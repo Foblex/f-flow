@@ -15,6 +15,10 @@
 
 Visit the [Foblex Flow Documentation](https://www.foblex.com/flow/documentation) to learn how to install and use the library in your Angular project.
 
+### Examples
+
+[Call Center](https://github.com/Foblex/f-flow-example)
+
 ### Support and Community
 
 For questions, feedback, and support, visit the [Foblex Portal](https://www.foblex.com/flow/home) to connect with the community and the development team.
