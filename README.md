@@ -13,7 +13,7 @@
 
 ### Getting Started and Documentation
 
-Visit the [Foblex Flow Documentation](https://www.foblex.com/flow/documentation) to learn how to install and use the library in your Angular project.
+Visit the [Foblex Flow Documentation](https://www.foblex.com/flow/documentation/get-started) to learn how to install and use the library in your Angular project.
 
 ### Examples
 
