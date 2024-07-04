@@ -1,0 +1,55 @@
+#name: CI/CD Pipeline
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#env:
+#  PROJECT_NAME: f-core
+#
+#jobs:
+#  test_and_build:
+#    name: Test and Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Rebase to get latest changes
+#        run: |
+#          git fetch origin main
+#          git rebase origin/main
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '18'
+#
+#      - name: Install Dependencies
+#        run: npm install
+#
+#      - name: Run Tests
+#        run: npm test -- --passWithNoTests
+#
+#      - name: Build
+#        run: npm run build ${{ env.PROJECT_NAME }}
+#
+#      - name: List contents of build directory
+#        run: ls -al dist/${{ env.PROJECT_NAME }}
+#
+#      - name: Disable Git
+#        run: git config --global url."https://".insteadOf ssh://
+#
+#      - name: Set up .npmrc file for authentication
+#        run: |
+#          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > dist/${{ env.PROJECT_NAME }}/.npmrc
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#
+#      - name: Publish to NPM
+#        run: |
+#          cd dist/${{ env.PROJECT_NAME }}
+#          npm publish --access public --registry https://registry.npmjs.org/
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

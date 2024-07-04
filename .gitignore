@@ -1,34 +1,10 @@
-/dist
-/tmp
-/out-tsc
-/bazel-out
 
-/node_modules
-npm-debug.log
-yarn-error.log
+dist
+.angular
+node_modules
+.idea
 
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-.DS_Store
-Thumbs.db
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

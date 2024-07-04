@@ -1,0 +1,36 @@
+{
+  "name": "@foblex/flow",
+  "version": "12.2.4",
+  "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "Siarhei Huzarevich",
+  "homepage": "https://foblex.com/flow/home",
+  "docs": "https://foblex.com/flow/documentation/get-started",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foblex/flow.git"
+  },
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "angular",
+    "flow",
+    "dynamic flow",
+    "dynamic graph",
+    "diagram",
+    "dataflow",
+    "workflow",
+    "foblex"
+  ],
+  "peerDependencies": {
+    "@angular/common": ">=12.0.0",
+    "@angular/core": ">=12.0.0",
+    "@foblex/core": ">=1.1.0",
+    "rxjs": ">=6.6.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

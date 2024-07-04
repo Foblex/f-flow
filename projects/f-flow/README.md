@@ -13,11 +13,7 @@
 
 ### Getting Started and Documentation
 
-Visit the [Foblex Flow Documentation](https://www.foblex.com/flow/documentation/get-started) to learn how to install and use the library in your Angular project.
-
-### Examples
-
-[Call Center](https://github.com/Foblex/f-flow-example)
+Visit the [Foblex Flow Documentation](https://foblex.com/flow/documentation/get-started) to learn how to install and use the library in your Angular project.
 
 ### Support and Community
 
@@ -29,4 +25,3 @@ You can also report [issues](https://github.com/Foblex/flow/issues) and request 
 This library is available for use under the [MIT License](./LICENSE).
 
 For more information please contact us at [Foblex](https://www.foblex.com/flow/home).
-

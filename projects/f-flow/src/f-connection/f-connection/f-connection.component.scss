@@ -1,0 +1,16 @@
+:host {
+  pointer-events: none;
+  position: absolute;
+
+  svg {
+    overflow: visible;
+
+    .f-connection-group {
+      pointer-events: all;
+    }
+  }
+
+  .f-connection-center {
+    pointer-events: all;
+  }
+}
