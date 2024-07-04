@@ -1,6 +1,6 @@
 ### Welcome to the @foblex/flow
 
-`@foblex/flow` is an Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.
+`@foblex/flow` is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.
 
 ### Features
 
