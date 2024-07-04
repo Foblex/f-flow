@@ -6,18 +6,18 @@ We are dedicated to creating an open and welcoming environment for all participa
 
 To maintain a positive atmosphere, we encourage the following behaviors:
 
-	•	Using welcoming and inclusive language
-	•	Respecting differing viewpoints and experiences
-	•	Gracefully accepting constructive criticism
-	•	Prioritizing the well-being of the community
-	•	Showing empathy towards other community members
+ - 🌟 **Using welcoming and inclusive language**
+ - 🤝 **Respecting differing viewpoints and experiences**
+ - 💬 **Gracefully accepting constructive criticism**
+ - 🌍 **Prioritizing the well-being of the community**
+ - ❤️ **Showing empathy towards other community members**
 
 We consider the following behaviors unacceptable:
 
-	•	The use of sexualized language or imagery and unwelcome sexual attention or advances
-	•	Trolling, insulting or derogatory comments, and personal or political attacks
-	•	Public or private harassment
-	•	Publishing others’ private information without explicit permission
+ - 🚫 **The use of sexualized language or imagery and unwelcome sexual attention or advances**
+ - ❌ **Trolling, insulting or derogatory comments, and personal or political attacks**
+ - 🛑 **Public or private harassment**
+ - 🔒 **Publishing others’ private information without explicit permission**
 
 ### Our Responsibilities
 
