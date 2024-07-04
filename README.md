@@ -30,5 +30,5 @@ This library is available for use under the MIT License, allowing free use, modi
 
 If you are interested in accessing the full source code of the library for purposes of study, modification, or deeper integration with your projects, we offer separate licenses for the source code. Purchasing such a license will grant you the right to use, modify, and distribute the source code according to the terms set forth in the licensing agreement.
 
-For more information and to purchase a source code license, please contact us at [Foblex](https://www.foblex.com/flow/home).
+For more information please contact us at [Foblex](https://www.foblex.com/flow/home).
 
