@@ -11,5 +11,5 @@ export const F_NODE_PROVIDERS = [
 
   FResizeHandleDirective,
 
-  FRotateHandleDirective
+  // FRotateHandleDirective
 ];
