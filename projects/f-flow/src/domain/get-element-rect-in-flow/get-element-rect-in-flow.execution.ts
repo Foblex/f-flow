@@ -1,12 +1,18 @@
-import { IRect, ITransformModel, Point, RectExtensions, SizeExtensions } from '@foblex/core';
+import {
+  IPoint, ISize,
+  ITransformModel,
+  Point,
+  SizeExtensions
+} from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { GetElementRectInFlowRequest } from './get-element-rect-in-flow-request';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 import { FComponentsStore } from '../../f-storage';
+import { IRoundedRect, RoundedRect } from '../intersections';
 
 @Injectable()
 @FExecutionRegister(GetElementRectInFlowRequest)
-export class GetElementRectInFlowExecution implements IExecution<GetElementRectInFlowRequest, IRect> {
+export class GetElementRectInFlowExecution implements IExecution<GetElementRectInFlowRequest, IRoundedRect> {
 
   private get transform(): ITransformModel {
     return this.fComponentsStore.transform;
@@ -21,14 +27,22 @@ export class GetElementRectInFlowExecution implements IExecution<GetElementRectI
   ) {
   }
 
-  public handle(request: GetElementRectInFlowRequest): IRect {
+  public handle(request: GetElementRectInFlowRequest): IRoundedRect {
+    const systemRect = RoundedRect.fromElement(request.element);
+    const position = this.transformElementPositionInFlow(systemRect);
+    const size = this.transformElementSizeInFlow(systemRect);
 
-    const systemRect = RectExtensions.fromElement(request.element);
+    return new RoundedRect(
+      position.x, position.y, size.width, size.height,
+      systemRect.radius1, systemRect.radius2, systemRect.radius3, systemRect.radius4
+    );
+  }
 
-    const position = Point.fromPoint(systemRect).elementTransform(this.flowHost).sub(this.transform.scaledPosition).sub(this.transform.position).div(this.transform.scale);
+  private transformElementPositionInFlow(rect: IRoundedRect): IPoint {
+    return Point.fromPoint(rect).elementTransform(this.flowHost).sub(this.transform.scaledPosition).sub(this.transform.position).div(this.transform.scale);
+  }
 
-    const size = SizeExtensions.initialize(systemRect.width / this.transform.scale, systemRect.height / this.transform.scale);
-
-    return RectExtensions.initialize(position.x, position.y, size.width, size.height);
+  private transformElementSizeInFlow(rect: IRoundedRect): ISize {
+    return SizeExtensions.initialize(rect.width / this.transform.scale, rect.height / this.transform.scale);
   }
 }

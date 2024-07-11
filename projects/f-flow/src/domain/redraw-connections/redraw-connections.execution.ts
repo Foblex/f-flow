@@ -1,13 +1,14 @@
-import { IHandler, IRect, IVector } from '@foblex/core';
+import { ILine } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../f-storage';
-import { GetConnectionVectorRequest } from '../get-connection-vector';
+import { GetConnectionLineRequest } from '../get-connection-line';
 import { FConnectorBase } from '../../f-connectors';
 import { FConnectionBase } from '../../f-connection';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { GetElementRectInFlowRequest } from '../get-element-rect-in-flow';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
+import { IConnectorShape, IRoundedRect } from '../intersections';
 
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)
@@ -44,20 +45,20 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     output.setConnected(true);
     input.setConnected(true);
 
-    const vector = this.getVector(output, input, connection);
+    const line = this.getLine(output, input, connection);
 
     this.setMarkers(connection);
 
-    connection.setVector(vector.point1, output.fConnectableSide, vector.point2, input.fConnectableSide);
+    connection.setLine(line.point1, output.fConnectableSide, line.point2, input.fConnectableSide);
 
     connection.initialize();
     connection.isSelected() ? connection.select() : null;
   }
 
-  private getVector(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): IVector {
-    const outputRect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(output.hostElement));
-    const inputRect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(input.hostElement));
-    return this.fMediator.send(new GetConnectionVectorRequest(
+  private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
+    const outputRect = this.fMediator.send<IConnectorShape>(new GetElementRectInFlowRequest(output.hostElement));
+    const inputRect = this.fMediator.send<IConnectorShape>(new GetElementRectInFlowRequest(input.hostElement));
+    return this.fMediator.send(new GetConnectionLineRequest(
         outputRect,
         inputRect,
         connection.fBehavior,

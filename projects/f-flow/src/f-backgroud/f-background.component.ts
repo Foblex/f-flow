@@ -28,7 +28,7 @@ export class FBackgroundComponent extends FBackgroundBase implements OnInit, Aft
     return this.elementReference.nativeElement;
   }
 
-  @ContentChild(F_BACKGROUND_PATTERN, { static: true })
+  @ContentChild(F_BACKGROUND_PATTERN, { static: false })
   public fBackgroundPattern: FBackgroundBase | undefined;
 
   constructor(

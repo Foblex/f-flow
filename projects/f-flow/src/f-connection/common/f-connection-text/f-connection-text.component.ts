@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component, ElementRef, Inject, ViewChild
 } from "@angular/core";
-import { IVector, PointExtensions } from '@foblex/core';
+import { ILine, PointExtensions } from '@foblex/core';
 import { FConnectionTextPathDirective } from './f-connection-text-path.directive';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionText } from '../i-has-connection-text';
@@ -45,9 +45,9 @@ export class FConnectionTextComponent implements IConnectionText {
   ) {
   }
 
-  public redraw(vector: IVector): void {
+  public redraw(line: ILine): void {
 
-    const isTextReverse: boolean = FConnectionTextComponent.isTextReverse(vector);
+    const isTextReverse: boolean = FConnectionTextComponent.isTextReverse(line);
     const dyValue = this.calculateDy(this.textPathDirective.fontSize, isTextReverse);
 
     this.hostElement.setAttribute('dy', dyValue);
@@ -55,7 +55,7 @@ export class FConnectionTextComponent implements IConnectionText {
     const textRect = this.textPathDirective.getBBox();
     const textRectCenter = [ textRect.x + textRect.width / 2, textRect.y + textRect.height / 2 ];
     this.hostElement.setAttribute('transform', isTextReverse ? `rotate(180, ${ textRectCenter })` : '');
-    const startOffset = FConnectionTextComponent.getTextStartOffset(vector, this.base.fText || '', this.textPathDirective.symbolWidth);
+    const startOffset = FConnectionTextComponent.getTextStartOffset(line, this.base.fText || '', this.textPathDirective.symbolWidth);
     if (startOffset < 0) {
 
       this.hostElement.style.display = 'none';
@@ -73,12 +73,12 @@ export class FConnectionTextComponent implements IConnectionText {
     return dyValue.toString();
   }
 
-  private static isTextReverse(vector: IVector): boolean {
-    return vector.point1.x > vector.point2.x;
+  private static isTextReverse(line: ILine): boolean {
+    return line.point1.x > line.point2.x;
   }
 
-  private static getTextStartOffset(vector: IVector, name: string, symbolWidth: number): number {
-    const vectorLength: number = PointExtensions.hypotenuse(vector.point1, vector.point2);
+  private static getTextStartOffset(line: ILine, name: string, symbolWidth: number): number {
+    const vectorLength: number = PointExtensions.hypotenuse(line.point1, line.point2);
     return vectorLength / 2 - ((name || '').length * symbolWidth) / 2;
   }
 }

@@ -33,34 +33,31 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ISelecta
   }
 
   public handle(): ISelectableWithRect[] {
-    const nodeRects = this.getNodesWithRects();
-
-    const lineRects = this.getConnectionsWithRects();
-
-    const result = [ ...nodeRects, ...lineRects ].filter((x) => {
+    return [ ...this.getNodesWithRects(), ...this.getConnectionsWithRects() ].filter((x) => {
       return !this.fDraggableDataContext.selectedItems.includes(x.element);
     });
-
-    return result;
   }
 
   private getNodesWithRects(): ISelectableWithRect[] {
     return this.fNodes.filter((x) => !x.fSelectionDisabled).map((x) => {
-
-      const rect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
       return {
         element: x,
-        rect: RectExtensions.mult(rect, this.transform.scale)
+        rect: RectExtensions.mult(
+          this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement)),
+          this.transform.scale
+        )
       };
     });
   }
 
   private getConnectionsWithRects(): ISelectableWithRect[] {
     return this.fConnections.filter((x) => !x.fSelectionDisabled).map((x) => {
-      const rect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.boundingElement));
       return {
         element: x,
-        rect: RectExtensions.mult(rect, this.transform.scale)
+        rect: RectExtensions.mult(
+          this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.boundingElement)),
+          this.transform.scale
+        )
       };
     });
   }

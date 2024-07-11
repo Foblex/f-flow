@@ -5,12 +5,8 @@ import {
   OnInit
 } from "@angular/core";
 import {
-  DomElementExtensions,
-  IPoint,
-  ISize,
-  ITransformModel,
-  PointExtensions, SizeExtensions,
-  TransformModelExtensions
+  DomElementExtensions, IPoint, ISize, ITransformModel,
+  PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/core';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { startWith, Subject, Subscription } from 'rxjs';

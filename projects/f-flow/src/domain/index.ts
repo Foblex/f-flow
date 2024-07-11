@@ -4,7 +4,7 @@ export * from './create-connection-markers';
 
 export * from './get-can-be-selected-items';
 
-export * from './get-connection-vector';
+export * from './get-connection-line';
 
 export * from './get-element-rect-in-flow';
 
@@ -27,6 +27,8 @@ export * from './select';
 export * from './select-all';
 
 export * from './select-and-update-node-layer';
+
+export * from './intersections';
 
 export * from './update-item-layer';
 

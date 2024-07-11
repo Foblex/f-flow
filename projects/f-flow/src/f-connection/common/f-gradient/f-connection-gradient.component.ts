@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Inject } from "@angular/core";
-import { IVector, Point } from '@foblex/core';
+import { ILine, Point } from '@foblex/core';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
 import { IHasConnectionColor } from '../i-has-connection-color';
@@ -60,9 +60,9 @@ export class FConnectionGradientComponent implements IConnectionGradient {
     this.stop2Element.setAttribute('stop-color', color || 'transparent');
   }
 
-  public redraw(vector: IVector): void {
-    const x: number = vector.point2.x - vector.point1.x;
-    const y: number = vector.point2.y - vector.point1.y;
+  public redraw(line: ILine): void {
+    const x: number = line.point2.x - line.point1.x;
+    const y: number = line.point2.y - line.point1.y;
     const distance: number = Math.sqrt(x * x + y * y) || 0.01;
 
     const from = new Point(0.5 - (0.5 * x) / distance, 0.5 - (0.5 * y) / distance);

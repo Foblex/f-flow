@@ -14,10 +14,6 @@ export * from './mixins';
 
 export * from './f-connection-base';
 
-export * from './cast-to-connection-behavior';
-
-export * from './cast-to-connection-type';
-
 export * from './e-f-connection-behavior';
 
 export * from './e-f-connection-type';
