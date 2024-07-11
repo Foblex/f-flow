@@ -110,10 +110,9 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   private subscribeOnResizeChanges(): Subscription {
     return merge(new FResizeObserver(this.hostElement as HTMLElement), this.stateChanges).pipe(
-      debounceTime(5), startWith(null)
+      debounceTime(10), startWith(null)
     ).subscribe(() => {
       this.connectors.forEach((fConnector: FConnectorBase) => {
-
         fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
           new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
         );

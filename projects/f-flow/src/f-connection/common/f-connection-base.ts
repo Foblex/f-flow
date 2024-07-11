@@ -1,9 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 import {
-  IHasHostElement,
-  IPoint,
-  IVector,
-  VectorExtensions
+  IHasHostElement, ILine,
+  IPoint, LineExtensions,
 } from '@foblex/core';
 import { Subject } from 'rxjs';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
@@ -59,7 +57,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public path: string = '';
 
-  public vector: IVector = VectorExtensions.initialize();
+  public line: ILine = LineExtensions.initialize();
 
   public readonly stateChanges: Subject<void> = new Subject<void>();
 
@@ -93,7 +91,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   protected constructor(
     elementReference: ElementRef<HTMLElement>,
-    private connectionFactory: FConnectionFactory
+    private cFactory: FConnectionFactory
   ) {
     super(elementReference.nativeElement);
   }
@@ -108,29 +106,33 @@ export abstract class FConnectionBase extends MIXIN_BASE
     return (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element);
   }
 
-  public setVector(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): void {
-    this.vector = VectorExtensions.initialize(source, target);
+  public setLine(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): void {
+    this.line = LineExtensions.initialize(source, target);
+    const pathResult = this.getPathResult(source, sourceSide, target, targetSide);
+    this.path = pathResult.path;
+    this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
+  }
+
+  private getPathResult(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): any {
     const radius = this.fRadius > 0 ? this.fRadius : 0;
     const offset = this.fOffset > 0 ? this.fOffset : 1;
-    const pathResult = this.connectionFactory.handle(
+    return this.cFactory.handle(
       {
         type: this.fType,
         payload: { source, sourceSide, target, targetSide, radius, offset }
       }
     );
+  }
 
-    this.path = pathResult.path;
-
-    const transform = `position: absolute; pointerEvents: all; transform: translate(-50%, -50%); left: ${ pathResult.connectionCenter.x }px; top: ${ pathResult.connectionCenter.y }px`;
-
-    this.fConnectionCenter?.nativeElement?.setAttribute('style', transform);
+  private getTransform(position: IPoint): string {
+    return `position: absolute; pointerEvents: all; transform: translate(-50%, -50%); left: ${ position.x }px; top: ${ position.y }px`;
   }
 
   public redraw(): void {
     this.fPath.setPath(this.path);
     this.fSelection.setPath(this.path);
-    this.fGradient.redraw(this.vector);
-    this.fDragHandle.redraw(this.vector.point2);
-    this.fTextComponent.redraw(this.vector);
+    this.fGradient.redraw(this.line);
+    this.fDragHandle.redraw(this.line.point2);
+    this.fTextComponent.redraw(this.line);
   }
 }

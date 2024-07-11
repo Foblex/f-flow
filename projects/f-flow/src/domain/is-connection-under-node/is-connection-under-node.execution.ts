@@ -1,4 +1,4 @@
-import { IRect, ITransformModel, RectExtensions } from '@foblex/core';
+import { IRect, ITransformModel } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { IsConnectionUnderNodeRequest } from './is-connection-under-node.request';
@@ -83,8 +83,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   private findConnectionsUnderNode(node: FNodeBase): FConnectionBase[] {
     const nodeRect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(node.hostElement));
     return this.fComponentsStore.fConnections.filter((x) => {
-      const intersection = RectExtensions.intersectionWithVector(nodeRect, x.vector.point1, x.vector.point2);
-      return (intersection || []).length > 0
+     // const intersection = [];// RectExtensions.intersectionWithVector(nodeRect, x.line.point1, x.line.point2, 0, 0, 0, 0);
+      return ([]).length > 0
     });
   }
 }

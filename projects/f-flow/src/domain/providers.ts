@@ -1,7 +1,7 @@
 import { GetIncomingConnectionsHandler } from './get-incoming-connections.handler';
 import { GetOutgoingConnectionsHandler } from './get-outgoing-connections.handler';
 import { GetConnectionHandler } from './get-connection.handler';
-import { GetConnectionVectorExecution } from './get-connection-vector';
+import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { GetOutputRectInFlowExecution } from './get-output-rect-in-flow';
 import { GetSelectionExecution } from './get-selection';
@@ -26,7 +26,7 @@ export const COMMON_PROVIDERS = [
 
   GetCanBeSelectedItemsExecution,
 
-  GetConnectionVectorExecution,
+  GetConnectionLineExecution,
 
   GetElementRectInFlowExecution,
 

@@ -1,12 +1,12 @@
-import { IPoint, IRect, IVector, RectExtensions } from '@foblex/core';
+import { ILine, IPoint } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFDraggableType } from '../e-f-draggable-type';
 import {
-  GetConnectionVectorRequest,
+  GetConnectionLineRequest,
   GetInputRectInFlowRequest,
   GetInputRectInFlowResponse,
   GetOutputRectInFlowRequest,
-  GetOutputRectInFlowResponse
+  GetOutputRectInFlowResponse, RoundedRect
 } from '../../domain';
 import { FConnectionBase } from '../../f-connection';
 import { EFConnectableSide } from '../../f-connectors';
@@ -16,43 +16,41 @@ export class ConnectionSourceDragHandler implements IDraggableItem {
 
   public readonly type: EFDraggableType = EFDraggableType.CONNECTION;
 
-  private fromConnectorRect: IRect = RectExtensions.initialize();
+  private fromConnectorRect: RoundedRect = new RoundedRect();
   private fromConnectorSide: EFConnectableSide = EFConnectableSide.BOTTOM;
 
-  private toConnectorRect: IRect = RectExtensions.initialize();
+  private toConnectorRect: RoundedRect = new RoundedRect();
   private toConnectorSide: EFConnectableSide = EFConnectableSide.TOP;
 
   constructor(
-      private fMediator: FFlowMediator,
-      private connection: FConnectionBase,
+    private fMediator: FFlowMediator,
+    private connection: FConnectionBase,
   ) {
   }
 
   public initialize(): void {
     const fromConnector = this.fMediator.send<GetOutputRectInFlowResponse>(
-        new GetOutputRectInFlowRequest(this.connection.fOutputId)
+      new GetOutputRectInFlowRequest(this.connection.fOutputId)
     );
-    this.fromConnectorRect = fromConnector.rect;
+    this.fromConnectorRect = RoundedRect.fromRoundedRect(fromConnector.rect);
     this.fromConnectorSide = fromConnector.fConnectableSide;
 
     const toConnector = this.fMediator.send<GetInputRectInFlowResponse>(new GetInputRectInFlowRequest(this.connection.fInputId));
-    this.toConnectorRect = toConnector.rect;
+    this.toConnectorRect = RoundedRect.fromRoundedRect(toConnector.rect);
     this.toConnectorSide = toConnector.fConnectableSide;
   }
 
   public move(difference: IPoint): void {
-    const fromConnectorRect = RectExtensions.addPoint(this.fromConnectorRect, difference);
-
-    const vector = this.fMediator.send<IVector>(new GetConnectionVectorRequest(
-            fromConnectorRect,
-            this.toConnectorRect,
-            this.connection.fBehavior,
-            this.fromConnectorSide,
-            this.toConnectorSide,
-        )
+    const line = this.fMediator.send<ILine>(new GetConnectionLineRequest(
+        this.fromConnectorRect.addPoint(difference),
+        this.toConnectorRect,
+        this.connection.fBehavior,
+        this.fromConnectorSide,
+        this.toConnectorSide,
+      )
     );
 
-    this.connection.setVector(vector.point1, this.fromConnectorSide, vector.point2, this.toConnectorSide);
+    this.connection.setLine(line.point1, this.fromConnectorSide, line.point2, this.toConnectorSide);
     this.connection.redraw();
   }
 }

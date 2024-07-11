@@ -9,7 +9,7 @@ export class FFlowMediator {
   ) {
   }
 
-  private static pipelines = new Map<string, Pipeline<any, any>>();
+  public static pipelines = new Map<string, Pipeline<any, any>>();
 
   public static registerPipeline<TRequest, TResponse>(
     type: Type<TRequest>,

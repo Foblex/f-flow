@@ -119,6 +119,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     if (this.fDraggableDataContext.draggableItems.length > 0) {
       this.hostElement.classList.add('f-dragging');
+      this.emitSelectionChangeEvent();
     }
   }
 

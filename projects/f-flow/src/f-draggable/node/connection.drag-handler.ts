@@ -1,8 +1,8 @@
-import { IPoint, IVector, Point, VectorExtensions } from '@foblex/core';
+import { ILine, IPoint, LineExtensions, Point } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFDraggableType } from '../e-f-draggable-type';
 import {
-  GetConnectionVectorRequest,
+  GetConnectionLineRequest,
   GetInputRectInFlowRequest,
   GetInputRectInFlowResponse,
   GetOutputRectInFlowRequest,
@@ -16,7 +16,7 @@ export class ConnectionDragHandler implements IDraggableItem {
 
   public readonly type = EFDraggableType.CONNECTION;
 
-  private onPointerDownVector: IVector = VectorExtensions.initialize();
+  private onPointerDownLine: ILine = LineExtensions.initialize();
 
   private fromConnectorSide: EFConnectableSide = EFConnectableSide.BOTTOM;
 
@@ -37,7 +37,7 @@ export class ConnectionDragHandler implements IDraggableItem {
     const toConnector = this.fMediator.send<GetInputRectInFlowResponse>(new GetInputRectInFlowRequest(this.connection.fInputId));
     this.toConnectorSide = toConnector.fConnectableSide;
 
-    this.onPointerDownVector = this.fMediator.send(new GetConnectionVectorRequest(
+    this.onPointerDownLine = this.fMediator.send(new GetConnectionLineRequest(
             fromConnector.rect,
             toConnector.rect,
             this.connection.fBehavior,
@@ -48,10 +48,10 @@ export class ConnectionDragHandler implements IDraggableItem {
   }
 
   public move(difference: IPoint): void {
-    const fromPoint = Point.fromPoint(this.onPointerDownVector.point1).add(difference);
-    const toPoint = Point.fromPoint(this.onPointerDownVector.point2).add(difference);
+    const fromPoint = Point.fromPoint(this.onPointerDownLine.point1).add(difference);
+    const toPoint = Point.fromPoint(this.onPointerDownLine.point2).add(difference);
 
-    this.connection.setVector(fromPoint, this.fromConnectorSide, toPoint, this.toConnectorSide);
+    this.connection.setLine(fromPoint, this.fromConnectorSide, toPoint, this.toConnectorSide);
     this.connection.redraw();
   }
 }

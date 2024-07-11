@@ -8,7 +8,6 @@ import {
   ViewChild
 } from "@angular/core";
 import {
-  castToConnectionBehavior,
   CONNECTION_GRADIENT,
   CONNECTION_PATH,
   CONNECTION_TEXT,
@@ -25,6 +24,7 @@ import { FComponentsStore } from '../../f-storage';
 import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
+import { castToEnum } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -121,7 +121,7 @@ export class FConnectionComponent
   private _behavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
   @Input()
   public override set fBehavior(value: string | EFConnectionBehavior) {
-    this._behavior = castToConnectionBehavior(value);
+    this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
     this.fComponentsStore.changes.next();
   }
   public override get fBehavior(): EFConnectionBehavior {
@@ -131,7 +131,7 @@ export class FConnectionComponent
   private _type: EFConnectionType = EFConnectionType.STRAIGHT;
   @Input()
   public override set fType(value: EFConnectionType | string) {
-    this._type = value as EFConnectionType;
+    this._type = castToEnum(value, 'fType', EFConnectionType);
     this.fComponentsStore.changes.next();
   }
   public override get fType(): EFConnectionType {

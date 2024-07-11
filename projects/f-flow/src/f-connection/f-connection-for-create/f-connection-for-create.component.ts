@@ -4,7 +4,7 @@ import {
   Component, ContentChildren, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild
 } from "@angular/core";
 import {
-  castToConnectionBehavior, CONNECTION_GRADIENT,
+  CONNECTION_GRADIENT,
   CONNECTION_PATH, CONNECTION_TEXT,
   FConnectionBase, FConnectionDragHandleComponent, FConnectionSelectionComponent, IConnectionGradient,
   IConnectionPath, IConnectionText,
@@ -16,6 +16,7 @@ import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { FComponentsStore } from '../../f-storage';
+import { castToEnum } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -83,7 +84,7 @@ export class FConnectionForCreateComponent
   private _behavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
   @Input()
   public override set fBehavior(value: EFConnectionBehavior | string) {
-    this._behavior = castToConnectionBehavior(value);
+    this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
     this.fComponentsStore.changes.next();
   }
   public override get fBehavior(): EFConnectionBehavior {
@@ -93,7 +94,7 @@ export class FConnectionForCreateComponent
   private _type: EFConnectionType = EFConnectionType.STRAIGHT;
   @Input()
   public override set fType(value: EFConnectionType | string) {
-    this._type = value as EFConnectionType;
+    this._type = castToEnum(value, 'fType', EFConnectionType);
     this.fComponentsStore.changes.next();
   }
   public override get fType(): EFConnectionType {
