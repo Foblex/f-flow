@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { FFlowMediator } from '../infrastructure';
 import { ElementRef, Injector } from '@angular/core';
 import { FComponentsStore } from '../f-storage';
-import { ISelectable } from '../f-connection';
+import { FDraggableDataContext } from '../f-draggable';
 
 export class MockElementRef extends ElementRef<HTMLElement> {
   constructor() {
@@ -10,22 +10,20 @@ export class MockElementRef extends ElementRef<HTMLElement> {
   }
 }
 
-export function setupTestModule(providers: any[] = []): void {
+export function setupTestModule(providers: any[] = [], declarations: any[] = []): void {
   TestBed.configureTestingModule({
+    declarations: [
+      ...declarations
+    ],
     providers: [
       FFlowMediator,
       FComponentsStore,
+      FDraggableDataContext,
       { provide: ElementRef, useClass: MockElementRef },
       Injector,
       ...providers
     ]
-  });
+  }).compileComponents();
 }
 
-export const MOCK_SELECTABLE_ITEM: ISelectable = {
-  fSelectionDisabled: false,
-  hostElement: document.createElement('svg'),
-  select: jasmine.createSpy('select'),
-  deselect: jasmine.createSpy('deselect'),
-  isSelected: jasmine.createSpy('isSelected').and.returnValue(true)
-};
+

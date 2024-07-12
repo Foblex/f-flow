@@ -1,28 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { FDraggableDataContext } from '../../f-draggable';
 import { FFlowMediator } from '../../infrastructure';
-import { ISelectable } from '../../f-connection';
 import { ClearSelectionRequest } from './clear-selection.request';
-import { MOCK_SELECTABLE_ITEM, setupTestModule } from '../test-setup';
-import { Injectable } from '@angular/core';
+import { setupTestModule } from '../test-setup';
 import { ClearSelectionExecution } from './clear-selection.execution';
+import { ISelectable } from '../../f-connection';
 
-@Injectable()
-class MockFDraggableDataContext {
-  selectedItems: ISelectable[] = [];
-  isSelectedChanged = false;
-}
+export const MOCK_SELECTABLE_ITEM: ISelectable = {
+  fSelectionDisabled: false,
+  hostElement: document.createElement('svg'),
+  select: jasmine.createSpy('select'),
+  deselect: jasmine.createSpy('deselect'),
+  isSelected: jasmine.createSpy('isSelected').and.returnValue(true)
+};
 
 describe('ClearSelectionExecution', () => {
-  let fDraggableDataContext: MockFDraggableDataContext;
+  let fDraggableDataContext: FDraggableDataContext;
   let fMediator: FFlowMediator;
 
   beforeEach(() => {
-    setupTestModule([
-      { provide: FDraggableDataContext, useClass: MockFDraggableDataContext },
-      ClearSelectionExecution
-    ])
-
+    setupTestModule([ ClearSelectionExecution ]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
     fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
   });

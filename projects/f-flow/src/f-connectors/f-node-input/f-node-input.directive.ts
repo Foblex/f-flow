@@ -4,7 +4,7 @@ import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FNodeBase, F_NODE } from '../../f-node';
 import { FComponentsStore } from '../../f-storage';
-import { castToConnectableSide } from '../cast-to-connectable-side';
+import { castToEnum } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -45,7 +45,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
 
   @Input('fInputConnectableSide')
   public set _fSide(value: EFConnectableSide | string) {
-    this._fConnectableSide = castToConnectableSide(value);
+    this._fConnectableSide = castToEnum(value, 'fInputConnectableSide', EFConnectableSide);
     this.fNode.refresh();
   }
 
@@ -62,9 +62,9 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
   }
 
   constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      @Inject(F_NODE) private fNode: FNodeBase,
-      private fComponentsStore: FComponentsStore,
+    private elementReference: ElementRef<HTMLElement>,
+    @Inject(F_NODE) private fNode: FNodeBase,
+    private fComponentsStore: FComponentsStore,
   ) {
     super();
   }

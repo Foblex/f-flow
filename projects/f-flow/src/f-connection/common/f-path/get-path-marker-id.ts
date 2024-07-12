@@ -1,5 +1,5 @@
 import { sanitizeElementId } from '@foblex/core';
-import { EFMarkerType } from '../../f-marker/e-f-marker-type';
+import { EFMarkerType } from '../../f-marker';
 
 export function getMarkerStartId(fConnectionId: string): string {
   return sanitizeElementId(`${ EFMarkerType.START }-${ fConnectionId }`);
