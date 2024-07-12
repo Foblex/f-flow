@@ -4,7 +4,7 @@ import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { F_NODE, FNodeBase } from '../../f-node';
 import { FComponentsStore } from '../../f-storage';
-import { castToConnectableSide } from '../cast-to-connectable-side';
+import { castToEnum } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -43,7 +43,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnD
 
   @Input('fOutputConnectableSide')
   public set _fSide(value: EFConnectableSide | string) {
-    this._fConnectableSide = castToConnectableSide(value);
+    this._fConnectableSide = castToEnum(value, 'fOutputConnectableSide', EFConnectableSide);
     this.fNode.refresh();
   }
 

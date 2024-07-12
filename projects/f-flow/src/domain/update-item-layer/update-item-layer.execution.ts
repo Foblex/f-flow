@@ -8,9 +8,8 @@ export class UpdateItemLayerExecution implements IExecution<UpdateItemLayerReque
 
   public handle(request: UpdateItemLayerRequest): void {
     const elements = Array.from(request.itemContainer.children);
-    const elementsCount = elements.length;
     const targetIndex: number = elements.findIndex((x) => x === request.item.hostElement);
-    if (targetIndex !== elementsCount - 1) {
+    if (targetIndex !== -1 && targetIndex !== elements.length - 1) {
       const afterElements = elements.splice(targetIndex + 1);
       afterElements.forEach((x) => {
         request.itemContainer.removeChild(x);
