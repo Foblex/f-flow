@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "publish": "ng build && cd dist/f-flow && npm publish"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
