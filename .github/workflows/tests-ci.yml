@@ -1,12 +1,8 @@
-name: CI
+name: Tests CI
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
 
 jobs:
   build:
@@ -14,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [18.x]
 
     steps:
       - name: Checkout repository
