@@ -1,3 +1,5 @@
+<img width="400px" src="https://github.com/user-attachments/assets/99cf9eb4-f5da-4cf5-8e9e-da393413afe9"/>
+
 ## Welcome to the @foblex/flow
 
 ![Release](https://img.shields.io/npm/v/@foblex/flow.svg?logo=npm&logoColor=fff&label=Release&color=limegreen)
