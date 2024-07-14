@@ -1,7 +1,7 @@
 ## Welcome to the @foblex/flow
 
 ![Release](https://img.shields.io/npm/v/@foblex/flow.svg?logo=npm&logoColor=fff&label=Release&color=limegreen)
-![CI](https://github.com/foblex/f-flow/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/foblex/f-flow/actions/workflows/tests-ci.yml/badge.svg)
 
 `@foblex/flow` is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.
 
