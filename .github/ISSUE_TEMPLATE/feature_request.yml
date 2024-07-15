@@ -15,22 +15,6 @@ body:
       required: true
 
   - type: textarea
-    id: justification
-    attributes:
-      label: Justification
-      description: Explain why this feature is important and how it will benefit users.
-    validations:
-      required: false
-
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatives
-      description: Describe any alternative solutions or features you've considered.
-    validations:
-      required: false
-
-  - type: textarea
     id: additional_context
     attributes:
       label: Additional Context
