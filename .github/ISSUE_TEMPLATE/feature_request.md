@@ -1,8 +1,5 @@
 name: 🎛️ Feature Request
 about: Suggest an idea for Foblex Flow
-title: ''
-labels: ['enhancement', 'feature request']
-assignees: ['siarheihuzarevich', 'markwojno']
 body:
   - type: textarea
     id: description
