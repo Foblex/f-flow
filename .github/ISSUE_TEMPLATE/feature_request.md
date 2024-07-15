@@ -1,10 +1,37 @@
----
-name: Feature request
+name: 🎛️ Feature Request
 about: Suggest an idea for Foblex Flow
 title: ''
-labels: enhancement
-assignees: siarheihuzarevich, markwojno
+labels: ['enhancement', 'feature request']
+assignees: ['siarheihuzarevich', 'markwojno']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Provide a clear and concise description of the feature you want to propose.
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Justification
+      description: Explain why this feature is important and how it will benefit users.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Describe any alternative solutions or features you've considered.
+    validations:
+      required: false
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false
 
----
 
 
