@@ -1,12 +1,11 @@
-name: 🎛️ Feature Request
-description: Suggest an idea for Foblex Flow
+---
+name: Feature request
+about: Suggest an idea for this project
 title: ''
-labels: 
-  - enhancement
-  - feature request
-assignees: 
-  - siarheihuzarevich
-  - markwojno
+labels: enhancement
+assignees: siarheihuzarevich, markwojno
+
+---
 body:
   - type: markdown
     attributes:
