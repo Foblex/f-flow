@@ -1,6 +1,6 @@
 ﻿**Selector:** [fNodeInput]
 
-The **FNodeOutputDirective** is a directive that marks an element as an input within a [fNode](#f-node-directive). It manages input-specific behaviours, such as allowing multiple connections, handling disabled state, and determining connectability.
+The **FNodeOutputDirective** is a directive that marks an element as an input within a [fNode](f-node-directive). It manages input-specific behaviours, such as allowing multiple connections, handling disabled state, and determining connectability.
 
 ## Inputs
 
@@ -56,14 +56,14 @@ You can also add **fNodeInput** directive to the element containing the [fNode](
 ```
 
 ::: info INFO
-[f-connection](f-connection-component) component when connecting takes into account the border-radius value for each corner when connecting
+The [f-connection](f-connection-component) component takes the border-radius of the component into account when connecting
 :::
 
 ## Examples
 
-Example of how to use the [fOutputConnectableSide](#f-output-connectable-side) and [fInputConnectableSide](#f-input-connectable-side) directives to specify the side of the node that can be connected to. Valid values are top, right, bottom, left, and auto from [EFConnectableSide](#e-f-connectable-side) enum.
+Example of how to use the [fOutputConnectableSide](f-output-connectable-side) and [fInputConnectableSide](f-input-connectable-side) directives to specify the side of the node that can be connected to. Valid values are top, right, bottom, left, and auto from [EFConnectableSide](#e-f-connectable-side) enum.
 ::: ng-component <connectable-side></connectable-side>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.scss
 :::

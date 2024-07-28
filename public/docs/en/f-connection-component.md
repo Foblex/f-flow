@@ -51,21 +51,21 @@ Add the `f-connection` component to the [f-canvas](f-canvas-component). Provide 
 
 Examples of different connection types. The connection type can be set using the `fType` input. Valid values are `straight`, `bezier` and `segment from [EFConnectionType](e-f-connection-type) enum.
 ::: ng-component <connection-type></connection-type>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.scss
 :::
 
 Examples of different connection behaviours. The connection behaviour can be set using the `fBehavior` input. Valid values are: `fixed`, `fixed_center` and `floating` from [EFConnectionBehaviour](e-f-connection-behaviour) enum.
 ::: ng-component <connection-behaviour></connection-behaviour>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.scss
 :::
 
 Examples of providing custom connection types. The connection type can be set using an array of providers.
 ::: ng-component <provide-connection-type></provide-connection-type>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.scss
 :::

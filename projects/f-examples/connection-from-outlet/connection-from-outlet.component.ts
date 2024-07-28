@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 
 @Component({
-  selector: 'connection-from-outlet-sample',
-  styleUrls: [ './connection-from-outlet-sample.component.scss' ],
-  templateUrl: './connection-from-outlet-sample.component.html',
+  selector: 'connection-from-outlet',
+  styleUrls: [ './connection-from-outlet.component.scss' ],
+  templateUrl: './connection-from-outlet.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     FFlowModule
   ]
 })
-export class ConnectionFromOutletSampleComponent {
+export class ConnectionFromOutletComponent {
 
   public connections: { outputId: string, inputId: string }[] = [];
 

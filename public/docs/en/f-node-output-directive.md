@@ -1,6 +1,6 @@
 ﻿**Selector:** [fNodeOutput]
 
-The **FNodeOutputDirective** is a directive that marks an element as an output within a [fNode](#f-node-directive). It manages the output-related behaviors, such as connection status and disabled state.
+The **FNodeOutputDirective** is a directive that marks an element as an output within a [fNode](f-node-directive). It manages the output-related behaviors, such as connection status and disabled state.
 
 ## Inputs
 
@@ -42,9 +42,9 @@ The **FNodeOutputDirective** is a directive that marks an element as an output w
 
 ## Examples
 
-Example of how to use the [fOutputConnectableSide](#f-output-connectable-side) and [fInputConnectableSide](#f-input-connectable-side) directives to specify the side of the node that can be connected to. Valid values are top, right, bottom, left, and auto from [EFConnectableSide](#e-f-connectable-side) enum.
+Example of how to use the [fOutputConnectableSide](f-output-connectable-side) and [fInputConnectableSide](f-input-connectable-side) directives to specify the side of the node that can be connected to. Valid values are top, right, bottom, left, and auto from [EFConnectableSide](#e-f-connectable-side) enum.
 ::: ng-component <connectable-side></connectable-side>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectable-side/connectable-side.component.scss
 :::

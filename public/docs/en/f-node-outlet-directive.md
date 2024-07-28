@@ -1,6 +1,6 @@
 ﻿**Selector:** [fNodeOutlet]
 
-The **FNodeOutletDirective** is a directive that marks an element as an output within a [fNode](#f-node-directive) to centralize the creation of connections. It allows dragging connections from a single outlet point rather than individual outputs. When a connection is made to an input, the library automatically links it to the first available output in the node.
+The **FNodeOutletDirective** is a directive that marks an element as an output within a [fNode](f-node-directive) to centralize the creation of connections. It allows dragging connections from a single outlet point rather than individual outputs. When a connection is made to an input, the library automatically links it to the first available output in the node.
 
 ## Inputs
 
@@ -35,7 +35,7 @@ The **FNodeOutletDirective** is a directive that marks an element as an output w
 
 Example of how to use the **FNodeOutletDirective** directive. In this example **isConnectionFromOutlet** is set to `true`.
 ::: ng-component <connection-from-outlet></connection-from-outlet>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.scss
 :::

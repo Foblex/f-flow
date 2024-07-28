@@ -29,8 +29,8 @@ The **FMarkerDirective** is a directive that represents a start or end marker fo
 
 Example of how to create a custom connection marker. The marker is created using an SVG element and **fMarker** directive. FMarkerDirective requires the following attributes: `type`, `height`, `width`, `refX`, `refY`. [type] attribute accepted values are from the [EFMarkerType](e-f-marker-type) enum.
 ::: ng-component <connection-markers></connection-markers>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-markers/connection-markers.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-markers/connection-markers.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-markers/connection-markers.component.scss
 :::
 

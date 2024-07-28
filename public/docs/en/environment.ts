@@ -11,8 +11,8 @@ import {
 import { CreateConnectionComponent } from '../../../projects/f-examples/create-connection/create-connection.component';
 import { ConnectableSideComponent } from '../../../projects/f-examples/connectable-side/connectable-side.component';
 import {
-  ConnectionFromOutletSampleComponent
-} from '../../../projects/f-examples/connection-from-outlet-sample/connection-from-outlet-sample.component';
+  ConnectionFromOutletComponent
+} from '../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component';
 import {
   ConnectionMarkersComponent
 } from '../../../projects/f-examples/connection-markers/connection-markers.component';
@@ -43,7 +43,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'provide-connection-type', component: ProvideConnectionTypeComponent },
       { tag: 'create-connection', component: CreateConnectionComponent },
       { tag: 'connectable-side', component: ConnectableSideComponent },
-      { tag: 'connection-from-outlet', component: ConnectionFromOutletSampleComponent },
+      { tag: 'connection-from-outlet', component: ConnectionFromOutletComponent },
       { tag: 'connection-markers', component: ConnectionMarkersComponent },
       { tag: 'zoom-example', component: ZoomExampleComponent },
     ],

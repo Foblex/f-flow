@@ -45,16 +45,16 @@ The **FFlowComponent** manages the flow of draggable and connectable elements wi
 Example of two connected nodes without dragging functionality. The nodes are connected by a connection line from the output of the first node to the input of the second node.
 
 ::: ng-component <simple-flow></simple-flow>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.scss
 :::
 
 #### Adding Dragging Functionality
 
 Let's add the [fDraggable](f-draggable-directive) directive to the f-stream to enable dragging functionality. Also we need to add the [fDragHandle](f-drag-handle-directive) Directive inside [fNode](f-node-directive) to specify the handle for dragging.
 ::: ng-component <draggable-flow></draggable-flow>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.scss
 :::

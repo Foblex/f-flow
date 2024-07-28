@@ -131,7 +131,7 @@ export class FConnectionComponent
   private _type: EFConnectionType = EFConnectionType.STRAIGHT;
   @Input()
   public override set fType(value: EFConnectionType | string) {
-    this._type = castToEnum(value, 'fType', EFConnectionType);
+    this._type = value as unknown as EFConnectionType; //castToEnum(value, 'fType', EFConnectionType);
     this.fComponentsStore.changes.next();
   }
   public override get fType(): EFConnectionType {

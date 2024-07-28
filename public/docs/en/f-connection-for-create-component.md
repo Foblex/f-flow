@@ -23,7 +23,7 @@ Add the `f-connection-for-create` component to the [f-canvas](f-canvas-component
 The following example shows how to create a connection between two nodes.
 
 ::: ng-component <create-connection></create-connection>
-[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
-[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
-[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.scss
 :::
