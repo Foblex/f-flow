@@ -1,0 +1,75 @@
+
+:host ::ng-deep {
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: #585858;
+      stroke-width: 2;
+    }
+  }
+}
+
+.node-with-outlet {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+
+  padding: 12px;
+  color: #585858;
+  cursor: move;
+  background: #FCFDFE;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 1px #E4E3E6;
+
+  .output-container, .outlet-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .f-node-output, .f-node-outlet {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #DEDEDE;
+  }
+
+  .f-node-outlet {
+    background: #585858;
+  }
+
+  &:active {
+    box-shadow: 0 0 2px 2px #E4E3E6;
+  }
+}
+
+.node-with-input {
+  padding: 12px;
+  color: #585858;
+  cursor: move;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #FCFDFE;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 1px #E4E3E6;
+
+  &:active {
+    box-shadow: 0 0 2px 2px #E4E3E6;
+  }
+}
+

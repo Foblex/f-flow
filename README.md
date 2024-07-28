@@ -36,7 +36,7 @@ npm install @foblex/flow
 ### Usage
 
 Example:
-```typescript
+```html
 <f-flow fDraggable>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1"></f-connection>

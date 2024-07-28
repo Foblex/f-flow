@@ -19,9 +19,9 @@ export class NodeResizeDragHandler implements IDraggableItem {
 
   public readonly type: EFDraggableType = EFDraggableType.NODE_RESIZE;
 
-  private readonly onPointerDownPosition: IPoint = this.fNode.position;
+  private readonly onPointerDownPosition: IPoint;
 
-  private readonly rect = RectExtensions.fromElement(this.fNode.hostElement);
+  private readonly rect;
 
   private get scale(): number {
     return this.fComponentsStore.fCanvas!.transform.scale;
@@ -32,6 +32,8 @@ export class NodeResizeDragHandler implements IDraggableItem {
     public fNode: FNodeBase,
     public fResizeHandleType: EFResizeHandleType,
   ) {
+    this.onPointerDownPosition = this.fNode.position;
+    this.rect = RectExtensions.fromElement(this.fNode.hostElement);
   }
 
   public move(difference: IPoint): void {

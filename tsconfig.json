@@ -1,15 +1,19 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "strict": true,
-    "noImplicitOverride": true,
     "paths": {
-      "f-flow": [
-        "./dist/f-flow"
+//      "@foblex/f-docs": [
+//        "./projects/f-docs/src/public-api.ts"
+//      ]
+      "@foblex/flow": [
+        "./projects/f-flow/src/public-api.ts"
       ]
     },
+    "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -18,11 +22,10 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
     "lib": [
       "ES2022",
       "dom"

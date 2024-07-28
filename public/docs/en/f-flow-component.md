@@ -1,0 +1,60 @@
+﻿**Selector:** f-flow
+
+The **FFlowComponent** manages the flow of draggable and connectable elements within a visual canvas.  It allows for dynamic creation, positioning, and interaction of elements, supporting features such as element connections, layout calculation, and event handling.  
+
+## Inputs
+
+  - `fFlowId: string;` The unique identifier for the component instance. Automatically generated. Default: `f-flow-${uniqueId++}`  
+
+## Outputs
+
+ - `fLoaded: EventEmitter<void>;` Emits an event when the flow has fully loaded and initialized. 
+
+## Methods
+
+ - `getNodesRect(): IRect;` Returns the bounding rectangle of all nodes in the flow.
+ 
+ - `getSelection(): FSelectionChangeEvent;` Returns the current selection state of the flow.
+ 
+ - `selectAll(): void;` Selects all items in the flow.
+
+ - `select(node: string[], connections:[]): void;` Selects the specified nodes and connections in the flow.
+ 
+ - `clearSelection(): void;` Clears the selection state of all nodes and connections in the flow.
+ 
+ - `redraw(): void;` Calls the redraw method on all nodes and connections in the flow.
+ 
+ - `getPositionInFlow(position: IPoint): void;` Returns the position of the point relative to the flow.
+
+## Styles
+
+  - `.f-component` A general class applied to all F components for shared styling.
+
+  - `.f-flow` Specifically targets the **FFlowComponent**, allowing for unique styling.
+
+## Usage
+
+```html
+<f-flow [id]="customId" (fLoaded)="loaded()"></f-flow>
+```
+
+## Examples
+
+#### Basic Example
+  
+Example of two connected nodes without dragging functionality. The nodes are connected by a connection line from the output of the first node to the input of the second node.
+
+::: ng-component <simple-flow></simple-flow>
+[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
+[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
+[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+:::
+
+#### Adding Dragging Functionality
+
+Let's add the [fDraggable](f-draggable-directive) directive to the f-stream to enable dragging functionality. Also we need to add the [fDragHandle](f-drag-handle-directive) Directive inside [fNode](f-node-directive) to specify the handle for dragging.
+::: ng-component <draggable-flow></draggable-flow>
+[component.html] <<< src/demo/app/simple-flow/simple-flow.component.html
+[component.ts] <<< src/demo/app/simple-flow/simple-flow.component.ts
+[component.scss] <<< src/demo/app/simple-flow/simple-flow.component.scss
+:::
