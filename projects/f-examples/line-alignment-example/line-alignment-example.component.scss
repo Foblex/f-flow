@@ -1,0 +1,44 @@
+:host ::ng-deep {
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: #585858;
+      stroke-width: 2;
+    }
+  }
+
+  .f-line-alignment {
+    .f-line {
+      background-color: #585858;
+    }
+  }
+}
+
+.f-node {
+  width: 100px;
+  height: 100px;
+  padding: 12px;
+  color: #585858;
+  cursor: move;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #FCFDFE;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 1px #E4E3E6;
+
+  &:active {
+    box-shadow: 0 0 2px 2px #E4E3E6;
+  }
+}
+

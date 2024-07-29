@@ -1,4 +1,6 @@
-﻿**Selector:** f-canvas
+﻿# Canvas
+
+**Selector:** f-canvas
 
 The **FCanvasComponent** is an Angular component that serves as a container for nodes [fNode](f-node-directive) and connections [f-connection](f-connection-component). It provides a canvas where these elements can be positioned and manipulated, offering features like dynamic positioning, scaling, and rendering optimizations.
 

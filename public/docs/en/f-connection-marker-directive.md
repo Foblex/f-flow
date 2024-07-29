@@ -1,4 +1,6 @@
-﻿**Selector:** [fMarker]
+﻿# Connection Marker
+
+**Selector:** [fMarker]
 
 The **FMarkerDirective** is a directive that represents a start or end marker for a connection.
 

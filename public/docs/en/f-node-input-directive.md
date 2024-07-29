@@ -1,4 +1,6 @@
-﻿**Selector:** [fNodeInput]
+﻿# Input
+
+**Selector:** [fNodeInput]
 
 The **FNodeOutputDirective** is a directive that marks an element as an input within a [fNode](f-node-directive). It manages input-specific behaviours, such as allowing multiple connections, handling disabled state, and determining connectability.
 

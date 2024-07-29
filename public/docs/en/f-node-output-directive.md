@@ -1,4 +1,6 @@
-﻿**Selector:** [fNodeOutput]
+﻿# Output
+
+**Selector:** [fNodeOutput]
 
 The **FNodeOutputDirective** is a directive that marks an element as an output within a [fNode](f-node-directive). It manages the output-related behaviors, such as connection status and disabled state.
 

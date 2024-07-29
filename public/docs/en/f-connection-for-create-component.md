@@ -1,4 +1,6 @@
-﻿**Selector:**  f-connection-for-create
+﻿# Create Connection
+
+**Selector:**  f-connection-for-create
 
 It is used to create a connection between two nodes. The connection can be dragged to a different node input.
 

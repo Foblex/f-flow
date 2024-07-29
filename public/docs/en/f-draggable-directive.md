@@ -1,4 +1,6 @@
-﻿**Selector:** [fDraggable] 
+﻿# Drag and Drop
+
+**Selector:** [fDraggable] 
 
 The **FDraggableDirective** enhances a component, typically a flow [f-flow](f-flow-component), with draggable functionality. It allows elements within the flow to be moved and managed interactively.
 

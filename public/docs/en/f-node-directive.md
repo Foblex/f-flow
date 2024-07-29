@@ -1,4 +1,6 @@
-﻿**Selector:** [fNode] 
+﻿# Node
+
+**Selector:** [fNode] 
 
 The **FNodeDirective** is a directive that represents a node within a flow of elements. It is capable of interacting with other nodes and connectors, and can be dynamically positioned and styled.
 

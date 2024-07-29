@@ -1,4 +1,6 @@
-﻿**Selector:** f-connection
+﻿# Connection
+
+**Selector:** f-connection
 
 The **FConnectionComponent** is a component that represents a connection between nodes in a flow. It allows customization of the connection's appearance and behaviour, including color, type, and interactivity.  
 
@@ -49,6 +51,7 @@ Add the `f-connection` component to the [f-canvas](f-canvas-component). Provide 
 
 ## Examples
 
+#### Different Connection Types
 Examples of different connection types. The connection type can be set using the `fType` input. Valid values are `straight`, `bezier` and `segment from [EFConnectionType](e-f-connection-type) enum.
 ::: ng-component <connection-type></connection-type>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.html
@@ -56,6 +59,7 @@ Examples of different connection types. The connection type can be set using the
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.scss
 :::
 
+#### Different Connection Behaviours
 Examples of different connection behaviours. The connection behaviour can be set using the `fBehavior` input. Valid values are: `fixed`, `fixed_center` and `floating` from [EFConnectionBehaviour](e-f-connection-behaviour) enum.
 ::: ng-component <connection-behaviour></connection-behaviour>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.html
@@ -63,6 +67,7 @@ Examples of different connection behaviours. The connection behaviour can be set
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.scss
 :::
 
+#### Custom Connection Type
 Examples of providing custom connection types. The connection type can be set using an array of providers.
 ::: ng-component <provide-connection-type></provide-connection-type>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.html

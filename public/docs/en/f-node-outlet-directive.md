@@ -1,4 +1,6 @@
-﻿**Selector:** [fNodeOutlet]
+﻿# Outlet
+
+**Selector:** [fNodeOutlet]
 
 The **FNodeOutletDirective** is a directive that marks an element as an output within a [fNode](f-node-directive) to centralize the creation of connections. It allows dragging connections from a single outlet point rather than individual outputs. When a connection is made to an input, the library automatically links it to the first available output in the node.
 

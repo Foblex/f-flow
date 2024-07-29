@@ -1,4 +1,6 @@
-﻿**Selector:** [fZoom]
+﻿# Zoom
+
+**Selector:** [fZoom]
 
 The **FZoomDirective** directive is used to control the zoom and pan of the canvas. It is used in conjunction with the [f-canvas](f-canvas-component) component to provide zoom and pan functionality. Zooming can be done by using the mouse wheel or by double clicking on the canvas. The zoom level can be reset to the default
 

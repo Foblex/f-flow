@@ -17,6 +17,12 @@ import {
   ConnectionMarkersComponent
 } from '../../../projects/f-examples/connection-markers/connection-markers.component';
 import { ZoomExampleComponent } from '../../../projects/f-examples/zoom-example/zoom-example.component';
+import {
+  BackgroundExampleComponent
+} from '../../../projects/f-examples/background-example/background-example.component';
+import {
+  LineAlignmentExampleComponent
+} from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -46,11 +52,14 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'connection-from-outlet', component: ConnectionFromOutletComponent },
       { tag: 'connection-markers', component: ConnectionMarkersComponent },
       { tag: 'zoom-example', component: ZoomExampleComponent },
+      { tag: 'background-example', component: BackgroundExampleComponent },
+      { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@foblex/flow' },
-    ]
+    ],
+    tocRange: { start: 2, end: 6 },
   }
 }
 
@@ -62,6 +71,10 @@ function introductionGroup(): INavigationGroup {
         link: 'get-started',
         text: 'Getting Started',
       },
+      // {
+      //   link: 'f-examples',
+      //   text: 'Examples',
+      // }
     ],
   }
 }
@@ -145,6 +158,14 @@ function extendsGroup(): INavigationGroup {
       {
         link: 'f-zoom-directive',
         text: 'Zoom',
+      },
+      {
+        link: 'f-background-component',
+        text: 'Background',
+      },
+      {
+        link: 'f-line-alignment-component',
+        text: 'Line Alignment',
       },
     ],
   }

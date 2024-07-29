@@ -1,4 +1,6 @@
-﻿**Selector:** f-flow
+﻿# Flow
+
+**Selector:** f-flow
 
 The **FFlowComponent** manages the flow of draggable and connectable elements within a visual canvas.  It allows for dynamic creation, positioning, and interaction of elements, supporting features such as element connections, layout calculation, and event handling.  
 
@@ -52,7 +54,7 @@ Example of two connected nodes without dragging functionality. The nodes are con
 
 #### Adding Dragging Functionality
 
-Let's add the [fDraggable](f-draggable-directive) directive to the f-stream to enable dragging functionality. Also we need to add the [fDragHandle](f-drag-handle-directive) Directive inside [fNode](f-node-directive) to specify the handle for dragging.
+Let's add the [fDraggable](f-draggable-directive) directive to the f-stream to enable dragging functionality. Also, we need to add the [fDragHandle](f-drag-handle-directive) directive inside [fNode](f-node-directive) to specify the handle for dragging.
 ::: ng-component <draggable-flow></draggable-flow>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.ts
