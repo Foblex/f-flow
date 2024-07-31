@@ -1,0 +1,35 @@
+<f-flow fDraggable>
+  <f-background>
+    <f-rect-pattern></f-rect-pattern>
+  </f-background>
+  <f-canvas [position]="canvasPosition" [scale]="scale">
+    @for (connection of connections;track connection;let i = $index) {
+      <f-connection [fReassignDisabled]="true"
+                    [fSelectionDisabled]="true"
+                    [fBehavior]="eConnectionBehaviour.FIXED"
+                    [fRadius]="12"
+                    [fType]="'segment'"
+                    [fOutputId]="connection.output" [fInputId]="connection.input">
+        <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
+          <circle cx="5" cy="5" r="2" stroke="none"></circle>
+        </svg>
+        <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.END" [height]="5" [width]="5" [refX]="4" [refY]="2.5">
+          <path d="M0,0L700,350L0,700L150,350z"/>
+        </svg>
+      </f-connection>
+    }
+
+    @for (node of nodes;track node.uid) {
+      <div fNode [fNodeId]="node.uid"
+           hero-node [node]="node"
+           fNodeInput [fInputId]="node.uid"
+           [fInputConnectableSide]="node.to"
+           fNodeOutput [fOutputId]="node.uid"
+           [fOutputConnectableSide]="node.from"
+           fDragHandle
+           [fNodePosition]="node.position"
+           (fNodePositionChange)="onNodePositionChanged($event, node)">
+      </div>
+    }
+  </f-canvas>
+</f-flow>

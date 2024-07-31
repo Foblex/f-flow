@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  padding-top: 32px;
+  gap: 12px;
+  width: fit-content;
+  margin: 0 auto;
+
+  @media (min-width: 960px) {
+    margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color .25s, border-color .25s, background-color .25s;
+
+    border-radius: 4px;
+    padding: 0 20px;
+    line-height: 38px;
+    font-size: 14px;
+
+    color: var(--text-2);
+    background-color: var(--alt-background);
+    cursor: pointer;
+    pointer-events: all;
+
+    &:hover {
+      background-color: #e4e4e9;
+    }
+
+    &:active {
+      background-color: #dddde3;
+    }
+
+    &.accent {
+      color: var(--alt-background);
+      background-color: #4a69bd;
+
+      &:hover {
+        background-color: #3f5aa6;
+      }
+
+      &:active {
+        background-color: #2e437f;
+      }
+    }
+  }
+}

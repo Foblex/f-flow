@@ -6,8 +6,8 @@ import {
   ConnectionBehaviourComponent
 } from '../../../projects/f-examples/connection-behaviour/connection-behaviour.component';
 import {
-  ProvideConnectionTypeComponent
-} from '../../../projects/f-examples/provide-connection-type/provide-connection-type.component';
+  CustomConnectionTypeComponent
+} from '../../../projects/f-examples/custom-connection-type/custom-connection-type.component';
 import { CreateConnectionComponent } from '../../../projects/f-examples/create-connection/create-connection.component';
 import { ConnectableSideComponent } from '../../../projects/f-examples/connectable-side/connectable-side.component';
 import {
@@ -46,7 +46,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'draggable-flow', component: DraggableFlowComponent },
       { tag: 'connection-type', component: ConnectionTypeComponent },
       { tag: 'connection-behaviour', component: ConnectionBehaviourComponent },
-      { tag: 'provide-connection-type', component: ProvideConnectionTypeComponent },
+      { tag: 'custom-connection-type', component: CustomConnectionTypeComponent },
       { tag: 'create-connection', component: CreateConnectionComponent },
       { tag: 'connectable-side', component: ConnectableSideComponent },
       { tag: 'connection-from-outlet', component: ConnectionFromOutletComponent },

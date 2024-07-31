@@ -24,9 +24,9 @@ const connectionBuilders = {
 
 
 @Component({
-  selector: 'provide-connection-type',
-  styleUrls: [ './provide-connection-type.component.scss' ],
-  templateUrl: './provide-connection-type.component.html',
+  selector: 'custom-connection-type',
+  styleUrls: [ './custom-connection-type.component.scss' ],
+  templateUrl: './custom-connection-type.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [
@@ -36,6 +36,6 @@ const connectionBuilders = {
     FFlowModule
   ]
 })
-export class ProvideConnectionTypeComponent {
+export class CustomConnectionTypeComponent {
 
 }

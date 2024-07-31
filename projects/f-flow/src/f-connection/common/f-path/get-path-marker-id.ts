@@ -10,7 +10,7 @@ export function getMarkerEndId(fConnectionId: string): string {
 }
 
 export function getMarkerSelectedStartId(fConnectionId: string): string {
-  return sanitizeElementId(`'f-connection-selected-marker-start-${ fConnectionId }`);
+  return sanitizeElementId(`f-connection-selected-marker-start-${ fConnectionId }`);
 }
 
 export function getMarkerSelectedEndId(fConnectionId: string): string {

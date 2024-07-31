@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 280px;
+  height: 280px;
+
+  @media (min-width: 640px) {
+    width: 392px;
+    height: 392px;
+  }
+
+  @media (min-width: 960px) {
+    width: 50%;
+    height: 392px;
+  }
+
+  .image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    max-width: 192px;
+    max-height: 192px;
+
+    @media (min-width: 640px) {
+      max-width: 256px;
+      max-height: 256px;
+    }
+
+    @media (min-width: 960px) {
+      max-width: 320px;
+      max-height: 320px;
+    }
+  }
+}
+
+
+

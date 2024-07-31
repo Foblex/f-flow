@@ -1,0 +1,53 @@
+::ng-deep hero-flow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: block;
+
+  .f-flow {
+    .f-background {
+      line {
+        stroke: #fafafa;
+      }
+    }
+
+    .f-connection {
+
+      .f-marker {
+        circle {
+          fill: var(--text-1);
+        }
+
+        path {
+          fill: var(--text-1);
+        }
+      }
+
+      .f-connection-drag-handle {
+        fill: transparent;
+      }
+
+      .f-connection-selection {
+        fill: none;
+      }
+
+      .f-connection-path {
+        stroke-width: 2px;
+        stroke: var(--text-1);
+        fill: none;
+        stroke-dashoffset: 50;
+        stroke-dasharray: 5, 5;
+        animation: dash 5s linear infinite;
+      }
+
+      @keyframes dash {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+  }
+}

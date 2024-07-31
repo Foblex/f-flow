@@ -69,8 +69,8 @@ Examples of different connection behaviours. The connection behaviour can be set
 
 #### Custom Connection Type
 Examples of providing custom connection types. The connection type can be set using an array of providers.
-::: ng-component <provide-connection-type></provide-connection-type>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/provide-connection-type/provide-connection-type.component.scss
+::: ng-component <custom-connection-type></custom-connection-type>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.scss
 :::

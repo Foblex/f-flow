@@ -4,6 +4,10 @@ import { F_ENVIRONMENT } from '@foblex/f-docs';
 
 export const routes: Routes = [
   {
+    path: '',
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
+  },
+  {
     path: 'docs',
     providers: [
       { provide: F_ENVIRONMENT, useValue: ENGLISH_ENVIRONMENT }
