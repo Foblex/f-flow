@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img height="280px" style="margin: auto" src="https://github.com/user-attachments/assets/0fd21960-ac6c-4f9b-8e9f-214bb08b6236" alt="Foblex Flow Logo"/>
+  <img style="margin: auto" src="https://github.com/user-attachments/assets/0557914d-a43d-43c1-8346-760d3627da14" alt="Foblex Flow Logo"/>
 </p>
 
 <p align="center">
@@ -35,7 +35,7 @@ manipulation and inter-node connections.
 
 ### Getting Started and Documentation
 
-Visit our [Documentation](https://flow.foblex.github.com) to learn how to install and use the library in your Angular project.
+Visit our [Documentation](https://flow.foblex.com) to learn how to install and use the library in your Angular project.
 
 ### Installation
 
