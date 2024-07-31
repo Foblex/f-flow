@@ -1,0 +1,2 @@
+sitemap: https://flow.foblex.com/sitemap.xml
+user-agent: *

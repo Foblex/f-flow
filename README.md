@@ -12,9 +12,9 @@
   </a>
 </p>
 
-## Welcome to @foblex/flow
+## Welcome to Foblex Flow
 
-`@foblex/flow` is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of 
+Foblex Flow is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of 
 dynamic flows. It provides components for flows, nodes, and connections, automating node 
 manipulation and inter-node connections.
 
@@ -35,11 +35,11 @@ manipulation and inter-node connections.
 
 ### Getting Started and Documentation
 
-Visit our [Documentation](https://foblex.github.io/f-flow/docs/get-started) to learn how to install and use the library in your Angular project.
+Visit our [Documentation](https://flow.foblex.github.com) to learn how to install and use the library in your Angular project.
 
 ### Installation
 
-To add `@foblex/flow` to your project, run the following command:
+To add Foblex Flow to your project, run the following command:
 
 ```bash
 npm install @foblex/flow

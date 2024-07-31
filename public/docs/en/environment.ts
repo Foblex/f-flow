@@ -31,7 +31,7 @@ function createEnvironment(): IDocsEnvironment {
     lang: 'en',
     docsDir: './docs/en/',
     logo: './logo.svg',
-    title: 'Documentation',
+    title: 'Flow Docs',
     version: '12.3.6',
     navigation: [
       introductionGroup(),
