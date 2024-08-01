@@ -1,6 +1,7 @@
-
 <p align="center">
-  <img style="margin: auto" src="https://github.com/user-attachments/assets/0557914d-a43d-43c1-8346-760d3627da14" alt="Foblex Flow Logo"/>
+  <a href="https://flow.foblex.com">
+    <img style="margin: auto" src="https://github.com/user-attachments/assets/0557914d-a43d-43c1-8346-760d3627da14" alt="Foblex Flow Logo"/>
+  </a>
 </p>
 
 <p align="center">
@@ -14,8 +15,8 @@
 
 ## Welcome to Foblex Flow
 
-Foblex Flow is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of 
-dynamic flows. It provides components for flows, nodes, and connections, automating node 
+Foblex Flow is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of
+dynamic flows. It provides components for flows, nodes, and connections, automating node
 manipulation and inter-node connections.
 
 ### Examples
@@ -48,12 +49,14 @@ npm install @foblex/flow
 ### Usage
 
 Example:
+
 ```html
+
 <f-flow fDraggable>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1"></f-connection>
-      <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right"> Drag me </div>
-      <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left"> Drag me </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right"> Drag me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left"> Drag me</div>
   </f-canvas>
 </f-flow>
 ```

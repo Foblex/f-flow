@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import {
+  FThemeButtonComponent
+} from '@foblex/f-docs';
 
 @Component({
   selector: 'header[header]',
@@ -7,7 +10,8 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrl: './header.component.scss',
   standalone: true,
   imports: [
-    NgOptimizedImage
+    NgOptimizedImage,
+    FThemeButtonComponent
   ]
 })
 export class HeaderComponent {

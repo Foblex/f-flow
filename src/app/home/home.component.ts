@@ -4,6 +4,7 @@ import { HeroComponent } from './hero/hero.component';
 import { HeaderComponent } from './header/header.component';
 import { HeroFlowComponent } from './hero-flow/hero-flow.component';
 import { HeroImageComponent } from './hero-image/hero-image.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'home',
@@ -16,6 +17,7 @@ import { HeroImageComponent } from './hero-image/hero-image.component';
     HeaderComponent,
     HeroFlowComponent,
     HeroImageComponent,
+    FooterComponent,
   ]
 })
 export class HomeComponent {

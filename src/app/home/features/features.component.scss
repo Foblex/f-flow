@@ -17,7 +17,7 @@
   .feature {
     width: 100%;
     border-radius: 4px;
-    background-color: #f6f6f7;
+    background-color: var(--soft-background);
     display: flex;
     flex-direction: column;
     padding: 24px;

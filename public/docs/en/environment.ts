@@ -31,8 +31,10 @@ function createEnvironment(): IDocsEnvironment {
     lang: 'en',
     docsDir: './docs/en/',
     logo: './logo.svg',
-    title: 'Flow Docs',
-    version: '12.3.6',
+    title: 'Foblex Flow',
+    version: {
+      npmPackage: '@foblex/flow',
+    },
     navigation: [
       introductionGroup(),
       containerGroup(),
