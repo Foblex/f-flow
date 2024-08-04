@@ -43,6 +43,14 @@ function createEnvironment(): IDocsEnvironment {
       connectionGroup(),
       extendsGroup()
     ],
+    footerNavigation: {
+      editLink: {
+        pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/en/',
+        text: 'Edit this page on GitHub'
+      },
+      previous: 'Previous Page',
+      next: 'Next Page',
+    },
     components: [
       { tag: 'simple-flow', component: SimpleFlowComponent },
       { tag: 'draggable-flow', component: DraggableFlowComponent },
@@ -61,7 +69,10 @@ function createEnvironment(): IDocsEnvironment {
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@foblex/flow' },
     ],
-    tocRange: { start: 2, end: 6 },
+    toC:{
+      title: 'In this article',
+      range: { start: 2, end: 6 },
+    }
   }
 }
 
@@ -72,11 +83,7 @@ function introductionGroup(): INavigationGroup {
       {
         link: 'get-started',
         text: 'Getting Started',
-      },
-      // {
-      //   link: 'f-examples',
-      //   text: 'Examples',
-      // }
+      }
     ],
   }
 }

@@ -38,9 +38,6 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   }
 
   public move(difference: IPoint): void {
-    console.log(difference);
-    console.log(JSON.stringify(this.onPointerDownToConnectorRect));
-    console.log(JSON.stringify(this.onPointerDownToConnectorRect.addPoint(difference)));
     const line = this.fMediator.send<ILine>(new GetConnectionLineRequest(
         this.onPointerDownFromConnectorRect,
         this.onPointerDownToConnectorRect.addPoint(difference),
