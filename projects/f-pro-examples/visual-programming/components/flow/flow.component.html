@@ -1,0 +1,52 @@
+<visual-programming-palette></visual-programming-palette>
+<f-flow fDraggable class="visual-programming-flow"
+        (fLoaded)="onInitialized()"
+        (fReassignConnection)="onReassignConnection($event)"
+        (fCreateConnection)="onConnectionAdded($event)"
+        (fCreateNode)="onNodeAdded($event)">
+  <f-background>
+    <f-circle-pattern></f-circle-pattern>
+  </f-background>
+  <f-line-alignment></f-line-alignment>
+  <f-canvas fZoom>
+    <f-connection-for-create fBehavior="floating" fType="straight">
+      <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
+        <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
+      </svg>
+      <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="6" [refY]="3">
+        <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
+      </svg>
+    </f-connection-for-create>
+    @for (connection of viewModel.connections;track connection) {
+      <f-connection fBehavior="floating"
+                    fType="straight"
+                    [fText]="connection.text"
+                    [fStartColor]="connection.color1" [fEndColor]="connection.color2"
+                    [fOutputId]="connection.from" [fInputId]="connection.to">
+        <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
+          <circle cx="5" cy="5" r="2" stroke="none" [attr.fill]="connection.color1"></circle>
+        </svg>
+        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="6" [refY]="3">
+          <path d="M0,0 L6,3 0,6Z" stroke="none" [attr.fill]="connection.color2"></path>
+        </svg>
+        <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.SELECTED_START" [height]="10" [width]="10" [refX]="5"
+             [refY]="5">
+          <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
+        </svg>
+        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="6" [refY]="3">
+          <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
+        </svg>
+      </f-connection>
+    }
+    @for (node of viewModel.nodes;track node.id) {
+      <visual-programming-node [node]="node"
+                               fNode
+                               fDragHandle
+                               [fNodePosition]="node.position"
+                               (fNodePositionChange)="onNodePositionChanged($event, node)">
+      </visual-programming-node>
+    }
+  </f-canvas>
+  <f-selection-area></f-selection-area>
+</f-flow>
+<visual-programming-toolbar></visual-programming-toolbar>

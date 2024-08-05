@@ -5,7 +5,7 @@ import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { UpdateItemLayerRequest } from '../../../../domain';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../infrastructure';
-import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase } from '../../../../f-connection';
+import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase, FConnectionComponent } from '../../../../f-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
 
 @Injectable()
@@ -35,6 +35,9 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
     const connectionToReassign = this.getConnectionHandler(
       this.getDragHandleElement(request.event.getPosition())
     )!;
+    if (connectionToReassign.fDraggingDisabled) {
+      return;
+    }
 
     this.fMediator.send<void>(
       new UpdateItemLayerRequest(

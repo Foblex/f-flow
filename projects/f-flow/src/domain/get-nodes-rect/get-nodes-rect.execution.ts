@@ -19,10 +19,7 @@ export class GetNodesRectExecution implements IExecution<GetNodesRectRequest, IR
   }
 
   private getNodesRects(): IRect[] {
-    return this.getNodes().map((x) => {
-      const rect = RectExtensions.fromElement(x.hostElement);
-      return RectExtensions.initialize(x.position.x, x.position.y, rect.width, rect.height);
-    })
+    return this.getNodes().map((x) => RectExtensions.fromElement(x.hostElement));
   }
 
   private getNodes(): FNodeBase[] {

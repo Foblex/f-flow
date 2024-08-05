@@ -124,11 +124,24 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   protected override onSelect(event: Event): void {
-    const isTargetNotHtml = event.constructor.name === 'Event';
-    const target = isTargetNotHtml ? (event.target as Node).parentNode as HTMLElement : event.target;
-    if (target && isExternalItem(target as HTMLElement)) {
+    if (this.isTargetItemExternal(event)) {
       event.preventDefault();
     }
+  }
+
+  private isTargetItemExternal(event: Event): boolean {
+    let isTargetItemExternal = this.isExternalItem(event.target as HTMLElement);
+    let isTargetParentItemExternal = this.isExternalItem((event.target as Node).parentNode as HTMLElement);
+    return isTargetItemExternal || isTargetParentItemExternal;
+  }
+
+  private isExternalItem(target: HTMLElement): boolean {
+    let result = false;
+    try {
+      result = isExternalItem(target);
+    } catch (e) {
+    }
+    return result;
   }
 
   public override onPointerMove(event: IPointerEvent): void {

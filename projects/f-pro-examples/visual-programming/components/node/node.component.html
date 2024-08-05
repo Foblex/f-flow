@@ -1,0 +1,17 @@
+@if (node) {
+  <div class="selected-background"></div>
+  <div class="interactive-node-body" [style.border-color]="node.color" [style.color]="node.color">
+    @if (node.output) {
+      <div fNodeOutput [fOutputMultiple]="true" [fOutputId]="node.output!"></div>
+      <div fNodeOutlet></div>
+    }
+
+    @if (node.input) {
+      <div fNodeInput [fInputMultiple]="true" [fInputId]="node.input"></div>
+    }
+    <div class="icon">
+      {{ node.type[0] }}
+    </div>
+  </div>
+}
+

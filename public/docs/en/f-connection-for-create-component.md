@@ -24,8 +24,8 @@ Add the `f-connection-for-create` component to the [f-canvas](f-canvas-component
 
 The following example shows how to create a connection between two nodes.
 
-::: ng-component <create-connection></create-connection>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/create-connection/create-connection.component.scss
+::: ng-component <drag-to-connect></drag-to-connect>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.scss
 :::
