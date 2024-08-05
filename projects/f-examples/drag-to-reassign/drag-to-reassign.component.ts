@@ -1,0 +1,29 @@
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
+
+@Component({
+  selector: 'drag-to-reassign',
+  styleUrls: [ './drag-to-reassign.component.scss' ],
+  templateUrl: './drag-to-reassign.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    FFlowModule
+  ]
+})
+export class DragToReassignComponent {
+
+  public connections: { outputId: string, inputId: string }[] = [
+    { outputId: '1', inputId: '2' },
+  ];
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
+  }
+
+  public reassignConnection(event: FReassignConnectionEvent): void {
+    this.connections = [ { outputId: event.fOutputId, inputId: event.newFInputId } ];
+    this.changeDetectorRef.detectChanges();
+  }
+}

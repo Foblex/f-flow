@@ -74,3 +74,11 @@ Examples of providing custom connection types. The connection type can be set us
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.scss
 :::
+
+#### Reassign Connection
+Each connection can be reassigned to another [fNodeInput](f-node-input-directive). The `fReassignDisabled` property can be used to disable this feature. Each connection has a `DragHandle` at the end, drag it to reassign the connection to another [fNodeInput](f-node-input-directive).
+::: ng-component <drag-to-reassign></drag-to-reassign>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.scss
+:::

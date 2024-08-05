@@ -39,12 +39,33 @@ export class RoundedRect implements IRoundedRect {
   }
 
   private static setRadiusFromElement(rect: RoundedRect, element: HTMLElement | SVGElement): RoundedRect {
-    rect.radius1 = parseFloat(element.style.borderTopLeftRadius) || 0;
-    rect.radius2 = parseFloat(element.style.borderTopRightRadius) || 0;
-    rect.radius3 = parseFloat(element.style.borderBottomRightRadius) || 0;
-    rect.radius4 = parseFloat(element.style.borderBottomLeftRadius) || 0;
+    const data = getComputedStyle(element);
+    rect.radius1 = this.convertToPixels(data.borderTopLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius2 = this.convertToPixels(data.borderTopRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius3 = this.convertToPixels(data.borderBottomRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius4 = this.convertToPixels(data.borderBottomLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
     return rect;
   }
+
+  private static convertToPixels(value: string, clientWidth: number, clientHeight: number, fontSize: string): number {
+    if (value.endsWith('px')) {
+      return parseFloat(value);
+    } else if (value.endsWith('%')) {
+      const percentage = parseFloat(value) / 100;
+      return Math.max(clientWidth, clientHeight) * percentage;
+    } else if (value.endsWith('em')) {
+      return parseFloat(value) * parseFloat(fontSize);
+    } else if (value.endsWith('rem')) {
+      return parseFloat(value) * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    } else if (value.endsWith('vh')) {
+      const vh = window.innerHeight / 100;
+      return parseFloat(value) * vh;
+    } else if (value.endsWith('vw')) {
+      const vw = window.innerWidth / 100;
+      return parseFloat(value) * vw;
+    }
+    return parseFloat(value) || 0;
+  };
 
   public addPoint(point: IPoint): RoundedRect {
     const copy = RoundedRect.fromRoundedRect(this);

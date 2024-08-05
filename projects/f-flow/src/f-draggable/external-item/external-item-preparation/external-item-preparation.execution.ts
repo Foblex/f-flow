@@ -23,7 +23,6 @@ export class ExternalItemPreparationExecution implements IExecution<ExternalItem
   }
 
   public handle(request: ExternalItemPreparationRequest): void {
-
     this.fDraggableDataContext.onPointerDownScale = 1;
 
     this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this.flowHost);

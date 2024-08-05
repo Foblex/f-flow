@@ -23,13 +23,22 @@ export class FConnectionDragHandleComponent implements IHasHostElement {
   }
 
   constructor(
-      private elementReference: ElementRef<SVGCircleElement>
+    private elementReference: ElementRef<SVGCircleElement>
   ) {
   }
 
-  public redraw(point: IPoint): void {
+  public redraw(start: IPoint, end: IPoint): void {
+    const point = this.calculateCircleCenter(start, end, 8);
     this.hostElement.setAttribute('cx', point.x.toString());
     this.hostElement.setAttribute('cy', point.y.toString());
+  }
+
+  private calculateCircleCenter(start: IPoint, end: IPoint, radius: number): IPoint {
+    const direction = { x: end.x - start.x, y: end.y - start.y };
+    const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y);
+    const unitDirection = { x: direction.x / length, y: direction.y / length };
+    const scaledDirection = { x: unitDirection.x * radius, y: unitDirection.y * radius };
+    return { x: end.x - scaledDirection.x, y: end.y - scaledDirection.y };
   }
 }
 

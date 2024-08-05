@@ -132,7 +132,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     this.fPath.setPath(this.path);
     this.fSelection.setPath(this.path);
     this.fGradient.redraw(this.line);
-    this.fDragHandle.redraw(this.line.point2);
+    this.fDragHandle.redraw(this.line.point1, this.line.point2);
     this.fTextComponent.redraw(this.line);
   }
 }

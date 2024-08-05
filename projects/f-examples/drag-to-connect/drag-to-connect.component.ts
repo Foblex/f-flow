@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 
 @Component({
-  selector: 'create-connection',
-  styleUrls: [ './create-connection.component.scss' ],
-  templateUrl: './create-connection.component.html',
+  selector: 'drag-to-connect',
+  styleUrls: [ './drag-to-connect.component.scss' ],
+  templateUrl: './drag-to-connect.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     FFlowModule
   ]
 })
-export class CreateConnectionComponent {
+export class DragToConnectComponent {
 
   public connections: { outputId: string, inputId: string }[] = [];
 
