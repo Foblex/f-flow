@@ -8,7 +8,7 @@ import {
 import {
   CustomConnectionTypeComponent
 } from '../../../projects/f-examples/custom-connection-type/custom-connection-type.component';
-import { CreateConnectionComponent } from '../../../projects/f-examples/create-connection/create-connection.component';
+import { DragToConnectComponent } from '../../../projects/f-examples/drag-to-connect/drag-to-connect.component';
 import { ConnectableSideComponent } from '../../../projects/f-examples/connectable-side/connectable-side.component';
 import {
   ConnectionFromOutletComponent
@@ -23,6 +23,8 @@ import {
 import {
   LineAlignmentExampleComponent
 } from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
+import { DragToReassignComponent } from '../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component';
+import { FlowComponent } from '../../../projects/f-pro-examples/visual-programming/components/flow/flow.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -41,7 +43,20 @@ function createEnvironment(): IDocsEnvironment {
       nodeGroup(),
       connectorGroup(),
       connectionGroup(),
-      extendsGroup()
+      extendsGroup(),
+      {
+        text: 'Pro Examples',
+        items: [{
+          text: 'Visual Programming Flow',
+          link: 'f-visual-programming-flow',
+        }, {
+          text: 'Call Center Flow',
+          link: 'https://github.com/Foblex/f-flow-example',
+        }, {
+          text: 'Scheme Editor',
+          link: 'https://github.com/Foblex/f-scheme-editor',
+        }]
+      }
     ],
     footerNavigation: {
       editLink: {
@@ -57,13 +72,15 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'connection-type', component: ConnectionTypeComponent },
       { tag: 'connection-behaviour', component: ConnectionBehaviourComponent },
       { tag: 'custom-connection-type', component: CustomConnectionTypeComponent },
-      { tag: 'create-connection', component: CreateConnectionComponent },
+      { tag: 'drag-to-connect', component: DragToConnectComponent },
+      { tag: 'drag-to-reassign', component: DragToReassignComponent },
       { tag: 'connectable-side', component: ConnectableSideComponent },
       { tag: 'connection-from-outlet', component: ConnectionFromOutletComponent },
       { tag: 'connection-markers', component: ConnectionMarkersComponent },
       { tag: 'zoom-example', component: ZoomExampleComponent },
       { tag: 'background-example', component: BackgroundExampleComponent },
       { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
+      { tag: 'visual-programming-flow', component: FlowComponent },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },

@@ -1,0 +1,6 @@
+@for (item of palette;track item) {
+  <div class="visual-programming-external-item" fExternalItem [fData]="item.type"
+       [style.border-color]="item.color" [style.color]="item.color">
+    <div class="icon">{{ item.type[0] }}</div>
+  </div>
+}

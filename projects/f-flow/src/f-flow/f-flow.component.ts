@@ -8,7 +8,7 @@ import { F_FLOW, FFlowBase } from './f-flow-base';
 import { debounceTime, startWith, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS, GetNodesRectRequest, GetPositionInFlowRequest,
+  COMMON_PROVIDERS, GetExternalNodesRectRequest, GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
   SelectAllRequest, SelectRequest,
@@ -97,7 +97,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public getNodesRect(): IRect {
-    return this.fMediator.send<IRect>(new GetNodesRectRequest());
+    return this.fMediator.send<IRect>(new GetExternalNodesRectRequest());
   }
 
   public getSelection(): FSelectionChangeEvent {

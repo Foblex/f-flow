@@ -4,7 +4,7 @@ import {
   Point,
   SizeExtensions
 } from '@foblex/core';
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 import { GetElementRectInFlowRequest } from './get-element-rect-in-flow-request';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 import { FComponentsStore } from '../../f-storage';
@@ -23,6 +23,7 @@ export class GetElementRectInFlowExecution implements IExecution<GetElementRectI
   }
 
   constructor(
+    private render: Renderer2,
     private fComponentsStore: FComponentsStore,
   ) {
   }

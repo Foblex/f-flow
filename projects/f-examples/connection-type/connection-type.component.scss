@@ -9,6 +9,11 @@
       fill: none;
     }
 
+    .f-connection-text, .f-connection-center {
+      fill: #585858;
+      color: #585858;
+    }
+
     .f-connection-path {
       fill: none;
       stroke: #585858;
@@ -19,7 +24,6 @@
 
 .f-node {
   width: 100px;
-  height: 100px;
   padding: 12px;
   color: #585858;
   cursor: move;

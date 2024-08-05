@@ -17,6 +17,7 @@ import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
 import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
+import { GetExternalNodesRectExecution } from './get-external-nodes-rect';
 
 export const COMMON_PROVIDERS = [
 
@@ -29,6 +30,8 @@ export const COMMON_PROVIDERS = [
   GetConnectionLineExecution,
 
   GetElementRectInFlowExecution,
+
+  GetExternalNodesRectExecution,
 
   GetNodesRectExecution,
 

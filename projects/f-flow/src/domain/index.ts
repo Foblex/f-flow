@@ -8,6 +8,8 @@ export * from './get-connection-line';
 
 export * from './get-element-rect-in-flow';
 
+export * from './get-external-nodes-rect';
+
 export * from './get-input-rect-in-flow';
 
 export * from './get-nodes-rect';
