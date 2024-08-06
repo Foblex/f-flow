@@ -12,8 +12,9 @@
 
 :host {
   position: relative;
-  width: 90px;
-  height: 90px;
+  display: flex;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   background: linear-gradient(var(--background-color), var(--background-color)) 50% 50%/calc(100% - 16px) calc(100% - 16px) no-repeat,
   linear-gradient(140deg, var(--gradient-1) 0%, var(--gradient-2) 100%);
@@ -22,8 +23,8 @@
   transition: --gradient-1 0.3s, --gradient-2 0.3s;
 
   &.large {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
   }
 }
 
@@ -32,4 +33,14 @@
     --gradient-1: #bd34fe;
     --gradient-2: #41d1ff;
   }
+}
+
+span {
+  margin: auto;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1em;
+  background: -webkit-linear-gradient(120deg, var(--gradient-2) 30%, var(--gradient-1));
+  background-clip: text;
+  color: transparent;
 }

@@ -6,7 +6,7 @@ import {
   Input,
   NgZone,
   OnDestroy,
-  OnInit, Output
+  OnInit, Optional, Output
 } from "@angular/core";
 import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
@@ -32,6 +32,7 @@ import { isExternalItem } from '../f-external-item';
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';
+import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -69,7 +70,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private fDraggableDataContext: FDraggableDataContext,
-    ngZone: NgZone,
+    @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
     @Inject(DOCUMENT) private doc: Document

@@ -12,4 +12,6 @@ export interface IHeroFlowNode {
   from: EFConnectableSide;
 
   large?: boolean;
+
+  text?: string;
 }

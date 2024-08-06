@@ -58,8 +58,9 @@ export abstract class FDraggableBase implements IHasHostElement {
   private moveHandler: Function = this.checkDragSequenceToStart;
 
   protected constructor(
-    protected ngZone: ICanRunOutsideAngular
+    protected ngZone: ICanRunOutsideAngular | undefined
   ) {
+    console.log('FDraggableBase', this.ngZone);
   }
 
   private onMouseDown = (event: MouseEvent) => {
@@ -76,7 +77,7 @@ export abstract class FDraggableBase implements IHasHostElement {
       this.dragStartTime = Date.now();
       this.dragStartPosition = mouseEvent.getPosition();
 
-      this.ngZone.runOutsideAngular(() => {
+      this.ngZone?.runOutsideAngular(() => {
         this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.addEventListener('mousemove', this.onMouseMove);
         this.document?.addEventListener('mouseup', this.onMouseUp);
@@ -103,7 +104,7 @@ export abstract class FDraggableBase implements IHasHostElement {
       this.dragStartTime = Date.now();
       this.dragStartPosition = touchEvent.getPosition();
 
-      this.ngZone.runOutsideAngular(() => {
+      this.ngZone?.runOutsideAngular(() => {
         this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.addEventListener('touchmove', this.onTouchMove);
         this.document?.addEventListener('touchend', this.onTouchUp);
@@ -198,7 +199,7 @@ export abstract class FDraggableBase implements IHasHostElement {
     }
     this.document = document;
 
-    this.ngZone.runOutsideAngular(() => {
+    this.ngZone?.runOutsideAngular(() => {
       document.addEventListener('mousedown', this.onMouseDown, EventExtensions.activeListener());
       document.addEventListener('touchstart', this.onTouchDown, EventExtensions.passiveListener());
     });
