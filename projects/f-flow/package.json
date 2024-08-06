@@ -5,8 +5,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Siarhei Huzarevich",
-  "homepage": "https://foblex.com/flow/home",
-  "docs": "https://foblex.com/flow/documentation/get-started",
+  "homepage": "https://flow.foblex.com",
+  "docs": "https://flow.foblex.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/foblex/flow.git"

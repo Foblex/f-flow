@@ -1,5 +1,5 @@
 {
-  "version": "12.4.1",
+  "version": "12.4.0",
   "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
@@ -16,9 +16,37 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test f-flow",
     "publish": "ng build f-flow && cd dist/f-flow && npm publish",
-    "release": "standard-version",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major"
+    "release": "standard-version --skip.commit",
+    "release:minor": "standard-version --release-as minor --skip.commit",
+    "release:major": "standard-version --release-as major --skip.commit"
+  },
+  "standard-version": {
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Bug Fixes"
+      },
+      {
+        "type": "docs",
+        "section": "Documentation"
+      },
+      {
+        "type": "test",
+        "section": "Tests"
+      },
+      {
+        "type": "ci",
+        "section": "Continuous Integration"
+      },
+      {
+        "type": "chore",
+        "hidden": true
+      }
+    ]
   },
   "private": true,
   "dependencies": {

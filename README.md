@@ -63,7 +63,7 @@ Example:
 
 ### Support and Community
 
-For questions, feedback, and support, visit the [Foblex Portal](https://www.foblex.com/flow/home) to connect with the community and the development team.
+For questions, feedback, and support, visit the [Foblex Portal](https://flow.foblex.com) to connect with the community and the development team.
 You can also report [issues](https://github.com/Foblex/flow/issues) and request [features](https://github.com/Foblex/flow/discussions) on the [GitHub repository](https://github.com/Foblex/flow).
 
 ### License

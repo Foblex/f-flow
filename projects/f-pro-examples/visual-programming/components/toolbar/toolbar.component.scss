@@ -1,7 +1,8 @@
 :host {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   position: absolute;
   right: 16px;
