@@ -1,13 +1,16 @@
 {
   "name": "flow-documentation-portal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build && cp dist/f-flow-portal/browser/index.html dist/f-flow-portal/browser/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test f-flow",
-    "publish": "ng build f-flow && cd dist/f-flow && npm publish"
+    "publish": "ng build f-flow && cd dist/f-flow && npm publish",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +22,8 @@
     "@angular/platform-browser": "^18.1.0",
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
-    "@foblex/f-docs": "^1.2.0",
     "@foblex/core": "^1.1.2",
+    "@foblex/f-docs": "^1.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -37,6 +40,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^18.1.0",
+    "standard-version": "^9.5.0",
     "typescript": "~5.5.2"
   }
 }
