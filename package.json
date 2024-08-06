@@ -1,6 +1,14 @@
 {
-  "name": "flow-documentation-portal",
-  "version": "0.0.1",
+  "version": "12.4.1",
+  "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
+  "author": "Siarhei Huzarevich",
+  "homepage": "https://flow.foblex.com",
+  "docs": "https://flow.foblex.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foblex/flow.git"
+  },
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
