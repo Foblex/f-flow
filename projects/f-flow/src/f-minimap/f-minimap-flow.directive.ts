@@ -15,7 +15,7 @@ export class FMinimapFlowDirective {
   public model: FMinimapData;
 
   @Input()
-  public fMinSize: number = 3000;
+  public fMinSize: number = 1000;
 
   public get hostElement(): SVGSVGElement {
     return this.elementReference.nativeElement;

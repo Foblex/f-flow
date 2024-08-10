@@ -181,6 +181,10 @@ function extendsGroup(): INavigationGroup {
         link: 'f-line-alignment-component',
         text: 'Line Alignment',
       },
+      {
+        link: 'f-minimap-component',
+        text: 'Minimap',
+      }
     ],
   }
 }

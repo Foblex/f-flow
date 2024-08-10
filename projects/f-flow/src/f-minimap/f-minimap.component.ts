@@ -40,7 +40,7 @@ export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDro
   public fMinimapView!: FMinimapViewDirective;
 
   @Input()
-  public fMinSize: number = 3000;
+  public fMinSize: number = 1000;
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
