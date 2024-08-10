@@ -10,7 +10,7 @@ import { FCanvasChangeEvent } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FNodeBase } from '../f-node';
 import { FFlowMediator } from '../infrastructure';
-import { GetNodesRectRequest } from '../domain';
+import { EmitTransformChangesRequest, GetNodesRectRequest } from '../domain';
 
 @Component({
   selector: 'f-canvas',
@@ -67,7 +67,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private fMediator: FFlowMediator,
-    private fComponentsStore: FComponentsStore
+    private fComponentsStore: FComponentsStore,
   ) {
     super();
   }
@@ -79,6 +79,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   public override redraw(): void {
     this.fComponentsStore.fBackground?.setTransform(this.transform);
     this.hostElement.setAttribute("style", `transform: ${ TransformModelExtensions.toString(this.transform) }`);
+    this.fMediator.send(new EmitTransformChangesRequest());
   }
 
   public override redrawWithAnimation(): void {

@@ -31,7 +31,7 @@
   "peerDependencies": {
     "@angular/common": ">=12.0.0",
     "@angular/core": ">=12.0.0",
-    "@foblex/core": ">=1.1.2",
+    "@foblex/core": ">=1.1.4",
     "rxjs": ">=6.6.0"
   },
   "dependencies": {

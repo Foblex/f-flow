@@ -2,6 +2,8 @@ export * from './clear-selection';
 
 export * from './create-connection-markers';
 
+export * from './emit-transform-changes';
+
 export * from './get-can-be-selected-items';
 
 export * from './get-connection-line';
@@ -29,6 +31,8 @@ export * from './select';
 export * from './select-all';
 
 export * from './select-and-update-node-layer';
+
+export * from './subscribe-on-transform-changes';
 
 export * from './intersections';
 

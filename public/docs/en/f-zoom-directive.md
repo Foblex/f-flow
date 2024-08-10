@@ -93,7 +93,7 @@ class Component {
 
 ## Example
 
-The following example shows how to enable **zoom** and **pan** functionality in the canvas. Use the **mouse wheel** to **zoom in** and **out**, and **double click** to **reset** the **zoom level**.
+The following example shows how to enable **zoom** and **pan** functionality in the canvas. Use the **mouse wheel** to **zoom in** and **out**, and **double click** to **zoom in**.
 
 ::: ng-component <zoom-example></zoom-example>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/zoom-example/zoom-example.component.html

@@ -29,7 +29,7 @@ export class FComponentsStore {
   public fBackground: FBackgroundBase | undefined;
 
   public fNodes: FNodeBase[] = [];
-  
+
   public fConnections: FConnectionBase[] = [];
 
   public fTempConnection: FConnectionBase | undefined;

@@ -44,19 +44,7 @@ function createEnvironment(): IDocsEnvironment {
       connectorGroup(),
       connectionGroup(),
       extendsGroup(),
-      {
-        text: 'Pro Examples',
-        items: [{
-          text: 'Visual Programming Flow',
-          link: 'f-visual-programming-flow',
-        }, {
-          text: 'Call Center Flow',
-          link: 'https://github.com/Foblex/f-flow-example',
-        }, {
-          text: 'Scheme Editor',
-          link: 'https://github.com/Foblex/f-scheme-editor',
-        }]
-      }
+      proExamplesGroup()
     ],
     footerNavigation: {
       editLink: {
@@ -194,6 +182,22 @@ function extendsGroup(): INavigationGroup {
         text: 'Line Alignment',
       },
     ],
+  }
+}
+
+function proExamplesGroup(): INavigationGroup {
+  return     {
+    text: 'Pro Examples',
+    items: [{
+      text: 'Visual Programming Flow',
+      link: 'f-visual-programming-flow',
+    }, {
+      text: 'Call Center Flow',
+      link: 'https://github.com/Foblex/f-flow-example',
+    }, {
+      text: 'Scheme Editor',
+      link: 'https://github.com/Foblex/f-scheme-editor',
+    }]
   }
 }
 

@@ -19,6 +19,8 @@ import {
   CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../f-connectors';
+import { FFlowMediator } from '../infrastructure';
+import { EmitTransformChangesRequest } from '../domain';
 
 let uniqueId: number = 0;
 
@@ -82,7 +84,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
-    private fComponentsStore: FComponentsStore
+    private fComponentsStore: FComponentsStore,
+    private fMediator: FFlowMediator
   ) {
     super();
   }
@@ -100,6 +103,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   protected override setStyle(styleName: string, value: string) {
     this.renderer.setStyle(this.hostElement, styleName, value);
+  }
+
+  public override redraw(): void {
+    super.redraw();
+    this.fMediator.send(new EmitTransformChangesRequest());
   }
 
   public ngAfterViewInit(): void {

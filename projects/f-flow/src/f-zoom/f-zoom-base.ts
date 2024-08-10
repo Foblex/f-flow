@@ -1,8 +1,8 @@
 import { EventExtensions, IPoint, Point, RectExtensions } from '@foblex/core';
 import { InjectionToken } from '@angular/core';
-import { FComponentsStore } from '../../f-storage';
-import { isNode } from '../../f-node';
-import { FCanvasBase } from '../f-canvas-base';
+import { FCanvasBase } from '../f-canvas';
+import { FComponentsStore } from '../f-storage';
+import { isNode } from '../f-node';
 
 export const F_ZOOM = new InjectionToken<FZoomBase>('F_ZOOM');
 
@@ -59,8 +59,9 @@ export abstract class FZoomBase {
 
   private onWheel(event: WheelEvent): void {
     event.preventDefault();
+    const targetElement = event.target as HTMLElement;
 
-    if (this.fComponentsStore.fDraggable?.isDragStarted) {
+    if (this.fComponentsStore.fDraggable?.isDragStarted || targetElement?.closest('[fLockedContext]')) {
       return;
     }
 
@@ -81,8 +82,9 @@ export abstract class FZoomBase {
 
   private onDoubleClick(event: MouseEvent): void {
     event.preventDefault();
+    const targetElement = event.target as HTMLElement;
 
-    if (this.fComponentsStore.fDraggable?.isDragStarted || isNode(event.target as HTMLElement)) {
+    if (this.fComponentsStore.fDraggable?.isDragStarted || isNode(targetElement) || targetElement?.closest('[fLockedContext]')) {
       return;
     }
 
