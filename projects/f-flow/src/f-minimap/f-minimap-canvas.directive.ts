@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
 import {
-  DomElementExtensions, IRect,
+  DomElementExtensions, IRect, Point,
   RectExtensions
 } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
@@ -16,6 +16,10 @@ export class FMinimapCanvasDirective {
 
   public get hostElement(): SVGGElement {
     return this.elementReference.nativeElement;
+  }
+
+  private get flowHost(): HTMLElement {
+    return this.fComponentsStore.flowHost;
   }
 
   private get flowScale(): number {
@@ -50,7 +54,8 @@ export class FMinimapCanvasDirective {
   }
 
   private getNodeRect(node: FNodeBase): IRect {
-    return RectExtensions.div(RectExtensions.fromElement(node.hostElement), this.flowScale);
+    const nodeRectInFlow = RectExtensions.elementTransform(RectExtensions.fromElement(node.hostElement), this.flowHost);
+    return RectExtensions.div(nodeRectInFlow, this.flowScale);
   }
 
   private setElementAttributes(element: SVGRectElement, rect: IRect): void {

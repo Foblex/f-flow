@@ -25,6 +25,12 @@ import {
 } from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
 import { DragToReassignComponent } from '../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component';
 import { FlowComponent } from '../../../projects/f-pro-examples/visual-programming/components/flow/flow.component';
+import {
+  MinimapBasicExampleComponent
+} from '../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component';
+import {
+  MinimapScaledExampleComponent
+} from '../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -69,6 +75,8 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'background-example', component: BackgroundExampleComponent },
       { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
       { tag: 'visual-programming-flow', component: FlowComponent },
+      { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
+      { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
