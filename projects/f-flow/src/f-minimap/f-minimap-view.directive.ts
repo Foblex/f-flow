@@ -3,7 +3,7 @@ import { FComponentsStore } from '../f-storage';
 import { IRect, RectExtensions } from '@foblex/core';
 
 @Directive({
-  selector: 'rect[f-minimap-view]',
+  selector: 'rect[fMinimapView]',
   host: {
     'class': 'f-component f-minimap-view',
   }

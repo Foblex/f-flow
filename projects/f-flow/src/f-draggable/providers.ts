@@ -5,7 +5,7 @@ import { EXTERNAL_ITEM_PROVIDERS } from './external-item';
 import { NODE_PROVIDERS } from './node';
 import { NODE_RESIZE_PROVIDERS } from './node-resize';
 import { SELECTION_AREA_PROVIDERS } from './selection-area';
-import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap';
+import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
 
 export const F_DRAGGABLE_PROVIDERS = [
 

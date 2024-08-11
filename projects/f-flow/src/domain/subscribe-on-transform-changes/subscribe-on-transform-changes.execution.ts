@@ -1,7 +1,7 @@
 import { SubscribeOnTransformChangesRequest } from './subscribe-on-transform-changes.request';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { FTransformStore } from '../../f-storage';
+import { merge, Observable } from 'rxjs';
+import { FComponentsStore, FTransformStore } from '../../f-storage';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 
 @Injectable()
@@ -11,10 +11,14 @@ export class SubscribeOnTransformChangesExecution
 
   constructor(
     private fTransformStore: FTransformStore,
+    private fComponentsStore: FComponentsStore
   ) {
   }
 
   public handle(request: SubscribeOnTransformChangesRequest): Observable<void> {
-    return this.fTransformStore.changes;
+    return merge(
+      this.fTransformStore.changes,
+      this.fComponentsStore.changes
+    );
   }
 }

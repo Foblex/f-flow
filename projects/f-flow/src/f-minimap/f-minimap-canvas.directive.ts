@@ -3,14 +3,14 @@ import {
 } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
 import {
-  DomElementExtensions, IRect, Point,
+  DomElementExtensions, IRect,
   RectExtensions
 } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
 import { FNodeBase } from '../f-node';
 
 @Directive({
-  selector: 'g[f-minimap-canvas]'
+  selector: 'g[fMinimapCanvas]'
 })
 export class FMinimapCanvasDirective {
 

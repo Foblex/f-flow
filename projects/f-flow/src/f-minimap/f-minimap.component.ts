@@ -3,12 +3,11 @@ import {
   ElementRef, Input, OnDestroy, ViewChild,
 } from "@angular/core";
 import { FFlowMediator } from '../infrastructure';
-import { debounceTime, merge, Observable, Subscription } from 'rxjs';
+import { debounceTime, Observable, Subscription } from 'rxjs';
 import { SubscribeOnTransformChangesRequest } from '../domain';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
-import { FComponentsStore } from '../f-storage';
 import { IPointerEvent } from '@foblex/core';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
@@ -44,7 +43,6 @@ export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDro
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
-    private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator
   ) {
   }
@@ -62,10 +60,7 @@ export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDro
   }
 
   private getTransformChanges(): Observable<void> {
-    return merge(
-      this.fMediator.send<Observable<void>>(new SubscribeOnTransformChangesRequest()),
-      this.fComponentsStore.changes
-    );
+    return this.fMediator.send<Observable<void>>(new SubscribeOnTransformChangesRequest());
   }
 
   public onPointerDown(event: IPointerEvent): void {
