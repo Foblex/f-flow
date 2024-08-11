@@ -27,7 +27,6 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
     const eventPoint = request.event.getPosition();
     const startCanvasPosition = Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position);
 
-
     this.fComponentsStore.fCanvas!.setPosition(this.getNewPosition(eventPoint, request.minimap));
     this.fComponentsStore.fCanvas!.redraw();
     this.fComponentsStore.fCanvas!.completeDrag();
@@ -44,7 +43,8 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
 
   private getNewPosition(eventPoint: IPoint, minimap: FMinimapData): IPoint {
     return this.fMediator.send<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
-      this.getFlowRect(), Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position),
+      this.getFlowRect(),
+      Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position),
       eventPoint, minimap,
     ));
   }

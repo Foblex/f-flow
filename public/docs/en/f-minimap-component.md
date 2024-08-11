@@ -16,10 +16,37 @@ The **FMinimapComponent** provides a miniature view of the larger flow, allowing
 
 ## Usage
 
+#### Basic Usage
+
+To add a minimap to your flow, simply include the `FMinimapComponent` within the [f-flow](f-flow-component) component. This provides users with an overview of the flow layout and enhances navigation capabilities.
+
 ```html
 <f-flow>
   ...// Other components
-  |:|<f-minimap [fMinSize]="customSize"></f-minimap>|:|
+  |:|<f-minimap></f-minimap>|:|
+</f-flow>
+```
+
+#### Navigation and Interaction
+
+For navigation and interaction you need to add [f-draggable](f-draggable-directive) directive to the [f-flow](f-flow-component) component.
+
+```html
+<f-flow |:|fDraggable|:|>
+  ...// Other components
+  |:|<f-minimap></f-minimap>|:|
+</f-flow>
+```
+
+
+#### Custom Scale
+
+You can set a custom scale for the minimap by using the `fMinSize` input. This allows you to control the size of the minimap based on your requirements.
+
+```html
+<f-flow fDraggable>
+  ...// Other components
+  <f-minimap |:|[fMinSize]="3000"|:|></f-minimap>
 </f-flow>
 ```
 
@@ -29,9 +56,19 @@ The **FMinimapComponent** provides a miniature view of the larger flow, allowing
 
 This example shows a basic implementation of the minimap component within a larger flow, providing users with an overview and easy navigation capabilities.
 
-::: ng-component <simple-flow></simple-flow>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/simple-flow/simple-flow.component.scss
+::: ng-component <minimap-basic-example></minimap-basic-example>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.scss
+:::
+
+#### Custom Scale Example
+
+This example demonstrates the use of a custom scale for the minimap, allowing you to control the size of the minimap based on your requirements.
+
+::: ng-component <minimap-scaled-example></minimap-scaled-example>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.scss
 :::
 

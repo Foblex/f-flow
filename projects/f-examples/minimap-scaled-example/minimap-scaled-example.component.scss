@@ -1,0 +1,52 @@
+:host ::ng-deep {
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: #585858;
+      stroke-width: 2;
+    }
+  }
+
+  .f-minimap {
+    background-color: var(--background-color);
+    bottom: 16px;
+    right: 16px;
+    width: 120px;
+    height: 120px;
+
+    .f-minimap-node {
+      fill: var(--primary-text);
+
+      &.f-selected {
+        fill: var(--primary-1);
+      }
+    }
+
+    .f-minimap-view {
+      fill: var(--primary-soft)
+    }
+  }
+}
+
+.f-node {
+  width: 100px;
+  padding: 12px;
+  color: #585858;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #FCFDFE;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 1px #E4E3E6;
+}
+
