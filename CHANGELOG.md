@@ -1,5 +1,23 @@
 # Changelog
 
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [12.5.0](https://github.com/foblex/flow/compare/v12.3.9...v12.5.0) (2024-08-11)
+
+### Features
+
+* Add various site icons and upgrade library to Zoneless ([e561e69](https://github.com/foblex/flow/commit/e561e6972a723ea299005518057963ba260961af))
+* Added minimap functionality ([f5eece6](https://github.com/foblex/flow/commit/f5eece6df6e556a0ec0bbfa26ec623ce368f60ef))
+* Added Zoneless support ([a8c5812](https://github.com/foblex/flow/commit/a8c581285d8c9e6f246cbd2f2a07c346ce1ba131))
+* Update to f-docs v1.2.1 ([8067764](https://github.com/foblex/flow/commit/80677640c5d917b564964987b575d9fb28e28ce5))
+
+
+### Documentation
+
+* Added minimap documentation ([ccbdb99](https://github.com/foblex/flow/commit/ccbdb990935d0d9ae04d92de47752b50a6b11190))
+* Added minimap examples ([5646066](https://github.com/foblex/flow/commit/56460662d015f4ba0e6269d8f6bbc0de6e7b058f))
+* Remove old changelogs and switch to standard-version ([ff5b9e5](https://github.com/foblex/flow/commit/ff5b9e53c342ee7403813ce807e38d55a350725b))
+
 ## [12.4.0] - 2024-08-05
 
 ### Bug Fixes

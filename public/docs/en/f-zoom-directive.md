@@ -38,6 +38,8 @@ The **FZoomDirective** directive is used to control the zoom and pan of the canv
 
 ## Usage
 
+#### Basic Usage
+
 To enable zoom and pan functionality, set `fZoom` directive to [f-canvas](f-canvas-component) component.
 
 ```html
@@ -48,6 +50,8 @@ To enable zoom and pan functionality, set `fZoom` directive to [f-canvas](f-canv
 </f-flow>
 ```
 
+#### Tracking Zoom Changes
+
 To track zoom changes, use the `fCanvasChange` output.
 
 ```html
@@ -57,6 +61,8 @@ To track zoom changes, use the `fCanvasChange` output.
   </f-canvas>
 </f-flow>
 ```
+
+#### Programmatically Controlling Zoom
 
 You can also control the zoom level programmatically by using the methods provided by the directive.
 
@@ -93,7 +99,7 @@ class Component {
 
 ## Example
 
-The following example shows how to enable **zoom** and **pan** functionality in the canvas. Use the **mouse wheel** to **zoom in** and **out**, and **double click** to **reset** the **zoom level**.
+The following example shows how to enable **zoom** and **pan** functionality in the canvas. Use the **mouse wheel** to **zoom in** and **out**, and **double click** to **zoom in**.
 
 ::: ng-component <zoom-example></zoom-example>
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/zoom-example/zoom-example.component.html

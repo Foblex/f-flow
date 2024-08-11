@@ -4,7 +4,7 @@ import {
 } from "@angular/core";
 import { BooleanExtensions } from '@foblex/core';
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
-import { FComponentsStore } from '../../f-storage';
+import { FComponentsStore } from '../f-storage';
 
 @Directive({
   selector: "f-canvas[fZoom]",

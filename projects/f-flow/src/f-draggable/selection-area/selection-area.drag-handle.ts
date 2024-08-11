@@ -3,7 +3,7 @@ import { IDraggableItem } from '../i-draggable-item';
 import { EFDraggableType } from '../e-f-draggable-type';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
-import { ISelectableWithRect } from '../../domain';
+import { EmitTransformChangesRequest, ISelectableWithRect } from '../../domain';
 import { ISelectable } from '../../f-connection';
 import { FFlowMediator } from '../../infrastructure';
 import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
@@ -61,6 +61,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
         this.selectedByMove.push(item.element);
       }
     });
+    this.fMediator.send<void>(new EmitTransformChangesRequest());
   }
 
   public complete(): void {

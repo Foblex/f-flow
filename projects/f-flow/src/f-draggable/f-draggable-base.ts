@@ -60,7 +60,6 @@ export abstract class FDraggableBase implements IHasHostElement {
   protected constructor(
     protected ngZone: ICanRunOutsideAngular | undefined
   ) {
-    console.log('FDraggableBase', this.ngZone);
   }
 
   private onMouseDown = (event: MouseEvent) => {

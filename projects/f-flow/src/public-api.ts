@@ -14,6 +14,8 @@ export * from './f-external-item';
 
 export * from './f-line-alignment';
 
+export * from './f-minimap';
+
 export * from './f-selection-area';
 
 export * from './f-flow';
@@ -21,6 +23,8 @@ export * from './f-flow';
 export * from './f-node';
 
 export * from './f-storage';
+
+export * from './f-zoom';
 
 export * from './infrastructure';
 

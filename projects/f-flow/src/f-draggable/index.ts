@@ -24,6 +24,8 @@ export * from './f-selection-change-event';
 
 export * from './i-can-run-outside-angular';
 
+export * from './i-f-drag-and-drop-plugin';
+
 export * from './i-draggable-item';
 
 export * from './providers';

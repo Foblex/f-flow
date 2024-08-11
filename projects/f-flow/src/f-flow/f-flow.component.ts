@@ -20,7 +20,7 @@ import {
   FDraggableDataContext, FSelectionChangeEvent
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
-import { FComponentsStore } from '../f-storage';
+import { FComponentsStore, FTransformStore } from '../f-storage';
 
 let uniqueId: number = 0;
 
@@ -35,6 +35,7 @@ let uniqueId: number = 0;
   providers: [
     FFlowMediator,
     FComponentsStore,
+    FTransformStore,
     FDraggableDataContext,
     FConnectionFactory,
     ...F_DRAGGABLE_PROVIDERS,

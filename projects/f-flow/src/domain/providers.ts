@@ -18,12 +18,16 @@ import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
 import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
 import { GetExternalNodesRectExecution } from './get-external-nodes-rect';
+import { EmitTransformChangesExecution } from './emit-transform-changes';
+import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
 
 export const COMMON_PROVIDERS = [
 
   ClearSelectionExecution,
 
   CreateConnectionMarkersExecution,
+
+  EmitTransformChangesExecution,
 
   GetCanBeSelectedItemsExecution,
 
@@ -50,6 +54,8 @@ export const COMMON_PROVIDERS = [
   SelectAllExecution,
 
   SelectAndUpdateNodeLayerExecution,
+
+  SubscribeOnTransformChangesExecution,
 
   UpdateItemLayerExecution,
 

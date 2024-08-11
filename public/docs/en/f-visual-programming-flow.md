@@ -18,6 +18,7 @@ This example demonstrates how to use the Foblex Flow to create a visual programm
 - Set the background using the [f-background](f-background-component) component.
 - Line alignment using [f-line-alignment](f-line-alignment-component) component.
 - Select multiple items using the [f-selection](f-selection-component) component with the `mouse` and by holding down the `Shift key`.
+- Minimap using the [f-minimap](f-minimap-component) component.
 
 ## Source Code
 

@@ -9,7 +9,6 @@ export class Pipeline<TRequest, TResponse>
   private validator?: Type<IValidator<TRequest>>;
   private execution!: Type<IExecution<TRequest, TResponse>>;
 
-
   public handle(request: TRequest, injector: Injector): TResponse | void {
     let isValid: boolean = true;
     if (this.validator) {
