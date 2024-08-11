@@ -14,7 +14,6 @@ export class CalculateFlowPointFromMinimapPointExecution
     return this.fComponentsStore.fCanvas!.transform.scale;
   }
 
-
   constructor(
     private fComponentsStore: FComponentsStore
   ) {

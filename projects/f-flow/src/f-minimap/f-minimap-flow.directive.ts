@@ -2,13 +2,13 @@ import {
   Directive, ElementRef, Input,
 } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
-import { IRect, ISize, Point, RectExtensions, SizeExtensions } from '@foblex/core';
+import { IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
 import { FMinimapData } from './domain';
 import { GetNodesRectRequest } from '../domain';
 
 @Directive({
-  selector: 'svg[f-minimap-flow]'
+  selector: 'svg[fMinimapFlow]'
 })
 export class FMinimapFlowDirective {
 

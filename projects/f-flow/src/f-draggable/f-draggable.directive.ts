@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, ContentChild, ContentChildren,
+  AfterViewInit, ContentChildren,
   Directive,
   ElementRef,
   EventEmitter, Inject,
