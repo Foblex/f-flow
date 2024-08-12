@@ -31,6 +31,9 @@ import {
 import {
   MinimapScaledExampleComponent
 } from '../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component';
+import {
+  DagreLayoutExampleComponent
+} from '../../../projects/f-examples/dagre-layout-example/dagre-layout-example.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -50,7 +53,8 @@ function createEnvironment(): IDocsEnvironment {
       connectorGroup(),
       connectionGroup(),
       extendsGroup(),
-      proExamplesGroup()
+      layoutGroup(),
+      proExamplesGroup(),
     ],
     footerNavigation: {
       editLink: {
@@ -77,12 +81,13 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'visual-programming-flow', component: FlowComponent },
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
+      { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent }
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@foblex/flow' },
     ],
-    toC:{
+    toC: {
       title: 'In this article',
       range: { start: 2, end: 6 },
     }
@@ -197,10 +202,22 @@ function extendsGroup(): INavigationGroup {
   }
 }
 
+function layoutGroup(): INavigationGroup {
+  return {
+    text: 'Layouts & Behaviors',
+    items: [
+      {
+        link: 'f-dagre-layout',
+        text: 'Dagre Tree',
+      }
+    ],
+  }
+}
+
 function proExamplesGroup(): INavigationGroup {
-  return     {
+  return {
     text: 'Pro Examples',
-    items: [{
+    items: [ {
       text: 'Visual Programming Flow',
       link: 'f-visual-programming-flow',
     }, {
@@ -209,7 +226,7 @@ function proExamplesGroup(): INavigationGroup {
     }, {
       text: 'Scheme Editor',
       link: 'https://github.com/Foblex/f-scheme-editor',
-    }]
+    } ]
   }
 }
 

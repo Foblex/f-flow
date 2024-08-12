@@ -60,6 +60,7 @@
     "@angular/router": "^18.1.0",
     "@foblex/core": "^1.1.6",
     "@foblex/f-docs": "^1.2.1",
+    "dagre": "^0.8.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -68,6 +69,7 @@
     "@angular-devkit/build-angular": "^18.1.2",
     "@angular/cli": "^18.1.2",
     "@angular/compiler-cli": "^18.1.0",
+    "@types/dagre": "^0.7.52",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

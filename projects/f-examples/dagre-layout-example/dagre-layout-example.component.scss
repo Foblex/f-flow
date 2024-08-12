@@ -1,0 +1,67 @@
+:host ::ng-deep {
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: #585858;
+      stroke-width: 2;
+    }
+  }
+}
+
+.f-node {
+  width: 100px;
+  padding: 12px;
+  color: #585858;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #FCFDFE;
+  border-radius: 4px;
+  box-shadow: 0 0 1px 1px #E4E3E6;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+button {
+  display: inline-block;
+  text-align: center;
+  font-weight: 500;
+  white-space: nowrap;
+  border: none;
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-size: 14px;
+
+  color: var(--button-default-text);
+  background-color: var(--button-default-bg);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--button-default-hover-text);
+    background-color: var(--button-default-hover-bg);
+  }
+
+  &:active {
+    color: var(--button-default-active-text);
+    background-color: var(--button-default-active-bg);
+  }
+}

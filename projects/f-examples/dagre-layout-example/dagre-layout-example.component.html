@@ -1,0 +1,23 @@
+<f-flow fDraggable>
+  <f-canvas>
+    @for (connection of connections;track connection.from) {
+      <f-connection [fOffset]="8" [fOutputId]="connection.from" [fInputId]="connection.to" fType="segment" fBehavior="fixed"></f-connection>
+    }
+
+    @for (node of nodes;track node.position) {
+      <div fNode [fNodePosition]="node.position"
+           fDragHandle
+           fNodeOutput [fOutputId]="node.id"
+           [fOutputConnectableSide]="configuration.outputSide"
+           fNodeInput [fInputId]="node.id"
+           [fInputConnectableSide]="configuration.inputSide">
+        {{ node.id }}
+      </div>
+    }
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <button (click)="horizontal()">Horizontal</button>
+  <button (click)="vertical()">Vertical</button>
+  <button (click)="fitToScreen()">Fit to Screen</button>
+</div>
