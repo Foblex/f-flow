@@ -59,7 +59,7 @@
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@foblex/core": "^1.1.6",
-    "@foblex/f-docs": "^1.2.1",
+    "@foblex/f-docs": "^1.2.2",
     "dagre": "^0.8.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
