@@ -39,6 +39,14 @@ export class FExternalItemDirective<TData> extends FExternalItemBase<TData> impl
 
   public ngOnInit(): void {
     this.fExternalItemService.registerItem(this);
+    this.disablePointerEvents(Array.from(this.hostElement.children) as HTMLElement[]);
+  }
+
+  private disablePointerEvents(children: HTMLElement[]): void {
+    children.forEach((x) => {
+      x.style.pointerEvents = 'none';
+      this.disablePointerEvents(Array.from(x.children) as HTMLElement[]);
+    });
   }
 
   public ngOnDestroy(): void {

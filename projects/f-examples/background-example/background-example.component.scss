@@ -1,6 +1,5 @@
-::ng-deep .f-background {
+@use "../flow-common";
 
-  line {
-    stroke: rgba(0, 0, 0, 0.6);
-  }
+::ng-deep background-example {
+  @include flow-common.background;
 }
