@@ -1,18 +1,18 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
-    @for (connection of connections;track connection.from) {
+    @for (connection of connections;track connection.id) {
       <f-connection [fOffset]="8" [fOutputId]="connection.from" [fInputId]="connection.to" fType="segment"
                     fBehavior="fixed"></f-connection>
     }
 
-    @for (node of nodes;track node.position) {
+    @for (node of nodes;track node.id) {
       <div fNode [fNodePosition]="node.position"
            fDragHandle
-           fNodeOutput [fOutputId]="node.id"
+           fNodeOutput [fOutputId]="node.connectorId"
            [fOutputConnectableSide]="configuration.outputSide"
-           fNodeInput [fInputId]="node.id"
+           fNodeInput [fInputId]="node.connectorId"
            [fInputConnectableSide]="configuration.inputSide">
-        {{ node.id }}
+        {{ node.connectorId }}
       </div>
     }
   </f-canvas>

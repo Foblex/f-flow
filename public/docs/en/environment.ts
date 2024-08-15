@@ -34,6 +34,9 @@ import {
 import {
   DagreLayoutExampleComponent
 } from '../../../projects/f-examples/dagre-layout-example/dagre-layout-example.component';
+import {
+  ElkjsLayoutExampleComponent
+} from '../../../projects/f-examples/elkjs-layout-example/elkjs-layout-example.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -81,7 +84,8 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'visual-programming-flow', component: FlowComponent },
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
-      { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent }
+      { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent },
+      { tag: 'elkjs-layout-example', component: ElkjsLayoutExampleComponent }
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -207,8 +211,12 @@ function layoutGroup(): INavigationGroup {
     text: 'Layouts & Behaviors',
     items: [
       {
-        link: 'f-dagre-layout',
+        link: 'dagre-layout',
         text: 'Dagre Tree',
+      },
+      {
+        link: 'elkjs-layout',
+        text: 'ELKJS Tree',
       }
     ],
   }
