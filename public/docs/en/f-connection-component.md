@@ -57,6 +57,7 @@ Examples of different connection types. The connection type can be set using the
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 #### Different Connection Behaviours
@@ -65,6 +66,7 @@ Examples of different connection behaviours. The connection behaviour can be set
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 #### Custom Connection Type
@@ -73,6 +75,7 @@ Examples of providing custom connection types. The connection type can be set us
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 #### Reassign Connection
@@ -81,4 +84,5 @@ Each connection can be reassigned to another [fNodeInput](f-node-input-directive
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

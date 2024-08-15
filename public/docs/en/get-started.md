@@ -28,22 +28,12 @@ This command will add Foblex Flow to your package.json and offer to create a def
 
 Add the [f-flow](f-flow-component) component to your HTML template:
 
-```html
-<f-flow fDraggable>
-  <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }"
-         fNodeOutput fOutputId="output1"
-         fOutputConnectableSide="right"> Drag me
-    </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }"
-         fNodeInput fInputId="input1"
-         fInputConnectableSide="left"> Drag me
-    </div>
-  </f-canvas>
-</f-flow>
-```
-<br>
+::: ng-component <draggable-flow></draggable-flow>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/draggable-flow/draggable-flow.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::
 
 - [f-flow](f-flow-component) component acts as the primary container, managing the layout and interactions of all child visualization components within the flow.
 

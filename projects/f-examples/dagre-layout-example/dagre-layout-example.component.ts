@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { EFConnectableSide, FCanvasComponent, FFlowModule } from '@foblex/flow';
+import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import * as dagre from "dagre";
 import { IPoint, PointExtensions } from '@foblex/core';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
+import { FCheckboxComponent } from '@foblex/f-docs';
 
 interface INodeViewModel {
   id: string;
@@ -22,7 +23,8 @@ interface IConnectionViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    FCheckboxComponent
   ]
 })
 export class DagreLayoutExampleComponent implements OnInit {
@@ -30,16 +32,29 @@ export class DagreLayoutExampleComponent implements OnInit {
   public nodes: INodeViewModel[] = [];
   public connections: IConnectionViewModel[] = [];
 
-  public configuration = CONFIGURATION[ Direction.LEFT_TO_RIGHT ];
+  public configuration = CONFIGURATION[ Direction.TOP_TO_BOTTOM ];
+
+  @ViewChild(FFlowComponent, { static: true })
+  public fFlowComponent!: FFlowComponent;
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvasComponent!: FCanvasComponent;
 
+  public isAutoLayout: boolean = true;
+
   public ngOnInit(): void {
-    this.getData(new dagre.graphlib.Graph(), Direction.LEFT_TO_RIGHT);
+    this.getData(new dagre.graphlib.Graph(), Direction.TOP_TO_BOTTOM);
+  }
+
+  public onLoaded(): void {
+    this.fitToScreen();
   }
 
   private getData(graph: Graph, direction: Direction): void {
+    if (this.isAutoLayout) {
+      this.fFlowComponent.reset();
+      // if auto layout is disabled, onLoaded will be called only after the first rendering of the flow
+    }
     this.setGraph(graph, direction);
     this.nodes = this.getNodes(graph);
     this.connections = this.getConnections(graph);
@@ -49,7 +64,7 @@ export class DagreLayoutExampleComponent implements OnInit {
     this.configuration = CONFIGURATION[ direction ];
     graph.setGraph({ rankdir: direction });
     GRAPH_DATA.forEach(node => {
-      graph.setNode(node.id, { width: 100, height: 48 });
+      graph.setNode(node.id, { width: 100, height: 33 });
       if (node.parentId != null) {
         graph.setEdge(node.parentId, node.id, {});
       }
@@ -79,7 +94,11 @@ export class DagreLayoutExampleComponent implements OnInit {
   }
 
   public fitToScreen(): void {
-    this.fCanvasComponent.fitToScreen(PointExtensions.initialize(50, 50),true);
+    this.fCanvasComponent.fitToScreen(PointExtensions.initialize(50, 50), false);
+  }
+
+  public onAutoLayoutChange(checked: boolean): void {
+    this.isAutoLayout = checked;
   }
 }
 

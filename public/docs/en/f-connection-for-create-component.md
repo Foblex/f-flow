@@ -28,4 +28,5 @@ The following example shows how to create a connection between two nodes.
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-connect/drag-to-connect.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

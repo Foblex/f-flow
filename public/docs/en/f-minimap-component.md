@@ -34,7 +34,7 @@ For navigation and interaction you need to add [f-draggable](f-draggable-directi
 ```html
 <f-flow |:|fDraggable|:|>
   ...// Other components
-  |:|<f-minimap></f-minimap>|:|
+  <f-minimap></f-minimap>
 </f-flow>
 ```
 
@@ -60,6 +60,7 @@ This example shows a basic implementation of the minimap component within a larg
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 #### Custom Scale Example
@@ -70,5 +71,6 @@ This example demonstrates the use of a custom scale for the minimap, allowing yo
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
