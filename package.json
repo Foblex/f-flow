@@ -61,6 +61,7 @@
     "@foblex/core": "^1.1.6",
     "@foblex/f-docs": "^1.2.2",
     "dagre": "^0.8.5",
+    "elkjs": "^0.9.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
