@@ -134,6 +134,10 @@ function nodeGroup(): INavigationGroup {
         link: 'f-node-directive',
         text: 'Node',
       },
+      {
+        link: 'f-drag-handle-directive',
+        text: 'Drag Handle',
+      },
     ],
   }
 }

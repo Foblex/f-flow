@@ -14,7 +14,10 @@ let uniqueId: number = 0;
   host: {
     '[attr.data-f-output-id]': 'id',
     class: "f-component f-node-output",
+    '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
+    '[class.f-node-output-not-connectable]': '!canBeConnected',
+    '[class.f-node-output-self-connectable]': 'isSelfConnectable',
   },
   providers: [ { provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective } ],
 })
