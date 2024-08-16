@@ -37,6 +37,9 @@ import {
 import {
   ElkjsLayoutExampleComponent
 } from '../../../projects/f-examples/elkjs-layout-example/elkjs-layout-example.component';
+import {
+  NodeWithConnectorsComponent
+} from '../../../projects/f-examples/node-with-connectors/node-with-connectors.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -85,7 +88,8 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
       { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent },
-      { tag: 'elkjs-layout-example', component: ElkjsLayoutExampleComponent }
+      { tag: 'elkjs-layout-example', component: ElkjsLayoutExampleComponent },
+      { tag: 'node-with-connectors', component: NodeWithConnectorsComponent }
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },

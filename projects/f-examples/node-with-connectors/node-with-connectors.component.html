@@ -1,0 +1,56 @@
+<f-flow fDraggable>
+  <f-canvas>
+    <f-connection fType="straight" fOutputId="output1" fInputId="input1"></f-connection>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 24, y: 24 }">
+      Node 1
+      <div class="connectors-line bottom">
+        <div fNodeOutput fOutputId="output1" fOutputConnectableSide="bottom"></div>
+      </div>
+    </div>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 24, y: 144 }">
+      Node 2
+      <div class="connectors-line top">
+        <div fNodeInput fInputId="input1" fInputConnectableSide="top"></div>
+      </div>
+    </div>
+
+    <f-connection fType="straight" fOutputId="output2" fInputId="input2"></f-connection>
+    <f-connection fType="straight" fOutputId="output3" fInputId="input3"></f-connection>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 244, y: 24 }">
+      Node 1
+      <div class="connectors-line bottom">
+        <div fNodeOutput fOutputId="output2" fOutputConnectableSide="bottom"></div>
+        <div fNodeOutput fOutputId="output3" fOutputConnectableSide="bottom"></div>
+      </div>
+    </div>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 244, y: 144 }">
+      Node 2
+      <div class="connectors-line top">
+        <div fNodeInput fInputId="input2" fInputConnectableSide="top"></div>
+        <div fNodeInput fInputId="input3" fInputConnectableSide="top"></div>
+      </div>
+    </div>
+
+    <f-connection fType="straight" fOutputId="output4" fInputId="input4"></f-connection>
+    <f-connection fType="straight" fOutputId="output5" fInputId="input4"></f-connection>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 464, y: 24 }">
+      Node 1
+      <div class="connectors-line bottom">
+        <div fNodeOutput fOutputId="output4" fOutputConnectableSide="bottom"></div>
+        <div fNodeOutput fOutputId="output5" fOutputConnectableSide="bottom"></div>
+      </div>
+    </div>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 464, y: 144 }">
+      Node 2
+      <div class="connectors-line top">
+        <div fNodeInput fInputId="input4" fInputConnectableSide="top"></div>
+      </div>
+    </div>
+  </f-canvas>
+</f-flow>
