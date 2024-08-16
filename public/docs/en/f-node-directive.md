@@ -35,10 +35,52 @@ The **FNodeDirective** is a directive that represents a node within a flow of el
 
 ## Usage
 
+#### Node with Position
+
+This code snippet shows a basic example of a node with a specified position.
+
 ```html
 <f-flow>
   <f-canvas>
-    |:|<div fNode [fNodePosition]="{ x: 100, y: 200 }" [fNodeId]="customNodeId"></div>|:|
+    |:|<div fNode [fNodePosition]="{ x: 100, y: 200 }"></div>|:|
+  </f-canvas>
+</f-flow>
+```
+
+#### Adding Dragging Functionality
+
+Let's add the [fDraggable](f-draggable-directive) directive to the [f-flow](f-flow-component) to enable dragging functionality. 
+Also, we need to add the [fDragHandle](f-drag-handle-directive) directive inside [fNode](f-node-directive) to specify the handle for dragging.
+This can be any element inside the node that will act as the drag handle.
+
+```html
+<f-flow |:|fDraggable|:|>
+  <f-canvas>
+    <div |:|fDragHandle|:| fNode [fNodePosition]="{ x: 100, y: 200 }"></div>
+  </f-canvas>
+</f-flow>
+```
+
+#### Disabling Dragging
+
+This code snippet shows how to disable dragging for a node.
+
+```html
+<f-flow fDraggable>
+  <f-canvas>
+    <div fDragHandle |:|[fNodeDraggingDisabled]="true"|:| fNode [fNodePosition]="{ x: 100, y: 200 }"></div>
+  </f-canvas>
+</f-flow>
+```
+
+#### Disabling Selection
+
+This code snippet shows how to disable selection for a node.
+
+```html
+<f-flow fDraggable>
+  <f-canvas>
+    <div fDragHandle |:|[fNodeSelectionDisabled]="true"|:| fNode [fNodePosition]="{ x: 100, y: 200 }"></div>
   </f-canvas>
 </f-flow>
 ```

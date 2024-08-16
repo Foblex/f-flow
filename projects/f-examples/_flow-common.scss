@@ -114,6 +114,32 @@
   }
 }
 
+@mixin connectors {
+  .f-node-output, .f-node-input {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 0.2px solid var(--node-border-color);
+    background-color: var(--node-background-color);
+  }
+
+  .connectors-line {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: calc(100% - 8px);
+
+    &.top {
+      top: -8px
+    }
+
+    &.bottom {
+      bottom: -8px;
+    }
+  }
+}
+
 
 @mixin toolbar {
   display: flex;
