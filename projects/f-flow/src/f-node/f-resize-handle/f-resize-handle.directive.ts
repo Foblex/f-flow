@@ -1,7 +1,7 @@
 import {
   Directive, ElementRef, HostBinding, InjectionToken, Input
 } from "@angular/core";
-import { BooleanExtensions, IHasHostElement } from '@foblex/core';
+import { IHasHostElement } from '@foblex/core';
 import { EFResizeHandleType } from './e-f-resize-handle-type';
 import { castToEnum } from '../../domain';
 
@@ -11,21 +11,11 @@ export const F_RESIZE_HANDLE: InjectionToken<FResizeHandleDirective> = new Injec
   selector: "[fResizeHandle]",
   host: {
     class: `f-resize-handle f-component`,
-    '[class.f-resize-handle-disabled]': 'disabled',
     '[attr.data-f-resize-handle-type]': 'type',
   },
   providers: [ { provide: F_RESIZE_HANDLE, useExisting: FResizeHandleDirective } ],
 })
 export class FResizeHandleDirective implements IHasHostElement {
-
-  private isDisabled: boolean = false;
-  @Input('fResizeHandleDisabled')
-  public set disabled(isDisabled: boolean | undefined | string) {
-    this.isDisabled = BooleanExtensions.castToBoolean(isDisabled);
-  }
-  public get disabled(): boolean {
-    return this.isDisabled;
-  }
 
   public _type: EFResizeHandleType = EFResizeHandleType.LEFT_TOP;
   @Input('fResizeHandleType')
