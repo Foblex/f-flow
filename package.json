@@ -58,7 +58,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
-    "@foblex/core": "^1.1.6",
+    "@foblex/core": "^1.1.8",
     "@foblex/f-docs": "^1.2.2",
     "dagre": "^0.8.5",
     "elkjs": "^0.9.3",

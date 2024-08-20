@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { SingleSelectRequest } from './single-select.request';
 import { GetConnectionHandler, UpdateItemLayerRequest } from '../../domain';
-import { IPointerEvent, MouseEventExtensions } from '@foblex/core';
+import { IPointerEvent, MouseEventExtensions, PlatformService } from '@foblex/core';
 import { ISelectable } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
@@ -12,6 +12,7 @@ import { FDraggableDataContext } from '../f-draggable-data-context';
 export class SingleSelectExecution implements IExecution<SingleSelectRequest, void> {
 
   constructor(
+    private platform: PlatformService,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
     private getConnectionHandler: GetConnectionHandler,
@@ -35,7 +36,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
   }
 
   private isMultiselectEnabled(event: IPointerEvent): boolean {
-    return MouseEventExtensions.isCommandButton(event.originalEvent) ||
+    return MouseEventExtensions.isCommandButton(this.platform.getOS()!, event.originalEvent) ||
       MouseEventExtensions.isShiftPressed(event.originalEvent);
   }
 
