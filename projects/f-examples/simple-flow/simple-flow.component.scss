@@ -6,5 +6,8 @@
 
 .f-node {
   @include flow-common.node;
+}
+
+.f-node {
   cursor: default;
 }
