@@ -10,10 +10,10 @@ import {
   PointExtensions
 } from '@foblex/core';
 import { Directive, EventEmitter, InjectionToken, } from '@angular/core';
-import { FCreateNodeEvent } from './external-item';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './connections';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
+import { FCreateNodeEvent } from '../f-external-item';
 
 export const F_DRAGGABLE = new InjectionToken<FDraggableBase>('F_DRAGGABLE');
 

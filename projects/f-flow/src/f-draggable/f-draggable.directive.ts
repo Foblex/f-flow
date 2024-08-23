@@ -12,7 +12,6 @@ import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
-import { FCreateNodeEvent, ExternalItemPreparationRequest, ExternalItemFinalizeRequest } from './external-item';
 import { IPointerEvent, Point } from '@foblex/core';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
@@ -28,7 +27,12 @@ import {
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FFlowMediator } from '../infrastructure';
 import { EmitTransformChangesRequest, GetSelectionRequest } from '../domain';
-import { isExternalItem } from '../f-external-item';
+import {
+  ExternalItemFinalizeRequest,
+  ExternalItemPreparationRequest,
+  FCreateNodeEvent,
+  isExternalItem
+} from '../f-external-item';
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';

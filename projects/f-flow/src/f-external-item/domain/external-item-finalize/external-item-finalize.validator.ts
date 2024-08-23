@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ExternalItemFinalizeRequest } from './external-item-finalize.request';
 import { FValidatorRegister, IValidator } from '../../../infrastructure';
-import { EFDraggableType } from '../../e-f-draggable-type';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { FDraggableDataContext } from '../../../f-draggable';
+import { ExternalItemDragHandler } from '../external-item.drag-handler';
+
 
 @Injectable()
 @FValidatorRegister(ExternalItemFinalizeRequest)
@@ -14,7 +15,8 @@ export class ExternalItemFinalizeValidator implements IValidator<ExternalItemFin
   }
 
   public handle(request: ExternalItemFinalizeRequest): boolean {
-    return this.fDraggableDataContext.draggableItems.some((x) =>
-      x.type === EFDraggableType.PALETTE_ITEM);
+    return this.fDraggableDataContext.draggableItems.some(
+      (x) => x.constructor.name === ExternalItemDragHandler.name
+    );
   }
 }

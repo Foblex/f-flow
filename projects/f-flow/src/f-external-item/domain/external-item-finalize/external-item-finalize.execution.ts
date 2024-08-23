@@ -3,10 +3,10 @@ import { ExternalItemFinalizeRequest } from './external-item-finalize.request';
 import { IPoint, IRect } from '@foblex/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FCreateNodeEvent } from '../f-create-node.event';
 import { GetElementRectInFlowRequest } from '../../../domain';
+import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(ExternalItemFinalizeRequest)

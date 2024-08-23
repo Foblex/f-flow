@@ -3,9 +3,9 @@ import { ExternalItemPreparationRequest } from './external-item-preparation.requ
 import { Point } from '@foblex/core';
 import { FExecutionRegister, IExecution } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FExternalItemBase, FExternalItemService, getExternalItem } from '../../../f-external-item';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
+import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(ExternalItemPreparationRequest)

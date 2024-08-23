@@ -1,3 +1,5 @@
+export * from './domain';
+
 export * from './f-external-item-base';
 
 export * from './is-external-item';

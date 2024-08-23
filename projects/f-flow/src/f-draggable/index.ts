@@ -2,8 +2,6 @@ export * from './canvas';
 
 export * from './connections';
 
-export * from './external-item';
-
 export * from './node';
 
 export * from './node-resize';

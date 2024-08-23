@@ -1,7 +1,6 @@
 import { DomElementExtensions, IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
-import { IDraggableItem } from '../i-draggable-item';
-import { EFDraggableType } from '../e-f-draggable-type';
 import { FExternalItemBase } from '../../f-external-item';
+import { EFDraggableType, IDraggableItem } from '../../f-draggable';
 
 export class ExternalItemDragHandler implements IDraggableItem {
 
