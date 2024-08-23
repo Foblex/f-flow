@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SelectionAreaFinalizeRequest } from './selection-area-finalize.request';
 import { FExecutionRegister, IExecution } from '../../../infrastructure';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(SelectionAreaFinalizeRequest)

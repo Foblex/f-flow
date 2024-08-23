@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SelectionAreaFinalizeRequest } from './selection-area-finalize.request';
 import { FValidatorRegister, IValidator } from '../../../infrastructure';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { EFDraggableType } from '../../e-f-draggable-type';
+import { FDraggableDataContext } from '../../../f-draggable';
+import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
 
 @Injectable()
 @FValidatorRegister(SelectionAreaFinalizeRequest)
@@ -14,7 +14,8 @@ export class SelectionAreaFinalizeValidator implements IValidator<SelectionAreaF
   }
 
   public handle(request: SelectionAreaFinalizeRequest): boolean {
-    return this.fDraggableDataContext.draggableItems.some((x) =>
-      x.type === EFDraggableType.SELECTION);
+    return this.fDraggableDataContext.draggableItems.some(
+      (x) => x.constructor.name === SelectionAreaDragHandle.name
+    );
   }
 }

@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { F_SELECTION_AREA, FSelectionAreaBase } from './f-selection-area-base';
-import { ISelectionAreaRect } from './domain';
-import { FDraggableDataContext } from '../f-draggable';
+import { FSelectionAreaBase } from './f-selection-area-base';
+import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
+import { IPointerEvent, IRect } from '@foblex/core';
+import { FFlowMediator } from '../infrastructure';
+import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './domain';
 
 @Component({
   selector: "f-selection-area",
@@ -11,10 +13,10 @@ import { FDraggableDataContext } from '../f-draggable';
     'class': 'f-selection-area f-component'
   },
   providers: [
-    { provide: F_SELECTION_AREA, useExisting: FSelectionAreaComponent }
+    { provide: F_DRAG_AND_DROP_PLUGIN, useExisting: FSelectionAreaComponent },
   ],
 })
-export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit {
+export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin  {
 
   public override get hostElement(): HTMLElement {
     return this.elementReference.nativeElement;
@@ -22,13 +24,12 @@ export class FSelectionAreaComponent extends FSelectionAreaBase implements OnIni
 
   constructor(
       private elementReference: ElementRef<HTMLElement>,
-      private fDraggableDataContext: FDraggableDataContext
+      private fMediator: FFlowMediator
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.fDraggableDataContext.fSelectionArea = this;
     this.hostElement.style.display = 'none';
   }
 
@@ -40,11 +41,19 @@ export class FSelectionAreaComponent extends FSelectionAreaBase implements OnIni
     this.hostElement.style.display = 'block';
   }
 
-  public override draw(object: ISelectionAreaRect): void {
+  public override draw(object: IRect): void {
     const style = this.hostElement.style;
-    style.left = object.left + 'px';
-    style.top = object.top + 'px';
+    style.left = object.x + 'px';
+    style.top = object.y + 'px';
     style.width = object.width + 'px';
     style.height = object.height + 'px';
+  }
+
+  public onPointerDown(event: IPointerEvent): void {
+    this.fMediator.send(new SelectionAreaPreparationRequest(event, this));
+  }
+
+  public onPointerUp(event: IPointerEvent): void {
+    this.fMediator.send(new SelectionAreaFinalizeRequest(event));
   }
 }

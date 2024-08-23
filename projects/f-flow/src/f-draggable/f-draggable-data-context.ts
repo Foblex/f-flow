@@ -3,7 +3,6 @@ import { Point } from '@foblex/core';
 import { IDraggableItem } from './i-draggable-item';
 import { ISelectable } from '../f-connection';
 import { FLineAlignmentBase } from '../f-line-alignment';
-import { FSelectionAreaBase } from '../f-selection-area';
 
 @Injectable()
 export class FDraggableDataContext {
@@ -17,8 +16,6 @@ export class FDraggableDataContext {
   public onPointerDownPosition: Point = new Point(0, 0);
 
   public draggableItems: IDraggableItem[] = [];
-
-  public fSelectionArea: FSelectionAreaBase | undefined;
 
   public fLineAlignment: FLineAlignmentBase | undefined;
 

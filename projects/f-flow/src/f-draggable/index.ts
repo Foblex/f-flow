@@ -6,8 +6,6 @@ export * from './node';
 
 export * from './node-resize';
 
-export * from './selection-area';
-
 export * from './single-select';
 
 export * from './e-f-draggable-type';

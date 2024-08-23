@@ -3,8 +3,8 @@ import { SelectionAreaPreparationRequest } from './selection-area-preparation.re
 import { Point } from '@foblex/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
+import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(SelectionAreaPreparationRequest)
@@ -23,7 +23,9 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
 
   public handle(request: SelectionAreaPreparationRequest): void {
     this.fDraggableDataContext.draggableItems = [
-      new SelectionAreaDragHandle(this.fComponentsStore, this.fDraggableDataContext, this.fMediator)
+      new SelectionAreaDragHandle(
+        this.fComponentsStore, request.fSelectionArea, this.fDraggableDataContext, this.fMediator
+      )
     ];
 
     this.fDraggableDataContext.onPointerDownScale = 1;
