@@ -8,8 +8,6 @@ export * from './node-resize';
 
 export * from './single-select';
 
-export * from './e-f-draggable-type';
-
 export * from './f-draggable.directive';
 
 export * from './f-draggable-base';

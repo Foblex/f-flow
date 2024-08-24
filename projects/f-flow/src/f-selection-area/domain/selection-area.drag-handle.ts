@@ -4,12 +4,10 @@ import { EmitTransformChangesRequest, ISelectableWithRect } from '../../domain';
 import { ISelectable } from '../../f-connection';
 import { FFlowMediator } from '../../infrastructure';
 import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
-import { EFDraggableType, FDraggableDataContext, IDraggableItem } from '../../f-draggable';
+import { FDraggableDataContext, IDraggableItem } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
 
 export class SelectionAreaDragHandle implements IDraggableItem {
-
-  public readonly type: EFDraggableType = EFDraggableType.SELECTION;
 
   private canBeSelected: ISelectableWithRect[] = [];
 
