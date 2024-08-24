@@ -11,7 +11,6 @@ import {
   CONNECTION_GRADIENT,
   CONNECTION_PATH,
   CONNECTION_TEXT,
-  FConnectionBase,
   FConnectionDragHandleComponent,
   FConnectionSelectionComponent,
   IConnectionGradient,
@@ -19,12 +18,16 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FComponentsStore } from '../../f-storage';
 import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { castToEnum } from '../../domain';
+import { F_CONNECTION } from '../common/f-connection.injection-token';
+//TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
+// TypeError: Class extends value undefined is not a constructor or null
+// at f-connection-for-create.component.ts:34:11
+import { FConnectionBase } from '../common/f-connection-base';
 
 let uniqueId: number = 0;
 

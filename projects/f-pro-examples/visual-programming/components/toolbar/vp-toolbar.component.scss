@@ -9,6 +9,13 @@
   top: 16px;
 }
 
+//.showcase {
+//  :host {
+//    right: 8px;
+//    top: 8px;
+//  }
+//}
+
 button {
   display: inline-block;
   text-align: center;
@@ -16,7 +23,7 @@ button {
   white-space: nowrap;
   border: none;
   border-radius: 2px;
-  padding: 4px 8px;
+  padding: 2px;
   font-size: 14px;
 
   color: var(--button-default-text);
@@ -31,5 +38,11 @@ button {
   &:active {
     color: var(--button-default-active-text);
     background-color: var(--button-default-active-bg);
+  }
+
+  span {
+    display: block;
+    width: 18px;
+    height: 18px;
   }
 }

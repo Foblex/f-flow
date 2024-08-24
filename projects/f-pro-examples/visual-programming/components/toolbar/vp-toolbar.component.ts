@@ -2,19 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
 } from '@angular/core';
-import { FlowComponent } from '../flow/flow.component';
+import { VpFlowComponent } from '../flow/vp-flow.component';
 
 @Component({
-  selector: 'visual-programming-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: [ './toolbar.component.scss' ],
+  selector: 'vp-toolbar',
+  templateUrl: './vp-toolbar.component.html',
+  styleUrls: [ './vp-toolbar.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToolbarComponent {
+export class VpToolbarComponent {
 
   constructor(
-    private flowComponent: FlowComponent
+    private flowComponent: VpFlowComponent
   ) {
   }
 

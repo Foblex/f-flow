@@ -1,4 +1,4 @@
-<visual-programming-palette></visual-programming-palette>
+<vp-palette></vp-palette>
 <f-flow fDraggable class="visual-programming-flow"
         (fLoaded)="onInitialized()"
         (fReassignConnection)="onReassignConnection($event)"
@@ -9,7 +9,8 @@
   </f-background>
   <f-line-alignment></f-line-alignment>
   <f-canvas fZoom>
-    <f-connection-for-create fBehavior="floating" fType="straight">
+    <f-connection-for-create fBehavior="floating"
+                             fType="straight">
       <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
         <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
       </svg>
@@ -17,7 +18,7 @@
         <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
       </svg>
     </f-connection-for-create>
-    @for (connection of viewModel.connections;track connection) {
+    @for (connection of viewModel.connections; track connection) {
       <f-connection fBehavior="floating"
                     fType="straight"
                     [fText]="connection.text"
@@ -38,16 +39,16 @@
         </svg>
       </f-connection>
     }
-    @for (node of viewModel.nodes;track node.id) {
-      <visual-programming-node [node]="node"
-                               fNode
-                               fDragHandle
-                               [fNodePosition]="node.position"
-                               (fNodePositionChange)="onNodePositionChanged($event, node)">
-      </visual-programming-node>
+    @for (node of viewModel.nodes; track node.id) {
+      <vp-node [node]="node"
+               fNode
+               fDragHandle
+               [fNodePosition]="node.position"
+               (fNodePositionChange)="onNodePositionChanged($event, node)">
+      </vp-node>
     }
   </f-canvas>
   <f-selection-area></f-selection-area>
   <f-minimap [fMinSize]="1000"></f-minimap>
 </f-flow>
-<visual-programming-toolbar></visual-programming-toolbar>
+<vp-toolbar></vp-toolbar>

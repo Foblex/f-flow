@@ -35,12 +35,26 @@
   }
 }
 
-.node-icon {
-  font-size: 14px;
-  mask-size: 100% 100%;
-  background-color: var(--secondary-text);
-  width: 21px;
-  height: 21px;
-}
-
-
+//.showcase {
+//  :host {
+//    width: 33px;
+//    min-width: 33px;
+//    padding: 4px;
+//    gap: 4px;
+//  }
+//}
+//
+//::ng-deep .showcase {
+//  .visual-programming-external-item {
+//    width: 24px;
+//    height: 24px;
+//    border: 1px solid;
+//    border-radius: 2px;
+//
+//    .icon {
+//      line-height: 13px;
+//      font-size: 12px;
+//      font-weight: 500;
+//    }
+//  }
+//}

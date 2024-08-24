@@ -10,23 +10,17 @@ import {
   FReassignConnectionEvent, FCreateConnectionEvent
 } from '@foblex/flow';
 import { IPoint, Point } from '@foblex/core';
-import { IFlowNodeViewModel } from '../../domain/node/i-flow-node-view-model';
-import { IFlowConnectionViewModel } from '../../domain/connection/i-flow-connection-view-model';
-import { ENodeType } from '../../domain/e-node-type';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { PaletteComponent } from '../palette/palette.component';
-import { NodeComponent } from '../node/node.component';
-import { MapToNodeViewModelHandler } from '../../domain/node/map/map-to-node-view-model.handler';
-import {
-  MapToConnectionViewModelHandler
-} from '../../domain/connection/map/map-to-connection-view-model.handler';
-import { FlowService } from '../../domain/flow.service';
-import { IFlowViewModel } from '../../domain/i-flow-view-model';
+import { ENodeType } from '../../domain';
+import { VpPaletteComponent } from '../palette/vp-palette.component';
+import { VpNodeComponent } from '../node/vp-node.component';
+import { FlowService } from '../../domain';
+import { IFlowViewModel } from '../../domain';
+import { VpToolbarComponent } from '../toolbar/vp-toolbar.component';
 
 @Component({
-  selector: 'visual-programming-flow',
-  templateUrl: './flow.component.html',
-  styleUrls: [ './flow.component.scss' ],
+  selector: 'vp-flow',
+  templateUrl: './vp-flow.component.html',
+  styleUrls: [ './vp-flow.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -34,12 +28,12 @@ import { IFlowViewModel } from '../../domain/i-flow-view-model';
   ],
   imports: [
     FFlowModule,
-    ToolbarComponent,
-    PaletteComponent,
-    NodeComponent
+    VpToolbarComponent,
+    VpPaletteComponent,
+    VpNodeComponent
   ]
 })
-export class FlowComponent implements OnInit {
+export class VpFlowComponent implements OnInit {
 
   protected viewModel: IFlowViewModel = {
     nodes: [],

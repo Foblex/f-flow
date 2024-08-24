@@ -2,20 +2,20 @@ import {
   ChangeDetectionStrategy, Component,
 } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
-import { ENodeType } from '../../domain/e-node-type';
-import { NODE_CONFIGURATION } from '../../domain/configuration';
+import { ENodeType } from '../../domain';
+import { NODE_CONFIGURATION } from '../../domain';
 
 @Component({
-  selector: 'visual-programming-palette',
-  templateUrl: './palette.component.html',
-  styleUrls: [ './palette.component.scss' ],
+  selector: 'vp-palette',
+  templateUrl: './vp-palette.component.html',
+  styleUrls: [ './vp-palette.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FFlowModule,
   ]
 })
-export class PaletteComponent {
+export class VpPaletteComponent {
 
   protected palette = Object.keys(NODE_CONFIGURATION).map((key) => {
     return {

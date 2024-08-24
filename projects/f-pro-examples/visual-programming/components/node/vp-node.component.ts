@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
-import { IFlowNodeViewModel } from '../../domain/node/i-flow-node-view-model';
+import { IFlowNodeViewModel } from '../../domain';
 
 @Component({
-  selector: 'visual-programming-node',
-  templateUrl: './node.component.html',
-  styleUrls: [ './node.component.scss' ],
+  selector: 'vp-node',
+  templateUrl: './vp-node.component.html',
+  styleUrls: [ './vp-node.component.scss' ],
   standalone: true,
   imports: [
     FFlowModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NodeComponent {
+export class VpNodeComponent {
 
   @Input()
   public node: IFlowNodeViewModel | undefined;

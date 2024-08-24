@@ -24,7 +24,6 @@ import {
   LineAlignmentExampleComponent
 } from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
 import { DragToReassignComponent } from '../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component';
-import { FlowComponent } from '../../../projects/f-pro-examples/visual-programming/components/flow/flow.component';
 import {
   MinimapBasicExampleComponent
 } from '../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component';
@@ -40,6 +39,7 @@ import {
 import {
   NodeWithConnectorsComponent
 } from '../../../projects/f-examples/node-with-connectors/node-with-connectors.component';
+import { VpFlowComponent } from '@pro-examples';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -84,7 +84,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'zoom-example', component: ZoomExampleComponent },
       { tag: 'background-example', component: BackgroundExampleComponent },
       { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
-      { tag: 'visual-programming-flow', component: FlowComponent },
+      { tag: 'vp-flow', component: VpFlowComponent },
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
       { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent },
