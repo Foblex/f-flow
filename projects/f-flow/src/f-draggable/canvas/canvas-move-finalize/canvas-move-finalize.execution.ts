@@ -13,8 +13,6 @@ export class CanvasMoveFinalizeExecution implements IExecution<CanvasMoveFinaliz
   }
 
   public handle(request: CanvasMoveFinalizeRequest): void {
-    this.fDraggableDataContext.draggableItems.forEach((x) => {
-      x.complete?.();
-    });
+    this.fDraggableDataContext.draggableItems.forEach((x) => x.complete?.());
   }
 }

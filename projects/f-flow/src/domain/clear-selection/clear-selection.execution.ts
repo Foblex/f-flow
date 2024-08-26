@@ -13,9 +13,7 @@ export class ClearSelectionExecution implements IExecution<ClearSelectionRequest
   }
 
   public handle(request: ClearSelectionRequest): void {
-    this.fDraggableDataContext.selectedItems.forEach((x) => {
-      x.deselect();
-    });
+    this.fDraggableDataContext.selectedItems.forEach((x) => x.deselect());
     this.fDraggableDataContext.selectedItems = [];
     this.fDraggableDataContext.isSelectedChanged = true;
   }
