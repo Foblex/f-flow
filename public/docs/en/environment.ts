@@ -32,14 +32,24 @@ import {
 } from '../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component';
 import {
   DagreLayoutExampleComponent
-} from '../../../projects/f-examples/dagre-layout-example/dagre-layout-example.component';
+} from '../../../projects/f-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component';
 import {
   ElkjsLayoutExampleComponent
-} from '../../../projects/f-examples/elkjs-layout-example/elkjs-layout-example.component';
+} from '../../../projects/f-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component';
 import {
   NodeWithConnectorsComponent
 } from '../../../projects/f-examples/node-with-connectors/node-with-connectors.component';
 import { VpFlowComponent } from '@pro-examples';
+import {
+  AddingDraggingFunctionalityExampleComponent
+} from '../../../projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component';
+import {
+  NodeWithPositionExampleComponent
+} from '../../../projects/f-examples/node/node-with-position-example/node-with-position-example.component';
+import {
+  NodeWithDragHandleExampleComponent
+} from '../../../projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component';
+import { DbManagementFlowComponent } from '../../../projects/f-pro-examples/db-management-example';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -85,11 +95,15 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'background-example', component: BackgroundExampleComponent },
       { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
       { tag: 'vp-flow', component: VpFlowComponent },
+      { tag: 'db-management-flow', component: DbManagementFlowComponent },
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
       { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent },
       { tag: 'elkjs-layout-example', component: ElkjsLayoutExampleComponent },
-      { tag: 'node-with-connectors', component: NodeWithConnectorsComponent }
+      { tag: 'node-with-connectors', component: NodeWithConnectorsComponent },
+      { tag: 'node-with-position-example', component: NodeWithPositionExampleComponent },
+      { tag: 'adding-dragging-functionality-example', component: AddingDraggingFunctionalityExampleComponent },
+      { tag: 'node-with-drag-handle-example', component: NodeWithDragHandleExampleComponent },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -236,6 +250,9 @@ function proExamplesGroup(): INavigationGroup {
     items: [ {
       text: 'Visual Programming Flow',
       link: 'f-visual-programming-flow',
+    },{
+      text: 'DB Management Flow',
+      link: 'f-db-management-flow',
     }, {
       text: 'Call Center Flow',
       link: 'https://github.com/Foblex/f-flow-example',

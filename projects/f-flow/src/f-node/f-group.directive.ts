@@ -25,26 +25,27 @@ import { EmitTransformChangesRequest } from '../domain';
 let uniqueId: number = 0;
 
 @Directive({
-  selector: "[fNode]",
+  selector: "[fGroup]",
   exportAs: "fComponent",
   host: {
-    '[attr.data-f-node-id]': 'fId',
-    class: "f-node f-component",
-    '[class.f-node-dragging-disabled]': 'fDraggingDisabled',
-    '[class.f-node-selection-disabled]': 'fSelectionDisabled',
+    '[attr.data-f-group-id]': 'fId',
+    class: "f-group f-component",
+    '[class.f-group-dragging-disabled]': 'fDraggingDisabled',
+    '[class.f-group-selection-disabled]': 'fSelectionDisabled',
   },
   providers: [
-    { provide: F_NODE, useExisting: FNodeDirective }
+    { provide: F_NODE, useExisting: FGroupDirective }
   ],
 })
-export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
+export class FGroupDirective extends FNodeBase
+  implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
   private subscriptions$: Subscription = new Subscription();
 
-  @Input('fNodeId')
-  public override fId: string = `f-node-${ uniqueId++ }`;
+  @Input('fGroupId')
+  public override fId: string = `f-group-${ uniqueId++ }`;
 
-  @Input('fNodePosition')
+  @Input('fGroupPosition')
   public override set position(value: IPoint) {
     this._position = PointExtensions.castToPoint(value);
     this.refresh();
@@ -52,10 +53,10 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   public override get position(): IPoint {
     return this._position;
   }
-  @Output('fNodePositionChange')
+  @Output('fGroupPositionChange')
   public override positionChange: EventEmitter<IPoint> = new EventEmitter<IPoint>();
 
-  @Input('fNodeSize')
+  @Input('fGroupSize')
   public override set size(value: ISize) {
     this._size = value;
     this.refresh();
@@ -63,17 +64,15 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   public override get size(): ISize {
     return this._size!;
   }
-  @Output('fNodeSizeChange')
+  @Output('fGroupSizeChange')
   public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
 
-  @Input('fNodeDraggingDisabled')
+  @Input('fGroupDraggingDisabled')
   public override fDraggingDisabled: boolean = false;
 
-  @Input('fNodeSelectionDisabled')
+  @Input('fGroupSelectionDisabled')
   public override fSelectionDisabled: boolean = false;
 
-
-  //TODO: Add ability to connect to first connectable input if node is under pointer
   @Input()
   public override fConnectOnNode: boolean = true;
 

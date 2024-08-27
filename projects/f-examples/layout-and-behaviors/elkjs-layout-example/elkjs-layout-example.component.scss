@@ -1,13 +1,12 @@
-@use "../flow-common";
+@use "../../flow-common";
 
-::ng-deep dagre-layout-example {
+::ng-deep elkjs-layout-example {
   @include flow-common.connection;
 }
 
 .f-node {
   @include flow-common.node;
 }
-
 
 .toolbar {
   @include flow-common.toolbar;

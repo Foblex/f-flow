@@ -1,0 +1,47 @@
+@use "../flow-common";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 200px;
+  padding: 4px;
+  padding-bottom: 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--node-background-color);
+  color: var(--primary-text);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: var(--primary-soft);
+    font-weight: 500;
+    cursor: move;
+  }
+
+  .field {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+
+    .name {
+      min-width: calc(50% - 8px);
+    }
+
+    .type {
+      min-width: calc(50% - 8px);
+      text-align: right;
+    }
+
+    input {
+      outline: none;
+      border: 1px solid var(--primary-soft);
+    }
+  }
+}
+

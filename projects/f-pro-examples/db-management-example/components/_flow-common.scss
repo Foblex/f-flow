@@ -38,44 +38,6 @@
   }
 }
 
-@mixin connection {
-  .f-connection {
-    .f-connection-drag-handle {
-      fill: transparent;
-    }
-
-    .f-connection-selection {
-      fill: none;
-    }
-
-    .f-connection-path {
-      fill: none;
-      stroke: var(--connection-color);
-      stroke-width: 2;
-    }
-
-    .f-connection-text, .f-connection-center {
-      fill: var(--connection-color);
-      color: var(--connection-color);
-    }
-  }
-}
-
-@mixin background {
-  .f-background {
-    line {
-      stroke: rgba(0, 0, 0, 0.6);
-    }
-  }
-}
-
-@mixin line-alignment {
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--connection-color);
-    }
-  }
-}
 
 @mixin minimap {
   .f-minimap {

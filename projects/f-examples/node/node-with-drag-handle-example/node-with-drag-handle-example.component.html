@@ -1,0 +1,25 @@
+<f-flow fDraggable>
+  <f-canvas>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 24, y: 24 }">
+      Drag Handle on the Node
+    </div>
+
+
+    <div fNode
+         [fNodePosition]="{ x: 164, y: 24 }" class="drag-handle-inside">
+      <span fDragHandle class="f-icon f-drag-handle-icon"></span>
+      Drag handle inside
+    </div>
+
+
+    <div fNode
+         [fNodePosition]="{ x: 304, y: 24 }" class="drag-handle-outside">
+      <div fDragHandle>
+        <span class="f-icon f-drag-handle-icon"></span>
+      </div>
+      Drag handle outside
+    </div>
+  </f-canvas>
+</f-flow>
