@@ -5,7 +5,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { Meta, Title } from '@angular/platform-browser';
 import { ENGLISH_ENVIRONMENT } from '../../public/docs/en/environment';
 import { filter, startWith, Subscription } from 'rxjs';
-import { ChangeMetaService } from './change-meta.service';
+import { MetaService } from './meta.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     matIconRegistry: MatIconRegistry,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
-    private metaService: ChangeMetaService,
+    private metaService: MetaService,
   ) {
     matIconRegistry.setDefaultFontSetClass('material-symbols-outlined');
 

@@ -123,6 +123,7 @@ function introductionGroup(): INavigationGroup {
       {
         link: 'get-started',
         text: 'Getting Started',
+        description: 'Learn how to install and use Foblex Flow in your Angular project.',
       }
     ],
   }
@@ -135,10 +136,12 @@ function containerGroup(): INavigationGroup {
       {
         link: 'f-flow-component',
         text: 'Flow',
+        description: 'The FFlowComponent in Foblex Flow manages draggable and connectable elements within a visual canvas, enabling dynamic creation, positioning, and interaction of nodes. It supports layout calculation, event handling, and provides methods for node selection, flow manipulation, and custom styling.',
       },
       {
         link: 'f-canvas-component',
         text: 'Canvas',
+        description: 'The FCanvasComponent in Foblex Flow provides a scalable and dynamic canvas for positioning and manipulating nodes and connections. It supports features like dynamic scaling, positioning, and optimized rendering, with methods for fitting the canvas to the screen and adjusting the scale.',
       },
     ],
   }
@@ -151,10 +154,13 @@ function nodeGroup(): INavigationGroup {
       {
         link: 'f-node-directive',
         text: 'Node',
+        description: 'The FNodeDirective in Foblex Flow represents a node within a flow, allowing dynamic positioning, styling, and interaction with other nodes and connectors. It supports features like drag-and-drop, selection management, and customizable behaviors for advanced flow manipulations.',
+        image: 'https://flow.foblex.com/f-node-directive.png'
       },
       {
         link: 'f-drag-handle-directive',
         text: 'Drag Handle',
+        description: 'The FDragHandle directive in Foblex Flow designates the drag handle within a node, enabling precise control over dragging operations in a flow. It works with the FNode directive to facilitate customizable drag-and-drop functionality for interactive elements.',
       },
     ],
   }
@@ -167,14 +173,17 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'f-connection-component',
         text: 'Connection',
+        description: 'The FConnectionComponent in Foblex Flow represents customizable connections between nodes in a flow, supporting various visual types, behaviors, and interactivity options. It allows for flexible connection styling, reassignment control, and dynamic flow management.',
       },
       {
         link: 'f-connection-for-create-component',
         text: 'Create Connection',
+        description: 'The FConnectionForCreate component in Foblex Flow allows users to create connections between nodes by dragging to different node inputs. It supports dynamic connection creation within a flow, working seamlessly with the draggable directive for flexible node interaction.',
       },
       {
         link: 'f-connection-marker-directive',
         text: 'Connection Marker',
+        description: 'The FMarkerDirective in Foblex Flow defines start or end markers for connections within a flow. It allows customization of marker type, size, and position, enabling precise control over the visual representation of connection endpoints using SVG elements.',
       },
     ],
   }
@@ -187,14 +196,17 @@ function connectorGroup(): INavigationGroup {
       {
         link: 'f-node-output-directive',
         text: 'Output',
+        description: 'The FNodeOutputDirective in Foblex Flow designates an element as an output within a node, managing connection behaviors such as multiple connections, disabled states, and connectable sides. It provides flexibility in creating and managing output connections in complex flow diagrams.',
       },
       {
         link: 'f-node-input-directive',
         text: 'Input',
+        description: 'The FNodeInputDirective in Foblex Flow designates an element as an input within a node, managing connection behaviors such as multiple connections, disabled states, and connectability. It allows for flexible input management in complex flow diagrams.',
       },
       {
         link: 'f-node-outlet-directive',
         text: 'Outlet',
+        description: 'The FNodeOutletDirective in Foblex Flow centralizes the creation of connections within a node by providing a single outlet point. It simplifies the connection process by linking new connections to the first available output, offering a streamlined approach for managing node connections in flow diagrams.',
       },
     ],
   }
@@ -207,22 +219,27 @@ function extendsGroup(): INavigationGroup {
       {
         link: 'f-draggable-directive',
         text: 'Drag and Drop',
+        description: 'The FDraggableDirective in Foblex Flow adds draggable functionality to flow components, enabling interactive movement and management of elements within the flow. It supports drag-and-drop operations, node creation, and connection reassignment, enhancing user interaction in complex diagrams.'
       },
       {
         link: 'f-zoom-directive',
         text: 'Zoom',
+        description: 'The FZoomDirective in Foblex Flow enables zoom and pan functionality for the canvas, allowing users to interactively control the scale and position of elements. It supports mouse wheel zooming, double-click zoom, and provides methods for programmatic control of the zoom level.'
       },
       {
         link: 'f-background-component',
         text: 'Background',
+        description: 'The FBackgroundComponent in Foblex Flow provides dynamic, pattern-based background designs for the canvas, supporting customizable circle and rectangle patterns. It allows for seamless integration of custom patterns, adapting to transformations like scaling and positioning in flow diagrams.'
       },
       {
         link: 'f-line-alignment-component',
         text: 'Line Alignment',
+        description: 'The FLineAlignmentComponent in Foblex Flow assists with aligning nodes on a canvas by providing visual guidelines. It detects node positions and draws intersecting lines when nodes are dragged within a specified threshold, helping to ensure precise alignment in flow diagrams.'
       },
       {
         link: 'f-minimap-component',
         text: 'Minimap',
+        description: 'The FMinimapComponent in Foblex Flow provides a miniature view of the larger flow, enhancing navigation with features like zooming, panning, and dynamic updates. It offers users an efficient way to interact with and visualize the entire flow layout, with customizable scaling options.'
       }
     ],
   }
@@ -235,10 +252,14 @@ function layoutGroup(): INavigationGroup {
       {
         link: 'dagre-layout',
         text: 'Dagre Tree',
+        description: 'Explore a tree layout example using Dagre.js with Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the Dagre layout engine.',
+        image: 'https://flow.foblex.com/f-visual-programming-flow.png'
       },
       {
         link: 'elkjs-layout',
         text: 'ELKJS Tree',
+        description: 'Explore a tree layout example using ELKJS with Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the ELKJS layout engine.',
+        image: 'https://flow.foblex.com/f-db-management-flow.png'
       }
     ],
   }
@@ -250,9 +271,11 @@ function proExamplesGroup(): INavigationGroup {
     items: [ {
       text: 'Visual Programming Flow',
       link: 'f-visual-programming-flow',
+      description: 'Learn how to create a visual programming interface using Foblex Flow. This example showcases features like adding and connecting nodes, zooming, panning, alignment, and more, providing a comprehensive guide to building interactive, flow-based diagrams.',
     },{
       text: 'DB Management Flow',
       link: 'f-db-management-flow',
+      description: 'Discover how to create a database management flow using Foblex Flow. This example demonstrates connecting nodes, zooming, panning, alignment, form validation, and more, offering a comprehensive solution for building interactive database management interfaces.'
     }, {
       text: 'Call Center Flow',
       link: 'https://github.com/Foblex/f-flow-example',
@@ -262,4 +285,3 @@ function proExamplesGroup(): INavigationGroup {
     } ]
   }
 }
-
