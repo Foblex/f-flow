@@ -1,0 +1,9 @@
+import { SELECTION_AREA_FINALIZE_PROVIDERS } from './selection-area-finalize';
+import { SELECTION_AREA_PREPARATION_PROVIDERS } from './selection-area-preparation';
+
+export const F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS = [
+
+  ...SELECTION_AREA_FINALIZE_PROVIDERS,
+
+  ...SELECTION_AREA_PREPARATION_PROVIDERS
+];

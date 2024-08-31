@@ -39,7 +39,9 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
 
     const path = this.buildPath(points, request.radius);
 
-    return { path, connectionCenter: center };
+    const penultimatePoint = points.length > 1 ? points[ points.length - 2 ] : source;
+
+    return { path, connectionCenter: center, penultimatePoint };
   }
 
   private getPathPoints(

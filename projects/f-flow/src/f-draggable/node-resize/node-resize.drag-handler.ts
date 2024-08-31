@@ -1,6 +1,5 @@
 import { IPoint, ISize, PointExtensions, RectExtensions, SizeExtensions } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
-import { EFDraggableType } from '../e-f-draggable-type';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FComponentsStore } from '../../f-storage';
 
@@ -16,8 +15,6 @@ const RESIZE_DIRECTIONS = {
 };
 
 export class NodeResizeDragHandler implements IDraggableItem {
-
-  public readonly type: EFDraggableType = EFDraggableType.NODE_RESIZE;
 
   private readonly onPointerDownPosition: IPoint;
 

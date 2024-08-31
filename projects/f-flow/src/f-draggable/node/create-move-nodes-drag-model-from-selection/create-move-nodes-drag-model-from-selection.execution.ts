@@ -8,7 +8,6 @@ import {
   GetOutgoingConnectionsHandler,
 } from '../../../domain';
 import { IDraggableItem } from '../../i-draggable-item';
-import { EFDraggableType } from '../../e-f-draggable-type';
 import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
@@ -98,7 +97,10 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   private getDragHandlersForInputConnections(fNode: FNodeBase, outputIds: string[], result: IDraggableItem[]): void {
     this.getIncomingConnectionsHandler.handle(this.getInputsForNode(fNode)).forEach((c) => {
       if (outputIds.includes(c.fOutputId)) {
-        const index = result.findIndex((x) => x.type === EFDraggableType.CONNECTION && (x as ConnectionDragHandler).connection.fConnectionId === c.fConnectionId);
+        const index = result.findIndex(
+          (x) => x.constructor.name === ConnectionDragHandler.name &&
+            (x as ConnectionDragHandler).connection.fConnectionId === c.fConnectionId
+        );
         if (index !== -1) {
           result.push(
             new ConnectionDragHandler(this.fMediator, c)

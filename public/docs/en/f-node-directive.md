@@ -84,3 +84,27 @@ This code snippet shows how to disable selection for a node.
   </f-canvas>
 </f-flow>
 ```
+
+## Examples
+
+#### Node with Position
+
+This example demonstrates a node with a specified position.
+
+::: ng-component <node-with-position-example></node-with-position-example>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-position-example/node-with-position-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-position-example/node-with-position-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-position-example/node-with-position-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::
+
+#### Adding Dragging Functionality
+
+This example demonstrates a node with dragging functionality.
+
+::: ng-component <adding-dragging-functionality-example></adding-dragging-functionality-example>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::

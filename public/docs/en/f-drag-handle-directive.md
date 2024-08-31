@@ -39,3 +39,16 @@ This code snippet shows how to disable dragging for a node.
   </f-canvas>
 </f-flow>
 ```
+
+## Examples
+
+#### Node with Drag Handle
+
+This example demonstrates how to use the **fDragHandle** directive to specify the handle for dragging a node.
+
+::: ng-component <node-with-drag-handle-example></node-with-drag-handle-example>
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::

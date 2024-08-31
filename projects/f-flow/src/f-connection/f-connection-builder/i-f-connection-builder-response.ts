@@ -5,4 +5,6 @@ export interface IFConnectionBuilderResponse {
   path: string;
 
   connectionCenter: IPoint;
+
+  penultimatePoint: IPoint;
 }

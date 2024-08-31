@@ -8,7 +8,6 @@ import {
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { IDraggableItem } from '../../i-draggable-item';
-import { EFDraggableType } from '../../e-f-draggable-type';
 import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
@@ -67,7 +66,8 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
-    return items.filter((x) => x.type === EFDraggableType.NODE)
-      .map(x => (x as NodeDragHandler).fNode);
+    return items.filter(
+      (x) => x.constructor.name === NodeDragHandler.name
+    ).map(x => (x as NodeDragHandler).fNode);
   }
 }

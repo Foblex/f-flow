@@ -1,0 +1,16 @@
+
+<div fNodeOutput [fOutputId]="column.id"></div>
+
+<div class="column-key">
+  @if (column.key === eTableColumnKey.PRIMARY) {
+    <mat-icon>key_vertical</mat-icon>
+  } @else if (column.key === eTableColumnKey.UNIQUE) {
+    <mat-icon>ac_unit</mat-icon>
+  } @else if (column.key === eTableColumnKey.INDEX) {
+    <mat-icon>list</mat-icon>
+  }
+</div>
+
+<ng-content></ng-content>
+
+

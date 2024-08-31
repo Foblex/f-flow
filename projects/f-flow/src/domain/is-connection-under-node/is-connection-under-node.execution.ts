@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { IsConnectionUnderNodeRequest } from './is-connection-under-node.request';
 import { FComponentsStore } from '../../f-storage';
-import { EFDraggableType, FDraggableDataContext, NodeDragHandler } from '../../f-draggable';
+import { FDraggableDataContext, NodeDragHandler } from '../../f-draggable';
 import { GetOutgoingConnectionsHandler } from '../get-outgoing-connections.handler';
 import { GetIncomingConnectionsHandler } from '../get-incoming-connections.handler';
 import { FNodeBase } from '../../f-node';
@@ -67,7 +67,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   private isValidRequest(): boolean {
     const result =
         this.fDraggableDataContext.draggableItems.length === 1 &&
-        this.fDraggableDataContext.draggableItems[ 0 ].type === EFDraggableType.NODE;
+        this.fDraggableDataContext.draggableItems[ 0 ].constructor.name === NodeDragHandler.name;
 
     return result;
   }

@@ -1,0 +1,98 @@
+::ng-deep :root {
+  --db-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --db-line-alignment-color: rgba(60, 60, 67, 0.56);
+
+  --db-node-background-color: #ffffff;
+  --db-node-normal-state-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --db-node-selected-state-shadow: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+
+  --db-node-header-normal-state-background-color: #e4e4e9;
+  --db-node-header-selected-state-background-color: rgba(100, 108, 255, 0.24);
+  --db-node-header-error-state-background-color: rgba(244, 63, 94, 0.14);
+
+  --db-node-text-color: rgba(60, 60, 67);
+
+  --db-node-column-primary-key-color: #915930;
+  --db-node-column-selected-state-color: var(--db-node-header-selected-state-background-color);
+
+  --db-connection-normal-state-color: rgba(60, 60, 67);
+  --db-connection-selected-state-color: #5672cd;
+
+  --db-connection-center-value-background-color: #ffffff;
+  --db-connection-center-normal-state-text-color: rgba(60, 60, 67);
+  --db-connection-center-selected-state-text-color: #5672cd;
+
+  --db-background-component-color: rgba(0, 0, 0, 0.1);
+
+  --db-selection-area-background-color: var(--db-node-header-selected-state-background-color);
+
+  --db-minimap-background-color: var(--db-node-background-color);
+  --db-minimap-node-background-color: var(--db-node-text-color);
+  --db-minimap-selected-node-background-color: #3451b2;
+  --db-minimap-view-background-color: var(--db-node-header-selected-state-background-color);
+
+  --db-filled-text-field-focused-container-color: var(--db-node-header-selected-state-background-color);
+  --db-filled-text-field-error-container-color: var(--db-node-header-error-state-background-color);
+  --db-text-field-input-text-color: var(--db-node-text-color);
+  --db-select-field-text-color: rgba(60, 60, 67, 0.56);
+  --db-select-panel-background-color: var(--db-node-background-color);
+  --db-select-panel-shadow: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --db-select-option-selected-state-layer-color: var(--db-node-header-selected-state-background-color);
+  --db-select-option-hover-state-layer-color: rgba(142, 150, 170, 0.14);
+  --db-select-option-focus-state-layer-color: rgba(142, 150, 170, 0.14);
+
+  --db-button-default-text: var(--db-node-text-color);
+  --db-button-default-bg: #ebebef;
+  --db-button-default-hover-bg: #e4e4e9;
+  --db-button-default-active-bg: #dddde3;
+
+  &.dark {
+    --db-line-alignment-color: rgba(235, 235, 245, 0.38);
+
+    --db-node-background-color: #000000;
+    --db-node-normal-state-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --db-node-selected-state-shadow: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+
+    --db-node-header-normal-state-background-color: #414853;
+    --db-node-header-selected-state-background-color: rgba(100, 108, 255, 0.26);
+    --db-node-header-error-state-background-color: rgba(244, 63, 94, 0.16);
+
+    --db-node-text-color: rgba(255, 255, 245, 0.86);
+
+    --db-node-column-primary-key-color: #f9b44e;
+    --db-node-column-selected-state-color: var(--db-node-header-selected-state-background-color);
+
+    --db-connection-normal-state-color: rgba(255, 255, 245, 0.86);
+    --db-connection-selected-state-color: #3e63dd;
+
+    --db-connection-center-value-background-color: #000000;
+    --db-connection-center-normal-state-text-color: rgba(255, 255, 245, 0.86);
+    --db-connection-center-selected-state-text-color: #3e63dd;
+
+    --db-background-component-color: rgba(255, 255, 255, 0.1);
+
+    --db-selection-area-background-color: var(--db-node-header-selected-state-background-color);
+
+    --db-minimap-background-color: var(--db-node-background-color);
+    --db-minimap-node-background-color: var(--db-node-text-color);
+    --db-minimap-selected-node-background-color: #a8b1ff;
+    --db-minimap-view-background-color: var(--db-node-header-selected-state-background-color);
+
+    --db-filled-text-field-focused-container-color: var(--db-node-header-selected-state-background-color);
+    --db-filled-text-field-error-container-color: var(--db-node-header-error-state-background-color);
+    --db-text-field-input-text-color: var(--db-node-text-color);
+    --db-select-field-text-color: rgba(235, 235, 245, 0.38);
+    --db-select-panel-background-color: var(--db-node-background-color);
+    --db-select-panel-shadow: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+    --db-select-option-selected-state-layer-color: var(--db-node-header-selected-state-background-color);
+    --db-select-option-hover-state-layer-color: rgba(101, 117, 133, 0.16);
+    --db-select-option-focus-state-layer-color: rgba(101, 117, 133, 0.16);
+
+    --db-button-default-text: var(--db-node-text-color);
+    --db-button-default-bg: #32363f;
+    --db-button-default-hover-bg: #414853;
+    --db-button-default-active-bg: #515c67;
+  }
+}

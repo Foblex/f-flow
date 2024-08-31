@@ -27,8 +27,8 @@ export class FConnectionDragHandleComponent implements IHasHostElement {
   ) {
   }
 
-  public redraw(start: IPoint, end: IPoint): void {
-    const point = this.calculateCircleCenter(start, end, 8);
+  public redraw(penultimatePoint: IPoint, endPoint: IPoint): void {
+    const point = this.calculateCircleCenter(penultimatePoint, endPoint, 8);
     this.hostElement.setAttribute('cx', point.x.toString());
     this.hostElement.setAttribute('cy', point.y.toString());
   }

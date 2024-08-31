@@ -1,0 +1,23 @@
+<div class="value">{{ viewModel.type }}</div>
+<div class="toolbar">
+  <button class="db-management-icon-button" (click)="changeConnectionType(eTableRelationType.ONE_TO_ONE)"
+          matTooltip="One to one">
+    <span>1:1</span>
+  </button>
+  <button class="db-management-icon-button" (click)="changeConnectionType(eTableRelationType.ONE_TO_MANY)"
+          matTooltip="One to many">
+    <span>1:N</span>
+  </button>
+  <button class="db-management-icon-button" (click)="changeConnectionType(eTableRelationType.MANY_TO_ONE)"
+          matTooltip="Many to one">
+    <span>N:1</span>
+  </button>
+  <button class="db-management-icon-button" (click)="changeConnectionType(eTableRelationType.MANY_TO_MANY)"
+          matTooltip="Many to many">
+    <span>N:N</span>
+  </button>
+  <button class="db-management-icon-button" (click)="removeConnection()"
+          matTooltip="Remove connection">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

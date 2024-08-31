@@ -1,6 +1,5 @@
 import { ILine, IPoint, LineExtensions, Point } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
-import { EFDraggableType } from '../e-f-draggable-type';
 import {
   GetConnectionLineRequest,
   GetInputRectInFlowRequest,
@@ -13,8 +12,6 @@ import { EFConnectableSide } from '../../f-connectors';
 import { FFlowMediator } from '../../infrastructure';
 
 export class ConnectionDragHandler implements IDraggableItem {
-
-  public readonly type = EFDraggableType.CONNECTION;
 
   private onPointerDownLine: ILine = LineExtensions.initialize();
 

@@ -1,0 +1,83 @@
+::ng-deep db-management-flow {
+
+  .f-connection {
+    .f-connection-center {
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: var(--db-connection-center-value-background-color);
+      color: var(--db-connection-center-normal-state-text-color);
+
+      .toolbar {
+        display: none;
+      }
+
+      .value {
+        cursor: pointer;
+        display: block;
+      }
+    }
+
+    &.f-selected {
+      .f-connection-center {
+        color: var(--db-connection-center-selected-state-text-color);
+      }
+    }
+  }
+
+
+  &.single-selection {
+    .f-flow {
+      &:not(.f-dragging) { //Necessary to prevent the СonnectionToolbar display: flex when using the selection area
+        .f-connection {
+          &.f-selected {
+            .f-connection-center {
+              z-index: 1;
+
+              padding: 4px;
+              background-color: var(--db-connection-center-selected-state-text-color);
+
+              .toolbar {
+                display: flex;
+              }
+
+              .value {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.db-management-icon-button {
+  min-width: 32px;
+
+  &:last-child {
+    min-width: unset;
+    margin-left: 16px;
+  }
+}
+
+.toolbar {
+  position: absolute;
+  display: flex;
+  padding: 8px;
+  border-radius: 4px;
+  gap: 8px;
+  background-color: var(--db-node-background-color);
+  border: 1px solid var(--db-node-header-normal-state-background-color);
+  animation: scaleIn 0.2s ease-in-out forwards;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0) translate(-90%, -50%);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(-50%, -200%);
+    opacity: 1;
+  }
+}
