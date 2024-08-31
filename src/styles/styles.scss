@@ -1,3 +1,25 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$f-flow-portal-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+:root {
+  @include mat.all-component-themes($f-flow-portal-theme);
+}
+
 @import "@foblex/f-docs/assets/styles/styles.scss";
 
 @import "icons";
+
+
+

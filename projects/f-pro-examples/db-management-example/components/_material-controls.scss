@@ -1,0 +1,179 @@
+@import "flow-common";
+
+::ng-deep {
+
+  .mat-mdc-form-field {
+    --mdc-filled-text-field-container-shape: 0px;
+    --mdc-filled-text-field-container-color: transparent;
+    --mat-form-field-state-layer-color: transparent;
+    --mat-form-field-container-text-font: var(--db-font-family);
+    --mat-form-field-container-text-size: 14px;
+    --mat-form-field-container-text-tracking: 0;
+    --mat-form-field-container-text-weight: 400;
+    --mdc-filled-text-field-input-text-color: var(--db-text-field-input-text-color);
+
+    width: 100%;
+    min-width: 90px;
+
+    .mdc-text-field {
+      padding: 0 4px;
+
+      .mat-mdc-form-field-flex {
+
+        .mat-mdc-select {
+          --mat-select-enabled-trigger-text-color: var(--db-select-field-text-color);
+          --mat-select-trigger-text-font: var(--db-font-family);
+          --mat-select-trigger-text-size: 14px;
+          --mat-select-trigger-text-weight: 400;
+          --mat-select-trigger-text-tracking: 0;
+
+          .mat-mdc-select-value {
+            text-align: right;
+          }
+
+          .mat-mdc-select-arrow-wrapper {
+            display: none;
+          }
+        }
+
+
+        .mat-mdc-form-field-infix {
+          min-height: unset;
+          padding: 0;
+        }
+      }
+
+      .mdc-line-ripple {
+        display: none;
+      }
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    &.mat-focused {
+      --mdc-filled-text-field-container-color: var(--db-filled-text-field-focused-container-color);
+    }
+
+    &.mat-form-field-invalid {
+      --mdc-filled-text-field-container-color: var(--db-filled-text-field-error-container-color);
+    }
+  }
+
+  .db-management-control {
+    --mat-select-panel-background-color: var(--db-select-panel-background-color);
+    --mat-select-container-elevation-shadow: var(--db-select-panel-shadow);
+    --mat-option-label-text-font: var(--db-font-family);
+
+    --mat-option-label-text-tracking: 0;
+    --mat-option-label-text-weight: 400;
+    --mat-option-selected-state-label-text-color: var(--db-text-field-input-text-color);
+    --mat-option-label-text-color: var(--db-text-field-input-text-color);
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--db-text-field-input-text-color);
+    --mat-option-selected-state-layer-color: var(--db-select-option-selected-state-layer-color);
+    --mat-option-hover-state-layer-color: var(--db-select-option-hover-state-layer-color);
+    --mat-option-focus-state-layer-color: var(--db-select-option-focus-state-layer-color);
+
+    --mat-option-label-text-size: calc(14px * var(--flow-scale, 1));
+    --mat-option-label-text-line-height: calc(16px * var(--flow-scale, 1));
+    --mat-option-padding: calc(4px * var(--flow-scale, 1)) calc(12px * var(--flow-scale, 1));
+    --mat-panel-padding: calc(16px * var(--flow-scale, 1)) calc(8px * var(--flow-scale, 1));
+
+    &.mat-mdc-select-panel {
+      padding: var(--mat-panel-padding);
+      .mat-mdc-option {
+        min-height: unset;
+        padding: var(--mat-option-padding);
+        text-align: right;
+
+        .mdc-list-item__primary-text {
+          text-align: right;
+          width: 100%;
+        }
+
+        .mat-pseudo-checkbox {
+          display: none;
+        }
+      }
+    }
+
+    &.cdk-menu-group {
+      --icon-size: calc(16px * var(--flow-scale, 1));
+      width: 100%;
+      outline: 0;
+      overflow: auto;
+      padding: var(--mat-panel-padding);
+      border-radius: 2px;
+      box-sizing: border-box;
+      position: static;
+      background-color: var(--mat-select-panel-background-color);
+      box-shadow: var(--mat-select-container-elevation-shadow);
+
+      .cdk-menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: calc(16px * var(--flow-scale, 1));
+        min-height: unset;
+        min-width: calc(80px * var(--flow-scale, 1));
+        padding: var(--mat-option-padding);
+        font-size: var(--mat-option-label-text-size);
+        line-height: var(--mat-option-label-text-line-height);
+        font-weight: var(--mat-option-label-text-weight);
+        color: var(--mat-option-label-text-color);
+        cursor: pointer;
+        outline: none;
+        border: none;
+
+        &:hover {
+          background-color: var(--mat-option-hover-state-layer-color);
+        }
+
+        .mat-icon {
+          display: block;
+          width: var(--icon-size);
+          height: var(--icon-size);
+          font-size: var(--icon-size);
+          color: inherit;
+        }
+      }
+    }
+  }
+
+  .db-management-icon-button {
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    white-space: nowrap;
+    border: none;
+    border-radius: 2px;
+    padding: 3px;
+    font-size: 14px;
+
+    color: var(--db-button-default-text);
+    background-color: var(--db-button-default-bg);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--db-button-default-hover-bg);
+    }
+
+    &:active {
+      background-color: var(--db-button-default-active-bg);
+    }
+
+    mat-icon {
+      display: block;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      color: inherit;
+    }
+
+    span {
+      color: inherit;
+      font-weight: 300;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<ng-template>
+  <div #menu="cdkMenu" cdkMenu class="db-management-control">
+    @if (column) {
+      <div cdkMenuItem cdkMenuItemDisabled [cdkMenuTriggerFor]="keyMenu">
+        <span>Key</span>
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    }
+    @if (!table) {
+      <div cdkMenuItem cdkMenuItemDisabled (click)="createTable(menu)">
+        <span>Create Table</span>
+        <mat-icon>add</mat-icon>
+      </div>
+    }
+    @if (column || table) {
+      <div cdkMenuItem cdkMenuItemDisabled (click)="createColumn(menu)">
+        <span>Create Column</span>
+        <mat-icon>add</mat-icon>
+      </div>
+      <div cdkMenuItem cdkMenuItemDisabled (click)="delete(table, column, menu)">
+        <span>Delete</span>
+        <mat-icon>delete</mat-icon>
+      </div>
+    }
+  </div>
+</ng-template>
+<ng-template #keyMenu>
+  <div #subMenu="cdkMenu" cdkMenu class="db-management-control">
+    <div cdkMenuItem cdkMenuItemDisabled (click)="setColumnKey(table!, column!, eTableColumnKey.PRIMARY, subMenu)">
+      <span>Primary Key</span>
+      <mat-icon>key_vertical</mat-icon>
+    </div>
+    <div cdkMenuItem cdkMenuItemDisabled (click)="setColumnKey(table!, column!, eTableColumnKey.UNIQUE, subMenu)">
+      <span>Unique Key</span>
+      <mat-icon>ac_unit</mat-icon>
+    </div>
+    <div cdkMenuItem cdkMenuItemDisabled (click)="setColumnKey(table!, column!, eTableColumnKey.INDEX, subMenu)">
+      <span>Index</span>
+      <mat-icon>list</mat-icon>
+    </div>
+    <div cdkMenuItem cdkMenuItemDisabled (click)="setColumnKey(table!, column!, null, subMenu)">
+      <span>None</span>
+    </div>
+  </div>
+</ng-template>
+

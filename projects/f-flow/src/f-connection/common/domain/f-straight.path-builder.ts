@@ -15,6 +15,6 @@ export class FStraightPathBuilder implements IFConnectionBuilder {
         new CalculateConnectionCenterRequest([source, target])
     );
 
-    return { path, connectionCenter };
+    return { path, connectionCenter, penultimatePoint: source };
   }
 }

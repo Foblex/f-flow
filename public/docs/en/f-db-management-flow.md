@@ -2,14 +2,13 @@
 
 ## Example
 
-This example demonstrates how to use the Foblex Flow to create a visual programming interface.
+This example demonstrates how to use the Foblex Flow to create a database management flow.
 
 ::: ng-component <db-management-flow></db-management-flow> [height]="600"
 :::
 
 ## Possibilities
 
-- Add nodes from the palette to the canvas using the [fExternalItem](f-external-item-directive) directive.
 - Connect nodes using [f-connection-for-create](f-connection-for-create-component) component.
 - Reassign connections.
 - Move nodes.
@@ -19,6 +18,10 @@ This example demonstrates how to use the Foblex Flow to create a visual programm
 - Line alignment using [f-line-alignment](f-line-alignment-component) component.
 - Select multiple items using the [f-selection](f-selection-component) component with the `mouse` and by holding down the `Shift key`.
 - Minimap using the [f-minimap](f-minimap-component) component.
+- Context menu using the material [mat-menu](https://material.angular.io/components/menu/overview) component.
+- Material controls [mat-select](https://material.angular.io/components/select/overview), [matInput](https://material.angular.io/components/input/overview)
+- Form validation
+- Create, update, delete nodes and connections.
 
 ## Source Code
 

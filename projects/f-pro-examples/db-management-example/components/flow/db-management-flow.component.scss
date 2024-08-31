@@ -1,47 +1,5 @@
 @use "../flow-common";
-
-::ng-deep db-management-flow {
-
-  .f-background {
-    line {
-      stroke: rgba(0, 0, 0, 0.6);
-    }
-  }
-
-  .f-connection {
-    .f-connection-drag-handle {
-      fill: transparent;
-    }
-
-    .f-connection-selection {
-      fill: none;
-    }
-
-    .f-connection-path {
-      fill: none;
-      stroke: var(--connection-color);
-      stroke-width: 2;
-    }
-
-    .f-connection-text, .f-connection-center {
-      fill: var(--connection-color);
-      color: var(--connection-color);
-    }
-  }
-
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--connection-color);
-    }
-  }
-}
-
-
-
-
-
-
-
+@import "../material-controls";
 
 :host {
   position: relative;
@@ -50,101 +8,87 @@
   height: 100%;
 }
 
+::ng-deep db-management-flow {
 
-
-
-::ng-deep .visual-programming-flow {
-
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--divider-color);
+  .f-background {
+    circle {
+      fill: var(--db-background-component-color);
     }
   }
 
   .f-connection {
-
     .f-connection-drag-handle {
       fill: transparent;
+      cursor: move;
     }
 
     .f-connection-selection {
-      stroke-width: 20px;
       fill: none;
-    }
-
-    &:hover {
-      .f-connection-selection {
-        stroke: var(--gray-soft);
-      }
+      stroke: transparent;
+      stroke-width: 20;
+      cursor: pointer;
     }
 
     .f-connection-path {
-      stroke-width: 2px;
       fill: none;
+      stroke: var(--db-connection-normal-state-color);
+      stroke-width: 2;
     }
 
-    &.f-connection-for-create {
-      .f-connection-path {
-        stroke: var(--primary-3);
-        stroke-width: 2px;
+    .f-marker {
+      path, circle {
+        fill: var(--db-connection-normal-state-color);
       }
-    }
-
-    .f-connection-text {
-      fill: var(--tertiary-text);
-      font-size: 12px;
     }
 
     &.f-selected {
       .f-connection-path {
-        stroke: var(--primary-3);
+        stroke: var(--db-connection-selected-state-color);
       }
 
-      .f-connection-text {
-        fill: var(--primary-3);
+      .f-marker {
+        path, circle {
+          fill: var(--db-connection-selected-state-color);
+        }
+      }
+    }
+
+    &:hover {
+      .f-connection-selection {
+        stroke: var(--db-connection-selected-state-color);
+        opacity: 0.1;
       }
     }
   }
 
-  .f-connection-for-create {
-    .f-connection-path {
-      stroke-width: 1px;
-      fill: none;
+  .f-line-alignment {
+    .f-line {
+      border: 0.5px dashed var(--db-line-alignment-color);
     }
   }
 
   .f-selection-area {
-    background-color: var(--primary-soft);
+    background-color: var(--db-selection-area-background-color);
   }
 
   .f-minimap {
-    background-color: var(--background-color);
+    background-color: var(--db-minimap-background-color);
     bottom: 16px;
     right: 16px;
     width: 140px;
     height: 120px;
 
     .f-minimap-node {
-      fill: var(--primary-text);
+      fill: var(--db-minimap-node-background-color);
 
       &.f-selected {
-        fill: var(--primary-1);
+        fill: var(--db-minimap-selected-node-background-color);
       }
     }
 
     .f-minimap-view {
-      fill: var(--primary-soft)
+      fill: var(--db-minimap-view-background-color)
     }
   }
 }
 
-//::ng-deep .showcase {
-//  .visual-programming-flow {
-//    .f-minimap {
-//      width: 100px;
-//      height: 90px;
-//      bottom: 8px;
-//      right: 8px;
-//    }
-//  }
-//}

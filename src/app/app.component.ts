@@ -1,6 +1,11 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon';
+import { Meta, Title } from '@angular/platform-browser';
+import { ENGLISH_ENVIRONMENT } from '../../public/docs/en/environment';
+import { filter, startWith, Subscription } from 'rxjs';
+import { ChangeMetaService } from './change-meta.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +16,18 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+  private subscriptions$: Subscription = new Subscription();
 
   constructor(
+    matIconRegistry: MatIconRegistry,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private metaService: ChangeMetaService,
   ) {
+    matIconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+
   }
 
   public ngOnInit(): void {
@@ -24,7 +35,9 @@ export class AppComponent implements OnInit {
       this.renderer.addClass(this.document.documentElement, 'dark');
       localStorage.setItem('preferred-theme', 'dark');
     }
+    this.subscriptions$.add(this.metaService.subscribeOnRouteChanges());
   }
+
 
   private getPreferredTheme(): string {
     return localStorage.getItem('preferred-theme')
@@ -33,5 +46,9 @@ export class AppComponent implements OnInit {
 
   private isDocumentContainsDarkTheme(): boolean {
     return this.document.documentElement.classList.contains('dark');
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions$.unsubscribe();
   }
 }

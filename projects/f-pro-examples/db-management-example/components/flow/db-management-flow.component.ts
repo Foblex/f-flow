@@ -1,19 +1,35 @@
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, } from '@angular/core';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component, OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  FCreateNodeEvent, EFMarkerType,
-  FCanvasComponent, FFlowModule, FZoomDirective,
-  FReassignConnectionEvent, FCreateConnectionEvent
+  EFMarkerType,
+  FCanvasChangeEvent,
+  FCanvasComponent,
+  FCreateConnectionEvent,
+  FCreateNodeEvent, FFlowComponent,
+  FFlowModule,
+  FReassignConnectionEvent,
+  FSelectionChangeEvent,
+  FZoomDirective
 } from '@foblex/flow';
-import { IPoint, Point } from '@foblex/core';
-import { DbManagementNodeComponent } from '../node/db-management-node.component';
-import { FlowService } from '../../domain';
-import { IFlowViewModel } from '../../domain';
-import { VpToolbarComponent } from '../toolbar/vp-toolbar.component';
+import { IPoint, Point, PointExtensions } from '@foblex/core';
+import {
+  BuildFormHandler, BuildFormRequest,
+  DatabaseApiService,
+  EReloadReason,
+  ETableRelationType,
+  IDatabaseModel,
+  ITableViewModel
+} from '../../domain';
+import { DbManagementToolbarComponent } from '../toolbar/db-management-toolbar.component';
+import { DbManagementTableComponent } from '../table';
+import { CdkContextMenuTrigger } from '@angular/cdk/menu';
+import { DbManagementContextMenuComponent } from '../context-menu/db-management-context-menu.component';
+import { SelectionService } from '../../domain/selection.service';
+import { MatIcon } from '@angular/material/icon';
+import {
+  DbManagementConnectionToolbarComponent
+} from '../connection-toolbar/db-management-connection-toolbar.component';
+import { startWith, Subscription } from 'rxjs';
+import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'db-management-flow',
@@ -22,20 +38,33 @@ import { VpToolbarComponent } from '../toolbar/vp-toolbar.component';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    FlowService
+    DatabaseApiService,
+    SelectionService
   ],
   imports: [
     FFlowModule,
-    VpToolbarComponent,
-    DbManagementNodeComponent
-  ]
+    DbManagementToolbarComponent,
+    DbManagementTableComponent,
+    CdkContextMenuTrigger,
+    DbManagementContextMenuComponent,
+    MatIcon,
+    DbManagementConnectionToolbarComponent
+  ],
+  host: {
+    '[class.single-selection]': 'isSingleSelection'
+  }
 })
 export class DbManagementFlowComponent implements OnInit {
 
-  protected viewModel: IFlowViewModel = {
-    nodes: [],
+  private subscriptions$: Subscription = new Subscription();
+
+  protected viewModel: IDatabaseModel = {
+    tables: [],
     connections: []
   };
+
+  @ViewChild(FFlowComponent, { static: true })
+  public fFlowComponent!: FFlowComponent;
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvasComponent!: FCanvasComponent;
@@ -45,45 +74,79 @@ export class DbManagementFlowComponent implements OnInit {
 
   protected readonly eMarkerType = EFMarkerType;
 
+  public isSingleSelection: boolean = true;
+
+  protected form: FormGroup = new FormGroup({
+    tables: new FormArray([])
+  });
+
+  public contextMenuPosition: IPoint = PointExtensions.initialize(0, 0);
+
   constructor(
-    private apiService: FlowService,
+    private apiService: DatabaseApiService,
+    private selectionService: SelectionService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
-    this.getData();
+    this.subscriptions$.add(this.subscribeOnReloadData());
+  }
+
+  private subscribeOnReloadData(): Subscription {
+    return this.apiService.reload$.pipe(startWith(null)).subscribe((reason: EReloadReason | null) => {
+      this.getData();
+      if (reason === EReloadReason.CONNECTION_CHANGED) {
+        this.fFlowComponent.clearSelection();
+      }
+    });
   }
 
   public onInitialized(): void {
-    this.fCanvasComponent.fitToScreen(new Point(40, 40), false);
+    this.fCanvasComponent.fitToScreen(new Point(140, 140), false);
   }
 
   private getData(): void {
-    this.viewModel = this.apiService.getFlow();
+    this.viewModel = this.apiService.get();
+    this.form = new BuildFormHandler().handle(new BuildFormRequest(this.viewModel));
     this.changeDetectorRef.markForCheck();
   }
 
-  public onNodeAdded(event: FCreateNodeEvent): void {
-    this.apiService.addNode(event.rect);
+  public getTableForm(id: string): FormGroup {
+    return (this.form.get('tables') as FormGroup).get(id) as FormGroup;
+  }
+
+  public canvasChanged(event: FCanvasChangeEvent): void {
+    document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
+  }
+
+  public selectionChanged(event: FSelectionChangeEvent): void {
+    this.isSingleSelection = event.connections.length + event.nodes.length === 1;
+    this.selectionService.setTables(event.nodes);
+    this.changeDetectorRef.markForCheck();
+  }
+
+  public reassignConnection(event: FReassignConnectionEvent): void {
+    this.apiService.reassignConnection(event.connectionId, event.newFInputId);
     this.getData();
   }
 
-  public onReassignConnection(event: FReassignConnectionEvent): void {
-    this.apiService.reassignConnection(event.fOutputId, event.oldFInputId, event.newFInputId);
-    this.getData();
-  }
-
-  public onConnectionAdded(event: FCreateConnectionEvent): void {
+  public createConnection(event: FCreateConnectionEvent): void {
     if (!event.fInputId) {
       return;
     }
-    this.apiService.addConnection(event.fOutputId, event.fInputId);
+    this.apiService.createConnection(event.fOutputId, event.fInputId, ETableRelationType.ONE_TO_ONE);
     this.getData();
   }
 
-  public onNodePositionChanged(point: IPoint, node: any): void {
-    node.position = point;
-    this.apiService.moveNode(node.id, point);
+  public moveTable(point: IPoint, table: ITableViewModel): void {
+    table.position = point;
+    this.apiService.moveTable(table.id, point);
+  }
+
+  public onContextMenu(event: MouseEvent): void {
+    this.contextMenuPosition = this.fFlowComponent.getPositionInFlow(
+      PointExtensions.initialize(event.clientX, event.clientY)
+    );
   }
 }

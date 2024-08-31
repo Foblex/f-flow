@@ -6,7 +6,7 @@ import {
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse
 } from '@foblex/flow';
-import { IPoint } from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/core';
 
 
 class OffsetStraightBuilder implements IFConnectionBuilder {
@@ -15,7 +15,7 @@ class OffsetStraightBuilder implements IFConnectionBuilder {
     const { source, target } = request;
     const path = `M ${ source.x } ${ source.y } L ${ source.x + 20 } ${ source.y } L ${ target.x - 20 } ${ target.y } L ${ target.x } ${ target.y }`;
 
-    return { path, connectionCenter: { x: 0, y: 0 } };
+    return { path, connectionCenter: { x: 0, y: 0 }, penultimatePoint: PointExtensions.initialize(target.x - 20, target.y) };
   }
 }
 
@@ -25,7 +25,7 @@ class CircleConnectionBuilder implements IFConnectionBuilder {
     const { source, target } = request;
     const d = this.getD(request);
     const path = `M ${ source.x } ${ source.y } S${ d.x } ${ d.y } ${ target.x } ${ target.y }`;
-    return { path, connectionCenter: { x: 0, y: 0 } };
+    return { path, connectionCenter: { x: 0, y: 0 }, penultimatePoint: d };
   }
 
   private getD(request: IFConnectionBuilderRequest): IPoint {

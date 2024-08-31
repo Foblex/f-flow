@@ -1,13 +1,16 @@
 <f-flow fDraggable
+        (contextmenu)="onContextMenu($event)"
+        [cdkContextMenuTriggerFor]="menu.template"
+        (cdkContextMenuClosed)="menu.dispose()"
         (fLoaded)="onInitialized()"
-        (fReassignConnection)="onReassignConnection($event)"
-        (fCreateConnection)="onConnectionAdded($event)"
-        (fCreateNode)="onNodeAdded($event)">
+        (fReassignConnection)="reassignConnection($event)"
+        (fCreateConnection)="createConnection($event)"
+        (fSelectionChange)="selectionChanged($event)" >
   <f-background>
     <f-circle-pattern></f-circle-pattern>
   </f-background>
   <f-line-alignment></f-line-alignment>
-  <f-canvas fZoom>
+  <f-canvas fZoom (fCanvasChange)="canvasChanged($event)">
     <f-connection-for-create fBehavior="floating"
                              fType="straight">
       <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
@@ -17,33 +20,41 @@
         <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
       </svg>
     </f-connection-for-create>
-    @for (connection of viewModel.connections; track connection) {
-      <f-connection fBehavior="floating"
-                    fType="straight"
+    @for (connection of viewModel.connections; track connection.id) {
+      <f-connection [fConnectionId]="connection.id"
+                    fBehavior="fixed"
+                    fType="segment"
                     [fOutputId]="connection.from" [fInputId]="connection.to">
         <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
-          <circle cx="5" cy="5" r="2" stroke="none"></circle>
+          <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
         </svg>
-        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="6" [refY]="3">
-          <path d="M0,0 L6,3 0,6Z" stroke="none"></path>
+        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="5.5" [refY]="3">
+          <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
         </svg>
         <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.SELECTED_START" [height]="10" [width]="10" [refX]="5"
              [refY]="5">
           <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
         </svg>
-        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="6" [refY]="3">
+        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="5.5"
+             [refY]="3">
           <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
         </svg>
+        <div fConnectionCenter db-management-connection-toolbar [viewModel]="connection"></div>
       </f-connection>
     }
-    @for (node of viewModel.nodes; track node.id) {
-      <db-management-node [node]="node"
-                          fNode
-                          [fNodePosition]="node.position"
-                          (fNodePositionChange)="onNodePositionChanged($event, node)">
-      </db-management-node>
+    @for (table of viewModel.tables; track table.id) {
+      <db-management-table [viewModel]="table"
+                           [form]="getTableForm(table.id)"
+                           [fNodeId]="table.id"
+                           fNode
+                           [fNodePosition]="table.position"
+                           (fNodePositionChange)="moveTable($event, table)">
+      </db-management-table>
     }
   </f-canvas>
   <f-selection-area></f-selection-area>
+  <f-minimap [fMinSize]="2000"></f-minimap>
 </f-flow>
-<vp-toolbar></vp-toolbar>
+<db-management-toolbar></db-management-toolbar>
+<db-management-context-menu #menu="menuComponent"></db-management-context-menu>
+
