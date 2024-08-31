@@ -1,0 +1,33 @@
+<f-flow fDraggable>
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="bottom">
+      Drag me
+    </div>
+
+    <div fNode [fNodePosition]="{ x: 24, y: 124 }" fNodeInput fInputId="input1" fInputConnectableSide="top">
+      This node doesn’t have a drag handle
+    </div>
+
+
+    <f-connection fOutputId="output2" fInputId="input2"></f-connection>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 144, y: 24 }">
+      Drag me
+      <div class="connectors-line bottom">
+        <div fNodeOutput fOutputId="output2" fOutputConnectableSide="bottom"></div>
+      </div>
+    </div>
+
+    <div fNode fDragHandle [fNodeDraggingDisabled]="true"
+         [fNodePosition]="{ x: 144, y: 124 }">
+      Dragging is disabled
+      <div class="connectors-line top">
+        <div fNodeInput fInputId="input2" fInputConnectableSide="top"></div>
+      </div>
+    </div>
+  </f-canvas>
+</f-flow>

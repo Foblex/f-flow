@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IHasHostElement, IPoint, IRect, ISize, PointExtensions, PointInput } from '@foblex/core';
+import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { debounceTime, merge, startWith, Subscription } from 'rxjs';
 import { FResizeObserver } from './f-resize-observer';
@@ -45,7 +45,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   public override fId: string = `f-node-${ uniqueId++ }`;
 
   @Input('fNodePosition')
-  public override set position(value: PointInput) {
+  public override set position(value: IPoint) {
     this._position = PointExtensions.castToPoint(value);
     this.refresh();
   }
@@ -72,6 +72,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   @Input('fNodeSelectionDisabled')
   public override fSelectionDisabled: boolean = false;
 
+
+  //TODO: Add ability to connect to first connectable input if node is under pointer
   @Input()
   public override fConnectOnNode: boolean = true;
 

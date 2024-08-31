@@ -24,7 +24,7 @@
 
     h2 {
       margin: 0;
-      margin-bottom: 8px;
+      //margin-bottom: 16px;
       line-height: 24px;
       font-size: 16px;
       font-weight: 600;
@@ -33,10 +33,18 @@
     p {
       flex-grow: 1;
       padding-top: 8px;
+      margin-bottom: 16px;
       line-height: 24px;
       font-size: 14px;
       font-weight: 500;
       color: var(--secondary-text);
+    }
+
+    .preview {
+      width: 100%;
+      min-height: 400px;
+      border: 1px solid var(--gutter-color);
+      border-radius: 2px;
     }
   }
 

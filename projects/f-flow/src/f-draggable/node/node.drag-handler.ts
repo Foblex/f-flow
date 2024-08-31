@@ -1,12 +1,9 @@
 import { IPoint, Point, PointExtensions } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
-import { EFDraggableType } from '../e-f-draggable-type';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FNodeBase } from '../../f-node';
 
 export class NodeDragHandler implements IDraggableItem {
-
-  public readonly type: EFDraggableType = EFDraggableType.NODE;
 
   private onPointerDownPosition: IPoint = PointExtensions.initialize();
 

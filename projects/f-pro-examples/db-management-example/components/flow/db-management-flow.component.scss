@@ -1,0 +1,94 @@
+@use "../flow-common";
+@import "../material-controls";
+
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep db-management-flow {
+
+  .f-background {
+    circle {
+      fill: var(--db-background-component-color);
+    }
+  }
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+      cursor: move;
+    }
+
+    .f-connection-selection {
+      fill: none;
+      stroke: transparent;
+      stroke-width: 20;
+      cursor: pointer;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: var(--db-connection-normal-state-color);
+      stroke-width: 2;
+    }
+
+    .f-marker {
+      path, circle {
+        fill: var(--db-connection-normal-state-color);
+      }
+    }
+
+    &.f-selected {
+      .f-connection-path {
+        stroke: var(--db-connection-selected-state-color);
+      }
+
+      .f-marker {
+        path, circle {
+          fill: var(--db-connection-selected-state-color);
+        }
+      }
+    }
+
+    &:hover {
+      .f-connection-selection {
+        stroke: var(--db-connection-selected-state-color);
+        opacity: 0.1;
+      }
+    }
+  }
+
+  .f-line-alignment {
+    .f-line {
+      border: 0.5px dashed var(--db-line-alignment-color);
+    }
+  }
+
+  .f-selection-area {
+    background-color: var(--db-selection-area-background-color);
+  }
+
+  .f-minimap {
+    background-color: var(--db-minimap-background-color);
+    bottom: 16px;
+    right: 16px;
+    width: 140px;
+    height: 120px;
+
+    .f-minimap-node {
+      fill: var(--db-minimap-node-background-color);
+
+      &.f-selected {
+        fill: var(--db-minimap-selected-node-background-color);
+      }
+    }
+
+    .f-minimap-view {
+      fill: var(--db-minimap-view-background-color)
+    }
+  }
+}
+

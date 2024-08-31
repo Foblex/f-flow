@@ -9,6 +9,8 @@ export class LineService {
   constructor(private hostElement: HTMLElement) {
     this.fHorizontalLine = new LineElement(this.hostElement);
     this.fVerticalLine = new LineElement(this.hostElement);
+    this.fHorizontalLine.hide();
+    this.fVerticalLine.hide();
   }
 
   public drawVerticalLine(x: number, size: ISize, transform: ITransformModel): void {

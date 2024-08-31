@@ -1,8 +1,5 @@
-import { IHasHostElement } from '@foblex/core';
-import { Directive, InjectionToken } from '@angular/core';
-import { ISelectionAreaRect } from './domain';
-
-export const F_SELECTION_AREA = new InjectionToken<FSelectionAreaBase>('F_SELECTION_AREA');
+import { IHasHostElement, IRect } from '@foblex/core';
+import { Directive } from '@angular/core';
 
 @Directive()
 export abstract class FSelectionAreaBase implements IHasHostElement {
@@ -13,5 +10,5 @@ export abstract class FSelectionAreaBase implements IHasHostElement {
 
   public abstract show(): void;
 
-  public abstract draw(object: ISelectionAreaRect): void;
+  public abstract draw(object: IRect): void;
 }

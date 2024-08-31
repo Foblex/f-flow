@@ -51,6 +51,6 @@ export class FBezierPathBuilder implements IFConnectionBuilder {
       new CalculateConnectionCenterRequest([ source, sourceAnglePoint, targetAnglePoint, target ])
     );
 
-    return { path, connectionCenter };
+    return { path, connectionCenter, penultimatePoint: targetAnglePoint };
   }
 }

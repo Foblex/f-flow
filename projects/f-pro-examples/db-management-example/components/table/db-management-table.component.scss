@@ -1,0 +1,39 @@
+@use "../flow-common";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 225px;
+  padding-bottom: 16px;
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 14px;
+  background-color: var(--db-node-background-color);
+  color: var(--db-node-text-color);
+  box-shadow: var(--db-node-normal-state-shadow);
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &.f-selected {
+    box-shadow: var(--db-node-selected-state-shadow);
+  }
+}
+
+:host {
+  --header-background: var(--db-node-header-normal-state-background-color);
+
+  &.f-selected {
+    --header-background: var(--db-node-header-selected-state-background-color);
+  }
+
+  &.has-errors {
+    --header-background: var(--db-node-header-error-state-background-color);
+  }
+}
+
+

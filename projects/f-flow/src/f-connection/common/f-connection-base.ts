@@ -1,7 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 import {
   IHasHostElement, ILine,
-  IPoint, LineExtensions,
+  IPoint, LineExtensions, PointExtensions,
 } from '@foblex/core';
 import { Subject } from 'rxjs';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
@@ -89,6 +89,8 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fConnectionCenter: ElementRef<HTMLDivElement>;
 
+  private penultimatePoint: IPoint = PointExtensions.initialize();
+
   protected constructor(
     elementReference: ElementRef<HTMLElement>,
     private cFactory: FConnectionFactory
@@ -110,6 +112,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     this.line = LineExtensions.initialize(source, target);
     const pathResult = this.getPathResult(source, sourceSide, target, targetSide);
     this.path = pathResult.path;
+    this.penultimatePoint = pathResult.penultimatePoint || source;
     this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
   }
 
@@ -132,7 +135,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     this.fPath.setPath(this.path);
     this.fSelection.setPath(this.path);
     this.fGradient.redraw(this.line);
-    this.fDragHandle.redraw(this.line.point1, this.line.point2);
+    this.fDragHandle.redraw(this.penultimatePoint, this.line.point2);
     this.fTextComponent.redraw(this.line);
   }
 }

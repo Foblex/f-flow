@@ -12,7 +12,6 @@ import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
-import { FCreateNodeEvent, ExternalItemPreparationRequest, ExternalItemFinalizeRequest } from './external-item';
 import { IPointerEvent, Point } from '@foblex/core';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
@@ -28,10 +27,14 @@ import {
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FFlowMediator } from '../infrastructure';
 import { EmitTransformChangesRequest, GetSelectionRequest } from '../domain';
-import { isExternalItem } from '../f-external-item';
+import {
+  ExternalItemFinalizeRequest,
+  ExternalItemPreparationRequest,
+  FCreateNodeEvent,
+  isExternalItem
+} from '../f-external-item';
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
-import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';
 import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 
@@ -116,8 +119,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
       p.prepareDragSequence?.(event);
     });
 
-    this.fMediator.send<void>(new SelectionAreaPreparationRequest(event));
-
     this.fMediator.send<void>(new NodeResizePreparationRequest(event));
 
     this.fMediator.send<void>(new NodeMovePreparationRequest(event));
@@ -179,8 +180,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this.fMediator.send<void>(new ReassignConnectionFinalizeRequest(event));
 
     this.fMediator.send<void>(new CreateConnectionFinalizeRequest(event));
-
-    this.fMediator.send<void>(new SelectionAreaFinalizeRequest(event));
 
     this.fMediator.send<void>(new NodeResizeFinalizeRequest(event));
 

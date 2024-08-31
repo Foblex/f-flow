@@ -1,4 +1,3 @@
-import { IHandler } from '@foblex/core';
 import { SelectAllRequest } from './select-all.request';
 import { Injectable } from '@angular/core';
 import { FDraggableDataContext } from '../../f-draggable';

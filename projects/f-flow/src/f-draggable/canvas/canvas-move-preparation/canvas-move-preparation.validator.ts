@@ -4,6 +4,7 @@ import { FValidatorRegister, IValidator } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeBase } from '../../../f-node';
+import { isElementWithClass } from '../../../domain';
 
 @Injectable()
 @FValidatorRegister(CanvasMovePreparationRequest)
@@ -34,9 +35,14 @@ export class CanvasMovePreparationValidator implements IValidator<CanvasMovePrep
 
   private getNode(targetElement: HTMLElement): FNodeBase | undefined {
     let result = this.fComponentsStore.findNode(targetElement);
+    // if (result && result.fDraggingDisabled || !this.isNodeHasDragHandle(targetElement)) {
     if (result && result.fDraggingDisabled) {
       result = undefined;
     }
     return result;
+  }
+
+  private isNodeHasDragHandle(targetElement: HTMLElement): boolean {
+    return isElementWithClass(targetElement, '.f-drag-handle');
   }
 }
