@@ -34,7 +34,13 @@ import { FormArray, FormGroup } from '@angular/forms';
 @Component({
   selector: 'db-management-flow',
   templateUrl: './db-management-flow.component.html',
-  styleUrls: [ './db-management-flow.component.scss' ],
+  styleUrls: [
+    '../styles/_variables.scss',
+    '../styles/_mdc-form-field.scss',
+    '../styles/_icon-button.scss',
+    '../styles/_cdk-panel.scss',
+    './db-management-flow.component.scss',
+  ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [

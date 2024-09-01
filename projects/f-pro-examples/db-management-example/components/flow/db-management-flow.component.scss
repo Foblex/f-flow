@@ -1,6 +1,3 @@
-@use "../flow-common";
-@import "../material-controls";
-
 :host {
   position: relative;
   display: flex;
@@ -31,31 +28,31 @@
 
     .f-connection-path {
       fill: none;
-      stroke: var(--db-connection-normal-state-color);
+      stroke: var(--db-text-1);
       stroke-width: 2;
     }
 
     .f-marker {
       path, circle {
-        fill: var(--db-connection-normal-state-color);
+        fill: var(--db-text-1);
       }
     }
 
     &.f-selected {
       .f-connection-path {
-        stroke: var(--db-connection-selected-state-color);
+        stroke: var(--db-primary-1);
       }
 
       .f-marker {
         path, circle {
-          fill: var(--db-connection-selected-state-color);
+          fill: var(--db-primary-1);
         }
       }
     }
 
     &:hover {
       .f-connection-selection {
-        stroke: var(--db-connection-selected-state-color);
+        stroke: var(--db-primary-1);
         opacity: 0.1;
       }
     }
@@ -68,26 +65,26 @@
   }
 
   .f-selection-area {
-    background-color: var(--db-selection-area-background-color);
+    background-color: var(--db-primary-soft);
   }
 
   .f-minimap {
-    background-color: var(--db-minimap-background-color);
+    background-color: var(--db-background);
     bottom: 16px;
     right: 16px;
     width: 140px;
     height: 120px;
 
     .f-minimap-node {
-      fill: var(--db-minimap-node-background-color);
+      fill: var(--db-text-1);
 
       &.f-selected {
-        fill: var(--db-minimap-selected-node-background-color);
+        fill: var(--db-primary-2);
       }
     }
 
     .f-minimap-view {
-      fill: var(--db-minimap-view-background-color)
+      fill: var(--db-primary-soft)
     }
   }
 }

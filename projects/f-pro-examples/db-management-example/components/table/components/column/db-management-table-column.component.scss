@@ -7,7 +7,7 @@
   padding: 0 8px;
 
   &.selected {
-    background-color: var(--db-node-column-selected-state-color);
+    background-color: var(--db-primary-soft);
   }
 }
 
@@ -17,7 +17,7 @@
   height: 16px;
 
   .mat-icon {
-    color: var(--db-node-column-primary-key-color);
+    color: var(--db-yellow);
     font-size: 16px;
     width: 16px;
     height: 16px;

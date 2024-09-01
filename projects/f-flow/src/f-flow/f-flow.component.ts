@@ -84,7 +84,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
       if (!this.isLoaded) {
         this.isLoaded = true;
-        this.fLoaded.emit();
+        setTimeout(() => {
+          this.fLoaded.emit();
+        });
       }
     });
   }
