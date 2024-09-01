@@ -1,21 +1,4 @@
 import { IDocsEnvironment, INavigationGroup } from '@foblex/f-docs';
-import { SimpleFlowComponent } from '../../../projects/f-examples/simple-flow/simple-flow.component';
-import { DraggableFlowComponent } from '../../../projects/f-examples/draggable-flow/draggable-flow.component';
-import { ConnectionTypeComponent } from '../../../projects/f-examples/connection-type/connection-type.component';
-import {
-  ConnectionBehaviourComponent
-} from '../../../projects/f-examples/connection-behaviour/connection-behaviour.component';
-import {
-  CustomConnectionTypeComponent
-} from '../../../projects/f-examples/custom-connection-type/custom-connection-type.component';
-import { DragToConnectComponent } from '../../../projects/f-examples/drag-to-connect/drag-to-connect.component';
-import { ConnectableSideComponent } from '../../../projects/f-examples/connectable-side/connectable-side.component';
-import {
-  ConnectionFromOutletComponent
-} from '../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component';
-import {
-  ConnectionMarkersComponent
-} from '../../../projects/f-examples/connection-markers/connection-markers.component';
 import { ZoomExampleComponent } from '../../../projects/f-examples/zoom-example/zoom-example.component';
 import {
   BackgroundExampleComponent
@@ -23,33 +6,12 @@ import {
 import {
   LineAlignmentExampleComponent
 } from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
-import { DragToReassignComponent } from '../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component';
 import {
   MinimapBasicExampleComponent
 } from '../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component';
 import {
   MinimapScaledExampleComponent
 } from '../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component';
-import {
-  DagreLayoutExampleComponent
-} from '../../../projects/f-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component';
-import {
-  ElkjsLayoutExampleComponent
-} from '../../../projects/f-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component';
-import {
-  NodeWithConnectorsComponent
-} from '../../../projects/f-examples/node-with-connectors/node-with-connectors.component';
-import { VpFlowComponent } from '@pro-examples';
-import {
-  AddingDraggingFunctionalityExampleComponent
-} from '../../../projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component';
-import {
-  NodeWithPositionExampleComponent
-} from '../../../projects/f-examples/node/node-with-position-example/node-with-position-example.component';
-import {
-  NodeWithDragHandleExampleComponent
-} from '../../../projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component';
-import { DbManagementFlowComponent } from '../../../projects/f-pro-examples/db-management-example';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -81,29 +43,29 @@ function createEnvironment(): IDocsEnvironment {
       next: 'Next Page',
     },
     components: [
-      { tag: 'simple-flow', component: SimpleFlowComponent },
-      { tag: 'draggable-flow', component: DraggableFlowComponent },
-      { tag: 'connection-type', component: ConnectionTypeComponent },
-      { tag: 'connection-behaviour', component: ConnectionBehaviourComponent },
-      { tag: 'custom-connection-type', component: CustomConnectionTypeComponent },
-      { tag: 'drag-to-connect', component: DragToConnectComponent },
-      { tag: 'drag-to-reassign', component: DragToReassignComponent },
-      { tag: 'connectable-side', component: ConnectableSideComponent },
-      { tag: 'connection-from-outlet', component: ConnectionFromOutletComponent },
-      { tag: 'connection-markers', component: ConnectionMarkersComponent },
+      { tag: 'simple-flow', component: import('../../../projects/f-examples/simple-flow/simple-flow.component') },
+      { tag: 'draggable-flow', component: import('../../../projects/f-examples/draggable-flow/draggable-flow.component') },
+      { tag: 'connection-type', component: import('../../../projects/f-examples/connection-type/connection-type.component') },
+      { tag: 'connection-behaviour', component: import('../../../projects/f-examples/connection-behaviour/connection-behaviour.component') },
+      { tag: 'custom-connection-type', component: import('../../../projects/f-examples/custom-connection-type/custom-connection-type.component') },
+      { tag: 'drag-to-connect', component: import('../../../projects/f-examples/drag-to-connect/drag-to-connect.component') },
+      { tag: 'drag-to-reassign', component: import('../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component') },
+      { tag: 'connectable-side', component: import('../../../projects/f-examples/connectable-side/connectable-side.component') },
+      { tag: 'connection-from-outlet', component: import('../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component') },
+      { tag: 'connection-markers', component: import('../../../projects/f-examples/connection-markers/connection-markers.component') },
       { tag: 'zoom-example', component: ZoomExampleComponent },
       { tag: 'background-example', component: BackgroundExampleComponent },
       { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
-      { tag: 'vp-flow', component: VpFlowComponent },
-      { tag: 'db-management-flow', component: DbManagementFlowComponent },
+      { tag: 'vp-flow', component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
+      { tag: 'db-management-flow', component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
       { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
       { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
-      { tag: 'dagre-layout-example', component: DagreLayoutExampleComponent },
-      { tag: 'elkjs-layout-example', component: ElkjsLayoutExampleComponent },
-      { tag: 'node-with-connectors', component: NodeWithConnectorsComponent },
-      { tag: 'node-with-position-example', component: NodeWithPositionExampleComponent },
-      { tag: 'adding-dragging-functionality-example', component: AddingDraggingFunctionalityExampleComponent },
-      { tag: 'node-with-drag-handle-example', component: NodeWithDragHandleExampleComponent },
+      { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component') },
+      { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component') },
+      { tag: 'node-with-connectors', component: import('../../../projects/f-examples/node-with-connectors/node-with-connectors.component') },
+      { tag: 'node-with-position-example', component: import('../../../projects/f-examples/node/node-with-position-example/node-with-position-example.component') },
+      { tag: 'adding-dragging-functionality-example', component: import('../../../projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component') },
+      { tag: 'node-with-drag-handle-example', component: import('../../../projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component') },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
