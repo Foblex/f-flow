@@ -1,6 +1,3 @@
-@use "../flow-common";
-@import "../material-controls";
-
 :host {
   position: relative;
   display: flex;
@@ -31,31 +28,31 @@
 
     .f-connection-path {
       fill: none;
-      stroke: var(--db-connection-normal-state-color);
+      stroke: var(--db-text-1);
       stroke-width: 2;
     }
 
     .f-marker {
       path, circle {
-        fill: var(--db-connection-normal-state-color);
+        fill: var(--db-text-1);
       }
     }
 
     &.f-selected {
       .f-connection-path {
-        stroke: var(--db-connection-selected-state-color);
+        stroke: var(--db-primary-1);
       }
 
       .f-marker {
         path, circle {
-          fill: var(--db-connection-selected-state-color);
+          fill: var(--db-primary-1);
         }
       }
     }
 
     &:hover {
       .f-connection-selection {
-        stroke: var(--db-connection-selected-state-color);
+        stroke: var(--db-primary-1);
         opacity: 0.1;
       }
     }
@@ -68,27 +65,87 @@
   }
 
   .f-selection-area {
-    background-color: var(--db-selection-area-background-color);
+    background-color: var(--db-primary-soft);
   }
 
   .f-minimap {
-    background-color: var(--db-minimap-background-color);
+    background-color: var(--db-background);
     bottom: 16px;
     right: 16px;
     width: 140px;
     height: 120px;
 
-    .f-minimap-node {
-      fill: var(--db-minimap-node-background-color);
+    .f-minimap-node, .f-minimap-group {
+      fill: var(--db-text-1);
 
       &.f-selected {
-        fill: var(--db-minimap-selected-node-background-color);
+        fill: var(--db-primary-2);
       }
     }
 
+    .f-minimap-group {
+      opacity: 0.5;
+    }
+
     .f-minimap-view {
-      fill: var(--db-minimap-view-background-color)
+      fill: var(--db-primary-soft)
     }
   }
 }
 
+.f-group {
+  display: block;
+  background-color: var(--db-gray-soft);
+  padding: 40px;
+
+  .group-title {
+    color: var(--db-text-1);
+    font-size: 16px;
+    position: absolute;
+    top: 20px;
+  }
+
+  &.f-selected {
+    border: 1px solid var(--db-primary-1);
+
+    .f-resize-handle {
+      display: block;
+    }
+  }
+}
+
+.f-resize-handle {
+  --resize-handle-size: 16px;
+  --resize-handle-offset: -8px;
+  display: none;
+  position: absolute;
+  width: var(--resize-handle-size);
+  height: var(--resize-handle-size);
+  background-color: var(--db-background);
+  border: 1px solid var(--db-primary-1);
+  border-radius: 1px;
+
+  &.f-resize-handle-left-top {
+    top: var(--resize-handle-offset);
+    left: var(--resize-handle-offset);
+    cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-right-top {
+    top: var(--resize-handle-offset);
+    right: var(--resize-handle-offset);
+    cursor: nesw-resize;
+  }
+
+  &.f-resize-handle-left-bottom {
+    bottom: var(--resize-handle-offset);
+    left: var(--resize-handle-offset);
+    cursor: nesw-resize;
+  }
+
+  &.f-resize-handle-right-bottom {
+    bottom: var(--resize-handle-offset);
+    right: var(--resize-handle-offset);
+    cursor: nwse-resize;
+  }
+}

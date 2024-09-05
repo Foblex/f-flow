@@ -2,7 +2,6 @@
 <div class="body">
   @for (column of viewModel.columns; track column.id) {
     <db-management-table-column
-      fNodeInput [fInputId]="column.id" fInputConnectableSide="left"
       [column]="viewModel.columns[$index]"
       [tableId]="viewModel.id" [formGroup]="getColumnForm(column.id)">
       <mat-form-field class="db-management-control">

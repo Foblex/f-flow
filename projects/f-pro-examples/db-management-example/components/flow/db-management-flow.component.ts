@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, } from '@angular/core';
 import {
-  EFMarkerType,
+  EFMarkerType, EFResizeHandleType,
   FCanvasChangeEvent,
   FCanvasComponent,
   FCreateConnectionEvent,
-  FCreateNodeEvent, FFlowComponent,
+  FFlowComponent,
   FFlowModule,
   FReassignConnectionEvent,
   FSelectionChangeEvent,
@@ -34,7 +34,11 @@ import { FormArray, FormGroup } from '@angular/forms';
 @Component({
   selector: 'db-management-flow',
   templateUrl: './db-management-flow.component.html',
-  styleUrls: [ './db-management-flow.component.scss' ],
+  styleUrls: [
+    './db-management-flow.component.scss',
+    '../styles/_variables.scss',
+    '../styles/_material-controls.scss'
+  ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -60,6 +64,7 @@ export class DbManagementFlowComponent implements OnInit {
 
   protected viewModel: IDatabaseModel = {
     tables: [],
+    groups: [],
     connections: []
   };
 
@@ -81,6 +86,8 @@ export class DbManagementFlowComponent implements OnInit {
   });
 
   public contextMenuPosition: IPoint = PointExtensions.initialize(0, 0);
+
+  public eResizeHandleType = EFResizeHandleType;
 
   constructor(
     private apiService: DatabaseApiService,

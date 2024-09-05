@@ -1,5 +1,3 @@
-@import "flow-common";
-
 ::ng-deep {
 
   .mat-mdc-form-field {
@@ -10,7 +8,7 @@
     --mat-form-field-container-text-size: 14px;
     --mat-form-field-container-text-tracking: 0;
     --mat-form-field-container-text-weight: 400;
-    --mdc-filled-text-field-input-text-color: var(--db-text-field-input-text-color);
+    --mdc-filled-text-field-input-text-color: var(--db-text-1);
 
     width: 100%;
     min-width: 90px;
@@ -53,25 +51,25 @@
     }
 
     &.mat-focused {
-      --mdc-filled-text-field-container-color: var(--db-filled-text-field-focused-container-color);
+      --mdc-filled-text-field-container-color: var(--db-primary-soft);
     }
 
     &.mat-form-field-invalid {
-      --mdc-filled-text-field-container-color: var(--db-filled-text-field-error-container-color);
+      --mdc-filled-text-field-container-color: var(--db-red-soft);
     }
   }
 
   .db-management-control {
-    --mat-select-panel-background-color: var(--db-select-panel-background-color);
-    --mat-select-container-elevation-shadow: var(--db-select-panel-shadow);
+    --mat-select-panel-background-color: var(--db-background);
+    --mat-select-container-elevation-shadow: var(--db-shadow-3);
     --mat-option-label-text-font: var(--db-font-family);
 
     --mat-option-label-text-tracking: 0;
     --mat-option-label-text-weight: 400;
-    --mat-option-selected-state-label-text-color: var(--db-text-field-input-text-color);
-    --mat-option-label-text-color: var(--db-text-field-input-text-color);
-    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--db-text-field-input-text-color);
-    --mat-option-selected-state-layer-color: var(--db-select-option-selected-state-layer-color);
+    --mat-option-selected-state-label-text-color: var(--db-text-1);
+    --mat-option-label-text-color: var(--db-text-1);
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--db-text-1);
+    --mat-option-selected-state-layer-color: var(--db-primary-soft);
     --mat-option-hover-state-layer-color: var(--db-select-option-hover-state-layer-color);
     --mat-option-focus-state-layer-color: var(--db-select-option-focus-state-layer-color);
 
@@ -151,7 +149,7 @@
     padding: 3px;
     font-size: 14px;
 
-    color: var(--db-button-default-text);
+    color: var(--db-text-1);
     background-color: var(--db-button-default-bg);
     cursor: pointer;
 

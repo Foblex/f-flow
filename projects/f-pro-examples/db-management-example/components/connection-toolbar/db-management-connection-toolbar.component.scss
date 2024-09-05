@@ -4,8 +4,8 @@
     .f-connection-center {
       padding: 4px 8px;
       border-radius: 4px;
-      background-color: var(--db-connection-center-value-background-color);
-      color: var(--db-connection-center-normal-state-text-color);
+      background-color: var(--db-background);
+      color: var(--db-text-1);
 
       .toolbar {
         display: none;
@@ -19,7 +19,7 @@
 
     &.f-selected {
       .f-connection-center {
-        color: var(--db-connection-center-selected-state-text-color);
+        color: var(--db-primary-1);
       }
     }
   }
@@ -34,7 +34,7 @@
               z-index: 1;
 
               padding: 4px;
-              background-color: var(--db-connection-center-selected-state-text-color);
+              background-color: var(--db-primary-1);
 
               .toolbar {
                 display: flex;
@@ -66,7 +66,7 @@
   padding: 8px;
   border-radius: 4px;
   gap: 8px;
-  background-color: var(--db-node-background-color);
+  background-color: var(--db-background);
   border: 1px solid var(--db-node-header-normal-state-background-color);
   animation: scaleIn 0.2s ease-in-out forwards;
 }

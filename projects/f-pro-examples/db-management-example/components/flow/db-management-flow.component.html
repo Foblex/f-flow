@@ -42,14 +42,25 @@
         <div fConnectionCenter db-management-connection-toolbar [viewModel]="connection"></div>
       </f-connection>
     }
+
     @for (table of viewModel.tables; track table.id) {
       <db-management-table [viewModel]="table"
                            [form]="getTableForm(table.id)"
                            [fNodeId]="table.id"
                            fNode
+                           [fNodeParentId]="table.parentId"
                            [fNodePosition]="table.position"
                            (fNodePositionChange)="moveTable($event, table)">
       </db-management-table>
+    }
+    @for (group of viewModel.groups; track group.id) {
+      <div fGroup [fGroupId]="group.id" [fGroupPosition]="group.position" [fGroupSize]="group.size" fDragHandle>
+        <div class="group-title">{{ group.name }}</div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      </div>
     }
   </f-canvas>
   <f-selection-area></f-selection-area>
