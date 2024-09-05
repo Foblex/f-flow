@@ -22,12 +22,21 @@ export class MetaService {
       startWith(new NavigationEnd(1, '', '')),
       filter(event => event instanceof NavigationEnd),
     ).subscribe((x) => {
-      this.meta.updateTag({ name: 'canonical', content: window.location.href });
+      let data = {
+        ...DEFAULT_PAGE_DATA,
+      }
       const item = this.findDocItemByUrl(this.findDocGroupByUrl(window.location.href), window.location.href);
       if (item) {
-        this.title.setTitle(`${ ENGLISH_ENVIRONMENT.title } - ${ item.text }`);
+        data.title = `${ ENGLISH_ENVIRONMENT.title } - ${ item.text }`;
+        data.url = window.location.href;
+        data.description = item.description || DEFAULT_PAGE_DATA.description;
+        data.image = item.image || DEFAULT_PAGE_DATA.image;
+        data.image_width = item.image_width || DEFAULT_PAGE_DATA.image_width;
+        data.image_height = item.image_height || DEFAULT_PAGE_DATA.image_height;
+        data.image_type = item.image_type || DEFAULT_PAGE_DATA.image_type;
       }
-      this.updateJsonLD(item);
+      this.updateMetaTags(data);
+      this.updateJsonLD(data);
     });
   }
 
@@ -39,7 +48,7 @@ export class MetaService {
     return (group?.items || []).find((i) => url.endsWith(i.link));
   }
 
-  private updateJsonLD(item: INavigationItem | undefined): void {
+  private updateJsonLD(item: IPageMetaOg): void {
     const oldScript = this.document.querySelector('script[type="application/ld+json"]');
     oldScript?.remove();
 
@@ -48,17 +57,66 @@ export class MetaService {
     script.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": item?.text || DEFAULT_PAGE_DATA.title,
-      "description": item?.description || DEFAULT_PAGE_DATA.description,
-      "image": item?.image || DEFAULT_PAGE_DATA.image,
-      "url": item?.text ? window.location.href : DEFAULT_PAGE_DATA.url,
+      "headline": item.title,
+      "description": item.description,
+      "image": item.image,
+      "url": item.url
     });
+  }
+
+  private updateMetaTags(item: IPageMetaOg): void {
+    this.title.setTitle(item.title);
+
+    this.meta.updateTag({ property: 'og:url', content: item.url });
+    this.meta.updateTag({ property: 'og:type', content: item.type });
+    this.meta.updateTag({ property: 'og:title', content: item.title });
+    this.meta.updateTag({ property: 'og:site_name', content: item.site_name });
+    this.meta.updateTag({ property: 'og:locale', content: item.locale });
+    this.meta.updateTag({ property: 'og:description', content: item.description });
+    this.meta.updateTag({ property: 'og:image', content: item.image });
+    this.meta.updateTag({ property: 'og:image:secure_url', content: item.image });
+    this.meta.updateTag({ property: 'og:image:type', content: item.image_type });
+    this.meta.updateTag({ property: 'og:image:width', content: item.image_width.toString() });
+    this.meta.updateTag({ property: 'og:image:height', content: item.image_height.toString() });
+
+    this.meta.updateTag({ name: 'description', content: item.description });
+
+    this.meta.updateTag({ name: 'canonical', content: item.url });
   }
 }
 
-const DEFAULT_PAGE_DATA = {
-  title: 'Foblex Flow',
-  description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
+const DEFAULT_PAGE_DATA: IPageMetaOg = {
   url: 'https://flow.foblex.com',
+  type: 'website',
+  title: ENGLISH_ENVIRONMENT.title,
+  site_name: ENGLISH_ENVIRONMENT.title,
+  locale: ENGLISH_ENVIRONMENT.lang,
+  description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
   image: 'https://flow.foblex.com/site-preview.png',
+  image_type: 'image/png',
+  image_width: 3116,
+  image_height: 1880
 };
+
+interface IPageMetaOg {
+
+  url: string;
+
+  type: string;
+
+  title: string;
+
+  site_name: string;
+
+  locale: string;
+
+  description: string;
+
+  image: string;
+
+  image_type: string;
+
+  image_width: number;
+
+  image_height: number;
+}
