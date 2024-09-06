@@ -1,0 +1,13 @@
+<f-flow fDraggable>
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <div fGroup fDragHandle [fGroupPosition]="{x: 10, y: 10}" [fGroupSize]="{ width: 680, height: 580}" fGroupId="group0"></div>
+    <div fGroup fDragHandle [fGroupPosition]="{x: 20, y: 20}" [fGroupSize]="{ width: 600, height: 460}" fGroupId="group1" fGroupParentId="group0"></div>
+    <div style="background-color: #3e63dd" fGroup fDragHandle [fGroupPosition]="{x: 40, y: 40}" [fGroupSize]="{ width: 200, height: 200}" fGroupId="group2" fGroupParentId="group1"></div>
+    <div style="background-color: #3dd68c" fGroup fDragHandle [fGroupPosition]="{x: 280, y: 40}" [fGroupSize]="{ width: 260, height: 260}" fGroupId="group3" fGroupParentId="group1"></div>
+
+
+    <div fNode [fNodePosition]="{ x: 90, y: 120 }" fDragHandle fNodeParentId="group2" fNodeOutput fOutputId="output1" fOutputConnectableSide="right">Node 1</div>
+    <div fNode [fNodePosition]="{ x: 330, y: 120 }" fDragHandle fNodeParentId="group3" fNodeInput fInputId="input1" fInputConnectableSide="left">Node 2</div>
+  </f-canvas>
+</f-flow>
