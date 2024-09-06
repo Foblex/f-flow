@@ -9,4 +9,6 @@ export interface IGroupStorageModel {
   position: IPoint;
 
   size: ISize;
+
+  parentId?: string;
 }

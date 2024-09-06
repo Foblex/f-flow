@@ -24,6 +24,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { ChangeColumnKeyHandler } from './table/change-column-key/change-column-key.handler';
 import { ChangeColumnKeyRequest } from './table/change-column-key/change-column-key.request';
+import { ToGroupViewModelHandler } from './group';
 
 
 
@@ -41,6 +42,7 @@ export class DatabaseApiService {
   public get(): IDatabaseModel {
     return {
       tables: new ToTableViewModelHandler(this.storage).handle(),
+      groups: new ToGroupViewModelHandler(this.storage).handle(),
       connections: new ToConnectionViewModelHandler(this.storage).handle(),
     }
   }
