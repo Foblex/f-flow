@@ -8,7 +8,7 @@ import { FConnectionBase } from '../../f-connection';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { GetElementRectInFlowRequest } from '../get-element-rect-in-flow';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
-import { IConnectorShape, IRoundedRect } from '../intersections';
+import { IConnectorShape } from '../intersections';
 
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)

@@ -7,6 +7,7 @@ import { ISelectable } from '../../f-connection';
 
 function getSelectableItem(hostElement: HTMLElement): ISelectable {
   return {
+    fId: '1',
     fSelectionDisabled: false,
     hostElement: hostElement,
     select: jasmine.createSpy('select'),

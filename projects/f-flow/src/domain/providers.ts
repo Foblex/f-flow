@@ -1,6 +1,3 @@
-import { GetIncomingConnectionsHandler } from './get-incoming-connections.handler';
-import { GetOutgoingConnectionsHandler } from './get-outgoing-connections.handler';
-import { GetConnectionHandler } from './get-connection.handler';
 import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { GetOutputRectInFlowExecution } from './get-output-rect-in-flow';
@@ -17,9 +14,11 @@ import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
 import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
-import { GetExternalNodesRectExecution } from './get-external-nodes-rect';
+import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
 import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
+import { SortItemsLayerExecution } from './sort-items-layer';
+
 
 export const COMMON_PROVIDERS = [
 
@@ -35,7 +34,7 @@ export const COMMON_PROVIDERS = [
 
   GetElementRectInFlowExecution,
 
-  GetExternalNodesRectExecution,
+  GetScaledNodeRectsWithFlowPositionExecution,
 
   GetNodesRectExecution,
 
@@ -55,19 +54,11 @@ export const COMMON_PROVIDERS = [
 
   SelectAndUpdateNodeLayerExecution,
 
+  SortItemsLayerExecution,
+
   SubscribeOnTransformChangesExecution,
 
   UpdateItemLayerExecution,
 
-
-
-  GetConnectionHandler,
-
-
   GetInputRectInFlowExecution,
-
-  GetIncomingConnectionsHandler,
-
-  GetOutgoingConnectionsHandler,
-
 ];

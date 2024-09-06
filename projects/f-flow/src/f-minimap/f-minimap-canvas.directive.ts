@@ -6,8 +6,7 @@ import {
   DomElementExtensions, IRect,
   RectExtensions
 } from '@foblex/core';
-import { FFlowMediator } from '../infrastructure';
-import { FNodeBase } from '../f-node';
+import { FNodeBase, FNodeDirective } from '../f-node';
 
 @Directive({
   selector: 'g[fMinimapCanvas]'
@@ -28,7 +27,6 @@ export class FMinimapCanvasDirective {
 
   constructor(
     private elementReference: ElementRef<SVGGElement>,
-    private fMediator: FFlowMediator,
     private fComponentsStore: FComponentsStore
   ) {
   }
@@ -50,7 +48,7 @@ export class FMinimapCanvasDirective {
 
   private configureNodeElement(element: SVGRectElement, node: FNodeBase): void {
     this.setElementAttributes(element, this.getNodeRect(node));
-    this.applyClassList(element, node);
+    this.applyClassList(element, node, node instanceof FNodeDirective);
   }
 
   private getNodeRect(node: FNodeBase): IRect {
@@ -65,8 +63,8 @@ export class FMinimapCanvasDirective {
     element.setAttribute('height', rect.height.toString());
   }
 
-  private applyClassList(element: SVGRectElement, node: FNodeBase): void {
-    element.classList.add('f-component', 'f-minimap-node');
+  private applyClassList(element: SVGRectElement, node: FNodeBase, isNode: boolean): void {
+    element.classList.add('f-component', isNode ? 'f-minimap-node' : 'f-minimap-group');
     if (node.isSelected()) {
       element.classList.add('f-selected');
     }

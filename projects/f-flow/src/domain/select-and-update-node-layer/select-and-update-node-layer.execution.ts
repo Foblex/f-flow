@@ -5,7 +5,6 @@ import { FExecutionRegister, FFlowMediator } from '../../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../../f-draggable';
 import { UpdateItemLayerRequest } from '../update-item-layer';
-import { FComponentsStore } from '../../f-storage';
 
 @Injectable()
 @FExecutionRegister(SelectAndUpdateNodeLayerRequest)
@@ -13,7 +12,6 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
 
   constructor(
     private fDraggableDataContext: FDraggableDataContext,
-    private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator
   ) {
   }
@@ -21,7 +19,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
     this.selectNodeIfNotSelected(request.node);
 
     this.fMediator.send<void>(
-      new UpdateItemLayerRequest(request.node, this.fComponentsStore.fCanvas!.fNodesContainer.nativeElement)
+      new UpdateItemLayerRequest(request.node, request.node.hostElement.parentElement as HTMLElement)
     );
   }
 

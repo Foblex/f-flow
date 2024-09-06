@@ -8,10 +8,10 @@ import { F_FLOW, FFlowBase } from './f-flow-base';
 import { debounceTime, startWith, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS, GetExternalNodesRectRequest, GetPositionInFlowRequest,
+  COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest,
+  SelectAllRequest, SelectRequest, SortItemsLayerRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
@@ -80,11 +80,14 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   private subscribeOnElementsChanges(): Subscription {
     return this.fComponentsStore.changes.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+      this.fMediator.send(new SortItemsLayerRequest());
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
         this.isLoaded = true;
-        this.fLoaded.emit();
+        setTimeout(() => {
+          this.fLoaded.emit();
+        })
       }
     });
   }
@@ -97,8 +100,8 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this.isLoaded = false;
   }
 
-  public getNodesRect(): IRect {
-    return this.fMediator.send<IRect>(new GetExternalNodesRectRequest());
+  public getAllNodesRect(): IRect | null {
+    return this.fMediator.send<IRect | null>(new GetScaledNodeRectsWithFlowPositionRequest());
   }
 
   public getSelection(): FSelectionChangeEvent {

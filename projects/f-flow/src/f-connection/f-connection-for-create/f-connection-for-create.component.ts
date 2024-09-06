@@ -38,7 +38,8 @@ let uniqueId: number = 0;
 export class FConnectionForCreateComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnDestroy {
 
-  public override fConnectionId: string = `f-connection-for-create-${ uniqueId++ }`;
+  @Input('fConnectionId')
+  public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
 
   public override fText: string = '';
 

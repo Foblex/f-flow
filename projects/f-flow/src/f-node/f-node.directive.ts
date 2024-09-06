@@ -44,14 +44,19 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   @Input('fNodeId')
   public override fId: string = `f-node-${ uniqueId++ }`;
 
+  @Input('fNodeParentId')
+  public override fParentId: string | null | undefined = null;
+
   @Input('fNodePosition')
   public override set position(value: IPoint) {
     this._position = PointExtensions.castToPoint(value);
     this.refresh();
   }
+
   public override get position(): IPoint {
     return this._position;
   }
+
   @Output('fNodePositionChange')
   public override positionChange: EventEmitter<IPoint> = new EventEmitter<IPoint>();
 
@@ -60,9 +65,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     this._size = value;
     this.refresh();
   }
+
   public override get size(): ISize {
     return this._size!;
   }
+
   @Output('fNodeSizeChange')
   public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
 
@@ -72,6 +79,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   @Input('fNodeSelectionDisabled')
   public override fSelectionDisabled: boolean = false;
 
+  @Input()
+  public override fIncludePadding: boolean = true;
 
   //TODO: Add ability to connect to first connectable input if node is under pointer
   @Input()

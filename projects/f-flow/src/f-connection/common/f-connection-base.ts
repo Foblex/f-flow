@@ -41,7 +41,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
              IHasStateChanges, IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
 
-  public abstract fConnectionId: string;
+  public abstract override fId: string;
 
   public abstract fStartColor: string;
 

@@ -49,7 +49,8 @@ export class FMinimapFlowDirective {
   }
 
   private getNodesRect(): IRect {
-    return RectExtensions.elementTransform(this.fMediator.send<IRect>(new GetNodesRectRequest()), this.flowHost)
+    const rect = this.fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize(0, 0, 0, 0);
+    return RectExtensions.elementTransform(rect, this.flowHost)
   }
 
   private getMinimapRect(): IRect {

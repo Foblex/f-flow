@@ -1,20 +1,20 @@
 import { IRect, RectExtensions } from '@foblex/core';
-import { GetExternalNodesRectRequest } from './get-external-nodes-rect.request';
+import { GetScaledNodeRectsWithFlowPositionRequest } from './get-scaled-node-rects-with-flow-position.request';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../f-storage';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 import { FNodeBase } from '../../f-node';
 
 @Injectable()
-@FExecutionRegister(GetExternalNodesRectRequest)
-export class GetExternalNodesRectExecution implements IExecution<GetExternalNodesRectRequest, IRect> {
+@FExecutionRegister(GetScaledNodeRectsWithFlowPositionRequest)
+export class GetScaledNodeRectsWithFlowPositionExecution implements IExecution<GetScaledNodeRectsWithFlowPositionRequest, IRect | null> {
 
   constructor(
     private fComponentsStore: FComponentsStore,
   ) {
   }
 
-  public handle(request: GetExternalNodesRectRequest): IRect {
+  public handle(request: GetScaledNodeRectsWithFlowPositionRequest): IRect | null {
     return RectExtensions.union(this.getNodesRects());
   }
 
@@ -22,7 +22,7 @@ export class GetExternalNodesRectExecution implements IExecution<GetExternalNode
     return this.getNodes().map((x) => {
       const rect = RectExtensions.fromElement(x.hostElement);
       return RectExtensions.initialize(x.position.x, x.position.y, rect.width, rect.height);
-    })
+    });
   }
 
   private getNodes(): FNodeBase[] {

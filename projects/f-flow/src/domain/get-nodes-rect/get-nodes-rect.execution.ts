@@ -7,14 +7,14 @@ import { FNodeBase } from '../../f-node';
 
 @Injectable()
 @FExecutionRegister(GetNodesRectRequest)
-export class GetNodesRectExecution implements IExecution<GetNodesRectRequest, IRect> {
+export class GetNodesRectExecution implements IExecution<GetNodesRectRequest, IRect | null> {
 
   constructor(
     private fComponentsStore: FComponentsStore,
   ) {
   }
 
-  public handle(request: GetNodesRectRequest): IRect {
+  public handle(request: GetNodesRectRequest): IRect | null {
     return RectExtensions.union(this.getNodesRects());
   }
 

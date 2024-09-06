@@ -43,7 +43,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
     }
     this.fDraggable.fReassignConnection.emit(
       new FReassignConnectionEvent(
-        this.dragHandler.connection.fConnectionId,
+        this.dragHandler.connection.fId,
         this.dragHandler.connection.fOutputId,
         this.dragHandler.connection.fInputId,
         input.id

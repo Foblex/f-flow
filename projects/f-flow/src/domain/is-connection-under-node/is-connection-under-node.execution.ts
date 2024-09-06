@@ -1,11 +1,9 @@
-import { IRect, ITransformModel } from '@foblex/core';
+import { IHandler, IRect, ITransformModel } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { IsConnectionUnderNodeRequest } from './is-connection-under-node.request';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext, NodeDragHandler } from '../../f-draggable';
-import { GetOutgoingConnectionsHandler } from '../get-outgoing-connections.handler';
-import { GetIncomingConnectionsHandler } from '../get-incoming-connections.handler';
 import { FNodeBase } from '../../f-node';
 import { FConnectorBase } from '../../f-connectors';
 import { FConnectionBase } from '../../f-connection';
@@ -27,8 +25,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
       private fComponentsStore: FComponentsStore,
       private fDraggableDataContext: FDraggableDataContext,
       private fMediator: FFlowMediator,
-      private getOutgoingConnectionsHandler: GetOutgoingConnectionsHandler,
-      private getIncomingConnectionsHandler: GetIncomingConnectionsHandler
+      // private getOutgoingConnectionsHandler: GetOutgoingConnectionsHandler,
+      // private getIncomingConnectionsHandler: GetIncomingConnectionsHandler
   ) {
   }
 
@@ -53,21 +51,21 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     if (!isCantBeConnectedByInput && outputsOfNode.length && !isCantBeConnectedByOutput && inputsOfNode.length) {
       const output = outputsOfNode[ 0 ];
       const input = inputsOfNode[ 0 ];
-      const outgoingConnections = this.getOutgoingConnectionsHandler.handle([ output ]);
-      const incomingConnections = this.getIncomingConnectionsHandler.handle([ input ]);
-      if (outgoingConnections.length === 0 && incomingConnections.length === 0) {
-        const connections = this.findConnectionsUnderNode(fNode);
-        if (connections.length) {
-          //TODO: need to implement
-        }
-      }
+      // const outgoingConnections = this.getOutgoingConnectionsHandler.handle([ output ]);
+      // const incomingConnections = this.getIncomingConnectionsHandler.handle([ input ]);
+      // if (outgoingConnections.length === 0 && incomingConnections.length === 0) {
+      //   const connections = this.findConnectionsUnderNode(fNode);
+      //   if (connections.length) {
+      //     //TODO: need to implement
+      //   }
+      // }
     }
   }
 
   private isValidRequest(): boolean {
     const result =
         this.fDraggableDataContext.draggableItems.length === 1 &&
-        this.fDraggableDataContext.draggableItems[ 0 ].constructor.name === NodeDragHandler.name;
+        this.fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
 
     return result;
   }
@@ -88,3 +86,41 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     });
   }
 }
+// @Injectable()
+// export class GetIncomingConnectionsHandler implements IHandler<FConnectorBase[], FConnectionBase[]> {
+//
+//   private get fConnections(): FConnectionBase[] {
+//     return this.fComponentsStore.fConnections;
+//   }
+//
+//   constructor(
+//     private fComponentsStore: FComponentsStore,
+//   ) {
+//   }
+//
+//   public handle(inputs: FConnectorBase[]): FConnectionBase[] {
+//     const inputsIds = inputs.map((x) => x.id);
+//     return this.fConnections.filter((x) => {
+//       return inputsIds.includes(x.fInputId);
+//     })!;
+//   }
+// }
+// @Injectable()
+// export class GetOutgoingConnectionsHandler implements IHandler<FConnectorBase[], FConnectionBase[]> {
+//
+//   private get fConnections(): FConnectionBase[] {
+//     return this.fComponentsStore.fConnections;
+//   }
+//
+//   constructor(
+//     private fComponentsStore: FComponentsStore,
+//   ) {
+//   }
+//
+//   public handle(outputs: FConnectorBase[]): FConnectionBase[] {
+//     const outputsIds = outputs.map((x) => x.id);
+//     return this.fConnections.filter((x) => {
+//       return outputsIds.includes(x.fOutputId);
+//     })!;
+//   }
+// }

@@ -66,8 +66,6 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
-    return items.filter(
-      (x) => x.constructor.name === NodeDragHandler.name
-    ).map(x => (x as NodeDragHandler).fNode);
+    return items.filter((x) => x instanceof NodeDragHandler).map(x => x.fNode);
   }
 }

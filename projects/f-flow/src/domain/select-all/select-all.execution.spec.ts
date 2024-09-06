@@ -36,7 +36,7 @@ describe('SelectAllExecution', () => {
 
   it('should select all nodes and connections', () => {
     const mockNode = { fId: 'node1', select: jasmine.createSpy('select') };
-    const mockConnection = { fConnectionId: 'conn1', select: jasmine.createSpy('select') };
+    const mockConnection = { fId: 'conn1', select: jasmine.createSpy('select') };
 
     fComponentsStore.fNodes = [mockNode] as any;
     fComponentsStore.fConnections = [mockConnection] as any;

@@ -14,7 +14,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
 
     fConnection.fMarkers.forEach((marker) => {
 
-      const markerElement = this.createMarkerElement(marker, fConnection.fConnectionId);
+      const markerElement = this.createMarkerElement(marker, fConnection.fId);
 
       const clone = marker.hostElement.cloneNode(true) as HTMLElement;
       clone.setAttribute('height', `${ marker.height }`);

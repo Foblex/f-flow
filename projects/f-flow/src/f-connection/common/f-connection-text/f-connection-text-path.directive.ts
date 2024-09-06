@@ -15,7 +15,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
   public get linkToConnection(): string {
     return F_CONNECTION_IDENTIFIERS.linkToConnection(
-      this.base.fConnectionId + this.base.fOutputId + this.base.fInputId
+      this.base.fId + this.base.fOutputId + this.base.fInputId
     );
   }
 

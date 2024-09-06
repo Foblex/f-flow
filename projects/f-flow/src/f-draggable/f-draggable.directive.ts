@@ -167,7 +167,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     const pointerPositionInCanvas = Point.fromPoint(event.getPosition()).elementTransform(this.hostElement);
     const difference = pointerPositionInCanvas.div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
     this.fDraggableDataContext.draggableItems.forEach((item) => {
-      item.move(difference);
+      item.move({ ...difference });
     });
   }
 

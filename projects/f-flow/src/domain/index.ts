@@ -10,7 +10,7 @@ export * from './get-connection-line';
 
 export * from './get-element-rect-in-flow';
 
-export * from './get-external-nodes-rect';
+export * from './get-scaled-node-rects-with-flow-position';
 
 export * from './get-input-rect-in-flow';
 
@@ -32,6 +32,8 @@ export * from './select-all';
 
 export * from './select-and-update-node-layer';
 
+export * from './sort-items-layer';
+
 export * from './subscribe-on-transform-changes';
 
 export * from './intersections';
@@ -39,12 +41,6 @@ export * from './intersections';
 export * from './update-item-layer';
 
 export * from './cast-to-enum';
-
-export * from './get-connection.handler';
-
-export * from './get-incoming-connections.handler';
-
-export * from './get-outgoing-connections.handler';
 
 export * from './get-value-from-data-attr';
 

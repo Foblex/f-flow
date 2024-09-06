@@ -15,7 +15,7 @@ export class CreateConnectionFinalizeValidator implements IValidator<CreateConne
 
   public handle(request: CreateConnectionFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === CreateConnectionDragHandler.name
+      (x) => x instanceof CreateConnectionDragHandler
     );
   }
 }

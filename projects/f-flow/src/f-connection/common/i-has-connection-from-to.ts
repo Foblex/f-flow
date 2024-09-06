@@ -1,6 +1,6 @@
 export interface IHasConnectionFromTo {
 
-  fConnectionId: string;
+  fId: string;
 
   fOutputId: string;
 

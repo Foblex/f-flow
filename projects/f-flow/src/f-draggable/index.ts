@@ -2,6 +2,8 @@ export * from './canvas';
 
 export * from './connections';
 
+export * from './domain';
+
 export * from './node';
 
 export * from './node-resize';

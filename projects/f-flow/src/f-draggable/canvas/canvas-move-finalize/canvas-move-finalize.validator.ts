@@ -15,7 +15,7 @@ export class CanvasMoveFinalizeValidator implements IValidator<CanvasMoveFinaliz
 
   public handle(request: CanvasMoveFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === CanvasDragHandler.name
+      (x) => x instanceof CanvasDragHandler
     );
   }
 }

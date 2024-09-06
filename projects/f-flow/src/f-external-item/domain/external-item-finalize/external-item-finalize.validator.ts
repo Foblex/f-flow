@@ -16,7 +16,7 @@ export class ExternalItemFinalizeValidator implements IValidator<ExternalItemFin
 
   public handle(request: ExternalItemFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === ExternalItemDragHandler.name
+      (x) => x instanceof ExternalItemDragHandler
     );
   }
 }

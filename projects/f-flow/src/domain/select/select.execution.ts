@@ -30,7 +30,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     });
 
     request.connections.forEach((key) => {
-      const connection = this.fDataContext.fConnections.find((x) => x.fConnectionId === key);
+      const connection = this.fDataContext.fConnections.find((x) => x.fId === key);
       if(connection) {
         connection.select();
         this.fDraggableDataContext.selectedItems.push(connection);

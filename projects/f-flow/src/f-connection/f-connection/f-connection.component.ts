@@ -38,7 +38,7 @@ let uniqueId: number = 0;
   styleUrls: [ "./f-connection.component.scss" ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.id]': 'fConnectionId',
+    '[attr.id]': 'fId',
     class: "f-component f-connection",
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled',
@@ -48,8 +48,8 @@ let uniqueId: number = 0;
 export class FConnectionComponent
     extends FConnectionBase implements OnInit, OnDestroy {
 
-  @Input()
-  public override fConnectionId: string = `f-connection-${ uniqueId++ }`;
+  @Input('fConnectionId')
+  public override fId: string = `f-connection-${ uniqueId++ }`;
 
   private _fText: string = '';
   @Input()

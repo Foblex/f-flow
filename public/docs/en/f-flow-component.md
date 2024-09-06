@@ -14,7 +14,7 @@ The **FFlowComponent** manages the flow of draggable and connectable elements wi
 
 ## Methods
 
- - `getNodesRect(): IRect;` Returns the bounding rectangle of all nodes in the flow.
+ - `getAllNodesRect(): IRect | null;` Returns the bounding rectangle of all nodes in the flow.
  
  - `getSelection(): FSelectionChangeEvent;` Returns the current selection state of the flow.
  

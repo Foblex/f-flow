@@ -45,6 +45,9 @@ export class FGroupDirective extends FNodeBase
   @Input('fGroupId')
   public override fId: string = `f-group-${ uniqueId++ }`;
 
+  @Input('fGroupParentId')
+  public override fParentId: string | null | undefined = null;
+
   @Input('fGroupPosition')
   public override set position(value: IPoint) {
     this._position = PointExtensions.castToPoint(value);
@@ -72,6 +75,9 @@ export class FGroupDirective extends FNodeBase
 
   @Input('fGroupSelectionDisabled')
   public override fSelectionDisabled: boolean = false;
+
+  @Input()
+  public override fIncludePadding: boolean = true;
 
   @Input()
   public override fConnectOnNode: boolean = true;
