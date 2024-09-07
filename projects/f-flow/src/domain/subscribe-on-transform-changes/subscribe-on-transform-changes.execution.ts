@@ -18,7 +18,8 @@ export class SubscribeOnTransformChangesExecution
   public handle(request: SubscribeOnTransformChangesRequest): Observable<void> {
     return merge(
       this.fTransformStore.changes,
-      this.fComponentsStore.changes
+      this.fComponentsStore.componentsData$,
+      this.fComponentsStore.componentsCount$
     );
   }
 }

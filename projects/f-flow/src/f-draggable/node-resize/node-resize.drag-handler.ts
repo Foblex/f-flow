@@ -1,72 +1,72 @@
-import { IPoint, ISize, PointExtensions, RectExtensions, SizeExtensions } from '@foblex/core';
+import { IPoint, IRect, RectExtensions } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
-import { FComponentsStore } from '../../f-storage';
-
-const RESIZE_DIRECTIONS = {
-
-  [ EFResizeHandleType.LEFT_TOP ]: { x: -1, y: -1 },
-
-  [ EFResizeHandleType.LEFT_BOTTOM ]: { x: -1, y: 1 },
-
-  [ EFResizeHandleType.RIGHT_TOP ]: { x: 1, y: -1 },
-
-  [ EFResizeHandleType.RIGHT_BOTTOM ]: { x: 1, y: 1 },
-};
+import { FFlowMediator } from '../../infrastructure';
+import { GetNormalizedNodeRectRequest } from '../domain';
+import { GetNodeResizeRestrictionsRequest, INodeResizeRestrictions } from './get-node-resize-restrictions';
+import { ApplyChildResizeRestrictionsRequest } from './apply-child-resize-restrictions';
+import { CalculateChangedSizeRequest } from './calculate-changed-size';
+import { CalculateChangedPositionRequest } from './calculate-changed-position';
+import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-restrictions';
 
 export class NodeResizeDragHandler implements IDraggableItem {
 
-  private readonly onPointerDownPosition: IPoint;
+  private originalRect!: IRect;
 
-  private readonly rect;
+  private restrictions!: INodeResizeRestrictions;
 
-  private get scale(): number {
-    return this.fComponentsStore.fCanvas!.transform.scale;
-  }
+  private childRestrictions: (rect: IRect, restrictionsRect: IRect) => void = () => {};
 
   constructor(
-    private fComponentsStore: FComponentsStore,
+    private fMediator: FFlowMediator,
     public fNode: FNodeBase,
     public fResizeHandleType: EFResizeHandleType,
   ) {
-    this.onPointerDownPosition = this.fNode.position;
-    this.rect = RectExtensions.fromElement(this.fNode.hostElement);
+  }
+
+  public initialize(): void {
+    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(this.fNode));
+
+    this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
+    if(this.restrictions.childRect) {
+      this.childRestrictions = (rect: IRect, restrictionsRect: IRect) => {
+        this.applyChildRestrictions(rect, restrictionsRect);
+      };
+    }
   }
 
   public move(difference: IPoint): void {
-    const sizeAndOffset = this.calculateSize(difference, RESIZE_DIRECTIONS[ this.fResizeHandleType ]);
-    const newPosition = this.calculatePosition(difference, RESIZE_DIRECTIONS[ this.fResizeHandleType ], sizeAndOffset.offsetPosition);
+    const changedRect = this.changePosition(difference, this.changeSize(difference));
 
-    this.fNode.updatePosition(newPosition);
-    this.fNode.updateSize(sizeAndOffset.newSize);
+    this.childRestrictions(changedRect, this.restrictions.childRect!);
+    this.applyParentRestrictions(changedRect, this.restrictions.parentRect);
+
+    this.fNode.updatePosition(changedRect);
+    this.fNode.updateSize(changedRect);
     this.fNode.redraw();
   }
 
-  private calculateSize(difference: IPoint, direction: IPoint): { newSize: ISize, offsetPosition: IPoint } {
-    const newSize = SizeExtensions.initialize(
-      this.rect.width / this.scale + direction.x * difference.x,
-      this.rect.height / this.scale + direction.y * difference.y
+  private changeSize(difference: IPoint): IRect {
+    return this.fMediator.send<IRect>(
+      new CalculateChangedSizeRequest(this.originalRect, difference, this.fResizeHandleType)
     );
-
-    let offsetPosition = PointExtensions.initialize(0, 0);
-
-    if (newSize.width < 0) {
-      offsetPosition.x = newSize.width;
-      newSize.width = Math.abs(newSize.width);
-    }
-
-    if (newSize.height < 0) {
-      offsetPosition.y = newSize.height;
-      newSize.height = Math.abs(newSize.height);
-    }
-
-    return { newSize, offsetPosition };
   }
 
-  private calculatePosition(difference: IPoint, direction: IPoint, offsetPosition: IPoint): IPoint {
-    return PointExtensions.initialize(
-      this.onPointerDownPosition.x + (direction.x === -1 ? difference.x : 0) + offsetPosition.x,
-      this.onPointerDownPosition.y + (direction.y === -1 ? difference.y : 0) + offsetPosition.y
+  private changePosition(difference: IPoint, changedRect: IRect): IRect {
+    return this.fMediator.send<IRect>(
+      new CalculateChangedPositionRequest(this.originalRect, changedRect, difference, this.fResizeHandleType)
+    );
+  }
+
+  private applyChildRestrictions(rect: IRect, restrictionsRect: IRect): void {
+    this.fMediator.send(
+      new ApplyChildResizeRestrictionsRequest(rect, restrictionsRect)
+    );
+  }
+
+  private applyParentRestrictions(rect: IRect, restrictionsRect: IRect): void {
+    this.fMediator.send(
+      new ApplyParentResizeRestrictionsRequest(rect, restrictionsRect)
     );
   }
 

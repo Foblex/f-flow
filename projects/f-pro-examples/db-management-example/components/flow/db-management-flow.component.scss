@@ -72,15 +72,19 @@
     background-color: var(--db-background);
     bottom: 16px;
     right: 16px;
-    width: 140px;
-    height: 120px;
+    width: 100px;
+    height: 70px;
 
-    .f-minimap-node {
+    .f-minimap-node, .f-minimap-group {
       fill: var(--db-text-1);
 
       &.f-selected {
         fill: var(--db-primary-2);
       }
+    }
+
+    .f-minimap-group {
+      opacity: 0.5;
     }
 
     .f-minimap-view {
@@ -89,3 +93,59 @@
   }
 }
 
+.f-group {
+  display: block;
+  background-color: var(--db-gray-soft);
+  padding: 40px;
+
+  .group-title {
+    color: var(--db-text-1);
+    font-size: 16px;
+    position: absolute;
+    top: 20px;
+  }
+
+  &.f-selected {
+    border: 1px solid var(--db-primary-1);
+
+    .f-resize-handle {
+      display: block;
+    }
+  }
+}
+
+.f-resize-handle {
+  --resize-handle-size: 16px;
+  --resize-handle-offset: -8px;
+  display: none;
+  position: absolute;
+  width: var(--resize-handle-size);
+  height: var(--resize-handle-size);
+  background-color: var(--db-background);
+  border: 1px solid var(--db-primary-1);
+  border-radius: 1px;
+
+  &.f-resize-handle-left-top {
+    top: var(--resize-handle-offset);
+    left: var(--resize-handle-offset);
+    cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-right-top {
+    top: var(--resize-handle-offset);
+    right: var(--resize-handle-offset);
+    cursor: nesw-resize;
+  }
+
+  &.f-resize-handle-left-bottom {
+    bottom: var(--resize-handle-offset);
+    left: var(--resize-handle-offset);
+    cursor: nesw-resize;
+  }
+
+  &.f-resize-handle-right-bottom {
+    bottom: var(--resize-handle-offset);
+    right: var(--resize-handle-offset);
+    cursor: nwse-resize;
+  }
+}

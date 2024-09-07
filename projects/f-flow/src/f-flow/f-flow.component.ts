@@ -8,10 +8,10 @@ import { F_FLOW, FFlowBase } from './f-flow-base';
 import { debounceTime, startWith, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS, GetExternalNodesRectRequest, GetPositionInFlowRequest,
+  COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest,
+  SelectAllRequest, SelectRequest, SortItemLayersRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
@@ -76,31 +76,40 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this.subscription$.add(
       this.subscribeOnElementsChanges()
     );
+    this.subscription$.add(
+      this.subscribeOnComponentsCountChanges()
+    );
+  }
+
+  private subscribeOnComponentsCountChanges(): Subscription {
+    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+      this.fMediator.send(new SortItemLayersRequest());
+    });
   }
 
   private subscribeOnElementsChanges(): Subscription {
-    return this.fComponentsStore.changes.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
         this.isLoaded = true;
         setTimeout(() => {
           this.fLoaded.emit();
-        });
+        })
       }
     });
   }
 
   public redraw(): void {
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public reset(): void {
     this.isLoaded = false;
   }
 
-  public getNodesRect(): IRect {
-    return this.fMediator.send<IRect>(new GetExternalNodesRectRequest());
+  public getAllNodesRect(): IRect | null {
+    return this.fMediator.send<IRect | null>(new GetScaledNodeRectsWithFlowPositionRequest());
   }
 
   public getSelection(): FSelectionChangeEvent {

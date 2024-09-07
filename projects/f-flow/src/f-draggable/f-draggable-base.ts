@@ -57,6 +57,8 @@ export abstract class FDraggableBase implements IHasHostElement {
 
   private moveHandler: Function = this.checkDragSequenceToStart;
 
+  private pointerDownElement: HTMLElement | null = null;
+
   protected constructor(
     protected ngZone: ICanRunOutsideAngular | undefined
   ) {
@@ -66,6 +68,7 @@ export abstract class FDraggableBase implements IHasHostElement {
     const isSyntheticEvent = this.isSyntheticEvent(event);
     const isFakeEvent = isFakeMousedownFromScreenReader(event);
     const mouseEvent = new IMouseEvent(event);
+    this.pointerDownElement = mouseEvent.targetElement;
 
     if (isSyntheticEvent || isFakeEvent || this.disabled) {
       return;
@@ -93,11 +96,12 @@ export abstract class FDraggableBase implements IHasHostElement {
   private onTouchDown = (event: TouchEvent) => {
     const isFakeEvent = isFakeTouchstartFromScreenReader(event as TouchEvent)
     const touchEvent = new ITouchDownEvent(event);
+    this.pointerDownElement = touchEvent.targetElement;
 
     if (isFakeEvent || this.disabled) {
       return;
     }
-    let result = this.onPointerDown(new ITouchDownEvent(event));
+    let result = this.onPointerDown(touchEvent);
     if (result) {
 
       this.dragStartTime = Date.now();
@@ -132,7 +136,8 @@ export abstract class FDraggableBase implements IHasHostElement {
   private checkDragSequenceToStart(event: IPointerEvent): void {
     const pointerPosition = event.getPosition();
 
-    if (!this.isDragStarted) {
+    if (!this.isDragStarted && this.pointerDownElement) {
+      event.setTarget(this.pointerDownElement);
       const distanceX = Math.abs(pointerPosition.x - this.dragStartPosition.x);
       const distanceY = Math.abs(pointerPosition.y - this.dragStartPosition.y);
       const isOverThreshold = distanceX + distanceY >= this.dragStartThreshold;
@@ -174,6 +179,8 @@ export abstract class FDraggableBase implements IHasHostElement {
 
   private endDragSequence(): void {
     this.isDragStarted = false;
+    this.pointerDownElement = null;
+
     this.moveHandler = this.checkDragSequenceToStart;
     this.mouseListeners();
     this.mouseListeners = EventExtensions.emptyListener();

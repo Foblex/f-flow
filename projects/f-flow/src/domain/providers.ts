@@ -1,6 +1,3 @@
-import { GetIncomingConnectionsHandler } from './get-incoming-connections.handler';
-import { GetOutgoingConnectionsHandler } from './get-outgoing-connections.handler';
-import { GetConnectionHandler } from './get-connection.handler';
 import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { GetOutputRectInFlowExecution } from './get-output-rect-in-flow';
@@ -11,15 +8,20 @@ import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import { GetInputRectInFlowExecution } from './get-input-rect-in-flow';
 import { SelectExecution } from './select';
-import { UpdateItemLayerExecution } from './update-item-layer';
+import {
+  MoveFrontElementsBeforeTargetElementExecution,
+  UpdateItemAndChildrenLayersExecution
+} from './update-item-and-children-layers';
 import { GetPositionInFlowExecution } from './get-position-in-flow';
 import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
 import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
-import { GetExternalNodesRectExecution } from './get-external-nodes-rect';
+import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
 import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
+import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
+import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 
 export const COMMON_PROVIDERS = [
 
@@ -31,11 +33,13 @@ export const COMMON_PROVIDERS = [
 
   GetCanBeSelectedItemsExecution,
 
+  GetDeepChildrenNodesAndGroupsExecution,
+
   GetConnectionLineExecution,
 
   GetElementRectInFlowExecution,
 
-  GetExternalNodesRectExecution,
+  GetScaledNodeRectsWithFlowPositionExecution,
 
   GetNodesRectExecution,
 
@@ -55,19 +59,17 @@ export const COMMON_PROVIDERS = [
 
   SelectAndUpdateNodeLayerExecution,
 
+  SortItemLayersExecution,
+
+  SortItemsByParentExecution,
+
+  SortNodeLayersExecution,
+
   SubscribeOnTransformChangesExecution,
 
-  UpdateItemLayerExecution,
+  UpdateItemAndChildrenLayersExecution,
 
-
-
-  GetConnectionHandler,
-
+  MoveFrontElementsBeforeTargetElementExecution,
 
   GetInputRectInFlowExecution,
-
-  GetIncomingConnectionsHandler,
-
-  GetOutgoingConnectionsHandler,
-
 ];

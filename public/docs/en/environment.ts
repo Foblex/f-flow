@@ -17,7 +17,7 @@ export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
 function createEnvironment(): IDocsEnvironment {
   return {
-    lang: 'en_US',
+    lang: 'en',
     docsDir: './docs/en/',
     logo: './logo.svg',
     title: 'Foblex Flow',
@@ -66,6 +66,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'node-with-position-example', component: import('../../../projects/f-examples/node/node-with-position-example/node-with-position-example.component') },
       { tag: 'adding-dragging-functionality-example', component: import('../../../projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component') },
       { tag: 'node-with-drag-handle-example', component: import('../../../projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component') },
+      { tag: 'groups-simple-example', component: import('../../../projects/f-examples/group/groups-simple-example/groups-simple-example.component') },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },

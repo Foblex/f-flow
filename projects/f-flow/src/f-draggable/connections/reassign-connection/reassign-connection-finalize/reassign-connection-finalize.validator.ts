@@ -15,7 +15,7 @@ export class ReassignConnectionFinalizeValidator implements IValidator<ReassignC
 
   public handle(request: ReassignConnectionFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === ReassignConnectionDragHandler.name
+      (x) => x instanceof ReassignConnectionDragHandler
     );
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ITransformModel } from '@foblex/core';
 import { FConnectionBase, FMarkerBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
@@ -12,7 +12,15 @@ import { FDraggableBase } from '../f-draggable';
 @Injectable()
 export class FComponentsStore {
 
-  public readonly changes: Subject<void> = new Subject<void>();
+  private readonly componentsDataChanges: Subject<void> = new Subject<void>();
+  public get componentsData$(): Observable<void> {
+    return this.componentsDataChanges.asObservable();
+  }
+
+  private readonly componentsCountChanges: Subject<void> = new Subject<void>();
+  public get componentsCount$(): Observable<void> {
+    return this.componentsCountChanges.asObservable();
+  }
 
   public get flowHost(): HTMLElement {
     return this.fFlow?.hostElement!;
@@ -50,14 +58,18 @@ export class FComponentsStore {
 
   public addComponent<T>(collection: T[], component: T): void {
     collection.push(component);
-    this.changes.next();
+    this.componentsCountChanges.next();
   }
 
   public removeComponent<T>(collection: T[], component: T): void {
     const index = collection.indexOf(component);
     if (index > -1) {
       collection.splice(index, 1);
-      this.changes.next();
+      this.componentsCountChanges.next();
     }
+  }
+
+  public componentDataChanged(): void {
+    this.componentsDataChanges.next();
   }
 }

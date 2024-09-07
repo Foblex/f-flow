@@ -14,8 +14,8 @@ export class SelectionAreaFinalizeValidator implements IValidator<SelectionAreaF
   }
 
   public handle(request: SelectionAreaFinalizeRequest): boolean {
-    return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === SelectionAreaDragHandle.name
+    return this.fDraggableDataContext.draggableItems.some((x) =>
+      x instanceof SelectionAreaDragHandle
     );
   }
 }

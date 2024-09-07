@@ -65,7 +65,7 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
     const draggedNodeRects = currentNodes.map((x) => {
       return this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
     });
-    this.draggedNodeRect = RectExtensions.union(draggedNodeRects);
+    this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
 
     const allNodesExcludeCurrents = allNodes.filter((x) => {
       return !currentNodes.includes(x);

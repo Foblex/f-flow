@@ -20,7 +20,7 @@ export class FConnectionGradientComponent implements IConnectionGradient {
 
   public get gradientId(): string {
     return F_CONNECTION_IDENTIFIERS.gradientId(
-      this.base.fConnectionId + this.base.fOutputId + this.base.fInputId
+      this.base.fId + this.base.fOutputId + this.base.fInputId
     );
   }
 

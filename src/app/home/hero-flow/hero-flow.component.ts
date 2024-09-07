@@ -9,7 +9,7 @@ import {
   EFMarkerType,
   FFlowComponent, FFlowModule
 } from '@foblex/flow';
-import { IPoint, PointExtensions } from '@foblex/core';
+import { IPoint, PointExtensions, RectExtensions } from '@foblex/core';
 import { debounceTime, fromEvent, startWith, Subscription } from 'rxjs';
 import { IHeroFlowNode } from './domain/i-hero-flow-node';
 import { IHeroFlowConnection } from './domain/i-hero-flow-connection';
@@ -65,7 +65,7 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
   private subscribeOnWindowResize(): Subscription {
     return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(5)).subscribe(() => {
       const result = new GetNewCanvasTransformHandler().handle(
-        new GetNewCanvasTransformRequest(this.fFlowComponent.getNodesRect())
+        new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
       );
       this.scale = result.scale;
       this.canvasPosition = result.position;

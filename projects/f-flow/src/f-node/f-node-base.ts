@@ -11,6 +11,8 @@ export abstract class FNodeBase implements IHasStateChanges, ISelectable, IHasHo
 
   public abstract fId: string;
 
+  public abstract fParentId: string | null | undefined;
+
   public abstract hostElement: HTMLElement;
 
   public readonly stateChanges: Subject<void> = new Subject<void>();
@@ -35,6 +37,10 @@ export abstract class FNodeBase implements IHasStateChanges, ISelectable, IHasHo
   public abstract fSelectionDisabled: boolean;
 
   public abstract fConnectOnNode: boolean;
+
+  public fCanBeResizedByChild: boolean = true;
+
+  public abstract fIncludePadding: boolean;
 
   public abstract refresh(): void;
 

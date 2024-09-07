@@ -1,5 +1,5 @@
-
-<div fNodeOutput [fOutputId]="column.id"></div>
+<div fNodeInput [fInputId]="column.id" fInputConnectableSide="left"></div>
+<div fNodeOutput [fOutputId]="column.id" fOutputConnectableSide="right"></div>
 
 <div class="column-key">
   @if (column.key === eTableColumnKey.PRIMARY) {

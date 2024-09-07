@@ -15,7 +15,7 @@ export class MinimapDragFinalizeValidator implements IValidator<MinimapDragFinal
 
   public handle(request: MinimapDragFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x.constructor.name === FMinimapDragHandler.name
+      (x) => x instanceof FMinimapDragHandler
     );
   }
 }

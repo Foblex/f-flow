@@ -1,10 +1,13 @@
 <ng-container>
-    <div #fConnectionsContainer>
-        <ng-content select="f-connection"></ng-content>
-        <ng-content select="f-connection-for-create"></ng-content>
-    </div>
-    <div #fNodesContainer>
-        <ng-content select="[fGroup]"></ng-content>
-        <ng-content select="[fNode]"></ng-content>
-    </div>
+  <div #fGroupsContainer>
+    <ng-content select="[fGroup]"></ng-content>
+  </div>
+  <div #fConnectionsContainer>
+    <ng-content select="f-connection"></ng-content>
+    <ng-content select="f-connection-for-create"></ng-content>
+  </div>
+
+  <div #fNodesContainer>
+    <ng-content select="[fNode]"></ng-content>
+  </div>
 </ng-container>

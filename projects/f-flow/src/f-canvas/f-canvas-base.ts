@@ -36,6 +36,8 @@ export abstract class FCanvasBase
 
   public abstract hostElement: HTMLElement;
 
+  public abstract fGroupsContainer: ElementRef<HTMLElement>;
+
   public abstract fNodesContainer: ElementRef<HTMLElement>;
 
   public abstract fConnectionsContainer: ElementRef<HTMLElement>;

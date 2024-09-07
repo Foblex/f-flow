@@ -15,7 +15,7 @@ export class NodeResizeFinalizeValidator implements IValidator<NodeResizeFinaliz
 
   public handle(request: NodeResizeFinalizeRequest): boolean {
     return this.fDraggableDataContext.draggableItems.some((x) =>
-      x.constructor.name === NodeResizeDragHandler.name
+      x instanceof NodeResizeDragHandler
     );
   }
 }

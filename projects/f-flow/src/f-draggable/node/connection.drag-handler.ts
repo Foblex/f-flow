@@ -1,54 +1,43 @@
-import { ILine, IPoint, LineExtensions, Point } from '@foblex/core';
-import { IDraggableItem } from '../i-draggable-item';
+import { ILine, IPoint } from '@foblex/core';
+import { FConnectionBase } from '../../f-connection';
+import { FFlowMediator } from '../../infrastructure';
 import {
   GetConnectionLineRequest,
-  GetInputRectInFlowRequest,
-  GetInputRectInFlowResponse,
-  GetOutputRectInFlowRequest,
-  GetOutputRectInFlowResponse
 } from '../../domain';
-import { FConnectionBase } from '../../f-connection';
-import { EFConnectableSide } from '../../f-connectors';
-import { FFlowMediator } from '../../infrastructure';
+import { ConnectionBaseDragHandler } from './connection-base-drag-handler';
+import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
 
-export class ConnectionDragHandler implements IDraggableItem {
+export class ConnectionDragHandler extends ConnectionBaseDragHandler {
 
-  private onPointerDownLine: ILine = LineExtensions.initialize();
-
-  private fromConnectorSide: EFConnectableSide = EFConnectableSide.BOTTOM;
-
-  private toConnectorSide: EFConnectableSide = EFConnectableSide.TOP;
+  private sourceRestrictions!: INodeMoveRestrictions;
+  private targetRestrictions!: INodeMoveRestrictions;
 
   constructor(
-      private fMediator: FFlowMediator,
-      public connection: FConnectionBase,
+    fMediator: FFlowMediator,
+    connection: FConnectionBase
   ) {
+    super(fMediator, connection);
   }
 
-  public initialize() {
-    const fromConnector = this.fMediator.send<GetOutputRectInFlowResponse>(
-        new GetOutputRectInFlowRequest(this.connection.fOutputId)
-    );
-    this.fromConnectorSide = fromConnector.fConnectableSide;
-
-    const toConnector = this.fMediator.send<GetInputRectInFlowResponse>(new GetInputRectInFlowRequest(this.connection.fInputId));
-    this.toConnectorSide = toConnector.fConnectableSide;
-
-    this.onPointerDownLine = this.fMediator.send(new GetConnectionLineRequest(
-            fromConnector.rect,
-            toConnector.rect,
-            this.connection.fBehavior,
-            fromConnector.fConnectableSide,
-            toConnector.fConnectableSide,
-        )
-    );
+  public setOutputRestrictions(min: IPoint, max: IPoint) {
+    this.sourceRestrictions = { min, max };
   }
 
-  public move(difference: IPoint): void {
-    const fromPoint = Point.fromPoint(this.onPointerDownLine.point1).add(difference);
-    const toPoint = Point.fromPoint(this.onPointerDownLine.point2).add(difference);
+  public setInputRestrictions(min: IPoint, max: IPoint) {
+    this.targetRestrictions = { min, max };
+  }
 
-    this.connection.setLine(fromPoint, this.fromConnectorSide, toPoint, this.toConnectorSide);
-    this.connection.redraw();
+  public override move(difference: IPoint): void {
+    this.redrawConnection(this.getNewLineValue(difference));
+  }
+
+  private getNewLineValue(difference: IPoint): ILine {
+    return this.fMediator.send<ILine>(new GetConnectionLineRequest(
+      this.fromConnectorRect.addPoint(this.getDifference({ ...difference }, this.sourceRestrictions)),
+      this.toConnectorRect.addPoint(this.getDifference({ ...difference }, this.targetRestrictions)),
+      this.connection.fBehavior,
+      this.fromConnectorSide,
+      this.toConnectorSide
+    ));
   }
 }

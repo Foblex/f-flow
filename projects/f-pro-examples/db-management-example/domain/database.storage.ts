@@ -1,8 +1,9 @@
-import { ITableStorageModel } from './table/i-table-storage-model';
-import { ITableConnectionStorageModel } from './connection/i-table-connection-storage-model';
-import { GuidExtensions, IPoint } from '@foblex/core';
+import { ITableStorageModel } from './table';
+import { ITableConnectionStorageModel } from './connection';
+import { GuidExtensions } from '@foblex/core';
 import { ETableRelationType } from './connection';
 import { ETableColumnKey, ETableColumnType } from './table';
+import { IGroupStorageModel } from './group';
 
 export interface IDatabaseStorage {
 
@@ -10,13 +11,13 @@ export interface IDatabaseStorage {
 
   connections: ITableConnectionStorageModel[];
 
-  groups: { groupId: string, groupName: string, position: IPoint }[];
+  groups: IGroupStorageModel[];
 }
 
 const CUSTOMERS = {
   id: 'customers',
   name: 'Customers',
-  parentId: 'sales',
+  parentId: 'customer_group',
   position: { x: 700, y: 50 },
   columns: [ {
     id: 'customer_id',
@@ -43,8 +44,8 @@ const CUSTOMERS = {
 const ORDERS = {
   id: 'orders',
   name: 'Orders',
-  parentId: 'sales',
-  position: { x: 320, y: 50 },
+  parentId: 'order_group',
+  position: { x: 220, y: -50 },
   columns: [ {
     id: 'order_id',
     name: 'id',
@@ -69,7 +70,7 @@ const ORDERS = {
 const PRODUCTS = {
   id: 'products',
   name: 'Products',
-  parentId: 'inventory',
+  parentId: 'product_group',
   position: { x: 760, y: 310 },
   columns: [ {
     id: 'product_id',
@@ -99,8 +100,8 @@ const PRODUCTS = {
 const ORDER_ITEMS = {
   id: 'order_items',
   name: 'Order Items',
-  parentId: 'sales',
-  position: { x: -110, y: 200 },
+  parentId: 'order_group',
+  position: { x: -210, y: 100 },
   columns: [ {
     id: 'order_item_id',
     name: 'id',
@@ -130,7 +131,7 @@ const ORDER_ITEMS = {
 const CATEGORIES = {
   id: 'categories',
   name: 'Categories',
-  parentId: 'inventory',
+  parentId: 'product_group',
   position: { x: 700, y: 600 },
   columns: [ {
     id: 'category_id',
@@ -156,7 +157,7 @@ const CATEGORIES = {
 const PRODUCT_CATEGORIES = {
   id: 'product_categories',
   name: 'Product Categories',
-  parentId: 'inventory',
+  parentId: 'product_group',
   position: { x: 220, y: 400 },
   columns: [ {
     id: 'product_category_id',
@@ -179,7 +180,6 @@ const PRODUCT_CATEGORIES = {
 const SUPPLIERS = {
   id: 'suppliers',
   name: 'Suppliers',
-  parentId: 'inventory',
   position: { x: 700, y: 800 },
   columns: [ {
     id: 'supplier_id',
@@ -205,7 +205,6 @@ const SUPPLIERS = {
 const INVENTORY = {
   id: 'inventory',
   name: 'Inventory',
-  parentId: 'inventory',
   position: { x: 320, y: 600 },
   columns: [ {
     id: 'inventory_id',
@@ -236,7 +235,6 @@ const INVENTORY = {
 const EMPLOYEES = {
   id: 'employees',
   name: 'Employees',
-  parentId: 'management',
   position: { x: -50, y: 650 },
   columns: [ {
     id: 'employee_id',
@@ -262,8 +260,8 @@ const EMPLOYEES = {
 const PAYMENTS = {
   id: 'payments',
   name: 'Payments',
-  parentId: 'sales',
-  position: { x: -120, y: -100 },
+  parentId: 'order_group',
+  position: { x: -220, y: -190 },
   columns: [ {
     id: 'payment_id',
     name: 'id',
@@ -295,19 +293,48 @@ export const DATABASE_STORAGE: IDatabaseStorage = {
     PRODUCT_CATEGORIES, SUPPLIERS, INVENTORY, EMPLOYEES, PAYMENTS
   ],
   connections: [
-    { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'order_customer_id', to: 'customer_id' },
-    { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'order_item_order_id', to: 'order_id' },
-    { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'order_item_product_id', to: 'product_id' },
-    { id: GuidExtensions.generate(), type: ETableRelationType.MANY_TO_MANY, from: 'product_category_product_id', to: 'product_id' },
-    { id: GuidExtensions.generate(), type: ETableRelationType.MANY_TO_MANY, from: 'product_category_category_id', to: 'category_id' },
-    // { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'inventory_product_id', to: 'product_id' },
-    { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'inventory_supplier_id', to: 'supplier_id' },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.ONE_TO_MANY,
+      from: 'order_customer_id',
+      to: 'customer_id'
+    },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.ONE_TO_MANY,
+      from: 'order_item_order_id',
+      to: 'order_id'
+    },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.ONE_TO_MANY,
+      from: 'order_item_product_id',
+      to: 'product_id'
+    },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.MANY_TO_MANY,
+      from: 'product_category_product_id',
+      to: 'product_id'
+    },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.MANY_TO_MANY,
+      from: 'product_category_category_id',
+      to: 'category_id'
+    },
+    {
+      id: GuidExtensions.generate(),
+      type: ETableRelationType.ONE_TO_MANY,
+      from: 'inventory_supplier_id',
+      to: 'supplier_id'
+    },
     { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'payment_order_id', to: 'order_id' },
   ],
   groups: [
-    { groupId: 'sales', groupName: 'Sales', position: { x: 20, y: 20 } },
-    { groupId: 'inventory', groupName: 'Inventory', position: { x: 20, y: 180 } },
-    { groupId: 'management', groupName: 'Management', position: { x: 20, y: 620 } }
+    { id: 'order_group', name: 'Order', position: { x: -260, y: -240 }, size: { width: 780, height: 600 }, parentId: 'customer_group' },
+    { id: 'customer_group', name: 'Customer', position: { x: -300, y: -290 }, size: { width: 1300, height: 800 } },
+    { id: 'product_group', name: 'Product', position: { x: 190, y: 300 }, size: { width: 900, height: 800 } },
   ]
 };
 

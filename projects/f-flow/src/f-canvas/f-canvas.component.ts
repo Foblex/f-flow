@@ -58,6 +58,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
     return this.elementReference.nativeElement;
   }
 
+  @ViewChild('fGroupsContainer', { static: true })
+  public override fGroupsContainer!: ElementRef<HTMLElement>;
+
   @ViewChild('fNodesContainer', { static: true })
   public override fNodesContainer!: ElementRef<HTMLElement>;
 
@@ -91,7 +94,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    const fNodesRect = this.fMediator.send<IRect>(new GetNodesRectRequest());
+    const fNodesRect = this.fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }
@@ -109,7 +112,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   }
 
   public oneToOne(): void {
-    const fNodesRect = this.fMediator.send<IRect>(new GetNodesRectRequest());
+    const fNodesRect = this.fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }

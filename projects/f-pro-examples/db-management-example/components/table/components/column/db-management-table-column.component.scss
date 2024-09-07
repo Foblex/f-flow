@@ -27,14 +27,14 @@
 .f-node-input, .f-node-output {
   position: absolute;
   background-color: transparent;
-  width: 24px;
+  width: 56px;
   height: 100%;
 }
 
 .f-node-input {
-  left: 0;
+  left: -8px;
 }
 
 .f-node-output {
-  right: 0;
+  right: -8px;
 }

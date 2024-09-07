@@ -38,7 +38,7 @@ let uniqueId: number = 0;
   styleUrls: [ "./f-connection.component.scss" ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.id]': 'fConnectionId',
+    '[attr.id]': 'fId',
     class: "f-component f-connection",
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled',
@@ -48,14 +48,14 @@ let uniqueId: number = 0;
 export class FConnectionComponent
     extends FConnectionBase implements OnInit, OnDestroy {
 
-  @Input()
-  public override fConnectionId: string = `f-connection-${ uniqueId++ }`;
+  @Input('fConnectionId')
+  public override fId: string = `f-connection-${ uniqueId++ }`;
 
   private _fText: string = '';
   @Input()
   public override set fText(value: string) {
     this._fText = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fText(): string {
     return this._fText;
@@ -65,7 +65,7 @@ export class FConnectionComponent
   @Input()
   public override set fStartColor(value: string) {
     this._fStartColor = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fStartColor(): string {
     return this._fStartColor;
@@ -75,7 +75,7 @@ export class FConnectionComponent
   @Input()
   public override set fEndColor(value: string) {
     this._fEndColor = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fEndColor(): string {
     return this._fEndColor;
@@ -85,7 +85,7 @@ export class FConnectionComponent
   @Input()
   public override set fOutputId(value: string) {
     this._fOutputId = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fOutputId(): string {
     return this._fOutputId;
@@ -95,7 +95,7 @@ export class FConnectionComponent
   @Input()
   public override set fInputId(value: string) {
     this._fInputId = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fInputId(): string {
     return this._fInputId;
@@ -105,7 +105,7 @@ export class FConnectionComponent
   @Input()
   public override set fRadius(value: number) {
     this._fRadius = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fRadius(): number {
     return this._fRadius;
@@ -115,7 +115,7 @@ export class FConnectionComponent
   @Input()
   public override set fOffset(value: number) {
     this._fOffset = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fOffset(): number {
     return this._fOffset;
@@ -125,7 +125,7 @@ export class FConnectionComponent
   @Input()
   public override set fBehavior(value: string | EFConnectionBehavior) {
     this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fBehavior(): EFConnectionBehavior {
     return this._behavior;
@@ -135,7 +135,7 @@ export class FConnectionComponent
   @Input()
   public override set fType(value: EFConnectionType | string) {
     this._type = value as unknown as EFConnectionType; //castToEnum(value, 'fType', EFConnectionType);
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
   public override get fType(): EFConnectionType {
     return this._type;

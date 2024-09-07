@@ -1,9 +1,12 @@
-import { ITableConnectionViewModel } from './connection/i-table-connection-view-model';
-import { ITableViewModel } from './table/i-table-view-model';
+import { ITableConnectionViewModel } from './connection';
+import { ITableViewModel } from './table';
+import { IGroupViewModel } from './group';
 
 export interface IDatabaseModel {
 
   tables: ITableViewModel[];
+
+  groups: IGroupViewModel[];
 
   connections: ITableConnectionViewModel[];
 }

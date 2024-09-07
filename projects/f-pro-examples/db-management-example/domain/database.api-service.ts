@@ -24,8 +24,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { ChangeColumnKeyHandler } from './table/change-column-key/change-column-key.handler';
 import { ChangeColumnKeyRequest } from './table/change-column-key/change-column-key.request';
-
-
+import { ToGroupViewModelHandler } from './group';
 
 @Injectable()
 export class DatabaseApiService {
@@ -41,6 +40,7 @@ export class DatabaseApiService {
   public get(): IDatabaseModel {
     return {
       tables: new ToTableViewModelHandler(this.storage).handle(),
+      groups: new ToGroupViewModelHandler(this.storage).handle(),
       connections: new ToConnectionViewModelHandler(this.storage).handle(),
     }
   }
@@ -67,7 +67,6 @@ export class DatabaseApiService {
   }
 
   public changeColumnKey(tableId: string, columnId: string, key: ETableColumnKey | null): void {
-    console.log('changeColumnKey', tableId, columnId, key);
     new ChangeColumnKeyHandler(this.storage).handle(
       new ChangeColumnKeyRequest(tableId, columnId, key)
     );

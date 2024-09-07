@@ -37,7 +37,7 @@ export class NodeResizePreparationExecution implements IExecution<NodeResizePrep
     const handleType = getValueFromDataAttr(request.event.targetElement, 'fResizeHandleType', '.f-resize-handle');
     const itemsToDrag: IDraggableItem[] = [
       new NodeResizeDragHandler(
-        this.fComponentsStore,
+        this.fMediator,
         this.getNode(request.event.targetElement),
         EFResizeHandleType[ handleType as keyof typeof EFResizeHandleType ]
       )

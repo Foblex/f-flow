@@ -21,6 +21,8 @@
 
   --db-text-1: rgba(60, 60, 67);
 
+  --db-gray-soft: rgba(142, 150, 170, 0.14);
+
   &.dark {
     --db-background: #000000;
     --db-primary-1: #3e63dd;
@@ -32,6 +34,8 @@
     --db-yellow: #f9b44e;
 
     --db-text-1: rgba(255, 255, 245, 0.86);
+
+    --db-gray-soft: rgba(101, 117, 133, 0.16);
   }
 }
 

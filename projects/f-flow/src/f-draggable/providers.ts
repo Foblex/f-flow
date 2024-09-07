@@ -6,12 +6,15 @@ import { NODE_RESIZE_PROVIDERS } from './node-resize';
 import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
 import { F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS } from '../f-external-item/domain/providers';
 import { F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS } from '../f-selection-area/domain/providers';
+import { DRAG_AND_DROP_COMMON_PROVIDERS } from './domain';
 
 export const F_DRAGGABLE_PROVIDERS = [
 
   ...CANVAS_PROVIDERS,
 
   ...CONNECTIONS_PROVIDERS,
+
+  ...DRAG_AND_DROP_COMMON_PROVIDERS,
 
   ...SINGLE_SELECT_PROVIDERS,
 

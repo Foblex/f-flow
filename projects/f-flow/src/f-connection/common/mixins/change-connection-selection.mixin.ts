@@ -3,6 +3,8 @@ import { IConnectionPath } from '../f-path';
 
 export interface ISelectable {
 
+  fId: string;
+
   fSelectionDisabled: boolean;
 
   hostElement: HTMLElement | SVGElement;
@@ -21,6 +23,8 @@ type CanChangeConnectionSelectionConstructor = Constructor<ISelectable> & Abstra
 export function mixinChangeConnectionSelection<T extends AbstractConstructor<IHasHostElement>>(base: T): CanChangeConnectionSelectionConstructor & T;
 export function mixinChangeConnectionSelection<T extends Constructor<IHasHostElement>>(base: T): CanChangeConnectionSelectionConstructor & T {
   return class extends base {
+
+    public fId: string = '';
 
     public fSelectionDisabled: boolean = false;
 
