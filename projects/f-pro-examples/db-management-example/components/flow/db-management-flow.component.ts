@@ -102,6 +102,7 @@ export class DbManagementFlowComponent implements OnInit {
 
   private subscribeOnReloadData(): Subscription {
     return this.apiService.reload$.pipe(startWith(null)).subscribe((reason: EReloadReason | null) => {
+      console.log('reload');
       this.getData();
       if (reason === EReloadReason.CONNECTION_CHANGED) {
         this.fFlowComponent.clearSelection();
@@ -128,6 +129,7 @@ export class DbManagementFlowComponent implements OnInit {
   }
 
   public selectionChanged(event: FSelectionChangeEvent): void {
+    console.log('selection changed', event);
     this.isSingleSelection = event.connections.length + event.nodes.length === 1;
     this.selectionService.setTables(event.nodes);
     this.changeDetectorRef.markForCheck();

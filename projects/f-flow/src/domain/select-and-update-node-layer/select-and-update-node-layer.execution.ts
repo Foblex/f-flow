@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator } from '../../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../../f-draggable';
-import { UpdateItemLayerRequest } from '../update-item-layer';
+import { UpdateItemAndChildrenLayersRequest } from '../update-item-and-children-layers';
 
 @Injectable()
 @FExecutionRegister(SelectAndUpdateNodeLayerRequest)
@@ -19,7 +19,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
     this.selectNodeIfNotSelected(request.node);
 
     this.fMediator.send<void>(
-      new UpdateItemLayerRequest(request.node, request.node.hostElement.parentElement as HTMLElement)
+      new UpdateItemAndChildrenLayersRequest(request.node, request.node.hostElement.parentElement as HTMLElement)
     );
   }
 

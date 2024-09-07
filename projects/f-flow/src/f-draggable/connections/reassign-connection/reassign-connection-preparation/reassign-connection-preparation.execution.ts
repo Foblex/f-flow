@@ -3,7 +3,7 @@ import { ReassignConnectionPreparationRequest } from './reassign-connection-prep
 import { IPoint, ITransformModel, Point } from '@foblex/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { UpdateItemLayerRequest } from '../../../../domain';
+import { UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../infrastructure';
 import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase, FConnectionComponent } from '../../../../f-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
@@ -40,7 +40,7 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
     }
 
     this.fMediator.send<void>(
-      new UpdateItemLayerRequest(
+      new UpdateItemAndChildrenLayersRequest(
         connectionToReassign, this.fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement
       )
     );

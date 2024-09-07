@@ -1,7 +1,5 @@
 export * from './convert-computed-to-pixels';
 
-export * from './get-children-nodes';
-
 export * from './get-node-padding';
 
 export * from './get-normalized-node-rect';

@@ -14,7 +14,8 @@ import {
   PutInputConnectionHandlersToArrayRequest
 } from './domain/put-input-connection-handlers-to-array';
 import { NodeResizeByChildDragHandler } from '../node-resize-by-child.drag-handler';
-import { GetChildrenNodesRequest, GetParentNodesRequest, IsArrayHasParentNodeRequest } from '../../domain';
+import { GetParentNodesRequest, IsArrayHasParentNodeRequest } from '../../domain';
+import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
@@ -61,7 +62,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getChildrenNodes(fId: string): FNodeBase[] {
-    return this.fMediator.send<FNodeBase[]>(new GetChildrenNodesRequest(fId));
+    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
   private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {

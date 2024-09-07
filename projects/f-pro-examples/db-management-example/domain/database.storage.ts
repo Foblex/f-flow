@@ -332,9 +332,9 @@ export const DATABASE_STORAGE: IDatabaseStorage = {
     { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'payment_order_id', to: 'order_id' },
   ],
   groups: [
+    { id: 'order_group', name: 'Order', position: { x: -260, y: -240 }, size: { width: 780, height: 600 }, parentId: 'customer_group' },
     { id: 'customer_group', name: 'Customer', position: { x: -300, y: -290 }, size: { width: 1300, height: 800 } },
     { id: 'product_group', name: 'Product', position: { x: 190, y: 300 }, size: { width: 900, height: 800 } },
-    { id: 'order_group', name: 'Order', position: { x: -260, y: -240 }, size: { width: 780, height: 600 }, parentId: 'customer_group' },
   ]
 };
 

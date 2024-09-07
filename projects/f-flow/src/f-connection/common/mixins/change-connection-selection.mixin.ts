@@ -9,8 +9,6 @@ export interface ISelectable {
 
   hostElement: HTMLElement | SVGElement;
 
-  // fParentId?: string | null;
-
   select(): void;
 
   deselect(): void;

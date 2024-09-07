@@ -10,7 +10,6 @@ import {
   Renderer2,
 } from "@angular/core";
 import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
-import { F_NODE, FNodeBase } from './f-node-base';
 import { debounceTime, merge, startWith, Subscription } from 'rxjs';
 import { FResizeObserver } from './f-resize-observer';
 import { FComponentsStore } from '../f-storage';
@@ -21,6 +20,7 @@ import {
 } from '../f-connectors';
 import { FFlowMediator } from '../infrastructure';
 import { EmitTransformChangesRequest } from '../domain';
+import { F_NODE, FNodeBase } from './f-node-base';
 
 let uniqueId: number = 0;
 
@@ -136,7 +136,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
           new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
         );
       });
-      this.fComponentsStore.changes.next();
+      this.fComponentsStore.componentDataChanged();
     });
   }
 

@@ -7,6 +7,7 @@ import { ClearSelectionExecution } from './clear-selection.execution';
 import { ISelectable } from '../../f-connection';
 
 export const MOCK_SELECTABLE_ITEM: ISelectable = {
+  fId: '1',
   fSelectionDisabled: false,
   hostElement: document.createElement('svg'),
   select: jasmine.createSpy('select'),

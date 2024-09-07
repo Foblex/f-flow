@@ -11,7 +11,7 @@ import {
   COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest, SortItemsLayerRequest,
+  SelectAllRequest, SelectRequest, SortItemLayersRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
@@ -76,11 +76,19 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this.subscription$.add(
       this.subscribeOnElementsChanges()
     );
+    this.subscription$.add(
+      this.subscribeOnComponentsCountChanges()
+    );
+  }
+
+  private subscribeOnComponentsCountChanges(): Subscription {
+    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+      this.fMediator.send(new SortItemLayersRequest());
+    });
   }
 
   private subscribeOnElementsChanges(): Subscription {
-    return this.fComponentsStore.changes.pipe(startWith(null), debounceTime(20)).subscribe(() => {
-      this.fMediator.send(new SortItemsLayerRequest());
+    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
@@ -93,7 +101,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public reset(): void {

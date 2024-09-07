@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { GetChildrenNodesRequest } from './get-children-nodes.request';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
-import { FNodeBase } from '../../../f-node';
-import { FComponentsStore } from '../../../f-storage';
+import { GetDeepChildrenNodesAndGroupsRequest } from './get-deep-children-nodes-and-groups.request';
+import { FComponentsStore } from '../../f-storage';
+import { FNodeBase } from '../../f-node';
+import { FExecutionRegister, IExecution } from '../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(GetChildrenNodesRequest)
-export class GetChildrenNodesExecution
-  implements IExecution<GetChildrenNodesRequest, FNodeBase[]> {
+@FExecutionRegister(GetDeepChildrenNodesAndGroupsRequest)
+export class GetDeepChildrenNodesAndGroupsExecution
+  implements IExecution<GetDeepChildrenNodesAndGroupsRequest, FNodeBase[]> {
 
   constructor(
     private fComponentsStore: FComponentsStore
   ) {
   }
 
-  public handle(request: GetChildrenNodesRequest): FNodeBase[] {
+  public handle(request: GetDeepChildrenNodesAndGroupsRequest): FNodeBase[] {
     return this.getChildrenNodes(request.fId);
   }
 

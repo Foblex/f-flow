@@ -32,6 +32,7 @@ export class DbManagementTableHeaderComponent {
   }
 
   public createColumn(): void {
+    console.log('create column');
     this.apiService.createColumn(this.viewModel.id);
   }
 }

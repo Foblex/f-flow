@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { SingleSelectRequest } from './single-select.request';
-import { UpdateItemLayerRequest } from '../../domain';
+import { UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { IPointerEvent, MouseEventExtensions, PlatformService } from '@foblex/core';
 import { FConnectionBase, ISelectable } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
@@ -24,7 +24,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
 
     const item = this.getSelectableItem(event);
     if (item) {
-      this.fMediator.send<void>(new UpdateItemLayerRequest(item, item.hostElement.parentElement!));
+      this.fMediator.send<void>(new UpdateItemAndChildrenLayersRequest(item, item.hostElement.parentElement!));
     }
 
     this.isMultiselectEnabled(event) ? this.multiSelect(item) : this.singleSelect(item);

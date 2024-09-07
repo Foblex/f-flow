@@ -58,6 +58,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
     return this.elementReference.nativeElement;
   }
 
+  @ViewChild('fGroupsContainer', { static: true })
+  public override fGroupsContainer!: ElementRef<HTMLElement>;
+
   @ViewChild('fNodesContainer', { static: true })
   public override fNodesContainer!: ElementRef<HTMLElement>;
 

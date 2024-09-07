@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { SortItemsLayerExecution } from './sort-items-layer.execution';
-import { SortItemsLayerRequest } from './sort-items-layer.request';
+import { UpdateItemAndChildrenLayersExecution } from './update-item-and-children-layers.execution';
+import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers.request';
 import { FFlowMediator } from '../../infrastructure';
 import { setupTestModule } from '../test-setup';
 import { ISelectable } from '../../f-connection';
@@ -22,11 +22,11 @@ function createElementWithId(id: string): HTMLElement {
   return element;
 }
 
-describe('SortItemsLayerExecution', () => {
+describe('UpdateItemLayerExecution', () => {
   let fMediator: FFlowMediator;
 
   beforeEach(() => {
-    setupTestModule([ SortItemsLayerExecution ]);
+    setupTestModule([ UpdateItemAndChildrenLayersExecution ]);
     fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
   });
 
@@ -42,7 +42,7 @@ describe('SortItemsLayerExecution', () => {
 
     expect(itemContainer.children[ 1 ].id).toEqual('targetElement');
 
-    fMediator.send(new SortItemsLayerRequest());
+    fMediator.send(new UpdateItemAndChildrenLayersRequest(getSelectableItem(targetElement), itemContainer));
 
     expect(itemContainer.children[ 0 ].id).toEqual('anotherElement');
     expect(itemContainer.children[ 1 ].id).toEqual('itemElement');
@@ -59,7 +59,7 @@ describe('SortItemsLayerExecution', () => {
 
     expect(itemContainer.children[ 1 ].id).toEqual('targetElement');
 
-    fMediator.send(new SortItemsLayerRequest());
+    fMediator.send(new UpdateItemAndChildrenLayersRequest(getSelectableItem(targetElement), itemContainer));
 
     expect(itemContainer.children[ 0 ].id).toEqual('anotherElement');
     expect(itemContainer.children[ 1 ].id).toEqual('targetElement');
@@ -69,7 +69,7 @@ describe('SortItemsLayerExecution', () => {
     const itemContainer = createElementWithId('itemContainer');
     const targetElement = createElementWithId('targetElement');
 
-    fMediator.send(new SortItemsLayerRequest());
+    fMediator.send(new UpdateItemAndChildrenLayersRequest(getSelectableItem(targetElement), itemContainer));
 
     expect(itemContainer.children.length).toBe(0);
   });
@@ -81,7 +81,7 @@ describe('SortItemsLayerExecution', () => {
 
     itemContainer.appendChild(anotherElement);
 
-    fMediator.send(new SortItemsLayerRequest());
+    fMediator.send(new UpdateItemAndChildrenLayersRequest(getSelectableItem(targetElement), itemContainer));
 
     expect(itemContainer.children.length).toBe(1);
     expect(itemContainer.children[ 0 ].id).toEqual('anotherElement');

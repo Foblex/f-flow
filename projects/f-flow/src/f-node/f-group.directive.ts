@@ -132,7 +132,7 @@ export class FGroupDirective extends FNodeBase
           new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
         );
       });
-      this.fComponentsStore.changes.next();
+      this.fComponentsStore.componentDataChanged();
     });
   }
 

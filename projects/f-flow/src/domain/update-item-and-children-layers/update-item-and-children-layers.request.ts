@@ -1,5 +1,5 @@
 import { ISelectable } from '../../f-connection';
-export class UpdateItemLayerRequest {
+export class UpdateItemAndChildrenLayersRequest {
 
   constructor(
     public item: ISelectable,

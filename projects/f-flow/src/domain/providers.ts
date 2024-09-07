@@ -8,7 +8,10 @@ import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import { GetInputRectInFlowExecution } from './get-input-rect-in-flow';
 import { SelectExecution } from './select';
-import { UpdateItemLayerExecution } from './update-item-layer';
+import {
+  MoveFrontElementsBeforeTargetElementExecution,
+  UpdateItemAndChildrenLayersExecution
+} from './update-item-and-children-layers';
 import { GetPositionInFlowExecution } from './get-position-in-flow';
 import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
@@ -17,8 +20,8 @@ import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-laye
 import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
 import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
-import { SortItemsLayerExecution } from './sort-items-layer';
-
+import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
+import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 
 export const COMMON_PROVIDERS = [
 
@@ -29,6 +32,8 @@ export const COMMON_PROVIDERS = [
   EmitTransformChangesExecution,
 
   GetCanBeSelectedItemsExecution,
+
+  GetDeepChildrenNodesAndGroupsExecution,
 
   GetConnectionLineExecution,
 
@@ -54,11 +59,17 @@ export const COMMON_PROVIDERS = [
 
   SelectAndUpdateNodeLayerExecution,
 
-  SortItemsLayerExecution,
+  SortItemLayersExecution,
+
+  SortItemsByParentExecution,
+
+  SortNodeLayersExecution,
 
   SubscribeOnTransformChangesExecution,
 
-  UpdateItemLayerExecution,
+  UpdateItemAndChildrenLayersExecution,
+
+  MoveFrontElementsBeforeTargetElementExecution,
 
   GetInputRectInFlowExecution,
 ];

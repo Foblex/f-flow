@@ -47,7 +47,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fStartColor(value: string) {
     this._fStartColor = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fStartColor(): string {
@@ -58,7 +58,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fEndColor(value: string) {
     this._fEndColor = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fEndColor(): string {
@@ -73,7 +73,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fRadius(value: number) {
     this._fRadius = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fRadius(): number {
@@ -84,7 +84,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fOffset(value: number) {
     this._fOffset = value;
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fOffset(): number {
@@ -96,7 +96,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fBehavior(value: EFConnectionBehavior | string) {
     this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fBehavior(): EFConnectionBehavior {
@@ -108,7 +108,7 @@ export class FConnectionForCreateComponent
   @Input()
   public override set fType(value: EFConnectionType | string) {
     this._type = castToEnum(value, 'fType', EFConnectionType);
-    this.fComponentsStore.changes.next();
+    this.fComponentsStore.componentDataChanged();
   }
 
   public override get fType(): EFConnectionType {

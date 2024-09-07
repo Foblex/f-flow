@@ -3,7 +3,8 @@ import { GetNormalizedChildrenNodesRectRequest } from './get-normalized-children
 import { IRect, RectExtensions } from '@foblex/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FNodeBase } from '../../../f-node';
-import { GetChildrenNodesRequest, GetNodePaddingRequest, GetNormalizedNodeRectRequest } from '../../domain';
+import { GetNodePaddingRequest, GetNormalizedNodeRectRequest } from '../../domain';
+import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(GetNormalizedChildrenNodesRectRequest)
@@ -26,7 +27,7 @@ export class GetNormalizedChildrenNodesRectExecution
   }
 
   private getChildrenNodes(fId: string): FNodeBase[] {
-    return this.fMediator.send<FNodeBase[]>(new GetChildrenNodesRequest(fId));
+    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
   private normalizeRect(node: FNodeBase): IRect {
