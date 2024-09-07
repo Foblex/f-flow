@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
-import ELK from 'elkjs/lib/elk.bundled';
 import { GuidExtensions, PointExtensions } from '@foblex/core';
 import { FCheckboxComponent } from '@foblex/f-docs';
 
@@ -16,6 +15,8 @@ import { FCheckboxComponent } from '@foblex/f-docs';
   ]
 })
 export class ElkjsLayoutExampleComponent implements OnInit {
+
+  private ELK!: any;
 
   public nodes: any[] = [];
   public connections: any[] = [];
@@ -60,11 +61,24 @@ export class ElkjsLayoutExampleComponent implements OnInit {
   }
 
   private async mapGraphData(configuration: any): Promise<void> {
-    new ELK().layout(configuration).then((data: any) => {
+    return this.loadElk().then(ELK => {
+      return new ELK().layout(configuration);
+    }).then((data: any) => {
       this.connections = this.getConnections(data);
       this.nodes = this.getNodes(data);
       this.changeDetectorRef.markForCheck();
     }).catch(console.error);
+  }
+
+  private loadElk(): Promise<any> {
+    if (this.ELK) {
+      return Promise.resolve(this.ELK);
+    }
+
+    return import('elkjs/lib/elk.bundled').then(module => {
+      this.ELK = module.default;
+      return this.ELK;
+    });
   }
 
   private getNodes(data: any): any[] {
