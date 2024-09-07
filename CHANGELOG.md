@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [12.6.0](https://github.com/foblex/flow/compare/v12.5.0...v12.6.0) (2024-09-07)
+
+
+### Features
+
+* Added dagre layout example ([737dd1f](https://github.com/foblex/flow/commit/737dd1f1a13895f29e38656cfab238d5d2659eb7))
+* Added db management flow example ([4a605a3](https://github.com/foblex/flow/commit/4a605a32c4f20e00b533dafb7de7d3de28d3e358))
+* Added elkjs layout example ([9695e08](https://github.com/foblex/flow/commit/9695e0838d0572410d2514f2b1b17f2884e823a8))
+* Added examples common styles ([5e96e98](https://github.com/foblex/flow/commit/5e96e983f803ed5678802c08d6057cde75e087c6))
+* Added f-group functionality ([8a3c8ce](https://github.com/foblex/flow/commit/8a3c8cebe0ddb17252b6cada15f0080dfcd971c6))
+* Added fDragHandle documentation ([a655fdc](https://github.com/foblex/flow/commit/a655fdce6e5869379e80dc7da43d6bd35ea0e212))
+* Modified layers sorting functionality after adding f-group ([3c60249](https://github.com/foblex/flow/commit/3c602498df9dfdcd4a5a74bc174dd23000015eca))
+* Moved external item drag and drop functionality to component directory ([8b9dbb1](https://github.com/foblex/flow/commit/8b9dbb114eec8816a10e7de9494bcc6e82187911))
+* Moved selection area drag and drop functionality to component directory ([121a63e](https://github.com/foblex/flow/commit/121a63e1fdc8d5bdb7be9127c0008ba9f2de14e0))
+* Updated to f-docs v1.2.2 ([bdaa267](https://github.com/foblex/flow/commit/bdaa267a705b701cbd5bb0886940f925412a79bd))
+
+
+### Bug Fixes
+
+* Fixed dagre layout trackby unique key ([102a771](https://github.com/foblex/flow/commit/102a771474654b07a3fe8f12c34ef07d900d2364))
+* Foblex Core is unable to slide the schema [#37](https://github.com/foblex/flow/issues/37) ([55a4070](https://github.com/foblex/flow/commit/55a407095c39d2428ce3b84d8cd448558dffb993))
+* Prevent selection when drag fExternalItem ([036e192](https://github.com/foblex/flow/commit/036e1921bd3f539dd93a03f724f0c5331f8a636d))
+
+
+### Documentation
+
+* Added custom connection type example ([b574306](https://github.com/foblex/flow/commit/b574306a7522c201d1b0274dd983f95a6a64b9fb))
+* Added db-management-flow dark theme ([1f8fe45](https://github.com/foblex/flow/commit/1f8fe45009ded71f6d825c6a6b49910ae1b0ec06))
+* Added f-group to db-management example ([65902f5](https://github.com/foblex/flow/commit/65902f59dcc07cc465beecc5b18046f763c6ca64))
+* Added group example ([dfd428b](https://github.com/foblex/flow/commit/dfd428b84808df863714920dd9dc60a525bdc0e7))
+* Added node with connectors example ([fb3bcb7](https://github.com/foblex/flow/commit/fb3bcb79ccf914b87c2e12888cdb25b993c42a83))
+* Updated Output and Input Documentation ([d942f88](https://github.com/foblex/flow/commit/d942f889a3906c287b1e7f783f40e5034c5fb716))
+
+
+### Tests
+
+* Added test to change items layers functionality ([01f27dd](https://github.com/foblex/flow/commit/01f27dd852c5d9c495b010e2144fa7241da31252))
+
 ## [12.5.0](https://github.com/foblex/flow/compare/v12.3.9...v12.5.0) (2024-08-11)
 
 ### Features

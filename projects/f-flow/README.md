@@ -1,6 +1,7 @@
-
 <p align="center">
-  <img height="280px" style="margin: auto" src="https://github.com/user-attachments/assets/0fd21960-ac6c-4f9b-8e9f-214bb08b6236" alt="Foblex Flow Logo"/>
+  <a href="https://flow.foblex.com">
+    <img style="margin: auto" src="https://github.com/user-attachments/assets/0557914d-a43d-43c1-8346-760d3627da14" alt="Foblex Flow Logo"/>
+  </a>
 </p>
 
 <p align="center">
@@ -12,9 +13,9 @@
   </a>
 </p>
 
-## Welcome to @foblex/flow
+## Welcome to Foblex Flow
 
-`@foblex/flow` is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of
+Foblex Flow is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of
 dynamic flows. It provides components for flows, nodes, and connections, automating node
 manipulation and inter-node connections.
 
@@ -35,11 +36,11 @@ manipulation and inter-node connections.
 
 ### Getting Started and Documentation
 
-Visit our [Documentation](https://flow.foblex.github.com) to learn how to install and use the library in your Angular project.
+Visit our [Documentation](https://flow.foblex.com/docs/get-started) to learn how to install and use the library in your Angular project.
 
 ### Installation
 
-To add `@foblex/flow` to your project, run the following command:
+To add Foblex Flow to your project, run the following command:
 
 ```bash
 npm install @foblex/flow
@@ -48,19 +49,21 @@ npm install @foblex/flow
 ### Usage
 
 Example:
+
 ```html
+
 <f-flow fDraggable>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1"></f-connection>
-      <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right"> Drag me </div>
-      <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left"> Drag me </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right"> Drag me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left"> Drag me</div>
   </f-canvas>
 </f-flow>
 ```
 
 ### Support and Community
 
-For questions, feedback, and support, visit the [Foblex Portal](https://www.foblex.com/flow/home) to connect with the community and the development team.
+For questions, feedback, and support, visit the [Foblex Portal](https://flow.foblex.com) to connect with the community and the development team.
 You can also report [issues](https://github.com/Foblex/flow/issues) and request [features](https://github.com/Foblex/flow/discussions) on the [GitHub repository](https://github.com/Foblex/flow).
 
 ### License

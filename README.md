@@ -36,7 +36,7 @@ manipulation and inter-node connections.
 
 ### Getting Started and Documentation
 
-Visit our [Documentation](https://flow.foblex.com) to learn how to install and use the library in your Angular project.
+Visit our [Documentation](https://flow.foblex.com/docs/get-started) to learn how to install and use the library in your Angular project.
 
 ### Installation
 
