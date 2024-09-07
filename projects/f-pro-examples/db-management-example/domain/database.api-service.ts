@@ -26,8 +26,6 @@ import { ChangeColumnKeyHandler } from './table/change-column-key/change-column-
 import { ChangeColumnKeyRequest } from './table/change-column-key/change-column-key.request';
 import { ToGroupViewModelHandler } from './group';
 
-
-
 @Injectable()
 export class DatabaseApiService {
 
@@ -69,7 +67,6 @@ export class DatabaseApiService {
   }
 
   public changeColumnKey(tableId: string, columnId: string, key: ETableColumnKey | null): void {
-    console.log('changeColumnKey', tableId, columnId, key);
     new ChangeColumnKeyHandler(this.storage).handle(
       new ChangeColumnKeyRequest(tableId, columnId, key)
     );
