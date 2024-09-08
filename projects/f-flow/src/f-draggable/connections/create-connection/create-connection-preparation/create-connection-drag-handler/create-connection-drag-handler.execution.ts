@@ -11,6 +11,10 @@ import { CreateConnectionDragHandler } from '../../create-connection.drag-handle
 export class CreateConnectionDragHandlerExecution
   implements IHandler<CreateConnectionDragHandlerRequest, void> {
 
+  private get flowHost(): HTMLElement {
+    return this.fComponentsStore.flowHost;
+  }
+
   private get transform(): ITransformModel {
     return this.fComponentsStore.fCanvas!.transform;
   }
@@ -27,11 +31,14 @@ export class CreateConnectionDragHandlerExecution
     this.fComponentsStore.fTempConnection!.initialize();
 
     this.fDraggableDataContext.onPointerDownScale = this.transform.scale;
+    const positionRelativeToFlowComponent = Point.fromPoint(request.onPointerDownPosition).elementTransform(this.flowHost).div(this.transform.scale);
+    this.fDraggableDataContext.onPointerDownPosition = positionRelativeToFlowComponent;
 
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.position).div(this.transform.scale);
+    const positionRelativeToCanvasComponent = Point.fromPoint(positionRelativeToFlowComponent).mult(this.transform.scale)
+      .sub(this.transform.position).sub(this.transform.scaledPosition).div(this.transform.scale);
 
     this.fDraggableDataContext.draggableItems = [
-      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore.fTempConnection!, request.connectorCenter)
+      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore.fTempConnection!, positionRelativeToCanvasComponent)
     ];
   }
 }
