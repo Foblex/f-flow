@@ -1,4 +1,4 @@
-import { ILine, IPoint, Point, RectExtensions, } from '@foblex/core';
+import { ILine, IPoint, Point, PointExtensions, RectExtensions, } from '@foblex/core';
 import { IDraggableItem } from '../../i-draggable-item';
 import {
   GetConnectionLineRequest, GetOutputRectInFlowRequest, GetOutputRectInFlowResponse, RoundedRect
@@ -17,7 +17,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   constructor(
     private fMediator: FFlowMediator,
     public connection: FConnectionBase,
-    private mouseDownPoint: IPoint
+    private onPointerDownPosition: IPoint
   ) {
   }
 
@@ -27,11 +27,14 @@ export class CreateConnectionDragHandler implements IDraggableItem {
     );
     this.outputSide = outputRect.fConnectableSide;
     this.onPointerDownFromConnectorRect = RoundedRect.fromRoundedRect(outputRect.rect);
+    console.log('onPointerDown1', this.onPointerDownFromConnectorRect.x, this.onPointerDownFromConnectorRect.y);
+
     this.onPointerDownToConnectorRect = RoundedRect.fromRect(
-      RectExtensions.initialize(this.mouseDownPoint.x, this.mouseDownPoint.y, 0, 0)
+      RectExtensions.initialize(this.onPointerDownPosition.x, this.onPointerDownPosition.y, 0, 0)
     );
+    console.log('onPointerDown2', this.onPointerDownPosition);
     (this.connection as FConnectionBase).show();
-    this.move(new Point(0, 0));
+    this.move(PointExtensions.initialize());
   }
 
   public move(difference: IPoint): void {

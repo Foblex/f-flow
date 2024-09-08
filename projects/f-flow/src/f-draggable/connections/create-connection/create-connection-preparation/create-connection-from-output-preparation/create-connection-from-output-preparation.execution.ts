@@ -1,4 +1,4 @@
-import { IHandler, IPoint, IRect, Point } from '@foblex/core';
+import { IHandler, IPoint, IRect } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { CreateConnectionFromOutputPreparationRequest } from './create-connection-from-output-preparation.request';
 import { FConnectorBase } from '../../../../../f-connectors';
@@ -12,10 +12,6 @@ import { GetElementRectInFlowRequest } from '../../../../../domain';
 export class CreateConnectionFromOutputPreparationExecution
   implements IHandler<CreateConnectionFromOutputPreparationRequest, void> {
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
-  }
-
   constructor(
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
@@ -24,7 +20,6 @@ export class CreateConnectionFromOutputPreparationExecution
 
   public handle(request: CreateConnectionFromOutputPreparationRequest): void {
     const { event } = request;
-    const pointerPositionInFlow = Point.fromPoint(event.getPosition()).elementTransform(this.flowHost);
 
     const output = this.fComponentsStore.fOutputs.find((x) => {
       return x.hostElement.contains(event.targetElement);
@@ -33,12 +28,11 @@ export class CreateConnectionFromOutputPreparationExecution
       throw new Error('Output not found');
     }
     if (output.canBeConnected) {
-      const outputCenter = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(output.hostElement)).gravityCenter;
-      this.createDragHandler(pointerPositionInFlow, output, outputCenter);
+      this.createDragHandler(event.getPosition(), output);
     }
   }
 
-  private createDragHandler(position: IPoint, output: FConnectorBase, outletCenter: IPoint): void {
-    this.fMediator.send(new CreateConnectionDragHandlerRequest(position, output, outletCenter));
+  private createDragHandler(position: IPoint, output: FConnectorBase): void {
+    this.fMediator.send(new CreateConnectionDragHandlerRequest(position, output));
   }
 }

@@ -12,7 +12,7 @@ import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
-import { IPointerEvent, Point } from '@foblex/core';
+import { IPoint, IPointerEvent, Point } from '@foblex/core';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
 import { DOCUMENT } from '@angular/common';
@@ -165,7 +165,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   public override onPointerMove(event: IPointerEvent): void {
     const pointerPositionInCanvas = Point.fromPoint(event.getPosition()).elementTransform(this.hostElement);
-    const difference = pointerPositionInCanvas.div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
+    const difference: IPoint = pointerPositionInCanvas.div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
     this.fDraggableDataContext.draggableItems.forEach((item) => {
       item.move({ ...difference });
     });
