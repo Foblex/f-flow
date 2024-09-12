@@ -1,8 +1,13 @@
 import { IHandler, IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/core';
 import { GetNewCanvasTransformRequest } from './get-new-canvas-transform.request';
+import { BrowserService } from '@foblex/platform';
 
 export class GetNewCanvasTransformHandler implements IHandler<GetNewCanvasTransformRequest, ITransformModel> {
 
+  constructor(
+    private fBrowser: BrowserService
+  ) {
+  }
   public handle(request: GetNewCanvasTransformRequest): ITransformModel {
     const heroImageRect = this.getHeroImageRect();
     const scale = heroImageRect.height / 320;
@@ -17,7 +22,7 @@ export class GetNewCanvasTransformHandler implements IHandler<GetNewCanvasTransf
   }
 
   private getHeroImageElement(): HTMLElement {
-    return document.querySelector('#hero-image') as HTMLElement
+    return this.fBrowser.document.querySelector('#hero-image') as HTMLElement
   }
 
   private getHeroImageRect(): IRect {

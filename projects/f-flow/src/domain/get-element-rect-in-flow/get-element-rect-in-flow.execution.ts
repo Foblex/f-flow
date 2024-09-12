@@ -9,6 +9,7 @@ import { GetElementRectInFlowRequest } from './get-element-rect-in-flow-request'
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 import { FComponentsStore } from '../../f-storage';
 import { IRoundedRect, RoundedRect } from '../intersections';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(GetElementRectInFlowRequest)
@@ -24,11 +25,12 @@ export class GetElementRectInFlowExecution implements IExecution<GetElementRectI
 
   constructor(
     private fComponentsStore: FComponentsStore,
+    private fBrowser: BrowserService
   ) {
   }
 
   public handle(request: GetElementRectInFlowRequest): IRoundedRect {
-    const systemRect = RoundedRect.fromElement(request.element);
+    const systemRect = RoundedRect.fromElement(request.element, this.fBrowser);
     const position = this.transformElementPositionInFlow(systemRect);
     const size = this.transformElementSizeInFlow(systemRect);
 

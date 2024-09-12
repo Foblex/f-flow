@@ -4,6 +4,8 @@ import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { F_CONNECTION } from '../f-connection.injection-token';
 import { IHasConnectionText } from '../i-has-connection-text';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
+import { BrowserService } from '@foblex/platform';
+import { createHTMLElement } from '../../../domain';
 
 @Directive({
   selector: 'textPath[f-connection-text-path]',
@@ -29,6 +31,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   constructor(
       private elementReference: ElementRef<SVGTextPathElement>,
       @Inject(F_CONNECTION) private base: IHasConnectionText & IHasConnectionFromTo,
+      private fBrowser: BrowserService
   ) {
   }
 
@@ -43,7 +46,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   }
 
   private getFontStyles(element: SVGTextPathElement): { fontSize: string, fontFamily: string } {
-    const computedStyles = window.getComputedStyle(element);
+    const computedStyles = this.fBrowser.window.getComputedStyle(element);
     return {
       fontSize: computedStyles.fontSize,
       fontFamily: computedStyles.fontFamily
@@ -54,11 +57,16 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
     const text = name || 'connection';
     const { fontFamily, fontSize } = this.getFontStyles(this.hostElement);
     this.fontSize = fontSize;
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+    const canvas = createHTMLElement('canvas', this.fBrowser);
+    let context;
 
+    try {
+      context = canvas.getContext('2d');
+    } catch (e) {
+      context = null;
+    }
     if (!context) {
-      throw new Error('Canvas context is not supported');
+      return 0;
     }
 
     context.font = `${ fontSize } ${ fontFamily }`;

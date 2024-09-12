@@ -3,7 +3,7 @@ import { GetNodePaddingRequest } from './get-node-padding.request';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FNodeBase } from '../../../f-node';
 import { IRect } from '@foblex/core';
-import { ConvertComputedToPixelsRequest } from '../convert-computed-to-pixels';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(GetNodePaddingRequest)
@@ -11,7 +11,7 @@ export class GetNodePaddingExecution
   implements IExecution<GetNodePaddingRequest, [ number, number, number, number ]> {
 
   constructor(
-    private fMediator: FFlowMediator
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -20,16 +20,12 @@ export class GetNodePaddingExecution
   }
 
   private getPaddingData(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    const style = window.getComputedStyle(node.hostElement);
+    const style = this.fBrowser.window.getComputedStyle(node.hostElement);
     return [
-      this.convertToPixels(style.paddingLeft, rect.width, rect.height, style.fontSize),
-      this.convertToPixels(style.paddingTop, rect.width, rect.height, style.fontSize),
-      this.convertToPixels(style.paddingRight, rect.width, rect.height, style.fontSize),
-      this.convertToPixels(style.paddingBottom, rect.width, rect.height, style.fontSize)
+      this.fBrowser.toPixels(style.paddingLeft, rect.width, rect.height, style.fontSize),
+      this.fBrowser.toPixels(style.paddingTop, rect.width, rect.height, style.fontSize),
+      this.fBrowser.toPixels(style.paddingRight, rect.width, rect.height, style.fontSize),
+      this.fBrowser.toPixels(style.paddingBottom, rect.width, rect.height, style.fontSize)
     ];
-  }
-
-  private convertToPixels(value: string, clientWidth: number, clientHeight: number, fontSize: string): number {
-    return this.fMediator.send<number>(new ConvertComputedToPixelsRequest(value, clientWidth, clientHeight, fontSize));
   }
 }

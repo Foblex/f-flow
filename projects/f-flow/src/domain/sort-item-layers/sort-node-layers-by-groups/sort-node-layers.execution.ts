@@ -1,10 +1,10 @@
 import { SortNodeLayersRequest } from './sort-node-layers.request';
 import { Injectable } from '@angular/core';
-import { WindowService } from '@foblex/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(SortNodeLayersRequest)
@@ -25,7 +25,7 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
   constructor(
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
-    private windowService: WindowService
+    private fBrowser: BrowserService,
   ) {
   }
 
@@ -55,7 +55,7 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
   private moveChildrenNodes(
     sortedChildrenGroups: HTMLElement[],
   ): void {
-    const fragment = this.windowService.getWindow().document.createDocumentFragment();
+    const fragment = this.fBrowser.document.createDocumentFragment();
     sortedChildrenGroups.forEach((childGroup: HTMLElement) => {
       fragment.appendChild(childGroup); // Append automatically removes the element from its current position
     });

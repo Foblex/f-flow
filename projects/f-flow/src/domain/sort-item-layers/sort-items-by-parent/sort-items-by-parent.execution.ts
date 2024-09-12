@@ -1,10 +1,10 @@
 import { SortItemsByParentRequest } from './sort-items-by-parent.request';
 import { Injectable } from '@angular/core';
-import { WindowService } from '@foblex/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(SortItemsByParentRequest)
@@ -19,7 +19,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   constructor(
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
-    private windowService: WindowService
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -55,7 +55,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   ): void {
     let nextSibling = parent.hostElement.nextElementSibling;
 
-    const fragment = this.windowService.getWindow().document.createDocumentFragment();
+    const fragment = this.fBrowser.document.createDocumentFragment();
 
     sortedChildrenItems.forEach((child: HTMLElement) => {
       fragment.appendChild(child); // Append automatically removes the element from its current position

@@ -7,6 +7,7 @@ import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
 import { GetElementRectInFlowRequest } from '../domain';
 import { FFlowMediator } from '../infrastructure';
+import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: "f-line-alignment",
@@ -50,9 +51,10 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
     private fMediator: FFlowMediator,
+    fBrowser: BrowserService
   ) {
     super();
-    this.lineService = new LineService(this.hostElement);
+    this.lineService = new LineService(fBrowser, this.hostElement);
   }
 
   public ngOnInit(): void {

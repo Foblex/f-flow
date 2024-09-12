@@ -1,13 +1,16 @@
-import { DomElementExtensions } from '@foblex/core';
 import { ILineAlignmentRect } from './i-line-alignment-rect';
+import { BrowserService } from '@foblex/platform';
+import { createHTMLElement } from '../../domain';
 
 export class LineElement {
 
-  private readonly element: HTMLElement = DomElementExtensions.createHtmlElement('div');
+  private readonly element: HTMLElement;
 
   constructor(
-      private readonly hostElement: HTMLElement,
+    fBrowser: BrowserService,
+    private readonly hostElement: HTMLElement,
   ) {
+    this.element = createHTMLElement('div', fBrowser);
     this.hostElement.appendChild(this.element);
     this.element.classList.add('f-line');
   }

@@ -7,6 +7,7 @@ import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FCreateNodeEvent } from '../f-create-node.event';
 import { GetElementRectInFlowRequest } from '../../../domain';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(ExternalItemFinalizeRequest)
@@ -27,7 +28,8 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FFlowMediator,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -40,7 +42,7 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   }
 
   private getExternalItemElementsFromPoint(position: IPoint): HTMLElement[] {
-    return document.elementsFromPoint(position.x, position.y)
+    return this.fBrowser.document.elementsFromPoint(position.x, position.y)
       .filter(x => !x.closest('.f-external-item')) as HTMLElement[];
   }
 

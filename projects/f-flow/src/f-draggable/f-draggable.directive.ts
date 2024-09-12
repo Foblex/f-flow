@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs';
 import { IPoint, IPointerEvent, Point } from '@foblex/core';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
-import { DOCUMENT } from '@angular/common';
 import {
   FCreateConnectionEvent,
   FReassignConnectionEvent,
@@ -37,6 +36,7 @@ import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
 import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
+import { BrowserService } from '@foblex/platform';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -80,7 +80,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
-    @Inject(DOCUMENT) private doc: Document
+    private fBrowser: BrowserService,
   ) {
     super(ngZone);
   }
@@ -90,7 +90,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public ngAfterViewInit(): void {
-    super.subscribe(this.doc);
+    super.subscribe(this.fBrowser.document);
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {

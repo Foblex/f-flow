@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
+import { IHasHostElement, IPoint, IRect, ISize, PlatformService, PointExtensions } from '@foblex/core';
 import { debounceTime, merge, startWith, Subscription } from 'rxjs';
 import { FResizeObserver } from './f-resize-observer';
 import { FComponentsStore } from '../f-storage';
@@ -96,7 +96,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     private elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator
+    private fMediator: FFlowMediator,
+    private fPlatform: PlatformService,
   ) {
     super();
   }
@@ -122,6 +123,9 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   public ngAfterViewInit(): void {
+    if(!this.fPlatform.isBrowser) {
+      return;
+    }
     this.subscriptions$.add(
       this.subscribeOnResizeChanges()
     );

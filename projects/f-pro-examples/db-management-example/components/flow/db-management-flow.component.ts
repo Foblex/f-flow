@@ -30,6 +30,7 @@ import {
 } from '../connection-toolbar/db-management-connection-toolbar.component';
 import { startWith, Subscription } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
+import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: 'db-management-flow',
@@ -95,7 +96,8 @@ export class DbManagementFlowComponent implements OnInit {
   constructor(
     private apiService: DatabaseApiService,
     private selectionService: SelectionService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -127,7 +129,7 @@ export class DbManagementFlowComponent implements OnInit {
   }
 
   public canvasChanged(event: FCanvasChangeEvent): void {
-    document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
+    this.fBrowser.document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
   }
 
   public selectionChanged(event: FSelectionChangeEvent): void {

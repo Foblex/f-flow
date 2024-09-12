@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, startWith, Subscription } from 'rxjs';
 import { ENGLISH_ENVIRONMENT } from '../../public/docs/en/environment';
 import { Meta, Title } from '@angular/platform-browser';
 import { INavigationGroup, INavigationItem } from '@foblex/f-docs';
-import { DOCUMENT } from '@angular/common';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
@@ -13,7 +13,7 @@ export class MetaService {
     private router: Router,
     private meta: Meta,
     private title: Title,
-    @Inject(DOCUMENT) private document: Document,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -25,10 +25,10 @@ export class MetaService {
       let data = {
         ...DEFAULT_PAGE_DATA,
       }
-      const item = this.findDocItemByUrl(this.findDocGroupByUrl(window.location.href), window.location.href);
+      const item = this.findDocItemByUrl(this.findDocGroupByUrl(this.fBrowser.window.location.href), this.fBrowser.window.location.href);
       if (item) {
         data.title = `${ ENGLISH_ENVIRONMENT.title } - ${ item.text }`;
-        data.url = window.location.href;
+        data.url = this.fBrowser.window.location.href;
         data.description = item.description || DEFAULT_PAGE_DATA.description;
         data.image = item.image || DEFAULT_PAGE_DATA.image;
         data.image_width = item.image_width || DEFAULT_PAGE_DATA.image_width;
@@ -49,10 +49,10 @@ export class MetaService {
   }
 
   private updateJsonLD(item: IPageMetaOg): void {
-    const oldScript = this.document.querySelector('script[type="application/ld+json"]');
+    const oldScript = this.fBrowser.document.querySelector('script[type="application/ld+json"]');
     oldScript?.remove();
 
-    const script = this.document.createElement('script');
+    const script = this.fBrowser.document.createElement('script');
     script.type = 'application/ld+json';
     script.text = JSON.stringify({
       "@context": "https://schema.org",

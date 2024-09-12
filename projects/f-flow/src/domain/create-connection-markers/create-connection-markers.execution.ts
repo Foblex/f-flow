@@ -1,15 +1,22 @@
-import { DomElementExtensions, sanitizeElementId } from '@foblex/core';
+import { sanitizeElementId } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
 import { FConnectionBase, FMarkerBase } from '../../f-connection';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { createSVGElement } from '../create-dom-element';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
 export class CreateConnectionMarkersExecution implements IExecution<CreateConnectionMarkersRequest, void> {
 
+  constructor(
+    private fBrowser: BrowserService
+  ) {
+  }
+
   public handle(request: CreateConnectionMarkersRequest): void {
-    const element: SVGDefsElement = DomElementExtensions.createSvgElement('defs');
+    const element: SVGDefsElement = createSVGElement('defs', this.fBrowser);
     const fConnection = request.fConnection;
 
     fConnection.fMarkers.forEach((marker) => {
@@ -37,7 +44,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
   }
 
   private createMarkerElement(marker: FMarkerBase, fConnectionId: string): SVGElement {
-    const markerElement = DomElementExtensions.createSvgElement('marker');
+    const markerElement = createSVGElement('marker', this.fBrowser);
 
     markerElement.setAttribute('id', sanitizeElementId(marker.type + '-' + fConnectionId));
 

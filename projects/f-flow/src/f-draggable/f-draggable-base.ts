@@ -32,7 +32,7 @@ export abstract class FDraggableBase implements IHasHostElement {
 
   public abstract fCreateConnection: EventEmitter<FCreateConnectionEvent>;
 
-  private document: Document | undefined;
+  private fDocument: Document | undefined;
 
   private mouseListeners: Function = EventExtensions.emptyListener();
   private touchListeners: Function = EventExtensions.emptyListener();
@@ -80,15 +80,15 @@ export abstract class FDraggableBase implements IHasHostElement {
       this.dragStartPosition = mouseEvent.getPosition();
 
       this.ngZone?.runOutsideAngular(() => {
-        this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
-        this.document?.addEventListener('mousemove', this.onMouseMove);
-        this.document?.addEventListener('mouseup', this.onMouseUp);
+        this.fDocument?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
+        this.fDocument?.addEventListener('mousemove', this.onMouseMove);
+        this.fDocument?.addEventListener('mouseup', this.onMouseUp);
       });
 
       this.mouseListeners = () => {
-        this.document?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
-        this.document?.removeEventListener('mousemove', this.onMouseMove);
-        this.document?.removeEventListener('mouseup', this.onMouseUp);
+        this.fDocument?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
+        this.fDocument?.removeEventListener('mousemove', this.onMouseMove);
+        this.fDocument?.removeEventListener('mouseup', this.onMouseUp);
       };
     }
   }
@@ -108,15 +108,15 @@ export abstract class FDraggableBase implements IHasHostElement {
       this.dragStartPosition = touchEvent.getPosition();
 
       this.ngZone?.runOutsideAngular(() => {
-        this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
-        this.document?.addEventListener('touchmove', this.onTouchMove);
-        this.document?.addEventListener('touchend', this.onTouchUp);
+        this.fDocument?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
+        this.fDocument?.addEventListener('touchmove', this.onTouchMove);
+        this.fDocument?.addEventListener('touchend', this.onTouchUp);
       });
 
       this.touchListeners = () => {
-        this.document?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
-        this.document?.removeEventListener('touchmove', this.onTouchMove);
-        this.document?.removeEventListener('touchend', this.onTouchUp);
+        this.fDocument?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
+        this.fDocument?.removeEventListener('touchmove', this.onTouchMove);
+        this.fDocument?.removeEventListener('touchend', this.onTouchUp);
       };
     }
   }
@@ -199,20 +199,20 @@ export abstract class FDraggableBase implements IHasHostElement {
 
   public abstract onPointerUp(event: IPointerEvent): void;
 
-  public subscribe(document: Document): void {
-    if (this.document) {
+  public subscribe(fDocument: Document): void {
+    if (this.fDocument) {
       this.unsubscribe();
     }
-    this.document = document;
+    this.fDocument = fDocument;
 
     this.ngZone?.runOutsideAngular(() => {
-      document.addEventListener('mousedown', this.onMouseDown, EventExtensions.activeListener());
-      document.addEventListener('touchstart', this.onTouchDown, EventExtensions.passiveListener());
+      fDocument.addEventListener('mousedown', this.onMouseDown, EventExtensions.activeListener());
+      fDocument.addEventListener('touchstart', this.onTouchDown, EventExtensions.passiveListener());
     });
 
     this.startListeners = () => {
-      document.removeEventListener('mousedown', this.onMouseDown, EventExtensions.activeListener());
-      document.removeEventListener('touchstart', this.onTouchDown, EventExtensions.passiveListener());
+      fDocument.removeEventListener('mousedown', this.onMouseDown, EventExtensions.activeListener());
+      fDocument.removeEventListener('touchstart', this.onTouchDown, EventExtensions.passiveListener());
     };
   }
 

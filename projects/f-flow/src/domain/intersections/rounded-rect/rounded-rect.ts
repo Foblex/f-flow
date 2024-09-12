@@ -1,6 +1,7 @@
 import { IRoundedRect } from './i-rounded-rect';
 import { IPoint, IRect, Point } from '@foblex/core';
 import { EFConnectorShape } from '../e-f-connector-shape';
+import { BrowserService } from '@foblex/platform';
 
 export class RoundedRect implements IRoundedRect {
 
@@ -33,39 +34,19 @@ export class RoundedRect implements IRoundedRect {
     return new RoundedRect(rect.x, rect.y, rect.width, rect.height, rect.radius1, rect.radius2, rect.radius3, rect.radius4);
   }
 
-  public static fromElement(element: HTMLElement | SVGElement): RoundedRect {
+  public static fromElement(element: HTMLElement | SVGElement, fBrowser: BrowserService): RoundedRect {
     const { x, y, width, height } = element.getBoundingClientRect();
-    return this.setRadiusFromElement(new RoundedRect(x, y, width, height), element);
+    return this.setRadiusFromElement(new RoundedRect(x, y, width, height), element, fBrowser);
   }
 
-  private static setRadiusFromElement(rect: RoundedRect, element: HTMLElement | SVGElement): RoundedRect {
-    const data = getComputedStyle(element);
-    rect.radius1 = this.convertToPixels(data.borderTopLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
-    rect.radius2 = this.convertToPixels(data.borderTopRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
-    rect.radius3 = this.convertToPixels(data.borderBottomRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
-    rect.radius4 = this.convertToPixels(data.borderBottomLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+  private static setRadiusFromElement(rect: RoundedRect, element: HTMLElement | SVGElement, fBrowser: BrowserService): RoundedRect {
+    const data = fBrowser.window.getComputedStyle(element);
+    rect.radius1 = fBrowser.toPixels(data.borderTopLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius2 = fBrowser.toPixels(data.borderTopRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius3 = fBrowser.toPixels(data.borderBottomRightRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
+    rect.radius4 = fBrowser.toPixels(data.borderBottomLeftRadius, element.clientWidth, element.clientHeight, data.fontSize) || 0;
     return rect;
   }
-
-  private static convertToPixels(value: string, clientWidth: number, clientHeight: number, fontSize: string): number {
-    if (value.endsWith('px')) {
-      return parseFloat(value);
-    } else if (value.endsWith('%')) {
-      const percentage = parseFloat(value) / 100;
-      return Math.max(clientWidth, clientHeight) * percentage;
-    } else if (value.endsWith('em')) {
-      return parseFloat(value) * parseFloat(fontSize);
-    } else if (value.endsWith('rem')) {
-      return parseFloat(value) * parseFloat(getComputedStyle(document.documentElement).fontSize);
-    } else if (value.endsWith('vh')) {
-      const vh = window.innerHeight / 100;
-      return parseFloat(value) * vh;
-    } else if (value.endsWith('vw')) {
-      const vw = window.innerWidth / 100;
-      return parseFloat(value) * vw;
-    }
-    return parseFloat(value) || 0;
-  };
 
   public addPoint(point: IPoint): RoundedRect {
     const copy = RoundedRect.fromRoundedRect(this);

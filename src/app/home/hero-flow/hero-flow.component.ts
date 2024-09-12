@@ -9,7 +9,7 @@ import {
   EFMarkerType,
   FFlowComponent, FFlowModule
 } from '@foblex/flow';
-import { IPoint, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, PlatformService, PointExtensions, RectExtensions } from '@foblex/core';
 import { debounceTime, fromEvent, startWith, Subscription } from 'rxjs';
 import { IHeroFlowNode } from './domain/i-hero-flow-node';
 import { IHeroFlowConnection } from './domain/i-hero-flow-connection';
@@ -21,6 +21,7 @@ import {
   GetNewCanvasTransformRequest
 } from './domain/get-new-canvas-transform-handler/get-new-canvas-transform.request';
 import { HeroNodeComponent } from './hero-node/hero-node.component';
+import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: 'hero-flow',
@@ -54,17 +55,21 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,
+    private fBrowser: BrowserService,
+    private fPlatform: PlatformService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
-    this.subscription$.add(this.subscribeOnWindowResize());
+    if (this.fPlatform.isBrowser) {
+      this.subscription$.add(this.subscribeOnWindowResize());
+    }
   }
 
   private subscribeOnWindowResize(): Subscription {
     return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(5)).subscribe(() => {
-      const result = new GetNewCanvasTransformHandler().handle(
+      const result = new GetNewCanvasTransformHandler(this.fBrowser).handle(
         new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
       );
       this.scale = result.scale;

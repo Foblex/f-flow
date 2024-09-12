@@ -1,14 +1,15 @@
 import { ISize, ITransformModel } from '@foblex/core';
 import { LineElement } from './line-element';
+import { BrowserService } from '@foblex/platform';
 
 export class LineService {
 
   private fHorizontalLine: LineElement;
   private fVerticalLine: LineElement;
 
-  constructor(private hostElement: HTMLElement) {
-    this.fHorizontalLine = new LineElement(this.hostElement);
-    this.fVerticalLine = new LineElement(this.hostElement);
+  constructor(fBrowser: BrowserService, private hostElement: HTMLElement) {
+    this.fHorizontalLine = new LineElement(fBrowser, this.hostElement);
+    this.fVerticalLine = new LineElement(fBrowser, this.hostElement);
     this.fHorizontalLine.hide();
     this.fVerticalLine.hide();
   }

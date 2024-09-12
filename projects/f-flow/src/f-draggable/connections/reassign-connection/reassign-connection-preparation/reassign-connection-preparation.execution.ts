@@ -7,6 +7,7 @@ import { UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../infrastructure';
 import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase, FConnectionComponent } from '../../../../f-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionPreparationRequest)
@@ -27,7 +28,8 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FFlowMediator,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -62,7 +64,7 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
   }
 
   private getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return document.elementsFromPoint(position.x, position.y) as HTMLElement[];
+    return this.fBrowser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
   }
 
   public getConnectionHandler(element: HTMLElement | SVGElement): FConnectionBase | undefined {
