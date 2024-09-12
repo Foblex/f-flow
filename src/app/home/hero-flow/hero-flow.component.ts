@@ -1,4 +1,6 @@
 import {
+  afterNextRender,
+  afterRender,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component, OnDestroy, OnInit,
@@ -66,16 +68,25 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
   }
 
   private subscribeOnWindowResize(): Subscription {
-    return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(5)).subscribe(() => {
-      const result = new GetNewCanvasTransformHandler(this.fBrowser).handle(
-        new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
-      );
-      this.scale = result.scale;
-      this.canvasPosition = result.position;
-      this.changeDetectorRef.markForCheck();
+    return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(1)).subscribe(() => {
+      if(this.fFlowComponent) {
+        this.modifyPosition();
+      }
     });
   }
 
+  public onLoaded(): void {
+    this.modifyPosition();
+  }
+
+  private modifyPosition(): void {
+    const result = new GetNewCanvasTransformHandler(this.fBrowser).handle(
+      new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
+    );
+    this.scale = result.scale;
+    this.canvasPosition = result.position;
+    this.changeDetectorRef.markForCheck();
+  }
 
   public onNodePositionChanged(point: IPoint, node: IHeroFlowNode): void {
     node.position = point;
