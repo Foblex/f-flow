@@ -42,7 +42,6 @@ h1 {
 }
 
 .second-description {
-  padding-top: 8px;
   line-height: 28px;
   font-size: 18px;
   font-weight: 500;
@@ -51,6 +50,8 @@ h1 {
   margin: 0 auto;
   width: fit-content;
   pointer-events: all;
+  text-align: center;
+  padding: 8px 16px 0;
 
   @media (min-width: 640px) {
     padding-top: 12px;
@@ -62,6 +63,8 @@ h1 {
     line-height: 36px;
     font-size: 24px;
     margin: 0;
+    text-align: left;
+    padding: 8px 0 0;
   }
 }
 
