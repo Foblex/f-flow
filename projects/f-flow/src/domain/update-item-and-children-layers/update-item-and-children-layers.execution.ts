@@ -4,7 +4,6 @@ import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastruct
 import { FComponentsStore } from '../../f-storage';
 import { FNodeBase } from '../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes-and-groups';
-import { WindowService } from '@foblex/core';
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
 
 @Injectable()
@@ -25,8 +24,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
-    private windowService: WindowService
+    private fMediator: FFlowMediator
   ) {
   }
 

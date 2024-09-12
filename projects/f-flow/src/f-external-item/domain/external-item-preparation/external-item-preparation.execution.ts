@@ -6,6 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem } from '../../../f-external-item';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(ExternalItemPreparationRequest)
@@ -18,7 +19,8 @@ export class ExternalItemPreparationExecution implements IExecution<ExternalItem
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fExternalItemService: FExternalItemService
+    private fExternalItemService: FExternalItemService,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -28,7 +30,7 @@ export class ExternalItemPreparationExecution implements IExecution<ExternalItem
     this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this.flowHost);
 
     this.fDraggableDataContext.draggableItems = [
-      new ExternalItemDragHandler(this.getExternalItem(request.event.targetElement))
+      new ExternalItemDragHandler(this.getExternalItem(request.event.targetElement), this.fBrowser)
     ];
   }
 

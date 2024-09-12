@@ -3,10 +3,12 @@ import {
 } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
 import {
-  DomElementExtensions, IRect,
+  IRect,
   RectExtensions
 } from '@foblex/core';
 import { FNodeBase, FNodeDirective } from '../f-node';
+import { BrowserService } from '@foblex/platform';
+import { createSVGElement } from '../domain';
 
 @Directive({
   selector: 'g[fMinimapCanvas]'
@@ -27,7 +29,8 @@ export class FMinimapCanvasDirective {
 
   constructor(
     private elementReference: ElementRef<SVGGElement>,
-    private fComponentsStore: FComponentsStore
+    private fComponentsStore: FComponentsStore,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -41,7 +44,7 @@ export class FMinimapCanvasDirective {
   }
 
   private renderNode(node: FNodeBase): void {
-    const element = DomElementExtensions.createSvgElement('rect');
+    const element = createSVGElement('rect', this.fBrowser);
     this.configureNodeElement(element, node);
     this.hostElement.appendChild(element);
   }

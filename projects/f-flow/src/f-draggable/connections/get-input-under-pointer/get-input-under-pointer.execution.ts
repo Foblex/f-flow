@@ -7,6 +7,7 @@ import { FConnectorBase } from '../../../f-connectors';
 import { FExecutionRegister, IExecution } from '../../../infrastructure';
 import { CreateConnectionDragHandler } from '../create-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(GetInputUnderPointerRequest)
@@ -22,7 +23,8 @@ export class GetInputUnderPointerExecution
   }
 
   constructor(
-    private fComponentsStore: FComponentsStore
+    private fComponentsStore: FComponentsStore,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -60,7 +62,7 @@ export class GetInputUnderPointerExecution
   }
 
   private getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return document.elementsFromPoint(position.x, position.y) as HTMLElement[];
+    return this.fBrowser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
   }
 
   private getFirstConnectableInputOfNodeInPosition(position: IPoint): FConnectorBase | undefined {

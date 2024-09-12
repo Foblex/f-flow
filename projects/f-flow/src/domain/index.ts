@@ -44,9 +44,15 @@ export * from './update-item-and-children-layers';
 
 export * from './cast-to-enum';
 
+export * from './create-dom-element';
+
+export * from './deep-clone-node';
+
 export * from './get-value-from-data-attr';
 
 export * from './is-element-with-class';
+
+export * from './sanitize-element-id';
 
 export * from './providers';
 

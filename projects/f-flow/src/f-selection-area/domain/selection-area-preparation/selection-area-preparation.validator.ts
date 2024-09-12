@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SelectionAreaPreparationRequest } from './selection-area-preparation.request';
 import { FValidatorRegister, IValidator } from '../../../infrastructure';
-import { MouseEventExtensions } from '@foblex/core';
 import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
@@ -15,10 +14,14 @@ export class SelectionAreaPreparationValidator implements IValidator<SelectionAr
 
   public handle(request: SelectionAreaPreparationRequest): boolean {
     return this.isDragHandlesEmpty()
-      && MouseEventExtensions.isShiftPressed(request.event.originalEvent);
+      && this.isShiftPressed(request.event.originalEvent);
   }
 
   private isDragHandlesEmpty(): boolean {
     return !this.fDraggableDataContext.draggableItems.length;
+  }
+
+  private isShiftPressed(event: { shiftKey: boolean }): boolean {
+    return event.shiftKey;
   }
 }

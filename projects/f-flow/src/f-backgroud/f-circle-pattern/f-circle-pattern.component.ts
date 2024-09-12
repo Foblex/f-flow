@@ -5,7 +5,6 @@ import {
   OnInit
 } from "@angular/core";
 import {
-  DomElementExtensions,
   IPoint,
   ITransformModel,
   PointExtensions,
@@ -13,6 +12,8 @@ import {
 } from '@foblex/core';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { startWith, Subject, Subscription } from 'rxjs';
+import { BrowserService } from '@foblex/platform';
+import { createSVGElement } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -67,16 +68,17 @@ export class FCirclePatternComponent implements OnInit, OnDestroy, IFBackgroundP
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
+    private fBrowser: BrowserService
   ) {
     this.createPattern();
   }
 
   private createPattern(): void {
-    this._pattern = DomElementExtensions.createSvgElement('pattern');
+    this._pattern = createSVGElement('pattern', this.fBrowser);
     this._pattern.setAttribute('patternUnits', 'userSpaceOnUse');
     this.hostElement.appendChild(this._pattern);
 
-    this._circle = DomElementExtensions.createSvgElement('circle');
+    this._circle = createSVGElement('circle', this.fBrowser);
     this._pattern.appendChild(this._circle);
   }
 

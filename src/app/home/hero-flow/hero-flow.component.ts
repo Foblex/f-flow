@@ -1,7 +1,9 @@
 import {
+  afterNextRender,
+  afterRender,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, OnDestroy, OnInit,
+  Component, OnDestroy, OnInit,
   ViewChild,
 } from '@angular/core';
 import {
@@ -21,6 +23,7 @@ import {
   GetNewCanvasTransformRequest
 } from './domain/get-new-canvas-transform-handler/get-new-canvas-transform.request';
 import { HeroNodeComponent } from './hero-node/hero-node.component';
+import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: 'hero-flow',
@@ -53,26 +56,37 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
   public eConnectionBehaviour = EFConnectionBehavior;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>,
+    private fBrowser: BrowserService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
-    this.subscription$.add(this.subscribeOnWindowResize());
+    if (this.fBrowser.isBrowser()) {
+      this.subscription$.add(this.subscribeOnWindowResize());
+    }
   }
 
   private subscribeOnWindowResize(): Subscription {
-    return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(5)).subscribe(() => {
-      const result = new GetNewCanvasTransformHandler().handle(
-        new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
-      );
-      this.scale = result.scale;
-      this.canvasPosition = result.position;
-      this.changeDetectorRef.markForCheck();
+    return fromEvent(window, 'resize').pipe(startWith(null), debounceTime(1)).subscribe(() => {
+      if(this.fFlowComponent) {
+        this.modifyPosition();
+      }
     });
   }
 
+  public onLoaded(): void {
+    this.modifyPosition();
+  }
+
+  private modifyPosition(): void {
+    const result = new GetNewCanvasTransformHandler(this.fBrowser).handle(
+      new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
+    );
+    this.scale = result.scale;
+    this.canvasPosition = result.position;
+    this.changeDetectorRef.markForCheck();
+  }
 
   public onNodePositionChanged(point: IPoint, node: IHeroFlowNode): void {
     node.position = point;

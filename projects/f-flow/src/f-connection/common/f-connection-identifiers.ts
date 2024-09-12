@@ -1,4 +1,4 @@
-import { sanitizeElementId } from '@foblex/core';
+import { sanitizeElementId } from '../../domain';
 
 export const F_CONNECTION_IDENTIFIERS = {
 

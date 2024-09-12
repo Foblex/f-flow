@@ -8,6 +8,8 @@
   display: block;
 
   .f-flow {
+    animation: fadeIn 1s ease-in-out;
+
     .f-background {
       line {
         stroke: var(--barely-visible);
@@ -49,5 +51,13 @@
         }
       }
     }
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

@@ -5,6 +5,7 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase } from '../../../../f-connection';
 import { FComponentsStore } from '../../../../f-storage';
 import { IPoint } from '@foblex/core';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FValidatorRegister(ReassignConnectionPreparationRequest)
@@ -16,7 +17,8 @@ export class ReassignConnectionPreparationValidator implements IValidator<Reassi
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext
+    private fDraggableDataContext: FDraggableDataContext,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -32,7 +34,7 @@ export class ReassignConnectionPreparationValidator implements IValidator<Reassi
   }
 
   private getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return document.elementsFromPoint(position.x, position.y) as HTMLElement[];
+    return this.fBrowser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
   }
 
   public getConnectionHandler(element: HTMLElement | SVGElement): FConnectionBase | undefined {

@@ -1,6 +1,8 @@
-import { DomElementExtensions, IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
 import { FExternalItemBase } from '../../f-external-item';
 import { IDraggableItem } from '../../f-draggable';
+import { BrowserService } from '@foblex/platform';
+import { deepCloneNode } from '../../domain';
 
 export class ExternalItemDragHandler implements IDraggableItem {
 
@@ -11,7 +13,8 @@ export class ExternalItemDragHandler implements IDraggableItem {
   private difference: IPoint = PointExtensions.initialize();
 
   constructor(
-    public externalItem: FExternalItemBase
+    public externalItem: FExternalItemBase,
+    private fBrowser: BrowserService
   ) {
   }
 
@@ -21,15 +24,15 @@ export class ExternalItemDragHandler implements IDraggableItem {
 
   public initialize(): void {
     this.onPointerDownRect = this.getExternalItemRect();
-    this.placeholder = DomElementExtensions.deepCloneNode(this.externalItem.hostElement);
+    this.placeholder = deepCloneNode(this.externalItem.hostElement);
     this.placeholder.setAttribute('style', this.getStyle(Point.fromPoint(this.onPointerDownRect)));
-    document.body.appendChild(this.placeholder);
+    this.fBrowser.document.body.appendChild(this.placeholder);
   }
 
   private getExternalItemRect(): IRect {
     const rect = this.externalItem.hostElement.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = this.fBrowser.window.pageYOffset || this.fBrowser.document.documentElement.scrollTop;
+    const scrollLeft = this.fBrowser.window.pageXOffset || this.fBrowser.document.documentElement.scrollLeft;
     const offsetTop = rect.top + scrollTop;
     const offsetLeft = rect.left + scrollLeft;
     return RectExtensions.initialize(offsetLeft, offsetTop, rect.width, rect.height);
@@ -42,6 +45,6 @@ export class ExternalItemDragHandler implements IDraggableItem {
   }
 
   public complete(): void {
-    document.body.removeChild(this.placeholder!);
+    this.fBrowser.document.body.removeChild(this.placeholder!);
   }
 }

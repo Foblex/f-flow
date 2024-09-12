@@ -5,11 +5,13 @@ import {
   OnInit
 } from "@angular/core";
 import {
-  DomElementExtensions, IPoint, ISize, ITransformModel,
+  IPoint, ISize, ITransformModel,
   PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/core';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { startWith, Subject, Subscription } from 'rxjs';
+import { createSVGElement } from '../../domain';
+import { BrowserService } from '@foblex/platform';
 
 let uniqueId: number = 0;
 
@@ -80,20 +82,21 @@ export class FRectPatternComponent implements OnInit, OnDestroy, IFBackgroundPat
   private _hLine!: SVGLineElement;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>
+    private elementReference: ElementRef<HTMLElement>,
+    private fBrowser: BrowserService
   ) {
     this.createPattern();
   }
 
   private createPattern(): void {
-    this._pattern = DomElementExtensions.createSvgElement('pattern');
+    this._pattern = createSVGElement('pattern', this.fBrowser);
     this._pattern.setAttribute('patternUnits', 'userSpaceOnUse');
     this.hostElement.appendChild(this._pattern);
 
-    this._vLine = DomElementExtensions.createSvgElement('line');
+    this._vLine = createSVGElement('line', this.fBrowser);
     this._pattern.appendChild(this._vLine);
 
-    this._hLine = DomElementExtensions.createSvgElement('line');
+    this._hLine = createSVGElement('line', this.fBrowser);
     this._pattern.appendChild(this._hLine);
   }
 
