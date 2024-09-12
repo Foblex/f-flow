@@ -1,10 +1,10 @@
-import { sanitizeElementId } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
 import { FConnectionBase, FMarkerBase } from '../../f-connection';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
 import { createSVGElement } from '../create-dom-element';
 import { BrowserService } from '@foblex/platform';
+import { sanitizeElementId } from '../sanitize-element-id';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)

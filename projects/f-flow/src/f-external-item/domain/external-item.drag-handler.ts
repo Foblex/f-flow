@@ -1,7 +1,8 @@
-import { DomElementExtensions, IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
 import { FExternalItemBase } from '../../f-external-item';
 import { IDraggableItem } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';
+import { deepCloneNode } from '../../domain';
 
 export class ExternalItemDragHandler implements IDraggableItem {
 
@@ -23,7 +24,7 @@ export class ExternalItemDragHandler implements IDraggableItem {
 
   public initialize(): void {
     this.onPointerDownRect = this.getExternalItemRect();
-    this.placeholder = DomElementExtensions.deepCloneNode(this.externalItem.hostElement);
+    this.placeholder = deepCloneNode(this.externalItem.hostElement);
     this.placeholder.setAttribute('style', this.getStyle(Point.fromPoint(this.onPointerDownRect)));
     this.fBrowser.document.body.appendChild(this.placeholder);
   }

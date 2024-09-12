@@ -12,7 +12,9 @@ export const routes: Routes = [
     providers: [
       { provide: F_ENVIRONMENT, useValue: ENGLISH_ENVIRONMENT }
     ],
-    loadChildren: () => import('@foblex/f-docs').then(m => m.F_DOCUMENTATION_ROUTES)
+    loadChildren: () => import('@foblex/f-docs').then(m => m.F_DOCUMENTATION_ROUTES),
+    pathMatch: 'full',
+    redirectTo: '.docs/get-started',
   },
   {
     path: '**',

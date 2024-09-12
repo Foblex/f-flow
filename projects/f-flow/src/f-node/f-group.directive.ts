@@ -21,6 +21,7 @@ import {
 } from '../f-connectors';
 import { FFlowMediator } from '../infrastructure';
 import { EmitTransformChangesRequest } from '../domain';
+import { BrowserService } from '@foblex/platform';
 
 let uniqueId: number = 0;
 
@@ -92,7 +93,8 @@ export class FGroupDirective extends FNodeBase
     private elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator
+    private fMediator: FFlowMediator,
+    private fBrowser: BrowserService
   ) {
     super();
   }
@@ -118,6 +120,9 @@ export class FGroupDirective extends FNodeBase
   }
 
   public ngAfterViewInit(): void {
+    if(!this.fBrowser.isBrowser()) {
+      return;
+    }
     this.subscriptions$.add(
       this.subscribeOnResizeChanges()
     );

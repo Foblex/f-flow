@@ -13,7 +13,7 @@ import {
   RedrawConnectionsRequest,
   SelectAllRequest, SelectRequest, SortItemLayersRequest,
 } from '../domain';
-import { IPoint, IRect, PlatformService } from '@foblex/core';
+import { IPoint, IRect } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
 import {
   F_DRAGGABLE_PROVIDERS,
@@ -65,7 +65,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     private elementReference: ElementRef<HTMLElement>,
     private fComponentsStore: FComponentsStore,
     private fMediator: FFlowMediator,
-    private fPlatform: PlatformService,
+    private fBrowser: BrowserService,
   ) {
     super();
   }
@@ -75,7 +75,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngAfterContentInit(): void {
-    if(!this.fPlatform.isBrowser) {
+    if(!this.fBrowser.isBrowser()) {
       return;
     }
     this.subscription$.add(

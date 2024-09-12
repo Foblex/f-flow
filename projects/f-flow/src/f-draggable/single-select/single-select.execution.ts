@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
 import { SingleSelectRequest } from './single-select.request';
 import { UpdateItemAndChildrenLayersRequest } from '../../domain';
-import { IPointerEvent, MouseEventExtensions, PlatformService } from '@foblex/core';
+import { IPointerEvent } from '@foblex/core';
 import { FConnectionBase, ISelectable } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
+import { EOperationSystem, PlatformService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(SingleSelectRequest)
 export class SingleSelectExecution implements IExecution<SingleSelectRequest, void> {
 
   constructor(
-    private platform: PlatformService,
+    private fPlatform: PlatformService,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
     private fMediator: FFlowMediator
@@ -39,8 +40,16 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
   }
 
   private isMultiselectEnabled(event: IPointerEvent): boolean {
-    return MouseEventExtensions.isCommandButton(this.platform.getOS()!, event.originalEvent) ||
-      MouseEventExtensions.isShiftPressed(event.originalEvent);
+    return this.isCommandButton(this.fPlatform.getOS()!, event.originalEvent) ||
+      this.isShiftPressed(event.originalEvent);
+  }
+
+  private isShiftPressed(event: { shiftKey: boolean }): boolean {
+    return event.shiftKey;
+  }
+
+  private isCommandButton(platform: EOperationSystem, event: { metaKey: boolean, ctrlKey: boolean }): boolean {
+    return platform === EOperationSystem.MAC_OS ? event.metaKey : event.ctrlKey;
   }
 
   private singleSelect(item: ISelectable | undefined): void {

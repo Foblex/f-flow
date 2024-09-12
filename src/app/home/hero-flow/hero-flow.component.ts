@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, OnDestroy, OnInit,
+  Component, OnDestroy, OnInit,
   ViewChild,
 } from '@angular/core';
 import {
@@ -9,7 +9,7 @@ import {
   EFMarkerType,
   FFlowComponent, FFlowModule
 } from '@foblex/flow';
-import { IPoint, PlatformService, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, PointExtensions, RectExtensions } from '@foblex/core';
 import { debounceTime, fromEvent, startWith, Subscription } from 'rxjs';
 import { IHeroFlowNode } from './domain/i-hero-flow-node';
 import { IHeroFlowConnection } from './domain/i-hero-flow-connection';
@@ -54,15 +54,13 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
   public eConnectionBehaviour = EFConnectionBehavior;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>,
     private fBrowser: BrowserService,
-    private fPlatform: PlatformService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
   public ngOnInit(): void {
-    if (this.fPlatform.isBrowser) {
+    if (this.fBrowser.isBrowser()) {
       this.subscription$.add(this.subscribeOnWindowResize());
     }
   }

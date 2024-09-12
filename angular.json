@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "prerender": {
+              "routesFile": "routes.txt"
+            },
             "outputPath": "dist/f-flow-portal",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -31,7 +34,6 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": true,
             "ssr": {
               "entry": "server.ts"
             }

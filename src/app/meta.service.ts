@@ -25,7 +25,7 @@ export class MetaService {
       let data = {
         ...DEFAULT_PAGE_DATA,
       }
-      const item = this.findDocItemByUrl(this.findDocGroupByUrl(this.fBrowser.window.location.href), this.fBrowser.window.location.href);
+      const item = this.findDocItemByUrl(this.findDocGroupByUrl(this.router.url), this.router.url);
       if (item) {
         data.title = `${ ENGLISH_ENVIRONMENT.title } - ${ item.text }`;
         data.url = this.fBrowser.window.location.href;
@@ -41,11 +41,11 @@ export class MetaService {
   }
 
   private findDocGroupByUrl(url: string): INavigationGroup | undefined {
-    return ENGLISH_ENVIRONMENT.navigation.find((g) => g.items.find((i) => url.endsWith(i.link)));
+    return ENGLISH_ENVIRONMENT.navigation.find((g: INavigationGroup) => g.items.find((i: INavigationItem) => url.endsWith(i.link)));
   }
 
   private findDocItemByUrl(group: INavigationGroup | undefined, url: string): INavigationItem | undefined {
-    return (group?.items || []).find((i) => url.endsWith(i.link));
+    return (group?.items || []).find((i: INavigationItem) => url.endsWith(i.link));
   }
 
   private updateJsonLD(item: IPageMetaOg): void {
