@@ -1,6 +1,5 @@
 import { ILineAlignmentRect } from './i-line-alignment-rect';
 import { BrowserService } from '@foblex/platform';
-import { createHTMLElement } from '../../domain';
 
 export class LineElement {
 
@@ -10,7 +9,7 @@ export class LineElement {
     fBrowser: BrowserService,
     private readonly hostElement: HTMLElement,
   ) {
-    this.element = createHTMLElement('div', fBrowser);
+    this.element = fBrowser.document.createElement('div');
     this.hostElement.appendChild(this.element);
     this.element.classList.add('f-line');
   }
@@ -31,3 +30,4 @@ export class LineElement {
     });
   }
 }
+

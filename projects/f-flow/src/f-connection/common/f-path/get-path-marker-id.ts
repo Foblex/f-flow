@@ -1,5 +1,3 @@
-import { sanitizeElementId } from '../../../domain';
-
 export function getMarkerStartId(fConnectionId: string): string {
   return sanitizeElementId(`f-connection-marker-start-${ fConnectionId }`);
 }
@@ -14,4 +12,11 @@ export function getMarkerSelectedStartId(fConnectionId: string): string {
 
 export function getMarkerSelectedEndId(fConnectionId: string): string {
   return sanitizeElementId(`f-connection-selected-marker-end-${ fConnectionId }`);
+}
+
+function sanitizeElementId(id: string): string {
+  if (!id.match(/^[a-zA-Z_]/)) {
+    id = '_' + id;
+  }
+  return id.replace(/[^a-zA-Z0-9_\-:.]/g, '_');
 }

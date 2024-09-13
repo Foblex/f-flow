@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
 import { FConnectionBase, FMarkerBase } from '../../f-connection';
 import { FExecutionRegister, IExecution } from '../../infrastructure';
-import { createSVGElement } from '../create-dom-element';
 import { BrowserService } from '@foblex/platform';
-import { sanitizeElementId } from '../sanitize-element-id';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
@@ -57,4 +55,13 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
 
     return markerElement;
   }
+}
+function sanitizeElementId(id: string): string {
+  if (!id.match(/^[a-zA-Z_]/)) {
+    id = '_' + id;
+  }
+  return id.replace(/[^a-zA-Z0-9_\-:.]/g, '_');
+}
+function createSVGElement<K extends keyof SVGElementTagNameMap>(tag: K, fBrowser: BrowserService): SVGElementTagNameMap[K] {
+  return fBrowser.document.createElementNS('http://www.w3.org/2000/svg', tag);
 }

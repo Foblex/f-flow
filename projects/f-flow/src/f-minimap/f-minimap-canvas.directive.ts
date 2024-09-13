@@ -9,6 +9,7 @@ import {
 import { FNodeBase, FNodeDirective } from '../f-node';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../domain';
+import { checkRectIsFinite } from './domain';
 
 @Directive({
   selector: 'g[fMinimapCanvas]'
@@ -60,6 +61,7 @@ export class FMinimapCanvasDirective {
   }
 
   private setElementAttributes(element: SVGRectElement, rect: IRect): void {
+    rect = checkRectIsFinite(rect);
     element.setAttribute('x', rect.x.toString());
     element.setAttribute('y', rect.y.toString());
     element.setAttribute('width', rect.width.toString());

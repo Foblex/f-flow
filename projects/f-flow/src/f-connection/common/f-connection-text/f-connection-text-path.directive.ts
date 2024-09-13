@@ -5,7 +5,6 @@ import { F_CONNECTION } from '../f-connection.injection-token';
 import { IHasConnectionText } from '../i-has-connection-text';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
 import { BrowserService } from '@foblex/platform';
-import { createHTMLElement } from '../../../domain';
 
 @Directive({
   selector: 'textPath[f-connection-text-path]',
@@ -57,7 +56,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
     const text = name || 'connection';
     const { fontFamily, fontSize } = this.getFontStyles(this.hostElement);
     this.fontSize = fontSize;
-    const canvas = createHTMLElement('canvas', this.fBrowser);
+    const canvas = this.fBrowser.document.createElement('canvas');
     let context;
 
     try {
@@ -76,3 +75,4 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
     return symbolWidth;
   }
 }
+

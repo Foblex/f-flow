@@ -52,7 +52,5 @@ export * from './get-value-from-data-attr';
 
 export * from './is-element-with-class';
 
-export * from './sanitize-element-id';
-
 export * from './providers';
 

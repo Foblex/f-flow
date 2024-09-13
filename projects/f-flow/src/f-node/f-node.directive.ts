@@ -11,7 +11,8 @@ import {
 } from "@angular/core";
 import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
 import { BrowserService } from '@foblex/platform';
-import { debounceTime, merge, startWith, Subscription } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
+import { startWith, debounceTime } from 'rxjs/operators';
 import { FResizeObserver } from './f-resize-observer';
 import { FComponentsStore } from '../f-storage';
 import {

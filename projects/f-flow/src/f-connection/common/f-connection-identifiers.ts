@@ -1,5 +1,3 @@
-import { sanitizeElementId } from '../../domain';
-
 export const F_CONNECTION_IDENTIFIERS = {
 
   textId(connectionId: string): string {
@@ -20,4 +18,11 @@ export const F_CONNECTION_IDENTIFIERS = {
   linkToConnection(connectionId: string): string {
     return `#${ F_CONNECTION_IDENTIFIERS.connectionId(connectionId) }`;
   }
+}
+
+function sanitizeElementId(id: string): string {
+  if (!id.match(/^[a-zA-Z_]/)) {
+    id = '_' + id;
+  }
+  return id.replace(/[^a-zA-Z0-9_\-:.]/g, '_');
 }

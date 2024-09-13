@@ -1,6 +1,7 @@
 import { Directive, ElementRef } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
 import { IRect, RectExtensions } from '@foblex/core';
+import { checkRectIsFinite } from './domain';
 
 @Directive({
   selector: 'rect[fMinimapView]',
@@ -30,6 +31,7 @@ export class FMinimapViewDirective {
   }
 
   private setAttributes(viewBox: IRect): void {
+    viewBox = checkRectIsFinite(viewBox);
     this.hostElement.setAttribute('x', '0');
     this.hostElement.setAttribute('y', '0');
     this.hostElement.setAttribute('width', viewBox.width.toString());

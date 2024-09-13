@@ -9,7 +9,8 @@ import {
   PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/core';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
-import { startWith, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 import { createSVGElement } from '../../domain';
 import { BrowserService } from '@foblex/platform';
 

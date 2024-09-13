@@ -4,7 +4,7 @@ import {
 import { FComponentsStore } from '../f-storage';
 import { IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/core';
 import { FFlowMediator } from '../infrastructure';
-import { FMinimapData } from './domain';
+import { checkRectIsFinite, FMinimapData } from './domain';
 import { GetNodesRectRequest } from '../domain';
 
 @Directive({
@@ -89,6 +89,7 @@ export class FMinimapFlowDirective {
   }
 
   private setViewBox(viewBox: IRect): void {
+    viewBox = checkRectIsFinite(viewBox);
     this.hostElement.setAttribute('viewBox', `${ viewBox.x } ${ viewBox.y } ${ viewBox.width } ${ viewBox.height }`);
   }
 }

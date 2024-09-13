@@ -11,9 +11,10 @@ import {
   TransformModelExtensions
 } from '@foblex/core';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
-import { startWith, Subject, Subscription } from 'rxjs';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../../domain';
+import { Subject, Subscription } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 let uniqueId: number = 0;
 

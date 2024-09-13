@@ -66,7 +66,10 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return items.flatMap((x) => this.getOutputsForNode(x.node)).map((x) => x.id);
+    return items.reduce((result: string[], item: INodeWithDistanceRestrictions) => {
+      const ids = this.getOutputsForNode(item.node).map((x) => x.id);
+      return [...result, ...ids];
+    }, []);
   }
 
   private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
@@ -74,7 +77,10 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllInputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return items.flatMap((x) => this.getInputsForNode(x.node)).map((x) => x.id);
+    return items.reduce((result: string[], item: INodeWithDistanceRestrictions) => {
+      const ids = this.getInputsForNode(item.node).map((x) => x.id);
+      return [...result, ...ids];
+    }, []);
   }
 
   private getInputsForNode(node: FNodeBase): FConnectorBase[] {
@@ -98,8 +104,8 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   ): IDraggableItem[] {
     let result: IDraggableItem[] = handlers;
     handlers.filter((x) => x instanceof NodeDragHandler).forEach((dragHandler) => {
-      this.fMediator.send(new PutOutputConnectionHandlersToArrayRequest(dragHandler, inputIds, result));
-      this.fMediator.send(new PutInputConnectionHandlersToArrayRequest(dragHandler, outputIds, result));
+      this.fMediator.send(new PutOutputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, inputIds, result));
+      this.fMediator.send(new PutInputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, outputIds, result));
     });
     return result;
   }

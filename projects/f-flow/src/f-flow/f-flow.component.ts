@@ -5,7 +5,8 @@ import {
   Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
-import { debounceTime, startWith, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { startWith, debounceTime } from 'rxjs/operators';
 import {
   ClearSelectionRequest,
   COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,

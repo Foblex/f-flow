@@ -3,7 +3,8 @@ import {
   ElementRef, Input, OnDestroy, ViewChild,
 } from "@angular/core";
 import { FFlowMediator } from '../infrastructure';
-import { debounceTime, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { SubscribeOnTransformChangesRequest } from '../domain';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
