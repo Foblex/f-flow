@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { IFlowNodeViewModel } from '../i-flow-node-view-model';
 import { IFlowStorage } from '../../flow.storage';
 import { NODE_CONFIGURATION } from '../../configuration';

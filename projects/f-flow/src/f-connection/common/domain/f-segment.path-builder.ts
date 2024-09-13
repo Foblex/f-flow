@@ -1,4 +1,5 @@
-import { IMap, IPoint, PointExtensions } from '@foblex/core';
+import { IMap} from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/2d';
 import { EFConnectableSide } from '../../../f-connectors';
 import {
   CalculateCenterBetweenPointsHandler,

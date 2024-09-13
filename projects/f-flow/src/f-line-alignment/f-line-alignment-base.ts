@@ -1,4 +1,5 @@
-import { IHasHostElement, IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
+import { IHasHostElement } from '@foblex/core';
 import { Directive, InjectionToken } from '@angular/core';
 import { ILineAlignmentResult } from './domain';
 import { FNodeBase } from '../f-node';

@@ -1,10 +1,11 @@
-import { IHandler, IPointerEvent } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
+import { IPointerEvent } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { CreateConnectionPreparationRequest } from './create-connection-preparation.request';
-import { FExecutionRegister, FFlowMediator } from '../../../../infrastructure';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { CreateConnectionFromOutletPreparationRequest } from './create-connection-from-outlet-preparation';
 import { CreateConnectionFromOutputPreparationRequest } from './create-connection-from-output-preparation';
 
@@ -15,7 +16,7 @@ export class CreateConnectionPreparationExecution
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 

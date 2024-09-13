@@ -12,7 +12,8 @@ import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
-import { IPoint, IPointerEvent, Point } from '@foblex/core';
+import { IPointerEvent } from '@foblex/core';
+import { IPoint, Point } from '@foblex/2d';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
 import {
@@ -24,7 +25,7 @@ import {
   CreateConnectionFinalizeRequest
 } from './connections';
 import { FSelectionChangeEvent } from './f-selection-change-event';
-import { FFlowMediator } from '../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { EmitTransformChangesRequest, GetSelectionRequest } from '../domain';
 import {
   ExternalItemFinalizeRequest,
@@ -79,7 +80,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     private fDraggableDataContext: FDraggableDataContext,
     @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fBrowser: BrowserService,
   ) {
     super(ngZone);

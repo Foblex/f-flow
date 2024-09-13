@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanvasMovePreparationRequest } from './canvas-move-preparation.request';
-import { Point } from '@foblex/core';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { Point } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { CanvasDragHandler } from '../canvas.drag-handler';

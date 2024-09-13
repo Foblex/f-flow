@@ -1,8 +1,8 @@
-import { IPoint, Point, RectExtensions } from '@foblex/core';
+import { IPoint, Point, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
 import { EmitTransformChangesRequest, ISelectableWithRect } from '../../domain';
 import { ISelectable } from '../../f-connection';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
 import { FDraggableDataContext, IDraggableItem } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
@@ -21,7 +21,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
     private fComponentsStore: FComponentsStore,
     private fSelectionArea: FSelectionAreaBase,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 

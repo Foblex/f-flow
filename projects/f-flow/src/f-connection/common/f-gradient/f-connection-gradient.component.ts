@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Inject } from "@angular/core";
-import { ILine, Point } from '@foblex/core';
+import { ILine, Point } from '@foblex/2d';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
 import { IHasConnectionColor } from '../i-has-connection-color';

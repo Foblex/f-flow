@@ -1,5 +1,5 @@
 import { EFConnectableSide } from '../../f-connectors';
-import { IRoundedRect } from '../intersections';
+import { IRoundedRect } from '@foblex/2d';
 
 export class GetInputRectInFlowResponse {
   constructor(

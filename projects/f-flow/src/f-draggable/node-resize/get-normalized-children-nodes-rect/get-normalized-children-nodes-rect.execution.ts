@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GetNormalizedChildrenNodesRectRequest } from './get-normalized-children-nodes-rect.request';
-import { IRect, RectExtensions } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { IRect, RectExtensions } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { GetNodePaddingRequest, GetNormalizedNodeRectRequest } from '../../domain';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
@@ -12,7 +12,7 @@ export class GetNormalizedChildrenNodesRectExecution
   implements IExecution<GetNormalizedChildrenNodesRectRequest, IRect | null> {
 
   constructor(
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

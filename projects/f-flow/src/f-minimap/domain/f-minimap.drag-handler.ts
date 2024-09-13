@@ -1,7 +1,7 @@
-import { IPoint, IRect, Point } from '@foblex/core';
+import { IPoint, IRect, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
 import { IDraggableItem } from '../../f-draggable';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point';
 import { FMinimapData } from './f-minimap-data';
 
@@ -11,7 +11,7 @@ export class FMinimapDragHandler implements IDraggableItem {
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private flowRect: IRect,
     private canvasPosition: IPoint,
     private eventPoint: IPoint,

@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { ITableColumn } from './i-table-column';
 
 export interface ITableStorageModel {

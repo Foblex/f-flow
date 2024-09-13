@@ -1,4 +1,4 @@
-import { IPoint, IRect } from '@foblex/core';
+import { IPoint, IRect } from '@foblex/2d';
 import { EFResizeHandleType } from '../../../f-node';
 
 export class CalculateChangedSizeRequest {

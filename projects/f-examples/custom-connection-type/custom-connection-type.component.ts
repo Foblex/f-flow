@@ -6,7 +6,7 @@ import {
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse
 } from '@foblex/flow';
-import { IPoint, PointExtensions } from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/2d';
 
 
 class OffsetStraightBuilder implements IFConnectionBuilder {

@@ -1,4 +1,5 @@
-import { IHandler, IPoint, PointExtensions } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
+import { IPoint, PointExtensions } from '@foblex/2d';
 import { CalculateCenterBetweenPointsRequest } from './calculate-center-between-points-request';
 
 export class CalculateCenterBetweenPointsHandler

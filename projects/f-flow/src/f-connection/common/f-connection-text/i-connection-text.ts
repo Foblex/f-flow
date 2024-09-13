@@ -1,4 +1,5 @@
-import { IHasHostElement, ILine } from '@foblex/core';
+import { IHasHostElement } from '@foblex/core';
+import { ILine } from '@foblex/2d';
 import { InjectionToken } from '@angular/core';
 
 export const CONNECTION_TEXT = new InjectionToken<IConnectionText>('CONNECTION_TEXT');

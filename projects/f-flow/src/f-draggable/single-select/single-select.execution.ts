@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SingleSelectRequest } from './single-select.request';
 import { UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { IPointerEvent } from '@foblex/core';
@@ -16,7 +16,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     private fPlatform: PlatformService,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

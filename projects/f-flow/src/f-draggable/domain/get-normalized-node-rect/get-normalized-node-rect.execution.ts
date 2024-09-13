@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GetNormalizedNodeRectRequest } from './get-normalized-node-rect.request';
-import { IPoint, IRect, RectExtensions } from '@foblex/core';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { IPoint, IRect, RectExtensions } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()

@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { IPoint, IRect, ISize, ITransformModel, RectExtensions, SizeExtensions } from '@foblex/core';
+import { IPoint, IRect, ISize, ITransformModel, RectExtensions, SizeExtensions } from '@foblex/2d';
 import { ILineAlignmentResult, LineService, NearestCoordinateFinder } from './domain';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
 import { GetElementRectInFlowRequest } from '../domain';
-import { FFlowMediator } from '../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 
 @Component({
@@ -50,7 +50,7 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
     private elementReference: ElementRef<HTMLElement>,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     fBrowser: BrowserService
   ) {
     super();

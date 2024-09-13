@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NodeResizePreparationRequest } from './node-resize-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isElementWithClass } from '../../../domain';

@@ -1,8 +1,9 @@
-import { IHandler, IPoint } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
+import { IPoint } from '@foblex/2d';
 import { Injectable } from '@angular/core';
 import { CreateConnectionFromOutletPreparationRequest } from './create-connection-from-outlet-preparation.request';
 import { FComponentsStore } from '../../../../../f-storage';
-import { FExecutionRegister, FFlowMediator } from '../../../../../infrastructure';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FConnectorBase, FNodeOutletBase, FNodeOutputBase } from '../../../../../f-connectors';
 import { GetCanBeConnectedOutputByOutletRequest } from '../../get-can-be-connected-output-by-outlet';
 import { RequiredOutput } from '../../../../../errors';
@@ -15,7 +16,7 @@ export class CreateConnectionFromOutletPreparationExecution
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 

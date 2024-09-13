@@ -1,8 +1,8 @@
-import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point.request';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FMinimapData } from '../f-minimap-data';
 
 @Injectable()

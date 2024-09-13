@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-restrictions.request';
-import { IRect } from '@foblex/core';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { IRect } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 const OFFSET = 0;
 

@@ -9,7 +9,8 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
+import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IHasHostElement } from '@foblex/core';
 import { BrowserService } from '@foblex/platform';
 import { merge, Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
@@ -20,7 +21,7 @@ import {
   CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../f-connectors';
-import { FFlowMediator } from '../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { EmitTransformChangesRequest } from '../domain';
 import { F_NODE, FNodeBase } from './f-node-base';
 
@@ -98,7 +99,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     private elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fBrowser: BrowserService
   ) {
     super();

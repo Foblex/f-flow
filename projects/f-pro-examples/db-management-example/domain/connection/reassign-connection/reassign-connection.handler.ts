@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { ReassignConnectionRequest } from './reassign-connection.request';
 import { ITableConnectionStorageModel } from '../i-table-connection-storage-model';
 import { IDatabaseStorage } from '../../database.storage';

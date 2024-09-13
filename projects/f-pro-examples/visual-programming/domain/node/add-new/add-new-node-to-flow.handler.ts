@@ -1,4 +1,5 @@
-import { GuidExtensions, IHandler } from '@foblex/core';
+import { GuidExtensions } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { AddNewNodeToFlowRequest } from './add-new-node-to-flow.request';
 import { IFlowStorage } from '../../flow.storage';
 

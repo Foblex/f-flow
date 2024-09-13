@@ -14,8 +14,8 @@ import {
   RedrawConnectionsRequest,
   SelectAllRequest, SelectRequest, SortItemLayersRequest,
 } from '../domain';
-import { IPoint, IRect } from '@foblex/core';
-import { FFlowMediator } from '../infrastructure';
+import { IPoint, IRect } from '@foblex/2d';
+import { FMediator } from '@foblex/mediator';
 import {
   F_DRAGGABLE_PROVIDERS,
   FDraggableDataContext, FSelectionChangeEvent
@@ -35,7 +35,7 @@ let uniqueId: number = 0;
     class: "f-component f-flow",
   },
   providers: [
-    FFlowMediator,
+    FMediator,
     FComponentsStore,
     FTransformStore,
     FDraggableDataContext,
@@ -65,7 +65,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fBrowser: BrowserService,
   ) {
     super();

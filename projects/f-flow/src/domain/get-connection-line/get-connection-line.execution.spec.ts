@@ -1,19 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { GetConnectionLineExecution } from './get-connection-line.execution';
 import { GetConnectionLineRequest } from './get-connection-line.request';
-import { ILine, PointExtensions } from '@foblex/core';
 import { EFConnectionBehavior } from '../../f-connection';
-import { RoundedRect } from '../intersections';
 import { EFConnectableSide } from '../../f-connectors';
 import { setupTestModule } from '../test-setup';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
+import { RoundedRect, ILine, PointExtensions } from '@foblex/2d';
 
 describe('GetConnectionLineExecution', () => {
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
 
   beforeEach(() => {
     setupTestModule([ GetConnectionLineExecution ]);
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
   it('should handle floating behavior correctly', () => {

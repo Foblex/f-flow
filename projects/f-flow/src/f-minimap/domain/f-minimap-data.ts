@@ -1,4 +1,4 @@
-import { IRect, RectExtensions } from '@foblex/core';
+import { IRect, RectExtensions } from '@foblex/2d';
 
 export class FMinimapData {
 

@@ -1,16 +1,16 @@
-import { ILine, IPoint } from '@foblex/core';
 import { IDraggableItem } from '../i-draggable-item';
 import {
   GetInputRectInFlowRequest,
   GetInputRectInFlowResponse,
   GetOutputRectInFlowRequest,
-  GetOutputRectInFlowResponse, RoundedRect
+  GetOutputRectInFlowResponse
 } from '../../domain';
 import { FConnectionBase } from '../../f-connection';
 import { EFConnectableSide } from '../../f-connectors';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { Directive } from '@angular/core';
 import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
+import { RoundedRect, ILine, IPoint } from '@foblex/2d';
 
 @Directive()
 export abstract class ConnectionBaseDragHandler implements IDraggableItem {
@@ -22,7 +22,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   protected toConnectorSide: EFConnectableSide = EFConnectableSide.TOP;
 
   protected constructor(
-    protected fMediator: FFlowMediator,
+    protected fMediator: FMediator,
     public connection: FConnectionBase,
   ) {
   }

@@ -1,10 +1,9 @@
-import { ILine, IPoint, IRect, Line, Point } from '@foblex/core';
 import { GetConnectionLineRequest } from './get-connection-line.request';
 import { Injectable } from '@angular/core';
 import { EFConnectionBehavior } from '../../f-connection';
 import { EFConnectableSide } from '../../f-connectors';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
-import { IntersectionFinder, IRoundedRect } from '../intersections';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { GetIntersections, ILine, IPoint, IRect, IRoundedRect, Line, Point } from '@foblex/2d';
 
 @Injectable()
 @FExecutionRegister(GetConnectionLineRequest)
@@ -24,8 +23,8 @@ export class GetConnectionLineExecution implements IExecution<GetConnectionLineR
   }
 
   private floatingBehavior(payload: GetConnectionLineRequest): ILine {
-    const fromResult = IntersectionFinder.getIntersections(payload.outputRect.gravityCenter, payload.inputRect.gravityCenter, payload.outputRect)[ 0 ];
-    const toResult = IntersectionFinder.getIntersections(payload.inputRect.gravityCenter, payload.outputRect.gravityCenter, payload.inputRect)[ 0 ];
+    const fromResult = GetIntersections.getRoundedRectIntersections(payload.outputRect.gravityCenter, payload.inputRect.gravityCenter, payload.outputRect)[ 0 ];
+    const toResult = GetIntersections.getRoundedRectIntersections(payload.inputRect.gravityCenter, payload.outputRect.gravityCenter, payload.inputRect)[ 0 ];
     return new Line(
       fromResult ? fromResult : payload.outputRect.gravityCenter,
       toResult ? toResult : payload.inputRect.gravityCenter

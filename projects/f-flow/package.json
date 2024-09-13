@@ -33,6 +33,8 @@
     "@angular/core": ">=12.0.0",
     "@foblex/platform": "1.0.3",
     "@foblex/core": "1.2.6",
+    "@foblex/mediator": "1.1.0",
+    "@foblex/2d": "1.1.0",
     "rxjs": ">=6.6.0"
   },
   "dependencies": {

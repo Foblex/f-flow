@@ -1,8 +1,6 @@
 import { Directive, ElementRef } from '@angular/core';
-import {
-  IHasHostElement, ILine,
-  IPoint, LineExtensions, PointExtensions,
-} from '@foblex/core';
+import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
+import { IHasHostElement } from '@foblex/core';
 import { Subject } from 'rxjs';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';

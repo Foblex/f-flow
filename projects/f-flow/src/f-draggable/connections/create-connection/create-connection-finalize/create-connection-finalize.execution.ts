@@ -1,9 +1,10 @@
-import { IHandler, IPointerEvent } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
+import { IPointerEvent } from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, FNodeOutletBase, FNodeOutputBase, isNodeOutlet } from '../../../../f-connectors';
 import { CreateConnectionFinalizeRequest } from './create-connection-finalize.request';
-import { FExecutionRegister, FFlowMediator } from '../../../../infrastructure';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 import { OutputNotFound } from '../../../../errors';
@@ -23,7 +24,7 @@ export class CreateConnectionFinalizeExecution
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 

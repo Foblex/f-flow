@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GetCanBeConnectedOutputByOutletRequest } from './get-can-be-connected-output-by-outlet.request';
-import { FValidatorRegister, IValidator } from '../../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
 import { FComponentsStore } from '../../../../f-storage';
 

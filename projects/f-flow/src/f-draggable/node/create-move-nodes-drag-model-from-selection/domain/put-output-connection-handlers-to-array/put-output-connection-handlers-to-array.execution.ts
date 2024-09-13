@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PutOutputConnectionHandlersToArrayRequest } from './put-output-connection-handlers-to-array.request';
 import { FComponentsStore } from '../../../../../f-storage';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../../f-node';
 import { NodeDragHandler } from '../../../node.drag-handler';
 import { IDraggableItem } from '../../../../i-draggable-item';
@@ -21,7 +21,7 @@ export class PutOutputConnectionHandlersToArrayExecution
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

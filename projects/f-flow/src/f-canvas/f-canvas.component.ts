@@ -5,11 +5,11 @@ import {
 import {
   FCanvasBase, F_CANVAS
 } from './f-canvas-base';
-import { IPoint, IRect, Point, PointExtensions, RectExtensions, TransformModelExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions, TransformModelExtensions } from '@foblex/2d';
 import { FCanvasChangeEvent } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FNodeBase } from '../f-node';
-import { FFlowMediator } from '../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { EmitTransformChangesRequest, GetNodesRectRequest } from '../domain';
 
 @Component({
@@ -69,7 +69,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fComponentsStore: FComponentsStore,
   ) {
     super();

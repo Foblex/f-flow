@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component, ElementRef
 } from "@angular/core";
-import { IHasHostElement, IPoint } from '@foblex/core';
+import { IHasHostElement } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 
 export const F_CONNECTION_DRAG_HANDLE_CLASS = 'f-connection-drag-handle';
 

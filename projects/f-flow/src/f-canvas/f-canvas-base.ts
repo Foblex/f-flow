@@ -1,13 +1,12 @@
 import {
   IHasHostElement,
-  ITransformModel, PointExtensions,
-  TransformModelExtensions,
   ICanChangePosition, ICanChangeZoom, ICanFitToParent, ICanOneToOneCentering,
   mixinChangePosition,
   mixinChangeZoom,
   mixinFitToParent,
-  mixinOneToOneCentering, IPoint
+  mixinOneToOneCentering
 } from '@foblex/core';
+import { ITransformModel, PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
 import { Directive, ElementRef, EventEmitter, InjectionToken } from '@angular/core';
 import { FCanvasChangeEvent } from './domain';
 import { FNodeBase } from '../f-node';

@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { ENodeType } from '../../e-node-type';
 
 export class AddNewNodeToFlowRequest {

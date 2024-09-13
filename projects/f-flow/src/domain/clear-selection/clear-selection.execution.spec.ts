@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { FDraggableDataContext } from '../../f-draggable';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { ClearSelectionRequest } from './clear-selection.request';
 import { setupTestModule } from '../test-setup';
 import { ClearSelectionExecution } from './clear-selection.execution';
@@ -17,12 +17,12 @@ export const MOCK_SELECTABLE_ITEM: ISelectable = {
 
 describe('ClearSelectionExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
 
   beforeEach(() => {
     setupTestModule([ ClearSelectionExecution ]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
   it('should deselect all selected items and clear the selectedItems array when clearSelection is called through FMediator', () => {

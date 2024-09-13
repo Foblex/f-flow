@@ -1,4 +1,5 @@
-import { IHandler, IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
+import { IHandler } from '@foblex/mediator';
 import { CalculateConnectionCenterRequest } from './calculate-connection-center-request';
 
 export class CalculateConnectionCenterHandler

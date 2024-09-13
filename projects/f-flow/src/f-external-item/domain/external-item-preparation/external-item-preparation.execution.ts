@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ExternalItemPreparationRequest } from './external-item-preparation.request';
-import { Point } from '@foblex/core';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { Point } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem } from '../../../f-external-item';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';

@@ -1,6 +1,6 @@
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(MoveFrontElementsBeforeTargetElementRequest)

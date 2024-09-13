@@ -1,6 +1,7 @@
 import { EventEmitter, InjectionToken } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IHasHostElement, IPoint, IRect, ISize, PointExtensions } from '@foblex/core';
+import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IHasHostElement } from '@foblex/core';
 import { F_SELECTED_CLASS, ISelectable } from '../f-connection';
 import { IHasStateChanges } from '../i-has-state-changes';
 import { FConnectorBase } from '../f-connectors';

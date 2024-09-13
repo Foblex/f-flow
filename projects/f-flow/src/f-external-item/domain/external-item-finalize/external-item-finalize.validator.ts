@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExternalItemFinalizeRequest } from './external-item-finalize.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 

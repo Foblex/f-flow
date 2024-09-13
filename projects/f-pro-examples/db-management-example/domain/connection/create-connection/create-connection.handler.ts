@@ -1,4 +1,5 @@
-import { GuidExtensions, IHandler } from '@foblex/core';
+import { GuidExtensions } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { CreateConnectionRequest } from './create-connection.request';
 import { IDatabaseStorage } from '../../database.storage';
 

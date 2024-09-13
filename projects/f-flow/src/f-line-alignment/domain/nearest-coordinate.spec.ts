@@ -1,4 +1,4 @@
-import { IRect, PointExtensions } from '@foblex/core';
+import { IRect, PointExtensions } from '@foblex/2d';
 import { INearestCoordinateResult } from './i-nearest-coordinate-result';
 import { NearestCoordinateFinder } from './nearest-coordinate';
 

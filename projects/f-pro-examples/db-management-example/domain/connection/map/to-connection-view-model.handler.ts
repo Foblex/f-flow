@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { ITableConnectionViewModel } from '../i-table-connection-view-model';
 import { IDatabaseStorage } from '../../database.storage';
 

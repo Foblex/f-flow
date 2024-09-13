@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { FFlowMediator } from '../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { ElementRef, Injector } from '@angular/core';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from '../f-draggable';
@@ -16,7 +16,7 @@ export function setupTestModule(providers: any[] = [], declarations: any[] = [])
       ...declarations
     ],
     providers: [
-      FFlowMediator,
+      FMediator,
       FComponentsStore,
       FDraggableDataContext,
       { provide: ElementRef, useClass: MockElementRef },

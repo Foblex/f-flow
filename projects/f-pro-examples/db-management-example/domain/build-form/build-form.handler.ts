@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { BuildFormRequest } from './build-form.request';
 import {
   AbstractControl,

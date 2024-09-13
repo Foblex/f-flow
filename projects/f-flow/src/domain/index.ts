@@ -2,6 +2,8 @@ export * from './clear-selection';
 
 export * from './create-connection-markers';
 
+export * from './create-rounded-rect-from-element';
+
 export * from './emit-transform-changes';
 
 export * from './get-can-be-selected-items';
@@ -37,8 +39,6 @@ export * from './select-and-update-node-layer';
 export * from './sort-item-layers';
 
 export * from './subscribe-on-transform-changes';
-
-export * from './intersections';
 
 export * from './update-item-and-children-layers';
 

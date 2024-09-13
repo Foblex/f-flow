@@ -26,8 +26,6 @@ export * from './f-storage';
 
 export * from './f-zoom';
 
-export * from './infrastructure';
-
 export * from './f-flow.module';
 
 export * from './i-has-state-changes';

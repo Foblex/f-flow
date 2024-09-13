@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/core';
+import { IRect } from '@foblex/2d';
 
 export class ApplyChildResizeRestrictionsRequest {
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CreateConnectionPreparationRequest } from './create-connection-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IPointerEvent } from '@foblex/core';

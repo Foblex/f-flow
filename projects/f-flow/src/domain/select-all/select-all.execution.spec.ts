@@ -2,20 +2,20 @@ import { TestBed } from '@angular/core/testing';
 import { SelectAllRequest } from './select-all.request';
 import { FDraggableDataContext } from '../../f-draggable';
 import { FComponentsStore } from '../../f-storage';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { SelectAllExecution } from './select-all.execution';
 import { setupTestModule } from '../test-setup';
 
 describe('SelectAllExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
   let fComponentsStore: FComponentsStore;
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
 
   beforeEach(() => {
     setupTestModule([SelectAllExecution]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
     fComponentsStore = TestBed.inject(FComponentsStore) as jasmine.SpyObj<FComponentsStore>;
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
   it('should deselect all items and clear selectedItems array', () => {

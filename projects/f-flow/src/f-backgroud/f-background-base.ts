@@ -1,5 +1,6 @@
 import { Directive, InjectionToken } from '@angular/core';
-import { IHasHostElement, ITransformModel } from '@foblex/core';
+import { IHasHostElement } from '@foblex/core';
+import { ITransformModel } from '@foblex/2d';
 
 export const F_BACKGROUND = new InjectionToken<FBackgroundBase>('F_BACKGROUND');
 

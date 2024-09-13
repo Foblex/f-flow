@@ -10,7 +10,7 @@ import {
   FSelectionChangeEvent,
   FZoomDirective
 } from '@foblex/flow';
-import { IPoint, Point, PointExtensions } from '@foblex/core';
+import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import {
   BuildFormHandler, BuildFormRequest,
   DatabaseApiService,

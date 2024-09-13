@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NodeResizePreparationRequest } from './node-resize-preparation.request';
-import { ITransformModel, Point } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { ITransformModel, Point } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
@@ -27,7 +27,7 @@ export class NodeResizePreparationExecution implements IExecution<NodeResizePrep
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

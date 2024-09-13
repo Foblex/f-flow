@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { IGroupViewModel } from '../i-group-view-model';
 import { IDatabaseStorage } from '../../database.storage';
 

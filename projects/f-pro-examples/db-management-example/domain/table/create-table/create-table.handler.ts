@@ -1,4 +1,5 @@
-import { GuidExtensions, IHandler } from '@foblex/core';
+import { GuidExtensions } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { CreateTableRequest } from './create-table.request';
 import { IDatabaseStorage } from '../../database.storage';
 import { ETableColumnType } from '../e-table-column-type';

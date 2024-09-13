@@ -1,6 +1,6 @@
 import { CalculateConnectionCenterHandler } from './calculate-connection-center.handler';
 import { CalculateConnectionCenterRequest } from './calculate-connection-center-request';
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 
 describe('CalculateConnectionCenterHandler', () => {
   let handler: CalculateConnectionCenterHandler;

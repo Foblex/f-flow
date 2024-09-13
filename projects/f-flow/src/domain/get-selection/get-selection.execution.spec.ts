@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { FDraggableDataContext, FSelectionChangeEvent } from '../../f-draggable';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { setupTestModule } from '../test-setup';
 import { GetSelectionExecution } from './get-selection.execution';
 import { GetSelectionRequest } from './get-selection.request';
 
 describe('GetSelectionExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
 
   beforeEach(() => {
     setupTestModule([ GetSelectionExecution ]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
   it('should return correct FSelectionChangeEvent when nodes and connections are selected', () => {

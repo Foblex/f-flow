@@ -1,14 +1,14 @@
-import { ILine } from '@foblex/core';
+import { ILine } from '@foblex/2d';
 import { Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../f-storage';
 import { GetConnectionLineRequest } from '../get-connection-line';
 import { FConnectorBase } from '../../f-connectors';
 import { FConnectionBase } from '../../f-connection';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetElementRectInFlowRequest } from '../get-element-rect-in-flow';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
-import { IConnectorShape } from '../intersections';
+import { IRoundedRect } from '@foblex/2d';
 
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)
@@ -16,7 +16,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
 
   constructor(
     private readonly fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 
@@ -56,8 +56,8 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
-    const outputRect = this.fMediator.send<IConnectorShape>(new GetElementRectInFlowRequest(output.hostElement));
-    const inputRect = this.fMediator.send<IConnectorShape>(new GetElementRectInFlowRequest(input.hostElement));
+    const outputRect = this.fMediator.send<IRoundedRect>(new GetElementRectInFlowRequest(output.hostElement));
+    const inputRect = this.fMediator.send<IRoundedRect>(new GetElementRectInFlowRequest(input.hostElement));
     return this.fMediator.send(new GetConnectionLineRequest(
         outputRect,
         inputRect,

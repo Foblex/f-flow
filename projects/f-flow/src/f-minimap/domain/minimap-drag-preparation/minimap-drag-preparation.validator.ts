@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MinimapDragPreparationRequest } from './minimap-drag-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { FComponentsStore } from '../../../f-storage';
 

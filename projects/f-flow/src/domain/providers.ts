@@ -22,12 +22,15 @@ import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
 import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
+import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
 
 export const COMMON_PROVIDERS = [
 
   ClearSelectionExecution,
 
   CreateConnectionMarkersExecution,
+
+  CreateRoundedRectFromElementExecution,
 
   EmitTransformChangesExecution,
 

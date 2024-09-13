@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SelectionAreaPreparationRequest } from './selection-area-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 
 @Injectable()
 @FValidatorRegister(SelectionAreaPreparationRequest)

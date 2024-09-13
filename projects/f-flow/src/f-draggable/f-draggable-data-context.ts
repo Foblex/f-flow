@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Point } from '@foblex/core';
+import { Point } from '@foblex/2d';
 import { IDraggableItem } from './i-draggable-item';
 import { ISelectable } from '../f-connection';
 import { FLineAlignmentBase } from '../f-line-alignment';

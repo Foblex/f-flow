@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SelectionAreaPreparationRequest } from './selection-area-preparation.request';
-import { Point } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { Point } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -17,7 +17,7 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

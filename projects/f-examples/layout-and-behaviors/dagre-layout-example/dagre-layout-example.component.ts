@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import * as dagre from "dagre";
-import { GuidExtensions, IPoint, PointExtensions } from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/2d';
+import { GuidExtensions } from '@foblex/core';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
 import { FCheckboxComponent } from '@foblex/f-docs';

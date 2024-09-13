@@ -1,4 +1,4 @@
-import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FExternalItemBase } from '../../f-external-item';
 import { IDraggableItem } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';

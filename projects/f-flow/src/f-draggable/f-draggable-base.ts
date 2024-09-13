@@ -2,13 +2,12 @@ import {
   EventExtensions,
   IHasHostElement,
   IMouseEvent,
-  IPoint,
   IPointerEvent,
   ITouchDownEvent,
   ITouchMoveEvent,
   ITouchUpEvent,
-  PointExtensions
 } from '@foblex/core';
+import { PointExtensions, IPoint } from '@foblex/2d';
 import { Directive, EventEmitter, InjectionToken, } from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './connections';
 import { FSelectionChangeEvent } from './f-selection-change-event';
