@@ -7,9 +7,9 @@
 //      "@foblex/f-docs": [
 //        "./projects/f-docs/src/public-api.ts"
 //      ],
-//      "@foblex/flow": [
-//        "./projects/f-flow/src/public-api.ts"
-//      ],
+      "@foblex/flow": [
+        "./projects/f-flow/src/public-api.ts"
+      ],
       "@pro-examples": [
         "./projects/f-pro-examples/public-api.ts"
       ]
