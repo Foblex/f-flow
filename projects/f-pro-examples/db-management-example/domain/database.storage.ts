@@ -3,7 +3,7 @@ import { ITableConnectionStorageModel } from './connection';
 import { ETableRelationType } from './connection';
 import { ETableColumnKey, ETableColumnType } from './table';
 import { IGroupStorageModel } from './group';
-import { generateGuid } from './generate-guid';
+import { generateGuid } from '@foblex/utils';
 
 export interface IDatabaseStorage {
 

@@ -3,7 +3,7 @@ import { CreateColumnRequest } from './create-column.request';
 import { IDatabaseStorage } from '../../database.storage';
 import { ITableStorageModel } from '../i-table-storage-model';
 import { ETableColumnType } from '../e-table-column-type';
-import { generateGuid } from '../../generate-guid';
+import { generateGuid } from '@foblex/utils';
 
 export class CreateColumnHandler implements IHandler<CreateColumnRequest> {
 

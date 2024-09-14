@@ -5,6 +5,7 @@ import { IPoint, PointExtensions } from '@foblex/2d';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
 import { FCheckboxComponent } from '@foblex/f-docs';
+import { generateGuid } from '@foblex/utils';
 
 interface INodeViewModel {
   id: string;
@@ -132,11 +133,3 @@ const GRAPH_DATA = [
   { id: 'Node7', parentId: 'Node3' },
   { id: 'Node8', parentId: 'Node2' }
 ];
-
-function generateGuid(): string {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}

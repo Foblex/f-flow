@@ -2,7 +2,7 @@ import { IHandler } from '@foblex/mediator';
 import { CreateTableRequest } from './create-table.request';
 import { IDatabaseStorage } from '../../database.storage';
 import { ETableColumnType } from '../e-table-column-type';
-import { generateGuid } from '../../generate-guid';
+import { generateGuid } from '@foblex/utils';
 
 export class CreateTableHandler implements IHandler<CreateTableRequest> {
 

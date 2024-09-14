@@ -9,6 +9,4 @@ export * from './database.api-service';
 
 export * from './database.storage';
 
-export * from './generate-guid';
-
 export * from './i-database-model';
