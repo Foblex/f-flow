@@ -1,10 +1,9 @@
 import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { BooleanExtensions } from '@foblex/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FNodeBase, F_NODE } from '../../f-node';
 import { FComponentsStore } from '../../f-storage';
-import { castToEnum } from '../../domain';
+import { castToBoolean, castToEnum } from '@foblex/utils';
 
 let uniqueId: number = 0;
 
@@ -34,7 +33,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
   }
 
   public override set disabled(isDisabled: boolean | undefined | string) {
-    const value = BooleanExtensions.castToBoolean(isDisabled);
+    const value = castToBoolean(isDisabled);
     if (value !== this.isDisabled) {
       this.isDisabled = value;
       this.stateChanges.next();

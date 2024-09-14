@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import * as dagre from "dagre";
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { GuidExtensions } from '@foblex/core';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
 import { FCheckboxComponent } from '@foblex/f-docs';
@@ -79,7 +78,7 @@ export class DagreLayoutExampleComponent implements OnInit {
     return graph.nodes().map((x) => {
       let node = graph.node(x);
       return {
-        id: GuidExtensions.generate(),
+        id: generateGuid(),
         connectorId: x,
         position: { x: node.x, y: node.y }
       }
@@ -87,7 +86,7 @@ export class DagreLayoutExampleComponent implements OnInit {
   }
 
   private getConnections(graph: Graph): IConnectionViewModel[] {
-    return graph.edges().map((x) => ({ id: GuidExtensions.generate(), from: x.v, to: x.w }));
+    return graph.edges().map((x) => ({ id: generateGuid(), from: x.v, to: x.w }));
   }
 
   public horizontal(): void {
@@ -133,3 +132,11 @@ const GRAPH_DATA = [
   { id: 'Node7', parentId: 'Node3' },
   { id: 'Node8', parentId: 'Node2' }
 ];
+
+function generateGuid(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}

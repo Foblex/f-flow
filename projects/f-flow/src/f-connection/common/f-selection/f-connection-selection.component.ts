@@ -2,10 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component, ElementRef, Inject
 } from "@angular/core";
-import { IHasHostElement } from '@foblex/core';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
 import { F_CONNECTION } from '../f-connection.injection-token';
+import { IHasHostElement } from '../../../i-has-host-element';
 
 @Component({
   selector: "path[fConnectionSelection]",

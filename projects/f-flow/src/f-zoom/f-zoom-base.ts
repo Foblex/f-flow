@@ -1,4 +1,4 @@
-import { EventExtensions } from '@foblex/core';
+import { EventExtensions } from '@foblex/drag-toolkit';
 import { IPoint, Point, RectExtensions } from '@foblex/2d';
 import { InjectionToken } from '@angular/core';
 import { FCanvasBase } from '../f-canvas';

@@ -26,6 +26,10 @@ export * from './f-storage';
 
 export * from './f-zoom';
 
+export * from './mixins';
+
 export * from './f-flow.module';
+
+export * from './i-has-host-element';
 
 export * from './i-has-state-changes';

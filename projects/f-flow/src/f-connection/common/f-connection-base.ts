@@ -1,6 +1,5 @@
 import { Directive, ElementRef } from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
-import { IHasHostElement } from '@foblex/core';
 import { Subject } from 'rxjs';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
@@ -16,15 +15,14 @@ import { IHasStateChanges } from '../../i-has-state-changes';
 import { FMarkerBase } from '../f-marker';
 import { EFConnectableSide } from '../../f-connectors';
 import { FConnectionFactory } from '../f-connection-builder';
+import { IHasHostElement } from '../../i-has-host-element';
 import {
-  ICanChangeConnectionVisibility,
-  ISelectable,
-  mixinChangeConnectionSelection,
-  mixinChangeConnectionVisibility
-} from './mixins';
+  ICanChangeSelection, ICanChangeVisibility,
+  mixinChangeSelection, mixinChangeVisibility
+} from '../../mixins';
 
-const MIXIN_BASE = mixinChangeConnectionSelection(
-  mixinChangeConnectionVisibility(
+const MIXIN_BASE = mixinChangeSelection(
+  mixinChangeVisibility(
     class {
       constructor(
         public hostElement: HTMLElement
@@ -34,8 +32,8 @@ const MIXIN_BASE = mixinChangeConnectionSelection(
 
 @Directive()
 export abstract class FConnectionBase extends MIXIN_BASE
-  implements IHasHostElement, ISelectable,
-             ICanChangeConnectionVisibility,
+  implements IHasHostElement, ICanChangeSelection,
+             ICanChangeVisibility,
              IHasStateChanges, IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
 
@@ -127,6 +125,14 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   private getTransform(position: IPoint): string {
     return `position: absolute; pointerEvents: all; transform: translate(-50%, -50%); left: ${ position.x }px; top: ${ position.y }px`;
+  }
+
+  public override selectChild(): void {
+    this.fPath.select();
+  }
+
+  public override deselectChild(): void {
+    this.fPath.deselect();
   }
 
   public redraw(): void {

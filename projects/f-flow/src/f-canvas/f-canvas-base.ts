@@ -1,15 +1,15 @@
 import {
-  IHasHostElement,
   ICanChangePosition, ICanChangeZoom, ICanFitToParent, ICanOneToOneCentering,
   mixinChangePosition,
   mixinChangeZoom,
   mixinFitToParent,
   mixinOneToOneCentering
-} from '@foblex/core';
+} from '../mixins';
 import { ITransformModel, PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
 import { Directive, ElementRef, EventEmitter, InjectionToken } from '@angular/core';
 import { FCanvasChangeEvent } from './domain';
 import { FNodeBase } from '../f-node';
+import { IHasHostElement } from '../i-has-host-element';
 
 export const F_CANVAS = new InjectionToken<FCanvasBase>('F_CANVAS');
 

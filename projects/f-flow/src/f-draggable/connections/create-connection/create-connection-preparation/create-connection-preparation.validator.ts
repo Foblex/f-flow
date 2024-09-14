@@ -3,7 +3,7 @@ import { CreateConnectionPreparationRequest } from './create-connection-preparat
 import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
 import { FComponentsStore } from '../../../../f-storage';
-import { IPointerEvent } from '@foblex/core';
+import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 
 @Injectable()

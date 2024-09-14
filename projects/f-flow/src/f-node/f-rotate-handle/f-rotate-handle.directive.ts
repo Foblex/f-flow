@@ -1,7 +1,7 @@
 import {
   Directive, ElementRef, InjectionToken, Input
 } from "@angular/core";
-import { BooleanExtensions, IHasHostElement } from '@foblex/core';
+import { IHasHostElement } from '../../i-has-host-element';
 
 // export const F_ROTATE_HANDLE: InjectionToken<FRotateHandleDirective> = new InjectionToken<FRotateHandleDirective>('F_ROTATE_HANDLE');
 //

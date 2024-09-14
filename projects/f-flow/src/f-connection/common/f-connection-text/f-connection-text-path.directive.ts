@@ -1,10 +1,10 @@
 import { Directive, ElementRef, Inject, OnInit } from '@angular/core';
-import { IHasHostElement } from '@foblex/core';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { F_CONNECTION } from '../f-connection.injection-token';
 import { IHasConnectionText } from '../i-has-connection-text';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
 import { BrowserService } from '@foblex/platform';
+import { IHasHostElement } from '../../../i-has-host-element';
 
 @Directive({
   selector: 'textPath[f-connection-text-path]',

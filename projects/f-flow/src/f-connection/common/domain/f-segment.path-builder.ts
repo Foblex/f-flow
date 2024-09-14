@@ -1,4 +1,3 @@
-import { IMap} from '@foblex/core';
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { EFConnectableSide } from '../../../f-connectors';
 import {
@@ -11,6 +10,7 @@ import {
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse
 } from '../../f-connection-builder';
+import { IMap } from '../../../domain';
 
 const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
 

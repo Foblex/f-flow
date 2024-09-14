@@ -68,6 +68,8 @@
     "@foblex/platform": "1.0.3",
     "@foblex/mediator": "1.1.0",
     "@foblex/2d": "1.1.0",
+    "@foblex/drag-toolkit": "1.1.0",
+    "@foblex/utils": "1.1.0",
     "dagre": "^0.8.5",
     "elkjs": "^0.9.3",
     "express": "^4.18.2",

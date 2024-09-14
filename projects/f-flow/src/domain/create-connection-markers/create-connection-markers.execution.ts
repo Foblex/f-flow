@@ -3,6 +3,7 @@ import { CreateConnectionMarkersRequest } from './create-connection-markers-requ
 import { FConnectionBase, FMarkerBase } from '../../f-connection';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
+import { normalizeDomElementId } from '@foblex/utils';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
@@ -44,7 +45,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
   private createMarkerElement(marker: FMarkerBase, fConnectionId: string): SVGElement {
     const markerElement = createSVGElement('marker', this.fBrowser);
 
-    markerElement.setAttribute('id', sanitizeElementId(marker.type + '-' + fConnectionId));
+    markerElement.setAttribute('id', normalizeDomElementId(marker.type + '-' + fConnectionId));
 
     markerElement.setAttribute('markerHeight', `${ marker.height }`);
     markerElement.setAttribute('markerWidth', `${ marker.width }`);
@@ -56,12 +57,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
     return markerElement;
   }
 }
-function sanitizeElementId(id: string): string {
-  if (!id.match(/^[a-zA-Z_]/)) {
-    id = '_' + id;
-  }
-  return id.replace(/[^a-zA-Z0-9_\-:.]/g, '_');
-}
+
 function createSVGElement<K extends keyof SVGElementTagNameMap>(tag: K, fBrowser: BrowserService): SVGElementTagNameMap[K] {
   return fBrowser.document.createElementNS('http://www.w3.org/2000/svg', tag);
 }

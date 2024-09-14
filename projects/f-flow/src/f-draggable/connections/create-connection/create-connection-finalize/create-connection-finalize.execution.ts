@@ -1,5 +1,5 @@
 import { IHandler } from '@foblex/mediator';
-import { IPointerEvent } from '@foblex/core';
+import { IPointerEvent } from '@foblex/drag-toolkit';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, FNodeOutletBase, FNodeOutputBase, isNodeOutlet } from '../../../../f-connectors';

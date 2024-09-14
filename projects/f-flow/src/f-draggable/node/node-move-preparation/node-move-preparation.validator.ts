@@ -3,8 +3,8 @@ import { NodeMovePreparationRequest } from './node-move-preparation.request';
 import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { isElementWithClass } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
+import { isClosestElementHasClass } from '@foblex/utils';
 
 @Injectable()
 @FValidatorRegister(NodeMovePreparationRequest)
@@ -35,6 +35,6 @@ export class NodeMovePreparationValidator implements IValidator<NodeMovePreparat
   }
 
   private isDragHandleElement(targetElement: HTMLElement): boolean {
-    return isElementWithClass(targetElement, '.f-drag-handle');
+    return isClosestElementHasClass(targetElement, '.f-drag-handle');
   }
 }

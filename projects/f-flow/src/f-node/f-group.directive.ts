@@ -10,7 +10,6 @@ import {
   Renderer2,
 } from "@angular/core";
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
-import { IHasHostElement } from '@foblex/core';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { merge, Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
@@ -24,6 +23,7 @@ import {
 import { FMediator } from '@foblex/mediator';
 import { EmitTransformChangesRequest } from '../domain';
 import { BrowserService } from '@foblex/platform';
+import { IHasHostElement } from '../i-has-host-element';
 
 let uniqueId: number = 0;
 
@@ -85,10 +85,6 @@ export class FGroupDirective extends FNodeBase
   @Input()
   public override fConnectOnNode: boolean = true;
 
-  public get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
-  }
-
   public override connectors: FConnectorBase[] = [];
 
   constructor(
@@ -98,7 +94,7 @@ export class FGroupDirective extends FNodeBase
     private fMediator: FMediator,
     private fBrowser: BrowserService
   ) {
-    super();
+    super(elementReference.nativeElement);
   }
 
   public ngOnInit(): void {

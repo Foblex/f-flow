@@ -5,12 +5,12 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
-  getValueFromDataAttr,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { IDraggableItem } from '../../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
 import { NodeResizeDragHandler } from '../node-resize.drag-handler';
+import { getDataAttrValueFromClosestElementWithClass } from '@foblex/utils';
 
 @Injectable()
 @FExecutionRegister(NodeResizePreparationRequest)
@@ -34,7 +34,7 @@ export class NodeResizePreparationExecution implements IExecution<NodeResizePrep
   public handle(request: NodeResizePreparationRequest): void {
     this.selectAndUpdateNodeLayer(request.event.targetElement);
 
-    const handleType = getValueFromDataAttr(request.event.targetElement, 'fResizeHandleType', '.f-resize-handle');
+    const handleType = getDataAttrValueFromClosestElementWithClass(request.event.targetElement, 'fResizeHandleType', '.f-resize-handle');
     const itemsToDrag: IDraggableItem[] = [
       new NodeResizeDragHandler(
         this.fMediator,

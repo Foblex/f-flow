@@ -16,6 +16,7 @@ import {
 import { NodeResizeByChildDragHandler } from '../node-resize-by-child.drag-handler';
 import { GetParentNodesRequest, IsArrayHasParentNodeRequest } from '../../domain';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
+import { flatMap } from '@foblex/utils';
 
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
@@ -66,10 +67,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return items.reduce((result: string[], item: INodeWithDistanceRestrictions) => {
-      const ids = this.getOutputsForNode(item.node).map((x) => x.id);
-      return [...result, ...ids];
-    }, []);
+    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getOutputsForNode(item.node).map((x) => x.id));
   }
 
   private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
@@ -77,10 +75,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllInputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return items.reduce((result: string[], item: INodeWithDistanceRestrictions) => {
-      const ids = this.getInputsForNode(item.node).map((x) => x.id);
-      return [...result, ...ids];
-    }, []);
+    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getInputsForNode(item.node).map((x) => x.id));
   }
 
   private getInputsForNode(node: FNodeBase): FConnectorBase[] {

@@ -1,8 +1,9 @@
-import { ISelectable } from '../../f-connection';
+import { ICanChangeSelection } from '../../mixins';
+
 export class UpdateItemAndChildrenLayersRequest {
 
   constructor(
-    public item: ISelectable,
+    public item: ICanChangeSelection,
     public itemContainer: HTMLElement,
   ) {
   }

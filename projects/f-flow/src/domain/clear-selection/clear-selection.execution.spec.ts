@@ -4,9 +4,9 @@ import { FMediator } from '@foblex/mediator';
 import { ClearSelectionRequest } from './clear-selection.request';
 import { setupTestModule } from '../test-setup';
 import { ClearSelectionExecution } from './clear-selection.execution';
-import { ISelectable } from '../../f-connection';
+import { ICanChangeSelection } from '@foblex/flow';
 
-export const MOCK_SELECTABLE_ITEM: ISelectable = {
+export const MOCK_SELECTABLE_ITEM: ICanChangeSelection = {
   fId: '1',
   fSelectionDisabled: false,
   hostElement: document.createElement('svg'),

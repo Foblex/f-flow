@@ -8,11 +8,10 @@ import {
   OnDestroy,
   OnInit, Optional, Output, QueryList
 } from "@angular/core";
-import { F_DRAGGABLE, FDraggableBase } from './f-draggable-base';
+import { FDraggableBase } from './f-draggable-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
-import { IPointerEvent } from '@foblex/core';
 import { IPoint, Point } from '@foblex/2d';
 import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
@@ -35,16 +34,13 @@ import {
 } from '../f-external-item';
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
-import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService } from '@foblex/platform';
+import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 
 @Directive({
   selector: "f-flow[fDraggable]",
-  exportAs: 'fDraggable',
-  providers: [
-    { provide: F_DRAGGABLE, useExisting: FDraggableDirective }
-  ]
+  exportAs: 'fDraggable'
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 

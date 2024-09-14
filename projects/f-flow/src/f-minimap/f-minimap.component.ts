@@ -9,7 +9,7 @@ import { SubscribeOnTransformChangesRequest } from '../domain';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
-import { IPointerEvent } from '@foblex/core';
+import { IPointerEvent } from '@foblex/drag-toolkit';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
 

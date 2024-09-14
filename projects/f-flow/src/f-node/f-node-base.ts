@@ -1,20 +1,26 @@
 import { EventEmitter, InjectionToken } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
-import { IHasHostElement } from '@foblex/core';
-import { F_SELECTED_CLASS, ISelectable } from '../f-connection';
 import { IHasStateChanges } from '../i-has-state-changes';
 import { FConnectorBase } from '../f-connectors';
+import { IHasHostElement } from '../i-has-host-element';
+import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
-export abstract class FNodeBase implements IHasStateChanges, ISelectable, IHasHostElement {
+const MIXIN_BASE = mixinChangeSelection(
+    class {
+      constructor(
+        public hostElement: HTMLElement
+      ) {
+      }
+    });
 
-  public abstract fId: string;
+export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, ICanChangeSelection, IHasHostElement {
+
+  public abstract override fId: string;
 
   public abstract fParentId: string | null | undefined;
-
-  public abstract hostElement: HTMLElement;
 
   public readonly stateChanges: Subject<void> = new Subject<void>();
 
@@ -35,7 +41,7 @@ export abstract class FNodeBase implements IHasStateChanges, ISelectable, IHasHo
 
   public abstract fDraggingDisabled: boolean;
 
-  public abstract fSelectionDisabled: boolean;
+  public abstract override fSelectionDisabled: boolean;
 
   public abstract fConnectOnNode: boolean;
 
@@ -64,18 +70,6 @@ export abstract class FNodeBase implements IHasStateChanges, ISelectable, IHasHo
     }
 
     this.setStyle('transform', `translate(${ this.position.x }px,${ this.position.y }px)`);
-  }
-
-  public deselect(): void {
-    this.hostElement.classList.remove(F_SELECTED_CLASS);
-  }
-
-  public select(): void {
-    this.hostElement.classList.add(F_SELECTED_CLASS);
-  }
-
-  public isSelected(): boolean {
-    return this.hostElement.classList.contains(F_SELECTED_CLASS);
   }
 
   public updatePosition(position: IPoint): void {
