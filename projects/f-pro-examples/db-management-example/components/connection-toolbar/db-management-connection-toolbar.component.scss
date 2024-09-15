@@ -68,17 +68,5 @@
   gap: 8px;
   background-color: var(--db-background);
   border: 1px solid var(--db-node-header-normal-state-background-color);
-  //animation: scaleIn 0.2s ease-in-out forwards;
   transform: scale(1) translate(-50%, -200%);
 }
-
-//@keyframes scaleIn {
-//  0% {
-//    transform: scale(0) translate(-90%, -50%);
-//    opacity: 0;
-//  }
-//  100% {
-//    transform: scale(1) translate(-50%, -200%);
-//    opacity: 1;
-//  }
-//}

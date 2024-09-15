@@ -28,6 +28,8 @@ The **FFlowComponent** manages the flow of draggable and connectable elements wi
  
  - `getPositionInFlow(position: IPoint): void;` Returns the position of the point relative to the flow.
 
+ - `getFlowState(): IFlowState;` Returns all nodes, groups and connections in the flow, including their positions and properties.
+
 ## Styles
 
   - `.f-component` A general class applied to all F components for shared styling.

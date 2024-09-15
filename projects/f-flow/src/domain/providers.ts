@@ -24,8 +24,12 @@ import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExec
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
 import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
+import { CenterGroupOrNodeExecution } from './center-group-or-node';
+import { ShowConnectionsAfterCalculationsExecution } from './show-connections-after-calculations';
 
 export const COMMON_PROVIDERS = [
+
+  CenterGroupOrNodeExecution,
 
   ClearSelectionExecution,
 
@@ -64,6 +68,8 @@ export const COMMON_PROVIDERS = [
   SelectAllExecution,
 
   SelectAndUpdateNodeLayerExecution,
+
+  ShowConnectionsAfterCalculationsExecution,
 
   SortItemLayersExecution,
 

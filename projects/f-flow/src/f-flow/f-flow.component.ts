@@ -9,10 +9,17 @@ import { Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
+  COMMON_PROVIDERS,
+  GetScaledNodeRectsWithFlowPositionRequest,
+  GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest, SortItemLayersRequest, IFFlowState, GetFlowStateRequest,
+  SelectAllRequest,
+  SelectRequest,
+  SortItemLayersRequest,
+  IFFlowState,
+  GetFlowStateRequest,
+  ShowConnectionsAfterCalculationsRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -98,10 +105,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
+        this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
-        setTimeout(() => {
-          this.fLoaded.emit();
-        })
+        this.fLoaded.emit();
       }
     });
   }
