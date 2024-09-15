@@ -1,6 +1,4 @@
 import {
-  afterNextRender,
-  afterRender,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component, OnDestroy, OnInit,
@@ -44,7 +42,7 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
 
   public connections: IHeroFlowConnection[] = HERO_FLOW_CONFIGURATION.connections;
 
-  @ViewChild(FFlowComponent, { static: true })
+  @ViewChild(FFlowComponent, { static: false })
   public fFlowComponent!: FFlowComponent;
 
   public canvasPosition: IPoint = PointExtensions.initialize();
@@ -55,10 +53,13 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
 
   public eConnectionBehaviour = EFConnectionBehavior;
 
+  public isBrowser: boolean = false;
+
   constructor(
     private fBrowser: BrowserService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
+    this.isBrowser = this.fBrowser.isBrowser();
   }
 
   public ngOnInit(): void {
@@ -76,7 +77,9 @@ export class HeroFlowComponent implements OnInit, OnDestroy {
   }
 
   public onLoaded(): void {
-    this.modifyPosition();
+    if(this.fFlowComponent) {
+      this.modifyPosition();
+    }
   }
 
   private modifyPosition(): void {

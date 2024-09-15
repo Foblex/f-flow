@@ -1,17 +1,4 @@
 import { IDocsEnvironment, INavigationGroup } from '@foblex/f-docs';
-import { ZoomExampleComponent } from '../../../projects/f-examples/zoom-example/zoom-example.component';
-import {
-  BackgroundExampleComponent
-} from '../../../projects/f-examples/background-example/background-example.component';
-import {
-  LineAlignmentExampleComponent
-} from '../../../projects/f-examples/line-alignment-example/line-alignment-example.component';
-import {
-  MinimapBasicExampleComponent
-} from '../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component';
-import {
-  MinimapScaledExampleComponent
-} from '../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component';
 
 export const ENGLISH_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 
@@ -53,13 +40,13 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'connectable-side', component: import('../../../projects/f-examples/connectable-side/connectable-side.component') },
       { tag: 'connection-from-outlet', component: import('../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component') },
       { tag: 'connection-markers', component: import('../../../projects/f-examples/connection-markers/connection-markers.component') },
-      { tag: 'zoom-example', component: ZoomExampleComponent },
-      { tag: 'background-example', component: BackgroundExampleComponent },
-      { tag: 'line-alignment-example', component: LineAlignmentExampleComponent },
+      { tag: 'zoom-example', component: import('../../../projects/f-examples/zoom-example/zoom-example.component') },
+      { tag: 'background-example', component: import('../../../projects/f-examples/background-example/background-example.component') },
+      { tag: 'line-alignment-example', component: import('../../../projects/f-examples/line-alignment-example/line-alignment-example.component') },
       { tag: 'vp-flow', component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
       { tag: 'db-management-flow', component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
-      { tag: 'minimap-basic-example', component: MinimapBasicExampleComponent },
-      { tag: 'minimap-scaled-example', component: MinimapScaledExampleComponent },
+      { tag: 'minimap-basic-example', component: import('../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component') },
+      { tag: 'minimap-scaled-example', component: import('../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component') },
       { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component') },
       { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component') },
       { tag: 'node-with-connectors', component: import('../../../projects/f-examples/node-with-connectors/node-with-connectors.component') },
