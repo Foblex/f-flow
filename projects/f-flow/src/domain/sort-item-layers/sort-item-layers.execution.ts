@@ -1,6 +1,6 @@
 import { SortItemLayersRequest } from './sort-item-layers.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SortNodeLayersRequest } from './sort-node-layers-by-groups';
 import { SortItemsByParentRequest } from './sort-items-by-parent';
 import { FComponentsStore } from '../../f-storage';
@@ -10,7 +10,7 @@ import { FComponentsStore } from '../../f-storage';
 export class SortItemLayersExecution implements IExecution<SortItemLayersRequest, void> {
 
   constructor(
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fComponentsStore: FComponentsStore,
   ) {
   }

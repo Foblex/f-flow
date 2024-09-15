@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NodeMoveFinalizeRequest } from './node-move-finalize.request';
-import { IPoint, Point } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { IPoint, Point } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
@@ -19,7 +19,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

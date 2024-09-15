@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetInputRectInFlowRequest } from './get-input-rect-in-flow-request';
 import { FComponentsStore } from '../../f-storage';
 import { GetInputRectInFlowResponse } from './get-input-rect-in-flow-response';
 import { InputNotFound } from '../../errors';
 import { GetElementRectInFlowRequest } from '../get-element-rect-in-flow';
-import { IRoundedRect } from '../intersections';
+import { IRoundedRect } from '@foblex/2d';
 
 @Injectable()
 @FExecutionRegister(GetInputRectInFlowRequest)
@@ -13,7 +13,7 @@ export class GetInputRectInFlowExecution implements IExecution<GetInputRectInFlo
 
   constructor(
       private fComponentsStore: FComponentsStore,
-      private fMediator: FFlowMediator,
+      private fMediator: FMediator,
   ) {
   }
 

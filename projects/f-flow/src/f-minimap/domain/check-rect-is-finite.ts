@@ -1,4 +1,4 @@
-import { IRect, RectExtensions } from '@foblex/core';
+import { IRect, RectExtensions } from '@foblex/2d';
 
 export function checkRectIsFinite(rect: IRect): IRect {
   if (!Number.isFinite(rect.width) || !Number.isFinite(rect.height) || !Number.isFinite(rect.x) || !Number.isFinite(rect.y)) {

@@ -5,12 +5,17 @@ import {
 import {
   FCanvasBase, F_CANVAS
 } from './f-canvas-base';
-import { IPoint, IRect, Point, PointExtensions, RectExtensions, TransformModelExtensions } from '@foblex/core';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions, TransformModelExtensions } from '@foblex/2d';
 import { FCanvasChangeEvent } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FNodeBase } from '../f-node';
-import { FFlowMediator } from '../infrastructure';
-import { EmitTransformChangesRequest, GetNodesRectRequest } from '../domain';
+import { FMediator } from '@foblex/mediator';
+import {
+  CenterGroupOrNodeRequest,
+  EmitTransformChangesRequest,
+  F_CANVAS_ANIMATION_DURATION,
+  GetNodesRectRequest
+} from '../domain';
 
 @Component({
   selector: 'f-canvas',
@@ -69,7 +74,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fComponentsStore: FComponentsStore,
   ) {
     super();
@@ -87,10 +92,14 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
 
   public override redrawWithAnimation(): void {
     this.fComponentsStore.fBackground?.setTransform(this.transform);
-    this.hostElement.setAttribute("style", `transition: transform 0.15s ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
+    this.hostElement.setAttribute("style", `transition: transform ${ F_CANVAS_ANIMATION_DURATION }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
     setTimeout(() => {
       this.redraw();
-    }, 150);
+    }, F_CANVAS_ANIMATION_DURATION);
+  }
+
+  public centerGroupOrNode(id: string, animated: boolean = true): void {
+    this.fMediator.send(new CenterGroupOrNodeRequest(id, animated));
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
@@ -109,6 +118,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
     );
     animated ? this.redrawWithAnimation() : this.redraw();
     this.completeDrag();
+    setTimeout(() => {
+      this.fComponentsStore.componentDataChanged();
+    }, F_CANVAS_ANIMATION_DURATION);
   }
 
   public oneToOne(): void {
@@ -125,5 +137,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
     );
     this.redrawWithAnimation();
     this.completeDrag();
+    setTimeout(() => {
+      this.fComponentsStore.componentDataChanged();
+    }, F_CANVAS_ANIMATION_DURATION);
   }
 }

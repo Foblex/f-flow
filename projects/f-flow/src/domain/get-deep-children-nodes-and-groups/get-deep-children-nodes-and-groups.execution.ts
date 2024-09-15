@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GetDeepChildrenNodesAndGroupsRequest } from './get-deep-children-nodes-and-groups.request';
 import { FComponentsStore } from '../../f-storage';
 import { FNodeBase } from '../../f-node';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(GetDeepChildrenNodesAndGroupsRequest)

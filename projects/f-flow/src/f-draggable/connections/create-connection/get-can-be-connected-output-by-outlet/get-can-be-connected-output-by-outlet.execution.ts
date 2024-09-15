@@ -1,11 +1,11 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, FNodeOutletBase } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { GetCanBeConnectedOutputByOutletRequest } from './get-can-be-connected-output-by-outlet.request';
 import { RequiredOutput } from '../../../../errors';
-import { FExecutionRegister } from '../../../../infrastructure';
+import { FExecutionRegister } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(GetCanBeConnectedOutputByOutletRequest)

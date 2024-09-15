@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ExternalItemFinalizeRequest } from './external-item-finalize.request';
-import { IPoint, IRect } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { IPoint, IRect } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FCreateNodeEvent } from '../f-create-node.event';
@@ -28,7 +28,7 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fBrowser: BrowserService
   ) {
   }

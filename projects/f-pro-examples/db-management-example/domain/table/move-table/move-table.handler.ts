@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { MoveTableRequest } from './move-table.request';
 import { IDatabaseStorage } from '../../database.storage';
 

@@ -1,15 +1,15 @@
-import { ILine, IPoint } from '@foblex/core';
+import { ILine, IPoint } from '@foblex/2d';
 import {
   GetConnectionLineRequest,
 } from '../../domain';
 import { FConnectionBase } from '../../f-connection';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { ConnectionBaseDragHandler } from './connection-base-drag-handler';
 
 export class ConnectionTargetDragHandler extends ConnectionBaseDragHandler {
 
   constructor(
-    fMediator: FFlowMediator,
+    fMediator: FMediator,
     connection: FConnectionBase,
     public minDistance: IPoint,
     public maxDistance: IPoint

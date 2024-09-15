@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FLOW_STORAGE, IFlowStorage } from './flow.storage';
 import { MapToNodeViewModelHandler } from './node/map/map-to-node-view-model.handler';
 import { MapToConnectionViewModelHandler } from './connection/map/map-to-connection-view-model.handler';
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { MoveNodeHandler } from './node/move-nodes/move-node.handler';
 import { MoveNodeRequest } from './node/move-nodes/move-node.request';
 import { AddNewNodeToFlowHandler } from './node/add-new/add-new-node-to-flow.handler';

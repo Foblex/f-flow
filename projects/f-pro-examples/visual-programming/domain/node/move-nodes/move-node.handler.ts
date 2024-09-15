@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { MoveNodeRequest } from './move-node.request';
 import { IFlowStorage } from '../../flow.storage';
 

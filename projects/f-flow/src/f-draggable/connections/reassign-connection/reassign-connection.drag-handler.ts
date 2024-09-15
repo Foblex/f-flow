@@ -1,15 +1,15 @@
-import { ILine, IPoint, RectExtensions } from '@foblex/core';
 import { IDraggableItem } from '../../i-draggable-item';
 import {
   GetConnectionLineRequest,
   GetInputRectInFlowRequest,
   GetInputRectInFlowResponse,
   GetOutputRectInFlowRequest,
-  GetOutputRectInFlowResponse, RoundedRect
+  GetOutputRectInFlowResponse
 } from '../../../domain';
 import { FConnectionBase } from '../../../f-connection';
 import { EFConnectableSide } from '../../../f-connectors';
-import { FFlowMediator } from '../../../infrastructure';
+import { FMediator } from '@foblex/mediator';
+import { RoundedRect, ILine, IPoint, RectExtensions  } from '@foblex/2d';
 
 export class ReassignConnectionDragHandler implements IDraggableItem {
 
@@ -20,7 +20,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   private inputSide: EFConnectableSide = EFConnectableSide.TOP;
 
   constructor(
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     public connection: FConnectionBase
   ) {
   }

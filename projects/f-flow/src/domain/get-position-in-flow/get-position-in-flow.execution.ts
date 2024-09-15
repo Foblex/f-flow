@@ -1,8 +1,8 @@
-import { IHandler, IPoint, ITransformModel, Point } from '@foblex/core';
+import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { Injectable } from '@angular/core';
 import { GetPositionInFlowRequest } from './get-position-in-flow-request';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(GetPositionInFlowRequest)

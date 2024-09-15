@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IRect, ITransformModel, RectExtensions } from '@foblex/core';
+import { IRect, ITransformModel, RectExtensions } from '@foblex/2d';
 import { ISelectableWithRect } from './i-selectable-with-rect';
 import { GetCanBeSelectedItemsRequest } from './get-can-be-selected-items-request';
 import { FNodeBase } from '../../f-node';
 import { FConnectionBase } from '../../f-connection';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable';
 import { GetElementRectInFlowRequest } from '../get-element-rect-in-flow';
@@ -28,7 +28,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ISelecta
   constructor(
       private fComponentsStore: FComponentsStore,
       private fDraggableDataContext: FDraggableDataContext,
-      private fMediator: FFlowMediator,
+      private fMediator: FMediator,
   ) {
   }
 

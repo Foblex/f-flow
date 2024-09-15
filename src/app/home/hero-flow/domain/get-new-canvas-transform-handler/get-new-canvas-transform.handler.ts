@@ -1,4 +1,5 @@
-import { IHandler, IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
+import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { GetNewCanvasTransformRequest } from './get-new-canvas-transform.request';
 import { BrowserService } from '@foblex/platform';
 

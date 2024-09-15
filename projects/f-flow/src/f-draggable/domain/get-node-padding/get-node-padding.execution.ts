@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetNodePaddingRequest } from './get-node-padding.request';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
-import { IRect } from '@foblex/core';
+import { IRect } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
 
 @Injectable()

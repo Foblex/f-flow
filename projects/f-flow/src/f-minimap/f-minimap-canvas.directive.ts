@@ -5,7 +5,7 @@ import { FComponentsStore } from '../f-storage';
 import {
   IRect,
   RectExtensions
-} from '@foblex/core';
+} from '@foblex/2d';
 import { FNodeBase, FNodeDirective } from '../f-node';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../domain';

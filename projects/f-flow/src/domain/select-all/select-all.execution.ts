@@ -2,7 +2,7 @@ import { SelectAllRequest } from './select-all.request';
 import { Injectable } from '@angular/core';
 import { FDraggableDataContext } from '../../f-draggable';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(SelectAllRequest)

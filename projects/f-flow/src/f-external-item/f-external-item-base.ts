@@ -1,5 +1,5 @@
-import { IHasHostElement } from '@foblex/core';
 import { Directive, InjectionToken } from '@angular/core';
+import { IHasHostElement } from '../i-has-host-element';
 
 export const F_EXTERNAL_ITEM = new InjectionToken<FExternalItemBase>('F_EXTERNAL_ITEM');
 

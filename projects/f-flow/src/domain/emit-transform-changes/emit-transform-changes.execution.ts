@@ -1,6 +1,6 @@
 import { EmitTransformChangesRequest } from './emit-transform-changes.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FTransformStore } from '../../f-storage';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GetInputUnderPointerRequest } from './get-input-under-pointer.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { OutputNotFound } from '../../../errors';
 import { FComponentsStore } from '../../../f-storage';
 import { FConnectorBase } from '../../../f-connectors';

@@ -1,4 +1,4 @@
-import { IPoint, IRect } from '@foblex/core';
+import { IPoint, IRect } from '@foblex/2d';
 import { FMinimapData } from '../f-minimap-data';
 
 export class CalculateFlowPointFromMinimapPointRequest {

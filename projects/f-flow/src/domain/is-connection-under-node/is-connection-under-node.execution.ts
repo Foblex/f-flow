@@ -1,6 +1,6 @@
-import { IHandler, IRect, ITransformModel } from '@foblex/core';
+import { IRect, ITransformModel } from '@foblex/2d';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IsConnectionUnderNodeRequest } from './is-connection-under-node.request';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext, NodeDragHandler } from '../../f-draggable';
@@ -24,7 +24,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   constructor(
       private fComponentsStore: FComponentsStore,
       private fDraggableDataContext: FDraggableDataContext,
-      private fMediator: FFlowMediator,
+      private fMediator: FMediator,
       // private getOutgoingConnectionsHandler: GetOutgoingConnectionsHandler,
       // private getIncomingConnectionsHandler: GetIncomingConnectionsHandler
   ) {

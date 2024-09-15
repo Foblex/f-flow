@@ -2,9 +2,9 @@ import {
   AfterViewInit,
   Directive, Input, OnDestroy
 } from "@angular/core";
-import { BooleanExtensions } from '@foblex/core';
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FComponentsStore } from '../f-storage';
+import { castToBoolean } from '@foblex/utils';
 
 @Directive({
   selector: "f-canvas[fZoom]",
@@ -22,7 +22,7 @@ export class FZoomDirective extends FZoomBase implements AfterViewInit, OnDestro
   }
 
   public set fFlowZoom(isEnabled: boolean | undefined | string) {
-    const value = BooleanExtensions.castToBoolean(isEnabled);
+    const value = castToBoolean(isEnabled);
     if (value !== this.isEnabled) {
       this.isEnabled = value;
       this.toggleZoom();

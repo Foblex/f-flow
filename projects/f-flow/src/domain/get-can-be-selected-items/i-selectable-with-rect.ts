@@ -1,9 +1,9 @@
-import { IRect } from '@foblex/core';
-import { ISelectable } from '../../f-connection';
+import { IRect } from '@foblex/2d';
+import { ICanChangeSelection } from '../../mixins';
 
 export interface ISelectableWithRect {
 
-  element: ISelectable;
+  element: ICanChangeSelection;
 
   rect: IRect;
 }

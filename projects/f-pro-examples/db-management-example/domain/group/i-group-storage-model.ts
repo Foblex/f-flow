@@ -1,4 +1,4 @@
-import { IPoint, ISize } from '@foblex/core';
+import { IPoint, ISize } from '@foblex/2d';
 
 export interface IGroupStorageModel {
 

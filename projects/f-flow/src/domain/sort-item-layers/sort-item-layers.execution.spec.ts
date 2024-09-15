@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import {
   FCanvasBase,
   FComponentsStore,
-  FFlowMediator,
   FNodeBase, GetDeepChildrenNodesAndGroupsExecution, SortItemLayersExecution, SortItemLayersRequest, SortItemsByParentExecution,
   SortNodeLayersExecution,
 } from '@foblex/flow';
 import { setupTestModule } from '../test-setup';
+import { FMediator } from '@foblex/mediator';
 
 function createNode(id: string, element: HTMLElement, parentId?: string): FNodeBase {
   return {
@@ -34,12 +34,12 @@ function createElementWithId(id: string): HTMLElement {
 }
 
 describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', () => {
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
   let fComponentsStore: FComponentsStore;
 
   beforeEach(() => {
     setupTestModule([ SortItemLayersExecution, SortItemsByParentExecution, GetDeepChildrenNodesAndGroupsExecution, SortNodeLayersExecution ]);
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
     fComponentsStore = TestBed.inject(FComponentsStore);
   });
 

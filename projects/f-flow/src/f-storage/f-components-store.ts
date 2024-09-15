@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ITransformModel } from '@foblex/core';
+import { ITransformModel } from '@foblex/2d';
 import { FConnectionBase, FMarkerBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';

@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { RemoveConnectionRequest } from './remove-connection.request';
 import { IDatabaseStorage } from '../../database.storage';
 

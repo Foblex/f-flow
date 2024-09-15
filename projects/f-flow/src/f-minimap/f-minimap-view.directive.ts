@@ -1,6 +1,6 @@
 import { Directive, ElementRef } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
-import { IRect, RectExtensions } from '@foblex/core';
+import { IRect, RectExtensions } from '@foblex/2d';
 import { checkRectIsFinite } from './domain';
 
 @Directive({

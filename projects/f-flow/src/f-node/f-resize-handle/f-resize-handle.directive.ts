@@ -1,9 +1,9 @@
 import {
   Directive, ElementRef, HostBinding, InjectionToken, Input
 } from "@angular/core";
-import { IHasHostElement } from '@foblex/core';
 import { EFResizeHandleType } from './e-f-resize-handle-type';
-import { castToEnum } from '../../domain';
+import { IHasHostElement } from '../../i-has-host-element';
+import { castToEnum } from '@foblex/utils';
 
 export const F_RESIZE_HANDLE: InjectionToken<FResizeHandleDirective> = new InjectionToken<FResizeHandleDirective>('F_RESIZE_HANDLE');
 

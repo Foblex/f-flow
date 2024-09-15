@@ -1,4 +1,4 @@
-import { IPoint, Point, PointExtensions } from '@foblex/core';
+import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FNodeBase } from '../../f-node';

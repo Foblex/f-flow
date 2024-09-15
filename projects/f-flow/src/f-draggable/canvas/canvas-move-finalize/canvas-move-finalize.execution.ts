@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanvasMoveFinalizeRequest } from './canvas-move-finalize.request';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetNodeResizeRestrictionsRequest } from './get-node-resize-restrictions.request';
-import { IRect } from '@foblex/core';
+import { IRect } from '@foblex/2d';
 import { INodeResizeRestrictions } from './i-node-resize-restrictions';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetNormalizedParentNodeRectRequest } from '../../domain';
 import { GetNormalizedChildrenNodesRectRequest } from '../get-normalized-children-nodes-rect';
 
@@ -13,7 +13,7 @@ export class GetNodeResizeRestrictionsExecution
   implements IExecution<GetNodeResizeRestrictionsRequest, INodeResizeRestrictions> {
 
   constructor(
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

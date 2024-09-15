@@ -1,15 +1,9 @@
-import {
-  IPoint, ISize,
-  ITransformModel,
-  Point,
-  SizeExtensions
-} from '@foblex/core';
 import { Injectable } from '@angular/core';
 import { GetElementRectInFlowRequest } from './get-element-rect-in-flow-request';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
-import { IRoundedRect, RoundedRect } from '../intersections';
-import { BrowserService } from '@foblex/platform';
+import { IRoundedRect, RoundedRect, IPoint, ISize, Point, SizeExtensions, ITransformModel  } from '@foblex/2d';
+import { CreateRoundedRectFromElementRequest } from '../create-rounded-rect-from-element';
 
 @Injectable()
 @FExecutionRegister(GetElementRectInFlowRequest)
@@ -25,12 +19,12 @@ export class GetElementRectInFlowExecution implements IExecution<GetElementRectI
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fBrowser: BrowserService
+    private fMediator: FMediator
   ) {
   }
 
   public handle(request: GetElementRectInFlowRequest): IRoundedRect {
-    const systemRect = RoundedRect.fromElement(request.element, this.fBrowser);
+    const systemRect = this.fMediator.send<IRoundedRect>(new CreateRoundedRectFromElementRequest(request.element));
     const position = this.transformElementPositionInFlow(systemRect);
     const size = this.transformElementSizeInFlow(systemRect);
 

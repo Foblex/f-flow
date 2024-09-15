@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { IDatabaseModel } from './i-database-model';
 import { DATABASE_STORAGE, IDatabaseStorage } from './database.storage';
 import {

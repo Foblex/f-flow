@@ -10,8 +10,6 @@ export * from './f-path';
 
 export * from './f-selection';
 
-export * from './mixins';
-
 export * from './f-connection-base';
 
 export * from './e-f-connection-behavior';

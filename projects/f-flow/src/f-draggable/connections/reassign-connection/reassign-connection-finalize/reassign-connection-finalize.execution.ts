@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { ReassignConnectionFinalizeRequest } from './reassign-connection-finalize.request';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
 import { FDraggableBase } from '../../../f-draggable-base';
 import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 import { FReassignConnectionEvent } from '../f-reassign-connection.event';
-import { IPointerEvent } from '@foblex/core';
+import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectorBase } from '../../../../f-connectors';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

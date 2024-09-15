@@ -10,6 +10,8 @@ export * from './f-connection-center';
 
 export * from './f-marker';
 
+export * from './f-snap-connection';
+
 export * from './providers';
 
 

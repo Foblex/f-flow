@@ -1,4 +1,4 @@
-import { ISize, ITransformModel } from '@foblex/core';
+import { ISize, ITransformModel } from '@foblex/2d';
 import { LineElement } from './line-element';
 import { BrowserService } from '@foblex/platform';
 

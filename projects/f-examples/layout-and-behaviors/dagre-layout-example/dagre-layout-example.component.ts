@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import * as dagre from "dagre";
-import { GuidExtensions, IPoint, PointExtensions } from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/2d';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
 import { FCheckboxComponent } from '@foblex/f-docs';
+import { generateGuid } from '@foblex/utils';
 
 interface INodeViewModel {
   id: string;
@@ -78,7 +79,7 @@ export class DagreLayoutExampleComponent implements OnInit {
     return graph.nodes().map((x) => {
       let node = graph.node(x);
       return {
-        id: GuidExtensions.generate(),
+        id: generateGuid(),
         connectorId: x,
         position: { x: node.x, y: node.y }
       }
@@ -86,7 +87,7 @@ export class DagreLayoutExampleComponent implements OnInit {
   }
 
   private getConnections(graph: Graph): IConnectionViewModel[] {
-    return graph.edges().map((x) => ({ id: GuidExtensions.generate(), from: x.v, to: x.w }));
+    return graph.edges().map((x) => ({ id: generateGuid(), from: x.v, to: x.w }));
   }
 
   public horizontal(): void {

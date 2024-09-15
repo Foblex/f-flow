@@ -1,7 +1,7 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator } from '../../infrastructure';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../../f-draggable';
 import { UpdateItemAndChildrenLayersRequest } from '../update-item-and-children-layers';
@@ -12,7 +12,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
 
   constructor(
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
   public handle(request: SelectAndUpdateNodeLayerRequest): void {

@@ -1,6 +1,6 @@
 import { ClearSelectionRequest } from './clear-selection.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable';
 
 @Injectable()

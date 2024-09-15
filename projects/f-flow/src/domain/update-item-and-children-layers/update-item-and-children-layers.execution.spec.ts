@@ -8,12 +8,12 @@ import {
   SortItemLayersRequest, SortItemsByParentExecution, SortNodeLayersExecution,
   UpdateItemAndChildrenLayersExecution
 } from '@foblex/flow';
-import { FFlowMediator } from '@foblex/flow';
 import { UpdateItemAndChildrenLayersRequest } from '@foblex/flow';
 import {
   FComponentsStore,
 } from '@foblex/flow';
 import { setupTestModule } from '../test-setup';
+import { FMediator } from '@foblex/mediator';
 
 function createElement(id: string): HTMLElement {
   const element = document.createElement('div');
@@ -44,12 +44,12 @@ function createCanvas(): FCanvasBase {
 }
 
 describe('UpdateItemAndChildrenLayersExecution', () => {
-  let fMediator: FFlowMediator;
+  let fMediator: FMediator;
   let fComponentsStore: FComponentsStore;
 
   beforeEach(() => {
     setupTestModule([ UpdateItemAndChildrenLayersExecution, SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution, GetDeepChildrenNodesAndGroupsExecution, MoveFrontElementsBeforeTargetElementExecution]);
-    fMediator = TestBed.inject(FFlowMediator) as jasmine.SpyObj<FFlowMediator>;
+    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
     fComponentsStore = TestBed.inject(FComponentsStore);
   });
 

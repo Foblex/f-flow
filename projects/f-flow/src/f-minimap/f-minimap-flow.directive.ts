@@ -2,8 +2,8 @@ import {
   Directive, ElementRef, Input,
 } from "@angular/core";
 import { FComponentsStore } from '../f-storage';
-import { IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/core';
-import { FFlowMediator } from '../infrastructure';
+import { IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/2d';
+import { FMediator } from '@foblex/mediator';
 import { checkRectIsFinite, FMinimapData } from './domain';
 import { GetNodesRectRequest } from '../domain';
 
@@ -27,7 +27,7 @@ export class FMinimapFlowDirective {
 
   constructor(
     private elementReference: ElementRef<SVGSVGElement>,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fComponentsStore: FComponentsStore
   ) {
     this.model = new FMinimapData(this.hostElement);

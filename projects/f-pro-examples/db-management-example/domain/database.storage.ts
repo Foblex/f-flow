@@ -1,9 +1,9 @@
 import { ITableStorageModel } from './table';
 import { ITableConnectionStorageModel } from './connection';
-import { GuidExtensions } from '@foblex/core';
 import { ETableRelationType } from './connection';
 import { ETableColumnKey, ETableColumnType } from './table';
 import { IGroupStorageModel } from './group';
+import { generateGuid } from '@foblex/utils';
 
 export interface IDatabaseStorage {
 
@@ -294,42 +294,42 @@ export const DATABASE_STORAGE: IDatabaseStorage = {
   ],
   connections: [
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.ONE_TO_MANY,
       from: 'order_customer_id',
       to: 'customer_id'
     },
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.ONE_TO_MANY,
       from: 'order_item_order_id',
       to: 'order_id'
     },
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.ONE_TO_MANY,
       from: 'order_item_product_id',
       to: 'product_id'
     },
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.MANY_TO_MANY,
       from: 'product_category_product_id',
       to: 'product_id'
     },
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.MANY_TO_MANY,
       from: 'product_category_category_id',
       to: 'category_id'
     },
     {
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       type: ETableRelationType.ONE_TO_MANY,
       from: 'inventory_supplier_id',
       to: 'supplier_id'
     },
-    { id: GuidExtensions.generate(), type: ETableRelationType.ONE_TO_MANY, from: 'payment_order_id', to: 'order_id' },
+    { id: generateGuid(), type: ETableRelationType.ONE_TO_MANY, from: 'payment_order_id', to: 'order_id' },
   ],
   groups: [
     { id: 'order_group', name: 'Order', position: { x: -260, y: -240 }, size: { width: 780, height: 600 }, parentId: 'customer_group' },

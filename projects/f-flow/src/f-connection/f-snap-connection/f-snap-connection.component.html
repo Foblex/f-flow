@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+    <defs #defs></defs>
+    <g class="f-connection-group">
+        <linearGradient fConnectionGradient></linearGradient>
+        <path fConnectionSelection [attr.d]="path"></path>
+        <g>
+            <path f-connection-path
+                  [attr.d]="path">
+            </path>
+            <circle f-connection-drag-handle r="8"></circle>
+        </g>
+        <text f-connection-text></text>
+    </g>
+    <ng-content></ng-content>
+</svg>
+<div #fConnectionCenter class="f-connection-center" *ngIf="fConnectionCenters.length">
+    <ng-content select="[fConnectionCenter]"></ng-content>
+</div>

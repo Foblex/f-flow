@@ -1,8 +1,9 @@
-import { IHandler, ITransformModel, Point } from '@foblex/core';
+import { ITransformModel, Point } from '@foblex/2d';
+import { IHandler } from '@foblex/mediator';
 import { Injectable } from '@angular/core';
 import { CreateConnectionDragHandlerRequest } from './create-connection-drag-handler.request';
 import { FComponentsStore } from '../../../../../f-storage';
-import { FExecutionRegister, FFlowMediator } from '../../../../../infrastructure';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../../f-draggable-data-context';
 import { CreateConnectionDragHandler } from '../../create-connection.drag-handler';
 
@@ -22,7 +23,7 @@ export class CreateConnectionDragHandlerExecution
   constructor(
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
   ) {
   }
 

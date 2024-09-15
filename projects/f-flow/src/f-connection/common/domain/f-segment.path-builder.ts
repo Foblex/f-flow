@@ -1,4 +1,4 @@
-import { IMap, IPoint, PointExtensions } from '@foblex/core';
+import { IPoint, PointExtensions } from '@foblex/2d';
 import { EFConnectableSide } from '../../../f-connectors';
 import {
   CalculateCenterBetweenPointsHandler,
@@ -10,6 +10,7 @@ import {
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse
 } from '../../f-connection-builder';
+import { IMap } from '../../../domain';
 
 const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
 

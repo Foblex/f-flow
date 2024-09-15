@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { RemoveColumnRequest } from './remove-column.request';
 import { IDatabaseStorage } from '../../database.storage';
 import { ITableStorageModel } from '../i-table-storage-model';

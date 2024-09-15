@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MinimapDragPreparationRequest } from './minimap-drag-preparation.request';
-import { IPoint, IRect, Point, RectExtensions } from '@foblex/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { IPoint, IRect, Point, RectExtensions } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FMinimapDragHandler } from '../f-minimap.drag-handler';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -18,7 +18,7 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
 
   constructor(
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fDraggableDataContext: FDraggableDataContext,
   ) {
   }

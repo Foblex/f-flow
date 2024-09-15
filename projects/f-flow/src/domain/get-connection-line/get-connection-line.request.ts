@@ -1,12 +1,12 @@
 import { EFConnectionBehavior } from '../../f-connection';
 import { EFConnectableSide } from '../../f-connectors';
-import { IConnectorShape } from '../intersections';
+import { IRoundedRect } from '@foblex/2d';
 
 export class GetConnectionLineRequest {
 
   constructor(
-      public outputRect: IConnectorShape,
-      public inputRect: IConnectorShape,
+      public outputRect: IRoundedRect,
+      public inputRect: IRoundedRect,
       public behavior: EFConnectionBehavior | string,
       public outputSide: EFConnectableSide,
       public inputSide: EFConnectableSide,

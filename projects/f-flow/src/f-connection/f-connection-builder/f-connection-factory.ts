@@ -1,10 +1,10 @@
-import { IMap } from '@foblex/core';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { IFConnectionBuilder } from './i-f-connection-builder';
 import { EFConnectionType, FBezierPathBuilder, FSegmentPathBuilder, FStraightPathBuilder } from '../common';
 import { F_CONNECTION_BUILDERS, IFConnectionBuilders } from './f-connection-builders';
 import { IFConnectionFactoryRequest } from './i-f-connection-factory-request';
 import { IFConnectionBuilderResponse } from './i-f-connection-builder-response';
+import { IMap } from '../../domain';
 
 @Injectable()
 export class FConnectionFactory {

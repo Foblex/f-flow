@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
-import { GuidExtensions, PointExtensions } from '@foblex/core';
+import { PointExtensions } from '@foblex/2d';
 import { FCheckboxComponent } from '@foblex/f-docs';
+import { generateGuid } from '@foblex/utils';
 
 @Component({
   selector: 'elkjs-layout-example',
@@ -84,7 +85,7 @@ export class ElkjsLayoutExampleComponent implements OnInit {
   private getNodes(data: any): any[] {
     return data.children!.map((node: any) => {
       return {
-        id: GuidExtensions.generate(),
+        id: generateGuid(),
         connectorId: node.id,
         position: PointExtensions.initialize(node.x, node.y)
       };
@@ -94,7 +95,7 @@ export class ElkjsLayoutExampleComponent implements OnInit {
   private getConnections(data: any): any[] {
     return data.edges!.map((edge: any) => {
       return {
-        id: GuidExtensions.generate(),
+        id: generateGuid(),
         from: edge.sources[ 0 ],
         to: edge.targets[ 0 ]
       };

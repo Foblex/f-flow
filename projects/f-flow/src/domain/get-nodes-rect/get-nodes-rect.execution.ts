@@ -1,8 +1,8 @@
-import { IRect, RectExtensions } from '@foblex/core';
+import { IRect, RectExtensions } from '@foblex/2d';
 import { GetNodesRectRequest } from './get-nodes-rect.request';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../f-node';
 
 @Injectable()

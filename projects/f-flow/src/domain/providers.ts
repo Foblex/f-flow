@@ -22,12 +22,20 @@ import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
 import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
+import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
+import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
+import { CenterGroupOrNodeExecution } from './center-group-or-node';
+import { ShowConnectionsAfterCalculationsExecution } from './show-connections-after-calculations';
 
 export const COMMON_PROVIDERS = [
+
+  CenterGroupOrNodeExecution,
 
   ClearSelectionExecution,
 
   CreateConnectionMarkersExecution,
+
+  CreateRoundedRectFromElementExecution,
 
   EmitTransformChangesExecution,
 
@@ -38,6 +46,8 @@ export const COMMON_PROVIDERS = [
   GetConnectionLineExecution,
 
   GetElementRectInFlowExecution,
+
+  ...GET_FLOW_STATE_PROVIDERS,
 
   GetScaledNodeRectsWithFlowPositionExecution,
 
@@ -58,6 +68,8 @@ export const COMMON_PROVIDERS = [
   SelectAllExecution,
 
   SelectAndUpdateNodeLayerExecution,
+
+  ShowConnectionsAfterCalculationsExecution,
 
   SortItemLayersExecution,
 

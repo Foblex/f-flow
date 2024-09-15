@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { CreateConnectionRequest } from './create-connection.request';
 import { IFlowStorage } from '../../flow.storage';
 import { IFlowConnectionStorageModel } from '../i-flow-connection-storage-model';

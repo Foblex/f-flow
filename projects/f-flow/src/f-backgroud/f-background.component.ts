@@ -6,7 +6,7 @@ import {
   OnInit
 } from "@angular/core";
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
-import { ITransformModel, TransformModelExtensions } from '@foblex/core';
+import { ITransformModel, TransformModelExtensions } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { BrowserService } from '@foblex/platform';

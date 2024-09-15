@@ -11,7 +11,7 @@ import {
   EFMarkerType,
   FFlowComponent, FFlowModule
 } from '@foblex/flow';
-import { IPoint, PointExtensions, RectExtensions } from '@foblex/core';
+import { IPoint, PointExtensions, RectExtensions } from '@foblex/2d';
 import { debounceTime, fromEvent, startWith, Subscription } from 'rxjs';
 import { IHeroFlowNode } from './domain/i-hero-flow-node';
 import { IHeroFlowConnection } from './domain/i-hero-flow-connection';

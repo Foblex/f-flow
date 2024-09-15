@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IsArrayHasParentNodeRequest } from './is-array-has-parent-node.request';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { GetParentNodesRequest } from '../get-parent-nodes';
 
@@ -10,7 +10,7 @@ export class IsArrayHasParentNodeExecution
   implements IExecution<IsArrayHasParentNodeRequest, boolean> {
 
   constructor(
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

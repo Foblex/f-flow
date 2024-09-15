@@ -1,5 +1,5 @@
 import { Directive, InjectionToken } from '@angular/core';
-import { IHasHostElement } from '@foblex/core';
+import { IHasHostElement } from '../../i-has-host-element';
 
 export const F_MARKER = new InjectionToken('F_MARKER');
 

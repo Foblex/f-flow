@@ -1,8 +1,9 @@
-import { GuidExtensions, IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { CreateColumnRequest } from './create-column.request';
 import { IDatabaseStorage } from '../../database.storage';
 import { ITableStorageModel } from '../i-table-storage-model';
 import { ETableColumnType } from '../e-table-column-type';
+import { generateGuid } from '@foblex/utils';
 
 export class CreateColumnHandler implements IHandler<CreateColumnRequest> {
 
@@ -14,7 +15,7 @@ export class CreateColumnHandler implements IHandler<CreateColumnRequest> {
   public handle(request: CreateColumnRequest): void {
     const table = this.findTable(request.tableId);
     table.columns.push({
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       name: 'column_' + (table.columns.length + 1),
       type: ETableColumnType.INT
     });

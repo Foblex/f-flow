@@ -1,5 +1,5 @@
 import { EventEmitter, InjectionToken } from '@angular/core';
-import { IHasHostElement } from '@foblex/core';
+import { IHasHostElement } from '../i-has-host-element';
 
 export const F_FLOW = new InjectionToken<FFlowBase>('F_FLOW');
 

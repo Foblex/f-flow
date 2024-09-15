@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component, ElementRef, Inject, ViewChild
 } from "@angular/core";
-import { ILine, PointExtensions } from '@foblex/core';
+import { ILine, PointExtensions } from '@foblex/2d';
 import { FConnectionTextPathDirective } from './f-connection-text-path.directive';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionText } from '../i-has-connection-text';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NodeResizePreparationRequest } from './node-resize-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { isElementWithClass } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
+import { isClosestElementHasClass } from '@foblex/utils';
 
 @Injectable()
 @FValidatorRegister(NodeResizePreparationRequest)
@@ -35,6 +35,6 @@ export class NodeResizePreparationValidator implements IValidator<NodeResizePrep
   }
 
   private isDragHandleElement(targetElement: HTMLElement): boolean {
-    return isElementWithClass(targetElement, '.f-resize-handle');
+    return isClosestElementHasClass(targetElement, '.f-resize-handle');
   }
 }

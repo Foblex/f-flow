@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExternalItemPreparationRequest } from './external-item-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
 
 @Injectable()

@@ -9,7 +9,7 @@ import {
   FCanvasComponent, FFlowModule, FZoomDirective,
   FReassignConnectionEvent, FCreateConnectionEvent
 } from '@foblex/flow';
-import { IPoint, Point } from '@foblex/core';
+import { IPoint, Point } from '@foblex/2d';
 import { ENodeType } from '../../domain';
 import { VpPaletteComponent } from '../palette/vp-palette.component';
 import { VpNodeComponent } from '../node/vp-node.component';

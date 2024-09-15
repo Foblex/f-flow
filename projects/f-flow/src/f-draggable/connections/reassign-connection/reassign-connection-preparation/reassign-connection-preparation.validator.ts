@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ReassignConnectionPreparationRequest } from './reassign-connection-preparation.request';
-import { FValidatorRegister, IValidator } from '../../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase } from '../../../../f-connection';
 import { FComponentsStore } from '../../../../f-storage';
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
 
 @Injectable()

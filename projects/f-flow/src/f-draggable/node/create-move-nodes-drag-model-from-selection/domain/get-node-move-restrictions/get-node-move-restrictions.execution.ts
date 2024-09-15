@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetNodeMoveRestrictionsRequest } from './get-node-move-restrictions.request';
-import { IRect, PointExtensions } from '@foblex/core';
+import { IRect, PointExtensions } from '@foblex/2d';
 import { INodeMoveRestrictions } from './i-node-move-restrictions';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../../../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetNormalizedNodeRectRequest, GetNormalizedParentNodeRectRequest } from '../../../../domain';
 import { FNodeBase } from '../../../../../f-node';
 
@@ -12,7 +12,7 @@ export class GetNodeMoveRestrictionsExecution
   implements IExecution<GetNodeMoveRestrictionsRequest, INodeMoveRestrictions> {
 
   constructor(
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 

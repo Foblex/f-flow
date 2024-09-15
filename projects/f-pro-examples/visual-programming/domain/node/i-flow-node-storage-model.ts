@@ -1,5 +1,5 @@
 import { ENodeType } from '../e-node-type';
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 
 export interface IFlowNodeStorageModel {
 

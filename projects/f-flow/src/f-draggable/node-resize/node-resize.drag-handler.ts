@@ -1,7 +1,7 @@
-import { IPoint, IRect, RectExtensions } from '@foblex/core';
+import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
-import { FFlowMediator } from '../../infrastructure';
+import { FMediator } from '@foblex/mediator';
 import { GetNormalizedNodeRectRequest } from '../domain';
 import { GetNodeResizeRestrictionsRequest, INodeResizeRestrictions } from './get-node-resize-restrictions';
 import { ApplyChildResizeRestrictionsRequest } from './apply-child-resize-restrictions';
@@ -18,7 +18,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   private childRestrictions: (rect: IRect, restrictionsRect: IRect) => void = () => {};
 
   constructor(
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     public fNode: FNodeBase,
     public fResizeHandleType: EFResizeHandleType,
   ) {

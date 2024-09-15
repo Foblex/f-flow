@@ -9,7 +9,7 @@ import {
   ITransformModel,
   PointExtensions,
   TransformModelExtensions
-} from '@foblex/core';
+} from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../../domain';

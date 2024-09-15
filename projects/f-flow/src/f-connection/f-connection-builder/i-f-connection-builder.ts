@@ -1,4 +1,4 @@
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { IFConnectionBuilderRequest } from './i-f-connection-builder-request';
 import { IFConnectionBuilderResponse } from './i-f-connection-builder-response';
 

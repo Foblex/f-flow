@@ -1,5 +1,5 @@
 import { IFlowStorage } from '../../flow.storage';
-import { IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { IFlowConnectionViewModel } from '../i-flow-connection-view-model';
 import { IFlowConnectionStorageModel } from '../i-flow-connection-storage-model';
 import { IFlowNodeStorageModel } from '../../node/i-flow-node-storage-model';

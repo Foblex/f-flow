@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
-import { IHasHostElement } from '@foblex/core';
 import { EFConnectableSide } from './e-f-connectable-side';
 import { IHasStateChanges } from '../i-has-state-changes';
+import { IHasHostElement } from '../i-has-host-element';
 
 export abstract class FConnectorBase implements IHasStateChanges, IHasHostElement {
 

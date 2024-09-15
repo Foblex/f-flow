@@ -2,7 +2,7 @@ import { SubscribeOnTransformChangesRequest } from './subscribe-on-transform-cha
 import { Injectable } from '@angular/core';
 import { merge, Observable } from 'rxjs';
 import { FComponentsStore, FTransformStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(SubscribeOnTransformChangesRequest)

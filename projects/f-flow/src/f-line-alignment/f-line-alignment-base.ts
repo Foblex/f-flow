@@ -1,7 +1,8 @@
-import { IHasHostElement, IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { Directive, InjectionToken } from '@angular/core';
 import { ILineAlignmentResult } from './domain';
 import { FNodeBase } from '../f-node';
+import { IHasHostElement } from '../i-has-host-element';
 
 export const F_LINE_ALIGNMENT = new InjectionToken<FLineAlignmentBase>('F_LINE_ALIGNMENT');
 

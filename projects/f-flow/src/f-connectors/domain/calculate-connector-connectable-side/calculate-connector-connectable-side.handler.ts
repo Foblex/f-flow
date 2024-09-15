@@ -1,4 +1,5 @@
-import { IHandler, RectExtensions } from '@foblex/core';
+import { RectExtensions } from '@foblex/2d';
+import { IHandler } from '@foblex/mediator';
 import { CalculateConnectorConnectableSideRequest } from './calculate-connector-connectable-side-request';
 import { EFConnectableSide } from '../../e-f-connectable-side';
 

@@ -9,13 +9,20 @@ import { Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
+  COMMON_PROVIDERS,
+  GetScaledNodeRectsWithFlowPositionRequest,
+  GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest, SortItemLayersRequest,
+  SelectAllRequest,
+  SelectRequest,
+  SortItemLayersRequest,
+  IFFlowState,
+  GetFlowStateRequest,
+  ShowConnectionsAfterCalculationsRequest,
 } from '../domain';
-import { IPoint, IRect } from '@foblex/core';
-import { FFlowMediator } from '../infrastructure';
+import { IPoint, IRect } from '@foblex/2d';
+import { FMediator } from '@foblex/mediator';
 import {
   F_DRAGGABLE_PROVIDERS,
   FDraggableDataContext, FSelectionChangeEvent
@@ -35,7 +42,7 @@ let uniqueId: number = 0;
     class: "f-component f-flow",
   },
   providers: [
-    FFlowMediator,
+    FMediator,
     FComponentsStore,
     FTransformStore,
     FDraggableDataContext,
@@ -65,7 +72,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private fComponentsStore: FComponentsStore,
-    private fMediator: FFlowMediator,
+    private fMediator: FMediator,
     private fBrowser: BrowserService,
   ) {
     super();
@@ -98,10 +105,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
+        this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
-        setTimeout(() => {
-          this.fLoaded.emit();
-        })
+        this.fLoaded.emit();
       }
     });
   }
@@ -124,6 +130,10 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public getPositionInFlow(position: IPoint): IRect {
     return this.fMediator.send(new GetPositionInFlowRequest(position));
+  }
+
+  public getState(): IFFlowState {
+    return this.fMediator.send(new GetFlowStateRequest());
   }
 
   public selectAll(): void {

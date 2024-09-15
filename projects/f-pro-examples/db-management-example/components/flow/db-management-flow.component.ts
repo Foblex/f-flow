@@ -10,7 +10,7 @@ import {
   FSelectionChangeEvent,
   FZoomDirective
 } from '@foblex/flow';
-import { IPoint, Point, PointExtensions } from '@foblex/core';
+import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import {
   BuildFormHandler, BuildFormRequest,
   DatabaseApiService,
@@ -25,9 +25,7 @@ import { CdkContextMenuTrigger } from '@angular/cdk/menu';
 import { DbManagementContextMenuComponent } from '../context-menu/db-management-context-menu.component';
 import { SelectionService } from '../../domain/selection.service';
 import { MatIcon } from '@angular/material/icon';
-import {
-  DbManagementConnectionToolbarComponent
-} from '../connection-toolbar/db-management-connection-toolbar.component';
+import { DbManagementConnectionToolbarComponent } from '../connection-toolbar/db-management-connection-toolbar.component';
 import { startWith, Subscription } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
 import { BrowserService } from '@foblex/platform';
@@ -36,7 +34,6 @@ import { BrowserService } from '@foblex/platform';
   selector: 'db-management-flow',
   templateUrl: './db-management-flow.component.html',
   styleUrls: [
-
     '../styles/_variables.scss',
     '../styles/_cdk-panel.scss',
     '../styles/_icon-button.scss',

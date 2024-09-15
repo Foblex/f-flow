@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReassignConnectionFinalizeRequest } from './reassign-connection-finalize.request';
-import { FValidatorRegister, IValidator } from '../../../../infrastructure';
+import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
 

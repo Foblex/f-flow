@@ -1,6 +1,7 @@
-import { GuidExtensions, IHandler } from '@foblex/core';
+import { IHandler } from '@foblex/mediator';
 import { CreateConnectionRequest } from './create-connection.request';
 import { IDatabaseStorage } from '../../database.storage';
+import { generateGuid } from '@foblex/utils';
 
 export class CreateConnectionHandler implements IHandler<CreateConnectionRequest> {
 
@@ -13,7 +14,7 @@ export class CreateConnectionHandler implements IHandler<CreateConnectionRequest
     this.getConnection(request.outputId, request.inputId);
 
     this.storage.connections.push({
-      id: GuidExtensions.generate(),
+      id: generateGuid(),
       from: request.outputId,
       to: request.inputId,
       type: request.type

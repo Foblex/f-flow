@@ -1,10 +1,10 @@
-import { IPoint } from '@foblex/core';
+import { IPoint } from '@foblex/2d';
 import { GetInputUnderPointerRequest } from './get-input-under-pointer.request';
 import { Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
-import { FExecutionRegister, IExecution } from '../../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { CreateConnectionDragHandler } from '../create-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection';
 import { BrowserService } from '@foblex/platform';

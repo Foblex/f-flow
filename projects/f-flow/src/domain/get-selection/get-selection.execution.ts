@@ -1,6 +1,6 @@
 import { GetSelectionRequest } from './get-selection.request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../infrastructure';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext, FSelectionChangeEvent } from '../../f-draggable';
 
 @Injectable()

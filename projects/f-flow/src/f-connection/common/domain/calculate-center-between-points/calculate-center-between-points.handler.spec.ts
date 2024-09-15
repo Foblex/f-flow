@@ -1,5 +1,5 @@
 import { CalculateCenterBetweenPointsHandler } from './calculate-center-between-points.handler';
-import { PointExtensions, IPoint } from '@foblex/core';
+import { PointExtensions, IPoint } from '@foblex/2d';
 import { CalculateCenterBetweenPointsRequest } from './calculate-center-between-points-request';
 
 describe('CalculateCenterBetweenPointsHandler', () => {

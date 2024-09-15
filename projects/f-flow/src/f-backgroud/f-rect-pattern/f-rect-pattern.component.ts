@@ -7,7 +7,7 @@ import {
 import {
   IPoint, ISize, ITransformModel,
   PointExtensions, SizeExtensions, TransformModelExtensions
-} from '@foblex/core';
+} from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { Subject, Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, FFlowMediator, IExecution } from '../../infrastructure';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SingleSelectRequest } from './single-select.request';
 import { UpdateItemAndChildrenLayersRequest } from '../../domain';
-import { IPointerEvent } from '@foblex/core';
-import { FConnectionBase, ISelectable } from '../../f-connection';
+import { IPointerEvent } from '@foblex/drag-toolkit';
+import { FConnectionBase } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
+import { ICanChangeSelection } from '../../mixins';
 
 @Injectable()
 @FExecutionRegister(SingleSelectRequest)
@@ -16,7 +17,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     private fPlatform: PlatformService,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FFlowMediator
+    private fMediator: FMediator
   ) {
   }
 
@@ -31,7 +32,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     this.isMultiselectEnabled(event) ? this.multiSelect(item) : this.singleSelect(item);
   }
 
-  private getSelectableItem(event: IPointerEvent): ISelectable | undefined {
+  private getSelectableItem(event: IPointerEvent): ICanChangeSelection | undefined {
     return this.fComponentsStore.findNode(event.targetElement) || this.getConnectionHandler(event.targetElement);
   }
 
@@ -52,7 +53,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     return platform === EOperationSystem.MAC_OS ? event.metaKey : event.ctrlKey;
   }
 
-  private singleSelect(item: ISelectable | undefined): void {
+  private singleSelect(item: ICanChangeSelection | undefined): void {
     if (item) {
       if (!item.isSelected() && !item.fSelectionDisabled) {
         this.clearSelection();
@@ -63,13 +64,13 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     }
   }
 
-  private multiSelect(item: ISelectable | undefined): void {
+  private multiSelect(item: ICanChangeSelection | undefined): void {
     if (item && !item.fSelectionDisabled) {
       item.isSelected() ? this.deselectItem(item) : this.selectItem(item);
     }
   }
 
-  private deselectItem(item: ISelectable): void {
+  private deselectItem(item: ICanChangeSelection): void {
     const index = this.fDraggableDataContext.selectedItems.indexOf(item);
     if (index > -1) {
       this.fDraggableDataContext.selectedItems.splice(index, 1);
@@ -78,7 +79,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     this.fDraggableDataContext.markSelectionAsChanged();
   }
 
-  private selectItem(item: ISelectable): void {
+  private selectItem(item: ICanChangeSelection): void {
     this.fDraggableDataContext.selectedItems.push(item);
     item.select();
     this.fDraggableDataContext.markSelectionAsChanged();
