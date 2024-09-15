@@ -40,6 +40,6 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
     ),
     provideAnimationsAsync(),
-    provideClientHydration()
+    provideClientHydration(),
   ]
 };

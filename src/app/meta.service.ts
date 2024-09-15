@@ -35,6 +35,9 @@ export class MetaService {
         data.image_height = item.image_height || DEFAULT_PAGE_DATA.image_height;
         data.image_type = item.image_type || DEFAULT_PAGE_DATA.image_type;
       }
+      if(!data.url.endsWith('/')) {
+        data.url += '/';
+      }
       this.updateMetaTags(data);
       this.updateJsonLD(data);
     });
@@ -80,8 +83,11 @@ export class MetaService {
     this.meta.updateTag({ property: 'og:image:height', content: item.image_height.toString() });
 
     this.meta.updateTag({ name: 'description', content: item.description });
-
-    this.meta.updateTag({ name: 'canonical', content: item.url });
+    // this.meta.getTag('link[rel="canonical"]')?.remove();
+    const link = this.fBrowser.document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (link) {
+      link.href = item.url;
+    }
   }
 }
 
