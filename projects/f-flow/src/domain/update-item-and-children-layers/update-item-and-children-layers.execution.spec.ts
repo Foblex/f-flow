@@ -8,12 +8,12 @@ import {
   SortItemLayersRequest, SortItemsByParentExecution, SortNodeLayersExecution,
   UpdateItemAndChildrenLayersExecution
 } from '@foblex/flow';
-import { FMediator } from '@foblex/flow';
 import { UpdateItemAndChildrenLayersRequest } from '@foblex/flow';
 import {
   FComponentsStore,
 } from '@foblex/flow';
 import { setupTestModule } from '../test-setup';
+import { FMediator } from '@foblex/mediator';
 
 function createElement(id: string): HTMLElement {
   const element = document.createElement('div');
