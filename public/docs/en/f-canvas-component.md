@@ -16,9 +16,11 @@ The **FCanvasComponent** is an Angular component that serves as a container for 
 
 ## Methods
 
-- `fitToScreen(toCenter?: IPoint, animated?: boolean): void;` Adjusts the canvas to fit the screen, optionally centering around a specified point and using animation.
+- `fitToScreen(toCenter?: IPoint, animated: boolean = true): void;` Adjusts the canvas to fit the screen, optionally centering around a specified point and using animation.
 
 - `oneToOne(): void;` Sets the canvas scale to 1:1, ensuring elements are displayed at actual size with animation.
+
+- `centerGroupOrNode(id: string, animated: boolean = true): void;` Centers the canvas around a group or node with the specified ID, optionally using animation.
 
 ## Styles
 
