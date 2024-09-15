@@ -14,6 +14,8 @@ export * from './get-connection-line';
 
 export * from './get-element-rect-in-flow';
 
+export * from './get-flow-state';
+
 export * from './get-scaled-node-rects-with-flow-position';
 
 export * from './get-input-rect-in-flow';

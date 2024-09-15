@@ -12,7 +12,7 @@ import {
   COMMON_PROVIDERS, GetScaledNodeRectsWithFlowPositionRequest, GetPositionInFlowRequest,
   GetSelectionRequest,
   RedrawConnectionsRequest,
-  SelectAllRequest, SelectRequest, SortItemLayersRequest,
+  SelectAllRequest, SelectRequest, SortItemLayersRequest, IFFlowState, GetFlowStateRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -124,6 +124,10 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public getPositionInFlow(position: IPoint): IRect {
     return this.fMediator.send(new GetPositionInFlowRequest(position));
+  }
+
+  public getState(): IFFlowState {
+    return this.fMediator.send(new GetFlowStateRequest());
   }
 
   public selectAll(): void {

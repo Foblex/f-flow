@@ -88,7 +88,7 @@ export class FGroupDirective extends FNodeBase
   public override connectors: FConnectorBase[] = [];
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
+    elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
     private fComponentsStore: FComponentsStore,
     private fMediator: FMediator,

@@ -23,6 +23,7 @@ import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-c
 import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
+import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
 
 export const COMMON_PROVIDERS = [
 
@@ -41,6 +42,8 @@ export const COMMON_PROVIDERS = [
   GetConnectionLineExecution,
 
   GetElementRectInFlowExecution,
+
+  ...GET_FLOW_STATE_PROVIDERS,
 
   GetScaledNodeRectsWithFlowPositionExecution,
 

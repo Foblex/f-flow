@@ -16,29 +16,25 @@ import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { FComponentsStore } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
-//TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
-// TypeError: Class extends value undefined is not a constructor or null
-// at f-connection-for-create.component.ts:34:11
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
-
 
 let uniqueId: number = 0;
 
 @Component({
-  selector: "f-connection-for-create",
-  templateUrl: "./f-connection-for-create.component.html",
-  styleUrls: [ "./f-connection-for-create.component.scss" ],
+  selector: "f-snap-connection",
+  templateUrl: "./f-snap-connection.component.html",
+  styleUrls: [ "./f-snap-connection.component.scss" ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: "f-component f-connection f-connection-for-create"
+    class: "f-component f-connection f-snap-connection"
   },
-  providers: [ { provide: F_CONNECTION, useExisting: FConnectionForCreateComponent } ],
+  providers: [ { provide: F_CONNECTION, useExisting: FSnapConnectionComponent } ],
 })
-export class FConnectionForCreateComponent
+export class FSnapConnectionComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnDestroy {
 
-  public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
+  public override fId: string = `f-snap-connection-${ uniqueId++ }`;
 
   public override fText: string = '';
 
