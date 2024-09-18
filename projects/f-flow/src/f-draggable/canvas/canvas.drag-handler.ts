@@ -21,6 +21,6 @@ export class CanvasDragHandler implements IDraggableItem {
   }
 
   public complete(): void {
-    this.fComponentsStore.fCanvas!.completeDrag();
+    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
   }
 }

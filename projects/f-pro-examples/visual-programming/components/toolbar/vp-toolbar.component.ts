@@ -31,6 +31,6 @@ export class VpToolbarComponent {
   }
 
   public onOneToOne(): void {
-    this.flowComponent.fCanvasComponent.oneToOne();
+    this.flowComponent.fCanvasComponent.resetScaleAndCenter();
   }
 }

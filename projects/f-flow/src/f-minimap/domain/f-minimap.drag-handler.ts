@@ -45,6 +45,6 @@ export class FMinimapDragHandler implements IDraggableItem {
 
   public complete(): void {
     this.fComponentsStore.fCanvas?.hostElement.classList.remove('f-scaled-animate');
-    this.fComponentsStore.fCanvas!.completeDrag();
+    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
   }
 }

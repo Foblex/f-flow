@@ -78,7 +78,7 @@ export abstract class FZoomBase {
 
     this.fCanvas.setZoom(result, pointerPositionInFlow);
     this.fCanvas.redraw();
-    this.fCanvas.completeDrag();
+    this.fCanvas.emitCanvasChangeEvent();
   }
 
   private onDoubleClick(event: MouseEvent): void {
@@ -100,7 +100,7 @@ export abstract class FZoomBase {
     const pointerPositionInFlow = new Point(event.clientX, event.clientY).elementTransform(this.flowHost);
     this.fCanvas.setZoom(result, pointerPositionInFlow);
     this.fCanvas.redrawWithAnimation();
-    this.fCanvas.completeDrag();
+    this.fCanvas.emitCanvasChangeEvent();
   }
 
   private onZoomToCenter(deltaY: number, position?: IPoint): void {
@@ -124,7 +124,7 @@ export abstract class FZoomBase {
   public reset(): void {
     this.fCanvas.resetZoom();
     this.fCanvas.redraw();
-    this.fCanvas.completeDrag();
+    this.fCanvas.emitCanvasChangeEvent();
   }
 
   protected unsubscribe(): void {

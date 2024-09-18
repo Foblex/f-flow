@@ -4,13 +4,11 @@ import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import {
-  SelectAndUpdateNodeLayerRequest,
-} from '../../../domain';
 import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
+import { SelectAndUpdateNodeLayerRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(NodeMovePreparationRequest)

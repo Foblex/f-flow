@@ -1,13 +1,9 @@
 import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { GetOutputRectInFlowExecution } from './get-output-rect-in-flow';
-import { GetSelectionExecution } from './get-selection';
-import { SelectAllExecution } from './select-all';
-import { ClearSelectionExecution } from './clear-selection';
 import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import { GetInputRectInFlowExecution } from './get-input-rect-in-flow';
-import { SelectExecution } from './select';
 import {
   MoveFrontElementsBeforeTargetElementExecution,
   UpdateItemAndChildrenLayersExecution
@@ -16,7 +12,6 @@ import { GetPositionInFlowExecution } from './get-position-in-flow';
 import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
-import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
 import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
 import { EmitTransformChangesExecution } from './emit-transform-changes';
 import { SubscribeOnTransformChangesExecution } from './subscribe-on-transform-changes';
@@ -24,20 +19,24 @@ import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExec
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
 import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
-import { CenterGroupOrNodeExecution } from './center-group-or-node';
 import { ShowConnectionsAfterCalculationsExecution } from './show-connections-after-calculations';
+import { F_SELECTION_FEATURES } from './f-selection';
+import { F_CANVAS_FEATURES } from '../f-canvas';
+import { F_BACKGROUND_FEATURES } from '../f-backgroud';
 
 export const COMMON_PROVIDERS = [
 
-  CenterGroupOrNodeExecution,
+  ...F_CANVAS_FEATURES,
 
-  ClearSelectionExecution,
+  ...F_BACKGROUND_FEATURES,
 
   CreateConnectionMarkersExecution,
 
   CreateRoundedRectFromElementExecution,
 
   EmitTransformChangesExecution,
+
+  ...F_SELECTION_FEATURES,
 
   GetCanBeSelectedItemsExecution,
 
@@ -57,17 +56,9 @@ export const COMMON_PROVIDERS = [
 
   GetPositionInFlowExecution,
 
-  GetSelectionExecution,
-
   IsConnectionUnderNodeExecution,
 
   RedrawConnectionsExecution,
-
-  SelectExecution,
-
-  SelectAllExecution,
-
-  SelectAndUpdateNodeLayerExecution,
 
   ShowConnectionsAfterCalculationsExecution,
 

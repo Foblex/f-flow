@@ -5,16 +5,19 @@ import {
 import {
   FCanvasBase, F_CANVAS
 } from './f-canvas-base';
-import { IPoint, IRect, Point, PointExtensions, RectExtensions, TransformModelExtensions } from '@foblex/2d';
-import { FCanvasChangeEvent } from './domain';
+import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import {
+  CenterGroupOrNodeRequest,
+  FCanvasChangeEvent, FitToFlowRequest,
+  InputCanvasPositionRequest,
+  InputCanvasScaleRequest, ResetScaleAndCenterRequest, ResetScaleRequest, UpdateScaleRequest
+} from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FNodeBase } from '../f-node';
 import { FMediator } from '@foblex/mediator';
 import {
-  CenterGroupOrNodeRequest,
   EmitTransformChangesRequest,
   F_CANVAS_ANIMATION_DURATION,
-  GetNodesRectRequest
 } from '../domain';
 
 @Component({
@@ -25,7 +28,9 @@ import {
   host: {
     'class': 'f-component f-canvas',
   },
-  providers: [ { provide: F_CANVAS, useExisting: FCanvasComponent } ],
+  providers: [
+    { provide: F_CANVAS, useExisting: FCanvasComponent }
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit {
@@ -35,24 +40,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
 
   @Input()
   public set position(value: IPoint | undefined) {
-    if (!value) {
-      return;
-    }
-    const position = PointExtensions.sum(this.transform.position, this.transform.scaledPosition);
-    if (!PointExtensions.isEqual(position, value)) {
-      this.transform.position = value;
-      this.transform.scaledPosition = PointExtensions.initialize();
-      this.redraw();
-    }
+    this.fMediator.send(new InputCanvasPositionRequest(value));
   }
 
   @Input()
   public set scale(value: number | undefined) {
-    if (!value) {
-      return;
-    }
-    this.transform.scale = value;
-    this.redraw();
+    this.fMediator.send(new InputCanvasScaleRequest(value));
   }
 
   public override get fNodes(): FNodeBase[] {
@@ -103,42 +96,18 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    const fNodesRect = this.fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
-    if (fNodesRect.width === 0 || fNodesRect.height === 0) {
-      return;
-    }
-
-    this.fitToParent(
-      fNodesRect,
-      RectExtensions.fromElement(this.fComponentsStore.fFlow!.hostElement),
-      this.fNodes.map((x) => {
-        return Point.fromPoint(x.position)
-      }),
-      toCenter
-    );
-    animated ? this.redrawWithAnimation() : this.redraw();
-    this.completeDrag();
-    setTimeout(() => {
-      this.fComponentsStore.componentDataChanged();
-    }, F_CANVAS_ANIMATION_DURATION);
+    this.fMediator.send(new FitToFlowRequest(toCenter, animated));
   }
 
-  public oneToOne(): void {
-    const fNodesRect = this.fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
-    if (fNodesRect.width === 0 || fNodesRect.height === 0) {
-      return;
-    }
-    this.oneToOneCentering(
-      fNodesRect,
-      RectExtensions.fromElement(this.fComponentsStore.fFlow!.hostElement),
-      this.fNodes.map((x) => {
-        return Point.fromPoint(x.position)
-      })
-    );
-    this.redrawWithAnimation();
-    this.completeDrag();
-    setTimeout(() => {
-      this.fComponentsStore.componentDataChanged();
-    }, F_CANVAS_ANIMATION_DURATION);
+  public resetScaleAndCenter(animated: boolean = true): void {
+    this.fMediator.send(new ResetScaleAndCenterRequest(animated));
+  }
+
+  public override setZoom(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
+    this.fMediator.send(new UpdateScaleRequest(scale, toPosition));
+  }
+
+  public override resetZoom(): void {
+    this.fMediator.send(new ResetScaleRequest());
   }
 }

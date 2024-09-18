@@ -95,13 +95,13 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   private subscribeOnComponentsCountChanges(): Subscription {
-    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
       this.fMediator.send(new SortItemLayersRequest());
     });
   }
 
   private subscribeOnElementsChanges(): Subscription {
-    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {

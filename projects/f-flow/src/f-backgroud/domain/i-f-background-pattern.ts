@@ -5,5 +5,7 @@ export const F_BACKGROUND_PATTERN = new InjectionToken<IFBackgroundPattern>('F_B
 
 export interface IFBackgroundPattern {
 
+  hostElement: HTMLElement | SVGElement;
+
   setTransform(transform: ITransformModel): void;
 }

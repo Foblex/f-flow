@@ -1,11 +1,4 @@
-import {
-  ICanChangePosition, ICanChangeZoom, ICanFitToParent, ICanOneToOneCentering,
-  mixinChangePosition,
-  mixinChangeZoom,
-  mixinFitToParent,
-  mixinOneToOneCentering
-} from '../mixins';
-import { ITransformModel, PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
+import { PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
 import { Directive, ElementRef, EventEmitter, InjectionToken } from '@angular/core';
 import { FCanvasChangeEvent } from './domain';
 import { FNodeBase } from '../f-node';
@@ -13,21 +6,9 @@ import { IHasHostElement } from '../i-has-host-element';
 
 export const F_CANVAS = new InjectionToken<FCanvasBase>('F_CANVAS');
 
-const MIXIN_BASE = mixinChangePosition(
-    mixinFitToParent(
-        mixinOneToOneCentering(
-            mixinChangeZoom(
-                class {
-                  constructor(
-                      public transform: ITransformModel
-                  ) {
-                  }
-                }))));
 
 @Directive()
-export abstract class FCanvasBase
-    extends MIXIN_BASE
-    implements IHasHostElement, ICanChangePosition, ICanFitToParent, ICanOneToOneCentering, ICanChangeZoom {
+export abstract class FCanvasBase implements IHasHostElement {
 
   public abstract fCanvasChange: EventEmitter<FCanvasChangeEvent>;
 
@@ -41,21 +22,27 @@ export abstract class FCanvasBase
 
   public abstract fConnectionsContainer: ElementRef<HTMLElement>;
 
-  protected constructor() {
-    super(TransformModelExtensions.default());
-  }
+  public transform = TransformModelExtensions.default();
 
   public abstract redraw(): void;
 
   public abstract redrawWithAnimation(): void;
 
-  public completeDrag(): void {
-    this.fCanvasChange.emit(
-        new FCanvasChangeEvent(this.getCanvasPosition(), this.transform.scale)
-    );
+  public getPosition(): IPoint {
+    return this.transform.position;
   }
 
-  private getCanvasPosition(): IPoint {
-    return PointExtensions.sum(this.transform.position, this.transform.scaledPosition);
+  public setPosition(position: IPoint): void {
+    this.transform.position = position;
+  }
+
+  public abstract setZoom(scale: number, toPosition: IPoint): void;
+
+  public abstract resetZoom(): void;
+
+  public emitCanvasChangeEvent(): void {
+    this.fCanvasChange.emit(
+        new FCanvasChangeEvent(PointExtensions.sum(this.transform.position, this.transform.scaledPosition), this.transform.scale)
+    );
   }
 }

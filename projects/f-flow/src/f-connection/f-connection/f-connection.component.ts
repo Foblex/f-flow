@@ -150,12 +150,6 @@ export class FConnectionComponent
   @ViewChild('defs', { static: true })
   public override fDefs!: ElementRef<SVGDefsElement>;
 
-  public get fMarkers(): FMarkerBase[] {
-    return this.fComponentsStore.fMarkers.filter((x) => {
-      return this.hostElement.contains(x.hostElement);
-    })
-  }
-
   @ViewChild(CONNECTION_PATH, { static: true })
   public override fPath!: IConnectionPath;
 
