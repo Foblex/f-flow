@@ -63,7 +63,7 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.3",
-    "@foblex/f-docs": "1.3.2",
+    "@foblex/f-docs": "1.3.3",
     "@foblex/platform": "1.0.3",
     "@foblex/mediator": "1.1.0",
     "@foblex/2d": "1.1.0",
