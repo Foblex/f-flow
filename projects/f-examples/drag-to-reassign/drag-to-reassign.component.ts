@@ -23,6 +23,9 @@ export class DragToReassignComponent {
   }
 
   public reassignConnection(event: FReassignConnectionEvent): void {
+    if(!event.newFInputId) {
+      return;
+    }
     this.connections = [ { outputId: event.fOutputId, inputId: event.newFInputId } ];
     this.changeDetectorRef.detectChanges();
   }

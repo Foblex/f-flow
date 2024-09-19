@@ -27,6 +27,10 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
       this.setMarkers(this.fComponentsStore.fTempConnection);
     }
 
+    if(this.fComponentsStore.fSnapConnection) {
+      this.setMarkers(this.fComponentsStore.fSnapConnection);
+    }
+
     this.fComponentsStore.fConnections.forEach((connection) => {
       const output = this.fComponentsStore.fOutputs.find((x) => x.id === connection.fOutputId);
       const input = this.fComponentsStore.fInputs.find((x) => x.id === connection.fInputId);

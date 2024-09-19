@@ -40,12 +40,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
 
   @Input()
   public set position(value: IPoint | undefined) {
-    this.fMediator.send(new InputCanvasPositionRequest(value));
+    this.fMediator.send(new InputCanvasPositionRequest(this.transform, value));
   }
 
   @Input()
   public set scale(value: number | undefined) {
-    this.fMediator.send(new InputCanvasScaleRequest(value));
+    this.fMediator.send(new InputCanvasScaleRequest(this.transform, value));
   }
 
   public override get fNodes(): FNodeBase[] {

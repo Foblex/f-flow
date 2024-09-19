@@ -2,7 +2,6 @@ import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
-import { GetInputRectInFlowExecution } from './get-input-rect-in-flow';
 import {
   MoveFrontElementsBeforeTargetElementExecution,
   UpdateItemAndChildrenLayersExecution
@@ -19,9 +18,9 @@ import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-node
 import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
 import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
 import { ShowConnectionsAfterCalculationsExecution } from './show-connections-after-calculations';
-import { F_SELECTION_FEATURES } from './f-selection';
+import { F_SELECTION_FEATURES } from './f-selection/providers';
 import { F_CANVAS_FEATURES } from '../f-canvas';
-import { F_BACKGROUND_FEATURES } from '../f-backgroud';
+import { F_BACKGROUND_FEATURES } from '../f-backgroud/domain/providers';
 
 export const COMMON_PROVIDERS = [
 
@@ -70,6 +69,4 @@ export const COMMON_PROVIDERS = [
   UpdateItemAndChildrenLayersExecution,
 
   MoveFrontElementsBeforeTargetElementExecution,
-
-  GetInputRectInFlowExecution,
 ];

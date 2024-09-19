@@ -1,10 +1,10 @@
 import { GetAllCanBeConnectedInputPositionsRequest } from './get-all-can-be-connected-input-positions.request';
 import { Injectable } from '@angular/core';
-import { FComponentsStore } from '../../../f-storage';
-import { FNodeBase } from '../../../f-node';
-import { FConnectorBase } from '../../../f-connectors';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetConnectorWithRectRequest, IConnectorWithRect } from '../get-connector-with-rect';
+import { FNodeBase } from '../../../../f-node';
+import { FConnectorBase } from '../../../../f-connectors';
+import { FComponentsStore } from '../../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(GetAllCanBeConnectedInputPositionsRequest)

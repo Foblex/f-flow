@@ -1,13 +1,14 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint, Point } from '@foblex/2d';
 import { GetInputUnderPointerRequest } from './get-input-under-pointer.request';
 import { Injectable } from '@angular/core';
-import { FComponentsStore } from '../../../f-storage';
-import { FNodeBase } from '../../../f-node';
-import { FConnectorBase } from '../../../f-connectors';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { CreateConnectionDragHandler } from '../create-connection';
-import { ReassignConnectionDragHandler } from '../reassign-connection';
 import { BrowserService } from '@foblex/platform';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FConnectorBase } from '../../../../f-connectors';
+import { FNodeBase } from '../../../../f-node';
+import { FComponentsStore } from '../../../../f-storage';
+import { CreateConnectionDragHandler } from '../../create-connection';
+import { ReassignConnectionDragHandler } from '../../reassign-connection';
+import { FDraggableDataContext } from '../../../f-draggable-data-context';
 
 @Injectable()
 @FExecutionRegister(GetInputUnderPointerRequest)
@@ -24,13 +25,14 @@ export class GetInputUnderPointerExecution
 
   constructor(
     private fComponentsStore: FComponentsStore,
+    private fDraggableDataContext: FDraggableDataContext,
     private fBrowser: BrowserService
   ) {
   }
 
   public handle(payload: GetInputUnderPointerRequest): FConnectorBase | undefined {
     const output = (this.getOutput(payload.dragHandler) || this.getOutlet(payload.dragHandler))!;
-    const inputsUnderPointer = this.getInputsUnderPointer(payload.event.getPosition());
+    const inputsUnderPointer = this.getInputsUnderPointer(payload.event.getPosition(), payload.dragHandler);
 
     const connectors = output.isSelfConnectable ?
       inputsUnderPointer :
@@ -46,13 +48,22 @@ export class GetInputUnderPointerExecution
     return this.fComponentsStore.fOutlets.find((x) => x.id === dragHandler.fConnection.fOutputId);
   }
 
-  private getInputsUnderPointer(position: IPoint): FConnectorBase[] {
+  private getInputsUnderPointer(position: IPoint, dragHandler: CreateConnectionDragHandler | ReassignConnectionDragHandler): FConnectorBase[] {
     const result = this.getInputsInPosition(position);
+    const closestInput = dragHandler.getClosetInput(this.getDifference(position));
+    if (closestInput) {
+      result.push(closestInput.fConnector);
+    }
     const input = this.getFirstConnectableInputOfNodeInPosition(position);
     if (input) {
       result.push(input);
     }
     return result;
+  }
+
+  private getDifference(position: IPoint): IPoint {
+    return Point.fromPoint(position).elementTransform(this.fComponentsStore.flowHost)
+      .div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
   }
 
   private getInputsInPosition(position: IPoint): FConnectorBase[] {

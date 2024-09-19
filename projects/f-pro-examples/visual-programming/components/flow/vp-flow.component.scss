@@ -42,13 +42,6 @@
       }
     }
 
-    &.f-snap-connection {
-      .f-connection-path {
-        stroke: red;
-        stroke-width: 2px;
-      }
-    }
-
     .f-connection-text {
       fill: var(--tertiary-text);
       font-size: 12px;

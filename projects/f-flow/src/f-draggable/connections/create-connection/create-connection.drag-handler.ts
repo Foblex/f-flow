@@ -1,13 +1,15 @@
 import { IDraggableItem } from '../../i-draggable-item';
 import { GetConnectionLineRequest } from '../../../domain';
-import { FConnectionBase } from '../../../f-connection';
+import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, Point, } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { GetAllCanBeConnectedInputPositionsRequest } from '../get-all-can-be-connected-input-positions';
-import { FindClosestInputUsingSnapThresholdRequest } from '../find-closest-input-using-snap-threshold';
-import { GetConnectorWithRectRequest, IConnectorWithRect } from '../get-connector-with-rect';
+import {
+  FindClosestInputUsingSnapThresholdRequest,
+  GetAllCanBeConnectedInputPositionsRequest, GetConnectorWithRectRequest,
+  IConnectorWithRect
+} from '../common';
 
 export class CreateConnectionDragHandler implements IDraggableItem {
 
@@ -17,8 +19,8 @@ export class CreateConnectionDragHandler implements IDraggableItem {
     return this.fComponentsStore.fTempConnection!;
   }
 
-  private get fSnapConnection(): FConnectionBase | undefined {
-    return this.fComponentsStore.fSnapConnection;
+  private get fSnapConnection(): FSnapConnectionComponent | undefined {
+    return this.fComponentsStore.fSnapConnection as FSnapConnectionComponent;
   }
 
   private fOutputWithRect!: IConnectorWithRect;
@@ -35,12 +37,15 @@ export class CreateConnectionDragHandler implements IDraggableItem {
 
   public initialize(): void {
     if (this.fSnapConnection) {
+      this.fSnapConnection.fOutputId = this.fOutput.id;
+      this.fSnapConnection.initialize();
       this.canBeConnectedInputs = this.fMediator.send<IConnectorWithRect[]>(
-        new GetAllCanBeConnectedInputPositionsRequest(this.fConnection.fOutputId)
+        new GetAllCanBeConnectedInputPositionsRequest(this.fOutput.id)
       );
     }
     this.fConnection.fOutputId = this.fOutput.id;
     this.fConnection.initialize();
+
 
     this.fOutputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.fOutput));
 
@@ -89,12 +94,12 @@ export class CreateConnectionDragHandler implements IDraggableItem {
     }
   }
 
-  private getClosetInput(difference: IPoint): IConnectorWithRect | undefined {
+  public getClosetInput(difference: IPoint): IConnectorWithRect | undefined {
     return this.fMediator.send<IConnectorWithRect | undefined>(
       new FindClosestInputUsingSnapThresholdRequest(
         Point.fromPoint(this.toConnectorRect).add(difference),
         this.canBeConnectedInputs,
-        50
+        this.fSnapConnection!.fSnapThreshold
       )
     );
   }

@@ -18,8 +18,6 @@ export * from './get-flow-state';
 
 export * from './get-scaled-node-rects-with-flow-position';
 
-export * from './get-input-rect-in-flow';
-
 export * from './get-nodes-rect';
 
 export * from './get-position-in-flow';

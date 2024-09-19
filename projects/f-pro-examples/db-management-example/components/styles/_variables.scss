@@ -42,6 +42,8 @@
 ::ng-deep :root {
   --db-line-alignment-color: rgba(60, 60, 67, 0.56);
 
+  --db-snap-connection: rgba(180, 180, 180);
+
   --db-node-header-normal-state-background-color: #e4e4e9;
 
   --db-background-component-color: rgba(0, 0, 0, 0.1);
@@ -56,6 +58,8 @@
 
   &.dark {
     --db-line-alignment-color: rgba(235, 235, 245, 0.38);
+
+    --db-snap-connection: rgba(220, 220, 220);
 
     --db-node-header-normal-state-background-color: #414853;
 

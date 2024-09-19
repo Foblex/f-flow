@@ -5,10 +5,10 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
 import { FDraggableBase } from '../../../f-draggable-base';
-import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 import { FReassignConnectionEvent } from '../f-reassign-connection.event';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectorBase } from '../../../../f-connectors';
+import { GetInputUnderPointerRequest } from '../../common';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionFinalizeRequest)

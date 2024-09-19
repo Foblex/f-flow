@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS,
   GetScaledNodeRectsWithFlowPositionRequest,
   GetPositionInFlowRequest,
   GetSelectionRequest,
@@ -23,12 +22,13 @@ import {
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import {
-  F_DRAGGABLE_PROVIDERS,
   FDraggableDataContext, FSelectionChangeEvent
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import { FComponentsStore, FTransformStore } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
+import { COMMON_PROVIDERS } from '../domain/providers';
+import { F_DRAGGABLE_PROVIDERS } from '../f-draggable/providers';
 
 let uniqueId: number = 0;
 

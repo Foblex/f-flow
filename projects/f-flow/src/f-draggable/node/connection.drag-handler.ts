@@ -1,4 +1,4 @@
-import { ILine, IPoint } from '@foblex/2d';
+import { ILine, IPoint, RoundedRect } from '@foblex/2d';
 import { FConnectionBase } from '../../f-connection';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -6,6 +6,7 @@ import {
 } from '../../domain';
 import { ConnectionBaseDragHandler } from './connection-base-drag-handler';
 import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
+import { FComponentsStore } from '../../f-storage';
 
 export class ConnectionDragHandler extends ConnectionBaseDragHandler {
 
@@ -14,9 +15,10 @@ export class ConnectionDragHandler extends ConnectionBaseDragHandler {
 
   constructor(
     fMediator: FMediator,
-    connection: FConnectionBase
+    fComponentsStore: FComponentsStore,
+    connection: FConnectionBase,
   ) {
-    super(fMediator, connection);
+    super(fMediator, fComponentsStore, connection);
   }
 
   public setOutputRestrictions(min: IPoint, max: IPoint) {
@@ -33,11 +35,11 @@ export class ConnectionDragHandler extends ConnectionBaseDragHandler {
 
   private getNewLineValue(difference: IPoint): ILine {
     return this.fMediator.send<ILine>(new GetConnectionLineRequest(
-      this.fromConnectorRect.addPoint(this.getDifference({ ...difference }, this.sourceRestrictions)),
-      this.toConnectorRect.addPoint(this.getDifference({ ...difference }, this.targetRestrictions)),
+      RoundedRect.fromRect(this.fOutputWithRect.fRect).addPoint(this.getDifference({ ...difference }, this.sourceRestrictions)),
+      RoundedRect.fromRect(this.fInputWithRect.fRect).addPoint(this.getDifference({ ...difference }, this.targetRestrictions)),
       this.connection.fBehavior,
-      this.fromConnectorSide,
-      this.toConnectorSide
+      this.fOutputWithRect.fConnector.fConnectableSide,
+      this.fInputWithRect.fConnector.fConnectableSide
     ));
   }
 }
