@@ -37,6 +37,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'custom-connection-type', component: import('../../../projects/f-examples/custom-connection-type/custom-connection-type.component') },
       { tag: 'drag-to-connect', component: import('../../../projects/f-examples/drag-to-connect/drag-to-connect.component') },
       { tag: 'drag-to-reassign', component: import('../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component') },
+      { tag: 'drag-snap-connection', component: import('../../../projects/f-examples/drag-snap-connection/drag-snap-connection.component') },
       { tag: 'connectable-side', component: import('../../../projects/f-examples/connectable-side/connectable-side.component') },
       { tag: 'connection-from-outlet', component: import('../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component') },
       { tag: 'connection-markers', component: import('../../../projects/f-examples/connection-markers/connection-markers.component') },
@@ -137,6 +138,11 @@ function connectionGroup(): INavigationGroup {
         link: 'f-connection-marker-directive',
         text: 'Connection Marker',
         description: 'The FMarkerDirective in Foblex Flow defines start or end markers for connections within a flow, enabling customization of marker type, size, and position. It ensures precise control over the visual representation of connection endpoints using SVG elements in your diagrams.',
+      },
+      {
+        link: 'f-snap-connection-component',
+        text: 'Snap Connection',
+        description: 'The FSnapConnection component in Foblex Flow allows users to create connections between nodes by snapping to the nearest input. It supports dynamic connection creation within a flow, working seamlessly with the draggable directive for flexible node interaction in diagrams and workflows.',
       },
     ],
   }
