@@ -8,6 +8,12 @@ It is used to create a connection between two nodes. The connection can be dragg
 
   - Similar to the [f-connection](f-connection-component) component
 
+## Styles
+
+- `.f-connection` Class specific to the connection component, providing styles for connection representation.
+
+- `.f-connection-for-create` Class specific to the connection component, providing styles for connection creation.
+
 ## Usage
 
 Add the `f-connection-for-create` component to the [f-canvas](f-canvas-component). Works only if [fDraggableDirective](f-draggable-directive) is added.

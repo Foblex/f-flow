@@ -10,6 +10,12 @@ It is used to help users create or reassign connections to the nearest input.
 
   - `fSnapThreshold: number;` The distance in pixels at which the connection snaps to the input. Default: `20`.
 
+## Styles
+
+- `.f-connection` Class specific to the connection component, providing styles for connection representation.
+
+- `.f-snap-connection` Class specific to the snap connection component, providing styles for snap connection representation.
+
 ## Usage
 
 Add the `f-snap-connection` component to the [f-canvas](f-canvas-component). Works with [f-connection-for-create](f-connection-for-create-component) or [f-connection](f-connection-component) components.

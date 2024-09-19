@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { FDraggableDataContext, FSelectionChangeEvent } from '../../f-draggable';
 import { FMediator } from '@foblex/mediator';
-import { setupTestModule } from '../test-setup';
 import { GetSelectionExecution } from './get-selection.execution';
 import { GetSelectionRequest } from './get-selection.request';
+import { setupTestModule } from '../../test-setup';
+import { FDraggableDataContext, FSelectionChangeEvent } from '@foblex/flow';
 
 describe('GetSelectionExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;

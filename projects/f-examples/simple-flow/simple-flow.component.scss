@@ -4,6 +4,10 @@
   @include flow-common.connection;
 }
 
+f-flow {
+  height: 300px;
+}
+
 .f-node {
   @include flow-common.node;
 }
