@@ -62,7 +62,7 @@ export class PutOutputConnectionHandlersToArrayExecution
   }
 
   private getNewConnectionHandler(connection: FConnectionBase, nodeDragHandler: NodeDragHandler): ConnectionDragHandler {
-    const handler = new ConnectionDragHandler(this.fMediator, connection);
+    const handler = new ConnectionDragHandler(this.fMediator, this.fComponentsStore, connection);
     handler.setOutputRestrictions(nodeDragHandler.minDistance, nodeDragHandler.maxDistance);
     return handler;
   }
@@ -72,7 +72,7 @@ export class PutOutputConnectionHandlersToArrayExecution
   }
 
   private getNewSourceConnectionHandler(connection: FConnectionBase, nodeDragHandler: NodeDragHandler): ConnectionSourceDragHandler {
-    return new ConnectionSourceDragHandler(this.fMediator, connection, nodeDragHandler.minDistance, nodeDragHandler.maxDistance);
+    return new ConnectionSourceDragHandler(this.fMediator, this.fComponentsStore, connection, nodeDragHandler.minDistance, nodeDragHandler.maxDistance);
   }
 }
 

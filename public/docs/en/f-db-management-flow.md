@@ -11,6 +11,7 @@ This example demonstrates how to use the Foblex Flow to create a database manage
 
 - Connect nodes using [f-connection-for-create](f-connection-for-create-component) component.
 - Reassign connections.
+- Snap connection.
 - Move nodes.
 - Move canvas.
 - Zoom with the `mouse wheel`, `double click` and `buttons` using [fZoom](f-zoom-directive) directive.

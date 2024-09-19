@@ -28,18 +28,16 @@ export class CreateConnectionDragHandlerExecution
   }
 
   public handle(request: CreateConnectionDragHandlerRequest): void {
-    this.fComponentsStore.fTempConnection!.fOutputId = request.connector.id;
-    this.fComponentsStore.fTempConnection!.initialize();
-
     this.fDraggableDataContext.onPointerDownScale = this.transform.scale;
-    const positionRelativeToFlowComponent = Point.fromPoint(request.onPointerDownPosition).elementTransform(this.flowHost).div(this.transform.scale);
+    const positionRelativeToFlowComponent = Point.fromPoint(request.onPointerDownPosition)
+      .elementTransform(this.flowHost).div(this.transform.scale);
     this.fDraggableDataContext.onPointerDownPosition = positionRelativeToFlowComponent;
 
     const positionRelativeToCanvasComponent = Point.fromPoint(positionRelativeToFlowComponent).mult(this.transform.scale)
       .sub(this.transform.position).sub(this.transform.scaledPosition).div(this.transform.scale);
 
     this.fDraggableDataContext.draggableItems = [
-      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore.fTempConnection!, positionRelativeToCanvasComponent)
+      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore, request.connector, positionRelativeToCanvasComponent)
     ];
   }
 }

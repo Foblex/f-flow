@@ -1,10 +1,10 @@
-export class FReassignConnectionEvent<T = any> {
+export class FReassignConnectionEvent {
 
   constructor(
-    public connectionId: T,
-    public fOutputId: T,
-    public oldFInputId: T,
-    public newFInputId: T
+    public fConnectionId: string,
+    public fOutputId: string,
+    public oldFInputId: string,
+    public newFInputId: string | undefined
   ) {
   }
 }

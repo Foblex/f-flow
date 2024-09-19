@@ -29,7 +29,7 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
 
     this.fComponentsStore.fCanvas!.setPosition(this.getNewPosition(eventPoint, request.minimap));
     this.fComponentsStore.fCanvas!.redraw();
-    this.fComponentsStore.fCanvas!.completeDrag();
+    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
 
     this.fDraggableDataContext.onPointerDownScale = 1;
     this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(eventPoint).elementTransform(this.flowHost);

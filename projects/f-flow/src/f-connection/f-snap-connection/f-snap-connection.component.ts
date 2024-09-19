@@ -11,7 +11,6 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { FComponentsStore } from '../../f-storage';
@@ -44,7 +43,6 @@ export class FSnapConnectionComponent
     this._fStartColor = value;
     this.fComponentsStore.componentDataChanged();
   }
-
   public override get fStartColor(): string {
     return this._fStartColor;
   }
@@ -60,28 +58,31 @@ export class FSnapConnectionComponent
     return this._fEndColor;
   }
 
+  @Input()
+  public fSnapThreshold: number = 20;
+
   public override fOutputId!: string;
 
   public override fInputId!: string;
 
   private _fRadius: number = 8;
+
   @Input()
   public override set fRadius(value: number) {
     this._fRadius = value;
     this.fComponentsStore.componentDataChanged();
   }
-
   public override get fRadius(): number {
     return this._fRadius;
   }
 
   private _fOffset: number = 32;
+
   @Input()
   public override set fOffset(value: number) {
     this._fOffset = value;
     this.fComponentsStore.componentDataChanged();
   }
-
   public override get fOffset(): number {
     return this._fOffset;
   }
@@ -93,7 +94,6 @@ export class FSnapConnectionComponent
     this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
     this.fComponentsStore.componentDataChanged();
   }
-
   public override get fBehavior(): EFConnectionBehavior {
     return this._behavior;
   }
@@ -105,7 +105,6 @@ export class FSnapConnectionComponent
     this._type = castToEnum(value, 'fType', EFConnectionType);
     this.fComponentsStore.componentDataChanged();
   }
-
   public override get fType(): EFConnectionType {
     return this._type;
   }
@@ -116,12 +115,6 @@ export class FSnapConnectionComponent
 
   @ViewChild('defs', { static: true })
   public override fDefs!: ElementRef<SVGDefsElement>;
-
-  public get fMarkers(): FMarkerBase[] {
-    return this.fComponentsStore.fMarkers.filter((x) => {
-      return this.hostElement.contains(x.hostElement);
-    });
-  }
 
   @ViewChild(CONNECTION_PATH, { static: true })
   public override fPath!: IConnectionPath;
@@ -157,7 +150,7 @@ export class FSnapConnectionComponent
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.fTempConnection = this;
+    this.fComponentsStore.fSnapConnection = this;
   }
 
   public ngAfterViewInit(): void {
@@ -165,6 +158,6 @@ export class FSnapConnectionComponent
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.fTempConnection = undefined;
+    this.fComponentsStore.fSnapConnection = undefined;
   }
 }

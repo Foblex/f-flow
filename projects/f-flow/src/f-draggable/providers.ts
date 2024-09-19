@@ -1,5 +1,5 @@
 import { CANVAS_PROVIDERS } from './canvas';
-import { CONNECTIONS_PROVIDERS } from './connections';
+import { CONNECTIONS_PROVIDERS } from './connections/providers';
 import { SINGLE_SELECT_PROVIDERS } from './single-select';
 import { NODE_PROVIDERS } from './node';
 import { NODE_RESIZE_PROVIDERS } from './node-resize';

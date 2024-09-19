@@ -56,6 +56,32 @@
         opacity: 0.1;
       }
     }
+
+
+    &.f-snap-connection {
+      .f-connection-path {
+        stroke: var(--db-snap-connection);
+        stroke-width: 2px;
+      }
+
+      .f-marker {
+        path, circle {
+          fill: var(--db-snap-connection);
+        }
+      }
+
+      .f-connection-selection {
+        fill: transparent !important;
+        stroke: transparent !important;
+      }
+    }
+
+    &.f-connection-for-create {
+      .f-connection-selection {
+        fill: transparent !important;
+        stroke: transparent !important;
+      }
+    }
   }
 
   .f-line-alignment {

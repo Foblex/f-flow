@@ -53,7 +53,7 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
       .elementTransform(this.flowHost).div(this.transform.scale);
 
     this.fDraggableDataContext.draggableItems = [
-      new ReassignConnectionDragHandler(this.fMediator, connectionToReassign)
+      new ReassignConnectionDragHandler(this.fMediator, this.fComponentsStore, connectionToReassign)
     ];
   }
 

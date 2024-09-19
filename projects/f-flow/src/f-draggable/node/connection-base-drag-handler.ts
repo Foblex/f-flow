@@ -1,44 +1,37 @@
 import { IDraggableItem } from '../i-draggable-item';
-import {
-  GetInputRectInFlowRequest,
-  GetInputRectInFlowResponse,
-  GetOutputRectInFlowRequest,
-  GetOutputRectInFlowResponse
-} from '../../domain';
 import { FConnectionBase } from '../../f-connection';
-import { EFConnectableSide } from '../../f-connectors';
+import { FConnectorBase } from '../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { Directive } from '@angular/core';
 import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
-import { RoundedRect, ILine, IPoint } from '@foblex/2d';
+import { ILine, IPoint } from '@foblex/2d';
+import { FComponentsStore } from '../../f-storage';
+import { GetConnectorWithRectRequest, IConnectorWithRect } from '../connections';
 
 @Directive()
 export abstract class ConnectionBaseDragHandler implements IDraggableItem {
 
-  protected fromConnectorRect: RoundedRect = new RoundedRect();
-  protected fromConnectorSide: EFConnectableSide = EFConnectableSide.BOTTOM;
-
-  protected toConnectorRect: RoundedRect = new RoundedRect();
-  protected toConnectorSide: EFConnectableSide = EFConnectableSide.TOP;
+  protected fOutputWithRect!: IConnectorWithRect;
+  protected fInputWithRect!: IConnectorWithRect;
 
   protected constructor(
     protected fMediator: FMediator,
+    protected fComponentsStore: FComponentsStore,
     public connection: FConnectionBase,
   ) {
   }
 
   public initialize(): void {
-    const fromConnector = this.fMediator.send<GetOutputRectInFlowResponse>(
-      new GetOutputRectInFlowRequest(this.connection.fOutputId)
-    );
-    this.fromConnectorRect = RoundedRect.fromRoundedRect(fromConnector.rect);
-    this.fromConnectorSide = fromConnector.fConnectableSide;
+    this.fOutputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getOutput()));
+    this.fInputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getInput()));
+  }
 
-    const toConnector = this.fMediator.send<GetInputRectInFlowResponse>(
-      new GetInputRectInFlowRequest(this.connection.fInputId)
-    );
-    this.toConnectorRect = RoundedRect.fromRoundedRect(toConnector.rect);
-    this.toConnectorSide = toConnector.fConnectableSide;
+  private getOutput(): FConnectorBase {
+    return this.fComponentsStore.fOutputs.find((x) => x.id === this.connection.fOutputId)!;
+  }
+
+  private getInput(): FConnectorBase {
+    return this.fComponentsStore.fInputs.find((x) => x.id === this.connection.fInputId)!
   }
 
   public abstract move(difference: IPoint): void;
@@ -51,7 +44,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   }
 
   protected redrawConnection(line: ILine): void {
-    this.connection.setLine(line.point1, this.fromConnectorSide, line.point2, this.toConnectorSide);
+    this.connection.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, this.fInputWithRect.fConnector.fConnectableSide);
     this.connection.redraw();
   }
 }

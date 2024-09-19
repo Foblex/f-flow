@@ -1,6 +1,6 @@
-export * from './create-connection';
+export * from './common';
 
-export * from './get-input-under-pointer';
+export * from './create-connection';
 
 export * from './reassign-connection';
 

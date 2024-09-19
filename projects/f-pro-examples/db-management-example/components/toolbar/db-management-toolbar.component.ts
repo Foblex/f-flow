@@ -35,6 +35,6 @@ export class DbManagementToolbarComponent {
   }
 
   public onOneToOne(): void {
-    this.flowComponent.fCanvasComponent.oneToOne();
+    this.flowComponent.fCanvasComponent.resetScaleAndCenter();
   }
 }

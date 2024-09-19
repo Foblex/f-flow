@@ -42,6 +42,8 @@ export class FComponentsStore {
 
   public fTempConnection: FConnectionBase | undefined;
 
+  public fSnapConnection: FConnectionBase | undefined;
+
   public fMarkers: FMarkerBase[] = [];
 
   public fOutputs: FConnectorBase[] = [];

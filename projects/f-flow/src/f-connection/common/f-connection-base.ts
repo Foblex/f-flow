@@ -69,8 +69,6 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fDefs: ElementRef<SVGDefsElement>;
 
-  public abstract fMarkers: FMarkerBase[];
-
   public abstract fPath: IConnectionPath;
 
   public abstract fGradient: IConnectionGradient;

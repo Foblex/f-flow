@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import {
   ClearSelectionRequest,
-  COMMON_PROVIDERS,
   GetScaledNodeRectsWithFlowPositionRequest,
   GetPositionInFlowRequest,
   GetSelectionRequest,
@@ -18,18 +17,18 @@ import {
   SelectRequest,
   SortItemLayersRequest,
   IFFlowState,
-  GetFlowStateRequest,
-  ShowConnectionsAfterCalculationsRequest,
+  GetFlowStateRequest
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import {
-  F_DRAGGABLE_PROVIDERS,
   FDraggableDataContext, FSelectionChangeEvent
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import { FComponentsStore, FTransformStore } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
+import { COMMON_PROVIDERS } from '../domain/providers';
+import { F_DRAGGABLE_PROVIDERS } from '../f-draggable/providers';
 
 let uniqueId: number = 0;
 
@@ -95,17 +94,17 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   private subscribeOnComponentsCountChanges(): Subscription {
-    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
       this.fMediator.send(new SortItemLayersRequest());
     });
   }
 
   private subscribeOnElementsChanges(): Subscription {
-    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(20)).subscribe(() => {
+    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
-       // this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
+        // this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
         this.fLoaded.emit();
       }
