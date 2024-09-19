@@ -105,7 +105,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
-        this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
+       // this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
         this.fLoaded.emit();
       }
