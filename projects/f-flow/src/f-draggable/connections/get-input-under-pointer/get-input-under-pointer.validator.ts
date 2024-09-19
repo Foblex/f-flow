@@ -19,16 +19,16 @@ export class GetInputUnderPointerValidator implements IValidator<GetInputUnderPo
   public handle(request: GetInputUnderPointerRequest): boolean {
     let output = this.getOutput(request.dragHandler) || this.getOutlet(request.dragHandler);
     if (!output) {
-      throw OutputNotFound(request.dragHandler.connection.fOutputId);
+      throw OutputNotFound(request.dragHandler.fConnection.fOutputId);
     }
     return true;
   }
 
   private getOutput(dragHandler: CreateConnectionDragHandler | ReassignConnectionDragHandler): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutputs.find((x) => x.id === dragHandler.fConnection.fOutputId);
   }
 
   private getOutlet(dragHandler: CreateConnectionDragHandler | ReassignConnectionDragHandler): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutlets.find((x) => x.id === dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutlets.find((x) => x.id === dragHandler.fConnection.fOutputId);
   }
 }

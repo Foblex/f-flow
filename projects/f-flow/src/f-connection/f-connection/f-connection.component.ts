@@ -19,7 +19,6 @@ import {
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
 import { FComponentsStore } from '../../f-storage';
-import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { F_CONNECTION } from '../common/f-connection.injection-token';

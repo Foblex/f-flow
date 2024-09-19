@@ -11,7 +11,6 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { FComponentsStore } from '../../f-storage';

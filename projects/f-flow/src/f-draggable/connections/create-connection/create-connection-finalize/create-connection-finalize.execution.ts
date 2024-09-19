@@ -35,7 +35,7 @@ export class CreateConnectionFinalizeExecution
 
   private getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {
     if (!output) {
-      throw OutputNotFound(this.dragHandler.connection.fOutputId);
+      throw OutputNotFound(this.dragHandler.fConnection.fOutputId);
     }
     return isNodeOutlet(output.hostElement) ? this.fMediator.send<FNodeOutputBase>(
       new GetCanBeConnectedOutputByOutletRequest(output as FNodeOutletBase)
@@ -43,11 +43,11 @@ export class CreateConnectionFinalizeExecution
   }
 
   private getOutput(): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === this.dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutputs.find((x) => x.id === this.dragHandler.fConnection.fOutputId);
   }
 
   private getOutlet(): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutlets.find((x) => x.id === this.dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutlets.find((x) => x.id === this.dragHandler.fConnection.fOutputId);
   }
 
   private emitEvent(event: IPointerEvent): void {

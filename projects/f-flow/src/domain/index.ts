@@ -22,8 +22,6 @@ export * from './get-input-rect-in-flow';
 
 export * from './get-nodes-rect';
 
-export * from './get-output-rect-in-flow';
-
 export * from './get-position-in-flow';
 
 export * from './is-connection-under-node';

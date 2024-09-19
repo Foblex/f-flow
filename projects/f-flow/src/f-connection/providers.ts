@@ -8,6 +8,7 @@ import { FConnectionComponent } from './f-connection';
 import { FConnectionCenterDirective } from './f-connection-center';
 import { FConnectionForCreateComponent } from './f-connection-for-create';
 import { FMarkerDirective } from './f-marker';
+import { FSnapConnectionComponent } from './f-snap-connection';
 
 export const F_CONNECTION_PROVIDERS = [
 
@@ -21,5 +22,6 @@ export const F_CONNECTION_PROVIDERS = [
   FConnectionComponent,
   FConnectionCenterDirective,
   FConnectionForCreateComponent,
-  FMarkerDirective
+  FMarkerDirective,
+  FSnapConnectionComponent
 ];

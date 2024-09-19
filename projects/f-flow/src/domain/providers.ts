@@ -1,6 +1,5 @@
 import { GetConnectionLineExecution } from './get-connection-line';
 import { RedrawConnectionsExecution } from './redraw-connections';
-import { GetOutputRectInFlowExecution } from './get-output-rect-in-flow';
 import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import { GetInputRectInFlowExecution } from './get-input-rect-in-flow';
@@ -51,8 +50,6 @@ export const COMMON_PROVIDERS = [
   GetScaledNodeRectsWithFlowPositionExecution,
 
   GetNodesRectExecution,
-
-  GetOutputRectInFlowExecution,
 
   GetPositionInFlowExecution,
 

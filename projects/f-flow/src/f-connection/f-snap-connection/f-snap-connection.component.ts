@@ -11,7 +11,6 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FMarkerBase } from '../f-marker';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { FComponentsStore } from '../../f-storage';
@@ -151,7 +150,7 @@ export class FSnapConnectionComponent
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.fTempConnection = this;
+    this.fComponentsStore.fSnapConnection = this;
   }
 
   public ngAfterViewInit(): void {
@@ -159,6 +158,6 @@ export class FSnapConnectionComponent
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.fTempConnection = undefined;
+    this.fComponentsStore.fSnapConnection = undefined;
   }
 }

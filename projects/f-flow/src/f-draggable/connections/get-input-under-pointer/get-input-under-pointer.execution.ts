@@ -39,11 +39,11 @@ export class GetInputUnderPointerExecution
   }
 
   private getOutput(dragHandler: CreateConnectionDragHandler | ReassignConnectionDragHandler): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutputs.find((x) => x.id === dragHandler.fConnection.fOutputId);
   }
 
   private getOutlet(dragHandler: CreateConnectionDragHandler | ReassignConnectionDragHandler): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutlets.find((x) => x.id === dragHandler.connection.fOutputId);
+    return this.fComponentsStore.fOutlets.find((x) => x.id === dragHandler.fConnection.fOutputId);
   }
 
   private getInputsUnderPointer(position: IPoint): FConnectorBase[] {

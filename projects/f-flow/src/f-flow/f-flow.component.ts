@@ -18,8 +18,7 @@ import {
   SelectRequest,
   SortItemLayersRequest,
   IFFlowState,
-  GetFlowStateRequest,
-  ShowConnectionsAfterCalculationsRequest,
+  GetFlowStateRequest
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -105,7 +104,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
-        this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
+        // this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
         this.fLoaded.emit();
       }
