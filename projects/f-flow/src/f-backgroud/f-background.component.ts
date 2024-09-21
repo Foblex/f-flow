@@ -7,11 +7,10 @@ import {
 } from "@angular/core";
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
-import { AddPatternToBackgroundRequest, F_BACKGROUND_PATTERN, IFBackgroundPattern } from './domain';
+import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
-
-let uniqueId: number = 0;
+import { AddPatternToBackgroundRequest } from '../domain';
 
 @Component({
   selector: "f-background",

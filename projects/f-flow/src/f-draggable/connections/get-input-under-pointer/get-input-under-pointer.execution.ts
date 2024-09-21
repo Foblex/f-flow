@@ -3,12 +3,13 @@ import { GetInputUnderPointerRequest } from './get-input-under-pointer.request';
 import { Injectable } from '@angular/core';
 import { BrowserService } from '@foblex/platform';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { FConnectorBase } from '../../../../f-connectors';
-import { FNodeBase } from '../../../../f-node';
-import { FComponentsStore } from '../../../../f-storage';
-import { CreateConnectionDragHandler } from '../../create-connection';
-import { ReassignConnectionDragHandler } from '../../reassign-connection';
-import { FDraggableDataContext } from '../../../f-draggable-data-context';
+import { FConnectorBase } from '../../../f-connectors';
+import { FNodeBase } from '../../../f-node';
+import { FComponentsStore } from '../../../f-storage';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { CreateConnectionDragHandler } from '../create-connection';
+import { ReassignConnectionDragHandler } from '../reassign-connection';
+
 
 @Injectable()
 @FExecutionRegister(GetInputUnderPointerRequest)

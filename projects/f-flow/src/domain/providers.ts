@@ -18,13 +18,16 @@ import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-node
 import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
 import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
 import { ShowConnectionsAfterCalculationsExecution } from './show-connections-after-calculations';
-import { F_SELECTION_FEATURES } from './f-selection/providers';
-import { F_CANVAS_FEATURES } from '../f-canvas';
-import { F_BACKGROUND_FEATURES } from '../f-backgroud/domain/providers';
+import { F_SELECTION_FEATURES } from './f-selection';
+import { F_BACKGROUND_FEATURES } from './f-background';
+import { F_CANVAS_FEATURES } from './f-canvas';
+import { F_CONNECTION_FEATURES } from './f-connection';
 
 export const COMMON_PROVIDERS = [
 
   ...F_CANVAS_FEATURES,
+
+  ...F_CONNECTION_FEATURES,
 
   ...F_BACKGROUND_FEATURES,
 

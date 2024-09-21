@@ -10,7 +10,7 @@ import { OutputNotFound } from '../../../../errors';
 import { GetCanBeConnectedOutputByOutletRequest } from '../get-can-be-connected-output-by-outlet';
 import { FCreateConnectionEvent } from '../f-create-connection.event';
 import { CreateConnectionDragHandler } from '../create-connection.drag-handler';
-import { GetInputUnderPointerRequest } from '../../common';
+import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionFinalizeRequest)

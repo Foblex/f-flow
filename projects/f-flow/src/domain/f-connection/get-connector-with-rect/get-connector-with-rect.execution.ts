@@ -3,7 +3,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetConnectorWithRectRequest } from './get-connector-with-rect-request';
 import { IRoundedRect } from '@foblex/2d';
 import { IConnectorWithRect } from './i-connector-with-rect';
-import { GetElementRectInFlowRequest } from '../../../../domain';
+import { GetElementRectInFlowRequest } from '../../get-element-rect-in-flow';
 
 @Injectable()
 @FExecutionRegister(GetConnectorWithRectRequest)

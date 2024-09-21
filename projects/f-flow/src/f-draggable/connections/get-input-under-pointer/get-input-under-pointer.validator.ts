@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { GetInputUnderPointerRequest } from './get-input-under-pointer.request';
 import { FValidatorRegister, IValidator } from '@foblex/mediator';
-import { FComponentsStore } from '../../../../f-storage';
-import { OutputNotFound } from '../../../../errors';
-import { CreateConnectionDragHandler } from '../../create-connection';
-import { ReassignConnectionDragHandler } from '../../reassign-connection';
-import { FConnectorBase } from '../../../../f-connectors';
+import { FComponentsStore } from '../../../f-storage';
+import { OutputNotFound } from '../../../errors';
+import { CreateConnectionDragHandler } from '../create-connection';
+import { ReassignConnectionDragHandler } from '../reassign-connection';
+import { FConnectorBase } from '../../../f-connectors';
 
 @Injectable()
 @FValidatorRegister(GetInputUnderPointerRequest)

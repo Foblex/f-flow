@@ -2,8 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { SelectRequest } from './select.request';
 import { FMediator } from '@foblex/mediator';
 import { SelectExecution } from './select.execution';
-import { FComponentsStore, FDraggableDataContext } from '@foblex/flow';
 import { setupTestModule } from '../../test-setup';
+import { FDraggableDataContext } from '../../../f-draggable';
+import { FComponentsStore } from '../../../f-storage';
 
 describe('SelectExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;

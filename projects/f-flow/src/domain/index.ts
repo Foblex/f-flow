@@ -4,6 +4,12 @@ export * from './create-rounded-rect-from-element';
 
 export * from './emit-transform-changes';
 
+export * from './f-background';
+
+export * from './f-canvas';
+
+export * from './f-connection';
+
 export * from './f-selection';
 
 export * from './get-can-be-selected-items';

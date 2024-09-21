@@ -8,7 +8,7 @@ import { FDraggableBase } from '../../../f-draggable-base';
 import { FReassignConnectionEvent } from '../f-reassign-connection.event';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectorBase } from '../../../../f-connectors';
-import { GetInputUnderPointerRequest } from '../../common';
+import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionFinalizeRequest)

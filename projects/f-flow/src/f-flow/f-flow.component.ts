@@ -27,8 +27,8 @@ import {
 import { FConnectionFactory } from '../f-connection';
 import { FComponentsStore, FTransformStore } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
-import { COMMON_PROVIDERS } from '../domain/providers';
-import { F_DRAGGABLE_PROVIDERS } from '../f-draggable/providers';
+import { COMMON_PROVIDERS } from '../domain';
+import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
 
 let uniqueId: number = 0;
 
@@ -46,8 +46,8 @@ let uniqueId: number = 0;
     FTransformStore,
     FDraggableDataContext,
     FConnectionFactory,
-    ...F_DRAGGABLE_PROVIDERS,
     ...COMMON_PROVIDERS,
+    ...F_DRAGGABLE_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,7 +82,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngAfterContentInit(): void {
-    if(!this.fBrowser.isBrowser()) {
+    if (!this.fBrowser.isBrowser()) {
       return;
     }
     this.subscription$.add(
@@ -104,7 +104,6 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       this.fMediator.send(new RedrawConnectionsRequest());
 
       if (!this.isLoaded) {
-        // this.fMediator.send(new ShowConnectionsAfterCalculationsRequest());
         this.isLoaded = true;
         this.fLoaded.emit();
       }

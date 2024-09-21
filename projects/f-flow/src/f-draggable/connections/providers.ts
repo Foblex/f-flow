@@ -1,25 +1,53 @@
 import {
-  GET_CAN_BE_CONNECTED_OUTPUT_BY_OUTLET_PROVIDERS
+  CreateConnectionDragHandlerExecution,
+  CreateConnectionFinalizeExecution,
+  CreateConnectionFinalizeValidator,
+  CreateConnectionFromOutletPreparationExecution,
+  CreateConnectionFromOutputPreparationExecution,
+  CreateConnectionFromOutputPreparationValidator,
+  CreateConnectionPreparationExecution,
+  CreateConnectionPreparationValidator,
+  GetCanBeConnectedOutputByOutletExecution,
+  GetCanBeConnectedOutputByOutletValidator
 } from './create-connection';
-import { CREATE_CONNECTION_FINALIZE_PROVIDERS } from './create-connection';
-import { CREATE_CONNECTION_PREPARATION_PROVIDERS } from './create-connection';
 import {
-  REASSIGN_CONNECTION_FINALIZE_PROVIDERS,
-  REASSIGN_CONNECTION_PREPARATION_PROVIDERS,
+  ReassignConnectionFinalizeExecution,
+  ReassignConnectionFinalizeValidator,
+  ReassignConnectionPreparationExecution, ReassignConnectionPreparationValidator,
 } from './reassign-connection';
-import { CONNECTION_DRAG_COMMON_PROVIDERS } from './common';
+import { GetInputUnderPointerExecution, GetInputUnderPointerValidator } from './get-input-under-pointer';
 
 export const CONNECTIONS_PROVIDERS = [
 
-  ...CONNECTION_DRAG_COMMON_PROVIDERS,
+  GetInputUnderPointerExecution,
 
-  ...CREATE_CONNECTION_FINALIZE_PROVIDERS,
+  GetInputUnderPointerValidator,
 
-  ...CREATE_CONNECTION_PREPARATION_PROVIDERS,
+  CreateConnectionFinalizeExecution,
 
-  ...GET_CAN_BE_CONNECTED_OUTPUT_BY_OUTLET_PROVIDERS,
+  CreateConnectionFinalizeValidator,
 
-  ...REASSIGN_CONNECTION_FINALIZE_PROVIDERS,
+  CreateConnectionDragHandlerExecution,
 
-  ...REASSIGN_CONNECTION_PREPARATION_PROVIDERS,
+  CreateConnectionFromOutletPreparationExecution,
+
+  GetCanBeConnectedOutputByOutletExecution,
+
+  GetCanBeConnectedOutputByOutletValidator,
+
+  CreateConnectionFromOutputPreparationExecution,
+
+  CreateConnectionFromOutputPreparationValidator,
+
+  CreateConnectionPreparationExecution,
+
+  CreateConnectionPreparationValidator,
+
+  ReassignConnectionFinalizeExecution,
+
+  ReassignConnectionFinalizeValidator,
+
+  ReassignConnectionPreparationExecution,
+
+  ReassignConnectionPreparationValidator,
 ];

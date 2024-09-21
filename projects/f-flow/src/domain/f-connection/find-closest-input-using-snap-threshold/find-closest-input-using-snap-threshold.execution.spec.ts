@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { FMediator } from '@foblex/mediator';
-import {
-  FConnectorBase,
-  FDraggableDataContext,
-  FindClosestInputUsingSnapThresholdExecution,
-  FindClosestInputUsingSnapThresholdRequest, IConnectorWithRect,
-} from '@foblex/flow';
-import { setupTestModule } from '../../../../domain/test-setup';
 import { RectExtensions, RoundedRect } from '@foblex/2d';
+import { setupTestModule } from '../../test-setup';
+import { FDraggableDataContext } from '../../../f-draggable';
+import { FindClosestInputUsingSnapThresholdExecution } from './find-closest-input-using-snap-threshold.execution';
+import { FindClosestInputUsingSnapThresholdRequest } from './find-closest-input-using-snap-threshold.request';
+import { IConnectorWithRect } from '../get-connector-with-rect';
+import { FConnectorBase } from '../../../f-connectors';
 
 describe('FindClosestInputUsingSnapThresholdExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;

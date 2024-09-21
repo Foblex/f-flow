@@ -1,16 +1,15 @@
 import { IDraggableItem } from '../../i-draggable-item';
-import { GetConnectionLineRequest } from '../../../domain';
+import {
+  FindClosestInputUsingSnapThresholdRequest,
+  GetAllCanBeConnectedInputPositionsRequest,
+  GetConnectionLineRequest, GetConnectorWithRectRequest,
+  IConnectorWithRect
+} from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import { FConnectorBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { ILine, IPoint, Point, RectExtensions, RoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import {
-  FindClosestInputUsingSnapThresholdRequest,
-  GetAllCanBeConnectedInputPositionsRequest,
-  GetConnectorWithRectRequest,
-  IConnectorWithRect
-} from '../common';
 
 export class ReassignConnectionDragHandler implements IDraggableItem {
 
