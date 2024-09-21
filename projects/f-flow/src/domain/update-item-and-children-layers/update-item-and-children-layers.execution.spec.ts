@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  FCanvasBase,
-  FNodeBase,
-  GetDeepChildrenNodesAndGroupsExecution,
-  MoveFrontElementsBeforeTargetElementExecution,
-  SortItemLayersExecution,
-  SortItemLayersRequest, SortItemsByParentExecution, SortNodeLayersExecution,
-  UpdateItemAndChildrenLayersExecution
-} from '@foblex/flow';
-import { UpdateItemAndChildrenLayersRequest } from '@foblex/flow';
-import {
-  FComponentsStore,
-} from '@foblex/flow';
 import { setupTestModule } from '../test-setup';
 import { FMediator } from '@foblex/mediator';
+import { FNodeBase } from '../../f-node';
+import { FCanvasBase } from '../../f-canvas';
+import { FComponentsStore } from '../../f-storage';
+import { UpdateItemAndChildrenLayersExecution } from './update-item-and-children-layers.execution';
+import {
+  SortItemLayersExecution,
+  SortItemLayersRequest,
+  SortItemsByParentExecution,
+  SortNodeLayersExecution
+} from '../sort-item-layers';
+import { GetDeepChildrenNodesAndGroupsExecution } from '../get-deep-children-nodes-and-groups';
+import { MoveFrontElementsBeforeTargetElementExecution } from './move-front-elements-before-target-element';
+import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers.request';
 
 function createElement(id: string): HTMLElement {
   const element = document.createElement('div');

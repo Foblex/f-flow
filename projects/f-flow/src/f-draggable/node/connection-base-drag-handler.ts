@@ -6,7 +6,7 @@ import { Directive } from '@angular/core';
 import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
 import { ILine, IPoint } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
-import { GetConnectorWithRectRequest, IConnectorWithRect } from '../connections';
+import { GetConnectorWithRectRequest, IConnectorWithRect } from '../../domain';
 
 @Directive()
 export abstract class ConnectionBaseDragHandler implements IDraggableItem {

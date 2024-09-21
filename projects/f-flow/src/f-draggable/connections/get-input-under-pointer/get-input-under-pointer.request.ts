@@ -1,6 +1,6 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
-import { CreateConnectionDragHandler } from '../../create-connection';
-import { ReassignConnectionDragHandler } from '../../reassign-connection';
+import { CreateConnectionDragHandler } from '../create-connection';
+import { ReassignConnectionDragHandler } from '../reassign-connection';
 
 export class GetInputUnderPointerRequest {
 

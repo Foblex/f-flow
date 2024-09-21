@@ -9,5 +9,3 @@ export * from './create-connection-preparation.execution';
 export * from './create-connection-preparation.request';
 
 export * from './create-connection-preparation.validator';
-
-export * from './providers';

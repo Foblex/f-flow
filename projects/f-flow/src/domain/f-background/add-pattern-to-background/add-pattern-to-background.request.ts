@@ -1,4 +1,4 @@
-import { IFBackgroundPattern } from '../i-f-background-pattern';
+import { IFBackgroundPattern } from '../../../f-backgroud';
 
 export class AddPatternToBackgroundRequest {
   constructor(

@@ -7,17 +7,19 @@ import {
 } from './f-canvas-base';
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import {
-  CenterGroupOrNodeRequest,
-  FCanvasChangeEvent, FitToFlowRequest,
-  InputCanvasPositionRequest,
-  InputCanvasScaleRequest, ResetScaleAndCenterRequest, ResetScaleRequest, UpdateScaleRequest
+  FCanvasChangeEvent,
 } from './domain';
 import { FComponentsStore } from '../f-storage';
 import { FNodeBase } from '../f-node';
 import { FMediator } from '@foblex/mediator';
 import {
+  CenterGroupOrNodeRequest,
   EmitTransformChangesRequest,
   F_CANVAS_ANIMATION_DURATION,
+  FitToFlowRequest,
+  InputCanvasPositionRequest,
+  InputCanvasScaleRequest,
+  ResetScaleAndCenterRequest, ResetScaleRequest, UpdateScaleRequest,
 } from '../domain';
 
 @Component({

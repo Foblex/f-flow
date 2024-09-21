@@ -1,11 +1,11 @@
-import { IRect, TransformModelExtensions } from '@foblex/2d';
+import { TransformModelExtensions } from '@foblex/2d';
 import { AddPatternToBackgroundRequest } from './add-pattern-to-background.request';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { createSVGElement } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
-import { FBackgroundBase } from '../../f-background-base';
 import { BrowserService } from '@foblex/platform';
+import { FBackgroundBase } from '../../../f-backgroud';
 
 let uniqueId: number = 0;
 
