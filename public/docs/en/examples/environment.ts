@@ -36,6 +36,7 @@ function createEnvironment(): IDocsEnvironment {
     },
     components: [
       { tag: 'custom-nodes', component: import('../../../../projects/f-examples/custom-nodes/custom-nodes.component') },
+      { tag: 'drag-handle', component: import('../../../../projects/f-examples/drag-handle/drag-handle.component') },
       { tag: 'draggable-flow', component: import('../../../../projects/f-guides-examples/draggable-flow/draggable-flow.component') },
       { tag: 'vp-flow', component: import('../../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
       { tag: 'db-management-flow', component: import('../../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
@@ -76,8 +77,8 @@ function introductionGroup(): INavigationGroup {
       {
         link: 'drag-handle',
         text: 'Drag Handle',
-        image: './previews/examples/custom-nodes.light.png',
-        image_dark: './previews/examples/custom-nodes.dark.png',
+        image: './previews/examples/drag-handle.light.png',
+        image_dark: './previews/examples/drag-handle.dark.png',
         description: 'This example showcases how to create a draggable handle for nodes, allowing users to move them easily within Angular and Foblex Flow.',
       },
       {

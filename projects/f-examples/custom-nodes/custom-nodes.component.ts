@@ -13,7 +13,7 @@ import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: 'custom-nodes',
-  styleUrls: [ './custom-nodes.component.scss', './_mdc-controls.scss' ],
+  styleUrls: [ './custom-nodes.component.scss', '../_mdc-controls.scss' ],
   templateUrl: './custom-nodes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,

@@ -1,0 +1,30 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas fZoom>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 24, y: 24 }">
+      Node is the drag handle
+    </div>
+
+    <div fNode
+         [fNodePosition]="{ x: 164, y: 84 }" class="drag-handle-inside">
+      <span fDragHandle class="f-icon f-drag-handle-icon"></span>
+      Only the icon is the drag handle
+    </div>
+
+    <div fNode
+         [fNodePosition]="{ x: 304, y: 24 }" class="drag-handle-outside">
+      <div fDragHandle>
+        <span class="f-icon f-drag-handle-icon"></span>
+      </div>
+      Only the icon is the drag handle
+    </div>
+
+    <div fNode
+         [fNodePosition]="{ x: 150, y: 170 }">
+      Only the image is the drag handle
+      <div fDragHandle>
+        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      </div>
+    </div>
+  </f-canvas>
+</f-flow>
