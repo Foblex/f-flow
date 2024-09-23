@@ -54,35 +54,35 @@ Add the `f-connection` component to the [f-canvas](f-canvas-component). Provide 
 #### Different Connection Types
 Examples of different connection types. The connection type can be set using the `fType` input. Valid values are `straight`, `bezier` and `segment from [EFConnectionType](e-f-connection-type) enum.
 ::: ng-component <connection-type></connection-type>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-type/connection-type.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-type/connection-type.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-type/connection-type.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-type/connection-type.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
 
 #### Different Connection Behaviours
 Examples of different connection behaviours. The connection behaviour can be set using the `fBehavior` input. Valid values are: `fixed`, `fixed_center` and `floating` from [EFConnectionBehaviour](e-f-connection-behaviour) enum.
 ::: ng-component <connection-behaviour></connection-behaviour>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-behaviour/connection-behaviour.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-behaviour/connection-behaviour.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-behaviour/connection-behaviour.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-behaviour/connection-behaviour.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
 
 #### Custom Connection Type
 Examples of providing custom connection types. The connection type can be set using an array of providers.
 ::: ng-component <custom-connection-type></custom-connection-type>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-connection-type/custom-connection-type.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/custom-connection-type/custom-connection-type.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/custom-connection-type/custom-connection-type.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/custom-connection-type/custom-connection-type.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
 
 #### Reassign Connection
 Each connection can be reassigned to another [fNodeInput](f-node-input-directive). The `fReassignDisabled` property can be used to disable this feature. Each connection has a `DragHandle` at the end, drag it to reassign the connection to another [fNodeInput](f-node-input-directive).
 ::: ng-component <drag-to-reassign></drag-to-reassign>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-to-reassign/drag-to-reassign.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-to-reassign/drag-to-reassign.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-to-reassign/drag-to-reassign.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-to-reassign/drag-to-reassign.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::

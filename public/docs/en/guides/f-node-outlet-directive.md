@@ -37,8 +37,8 @@ The **FNodeOutletDirective** is a directive that marks an element as an output w
 
 Example of how to use the **FNodeOutletDirective** directive. In this example **isConnectionFromOutlet** is set to `true`.
 ::: ng-component <connection-from-outlet></connection-from-outlet>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connection-from-outlet/connection-from-outlet.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-from-outlet/connection-from-outlet.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-from-outlet/connection-from-outlet.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-from-outlet/connection-from-outlet.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::

@@ -33,8 +33,8 @@ Add the `f-snap-connection` component to the [f-canvas](f-canvas-component). Wor
 The following example shows how to create a connection between two nodes with snap connection.
 
 ::: ng-component <drag-snap-connection></drag-snap-connection>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-snap-connection/drag-snap-connection.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-snap-connection/drag-snap-connection.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-snap-connection/drag-snap-connection.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::

@@ -1,0 +1,17 @@
+@use "../flow-common";
+
+::ng-deep simple-flow {
+  @include flow-common.connection;
+}
+
+f-flow {
+  height: 300px;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node {
+  cursor: default;
+}

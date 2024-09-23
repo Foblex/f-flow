@@ -8,9 +8,6 @@ function createEnvironment(): IDocsEnvironment {
     docsDir: './docs/en/examples/',
     logo: './logo.svg',
     title: 'Foblex Flow',
-    version: {
-      npmPackage: '@foblex/flow',
-    },
     navigation: [
       overviewGroup(),
       introductionGroup(),
@@ -38,35 +35,13 @@ function createEnvironment(): IDocsEnvironment {
       next: 'Next Page',
     },
     components: [
-      { tag: 'simple-flow', component: import('../../../../projects/f-examples/simple-flow/simple-flow.component') },
-      { tag: 'draggable-flow', component: import('../../../../projects/f-examples/draggable-flow/draggable-flow.component') },
-      { tag: 'connection-type', component: import('../../../../projects/f-examples/connection-type/connection-type.component') },
-      { tag: 'connection-behaviour', component: import('../../../../projects/f-examples/connection-behaviour/connection-behaviour.component') },
-      { tag: 'custom-connection-type', component: import('../../../../projects/f-examples/custom-connection-type/custom-connection-type.component') },
-      { tag: 'drag-to-connect', component: import('../../../../projects/f-examples/drag-to-connect/drag-to-connect.component') },
-      { tag: 'drag-to-reassign', component: import('../../../../projects/f-examples/drag-to-reassign/drag-to-reassign.component') },
-      { tag: 'drag-snap-connection', component: import('../../../../projects/f-examples/drag-snap-connection/drag-snap-connection.component') },
-      { tag: 'connectable-side', component: import('../../../../projects/f-examples/connectable-side/connectable-side.component') },
-      { tag: 'connection-from-outlet', component: import('../../../../projects/f-examples/connection-from-outlet/connection-from-outlet.component') },
-      { tag: 'connection-markers', component: import('../../../../projects/f-examples/connection-markers/connection-markers.component') },
-      { tag: 'zoom-example', component: import('../../../../projects/f-examples/zoom-example/zoom-example.component') },
-      { tag: 'background-example', component: import('../../../../projects/f-examples/background-example/background-example.component') },
-      { tag: 'line-alignment-example', component: import('../../../../projects/f-examples/line-alignment-example/line-alignment-example.component') },
+      { tag: 'custom-nodes', component: import('../../../../projects/f-examples/custom-nodes/custom-nodes.component') },
+      { tag: 'draggable-flow', component: import('../../../../projects/f-guides-examples/draggable-flow/draggable-flow.component') },
       { tag: 'vp-flow', component: import('../../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
       { tag: 'db-management-flow', component: import('../../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
-      { tag: 'minimap-basic-example', component: import('../../../../projects/f-examples/minimap-basic-example/minimap-basic-example.component') },
-      { tag: 'minimap-scaled-example', component: import('../../../../projects/f-examples/minimap-scaled-example/minimap-scaled-example.component') },
-      { tag: 'dagre-layout-example', component: import('../../../../projects/f-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component') },
-      { tag: 'elkjs-layout-example', component: import('../../../../projects/f-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component') },
-      { tag: 'node-with-connectors', component: import('../../../../projects/f-examples/node-with-connectors/node-with-connectors.component') },
-      { tag: 'node-with-position-example', component: import('../../../../projects/f-examples/node/node-with-position-example/node-with-position-example.component') },
-      { tag: 'adding-dragging-functionality-example', component: import('../../../../projects/f-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component') },
-      { tag: 'node-with-drag-handle-example', component: import('../../../../projects/f-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component') },
-      { tag: 'groups-simple-example', component: import('../../../../projects/f-examples/group/groups-simple-example/groups-simple-example.component') },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
-      { icon: 'npm', link: 'https://www.npmjs.com/package/@foblex/flow' },
     ],
     toC: {
       title: 'In this article',
@@ -92,24 +67,37 @@ function introductionGroup(): INavigationGroup {
     text: 'Nodes',
     items: [
       {
-        link: 'custom-node',
+        link: 'custom-nodes',
         text: 'Custom Nodes',
+        image: './previews/examples/custom-nodes.light.png',
+        image_dark: './previews/examples/custom-nodes.dark.png',
+        description: 'Learn how to display any content inside a node. This example demonstrates how to create custom nodes with varied content, styles, and behaviors, providing a comprehensive guide to building interactive flow-based diagrams.',
       },
       {
         link: 'drag-handle',
         text: 'Drag Handle',
+        image: './previews/examples/custom-nodes.light.png',
+        image_dark: './previews/examples/custom-nodes.dark.png',
+        description: 'This example showcases how to create a draggable handle for nodes, allowing users to move them easily within Angular and Foblex Flow.',
       },
       {
         link: 'resize-handle',
         text: 'Resize Handle',
+        image: './previews/examples/custom-nodes.light.png',
+        image_dark: './previews/examples/custom-nodes.dark.png',
+        description: 'Discover how to add a resize handle to nodes. This example demonstrates how to make nodes resizable, enabling users to adjust their size easily within Angular and Foblex Flow.',
       },
       {
         link: 'grouping',
         text: 'Grouping',
+        image: 'https://flow.foblex.com/f-visual-programming-flow.png',
+        description: 'Explore how to group nodes together. This example demonstrates how to create groups of nodes, allowing users to organize and manage them efficiently within Angular and Foblex Flow.',
       },
       {
         link: 'group-paddings',
         text: 'Group Paddings',
+        image: 'https://flow.foblex.com/f-visual-programming-flow.png',
+        description: 'Learn how to add padding to groups. This example showcases how to add padding to groups of nodes, providing a comprehensive guide to creating organized and visually appealing flow-based diagrams.',
       },
     ],
   }
@@ -205,7 +193,7 @@ function connectionGroup(): INavigationGroup {
 
 function layoutGroup(): INavigationGroup {
   return {
-    text: 'Layouts & Behaviors',
+    text: 'Layouts',
     items: [
       {
         link: 'dagre-layout',

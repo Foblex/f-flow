@@ -1,9 +1,10 @@
-import { Component, Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { MetaService } from './meta.service';
 import { BrowserService } from '@foblex/platform';
+import { takeScreenshot } from './take-screenshot';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +45,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private isDocumentContainsDarkTheme(): boolean {
     return this.fBrowser.document.documentElement.classList.contains('dark');
+  }
+
+  protected takeScreenshot(): void {
+    takeScreenshot('f-flow').then();
   }
 
   public ngOnDestroy(): void {

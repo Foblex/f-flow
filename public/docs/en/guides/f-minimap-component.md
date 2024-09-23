@@ -57,10 +57,10 @@ You can set a custom scale for the minimap by using the `fMinSize` input. This a
 This example shows a basic implementation of the minimap component within a larger flow, providing users with an overview and easy navigation capabilities.
 
 ::: ng-component <minimap-basic-example></minimap-basic-example>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-basic-example/minimap-basic-example.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-basic-example/minimap-basic-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-basic-example/minimap-basic-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-basic-example/minimap-basic-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
 
 #### Custom Scale Example
@@ -68,9 +68,9 @@ This example shows a basic implementation of the minimap component within a larg
 This example demonstrates the use of a custom scale for the minimap, allowing you to control the size of the minimap based on your requirements.
 
 ::: ng-component <minimap-scaled-example></minimap-scaled-example>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/minimap-scaled-example/minimap-scaled-example.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-scaled-example/minimap-scaled-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-scaled-example/minimap-scaled-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/minimap-scaled-example/minimap-scaled-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
 

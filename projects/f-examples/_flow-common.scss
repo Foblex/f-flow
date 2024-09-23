@@ -38,6 +38,12 @@
     --minimap-node-selected-color: #a8b1ff;
     --minimap-view-color: rgba(100, 108, 255, 0.16);
   }
+
+  --form-field-text-color: var(--node-color);
+  --form-field-background: var(--minimap-view-color);
+  --form-field-panel-shadow: var(--shadow-4);
+  --form-field-panel-background: var(--node-background-color);
+  --form-field-active-color: var(--minimap-node-selected-color);
 }
 
 @mixin connection {

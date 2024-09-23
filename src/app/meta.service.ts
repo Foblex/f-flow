@@ -100,8 +100,8 @@ const DEFAULT_PAGE_DATA: IPageMetaOg = {
   description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
   image: 'https://flow.foblex.com/site-preview.png',
   image_type: 'image/png',
-  image_width: 3116,
-  image_height: 1880
+  image_width: 2986,
+  image_height: 1926
 };
 
 interface IPageMetaOg {
