@@ -60,7 +60,9 @@ export class CreateConnectionDragHandler implements IDraggableItem {
 
   public move(difference: IPoint): void {
     this.drawTempConnection(this.toConnectorRect.addPoint(difference));
-    this.drawSnapConnection(this.getClosetInput(difference));
+    if (this.fSnapConnection) {
+      this.drawSnapConnection(this.getClosetInput(difference));
+    }
   }
 
   private drawTempConnection(fInputRect: RoundedRect): void {
@@ -96,6 +98,9 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   }
 
   public getClosetInput(difference: IPoint): IConnectorWithRect | undefined {
+    if (!this.fSnapConnection) {
+      return undefined;
+    }
     return this.fMediator.send<IConnectorWithRect | undefined>(
       new FindClosestInputUsingSnapThresholdRequest(
         Point.fromPoint(this.toConnectorRect).add(difference),

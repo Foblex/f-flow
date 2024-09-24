@@ -56,8 +56,13 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   }
 
   public move(difference: IPoint): void {
-    this.drawConnection({ fRect: this.toConnectorRect.addPoint(difference), fConnector: this.fInputWithRect.fConnector });
-    this.drawSnapConnection(this.getClosetInput(difference));
+    this.drawConnection({
+      fRect: this.toConnectorRect.addPoint(difference),
+      fConnector: this.fInputWithRect.fConnector
+    });
+    if (this.fSnapConnection) {
+      this.drawSnapConnection(this.getClosetInput(difference));
+    }
   }
 
   private drawConnection(fInputWithRect: IConnectorWithRect): void {
@@ -93,6 +98,9 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   }
 
   public getClosetInput(difference: IPoint): IConnectorWithRect | undefined {
+    if (!this.fSnapConnection) {
+      return undefined;
+    }
     return this.fMediator.send<IConnectorWithRect | undefined>(
       new FindClosestInputUsingSnapThresholdRequest(
         Point.fromPoint(this.toConnectorRect).add(difference),
