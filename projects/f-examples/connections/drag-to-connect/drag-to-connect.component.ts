@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 
 @Component({
   selector: 'drag-to-connect',
@@ -12,6 +12,9 @@ import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
   ]
 })
 export class DragToConnectComponent {
+
+  @ViewChild(FCanvasComponent, { static: true })
+  public fCanvas!: FCanvasComponent;
 
   public connections: { outputId: string, inputId: string }[] = [];
 
@@ -26,5 +29,9 @@ export class DragToConnectComponent {
     }
     this.connections.push({ outputId: event.fOutputId, inputId: event.fInputId });
     this.changeDetectorRef.detectChanges();
+  }
+
+  public onLoaded(): void {
+    this.fCanvas.resetScaleAndCenter(false);
   }
 }

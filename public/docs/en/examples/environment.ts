@@ -40,6 +40,9 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'resize-handle', component: import('../../../../projects/f-examples/nodes/resize-handle/resize-handle.component') },
       { tag: 'grouping', component: import('../../../../projects/f-examples/nodes/grouping/grouping.component') },
 
+      { tag: 'drag-to-connect', component: import('../../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component') },
+      { tag: 'drag-to-reassign', component: import('../../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component') },
+
       { tag: 'dagre-layout-example', component: import('../../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
       { tag: 'elkjs-layout-example', component: import('../../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
 
@@ -144,10 +147,16 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'drag-to-connect',
         text: 'Drag to Connect',
+        image: './previews/examples/drag-to-connect.light.png',
+        image_dark: './previews/examples/drag-to-connect.dark.png',
+        description: 'Learn how to connect nodes by dragging a connection between them. This example demonstrates how to create connections between nodes, providing a comprehensive guide to building interactive flow-based diagrams.',
       },
       {
         link: 'drag-to-reassign',
         text: 'Drag to Reassign',
+        image: './previews/examples/drag-to-reassign.light.png',
+        image_dark: './previews/examples/drag-to-reassign.dark.png',
+        description: 'Discover how to reassign connections by dragging them to a new connector. This example demonstrates how to move connections between nodes, enabling users to reassign them easily within Angular and Foblex Flow.',
       },
       {
         link: 'add-node-on-connection-drop',
