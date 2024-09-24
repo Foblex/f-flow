@@ -114,7 +114,7 @@
 }
 
 @mixin node {
-  padding: 4px;
+  padding: 24px;
   color: var(--node-color);
   text-align: center;
   background: var(--node-background-color);
@@ -128,7 +128,6 @@
 }
 
 @mixin connectors {
-
 
   .connectors-line {
     position: absolute;

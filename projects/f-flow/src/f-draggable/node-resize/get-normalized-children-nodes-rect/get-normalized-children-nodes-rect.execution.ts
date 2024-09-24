@@ -3,7 +3,7 @@ import { GetNormalizedChildrenNodesRectRequest } from './get-normalized-children
 import { IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
-import { GetNodePaddingRequest, GetNormalizedNodeRectRequest } from '../../domain';
+import { GetNormalizedNodeRectRequest } from '../../domain';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 
 @Injectable()
@@ -21,9 +21,7 @@ export class GetNormalizedChildrenNodesRectExecution
       this.getChildrenNodes(request.fNode.fId).map((x) => this.normalizeRect(x))
     );
     return childNodeRect ?
-      this.concatRectWithParentPadding(childNodeRect,
-        this.getNodePadding(request.fNode, request.rect)
-      ) : null;
+      this.concatRectWithParentPadding(childNodeRect, request.paddings) : null;
   }
 
   private getChildrenNodes(fId: string): FNodeBase[] {
@@ -32,10 +30,6 @@ export class GetNormalizedChildrenNodesRectExecution
 
   private normalizeRect(node: FNodeBase): IRect {
     return this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(node));
-  }
-
-  private getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this.fMediator.send<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
   }
 
   private concatRectWithParentPadding(rect: IRect, padding: [ number, number, number, number ]): IRect {
