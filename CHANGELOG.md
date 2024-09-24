@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [16.0.0](https://github.com/foblex/flow/compare/v12.6.0...v16.0.0) (2024-09-24)
+
+
+### Features
+
+* Added centerNodeOrGroup functionality https://github.com/Foblex/f-flow/discussions/44 ([131ae19](https://github.com/foblex/flow/commit/131ae196ab84206c7ae7884b0b288a23b23f5edd))
+* Added getFlowState functionality https://github.com/Foblex/f-flow/issues/46 ([c5841fd](https://github.com/foblex/flow/commit/c5841fdd96683f195b09421870569cd3316aa7c3))
+* Added Server Side Rendering (SSR) support ([ba73083](https://github.com/foblex/flow/commit/ba7308383ec498f2ce79718d502ec75bd220a1b8))
+* Added snap connection to create functionality ([82b3872](https://github.com/foblex/flow/commit/82b38725db63093c2a126867345d2780049492c3))
+* Added snap connection to reassign functionality ([37972df](https://github.com/foblex/flow/commit/37972df1ccf933d0590d8efa8cc253b17f462464))
+* Added SSR support to f-docs ([a3d6595](https://github.com/foblex/flow/commit/a3d6595fb28df1e8bfd61ccc8e989ec26e43f58d))
+* Changed imports from @foblex/core to @foblex/mediator, @foblex/platform, @foblex/2d ([30a60da](https://github.com/foblex/flow/commit/30a60da2e64aa87be52e6fb90f06f780b2dc0777))
+* Changed imports from @foblex/core to @foblex/utils, @foblex/drag-toolkit ([26d9631](https://github.com/foblex/flow/commit/26d96313b86d068d9912b3c6ff28ca0fa6c14039))
+* Cleanup after delete @foblex/core ([9aa5717](https://github.com/foblex/flow/commit/9aa5717434849c1a9b612e503d67c1a893b6b6e3))
+* Updated f-canvas user api ([978d764](https://github.com/foblex/flow/commit/978d76486d51c6d2cb75f617e15cc2b3dc75e43d))
+
+
+### Bug Fixes
+
+* Fixed After adding a Node, all the connections disappear https://github.com/Foblex/f-flow/issues/51 ([c47621d](https://github.com/foblex/flow/commit/c47621d336b69ddeedb38ee6bb5083b399962eee))
+* Fixed Cannot access 'AddPatternToBackgroundExecution' before initialization https://github.com/Foblex/f-flow/issues/53 ([ecfed74](https://github.com/foblex/flow/commit/ecfed74aa6fbf509324cea14cc648aeb14c4c043))
+* Fixed create connection target incorrect position with scale ([ec323c5](https://github.com/foblex/flow/commit/ec323c53a5d36ccbe30fe6d07fa229606ba73277))
+* Fixed doesn't work for angular 12 https://github.com/Foblex/f-flow/issues/48 ([70064b0](https://github.com/foblex/flow/commit/70064b059b65c4f7d64b269d6a2bc0f11e0ca3b0))
+* Fixed tests after removing @foblex/core ([60a4e92](https://github.com/foblex/flow/commit/60a4e92fccc4d1ef0dafcc9d72bf47d6ab64f1f4))
+* Fixed undefined snap connection ([739f414](https://github.com/foblex/flow/commit/739f4144e5c2df608410b87924be12fac5ae793e))
+
+
+### Tests
+
+* Added FindClosestInputUsingSnapThresholdExecution tests ([bcf1bda](https://github.com/foblex/flow/commit/bcf1bda003e67483b96b5de87c7cdf8bbe328a34))
+
+
+### Documentation
+
+* Added center node or group functionality ([01584c1](https://github.com/foblex/flow/commit/01584c1355217224541c4db9fc2c25c69197dd7f))
+* Added custom nodes example ([6f2bd7b](https://github.com/foblex/flow/commit/6f2bd7bde46f901bbe773a550c92de86160fb01f))
+* Added drag to connect and drag to reassign examples ([afdd469](https://github.com/foblex/flow/commit/afdd4693f0fdd545ef3015c01abbdcfb1c17b405))
+* Added drag-handle example ([8fb4399](https://github.com/foblex/flow/commit/8fb4399ac1fc6749efbf550af5beee81086cc27d))
+* Added grouping example ([766e456](https://github.com/foblex/flow/commit/766e45652a6962be3118b77f00d4a4f580c36ef3))
+* Added resize handle example ([4f23af5](https://github.com/foblex/flow/commit/4f23af534549fb0630d6db0e8e9a282cf734e617))
+* Added snap-connection documentation and example ([dd4895f](https://github.com/foblex/flow/commit/dd4895fb50d5385e506579c1ee03167259141f19))
+
 ## [12.6.0](https://github.com/foblex/flow/compare/v12.5.0...v12.6.0) (2024-09-07)
 
 
