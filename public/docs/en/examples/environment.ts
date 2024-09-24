@@ -11,10 +11,10 @@ function createEnvironment(): IDocsEnvironment {
     navigation: [
       overviewGroup(),
       introductionGroup(),
-      connectorGroup(),
+   //   connectorGroup(),
       connectionGroup(),
       layoutGroup(),
-      extensionGroup(),
+  //    extensionGroup(),
       proExamplesGroup(),
     ],
     headerNavigation: [{
@@ -108,37 +108,37 @@ function introductionGroup(): INavigationGroup {
   }
 }
 
-function connectorGroup(): INavigationGroup {
-  return {
-    text: 'Connectors',
-    items: [
-      {
-        link: 'connectable-nodes',
-        text: 'Connectable Nodes',
-      },
-      {
-        link: 'connectors-inside-nodes',
-        text: 'Connectors Inside Nodes',
-      },
-      {
-        link: 'limiting-connections',
-        text: 'Limiting Connections',
-      },
-      {
-        link: 'connector-outlet',
-        text: 'Connector Outlet',
-      },
-      {
-        link: 'connectable-side',
-        text: 'Connectable Side',
-      },
-      {
-        link: 'rounded-connectors',
-        text: 'Rounded Connectors',
-      }
-    ],
-  }
-}
+// function connectorGroup(): INavigationGroup {
+//   return {
+//     text: 'Connectors',
+//     items: [
+//       {
+//         link: 'connectable-nodes',
+//         text: 'Connectable Nodes',
+//       },
+//       {
+//         link: 'connectors-inside-nodes',
+//         text: 'Connectors Inside Nodes',
+//       },
+//       {
+//         link: 'limiting-connections',
+//         text: 'Limiting Connections',
+//       },
+//       {
+//         link: 'connector-outlet',
+//         text: 'Connector Outlet',
+//       },
+//       {
+//         link: 'connectable-side',
+//         text: 'Connectable Side',
+//       },
+//       {
+//         link: 'rounded-connectors',
+//         text: 'Rounded Connectors',
+//       }
+//     ],
+//   }
+// }
 
 function connectionGroup(): INavigationGroup {
   return  {
@@ -158,46 +158,46 @@ function connectionGroup(): INavigationGroup {
         image_dark: './previews/examples/drag-to-reassign.dark.png',
         description: 'Discover how to reassign connections by dragging them to a new connector. This example demonstrates how to move connections between nodes, enabling users to reassign them easily within Angular and Foblex Flow.',
       },
-      {
-        link: 'add-node-on-connection-drop',
-        text: 'Add Node on Connection Drop',
-      },
-      {
-        link: 'proximity-connect',
-        text: 'Proximity Connect',
-      },
-      {
-        link: 'delete-connection-on-drop',
-        text: 'Delete Connection on Drop',
-      },
-      {
-        link: 'connection-types',
-        text: 'Connection Types',
-      },
-      {
-        link: 'connection-behaviors',
-        text: 'Connection Behaviors',
-      },
-      {
-        link: 'custom-connection-type',
-        text: 'Custom Connection Type',
-      },
-      {
-        link: 'custom-connection',
-        text: 'Custom Connection',
-      },
-      {
-        link: 'connection-markers',
-        text: 'Connection Markers',
-      },
-      {
-        link: 'connection-text',
-        text: 'Connection Text',
-      },
-      {
-        link: 'connection-center',
-        text: 'Connection Center',
-      },
+      // {
+      //   link: 'add-node-on-connection-drop',
+      //   text: 'Add Node on Connection Drop',
+      // },
+      // {
+      //   link: 'proximity-connect',
+      //   text: 'Proximity Connect',
+      // },
+      // {
+      //   link: 'delete-connection-on-drop',
+      //   text: 'Delete Connection on Drop',
+      // },
+      // {
+      //   link: 'connection-types',
+      //   text: 'Connection Types',
+      // },
+      // {
+      //   link: 'connection-behaviors',
+      //   text: 'Connection Behaviors',
+      // },
+      // {
+      //   link: 'custom-connection-type',
+      //   text: 'Custom Connection Type',
+      // },
+      // {
+      //   link: 'custom-connection',
+      //   text: 'Custom Connection',
+      // },
+      // {
+      //   link: 'connection-markers',
+      //   text: 'Connection Markers',
+      // },
+      // {
+      //   link: 'connection-text',
+      //   text: 'Connection Text',
+      // },
+      // {
+      //   link: 'connection-center',
+      //   text: 'Connection Center',
+      // },
     ]
   }
 }
@@ -224,33 +224,33 @@ function layoutGroup(): INavigationGroup {
   }
 }
 
-function extensionGroup(): INavigationGroup {
-  return {
-    text: 'Extensions',
-    items: [
-      {
-        link: 'add-node-on-drag-and-drop',
-        text: 'Add Node on Drag and Drop',
-      },
-      {
-        link: 'help-in-positioning',
-        text: 'Help in Positioning',
-      },
-      {
-        link: 'minimap',
-        text: 'Minimap',
-      },
-      {
-        link: 'zoom',
-        text: 'Zoom',
-      },
-      {
-        link: 'background',
-        text: 'Background',
-      }
-    ],
-  }
-}
+// function extensionGroup(): INavigationGroup {
+//   return {
+//     text: 'Extensions',
+//     items: [
+//       {
+//         link: 'add-node-on-drag-and-drop',
+//         text: 'Add Node on Drag and Drop',
+//       },
+//       {
+//         link: 'help-in-positioning',
+//         text: 'Help in Positioning',
+//       },
+//       {
+//         link: 'minimap',
+//         text: 'Minimap',
+//       },
+//       {
+//         link: 'zoom',
+//         text: 'Zoom',
+//       },
+//       {
+//         link: 'background',
+//         text: 'Background',
+//       }
+//     ],
+//   }
+// }
 
 function proExamplesGroup(): INavigationGroup {
   return {
@@ -271,12 +271,14 @@ function proExamplesGroup(): INavigationGroup {
       image_type: 'image/png',
       image_width: 1598,
       image_height: 1198,
-    }, {
-      text: 'Call Center Flow',
-      link: 'https://github.com/Foblex/f-flow-example',
-    }, {
-      text: 'Scheme Editor',
-      link: 'https://github.com/Foblex/f-scheme-editor',
-    } ]
+    },
+    //   {
+    //   text: 'Call Center Flow',
+    //   link: 'https://github.com/Foblex/f-flow-example',
+    // }, {
+    //   text: 'Scheme Editor',
+    //   link: 'https://github.com/Foblex/f-scheme-editor',
+    // }
+    ]
   }
 }
