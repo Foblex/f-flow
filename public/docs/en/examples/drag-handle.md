@@ -7,9 +7,9 @@ This example showcases how to add a [DragHandle](./docs/f-drag-handle-directive)
 ## Example
 
 ::: ng-component <drag-handle></drag-handle> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-handle/drag-handle.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-handle/drag-handle.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/drag-handle/drag-handle.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 

@@ -50,13 +50,10 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'line-alignment-example', component: import('../../../../projects/f-guides-examples/line-alignment-example/line-alignment-example.component') },
       { tag: 'minimap-basic-example', component: import('../../../../projects/f-guides-examples/minimap-basic-example/minimap-basic-example.component') },
       { tag: 'minimap-scaled-example', component: import('../../../../projects/f-guides-examples/minimap-scaled-example/minimap-scaled-example.component') },
-      { tag: 'dagre-layout-example', component: import('../../../../projects/f-guides-examples/layout-and-behaviors/dagre-layout-example/dagre-layout-example.component') },
-      { tag: 'elkjs-layout-example', component: import('../../../../projects/f-guides-examples/layout-and-behaviors/elkjs-layout-example/elkjs-layout-example.component') },
       { tag: 'node-with-connectors', component: import('../../../../projects/f-guides-examples/node-with-connectors/node-with-connectors.component') },
       { tag: 'node-with-position-example', component: import('../../../../projects/f-guides-examples/node/node-with-position-example/node-with-position-example.component') },
       { tag: 'adding-dragging-functionality-example', component: import('../../../../projects/f-guides-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component') },
       { tag: 'node-with-drag-handle-example', component: import('../../../../projects/f-guides-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component') },
-      { tag: 'groups-simple-example', component: import('../../../../projects/f-guides-examples/group/groups-simple-example/groups-simple-example.component') },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },

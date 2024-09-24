@@ -1,0 +1,39 @@
+@use "../../flow-common";
+
+::ng-deep custom-nodes {
+  @include flow-common.connection;
+}
+
+.mat-mdc-card {
+  max-width: 300px;
+  color: var(--node-color);
+  background: var(--node-background-color);
+  border-radius: var(--node-border-radius);
+  border: 0.2px solid var(--node-border-color);
+  cursor: move;
+
+  .mat-mdc-card-subtitle {
+    color: var(--node-color);
+  }
+
+  &:active {
+    box-shadow: var(--node-shadow);
+  }
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.simple-node {
+  @include flow-common.node;
+  width: unset;
+}
+
+img {
+  pointer-events: none;
+  margin-bottom: 16px;
+}
+
+

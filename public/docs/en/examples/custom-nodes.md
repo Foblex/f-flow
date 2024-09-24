@@ -7,9 +7,9 @@ This guide shows how to create custom nodes for flow components with different c
 ## Example
 
 ::: ng-component <custom-nodes></custom-nodes> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-nodes/custom-nodes.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-nodes/custom-nodes.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/custom-nodes/custom-nodes.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 

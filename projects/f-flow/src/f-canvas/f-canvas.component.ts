@@ -98,6 +98,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
+    console.log('fitToScreen');
     this.fMediator.send(new FitToFlowRequest(toCenter, animated));
   }
 

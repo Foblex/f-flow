@@ -35,9 +35,14 @@ function createEnvironment(): IDocsEnvironment {
       next: 'Next Page',
     },
     components: [
-      { tag: 'custom-nodes', component: import('../../../../projects/f-examples/custom-nodes/custom-nodes.component') },
-      { tag: 'drag-handle', component: import('../../../../projects/f-examples/drag-handle/drag-handle.component') },
-      { tag: 'resize-handle', component: import('../../../../projects/f-examples/resize-handle/resize-handle.component') },
+      { tag: 'custom-nodes', component: import('../../../../projects/f-examples/nodes/custom-nodes/custom-nodes.component') },
+      { tag: 'drag-handle', component: import('../../../../projects/f-examples/nodes/drag-handle/drag-handle.component') },
+      { tag: 'resize-handle', component: import('../../../../projects/f-examples/nodes/resize-handle/resize-handle.component') },
+      { tag: 'grouping', component: import('../../../../projects/f-examples/nodes/grouping/grouping.component') },
+
+      { tag: 'dagre-layout-example', component: import('../../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
+      { tag: 'elkjs-layout-example', component: import('../../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
+
       { tag: 'draggable-flow', component: import('../../../../projects/f-guides-examples/draggable-flow/draggable-flow.component') },
       { tag: 'vp-flow', component: import('../../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
       { tag: 'db-management-flow', component: import('../../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
@@ -85,22 +90,17 @@ function introductionGroup(): INavigationGroup {
       {
         link: 'resize-handle',
         text: 'Resize Handle',
-        image: './previews/examples/custom-nodes.light.png',
-        image_dark: './previews/examples/custom-nodes.dark.png',
+        image: './previews/examples/resize-handle.light.png',
+        image_dark: './previews/examples/resize-handle.dark.png',
         description: 'Discover how to add a resize handle to nodes. This example demonstrates how to make nodes resizable, enabling users to adjust their size easily within Angular and Foblex Flow.',
       },
       {
         link: 'grouping',
         text: 'Grouping',
-        image: 'https://flow.foblex.com/f-visual-programming-flow.png',
+        image: './previews/examples/grouping.light.png',
+        image_dark: './previews/examples/grouping.dark.png',
         description: 'Explore how to group nodes together. This example demonstrates how to create groups of nodes, allowing users to organize and manage them efficiently within Angular and Foblex Flow.',
-      },
-      {
-        link: 'group-paddings',
-        text: 'Group Paddings',
-        image: 'https://flow.foblex.com/f-visual-programming-flow.png',
-        description: 'Learn how to add padding to groups. This example showcases how to add padding to groups of nodes, providing a comprehensive guide to creating organized and visually appealing flow-based diagrams.',
-      },
+      }
     ],
   }
 }
@@ -199,12 +199,16 @@ function layoutGroup(): INavigationGroup {
     items: [
       {
         link: 'dagre-layout',
-        text: 'Dagre Tree',
+        text: 'Dagre Layout',
+        image: './previews/examples/dagre-layout.light.png',
+        image_dark: './previews/examples/dagre-layout.dark.png',
         description: 'Explore a tree layout example using Dagre.js with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the Dagre layout engine.'
       },
       {
         link: 'elkjs-layout',
-        text: 'ELKJS Tree',
+        text: 'ELKJS Layout',
+        image: './previews/examples/elkjs-layout.light.png',
+        image_dark: './previews/examples/elkjs-layout.dark.png',
         description: 'Explore a tree layout example using ELKJS with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the ELKJS layout engine.',
       }
     ],

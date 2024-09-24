@@ -114,6 +114,7 @@
 }
 
 @mixin node {
+  width: 120px;
   padding: 24px;
   color: var(--node-color);
   text-align: center;

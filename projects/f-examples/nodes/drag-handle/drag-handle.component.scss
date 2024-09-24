@@ -1,0 +1,51 @@
+@use "../../flow-common";
+
+::ng-deep drag-handle {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+  cursor: default;
+
+  img {
+    display: block;
+    pointer-events: none;
+    width: 150px;
+  }
+}
+
+.f-drag-handle {
+  width: fit-content;
+  cursor: move;
+}
+
+.drag-handle-inside {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+}
+
+.f-icon {
+  display: block;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  mask-repeat: no-repeat;
+}
+
+.drag-handle-outside {
+  .f-drag-handle {
+    background-color: var(--node-background-color);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -50px;
+    padding: 4px;
+    border: 0.5px solid var(--node-border-color);
+    border-radius: var(--node-border-radius);
+  }
+}
+
+
