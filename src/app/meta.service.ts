@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, startWith, Subscription } from 'rxjs';
-import { ENGLISH_ENVIRONMENT } from '../../public/docs/en/environment';
 import { Meta, Title } from '@angular/platform-browser';
 import { INavigationGroup, INavigationItem } from '@foblex/f-docs';
 import { BrowserService } from '@foblex/platform';
+import { GUIDES_ENVIRONMENT } from '../../public/docs/en/guides/environment';
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
@@ -27,7 +27,7 @@ export class MetaService {
       }
       const item = this.findDocItemByUrl(this.findDocGroupByUrl(this.router.url), this.router.url);
       if (item) {
-        data.title = `${ ENGLISH_ENVIRONMENT.title } - ${ item.text }`;
+        data.title = `${ GUIDES_ENVIRONMENT.title } - ${ item.text }`;
         data.url = this.fBrowser.window.location.href;
         data.description = item.description || DEFAULT_PAGE_DATA.description;
         data.image = item.image || DEFAULT_PAGE_DATA.image;
@@ -47,7 +47,7 @@ export class MetaService {
   }
 
   private findDocGroupByUrl(url: string): INavigationGroup | undefined {
-    return ENGLISH_ENVIRONMENT.navigation.find((g: INavigationGroup) => g.items.find((i: INavigationItem) => url.endsWith(i.link)));
+    return GUIDES_ENVIRONMENT.navigation.find((g: INavigationGroup) => g.items.find((i: INavigationItem) => url.endsWith(i.link)));
   }
 
   private findDocItemByUrl(group: INavigationGroup | undefined, url: string): INavigationItem | undefined {
@@ -94,14 +94,14 @@ export class MetaService {
 const DEFAULT_PAGE_DATA: IPageMetaOg = {
   url: 'https://flow.foblex.com',
   type: 'website',
-  title: ENGLISH_ENVIRONMENT.title,
-  site_name: ENGLISH_ENVIRONMENT.title,
-  locale: ENGLISH_ENVIRONMENT.lang,
+  title: GUIDES_ENVIRONMENT.title,
+  site_name: GUIDES_ENVIRONMENT.title,
+  locale: GUIDES_ENVIRONMENT.lang,
   description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
   image: 'https://flow.foblex.com/site-preview.png',
   image_type: 'image/png',
-  image_width: 3116,
-  image_height: 1880
+  image_width: 2986,
+  image_height: 1926
 };
 
 interface IPageMetaOg {

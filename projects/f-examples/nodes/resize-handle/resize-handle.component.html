@@ -1,0 +1,46 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas>
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 0, y: 0 }">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+      <div class="node-content">
+        Node with Left Top ResizeHandle
+      </div>
+    </div>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 300, y: 0 }">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+      <div class="node-content">
+        Node with Right Top ResizeHandle
+      </div>
+    </div>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 0, y: 200 }">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      <div class="node-content">
+        Node with Right Bottom ResizeHandle
+      </div>
+    </div>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 300, y: 200 }">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+      <div class="node-content">
+        Node with Left Bottom ResizeHandle
+      </div>
+    </div>
+
+    <div fNode fDragHandle
+         [fNodePosition]="{ x: 150, y: 100 }">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      <div class="node-content">
+        Node with all ResizeHandles
+      </div>
+    </div>
+  </f-canvas>
+</f-flow>

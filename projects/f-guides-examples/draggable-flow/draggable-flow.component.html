@@ -1,0 +1,11 @@
+<f-flow fDraggable>
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right">
+      Drag me
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left">
+      Drag me
+    </div>
+  </f-canvas>
+</f-flow>

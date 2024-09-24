@@ -10,7 +10,11 @@ export class CalculateChangedSizeExecution
   implements IExecution<CalculateChangedSizeRequest, IRect> {
 
   public handle(request: CalculateChangedSizeRequest): IRect {
-    return this.change(request.originalRect, request.difference, RESIZE_DIRECTIONS[request.fResizeHandleType]);
+    return this.change(
+      request.originalRect,
+      request.difference,
+      RESIZE_DIRECTIONS[request.fResizeHandleType],
+    );
   }
 
   private change(rect: IRect, difference: IPoint, direction: IPoint): IRect {
@@ -19,6 +23,7 @@ export class CalculateChangedSizeExecution
       rect.width + direction.x * difference.x,
       rect.height + direction.y * difference.y
     );
+
 
     if (result.width < 0) {
       result.x = result.width;

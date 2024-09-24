@@ -1,4 +1,4 @@
-import { IPoint, IRect, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
@@ -15,7 +15,8 @@ export class NodeResizeDragHandler implements IDraggableItem {
 
   private restrictions!: INodeResizeRestrictions;
 
-  private childRestrictions: (rect: IRect, restrictionsRect: IRect) => void = () => {};
+  private childRestrictions: (rect: IRect, restrictionsRect: IRect) => void = () => {
+  };
 
   constructor(
     private fMediator: FMediator,
@@ -28,7 +29,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
     this.originalRect = this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(this.fNode));
 
     this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
-    if(this.restrictions.childRect) {
+    if (this.restrictions.childRect) {
       this.childRestrictions = (rect: IRect, restrictionsRect: IRect) => {
         this.applyChildRestrictions(rect, restrictionsRect);
       };
@@ -36,7 +37,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   }
 
   public move(difference: IPoint): void {
-    const changedRect = this.changePosition(difference, this.changeSize(difference));
+    const changedRect = this.changePosition(difference, this.changeSize(difference, this.restrictions.minSize));
 
     this.childRestrictions(changedRect, this.restrictions.childRect!);
     this.applyParentRestrictions(changedRect, this.restrictions.parentRect);
@@ -46,7 +47,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
     this.fNode.redraw();
   }
 
-  private changeSize(difference: IPoint): IRect {
+  private changeSize(difference: IPoint, minSize: ISize): IRect {
     return this.fMediator.send<IRect>(
       new CalculateChangedSizeRequest(this.originalRect, difference, this.fResizeHandleType)
     );

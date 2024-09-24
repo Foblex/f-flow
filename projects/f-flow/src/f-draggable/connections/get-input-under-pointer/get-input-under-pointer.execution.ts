@@ -37,7 +37,7 @@ export class GetInputUnderPointerExecution
 
     const connectors = output.isSelfConnectable ?
       inputsUnderPointer :
-      this.filterSelfConnectable(inputsUnderPointer, output)
+      this.filterSelfConnectable(inputsUnderPointer, output);
     return connectors.length > 0 ? connectors[0] : undefined;
   }
 

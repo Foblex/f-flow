@@ -1,0 +1,171 @@
+::ng-deep :root {
+  --node-background-color: #ffffff;
+  --node-border-radius: 2px;
+  --node-border-color: rgba(60, 60, 67, 0.36);
+  --node-color: rgba(60, 60, 67, 0.78);
+  --node-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  --connection-color: rgba(60, 60, 67, 0.78);
+  --snap-connection-color: rgba(60, 60, 67, 0.38);
+  --connection-gradient-1: #915930;
+  --connection-gradient-2: #18794e;
+
+  --outlet-color: #3451b2;
+  --input-output-color: rgba(60, 60, 67, 0.78);
+
+  --minimap-background-color: #ffffff;
+  --minimap-node-color: rgba(60, 60, 67);
+  --minimap-node-selected-color: #3451b2;
+  --minimap-view-color: rgba(100, 108, 255, 0.14);
+
+  &.dark {
+    --node-background-color: #000000;
+    --node-border-radius: 2px;
+    --node-border-color: rgba(235, 235, 245, 0.38);
+    --node-color: rgba(235, 235, 245, 0.6);
+    --node-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+
+    --connection-color: rgba(235, 235, 245, 0.6);
+    --snap-connection-color: rgba(235, 235, 245, 0.2);
+    --connection-gradient-1: #f9b44e;
+    --connection-gradient-2: #3dd68c;
+
+    --outlet-color: #a8b1ff;
+    --input-output-color: rgba(235, 235, 245, 0.6);
+
+    --minimap-background-color: #1b1b1f;
+    --minimap-node-color: rgba(255, 255, 245, 0.86);
+    --minimap-node-selected-color: #a8b1ff;
+    --minimap-view-color: rgba(100, 108, 255, 0.16);
+  }
+}
+
+@mixin connection {
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: var(--connection-color);
+      stroke-width: 2;
+    }
+
+    .f-connection-text, .f-connection-center {
+      fill: var(--connection-color);
+      color: var(--connection-color);
+    }
+
+    &.f-snap-connection {
+      .f-connection-path {
+        stroke: var(--snap-connection-color);
+      }
+    }
+  }
+}
+
+@mixin background {
+  .f-background {
+    line {
+      stroke: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+@mixin line-alignment {
+  .f-line-alignment {
+    .f-line {
+      background-color: var(--connection-color);
+    }
+  }
+}
+
+@mixin minimap {
+  .f-minimap {
+    background-color: var(--minimap-background-color);
+    bottom: 16px;
+    right: 16px;
+    width: 120px;
+    height: 120px;
+
+    .f-minimap-node {
+      fill: var(--minimap-node-color);
+
+      &.f-selected {
+        fill: var(--minimap-node-selected-color);
+      }
+    }
+
+    .f-minimap-view {
+      fill: var(--minimap-view-color)
+    }
+  }
+}
+
+@mixin node {
+  width: 100px;
+  padding: 4px;
+  color: var(--node-color);
+  text-align: center;
+  background: var(--node-background-color);
+  border-radius: var(--node-border-radius);
+  border: 0.2px solid var(--node-border-color);
+  cursor: move;
+
+  &:active {
+    box-shadow: var(--node-shadow);
+  }
+}
+
+@mixin connectors {
+
+
+  .connectors-line {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: calc(100% - 8px);
+
+    .f-node-output, .f-node-input {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 0.2px solid var(--node-border-color);
+      background-color: var(--node-background-color);
+    }
+
+    &.top {
+      top: -8px
+    }
+
+    &.bottom {
+      bottom: -8px;
+    }
+  }
+}
+
+
+@mixin toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+
+  button {
+    font-weight: 500;
+    border: none;
+    border-radius: 2px;
+    padding: 4px 8px;
+    line-height: normal;
+  }
+}

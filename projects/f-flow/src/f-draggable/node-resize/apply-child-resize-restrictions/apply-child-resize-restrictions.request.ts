@@ -4,7 +4,7 @@ export class ApplyChildResizeRestrictionsRequest {
 
   constructor(
     public rect: IRect,
-    public restrictionsRect: IRect,
+    public restrictionsRect: IRect
   ) {
   }
 }
