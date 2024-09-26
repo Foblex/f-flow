@@ -9,5 +9,4 @@ node_modules
 *-debug.log
 .runtimeconfig.json
 
-package-lock.json
 
