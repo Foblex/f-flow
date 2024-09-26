@@ -3,7 +3,6 @@ import {
   FCanvasComponent,
   FFlowModule
 } from '@foblex/flow';
-import { PointExtensions } from '@foblex/2d';
 
 @Component({
   selector: 'drag-handle',
