@@ -19,5 +19,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Start Angular dev server
+        run: npm start & 
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:4200
+
       - name: Run Cypress E2E tests
-        run: npm run cypress:run 
+        run: npx cypress run
