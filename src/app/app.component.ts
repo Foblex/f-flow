@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
-import { MetaService } from './meta.service';
 import { BrowserService } from '@foblex/platform';
 import { takeScreenshot } from './take-screenshot';
+import { FMetaService, IMetaData } from '@foblex/f-docs';
+import { GUIDES_ENVIRONMENT } from '../../public/docs/en/guides/environment';
+import { EXAMPLES_ENVIRONMENT } from '../../public/docs/en/examples/environment';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     matIconRegistry: MatIconRegistry,
     private renderer: Renderer2,
-    private metaService: MetaService,
+    private fMeta: FMetaService,
     private fBrowser: BrowserService,
   ) {
     matIconRegistry.setDefaultFontSetClass('material-symbols-outlined');
@@ -33,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.renderer.addClass(this.fBrowser.document.documentElement, 'dark');
       this.fBrowser.localStorage.setItem('preferred-theme', 'dark');
     }
-    this.subscriptions$.add(this.metaService.subscribeOnRouteChanges());
+    this.subscriptions$.add(this.fMeta.subscribeOnRouteChanges(DEFAULT_PAGE_DATA, [ GUIDES_ENVIRONMENT, EXAMPLES_ENVIRONMENT ]));
   }
 
 
@@ -55,3 +57,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptions$.unsubscribe();
   }
 }
+
+const DEFAULT_PAGE_DATA: IMetaData = {
+  url: 'https://flow.foblex.com',
+  type: 'website',
+  title: GUIDES_ENVIRONMENT.title,
+  site_name: GUIDES_ENVIRONMENT.title,
+  locale: GUIDES_ENVIRONMENT.lang,
+  description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
+  image: 'https://flow.foblex.com/site-preview.png',
+  image_type: 'image/png',
+  image_width: 2986,
+  image_height: 1926
+};

@@ -1,0 +1,32 @@
+name: Cypress E2E Tests
+
+on:
+  push:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Angular dev server
+        run: npm start &
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:4200
+
+      - name: Run Cypress E2E tests
+        run: npx cypress run
+
+      - name: Stop Angular dev server
+        run: npx kill-port 4200

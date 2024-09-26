@@ -74,7 +74,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   public complete(): void {
     this.fNode.sizeChange.emit(
       RectExtensions.initialize(
-        this.fNode.position.x, this.fNode.position.y, this.fNode.size.width, this.fNode.size.height
+        this.fNode.position.x, this.fNode.position.y, this.fNode.size?.width, this.fNode.size?.height
       )
     );
   }

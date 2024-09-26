@@ -67,6 +67,7 @@ function overviewGroup(): INavigationGroup {
       {
         link: 'overview',
         text: 'Overview',
+        description: 'Learn about Foblex Flow, a modern Angular library for building interactive flow-based diagrams. This article provides an overview of the library, its features, and how to get started with it.',
       },
     ],
   }
@@ -82,6 +83,9 @@ function introductionGroup(): INavigationGroup {
         image: './previews/examples/custom-nodes.light.png',
         image_dark: './previews/examples/custom-nodes.dark.png',
         description: 'Learn how to display any content inside a node. This example demonstrates how to create custom nodes with varied content, styles, and behaviors, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       {
         link: 'drag-handle',
@@ -89,6 +93,9 @@ function introductionGroup(): INavigationGroup {
         image: './previews/examples/drag-handle.light.png',
         image_dark: './previews/examples/drag-handle.dark.png',
         description: 'This example showcases how to create a draggable handle for nodes, allowing users to move them easily within Angular and Foblex Flow.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       {
         link: 'resize-handle',
@@ -96,6 +103,9 @@ function introductionGroup(): INavigationGroup {
         image: './previews/examples/resize-handle.light.png',
         image_dark: './previews/examples/resize-handle.dark.png',
         description: 'Discover how to add a resize handle to nodes. This example demonstrates how to make nodes resizable, enabling users to adjust their size easily within Angular and Foblex Flow.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       {
         link: 'grouping',
@@ -103,6 +113,9 @@ function introductionGroup(): INavigationGroup {
         image: './previews/examples/grouping.light.png',
         image_dark: './previews/examples/grouping.dark.png',
         description: 'Explore how to group nodes together. This example demonstrates how to create groups of nodes, allowing users to organize and manage them efficiently within Angular and Foblex Flow.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       }
     ],
   }
@@ -150,6 +163,9 @@ function connectionGroup(): INavigationGroup {
         image: './previews/examples/drag-to-connect.light.png',
         image_dark: './previews/examples/drag-to-connect.dark.png',
         description: 'Learn how to connect nodes by dragging a connection between them. This example demonstrates how to create connections between nodes, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       {
         link: 'drag-to-reassign',
@@ -157,6 +173,9 @@ function connectionGroup(): INavigationGroup {
         image: './previews/examples/drag-to-reassign.light.png',
         image_dark: './previews/examples/drag-to-reassign.dark.png',
         description: 'Discover how to reassign connections by dragging them to a new connector. This example demonstrates how to move connections between nodes, enabling users to reassign them easily within Angular and Foblex Flow.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       // {
       //   link: 'add-node-on-connection-drop',
@@ -211,7 +230,10 @@ function layoutGroup(): INavigationGroup {
         text: 'Dagre Layout',
         image: './previews/examples/dagre-layout.light.png',
         image_dark: './previews/examples/dagre-layout.dark.png',
-        description: 'Explore a tree layout example using Dagre.js with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the Dagre layout engine.'
+        description: 'Explore a tree layout example using Dagre.js with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the Dagre layout engine.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       },
       {
         link: 'elkjs-layout',
@@ -219,6 +241,9 @@ function layoutGroup(): INavigationGroup {
         image: './previews/examples/elkjs-layout.light.png',
         image_dark: './previews/examples/elkjs-layout.dark.png',
         description: 'Explore a tree layout example using ELKJS with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the ELKJS layout engine.',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
       }
     ],
   }
@@ -261,12 +286,18 @@ function proExamplesGroup(): INavigationGroup {
       description: 'Learn how to create a visual programming interface using Angular and Foblex Flow. This example showcases features like adding and connecting nodes, zooming, panning, alignment, and more, providing a comprehensive guide to building interactive, flow-based diagrams.',
       image: './previews/examples/vp-flow.light.png',
       image_dark: './previews/examples/vp-flow.dark.png',
+      image_width: 800,
+      image_height: 600,
+      image_type: 'image/png',
     },{
       text: 'DB Management Flow',
       link: 'f-db-management-flow',
       description: 'Discover how to create a database management flow using Angular and Foblex Flow. This example demonstrates connecting nodes, zooming, panning, alignment, form validation, and more, offering a comprehensive solution for building interactive database management interfaces.',
       image: './previews/examples/db-management-flow.light.png',
       image_dark: './previews/examples/db-management-flow.dark.png',
+      image_width: 800,
+      image_height: 600,
+      image_type: 'image/png',
     },
     //   {
     //   text: 'Call Center Flow',
