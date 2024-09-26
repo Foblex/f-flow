@@ -20,7 +20,8 @@
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
-    "serve:ssr:f-flow-portal": "node dist/f-flow-portal/server/server.mjs"
+    "serve:ssr:f-flow-portal": "node dist/f-flow-portal/server/server.mjs",
+    "cypress:run": "cypress run"
   },
   "standard-version": {
     "types": [
