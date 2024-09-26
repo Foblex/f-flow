@@ -28,17 +28,18 @@ describe('DragHandleComponent', () => {
   });
 
   it('should drag fCanvas element and update its transform translate', function () {
-    cy.get('.f-canvas').invoke('css', 'transform')
-      .should('equal', 'matrix(1, 0, 0, 1, -15.1484, 103.5)');
+    cy.get('.f-canvas').invoke('css', 'transform').then((transform) => {
 
-    cy.get('#f-flow-0')
-      .trigger('mousedown', { clientX: 10, clientY: 10, button: 0, force: true })
-      .trigger('mousemove', { clientX: 0, clientY: 0 })
-      .trigger('mousemove', { clientX: 20, clientY: 0 })
-      .trigger('mouseup', { clientX: 30, clientY: 0 });
+      cy.get('#f-flow-0')
+        .trigger('mousedown', { clientX: 10, clientY: 10, button: 0, force: true })
+        .trigger('mousemove', { clientX: 0, clientY: 0 })
+        .trigger('mousemove', { clientX: 20, clientY: 0 })
+        .trigger('mouseup', { clientX: 30, clientY: 0 });
 
-    cy.get('.f-canvas').invoke('css', 'transform')
-      .should('not.equal', 'matrix(1, 0, 0, 1, -15.1484, 103.5)');
+      cy.get('.f-canvas').invoke('css', 'transform')
+        .should('not.equal', transform);
+    });
+
   });
 });
 
