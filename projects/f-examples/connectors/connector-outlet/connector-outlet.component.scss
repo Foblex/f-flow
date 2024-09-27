@@ -1,0 +1,33 @@
+@use "../../flow-common";
+
+::ng-deep connector-outlet {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}
+
+.f-node-outlet {
+  position: absolute;
+  border: 0.2px solid var(--node-border-color);
+  background-color: var(--node-background-color);
+  top: 50%;
+  right: -90px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+
+  .mat-icon {
+    display: block;
+  }
+}
+
+.toolbar {
+  @include flow-common.toolbar;
+}

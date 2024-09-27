@@ -1,0 +1,17 @@
+@use "../../flow-common";
+
+::ng-deep connector-inside-node {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}
+
+

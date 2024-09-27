@@ -2,9 +2,9 @@ export enum EFConnectableSide {
 
   LEFT = 'left',
 
-  RIGHT = 'right',
-
   TOP = 'top',
+
+  RIGHT = 'right',
 
   BOTTOM = 'bottom',
 

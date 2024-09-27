@@ -27,6 +27,8 @@ import { F_CONNECTION } from '../common/f-connection.injection-token';
 // at f-connection-for-create.component.ts:34:11
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -176,16 +178,17 @@ export class FConnectionComponent
   constructor(
       elementReference: ElementRef<HTMLElement>,
       fConnectionFactory: FConnectionFactory,
-      private fComponentsStore: FComponentsStore
+      private fComponentsStore: FComponentsStore,
+      private fMediator: FMediator
   ) {
     super(elementReference, fConnectionFactory);
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.addComponent(this.fComponentsStore.fConnections, this);
+    this.fMediator.send(new AddConnectionToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fConnections, this);
+    this.fMediator.send(new RemoveConnectionFromStoreRequest(this));
   }
 }

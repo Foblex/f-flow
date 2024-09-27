@@ -10,8 +10,8 @@ function createEnvironment(): IDocsEnvironment {
     title: 'Foblex Flow',
     navigation: [
       overviewGroup(),
-      introductionGroup(),
-   //   connectorGroup(),
+      nodesGroup(),
+      connectorGroup(),
       connectionGroup(),
       layoutGroup(),
   //    extensionGroup(),
@@ -39,6 +39,12 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'drag-handle', component: import('../../../../projects/f-examples/nodes/drag-handle/drag-handle.component') },
       { tag: 'resize-handle', component: import('../../../../projects/f-examples/nodes/resize-handle/resize-handle.component') },
       { tag: 'grouping', component: import('../../../../projects/f-examples/nodes/grouping/grouping.component') },
+
+      { tag: 'node-as-connector', component: import('../../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component') },
+      { tag: 'connector-inside-node', component: import('../../../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component') },
+      { tag: 'connector-outlet', component: import('../../../../projects/f-examples/connectors/connector-outlet/connector-outlet.component') },
+      { tag: 'limiting-connections', component: import('../../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component') },
+      { tag: 'connectable-side', component: import('../../../../projects/f-examples/connectors/connectable-side/connectable-side.component') },
 
       { tag: 'drag-to-connect', component: import('../../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component') },
       { tag: 'drag-to-reassign', component: import('../../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component') },
@@ -73,7 +79,7 @@ function overviewGroup(): INavigationGroup {
   }
 }
 
-function introductionGroup(): INavigationGroup {
+function nodesGroup(): INavigationGroup {
   return {
     text: 'Nodes',
     items: [
@@ -121,37 +127,63 @@ function introductionGroup(): INavigationGroup {
   }
 }
 
-// function connectorGroup(): INavigationGroup {
-//   return {
-//     text: 'Connectors',
-//     items: [
-//       {
-//         link: 'connectable-nodes',
-//         text: 'Connectable Nodes',
-//       },
-//       {
-//         link: 'connectors-inside-nodes',
-//         text: 'Connectors Inside Nodes',
-//       },
-//       {
-//         link: 'limiting-connections',
-//         text: 'Limiting Connections',
-//       },
-//       {
-//         link: 'connector-outlet',
-//         text: 'Connector Outlet',
-//       },
-//       {
-//         link: 'connectable-side',
-//         text: 'Connectable Side',
-//       },
-//       {
-//         link: 'rounded-connectors',
-//         text: 'Rounded Connectors',
-//       }
-//     ],
-//   }
-// }
+function connectorGroup(): INavigationGroup {
+  return {
+    text: 'Connectors',
+    items: [
+      {
+        link: 'node-as-connector',
+        text: 'Node as Connector',
+        description: 'Learn how to use nodes as connectors. This example demonstrates how to create nodes with connectors, enabling users to connect them easily within Angular and Foblex Flow.',
+        image: './previews/examples/node-as-connector.light.png',
+        image_dark: './previews/examples/node-as-connector.dark.png',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'connector-inside-node',
+        text: 'Connector Inside Node',
+        description: 'Discover how to add connectors inside nodes. This example demonstrates how to create nodes with internal connectors, allowing users to connect them easily within Angular and Foblex Flow.',
+        image: './previews/examples/connector-inside-node.light.png',
+        image_dark: './previews/examples/connector-inside-node.dark.png',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'connector-outlet',
+        text: 'Connector Outlet',
+        description: 'Learn how to add a connector that controls other connectors. This example demonstrates how to create connectors that connect other connectors, allowing users to create complex connections in Angular and Foblex Flow.',
+        image: './previews/examples/connector-outlet.light.png',
+        image_dark: './previews/examples/connector-outlet.dark.png',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'limiting-connections',
+        text: 'Limiting Connections',
+        description: 'Explore how to limit the number of connections. This example demonstrates how to restrict the number of connections between nodes, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image: './previews/examples/limiting-connections.light.png',
+        image_dark: './previews/examples/limiting-connections.dark.png',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'connectable-side',
+        text: 'Connectable Side',
+        description: 'Discover how to connect connectors from specific sides. This example demonstrates how to connect connectors from specific sides, enabling users to create custom connections within Angular and Foblex Flow.',
+        image: './previews/examples/connectable-side.light.png',
+        image_dark: './previews/examples/connectable-side.dark.png',
+        image_width: 800,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+    ],
+  }
+}
 
 function connectionGroup(): INavigationGroup {
   return  {

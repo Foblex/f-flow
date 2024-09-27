@@ -1,7 +1,7 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fReassignConnection)="reassignConnection($event)">
   <f-canvas>
-    @for (connection of connections;track connection.inputId) {
-      <f-connection fBehavior="floating"
+    @for (connection of connections; track connection.inputId) {
+      <f-connection fBehavior="floating" [fReassignDisabled]="false"
                     [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
       </f-connection>
     }

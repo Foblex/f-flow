@@ -14,8 +14,7 @@ let uniqueId: number = 0;
     '[attr.data-f-input-id]': 'id',
     class: "f-component f-node-input",
     '[class.f-node-input-multiple]': 'multiple',
-    '[class.f-node-input-disabled]': 'disabled',
-    '[class.f-node-input-not-connectable]': '!canBeConnected',
+    '[class.f-node-input-disabled]': 'disabled'
   },
   providers: [ { provide: F_NODE_INPUT, useExisting: FNodeInputDirective } ],
 })
@@ -76,6 +75,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
   public override setConnected(isConnected: boolean): void {
     this.isConnected = isConnected;
     this.hostElement.classList.toggle('f-node-input-connected', isConnected);
+    this.hostElement.classList.toggle('f-node-input-not-connectable', !this.canBeConnected);
   }
 
   public ngOnDestroy(): void {
