@@ -23,6 +23,12 @@
 /examples/resize-handle
 /examples/grouping
 
+/examples/node-as-connector
+/examples/connector-inside-node
+/examples/connector-outlet
+/examples/limiting-connections
+/examples/connectable-side
+
 /examples/drag-to-connect
 /examples/drag-to-reassign
 

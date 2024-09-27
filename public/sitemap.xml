@@ -117,6 +117,33 @@
   </url>
 
   <url>
+    <loc>https://flow.foblex.com/examples/node-as-connector/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/connector-inside-node/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/connector-outlet/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/limiting-connections/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/connectable-side/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+
+  <url>
     <loc>https://flow.foblex.com/examples/drag-to-connect/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
