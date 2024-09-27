@@ -1,0 +1,15 @@
+@use "../../flow-common";
+
+::ng-deep connectable-side {
+  @include flow-common.connection;
+}
+
+.f-node {
+  position: relative;
+  @include flow-common.node;
+  width: 180px;
+}
+
+.toolbar {
+  @include flow-common.toolbar;
+}

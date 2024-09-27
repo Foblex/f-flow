@@ -15,7 +15,6 @@ let uniqueId: number = 0;
     class: "f-component f-node-output",
     '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
-    '[class.f-node-output-not-connectable]': '!canBeConnected',
     '[class.f-node-output-self-connectable]': 'isSelfConnectable',
   },
   providers: [ { provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective } ],
@@ -83,6 +82,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnD
   public override setConnected(isConnected: boolean): void {
     this.isConnected = isConnected;
     this.hostElement.classList.toggle('f-node-output-connected', isConnected);
+    this.hostElement.classList.toggle('f-node-output-not-connectable', !this.canBeConnected);
   }
 
   public ngOnDestroy(): void {

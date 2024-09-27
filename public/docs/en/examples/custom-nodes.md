@@ -2,7 +2,8 @@
 
 ## Description
 
-This guide shows how to create custom nodes for flow components with different content, styles, and behaviors, providing a comprehensive approach to building interactive flow-based diagrams.
+This guide shows how to create custom nodes for flow components with different content, styles, and behaviors, providing 
+a comprehensive approach to building interactive flow-based diagrams. You can use this guide to create custom nodes with any HTML content, styles, and behaviors.
 
 ## Example
 

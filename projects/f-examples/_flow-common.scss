@@ -1,4 +1,5 @@
 ::ng-deep :root {
+  --disabled-color: #e2e2e2;
   --node-background-color: #ffffff;
   --node-border-radius: 2px;
   --node-border-color: rgba(60, 60, 67, 0.36);
@@ -19,6 +20,7 @@
   --minimap-view-color: rgba(100, 108, 255, 0.14);
 
   &.dark {
+    --disabled-color: #2c2c2e;
     --node-background-color: #000000;
     --node-border-radius: 2px;
     --node-border-color: rgba(235, 235, 245, 0.38);
@@ -129,29 +131,55 @@
 }
 
 @mixin connectors {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 0.2px solid var(--node-border-color);
+  background-color: var(--node-background-color);
 
-  .connectors-line {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    width: calc(100% - 8px);
+  &.left {
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    .f-node-output, .f-node-input {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 0.2px solid var(--node-border-color);
-      background-color: var(--node-background-color);
-    }
+  &.right {
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    &.top {
-      top: -8px
-    }
+  &.top {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-    &.bottom {
-      bottom: -8px;
-    }
+  &.top-left {
+    top: -8px;
+    left: -8px;
+  }
+
+  &.top-right {
+    top: -8px;
+    right: -8px;
+  }
+
+  &.bottom {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.bottom-left {
+    bottom: -8px;
+    left: -8px;
+  }
+
+  &.bottom-right {
+    bottom: -8px;
+    right: -8px;
   }
 }
 

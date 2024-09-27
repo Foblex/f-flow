@@ -1,0 +1,23 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas>
+
+    <f-connection [fReassignDisabled]="true"
+                  fOutputId="1" fInputId="2"
+                  fBehavior="fixed" fType="segment">
+    </f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }"
+         fNodeOutput fOutputId="1" [fOutputConnectableSide]="outputSide">
+      I'm connector with {{ outputSide }} connectable side
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 150 }"
+         fNodeInput fInputId="2" [fInputConnectableSide]="inputSide">
+      I'm connector with {{ inputSide }} connectable side
+    </div>
+
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <button class="f-button" (click)="onSwitchSides()">Switch Sides</button>
+</div>
