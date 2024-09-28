@@ -57,6 +57,7 @@ function createEnvironment(): IDocsEnvironment {
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
+      { icon: 'twitter', link: 'https://x.com/foblexflow' },
     ],
     toC: {
       title: 'In this article',

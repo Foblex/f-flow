@@ -86,11 +86,19 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   }
 
   public override redrawWithAnimation(): void {
+    let duration = F_CANVAS_ANIMATION_DURATION;
+    if (this.isMobile()) {
+      duration = 80;
+    }
     this.fComponentsStore.fBackground?.setTransform(this.transform);
-    this.hostElement.setAttribute("style", `transition: transform ${ F_CANVAS_ANIMATION_DURATION }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
-    setTimeout(() => {
-      this.redraw();
-    }, F_CANVAS_ANIMATION_DURATION);
+    this.hostElement.setAttribute("style", `transition: transform ${ duration }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
+    setTimeout(() => this.redraw(), F_CANVAS_ANIMATION_DURATION);
+  }
+
+  private isMobile(): boolean {
+    // @ts-ignore
+    const userAgent = navigator.userAgent || navigator.vendor || window[ 'opera' ];
+    return /android|iPad|iPhone|iPod/i.test(userAgent);
   }
 
   public centerGroupOrNode(id: string, animated: boolean = true): void {
