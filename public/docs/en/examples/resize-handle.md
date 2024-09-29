@@ -2,7 +2,7 @@
 
 ## Description
 
-Learn how to enhance the interactivity of your flow diagrams by adding a [ResizeHandle](./docs/f-resize-handle-directive) to nodes. This example demonstrates the process of making nodes dynamically resizable, allowing users to easily modify the dimensions of nodes within an Angular application powered by Foblex Flow.
+Learn how to enhance the interactivity of your flow diagrams by adding a ResizeHandle to nodes. This example demonstrates the process of making nodes dynamically resizable, allowing users to easily modify the dimensions of nodes within an Angular application powered by Foblex Flow.
 
 ## Example
 
