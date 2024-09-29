@@ -2,7 +2,7 @@
 
 ## Description
 
-Discover how to enhance your flow-based diagrams by grouping nodes together. This example illustrates the process of creating [node groups](./docs/f-node-group-directive), enabling users to efficiently organize, manage, and manipulate multiple nodes simultaneously within Angular, utilizing Foblex Flow.
+Discover how to enhance your flow-based diagrams by grouping nodes together. This example illustrates the process of creating node groups, enabling users to efficiently organize, manage, and manipulate multiple nodes simultaneously within Angular, utilizing Foblex Flow.
 
 ## Example
 
