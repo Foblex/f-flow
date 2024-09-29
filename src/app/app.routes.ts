@@ -22,6 +22,10 @@ export const routes: Routes = [
     ],
     loadChildren: () => import('@foblex/f-docs').then(m => m.F_DOCUMENTATION_ROUTES)
   },
+  // {
+  //   path: '**',
+  //   loadComponent: () => import('./not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
+  // }
   {
     path: '**',
     redirectTo: '/docs/get-started',
