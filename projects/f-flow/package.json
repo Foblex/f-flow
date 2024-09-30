@@ -31,7 +31,7 @@
   "peerDependencies": {
     "@angular/common": ">=12.0.0",
     "@angular/core": ">=12.0.0",
-    "@foblex/platform": "1.0.3",
+    "@foblex/platform": "1.0.4",
     "@foblex/mediator": "1.1.0",
     "@foblex/2d": "1.1.0",
     "@foblex/drag-toolkit": "1.1.0",

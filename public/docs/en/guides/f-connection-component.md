@@ -20,9 +20,9 @@ The **FConnectionComponent** is a component that represents a connection between
 
   - `fInputId: string;` The identifier of the [FNodeInputDirective](f-node-input-directive) where the connection ends.  
 
-  - `fBehavior: EFConnectionBehavior;` The behaviour of the connection, affecting its positioning and flexibility. Accepts a value from [EFConnectionBehavior](e-f-connection-behaviour) enum. Default: `EFConnectionBehavior.FIXED`
+  - `fBehavior: EFConnectionBehavior;` The behaviour of the connection, affecting its positioning and flexibility. Accepts a value from [EFConnectionBehavior]() enum. Default: `EFConnectionBehavior.FIXED`
 
-  - `fType: EFConnectionType | string;` The visual type of the connection, such as straight, bezier and etc. Accepts a value from [EFConnectionType](e-f-connection-type) enum or string for custom connection. Default: `EFConnectionType.STRAIGHT` 
+  - `fType: EFConnectionType | string;` The visual type of the connection, such as straight, bezier and etc. Accepts a value from [EFConnectionType]() enum or string for custom connection. Default: `EFConnectionType.STRAIGHT` 
 
   - `fText: string;` The text displayed on the connection. Default: `null`
 

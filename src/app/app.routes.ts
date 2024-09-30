@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { F_ENVIRONMENT } from '@foblex/f-docs';
 import { GUIDES_ENVIRONMENT } from '../../public/docs/en/guides/environment';
 import { EXAMPLES_ENVIRONMENT } from '../../public/docs/en/examples/environment';
+import { F_ENVIRONMENT } from '@foblex/f-docs';
 
 export const routes: Routes = [
   {

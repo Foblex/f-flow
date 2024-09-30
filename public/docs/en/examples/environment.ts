@@ -6,6 +6,7 @@ function createEnvironment(): IDocsEnvironment {
   return {
     lang: 'en',
     docsDir: './docs/en/examples/',
+    notFoundMD: './docs/en/404.md',
     logo: './logo.svg',
     title: 'Foblex Flow',
     navigation: [
