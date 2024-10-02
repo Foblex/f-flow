@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { BrowserService } from '@foblex/platform';
 import { takeScreenshot } from './take-screenshot';
 import { FMetaService, IMetaData } from '@foblex/f-docs';
-import { GUIDES_ENVIRONMENT } from '../../public/docs/en/guides/environment';
-import { EXAMPLES_ENVIRONMENT } from '../../public/docs/en/examples/environment';
+import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
+import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
 
 @Component({
   selector: 'app-root',

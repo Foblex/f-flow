@@ -1,0 +1,18 @@
+@use "../../flow-common";
+
+::ng-deep create-node-on-connection-drop {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}
+.toolbar {
+  @include flow-common.toolbar;
+}

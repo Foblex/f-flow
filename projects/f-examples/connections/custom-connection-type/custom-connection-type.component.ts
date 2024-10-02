@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import {
   F_CONNECTION_BUILDERS,
+  FCanvasComponent,
   FFlowModule,
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
@@ -43,7 +44,6 @@ const connectionBuilders = {
   [ 'circle' ]: new CircleConnectionBuilder()
 };
 
-
 @Component({
   selector: 'custom-connection-type',
   styleUrls: [ './custom-connection-type.component.scss' ],
@@ -59,4 +59,10 @@ const connectionBuilders = {
 })
 export class CustomConnectionTypeComponent {
 
+  @ViewChild(FCanvasComponent, { static: true })
+  public fCanvas!: FCanvasComponent;
+
+  public onLoaded(): void {
+    this.fCanvas.resetScaleAndCenter(false);
+  }
 }

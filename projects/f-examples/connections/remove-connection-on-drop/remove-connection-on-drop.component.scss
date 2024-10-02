@@ -1,0 +1,20 @@
+@use "../../flow-common";
+
+::ng-deep remove-connection-on-drop {
+  @include flow-common.connection;
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: var(--connection-color);
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}

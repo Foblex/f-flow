@@ -1,0 +1,29 @@
+@use "../../flow-common";
+
+::ng-deep connection-markers {
+  @include flow-common.connection;
+
+  .connection-marker {
+    circle, rect, path {
+      fill: var(--connection-color);
+    }
+  }
+
+  .f-connection {
+    &.f-selected {
+
+      .f-connection-path {
+        stroke: var(--minimap-node-selected-color);
+      }
+      .connection-marker {
+        circle, rect, path {
+          fill: var(--minimap-node-selected-color);
+        }
+      }
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}

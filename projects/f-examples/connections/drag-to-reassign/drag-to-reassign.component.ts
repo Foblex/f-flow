@@ -8,7 +8,7 @@ import { FCanvasComponent, FFlowModule, FReassignConnectionEvent } from '@foblex
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
   ]
 })
 export class DragToReassignComponent {

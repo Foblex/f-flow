@@ -1,0 +1,31 @@
+<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="onConnectionDropped($event)">
+  <f-canvas>
+    <f-connection-for-create></f-connection-for-create>
+
+    @for (connection of connections; track connection.inputId)  {
+      <f-connection [fReassignDisabled]="true"
+                    fBehavior="floating"
+                    [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
+      </f-connection>
+    }
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }">
+      I'm a node
+      <div fNodeOutput fOutputConnectableSide="left" [fOutputMultiple]="true" class="left"></div>
+      <div fNodeOutput fOutputConnectableSide="top" [fOutputMultiple]="true" class="top"></div>
+      <div fNodeOutput fOutputConnectableSide="right" [fOutputMultiple]="true" class="right"></div>
+      <div fNodeOutput fOutputConnectableSide="bottom" [fOutputMultiple]="true" class="bottom"></div>
+    </div>
+
+    @for (node of nodes; track node.id) {
+      <div fNode fDragHandle [fNodePosition]="node.position"
+           fNodeInput [fInputId]="node.id" fInputConnectableSide="left">
+        I'm a node
+      </div>
+    }
+
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <button class="f-button" (click)="onDeleteConnections()">Delete Connections</button>
+</div>
