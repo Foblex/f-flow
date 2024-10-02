@@ -51,6 +51,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'drag-to-reassign', component: import('../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component') },
       { tag: 'create-node-on-connection-drop', component: import('../../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component') },
       { tag: 'remove-connection-on-drop', component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component') },
+      { tag: 'auto-snap', component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component') },
 
       { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
       { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
@@ -236,11 +237,17 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
-      }
-      // {
-      //   link: 'proximity-connect',
-      //   text: 'Proximity Connect',
-      // },
+      },
+      {
+        link: 'auto-snap',
+        text: 'Auto Snap',
+        description: 'Discover how to automatically snap connections to nodes. This example demonstrates how to snap connections to nodes automatically, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image: './previews/examples/auto-snap.light.png',
+        image_dark: './previews/examples/auto-snap.dark.png',
+        image_width: 791,
+        image_height: 600,
+        image_type: 'image/png',
+      },
       // {
       //   link: 'connection-types',
       //   text: 'Connection Types',

@@ -1,0 +1,19 @@
+<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
+  <f-canvas>
+    <f-connection-for-create></f-connection-for-create>
+    <f-snap-connection [fSnapThreshold]="100"></f-snap-connection>
+
+    @for (connection of connections; track connection.inputId)  {
+      <f-connection [fReassignDisabled]="true"
+                    [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
+      </f-connection>
+    }
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 24 }" fNodeOutput fOutputConnectableSide="right">drag me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 24 }" fNodeInput fInputConnectableSide="left">to me</div>
+
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <button class="f-button" (click)="onDeleteConnections()">Delete Connections</button>
+</div>
