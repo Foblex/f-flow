@@ -54,6 +54,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'auto-snap', component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component') },
       { tag: 'connection-types', component: import('../../../projects/f-examples/connections/connection-types/connection-types.component') },
       { tag: 'custom-connection-type', component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component') },
+      { tag: 'connection-behaviours', component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component') },
 
       { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
       { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
@@ -270,14 +271,16 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
-      // {
-      //   link: 'connection-behaviors',
-      //   text: 'Connection Behaviors',
-      // },
-      // {
-      //   link: 'custom-connection-type',
-      //   text: 'Custom Connection Type',
-      // },
+      {
+        link: 'connection-behaviours',
+        text: 'Connection Behaviours',
+        description: 'Learn how to customize connection behaviours. This example demonstrates how to modify connection behaviours, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image: './previews/examples/connection-behaviours.light.png',
+        image_dark: './previews/examples/connection-behaviours.dark.png',
+        image_width: 791,
+        image_height: 600,
+        image_type: 'image/png',
+      },
       // {
       //   link: 'custom-connection',
       //   text: 'Custom Connection',
