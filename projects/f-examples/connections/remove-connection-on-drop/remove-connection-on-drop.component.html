@@ -1,0 +1,18 @@
+<f-flow fDraggable (fLoaded)="onLoaded()" (fReassignConnection)="onConnectionDropped($event)">
+  <f-canvas>
+    @for (connection of connections; track connection.inputId)  {
+      <f-connection [fReassignDisabled]="false"
+                    fBehavior="floating"
+                    [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
+      </f-connection>
+    }
+
+    @for (node of nodes; track node.id) {
+      <div fNode fDragHandle [fNodePosition]="node.position"
+           fNodeOutput [fOutputId]="node.id"
+           fNodeInput [fInputId]="node.id">
+        I'm a node
+      </div>
+    }
+  </f-canvas>
+</f-flow>

@@ -37,7 +37,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   private emitEvent(event: IPointerEvent): void {
     const input = this.getInputUnderPointer(event);
     if (
-      !input || !this.isReassignToDifferentInput(input)
+      !!input && !this.isReassignToDifferentInput(input)
     ) {
       return;
     }
@@ -46,7 +46,8 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
         this.dragHandler.fConnection.fId,
         this.dragHandler.fConnection.fOutputId,
         this.dragHandler.fConnection.fInputId,
-        input.id
+        input?.id,
+        event.getPosition()
       )
     );
   }

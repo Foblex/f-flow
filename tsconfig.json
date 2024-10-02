@@ -5,8 +5,8 @@
     "strict": true,
     "paths": {
 //      "@foblex/f-docs": [
-////        "./projects/f-docs/src/public-api.ts"
-//        "./dist/f-docs"
+//        "./projects/f-docs/src/public-api.ts"
+////        "./dist/f-docs"
 //      ],
       "@foblex/flow": [
         "./projects/f-flow/src/public-api.ts"
