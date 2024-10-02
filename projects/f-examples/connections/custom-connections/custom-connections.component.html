@@ -1,0 +1,24 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas>
+    <f-connection [fReassignDisabled]="true"
+                  fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment"
+                  class="gradient-color"
+                  fStartColor="var(--connection-gradient-1)" fEndColor="var(--connection-gradient-2)">
+    </f-connection>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1" fOutputConnectableSide="bottom">
+      I'm a node
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" fNodeInput fInputId="2" fInputConnectableSide="top">
+      I'm a node
+    </div>
+
+    <f-connection [fReassignDisabled]="true" fOutputId="3" fInputId="4" fBehavior="floating">
+    </f-connection>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }" fNodeOutput fOutputId="3" fOutputConnectableSide="right">
+      I'm a node
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 150 }" fNodeInput fInputId="4" fInputConnectableSide="left">
+      I'm a node
+    </div>
+  </f-canvas>
+</f-flow>

@@ -1,0 +1,35 @@
+@use "../../flow-common";
+
+::ng-deep custom-connections {
+  .f-connection {
+
+    .f-connection-drag-handle {
+      fill: none;
+      stroke: none;
+    }
+
+    .f-connection-selection {
+      fill: none;
+      stroke-width: 20;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke-width: 6;
+    }
+
+    &:not(.gradient-color) {
+      .f-connection-path {
+        stroke: #db2777;
+        stroke-width: 4;
+      }
+    }
+    &:hover {
+      stroke: var(--minimap-view-color);
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}
