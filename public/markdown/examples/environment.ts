@@ -55,6 +55,7 @@ function createEnvironment(): IDocsEnvironment {
       { tag: 'connection-types', component: import('../../../projects/f-examples/connections/connection-types/connection-types.component') },
       { tag: 'custom-connection-type', component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component') },
       { tag: 'connection-behaviours', component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component') },
+      { tag: 'connection-markers', component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component') },
 
       { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
       { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
@@ -281,14 +282,16 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
-      // {
-      //   link: 'custom-connection',
-      //   text: 'Custom Connection',
-      // },
-      // {
-      //   link: 'connection-markers',
-      //   text: 'Connection Markers',
-      // },
+      {
+        link: 'connection-markers',
+        text: 'Connection Markers',
+        description: 'Discover how to add markers to connections. This example demonstrates how to create connections with markers, providing a comprehensive guide to building interactive flow-based diagrams.',
+        image: './previews/examples/connection-markers.light.png',
+        image_dark: './previews/examples/connection-markers.dark.png',
+        image_width: 791,
+        image_height: 600,
+        image_type: 'image/png',
+      },
       // {
       //   link: 'connection-text',
       //   text: 'Connection Text',
