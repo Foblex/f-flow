@@ -8,7 +8,7 @@ function createEnvironment(): IDocsEnvironment {
     docsDir: './markdown/guides/',
     notFoundMD: './markdown/404.md',
     logo: './logo.svg',
-    title: 'Foblex Flow',
+    title: 'Foblex Flow – Angular Library for Flow-Based UIs',
     navigation: [
       introductionGroup(),
       containerGroup(),

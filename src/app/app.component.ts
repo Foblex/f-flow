@@ -64,7 +64,7 @@ const DEFAULT_PAGE_DATA: IMetaData = {
   title: GUIDES_ENVIRONMENT.title,
   site_name: GUIDES_ENVIRONMENT.title,
   locale: GUIDES_ENVIRONMENT.lang,
-  description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
+  description: 'Foblex Flow is an Angular library that simplifies the creation of flow-based uis, providing components for building interactive UIs with nodes and connections.',
   image: 'https://flow.foblex.com/site-preview.png',
   image_type: 'image/png',
   image_width: 2986,
