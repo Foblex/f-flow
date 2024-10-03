@@ -35,7 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.renderer.addClass(this.fBrowser.document.documentElement, 'dark');
       this.fBrowser.localStorage.setItem('preferred-theme', 'dark');
     }
-    this.subscriptions$.add(this.fMeta.subscribeOnRouteChanges(DEFAULT_PAGE_DATA, [ GUIDES_ENVIRONMENT, EXAMPLES_ENVIRONMENT ]));
+    this.subscriptions$.add(
+      this.fMeta.subscribeOnRouteChanges(DEFAULT_PAGE_DATA, [ GUIDES_ENVIRONMENT, EXAMPLES_ENVIRONMENT ])
+    );
   }
 
 
@@ -61,10 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
 const DEFAULT_PAGE_DATA: IMetaData = {
   url: 'https://flow.foblex.com',
   type: 'website',
-  title: GUIDES_ENVIRONMENT.title,
-  site_name: GUIDES_ENVIRONMENT.title,
+  title: 'Angular Library for Flow-Based UIs - Foblex Flow',
+  app_name: 'Foblex Flow',
   locale: GUIDES_ENVIRONMENT.lang,
-  description: 'An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.',
+  description: 'Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections',
   image: 'https://flow.foblex.com/site-preview.png',
   image_type: 'image/png',
   image_width: 2986,

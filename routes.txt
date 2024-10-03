@@ -31,6 +31,14 @@
 
 /examples/drag-to-connect
 /examples/drag-to-reassign
+/examples/create-node-on-connection-drop
+/examples/remove-connection-on-drop
+/examples/auto-snap
+/examples/connection-types
+/examples/custom-connection-type
+/examples/connection-behaviours
+/examples/connection-markers
+/examples/custom-connections
 
 /examples/dagre-layout
 /examples/elkjs-layout

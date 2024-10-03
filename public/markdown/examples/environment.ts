@@ -148,7 +148,7 @@ function connectorGroup(): INavigationGroup {
       {
         link: 'node-as-connector',
         text: 'Node as Connector',
-        description: 'Learn how to use nodes as connectors. This example demonstrates how to create nodes with connectors, enabling users to connect them easily within Angular and Foblex Flow.',
+        description: 'Use nodes as connectors, enabling easy connections in Foblex Flow for Angular.',
         image: './previews/examples/node-as-connector.light.png',
         image_dark: './previews/examples/node-as-connector.dark.png',
         image_width: 726,
@@ -158,7 +158,7 @@ function connectorGroup(): INavigationGroup {
       {
         link: 'connector-inside-node',
         text: 'Connector Inside Node',
-        description: 'Discover how to add connectors inside nodes. This example demonstrates how to create nodes with internal connectors, allowing users to connect them easily within Angular and Foblex Flow.',
+        description: 'Add connectors inside nodes, allowing easy connections in Foblex Flow for Angular.',
         image: './previews/examples/connector-inside-node.light.png',
         image_dark: './previews/examples/connector-inside-node.dark.png',
         image_width: 726,
@@ -168,7 +168,7 @@ function connectorGroup(): INavigationGroup {
       {
         link: 'connector-outlet',
         text: 'Connector Outlet',
-        description: 'Learn how to add a connector that controls other connectors. This example demonstrates how to create connectors that connect other connectors, allowing users to create complex connections in Angular and Foblex Flow.',
+        description: 'Create connectors that control other connectors, enabling complex connections in Foblex Flow for Angular.',
         image: './previews/examples/connector-outlet.light.png',
         image_dark: './previews/examples/connector-outlet.dark.png',
         image_width: 726,
@@ -188,7 +188,7 @@ function connectorGroup(): INavigationGroup {
       {
         link: 'connectable-side',
         text: 'Connectable Side',
-        description: 'Discover how to connect connectors from specific sides. This example demonstrates how to connect connectors from specific sides, enabling users to create custom connections within Angular and Foblex Flow.',
+        description: 'Connect nodes from specific sides in Foblex Flow.',
         image: './previews/examples/connectable-side.light.png',
         image_dark: './previews/examples/connectable-side.dark.png',
         image_width: 726,
@@ -208,7 +208,7 @@ function connectionGroup(): INavigationGroup {
         text: 'Drag to Connect',
         image: './previews/examples/drag-to-connect.light.png',
         image_dark: './previews/examples/drag-to-connect.dark.png',
-        description: 'Learn how to connect nodes by dragging a connection between them. This example demonstrates how to create connections between nodes, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Drag to create connections between nodes in Foblex Flow diagrams for Angular.',
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
@@ -218,7 +218,7 @@ function connectionGroup(): INavigationGroup {
         text: 'Drag to Reassign',
         image: './previews/examples/drag-to-reassign.light.png',
         image_dark: './previews/examples/drag-to-reassign.dark.png',
-        description: 'Discover how to reassign connections by dragging them to a new connector. This example demonstrates how to move connections between nodes, enabling users to reassign them easily within Angular and Foblex Flow.',
+        description: 'Reassign connections by dragging them to new nodes in Foblex Flow for Angular.',
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
@@ -226,7 +226,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'create-node-on-connection-drop',
         text: 'Create Node on Connection Drop',
-        description: 'Explore how to create a node when a connection is dropped. This example demonstrates how to add nodes when connections are dropped, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Create a node when a connection is dropped in Foblex Flow for Angular.',
         image: './previews/examples/create-node-on-connection-drop.light.png',
         image_dark: './previews/examples/create-node-on-connection-drop.dark.png',
         image_width: 791,
@@ -236,7 +236,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'remove-connection-on-drop',
         text: 'Remove Connection on Drop',
-        description: 'Learn how to remove a connection when it is dropped. This example demonstrates how to delete connections when they are dropped, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Remove a connection when it is dropped in Foblex Flow diagrams for Angular.',
         image: './previews/examples/remove-connection-on-drop.light.png',
         image_dark: './previews/examples/remove-connection-on-drop.dark.png',
         image_width: 791,
@@ -256,7 +256,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'connection-types',
         text: 'Connection Types',
-        description: 'Learn how to set different connection types. This example demonstrates how to create connections with different types, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Set different connection types for building interactive flow-based diagrams in Foblex Flow for Angular.',
         image: './previews/examples/connection-types.light.png',
         image_dark: './previews/examples/connection-types.dark.png',
         image_width: 791,
@@ -266,7 +266,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'custom-connection-type',
         text: 'Custom Connection Type',
-        description: 'Explore how to create custom connection types. This example demonstrates how to define custom connection types, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Create custom connection types for interactive diagrams in Foblex Flow for Angular.',
         image: './previews/examples/custom-connection-type.light.png',
         image_dark: './previews/examples/custom-connection-type.dark.png',
         image_width: 791,
@@ -276,7 +276,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'connection-behaviours',
         text: 'Connection Behaviours',
-        description: 'Learn how to customize connection behaviours. This example demonstrates how to modify connection behaviours, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Customize connection behaviors for interactive diagrams in Foblex Flow for Angular.',
         image: './previews/examples/connection-behaviours.light.png',
         image_dark: './previews/examples/connection-behaviours.dark.png',
         image_width: 791,
@@ -286,7 +286,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'connection-markers',
         text: 'Connection Markers',
-        description: 'Discover how to add markers to connections. This example demonstrates how to create connections with markers, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Add markers to connections for better visualization in Foblex Flow diagrams.',
         image: './previews/examples/connection-markers.light.png',
         image_dark: './previews/examples/connection-markers.dark.png',
         image_width: 791,
@@ -296,7 +296,7 @@ function connectionGroup(): INavigationGroup {
       {
         link: 'custom-connections',
         text: 'Custom Connections',
-        description: 'Explore how to customize connections. This example demonstrates how to create custom connections, providing a comprehensive guide to building interactive flow-based diagrams.',
+        description: 'Create and customize connections in Foblex Flow diagrams for Angular.',
         image: './previews/examples/custom-connections.light.png',
         image_dark: './previews/examples/custom-connections.dark.png',
         image_width: 791,
@@ -334,7 +334,7 @@ function layoutGroup(): INavigationGroup {
         text: 'ELKJS Layout',
         image: './previews/examples/elkjs-layout.light.png',
         image_dark: './previews/examples/elkjs-layout.dark.png',
-        description: 'Explore a tree layout example using ELKJS with Angular and Foblex Flow to create structured and dynamic tree diagrams. This example demonstrates how to implement and customize tree layouts efficiently within a flow-based diagram using the ELKJS layout engine.',
+        description: 'Create structured tree diagrams with ELKJS in Foblex Flow for Angular.',
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
@@ -377,7 +377,7 @@ function proExamplesGroup(): INavigationGroup {
     items: [ {
       text: 'Visual Programming Flow',
       link: 'f-visual-programming-flow',
-      description: 'Learn how to create a visual programming interface using Angular and Foblex Flow. This example showcases features like adding and connecting nodes, zooming, panning, alignment, and more, providing a comprehensive guide to building interactive, flow-based diagrams.',
+      description: 'Learn how to create a visual programming interface using Angular and Foblex Flow.',
       image: './previews/examples/vp-flow.light.png',
       image_dark: './previews/examples/vp-flow.dark.png',
       image_width: 757,
@@ -386,7 +386,7 @@ function proExamplesGroup(): INavigationGroup {
     },{
       text: 'DB Management Flow',
       link: 'f-db-management-flow',
-      description: 'Discover how to create a database management flow using Angular and Foblex Flow. This example demonstrates connecting nodes, zooming, panning, alignment, form validation, and more, offering a comprehensive solution for building interactive database management interfaces.',
+      description: 'Discover how to create a database management flow using Angular and Foblex Flow.',
       image: './previews/examples/db-management-flow.light.png',
       image_dark: './previews/examples/db-management-flow.dark.png',
       image_width: 806,

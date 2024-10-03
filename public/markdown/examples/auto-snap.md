@@ -2,7 +2,7 @@
 
 ## Description
 
-This guide shows how to create connections when a connection is dropped near a connector, providing a comprehensive approach to building interactive flow-based diagrams.
+This guide explains how to automatically snap connections when they are dropped near a connector, offering a comprehensive solution for building interactive flow-based diagrams.
 
 ## Example
 
