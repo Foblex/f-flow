@@ -2,7 +2,7 @@
 
 ## Description
 
-This guide shows how to add connectors with different connectable sides to a node. 
+This guide explains how to add connectors to a node, allowing connections from specific sides for more control over node interactions.
 
 ## Example
 
