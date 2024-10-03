@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://flow.foblex.com">
-    <img style="margin: auto" src="https://github.com/user-attachments/assets/0557914d-a43d-43c1-8346-760d3627da14" alt="Foblex Flow Logo"/>
+  <a href="https://flow.foblex.com/">
+    <img style="margin: auto" src="https://github.com/user-attachments/assets/ee1d39f6-0a89-4cb9-8dee-1652aba82e69" alt="Foblex Flow Logo"/>
   </a>
 </p>
 
@@ -15,40 +15,45 @@
 
 ## Welcome to Foblex Flow
 
-Foblex Flow is an [Angular](https://angular.dev/) library designed to simplify the creation and manipulation of
-dynamic flows. It provides components for flows, nodes, and connections, automating node
-manipulation and inter-node connections.
+Foblex Flow is an [Angular](https://angular.dev/) library built to simplify the creation and management of dynamic, interactive flows.
+Whether you're developing complex systems or lightweight visualizations, Foblex Flow provides a robust set of tools to help automate node manipulation and inter-node connections with ease. It's fully compatible with Angular 12+, Server-Side Rendering (SSR), and the Composition API.
 
 ### Examples
 
-- [Call Center](https://github.com/Foblex/f-flow-example) - A simple example of a call center flow.
+Explore practical use cases to see Foblex Flow in action:
 
-- [Scheme Editor](https://github.com/Foblex/f-scheme-editor) - A more complex example of a scheme editor.
+- [Call Center](https://github.com/Foblex/f-flow-example) - A streamlined flow example simulating a call flow.
+
+- [Scheme Editor](https://github.com/Foblex/f-scheme-editor) - A more advanced example of a fully interactive scheme editor.
+
+- [Visual Programming](https://flow.foblex.com/examples/f-visual-programming-flow/) - An example of a visual programming flow.
+
+- [DB Management](https://flow.foblex.com/examples/f-db-management-flow/) - An example of a database management flow.
 
 ### Features
 
-1. Node and Connection creation and manipulation.
-2. Connection and Node events.
-3. Reassigning Nodes and Connections.
-4. Customizable Node and Connection templates.
-5. Drag-and-drop support.
-6. Zoom and pan support.
+1. **Node and Connection Creation:** Dynamically generate and manipulate nodes and their connections.
+2. **Event-Driven Architecture:** Built-in events for nodes and connections to allow seamless interaction handling.
+3. **Reassign Connections:** Easily reassign connections between nodes, allowing for flexible flow adjustments.
+4. **Custom Templates:** Fully customizable node and connection templates for tailored visual representation.
+5. **Drag-and-Drop:** Simplified drag-and-drop functionality for intuitive flow manipulation.
+6. **Zoom and Pan Support:** Explore large flows with smooth zooming and panning controls.
 
 ### Getting Started and Documentation
 
-Visit our [Documentation](https://flow.foblex.com/docs/get-started) to learn how to install and use the library in your Angular project.
+For a comprehensive guide on how to install, configure, and use Foblex Flow in your Angular project, visit our [Documentation](https://flow.foblex.com/docs/get-started).
 
 ### Installation
 
-To add Foblex Flow to your project, run the following command:
+To add Foblex Flow to your project, use the following npm command:
 
 ```bash
 npm install @foblex/flow
 ```
 
-### Usage
+### Usage Example
 
-Example:
+Here’s a simple example of how you can use Foblex Flow to create draggable nodes and connections:
 
 ```html
 
@@ -61,7 +66,7 @@ Example:
 </f-flow>
 ```
 
-### Support and Community
+### Community and Support
 
 For questions, feedback, and support, visit the [Foblex Portal](https://flow.foblex.com) to connect with the community and the development team.
 You can also report [issues](https://github.com/Foblex/flow/issues) and request [features](https://github.com/Foblex/flow/discussions) on the [GitHub repository](https://github.com/Foblex/flow).
