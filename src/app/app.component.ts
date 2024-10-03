@@ -4,7 +4,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { BrowserService } from '@foblex/platform';
 import { takeScreenshot } from './take-screenshot';
-import { FMetaService, IMetaData } from '@foblex/f-docs';
+import { CookiePopup, FAnalyticsService, FMetaService, IMetaData } from '@foblex/f-docs';
 import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
 import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
 
@@ -12,7 +12,8 @@ import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    CookiePopup
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -21,13 +22,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions$: Subscription = new Subscription();
 
+  public isBrowser = false;
+
   constructor(
     matIconRegistry: MatIconRegistry,
     private renderer: Renderer2,
     private fMeta: FMetaService,
     private fBrowser: BrowserService,
+    private fAnalytics: FAnalyticsService
   ) {
     matIconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+    this.isBrowser = fBrowser.isBrowser();
   }
 
   public ngOnInit(): void {
@@ -38,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptions$.add(
       this.fMeta.subscribeOnRouteChanges(DEFAULT_PAGE_DATA, [ GUIDES_ENVIRONMENT, EXAMPLES_ENVIRONMENT ])
     );
+    this.fAnalytics.initialize('AW-16677977117');
   }
 
 
