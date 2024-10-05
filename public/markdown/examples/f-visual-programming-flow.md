@@ -22,4 +22,4 @@ This example demonstrates how to use the Foblex Flow to create a visual programm
 
 ## Source Code
 
-The source code for this example can be found in our [GitHub repository](https://github.com/Foblex/f-flow/tree/main/projects/f-pro-examples).
+The source code for this example can be found in our [GitHub repository](https://github.com/Foblex/f-flow/tree/main/projects/f-pro-examples) or [StackBlitz](https://stackblitz.com/~/github.com/siarheihuzarevich/foblex-flow-visual-programming-example)

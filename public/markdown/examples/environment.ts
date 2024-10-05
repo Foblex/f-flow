@@ -15,10 +15,10 @@ function createEnvironment(): IDocsEnvironment {
       connectorGroup(),
       connectionGroup(),
       layoutGroup(),
-  //    extensionGroup(),
+      //    extensionGroup(),
       proExamplesGroup(),
     ],
-    headerNavigation: [{
+    headerNavigation: [ {
       link: '/docs/get-started',
       active: '/docs',
       text: 'Docs',
@@ -26,7 +26,7 @@ function createEnvironment(): IDocsEnvironment {
       link: '/examples/overview',
       active: '/examples',
       text: 'Examples',
-    }],
+    } ],
     footerNavigation: {
       editLink: {
         pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/en/',
@@ -36,34 +36,101 @@ function createEnvironment(): IDocsEnvironment {
       next: 'Next Page',
     },
     components: [
-      { tag: 'custom-nodes', component: import('../../../projects/f-examples/nodes/custom-nodes/custom-nodes.component') },
+      {
+        tag: 'custom-nodes',
+        component: import('../../../projects/f-examples/nodes/custom-nodes/custom-nodes.component')
+      },
       { tag: 'drag-handle', component: import('../../../projects/f-examples/nodes/drag-handle/drag-handle.component') },
-      { tag: 'resize-handle', component: import('../../../projects/f-examples/nodes/resize-handle/resize-handle.component') },
+      {
+        tag: 'resize-handle',
+        component: import('../../../projects/f-examples/nodes/resize-handle/resize-handle.component')
+      },
       { tag: 'grouping', component: import('../../../projects/f-examples/nodes/grouping/grouping.component') },
 
-      { tag: 'node-as-connector', component: import('../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component') },
-      { tag: 'connector-inside-node', component: import('../../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component') },
-      { tag: 'connector-outlet', component: import('../../../projects/f-examples/connectors/connector-outlet/connector-outlet.component') },
-      { tag: 'limiting-connections', component: import('../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component') },
-      { tag: 'connectable-side', component: import('../../../projects/f-examples/connectors/connectable-side/connectable-side.component') },
+      {
+        tag: 'node-as-connector',
+        component: import('../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component')
+      },
+      {
+        tag: 'connector-inside-node',
+        component: import('../../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component')
+      },
+      {
+        tag: 'connector-outlet',
+        component: import('../../../projects/f-examples/connectors/connector-outlet/connector-outlet.component')
+      },
+      {
+        tag: 'limiting-connections',
+        component: import('../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component')
+      },
+      {
+        tag: 'connectable-side',
+        component: import('../../../projects/f-examples/connectors/connectable-side/connectable-side.component')
+      },
 
-      { tag: 'drag-to-connect', component: import('../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component') },
-      { tag: 'drag-to-reassign', component: import('../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component') },
-      { tag: 'create-node-on-connection-drop', component: import('../../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component') },
-      { tag: 'remove-connection-on-drop', component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component') },
+      {
+        tag: 'drag-to-connect',
+        component: import('../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component')
+      },
+      {
+        tag: 'drag-to-reassign',
+        component: import('../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component')
+      },
+      {
+        tag: 'create-node-on-connection-drop',
+        component: import('../../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component')
+      },
+      {
+        tag: 'remove-connection-on-drop',
+        component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component')
+      },
       { tag: 'auto-snap', component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component') },
-      { tag: 'connection-types', component: import('../../../projects/f-examples/connections/connection-types/connection-types.component') },
-      { tag: 'custom-connection-type', component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component') },
-      { tag: 'connection-behaviours', component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component') },
-      { tag: 'connection-markers', component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component') },
-      { tag: 'custom-connections', component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component') },
+      {
+        tag: 'connection-types',
+        component: import('../../../projects/f-examples/connections/connection-types/connection-types.component')
+      },
+      {
+        tag: 'custom-connection-type',
+        component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component')
+      },
+      {
+        tag: 'connection-behaviours',
+        component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component')
+      },
+      {
+        tag: 'connection-markers',
+        component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component')
+      },
+      {
+        tag: 'custom-connections',
+        component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component')
+      },
 
-      { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
-      { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
+      {
+        tag: 'dagre-layout-example',
+        component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component')
+      },
+      {
+        tag: 'elkjs-layout-example',
+        component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component')
+      },
 
-      { tag: 'draggable-flow', component: import('../../../projects/f-guides-examples/draggable-flow/draggable-flow.component') },
-      { tag: 'vp-flow', component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
-      { tag: 'db-management-flow', component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
+      {
+        tag: 'draggable-flow',
+        component: import('../../../projects/f-guides-examples/draggable-flow/draggable-flow.component')
+      },
+      {
+        tag: 'vp-flow',
+        component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component')
+      },
+      {
+        tag: 'db-management-flow',
+        component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component')
+      },
+      {
+        tag: 'uml-diagram-example',
+        component: import('../../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component')
+      },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -200,7 +267,7 @@ function connectorGroup(): INavigationGroup {
 }
 
 function connectionGroup(): INavigationGroup {
-  return  {
+  return {
     text: 'Connections',
     items: [
       {
@@ -383,7 +450,7 @@ function proExamplesGroup(): INavigationGroup {
       image_width: 757,
       image_height: 600,
       image_type: 'image/png',
-    },{
+    }, {
       text: 'DB Management Flow',
       link: 'f-db-management-flow',
       description: 'Discover how to create a database management flow using Angular and Foblex Flow.',
@@ -392,14 +459,23 @@ function proExamplesGroup(): INavigationGroup {
       image_width: 806,
       image_height: 600,
       image_type: 'image/png',
-    },
-    //   {
-    //   text: 'Call Center Flow',
-    //   link: 'https://github.com/Foblex/f-flow-example',
-    // }, {
-    //   text: 'Scheme Editor',
-    //   link: 'https://github.com/Foblex/f-scheme-editor',
-    // }
+    }, {
+      text: 'UML Diagram',
+      link: 'f-uml-diagram-flow',
+      description: 'Learn how to create a UML diagram using Angular and Foblex Flow.',
+      image: './previews/examples/uml-diagram-example.light.png',
+      image_dark: './previews/examples/uml-diagram-example.dark.png',
+      image_width: 806,
+      image_height: 600,
+      image_type: 'image/png',
+    }
+      //   {
+      //   text: 'Call Center Flow',
+      //   link: 'https://github.com/Foblex/f-flow-example',
+      // }, {
+      //   text: 'Scheme Editor',
+      //   link: 'https://github.com/Foblex/f-scheme-editor',
+      // }
     ]
   }
 }

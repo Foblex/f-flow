@@ -1,0 +1,76 @@
+::ng-deep :root {
+  --db-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+::ng-deep :root {
+  --db-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --db-shadow-2: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+  --db-shadow-3: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+::ng-deep :root {
+  --db-background: #ffffff;
+  --db-primary-1: #5672cd;
+  --db-primary-2: #3451b2;
+  --db-primary-soft: rgba(100, 108, 255, 0.24);
+
+  --db-red-soft: rgba(244, 63, 94, 0.14);
+
+  --db-yellow: #915930;
+
+  --db-text-1: rgba(60, 60, 67);
+
+  --db-gray-soft: rgba(142, 150, 170, 0.14);
+
+  &.dark {
+    --db-background: #000000;
+    --db-primary-1: #3e63dd;
+    --db-primary-2: #a8b1ff;
+    --db-primary-soft: rgba(100, 108, 255, 0.26);
+
+    --db-red-soft: rgba(244, 63, 94, 0.16);
+
+    --db-yellow: #f9b44e;
+
+    --db-text-1: rgba(255, 255, 245, 0.86);
+
+    --db-gray-soft: rgba(101, 117, 133, 0.16);
+  }
+}
+
+::ng-deep :root {
+  --db-line-alignment-color: rgba(60, 60, 67, 0.56);
+
+  --db-snap-connection: rgba(180, 180, 180);
+
+  --db-node-header-normal-state-background-color: #e4e4e9;
+
+  --db-background-component-color: rgba(0, 0, 0, 0.1);
+
+  --db-select-field-text-color: rgba(60, 60, 67, 0.56);
+  --db-select-option-hover-state-layer-color: rgba(142, 150, 170, 0.14);
+  --db-select-option-focus-state-layer-color: rgba(142, 150, 170, 0.14);
+
+  --db-button-default-bg: #ebebef;
+  --db-button-default-hover-bg: #e4e4e9;
+  --db-button-default-active-bg: #dddde3;
+
+  &.dark {
+    --db-line-alignment-color: rgba(235, 235, 245, 0.38);
+
+    --db-snap-connection: rgba(220, 220, 220);
+
+    --db-node-header-normal-state-background-color: #414853;
+
+    --db-background-component-color: rgba(255, 255, 255, 0.1);
+
+    --db-select-field-text-color: rgba(235, 235, 245, 0.38);
+    --db-select-option-hover-state-layer-color: rgba(101, 117, 133, 0.16);
+    --db-select-option-focus-state-layer-color: rgba(101, 117, 133, 0.16);
+
+    --db-button-default-bg: #32363f;
+    --db-button-default-hover-bg: #414853;
+    --db-button-default-active-bg: #515c67;
+  }
+}
