@@ -1,0 +1,10 @@
+@use "../../flow-common";
+
+::ng-deep minimap-example {
+  @include flow-common.connection;
+  @include flow-common.minimap;
+}
+
+.f-node {
+  @include flow-common.node;
+}
