@@ -5,11 +5,27 @@
   height: 100%;
 }
 
+::ng-deep :root {
+  --uml-line-alignment-color: #e2e2e3;
+  --uml-node-color: rgba(100, 108, 255, 0.24);
+  --uml-node-text-color: rgba(60, 60, 67);
+
+  --uml-connection-color: rgba(60, 60, 67);
+
+  &.dark {
+    --uml-line-alignment-color: #2e2e32;
+    --uml-node-color: rgba(100, 108, 255, 0.26);
+    --uml-node-text-color: rgba(255, 255, 245, 0.86);
+
+    --uml-connection-color: rgba(255, 255, 245, 0.86);
+  }
+}
+
 ::ng-deep uml-diagram-example {
 
   .f-background {
     circle {
-      fill: var(--db-background-component-color);
+      fill: var(--uml-line-alignment-color);
     }
   }
 
@@ -19,93 +35,41 @@
       cursor: move;
     }
 
-    .f-connection-selection {
-      fill: none;
-      stroke: transparent;
-      stroke-width: 20;
-      cursor: pointer;
-    }
-
     .f-connection-path {
       fill: none;
-      stroke: var(--db-text-1);
+      stroke: var(--uml-node-text-color);
       stroke-width: 2;
     }
 
     .f-marker {
       path, circle {
-        fill: var(--db-text-1);
-      }
-    }
-
-    &.f-selected {
-      .f-connection-path {
-        stroke: var(--db-primary-1);
-      }
-
-      .f-marker {
-        path, circle {
-          fill: var(--db-primary-1);
-        }
-      }
-    }
-
-    &:hover {
-      .f-connection-selection {
-        stroke: var(--db-primary-1);
-        opacity: 0.1;
-      }
-    }
-
-
-    &.f-snap-connection {
-      .f-connection-path {
-        stroke: var(--db-snap-connection);
-        stroke-width: 2px;
-      }
-
-      .f-marker {
-        path, circle {
-          fill: var(--db-snap-connection);
-        }
-      }
-
-      .f-connection-selection {
-        fill: transparent !important;
-        stroke: transparent !important;
-      }
-    }
-
-    &.f-connection-for-create {
-      .f-connection-selection {
-        fill: transparent !important;
-        stroke: transparent !important;
+        fill: var(--uml-node-text-color);
       }
     }
   }
 
   .f-line-alignment {
     .f-line {
-      border: 0.5px dashed var(--db-line-alignment-color);
+      border: 0.5px dashed var(--uml-line-alignment-color);
     }
   }
 }
 
 .f-node, .f-group {
   display: block;
-  background-color: var(--db-primary-soft);
+  background-color: var(--uml-node-color);
   min-width: 200px;
   min-height: 120px;
   border-radius: 12px;
 
   .title {
-    color: var(--db-text-1);
+    color: var(--uml-node-text-color);
     padding: 4px 12px;
-    border-bottom: 1px solid var(--db-line-alignment-color);
+    border-bottom: 1px solid var(--uml-node-text-color);
   }
 
   .attr {
-    color: var(--db-text-1);
+    color: var(--uml-node-text-color);
     padding: 4px 12px;
   }
 }

@@ -1,4 +1,6 @@
 ::ng-deep :root {
+  --background-element-color: rgba(0, 0, 0, 0.1);
+
   --disabled-color: #e2e2e2;
   --node-background-color: #ffffff;
   --node-border-radius: 2px;
@@ -20,6 +22,8 @@
   --minimap-view-color: rgba(100, 108, 255, 0.14);
 
   &.dark {
+    --background-element-color: rgba(255, 255, 255, 0.1);
+
     --disabled-color: #2c2c2e;
     --node-background-color: #000000;
     --node-border-radius: 2px;
@@ -80,7 +84,11 @@
 @mixin background {
   .f-background {
     line {
-      stroke: rgba(0, 0, 0, 0.6);
+      stroke: var(--background-element-color);
+    }
+
+    circle {
+      fill: var(--background-element-color);
     }
   }
 }

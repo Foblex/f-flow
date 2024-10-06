@@ -14,10 +14,10 @@
     <f-connection-for-create fBehavior="floating"
                              fType="straight">
       <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
-        <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
+        <circle cx="5" cy="5" r="2" stroke="none"></circle>
       </svg>
       <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="5" [refY]="3">
-        <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
+        <path d="M0,0 L6,3 0,6Z" stroke="none"></path>
       </svg>
     </f-connection-for-create>
     <f-snap-connection fBehavior="fixed"
@@ -35,18 +35,16 @@
                     fType="segment"
                     [fOutputId]="connection.from" [fInputId]="connection.to">
         <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
-          <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
+          <circle cx="5" cy="5" r="2" stroke="none"></circle>
         </svg>
         <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="5" [refY]="3">
-          <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
+          <path d="M0,0 L6,3 0,6Z" stroke="none"></path>
         </svg>
-        <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.SELECTED_START" [height]="10" [width]="10" [refX]="5"
-             [refY]="5">
-          <circle cx="5" cy="5" r="2" stroke="none" fill="var(--primary-3)"></circle>
+        <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.SELECTED_START" [height]="10" [width]="10" [refX]="5" [refY]="5">
+          <circle cx="5" cy="5" r="2" stroke="none"></circle>
         </svg>
-        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="5.5"
-             [refY]="3">
-          <path d="M0,0 L6,3 0,6Z" stroke="none" fill="var(--primary-3)"></path>
+        <svg viewBox="0 0 6 6" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="5" [refY]="3">
+          <path d="M0,0 L6,3 0,6Z" stroke="none"></path>
         </svg>
         <div fConnectionCenter db-management-connection-toolbar [viewModel]="connection"></div>
       </f-connection>

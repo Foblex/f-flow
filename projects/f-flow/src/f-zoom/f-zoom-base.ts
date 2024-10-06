@@ -46,11 +46,11 @@ export abstract class FZoomBase {
       return;
     }
 
-    this.flowHost.addEventListener('wheel', this.onWheel.bind(this));
-    this.flowHost.addEventListener('dblclick', this.onDoubleClick.bind(this));
+    this.flowHost.addEventListener('wheel', this.onWheel);
+    this.flowHost.addEventListener('dblclick', this.onDoubleClick);
     this.listeners = () => {
-      this.flowHost.removeEventListener('wheel', this.onWheel.bind(this));
-      this.flowHost.removeEventListener('dblclick', this.onDoubleClick.bind(this));
+      this.flowHost.removeEventListener('wheel', this.onWheel);
+      this.flowHost.removeEventListener('dblclick', this.onDoubleClick);
     };
   }
 
@@ -58,7 +58,7 @@ export abstract class FZoomBase {
     return this.fCanvas.transform.scale || 1;
   }
 
-  private onWheel(event: WheelEvent): void {
+  private onWheel = (event: WheelEvent) => {
     event.preventDefault();
     const targetElement = event.target as HTMLElement;
 
@@ -81,7 +81,7 @@ export abstract class FZoomBase {
     this.fCanvas.emitCanvasChangeEvent();
   }
 
-  private onDoubleClick(event: MouseEvent): void {
+  private onDoubleClick = (event: MouseEvent) => {
     event.preventDefault();
     const targetElement = event.target as HTMLElement;
 

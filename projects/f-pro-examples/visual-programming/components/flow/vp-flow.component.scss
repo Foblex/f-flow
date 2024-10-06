@@ -5,11 +5,17 @@
   height: 100%;
 }
 
-::ng-deep .visual-programming-flow {
+::ng-deep vp-flow {
 
   .f-line-alignment {
     .f-line {
-      background-color: var(--divider-color);
+      background-color: var(--vp-line-alignment-color);
+    }
+  }
+
+  .f-background {
+    circle {
+      fill: var(--vp-line-alignment-color);
     }
   }
 
@@ -26,7 +32,7 @@
 
     &:hover {
       .f-connection-selection {
-        stroke: var(--gray-soft);
+        stroke: var(--vp-connection-selection-color);
       }
     }
 
@@ -37,59 +43,48 @@
 
     &.f-connection-for-create {
       .f-connection-path {
-        stroke: var(--primary-3);
+        stroke: var(--vp-connection-for-create-path);
         stroke-width: 2px;
       }
     }
 
     .f-connection-text {
-      fill: var(--tertiary-text);
+      fill: var(--vp-connection-text-color);
       font-size: 12px;
     }
 
     &.f-selected {
       .f-connection-path {
-        stroke: var(--primary-3);
+        stroke: var(--vp-selected-connection-color);
       }
 
       .f-connection-text {
-        fill: var(--primary-3);
+        fill: var(--vp-selected-connection-color);
       }
     }
   }
 
   .f-selection-area {
-    background-color: var(--primary-soft);
+    background-color: var(--vp-selection-area-color);
   }
 
   .f-minimap {
-    background-color: var(--background-color);
+    background-color: var(--vp-minimap-color);
     bottom: 16px;
     right: 16px;
     width: 140px;
     height: 120px;
 
     .f-minimap-node {
-      fill: var(--primary-text);
+      fill: var(--vp-minimap-node-color);
 
       &.f-selected {
-        fill: var(--primary-1);
+        fill: var(--vp-minimap-selected-node-color);
       }
     }
 
     .f-minimap-view {
-      fill: var(--primary-soft)
+      fill: var(--vp-minimap-view-color)
     }
   }
 }
-
-//::ng-deep .showcase {
-//  .visual-programming-flow {
-//    .f-minimap {
-//      width: 100px;
-//      height: 90px;
-//      bottom: 8px;
-//      right: 8px;
-//    }
-//  }
-//}

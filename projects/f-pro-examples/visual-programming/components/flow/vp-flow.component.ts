@@ -20,7 +20,11 @@ import { VpToolbarComponent } from '../toolbar/vp-toolbar.component';
 @Component({
   selector: 'vp-flow',
   templateUrl: './vp-flow.component.html',
-  styleUrls: [ './vp-flow.component.scss' ],
+  styleUrls: [
+    '../styles/_icon-button.scss',
+    '../styles/_variables.scss',
+    './vp-flow.component.scss'
+  ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -73,8 +77,8 @@ export class VpFlowComponent implements OnInit {
   }
 
   public onReassignConnection(event: FReassignConnectionEvent): void {
-    if(!event.newFInputId) {
-        return;
+    if (!event.newFInputId) {
+      return;
     }
     this.apiService.reassignConnection(event.fOutputId, event.oldFInputId, event.newFInputId);
     this.getData();

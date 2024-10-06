@@ -10,10 +10,11 @@ import { UML_CHART_NODES } from './nodes';
 import { UML_CHART_CONNECTIONS } from './connections';
 
 @Component({
-  selector: 'uml-diagram-example',
-  templateUrl: './uml-diagram-example.component.html',
+  selector: 'mind-map-example',
+  templateUrl: './mind-map-example.component.html',
   styleUrls: [
-    './uml-diagram-example.component.scss',
+    '../styles/_variables.scss',
+    './mind-map-example.component.scss',
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +22,7 @@ import { UML_CHART_CONNECTIONS } from './connections';
     FFlowModule,
   ]
 })
-export class UmlDiagramExampleComponent {
+export class MindMapExampleComponent {
 
   public connections = UML_CHART_CONNECTIONS;
 

@@ -1,0 +1,57 @@
+::ng-deep :root {
+  --vp-line-alignment-color: #e2e2e3;
+  --vp-connection-selection-color: rgba(142, 150, 170, 0.14);
+  --vp-connection-for-create-path: #5672cd;
+  --vp-connection-text-color: rgba(60, 60, 67, 0.56);
+  --vp-selected-connection-color: #5672cd;
+  --vp-selection-area-color: rgba(100, 108, 255, 0.14);
+
+  --vp-minimap-color: #ffffff;
+  --vp-minimap-node-color: rgba(60, 60, 67);
+  --vp-minimap-selected-node-color: #3451b2;
+  --vp-minimap-view-color: rgba(100, 108, 255, 0.14);
+
+  --vp-node-color: #ffffff;
+  --vp-selected-node-background-color: rgba(142, 150, 170, 0.14);
+  --vp-hover-node-background-color: rgba(142, 150, 170, 0.14);
+  --vp-selected-node-border-color: #5672cd;
+  --vp-outlet-color: #ffffff;
+  --vp-outlet-border-color: rgba(60, 60, 67);
+
+  --vp-palette-border-color: #e2e2e3;
+  --vp-palette-node-color: #ffffff;
+
+  --vp-button-text-color: rgba(60, 60, 67);
+  --vp-button-default-bg: #ebebef;
+  --vp-button-default-hover-bg: #e4e4e9;
+  --vp-button-default-active-bg: #dddde3;
+
+  &.dark {
+    --vp-line-alignment-color: #2e2e32;
+    --vp-connection-selection-color: rgba(101, 117, 133, 0.16);
+    --vp-connection-for-create-path: #3e63dd;
+    --vp-connection-text-color: rgba(235, 235, 245, 0.38);
+    --vp-selected-connection-color: #3e63dd;
+    --vp-selection-area-color: rgba(100, 108, 255, 0.16);
+
+    --vp-minimap-color: #1b1b1f;
+    --vp-minimap-node-color: rgba(255, 255, 245, 0.86);
+    --vp-minimap-selected-node-color: #a8b1ff;
+    --vp-minimap-view-color: rgba(100, 108, 255, 0.16);
+
+    --vp-node-color: #1b1b1f;
+    --vp-selected-node-background-color: rgba(101, 117, 133, 0.16);
+    --vp-hover-node-background-color: rgba(101, 117, 133, 0.16);
+    --vp-selected-node-border-color: #3e63dd;
+    --vp-outlet-color: #1b1b1f;
+    --vp-outlet-border-color: rgba(255, 255, 245, 0.86);
+
+    --vp-palette-border-color: #000000;
+    --vp-palette-node-color: #1b1b1f;
+
+    --vp-button-text-color: rgba(255, 255, 245, 0.86);
+    --vp-button-default-bg: #32363f;
+    --vp-button-default-hover-bg: #414853;
+    --vp-button-default-active-bg: #515c67;
+  }
+}
