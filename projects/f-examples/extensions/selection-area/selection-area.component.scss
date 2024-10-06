@@ -1,5 +1,4 @@
 @use "../../flow-common";
-@use "../../mdc-controls";
 
 ::ng-deep selection-area {
   @include flow-common.connection;

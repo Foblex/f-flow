@@ -6,7 +6,10 @@ import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'background-example',
-  styleUrls: [ './background-example.component.scss' ],
+  styleUrls: [
+    '../../_mdc-controls.scss',
+    './background-example.component.scss'
+  ],
   templateUrl: './background-example.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
