@@ -121,12 +121,16 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component')
       },
       {
+        tag: 'selection-area',
+        component: import('../../../projects/f-examples/extensions/selection-area/selection-area.component')
+      },
+      {
         tag: 'help-in-positioning-example',
         component: import('../../../projects/f-examples/extensions/help-in-positioning-example/help-in-positioning-example.component')
       },
       {
-        tag: 'zoom-example',
-        component: import('../../../projects/f-examples/extensions/zoom-example/zoom-example.component')
+        tag: 'zoom',
+        component: import('../../../projects/f-examples/extensions/zoom/zoom.component')
       },
       {
         tag: 'minimap-example',
@@ -205,6 +209,16 @@ function nodesGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
+      // {
+      //   link: 'node-selection',
+      //   text: 'Node Selection',
+      //   description: 'Select nodes in Foblex Flow diagrams for Angular.',
+      //   image: './previews/examples/node-selection.light.png',
+      //   image_dark: './previews/examples/node-selection.dark.png',
+      //   image_width: 806,
+      //   image_height: 600,
+      //   image_type: 'image/png',
+      // },
       {
         link: 'resize-handle',
         text: 'Resize Handle',
@@ -341,6 +355,16 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
+      // {
+      //   link: 'connection-selection',
+      //   text: 'Connection Selection',
+      //   description: 'Select connections in Foblex Flow diagrams for Angular.',
+      //   image: './previews/examples/connection-selection.light.png',
+      //   image_dark: './previews/examples/connection-selection.dark.png',
+      //   image_width: 806,
+      //   image_height: 600,
+      //   image_type: 'image/png',
+      // },
       {
         link: 'connection-types',
         text: 'Connection Types',
@@ -440,6 +464,16 @@ function extensionGroup(): INavigationGroup {
       //   text: 'Add Node from Palette',
       // },
       {
+        link: 'selection-area',
+        text: 'Selection Area',
+        description: 'Add a selection area for multiple node selection in Foblex Flow for Angular.',
+        image: './previews/examples/selection-area.light.png',
+        image_dark: './previews/examples/selection-area.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
         link: 'help-in-positioning',
         text: 'Help in Positioning',
         description: 'Automatically align nodes to each other in Foblex Flow for Angular.',
@@ -463,8 +497,8 @@ function extensionGroup(): INavigationGroup {
         link: 'zoom',
         text: 'Zoom',
         description: 'Add zoom controls to Foblex Flow diagrams for Angular.',
-        image: './previews/examples/zoom-example.light.png',
-        image_dark: './previews/examples/zoom-example.dark.png',
+        image: './previews/examples/zoom.light.png',
+        image_dark: './previews/examples/zoom.dark.png',
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
@@ -513,16 +547,17 @@ function proExamplesGroup(): INavigationGroup {
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
-    }, {
-      text: 'Mind Map',
-      link: 'f-mind-map-example',
-      description: 'Design a mind map using Angular and Foblex Flow.',
-      image: './previews/examples/mind-map-example.light.png',
-      image_dark: './previews/examples/mind-map-example.dark.png',
-      image_width: 821,
-      image_height: 600,
-      image_type: 'image/png',
-    }
+    },
+    //   {
+    //   text: 'Mind Map',
+    //   link: 'f-mind-map-example',
+    //   description: 'Design a mind map using Angular and Foblex Flow.',
+    //   image: './previews/examples/mind-map-example.light.png',
+    //   image_dark: './previews/examples/mind-map-example.dark.png',
+    //   image_width: 821,
+    //   image_height: 600,
+    //   image_type: 'image/png',
+    // }
       //   {
       //   text: 'Call Center Flow',
       //   link: 'https://github.com/Foblex/f-flow-example',

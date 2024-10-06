@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { FCanvasComponent, FCreateConnectionEvent, FFlowModule, FZoomDirective } from '@foblex/flow';
+import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/f-docs';
 
 @Component({
-  selector: 'zoom-example',
-  styleUrls: [ './zoom-example.component.scss' ],
-  templateUrl: './zoom-example.component.html',
+  selector: 'zoom',
+  styleUrls: [ './zoom.component.scss' ],
+  templateUrl: './zoom.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -13,7 +13,7 @@ import { FCheckboxComponent } from '@foblex/f-docs';
     FCheckboxComponent
   ]
 })
-export class ZoomExampleComponent {
+export class ZoomComponent {
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;

@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep zoom-example {
+::ng-deep zoom {
   @include flow-common.connection;
 }
 
