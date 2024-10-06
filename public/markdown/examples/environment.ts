@@ -53,6 +53,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/nodes/grouping/grouping.component')
       },
       {
+        tag: 'node-selection',
+        component: import('../../../projects/f-examples/nodes/node-selection/node-selection.component')
+      },
+      {
         tag: 'node-as-connector',
         component: import('../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component')
       },
@@ -209,16 +213,16 @@ function nodesGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
-      // {
-      //   link: 'node-selection',
-      //   text: 'Node Selection',
-      //   description: 'Select nodes in Foblex Flow diagrams for Angular.',
-      //   image: './previews/examples/node-selection.light.png',
-      //   image_dark: './previews/examples/node-selection.dark.png',
-      //   image_width: 806,
-      //   image_height: 600,
-      //   image_type: 'image/png',
-      // },
+      {
+        link: 'node-selection',
+        text: 'Node Selection',
+        description: 'Select nodes in Foblex Flow diagrams for Angular.',
+        image: './previews/examples/node-selection.light.png',
+        image_dark: './previews/examples/node-selection.dark.png',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
+      },
       {
         link: 'resize-handle',
         text: 'Resize Handle',

@@ -1,0 +1,21 @@
+@use "../../flow-common";
+
+::ng-deep node-selection {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+  border: 1px solid var(--node-border-color);
+
+  &.f-selected {
+    border: 1px solid var(--node-selected-border-color);
+  }
+}
+
+.overlay {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  font-size: 12px;
+}
