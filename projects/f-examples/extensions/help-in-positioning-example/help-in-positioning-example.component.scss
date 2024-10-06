@@ -1,0 +1,12 @@
+@use "../../flow-common";
+@use "../../mdc-controls";
+
+::ng-deep help-in-positioning-example {
+  @include flow-common.connection;
+  @include flow-common.line-alignment
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
