@@ -55,7 +55,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   private getSymbolWidth(name: string): number {
     const text = name || 'connection';
     const { fontFamily, fontSize } = this.getFontStyles(this.hostElement);
-    this.fontSize = fontSize;
+    this.fontSize = fontSize || '12px';
     const canvas = this.fBrowser.document.createElement('canvas');
     let context;
 

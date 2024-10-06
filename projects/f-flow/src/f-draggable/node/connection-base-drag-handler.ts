@@ -27,11 +27,23 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   }
 
   private getOutput(): FConnectorBase {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === this.connection.fOutputId)!;
+    const result = this.fComponentsStore.fOutputs.find((x) => x.id === this.connection.fOutputId)!;
+    if (!result) {
+      throw new Error(this.connectorNotFoundPrefix(`fOutput with id ${ this.connection.fOutputId } not found`));
+    }
+    return result;
   }
 
   private getInput(): FConnectorBase {
-    return this.fComponentsStore.fInputs.find((x) => x.id === this.connection.fInputId)!
+    const result = this.fComponentsStore.fInputs.find((x) => x.id === this.connection.fInputId)!;
+    if (!result) {
+      throw new Error(this.connectorNotFoundPrefix(`fInput with id ${ this.connection.fInputId } not found`));
+    }
+    return result;
+  }
+
+  private connectorNotFoundPrefix(message: string): string {
+    return `ConnectionDragHandler Error: Connection From (fOutput)${ this.connection.fOutputId } To (fInput)${ this.connection.fInputId }. ${ message }. Please ensure that all f-connections are associated with existing connectors`;
   }
 
   public abstract move(difference: IPoint): void;

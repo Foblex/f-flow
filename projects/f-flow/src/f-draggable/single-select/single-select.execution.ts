@@ -58,6 +58,8 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
       if (!item.isSelected() && !item.fSelectionDisabled) {
         this.clearSelection();
         this.selectItem(item);
+      } else if(item.fSelectionDisabled) {
+        this.clearSelection();
       }
     } else {
       this.clearSelection();

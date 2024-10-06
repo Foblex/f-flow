@@ -15,10 +15,10 @@ function createEnvironment(): IDocsEnvironment {
       connectorGroup(),
       connectionGroup(),
       layoutGroup(),
-  //    extensionGroup(),
+      extensionGroup(),
       proExamplesGroup(),
     ],
-    headerNavigation: [{
+    headerNavigation: [ {
       link: '/docs/get-started',
       active: '/docs',
       text: 'Docs',
@@ -26,7 +26,7 @@ function createEnvironment(): IDocsEnvironment {
       link: '/examples/overview',
       active: '/examples',
       text: 'Examples',
-    }],
+    } ],
     footerNavigation: {
       editLink: {
         pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/en/',
@@ -36,34 +36,130 @@ function createEnvironment(): IDocsEnvironment {
       next: 'Next Page',
     },
     components: [
-      { tag: 'custom-nodes', component: import('../../../projects/f-examples/nodes/custom-nodes/custom-nodes.component') },
-      { tag: 'drag-handle', component: import('../../../projects/f-examples/nodes/drag-handle/drag-handle.component') },
-      { tag: 'resize-handle', component: import('../../../projects/f-examples/nodes/resize-handle/resize-handle.component') },
-      { tag: 'grouping', component: import('../../../projects/f-examples/nodes/grouping/grouping.component') },
-
-      { tag: 'node-as-connector', component: import('../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component') },
-      { tag: 'connector-inside-node', component: import('../../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component') },
-      { tag: 'connector-outlet', component: import('../../../projects/f-examples/connectors/connector-outlet/connector-outlet.component') },
-      { tag: 'limiting-connections', component: import('../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component') },
-      { tag: 'connectable-side', component: import('../../../projects/f-examples/connectors/connectable-side/connectable-side.component') },
-
-      { tag: 'drag-to-connect', component: import('../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component') },
-      { tag: 'drag-to-reassign', component: import('../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component') },
-      { tag: 'create-node-on-connection-drop', component: import('../../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component') },
-      { tag: 'remove-connection-on-drop', component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component') },
-      { tag: 'auto-snap', component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component') },
-      { tag: 'connection-types', component: import('../../../projects/f-examples/connections/connection-types/connection-types.component') },
-      { tag: 'custom-connection-type', component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component') },
-      { tag: 'connection-behaviours', component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component') },
-      { tag: 'connection-markers', component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component') },
-      { tag: 'custom-connections', component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component') },
-
-      { tag: 'dagre-layout-example', component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component') },
-      { tag: 'elkjs-layout-example', component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component') },
-
-      { tag: 'draggable-flow', component: import('../../../projects/f-guides-examples/draggable-flow/draggable-flow.component') },
-      { tag: 'vp-flow', component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component') },
-      { tag: 'db-management-flow', component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component') },
+      {
+        tag: 'custom-nodes',
+        component: import('../../../projects/f-examples/nodes/custom-nodes/custom-nodes.component')
+      },
+      {
+        tag: 'drag-handle',
+        component: import('../../../projects/f-examples/nodes/drag-handle/drag-handle.component')
+      },
+      {
+        tag: 'resize-handle',
+        component: import('../../../projects/f-examples/nodes/resize-handle/resize-handle.component')
+      },
+      {
+        tag: 'grouping',
+        component: import('../../../projects/f-examples/nodes/grouping/grouping.component')
+      },
+      {
+        tag: 'node-selection',
+        component: import('../../../projects/f-examples/nodes/node-selection/node-selection.component')
+      },
+      {
+        tag: 'node-as-connector',
+        component: import('../../../projects/f-examples/connectors/node-as-connector/node-as-connector.component')
+      },
+      {
+        tag: 'connector-inside-node',
+        component: import('../../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component')
+      },
+      {
+        tag: 'connector-outlet',
+        component: import('../../../projects/f-examples/connectors/connector-outlet/connector-outlet.component')
+      },
+      {
+        tag: 'limiting-connections',
+        component: import('../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component')
+      },
+      {
+        tag: 'connectable-side',
+        component: import('../../../projects/f-examples/connectors/connectable-side/connectable-side.component')
+      },
+      {
+        tag: 'drag-to-connect',
+        component: import('../../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component')
+      },
+      {
+        tag: 'drag-to-reassign',
+        component: import('../../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component')
+      },
+      {
+        tag: 'create-node-on-connection-drop',
+        component: import('../../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component')
+      },
+      {
+        tag: 'remove-connection-on-drop',
+        component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component')
+      },
+      {
+        tag: 'auto-snap',
+        component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component')
+      },
+      {
+        tag: 'connection-types',
+        component: import('../../../projects/f-examples/connections/connection-types/connection-types.component')
+      },
+      {
+        tag: 'custom-connection-type',
+        component: import('../../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component')
+      },
+      {
+        tag: 'connection-behaviours',
+        component: import('../../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component')
+      },
+      {
+        tag: 'connection-markers',
+        component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component')
+      },
+      {
+        tag: 'custom-connections',
+        component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component')
+      },
+      {
+        tag: 'dagre-layout-example',
+        component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component')
+      },
+      {
+        tag: 'elkjs-layout-example',
+        component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component')
+      },
+      {
+        tag: 'selection-area',
+        component: import('../../../projects/f-examples/extensions/selection-area/selection-area.component')
+      },
+      {
+        tag: 'help-in-positioning-example',
+        component: import('../../../projects/f-examples/extensions/help-in-positioning-example/help-in-positioning-example.component')
+      },
+      {
+        tag: 'zoom',
+        component: import('../../../projects/f-examples/extensions/zoom/zoom.component')
+      },
+      {
+        tag: 'minimap-example',
+        component: import('../../../projects/f-examples/extensions/minimap-example/minimap-example.component')
+      },
+      {
+        tag: 'background-example',
+        component: import('../../../projects/f-examples/extensions/background-example/background-example.component')
+      },
+      {
+        tag: 'vp-flow',
+        component: import('../../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component')
+      },
+      {
+        tag: 'db-management-flow',
+        component: import('../../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component')
+      },
+      {
+        tag: 'uml-diagram-example',
+        component: import('../../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component')
+      },
+      {
+        tag: 'mind-map-example',
+        component: import('../../../projects/f-pro-examples/mind-map-example/flow/mind-map-example.component')
+      },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -114,6 +210,16 @@ function nodesGroup(): INavigationGroup {
         image_dark: './previews/examples/drag-handle.dark.png',
         description: 'Create draggable handles for nodes to enable easy movement in Foblex Flow for Angular.',
         image_width: 795,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'node-selection',
+        text: 'Node Selection',
+        description: 'Select nodes in Foblex Flow diagrams for Angular.',
+        image: './previews/examples/node-selection.light.png',
+        image_dark: './previews/examples/node-selection.dark.png',
+        image_width: 806,
         image_height: 600,
         image_type: 'image/png',
       },
@@ -200,7 +306,7 @@ function connectorGroup(): INavigationGroup {
 }
 
 function connectionGroup(): INavigationGroup {
-  return  {
+  return {
     text: 'Connections',
     items: [
       {
@@ -253,6 +359,16 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
+      // {
+      //   link: 'connection-selection',
+      //   text: 'Connection Selection',
+      //   description: 'Select connections in Foblex Flow diagrams for Angular.',
+      //   image: './previews/examples/connection-selection.light.png',
+      //   image_dark: './previews/examples/connection-selection.dark.png',
+      //   image_width: 806,
+      //   image_height: 600,
+      //   image_type: 'image/png',
+      // },
       {
         link: 'connection-types',
         text: 'Connection Types',
@@ -343,63 +459,116 @@ function layoutGroup(): INavigationGroup {
   }
 }
 
-// function extensionGroup(): INavigationGroup {
-//   return {
-//     text: 'Extensions',
-//     items: [
-//       {
-//         link: 'add-node-on-drag-and-drop',
-//         text: 'Add Node on Drag and Drop',
-//       },
-//       {
-//         link: 'help-in-positioning',
-//         text: 'Help in Positioning',
-//       },
-//       {
-//         link: 'minimap',
-//         text: 'Minimap',
-//       },
-//       {
-//         link: 'zoom',
-//         text: 'Zoom',
-//       },
-//       {
-//         link: 'background',
-//         text: 'Background',
-//       }
-//     ],
-//   }
-// }
+function extensionGroup(): INavigationGroup {
+  return {
+    text: 'Extensions',
+    items: [
+      // {
+      //   link: 'add-node-from-palette',
+      //   text: 'Add Node from Palette',
+      // },
+      {
+        link: 'selection-area',
+        text: 'Selection Area',
+        description: 'Add a selection area for multiple node selection in Foblex Flow for Angular.',
+        image: './previews/examples/selection-area.light.png',
+        image_dark: './previews/examples/selection-area.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'help-in-positioning',
+        text: 'Help in Positioning',
+        description: 'Automatically align nodes to each other in Foblex Flow for Angular.',
+        image: './previews/examples/help-in-positioning-example.light.png',
+        image_dark: './previews/examples/help-in-positioning-example.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'minimap',
+        text: 'Minimap',
+        description: 'Add a minimap to navigate large diagrams in Foblex Flow for Angular.',
+        image: './previews/examples/minimap-example.light.png',
+        image_dark: './previews/examples/minimap-example.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'zoom',
+        text: 'Zoom',
+        description: 'Add zoom controls to Foblex Flow diagrams for Angular.',
+        image: './previews/examples/zoom.light.png',
+        image_dark: './previews/examples/zoom.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'background',
+        text: 'Background',
+        description: 'Add background shapes to Foblex Flow diagrams for Angular.',
+        image: './previews/examples/background-example.light.png',
+        image_dark: './previews/examples/background-example.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+      }
+    ],
+  }
+}
 
 function proExamplesGroup(): INavigationGroup {
   return {
     text: 'Pro Examples',
     items: [ {
-      text: 'Visual Programming Flow',
+      text: 'Visual Programming',
       link: 'f-visual-programming-flow',
-      description: 'Learn how to create a visual programming interface using Angular and Foblex Flow.',
+      description: 'Create a visual programming interface using Angular and Foblex Flow.',
       image: './previews/examples/vp-flow.light.png',
       image_dark: './previews/examples/vp-flow.dark.png',
       image_width: 757,
       image_height: 600,
       image_type: 'image/png',
-    },{
-      text: 'DB Management Flow',
+    }, {
+      text: 'DB Management',
       link: 'f-db-management-flow',
-      description: 'Discover how to create a database management flow using Angular and Foblex Flow.',
+      description: 'Build a database management workflow using Angular and Foblex Flow.',
       image: './previews/examples/db-management-flow.light.png',
       image_dark: './previews/examples/db-management-flow.dark.png',
       image_width: 806,
       image_height: 600,
       image_type: 'image/png',
+    }, {
+      text: 'UML Diagram',
+      link: 'f-uml-diagram-example',
+      description: 'Create a UML diagram with Angular and Foblex Flow.',
+      image: './previews/examples/uml-diagram-example.light.png',
+      image_dark: './previews/examples/uml-diagram-example.dark.png',
+      image_width: 821,
+      image_height: 600,
+      image_type: 'image/png',
     },
     //   {
-    //   text: 'Call Center Flow',
-    //   link: 'https://github.com/Foblex/f-flow-example',
-    // }, {
-    //   text: 'Scheme Editor',
-    //   link: 'https://github.com/Foblex/f-scheme-editor',
+    //   text: 'Mind Map',
+    //   link: 'f-mind-map-example',
+    //   description: 'Design a mind map using Angular and Foblex Flow.',
+    //   image: './previews/examples/mind-map-example.light.png',
+    //   image_dark: './previews/examples/mind-map-example.dark.png',
+    //   image_width: 821,
+    //   image_height: 600,
+    //   image_type: 'image/png',
     // }
+      //   {
+      //   text: 'Call Center Flow',
+      //   link: 'https://github.com/Foblex/f-flow-example',
+      // }, {
+      //   text: 'Scheme Editor',
+      //   link: 'https://github.com/Foblex/f-scheme-editor',
+      // }
     ]
   }
 }

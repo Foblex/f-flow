@@ -1,0 +1,13 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas [fZoom]="isZoomEnabled">
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
+    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
+    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <button class="f-button" (click)="onZoomIn()">Zoom In</button>
+  <button class="f-button" (click)="onZoomOut()">Zoom Out</button>
+  <f-checkbox [checked]="isZoomEnabled" (change)="onZoomOnMouseWheelChanged($event)">Zoom on mouse wheel</f-checkbox>
+</div>
+

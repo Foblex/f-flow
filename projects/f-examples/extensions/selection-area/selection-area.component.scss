@@ -1,0 +1,28 @@
+@use "../../flow-common";
+@use "../../mdc-controls";
+
+::ng-deep selection-area {
+  @include flow-common.connection;
+  @include flow-common.background;
+
+  .f-connection {
+
+    &.f-selected {
+      .f-connection-path {
+        stroke: var(--node-selected-border-color);
+      }
+    }
+  }
+}
+
+.f-selection-area {
+  background-color: var(--selection-area-color);
+}
+
+.f-node {
+  @include flow-common.node;
+
+  &.f-selected {
+    border: 1px solid var(--node-selected-border-color);
+  }
+}

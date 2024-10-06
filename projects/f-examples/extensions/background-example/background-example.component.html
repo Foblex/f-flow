@@ -1,0 +1,26 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  @if (background === 'circle') {
+    <f-background>
+      <f-circle-pattern></f-circle-pattern>
+    </f-background>
+  } @else if (background === 'rect') {
+    <f-background>
+      <f-rect-pattern></f-rect-pattern>
+    </f-background>
+  }
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
+    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
+    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <mat-form-field appearance="fill" class="f-form-field">
+    <mat-label>Select Background</mat-label>
+    <mat-select panelClass="f-select-panel" [(value)]="background">
+      @for (option of backgroundOptions; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -3,6 +3,7 @@ import {
   Component,
 } from '@angular/core';
 import { VpFlowComponent } from '../flow/vp-flow.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'vp-toolbar',
@@ -10,6 +11,9 @@ import { VpFlowComponent } from '../flow/vp-flow.component';
   styleUrls: [ './vp-toolbar.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatIcon
+  ]
 })
 export class VpToolbarComponent {
 

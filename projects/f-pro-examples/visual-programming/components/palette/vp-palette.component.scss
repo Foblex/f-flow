@@ -5,7 +5,7 @@
   width: 49px;
   min-width: 49px;
   height: 100%;
-  border-right: 1px solid var(--gutter-color);
+  border-right: 1px solid var(--vp-palette-border-color);
   overflow: hidden;
   overflow-y: auto;
   z-index: 1;
@@ -20,7 +20,7 @@
   height: 32px;
   overflow: hidden;
   border-radius: 4px;
-  background-color: var(--background-color);
+  background-color: var(--vp-palette-node-color);
   border: 2px solid;
   cursor: move;
   z-index: 50;
@@ -34,27 +34,3 @@
     color: inherit;
   }
 }
-
-//.showcase {
-//  :host {
-//    width: 33px;
-//    min-width: 33px;
-//    padding: 4px;
-//    gap: 4px;
-//  }
-//}
-//
-//::ng-deep .showcase {
-//  .visual-programming-external-item {
-//    width: 24px;
-//    height: 24px;
-//    border: 1px solid;
-//    border-radius: 2px;
-//
-//    .icon {
-//      line-height: 13px;
-//      font-size: 12px;
-//      font-weight: 500;
-//    }
-//  }
-//}

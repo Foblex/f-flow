@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
 import {
   FCanvasChangeEvent,
   FCanvasComponent,
@@ -26,7 +26,7 @@ import { BrowserService } from '@foblex/platform';
     MatOption
   ]
 })
-export class CustomNodesComponent {
+export class CustomNodesComponent implements OnDestroy {
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;
@@ -42,5 +42,9 @@ export class CustomNodesComponent {
 
   public onCanvasChanged(event: FCanvasChangeEvent): void {
     this.fBrowser.document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
+  }
+
+  public ngOnDestroy(): void {
+    this.fBrowser.document.documentElement.style.removeProperty('--flow-scale');
   }
 }

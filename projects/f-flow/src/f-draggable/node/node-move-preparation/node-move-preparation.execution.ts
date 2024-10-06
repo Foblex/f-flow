@@ -30,9 +30,17 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   public handle(request: NodeMovePreparationRequest): void {
-    this.selectAndUpdateNodeLayer(request.event.targetElement);
-
-    const itemsToDrag: IDraggableItem[] = this.createDragModelFromSelection();
+    const node = this.getNode(request.event.targetElement);
+    if (!node) {
+      throw new Error('Node not found');
+    }
+    let itemsToDrag: IDraggableItem[] = [];
+    if (!node.fSelectionDisabled) {
+      this.selectAndUpdateNodeLayer(node);
+      itemsToDrag = this.createDragModelFromSelection();
+    } else {
+      itemsToDrag = this.createDragModelFromSelection(node);
+    }
 
     this.initializeLineAlignment(this.filterNodesFromDraggableItems(itemsToDrag));
 
@@ -42,9 +50,9 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
     this.fDraggableDataContext.draggableItems = itemsToDrag;
   }
 
-  private selectAndUpdateNodeLayer(targetElement: HTMLElement) {
+  private selectAndUpdateNodeLayer(node: FNodeBase) {
     this.fMediator.send(
-      new SelectAndUpdateNodeLayerRequest(this.getNode(targetElement))
+      new SelectAndUpdateNodeLayerRequest(node)
     );
   }
 
@@ -52,8 +60,8 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
     return this.fComponentsStore.findNode(targetElement)!;
   }
 
-  private createDragModelFromSelection(): IDraggableItem[] {
-    return this.fMediator.send(new CreateMoveNodesDragModelFromSelectionRequest());
+  private createDragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
+    return this.fMediator.send(new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection));
   }
 
   private initializeLineAlignment(nodesToDrag: FNodeBase[]): void {
