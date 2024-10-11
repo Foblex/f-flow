@@ -56,6 +56,6 @@ Explore practical use cases to see Foblex Flow in action:
 
 <br>
 
-::: info Conclusion
+::: tip Conclusion
 Foblex Flow is a powerful tool for creating complex graphical interfaces in Angular. For more information on the capabilities and components of the library, refer to the Foblex Flow documentation.
 :::

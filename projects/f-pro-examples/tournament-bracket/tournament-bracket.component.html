@@ -1,0 +1,36 @@
+<f-flow fDraggable
+        (fLoaded)="onInitialized()">
+  <f-canvas fZoom>
+
+    @for (item of viewModel; track item.id) {
+      <f-connection [fReassignDisabled]="true"
+                    [fSelectionDisabled]="true"
+                    fBehavior="fixed_center"
+                    fType="segment"
+                    [fOutputId]="item.id" [fInputId]="item.nextMatchId">
+      </f-connection>
+    }
+
+    @for (item of viewModel; track item.id) {
+      <div fNode [fNodeId]="item.id" [fNodePosition]="item.position!"
+           fDragHandle
+           fNodeOutput [fOutputId]="item.id" fOutputConnectableSide="right"
+           fNodeInput [fInputId]="item.id" fInputConnectableSide="left"
+           [fNodeDraggingDisabled]="true">
+        <div class="header" [class]="item.color">
+          <div class="title">{{ item.competitionPhase }}</div>
+          <div class="date">{{ item.date | date }}</div>
+        </div>
+        <div class="body">
+          @for (competitor of item.competitors; track competitor.title) {
+            <div class="competitor">
+              <div class="name">{{ competitor.title }}</div>
+              <div class="score">{{ competitor.score }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </f-canvas>
+</f-flow>
+

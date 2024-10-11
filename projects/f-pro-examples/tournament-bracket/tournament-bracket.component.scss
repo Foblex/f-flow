@@ -1,0 +1,130 @@
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep :root {
+  --node-background-color: #ffffff;
+  --node-border-color: rgba(60, 60, 67, 0.36);
+  --node-color: rgba(60, 60, 67, 0.78);
+
+  --connection-color: rgba(60, 60, 67, 0.78);
+
+  --blue: #3451b2;
+  --blue-soft: rgba(100, 108, 255, 0.14);
+
+  --purple: #6f42c1;
+  --purple-soft: rgba(159, 122, 234, 0.14);
+
+  --green: #18794e;
+  --green-soft: rgba(16, 185, 129, 0.14);
+
+  --yellow: #915930;
+  --yellow-soft: rgba(234, 179, 8, 0.14);
+
+  --red: #b8272c;
+  --red-soft: rgba(244, 63, 94, 0.14);
+
+
+  &.dark {
+    --node-background-color: #000000;
+    --node-border-color: rgba(235, 235, 245, 0.38);
+    --node-color: rgba(235, 235, 245, 0.6);
+
+    --connection-color: rgba(235, 235, 245, 0.6);
+
+    --indigo: #a8b1ff;
+    --indigo-soft: rgba(100, 108, 255, 0.16);
+
+    --purple: #c8abfa;
+    --purple-soft: rgba(159, 122, 234, 0.16);
+
+    --green-1: #3dd68c;
+    --green-soft: rgba(16, 185, 129, 0.16);
+
+    --yellow: #f9b44e;
+    --yellow-soft: rgba(234, 179, 8, 0.16);
+
+    --red: #f66f81;
+    --red-soft: rgba(244, 63, 94, 0.16);
+  }
+}
+
+::ng-deep tournament-bracket {
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: var(--connection-color);
+      stroke-width: 2;
+    }
+  }
+}
+
+.f-node {
+  width: 200px;
+  color: var(--node-color);
+  background: var(--node-background-color);
+  border-radius: var(--node-border-radius);
+  border: 0.2px solid var(--node-border-color);
+  cursor: move;
+  box-shadow: var(--node-shadow);
+
+  .header {
+    padding: 4px 12px;
+
+
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .date {
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    &.blue {
+      color: var(--blue);
+      background-color: var(--blue-soft);
+    }
+
+    &.red {
+      color: var(--red);
+      background-color: var(--red-soft);
+    }
+
+    &.green {
+      color: var(--green);
+      background-color: var(--green-soft);
+    }
+
+    &.yellow {
+      color: var(--yellow);
+      background-color: var(--yellow-soft);
+    }
+
+    &.purple {
+      color: var(--purple);
+      background-color: var(--purple-soft);
+    }
+  }
+
+  .competitor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 12px;
+    font-size: 14px;
+  }
+}
+

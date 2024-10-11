@@ -160,6 +160,10 @@ function createEnvironment(): IDocsEnvironment {
         tag: 'mind-map-example',
         component: import('../../../projects/f-pro-examples/mind-map-example/flow/mind-map-example.component')
       },
+      {
+        tag: 'tournament-bracket',
+        component: import('../../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component')
+      },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -222,6 +226,10 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'resize-handle',
@@ -318,6 +326,10 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'drag-to-reassign',
@@ -328,6 +340,10 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'create-node-on-connection-drop',
@@ -388,6 +404,10 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'connection-behaviours',
@@ -398,6 +418,10 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'connection-markers',
@@ -486,6 +510,11 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+
       },
       {
         link: 'minimap',
@@ -544,17 +573,30 @@ function proExamplesGroup(): INavigationGroup {
       image_type: 'image/png',
     }, {
       text: 'UML Diagram',
-      link: 'f-uml-diagram-example',
+      link: 'uml-diagram-example',
       description: 'Create a UML diagram with Angular and Foblex Flow.',
       image: './previews/examples/uml-diagram-example.light.png',
       image_dark: './previews/examples/uml-diagram-example.dark.png',
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
-    },
+    }, {
+      text: 'Tournament Bracket',
+      link: 'tournament-bracket',
+      description: 'Create a tournament bracket using Angular and Foblex Flow.',
+      image: './previews/examples/tournament-bracket.light.png',
+      image_dark: './previews/examples/tournament-bracket.dark.png',
+      image_width: 821,
+      image_height: 600,
+      image_type: 'image/png',
+      badge: {
+        text: 'New',
+        type: 'info'
+      }
+    }
     //   {
     //   text: 'Mind Map',
-    //   link: 'f-mind-map-example',
+    //   link: 'mind-map-example',
     //   description: 'Design a mind map using Angular and Foblex Flow.',
     //   image: './previews/examples/mind-map-example.light.png',
     //   image_dark: './previews/examples/mind-map-example.dark.png',

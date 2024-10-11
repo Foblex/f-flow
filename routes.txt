@@ -20,6 +20,7 @@
 
 /examples/custom-nodes
 /examples/drag-handle
+/examples/node-selection
 /examples/resize-handle
 /examples/grouping
 
@@ -43,5 +44,13 @@
 /examples/dagre-layout
 /examples/elkjs-layout
 
+/examples/selection-area
+/examples/help-in-positioning
+/examples/minimap
+/examples/zoom
+/examples/background
+
 /examples/f-visual-programming-flow
 /examples/f-db-management-flow
+/examples/uml-diagram-example
+/examples/tournament-bracket

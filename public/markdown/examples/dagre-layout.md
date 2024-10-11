@@ -2,7 +2,7 @@
 
 ## Description
 
-Example of a tree layout using the [dagre.js](https://github.com/dagrejs/dagre) with Foblex Flow to create simple tree layouts. 
+Example of a tree layout using the [dagre.js](https://github.com/dagrejs/dagre) with Foblex Flow and Angular to create simple tree layouts. The `dagre.js` library provides a set of layout algorithms that can be used to create complex layouts for diagrams and graphs.
 
 ## Example
 
