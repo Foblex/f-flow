@@ -6,7 +6,7 @@ The **FConnectionComponent** is a component that represents a connection between
 
 ## Inputs
 
-  - `id: string;` The unique identifier for the component instance. Automatically generated. Default: `f-connection-${uniqueId++}` 
+  - `fConnectionId: string;` The unique identifier for the component instance. Automatically generated. Default: `f-connection-${uniqueId++}` 
 
   - `fReassignDisabled: boolean;` Indicates whether the connection cannot be reassigned. Default: `false`. 
 
