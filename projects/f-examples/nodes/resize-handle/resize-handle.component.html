@@ -1,7 +1,9 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 0, y: 0 }">
+         [fNodePosition]="{ x: 0, y: 0 }"
+         [fNodeSize]="{ width: 120, height: 150 }"
+         (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
       <div class="node-content">
         Node with Left Top ResizeHandle
@@ -9,7 +11,7 @@
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 300, y: 0 }">
+         [fNodePosition]="{ x: 300, y: 0 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
       <div class="node-content">
         Node with Right Top ResizeHandle
@@ -17,7 +19,7 @@
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 0, y: 200 }">
+         [fNodePosition]="{ x: 0, y: 200 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
       <div class="node-content">
         Node with Right Bottom ResizeHandle
@@ -25,7 +27,7 @@
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 300, y: 200 }">
+         [fNodePosition]="{ x: 300, y: 200 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
       <div class="node-content">
         Node with Left Bottom ResizeHandle
@@ -33,7 +35,7 @@
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 150, y: 100 }">
+         [fNodePosition]="{ x: 150, y: 100 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>

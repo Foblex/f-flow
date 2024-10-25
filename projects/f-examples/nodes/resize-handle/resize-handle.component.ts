@@ -4,6 +4,7 @@ import {
   FCanvasComponent,
   FFlowModule
 } from '@foblex/flow';
+import { IRect } from '@foblex/2d';
 
 @Component({
   selector: 'resize-handle',
@@ -25,4 +26,9 @@ export class ResizeHandleComponent {
   }
 
   protected readonly eResizeHandleType = EFResizeHandleType;
+
+
+  public onNodeSizeChanged(rect: IRect): void {
+    console.log('Node size changed', rect);
+  }
 }

@@ -10,6 +10,8 @@ The **FNodeDirective** is a directive that represents a node within a flow of el
 
   - `fNodePosition: IPoint;` Sets the position of the node. Redraws the node when the position changes.
 
+  - `fNodeSize: IRect;` Sets the size of the node. Redraws the node when the size changes. Use the [fResizeHandle](f-resize-handle-directive) directive to resize the node.
+
   - `fNodeDraggingDisabled: boolean;` Indicates whether the node cannot be dragged. Default: `false`
 
   - `fNodeSelectionDisabled: boolean;`  Indicates whether the node cannot be selected. Default: `false`
@@ -18,11 +20,14 @@ The **FNodeDirective** is a directive that represents a node within a flow of el
 
  - `fNodePositionChange: EventEmitter<IPoint>;` Emits an event when the position of the node changes.  
 
+ - `fNodeSizeChange: EventEmitter<IRect>;` Emits an event when the size of the node changes using the [fResizeHandle](f-resize-handle-directive) directive.
+
 ## Methods
 
  - `refresh(): void;` Refreshes the state of the node, typically triggering a re-render or update.
 
 ## Styles
+
   - `.f-component` A general class applied to all F components for shared styling.
 
   - `.f-node` Class specific to the node directive, providing styles for node representation.
