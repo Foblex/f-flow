@@ -5,6 +5,7 @@ import { IHasStateChanges } from '../i-has-state-changes';
 import { FConnectorBase } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
+import { FDroppedChildrenEvent } from '../f-draggable';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
@@ -37,6 +38,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, 
   public abstract size: ISize;
 
   protected _size: ISize | undefined;
+
+
+  public abstract droppedNodes: EventEmitter<FDroppedChildrenEvent>;
 
 
   public abstract fDraggingDisabled: boolean;
@@ -78,5 +82,13 @@ export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, 
 
   public updateSize(value: ISize): void {
     this._size = value;
+  }
+
+  public setClass(className: string): void {
+    this.hostElement.classList.add(className);
+  }
+
+  public removeClass(className: string): void {
+    this.hostElement.classList.remove(className);
   }
 }

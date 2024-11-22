@@ -52,7 +52,7 @@ export class FRectPatternComponent implements OnInit, OnDestroy, IFBackgroundPat
 
   @Input()
   public set hColor(value: string) {
-    this._vColor = value;
+    this._hColor = value;
     this._stateChanges.next();
   }
 

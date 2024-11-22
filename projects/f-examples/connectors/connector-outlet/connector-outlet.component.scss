@@ -6,6 +6,10 @@
 
 .f-node {
   @include flow-common.node;
+
+  &.f-parent-for-drop {
+    border: 1px dashed red;
+  }
 }
 
 .f-node-input, .f-node-output {

@@ -13,7 +13,7 @@ import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
 import { IPoint, Point } from '@foblex/2d';
-import { NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
+import { NodeDragToParentPreparationRequest, NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
 import {
   FCreateConnectionEvent,
@@ -119,6 +119,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this.fMediator.send<void>(new NodeResizePreparationRequest(event));
 
     this.fMediator.send<void>(new NodeMovePreparationRequest(event));
+
+    this.fMediator.send<void>(new NodeDragToParentPreparationRequest(event));
 
     this.fMediator.send<void>(new CanvasMovePreparationRequest(event));
 

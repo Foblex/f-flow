@@ -53,6 +53,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/nodes/grouping/grouping.component')
       },
       {
+        tag: 'stress-test',
+        component: import('../../../projects/f-examples/nodes/stress-test/stress-test.component')
+      },
+      {
         tag: 'node-selection',
         component: import('../../../projects/f-examples/nodes/node-selection/node-selection.component')
       },
@@ -250,6 +254,20 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'stress-test',
+        text: 'Stress Test',
+        image: './previews/examples/stress-test.light.png',
+        image_dark: './previews/examples/stress-test.dark.png',
+        description: 'Test the performance of Foblex Flow with a large number of nodes in Angular.',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       }
     ],
   }

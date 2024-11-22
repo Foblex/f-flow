@@ -61,7 +61,9 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private createDragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
-    return this.fMediator.send(new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection));
+    return this.fMediator.send(
+      new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
+    );
   }
 
   private initializeLineAlignment(nodesToDrag: FNodeBase[]): void {
@@ -72,6 +74,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
-    return items.filter((x) => x instanceof NodeDragHandler).map(x => (x as NodeDragHandler).fNode);
+    return items.filter((x) => x instanceof NodeDragHandler)
+      .map(x => (x as NodeDragHandler).fNode);
   }
 }

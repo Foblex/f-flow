@@ -7,6 +7,8 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   IsConnectionUnderNodeRequest
 } from '../../../domain/is-connection-under-node/is-connection-under-node.request';
+import { IDraggableItem } from '../../i-draggable-item';
+import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 
 @Injectable()
 @FExecutionRegister(NodeMoveFinalizeRequest)
@@ -27,7 +29,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     const difference = this.getDifferenceWithLineAlignment(
       this.getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
-    this.fDraggableDataContext.draggableItems.forEach((x) => {
+    this.getItems().forEach((x) => {
       x.move({ ...difference });
       x.complete?.();
     });
@@ -35,9 +37,15 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     this.fDraggableDataContext.fLineAlignment?.complete();
   }
 
+  private getItems(): IDraggableItem[] {
+    return this.fDraggableDataContext.draggableItems
+      .filter((x) => !(x instanceof NodeDragToParentDragHandler));
+  }
+
   private getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
     return Point.fromPoint(position).elementTransform(this.flowHost)
-      .div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
+      .div(this.fDraggableDataContext.onPointerDownScale)
+      .sub(this.fDraggableDataContext.onPointerDownPosition);
   }
 
   private getDifferenceWithLineAlignment(difference: IPoint): IPoint {
