@@ -1,8 +1,9 @@
 import { IPoint } from '@foblex/2d';
 
-export class FDroppedChildrenEvent {
+export class FDropToGroupEvent {
 
   constructor(
+    public fTargetNode: string,
     public fNodes: string[],
     public fDropPosition: IPoint,
   ) {

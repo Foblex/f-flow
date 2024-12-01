@@ -13,7 +13,12 @@ import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from './f-draggable-data-context';
 import { Subscription } from 'rxjs';
 import { IPoint, Point } from '@foblex/2d';
-import { NodeDragToParentPreparationRequest, NodeMoveFinalizeRequest, NodeMovePreparationRequest } from './node';
+import {
+  FDropToGroupEvent, NodeDragToParentFinalizeRequest,
+  NodeDragToParentPreparationRequest,
+  NodeMoveFinalizeRequest,
+  NodeMovePreparationRequest
+} from './node';
 import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
 import {
   FCreateConnectionEvent,
@@ -67,6 +72,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   @Output()
   public override fCreateConnection: EventEmitter<FCreateConnectionEvent> = new EventEmitter<FCreateConnectionEvent>();
+
+  @Output()
+  public override fDropToGroup: EventEmitter<FDropToGroupEvent> = new EventEmitter<FDropToGroupEvent>();
 
   @ContentChildren(F_DRAG_AND_DROP_PLUGIN, { descendants: true })
   private plugins!: QueryList<IFDragAndDropPlugin>;
@@ -183,6 +191,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this.fMediator.send<void>(new NodeResizeFinalizeRequest(event));
 
     this.fMediator.send<void>(new NodeMoveFinalizeRequest(event));
+
+    this.fMediator.send<void>(new NodeDragToParentFinalizeRequest(event));
 
     this.fMediator.send<void>(new CanvasMoveFinalizeRequest(event));
 

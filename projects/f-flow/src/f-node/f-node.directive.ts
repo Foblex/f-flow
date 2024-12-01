@@ -24,7 +24,6 @@ import { FMediator } from '@foblex/mediator';
 import { EmitTransformChangesRequest } from '../domain';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { IHasHostElement } from '../i-has-host-element';
-import { FDroppedChildrenEvent } from '../f-draggable';
 
 let uniqueId: number = 0;
 
@@ -91,9 +90,6 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   public override fConnectOnNode: boolean = true;
 
   public override connectors: FConnectorBase[] = [];
-
-  @Output('fDroppedNodes')
-  public override droppedNodes: EventEmitter<FDroppedChildrenEvent> = new EventEmitter<FDroppedChildrenEvent>();
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

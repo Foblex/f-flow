@@ -1,5 +1,5 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="onCreateConnection($event)">
-  <f-canvas fZoom>
+  <f-canvas>
     <f-connection-for-create fBehavior="floating"></f-connection-for-create>
 
     @for (connection of connections; track connection.to) {

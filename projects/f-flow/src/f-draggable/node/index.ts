@@ -16,7 +16,7 @@ export * from './connection-source.drag-handler';
 
 export * from './connection-target.drag-handler';
 
-export * from './f-dropped-children.event';
+export * from './f-drop-to-group.event';
 
 export * from './node.drag-handler';
 

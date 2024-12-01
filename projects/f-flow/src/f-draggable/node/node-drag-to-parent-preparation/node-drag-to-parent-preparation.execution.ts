@@ -3,7 +3,7 @@ import { NodeDragToParentPreparationRequest } from './node-drag-to-parent-prepar
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
-import { IRect } from '@foblex/2d';
+import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { GetElementRectInFlowRequest } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
@@ -17,6 +17,14 @@ export class NodeDragToParentPreparationExecution
 
   private get fNodes(): FNodeBase[] {
     return this.fComponentsStore.fNodes;
+  }
+
+  private get transform(): ITransformModel {
+    return this.fComponentsStore.transform;
+  }
+
+  private get fCanvasPosition(): IPoint {
+    return PointExtensions.sum(this.transform.position, this.transform.scaledPosition)
   }
 
   constructor(
@@ -35,7 +43,7 @@ export class NodeDragToParentPreparationExecution
 
     this.fDraggableDataContext.draggableItems.push(
       new NodeDragToParentDragHandler(
-        this.fMediator, this.fComponentsStore,
+        this.fComponentsStore,
         this.fDraggableDataContext, this.getNotDraggedNodesRects()
       )
     );
@@ -43,9 +51,15 @@ export class NodeDragToParentPreparationExecution
 
   private getNotDraggedNodesRects(): INodeWithRect[] {
     return this.getNotDraggedNodes(this.getDraggedNodes()).map((x) => {
+      const rect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
       return {
         node: x,
-        rect: this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement))
+        rect: RectExtensions.initialize(
+          rect.x + this.fCanvasPosition.x,
+          rect.y + this.fCanvasPosition.y,
+          rect.width * this.transform.scale,
+          rect.height * this.transform.scale
+        )
       }
     });
   }

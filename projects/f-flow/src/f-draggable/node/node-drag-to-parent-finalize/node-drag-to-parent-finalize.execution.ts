@@ -4,7 +4,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 import { NodeDragHandler } from '../node.drag-handler';
-import { FDroppedChildrenEvent } from '../f-dropped-children.event';
+import { FDropToGroupEvent } from '../f-drop-to-group.event';
+import { FComponentsStore } from '../../../f-storage';
+import { IPointerEvent } from '@foblex/drag-toolkit';
 
 @Injectable()
 @FExecutionRegister(NodeDragToParentFinalizeRequest)
@@ -12,27 +14,36 @@ export class NodeDragToParentFinalizeExecution
   implements IExecution<NodeDragToParentFinalizeRequest, void> {
 
   constructor(
+    private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
   ) {
   }
 
   public handle(request: NodeDragToParentFinalizeRequest): void {
-    const item = this.getItem();
+    const item = this.getDragHandleItem();
     if(item.fNodeWithRect) {
-      item.fNodeWithRect.node.droppedNodes.emit(
-        new FDroppedChildrenEvent(this.getDraggedNodeIds(), request.event.getPosition())
-      )
+      this.emitDroppedChildrenEvent(item.fNodeWithRect.node.fId, request.event);
     }
     item.complete?.();
   }
 
-  private getItem(): NodeDragToParentDragHandler {
-    const result = this.fDraggableDataContext.draggableItems
-      .find((x) => x instanceof NodeDragToParentDragHandler);
+  private emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {
+    this.fComponentsStore.fDraggable?.fDropToGroup.emit(
+      new FDropToGroupEvent(fTargetId, this.getDraggedNodeIds(), event.getPosition())
+    );
+  }
+
+  private getDragHandleItem(): NodeDragToParentDragHandler {
+    const result = this.findDragHandleItem();
     if(!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }
     return result;
+  }
+
+  private findDragHandleItem(): NodeDragToParentDragHandler | undefined {
+    return this.fDraggableDataContext.draggableItems
+      .find((x) => x instanceof NodeDragToParentDragHandler);
   }
 
   private getDraggedNodeIds(): string[] {

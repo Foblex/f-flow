@@ -53,6 +53,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/nodes/grouping/grouping.component')
       },
       {
+        tag: 'drag-to-group',
+        component: import('../../../projects/f-examples/nodes/drag-to-group/drag-to-group.component')
+      },
+      {
         tag: 'stress-test',
         component: import('../../../projects/f-examples/nodes/stress-test/stress-test.component')
       },
@@ -229,11 +233,7 @@ function nodesGroup(): INavigationGroup {
         image_dark: './previews/examples/node-selection.dark.png',
         image_width: 806,
         image_height: 600,
-        image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
+        image_type: 'image/png'
       },
       {
         link: 'resize-handle',
@@ -254,6 +254,20 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'drag-to-group',
+        text: 'Drag to Group',
+        image: './previews/examples/drag-to-group.light.png',
+        image_dark: './previews/examples/drag-to-group.dark.png',
+        description: 'Drag nodes to group them together in Foblex Flow for Angular.',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'stress-test',
