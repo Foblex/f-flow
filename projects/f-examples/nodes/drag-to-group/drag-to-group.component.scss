@@ -1,0 +1,13 @@
+@use "../../flow-common";
+
+::ng-deep drag-to-group {
+  @include flow-common.connection;
+}
+
+.f-node, .f-group {
+  @include flow-common.node;
+
+  &.f-parent-for-drop {
+    border: 1px dashed var(--node-selected-border-color);
+  }
+}
