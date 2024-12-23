@@ -37,7 +37,7 @@ export class PutInputConnectionHandlersToArrayExecution
   }
 
   public getInputConnections(node: FNodeBase): FConnectionBase[] {
-    const inputIds = new Set(this.getInputsForNode(node).map((x) => x.id));
+    const inputIds = new Set(this.getInputsForNode(node).map((x) => x.fId));
     return this.fConnections.filter((x) => inputIds.has(x.fInputId));
   }
 

@@ -1,9 +1,10 @@
-import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { F_NODE, FNodeBase } from '../../f-node';
-import { FComponentsStore } from '../../f-storage';
 import { castToBoolean, castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddOutputToStoreRequest, RemoveOutputFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -11,7 +12,7 @@ let uniqueId: number = 0;
   selector: "[fNodeOutput]",
   exportAs: 'fNodeOutput',
   host: {
-    '[attr.data-f-output-id]': 'id',
+    '[attr.data-f-output-id]': 'fId',
     class: "f-component f-node-output",
     '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
@@ -22,7 +23,7 @@ let uniqueId: number = 0;
 export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnDestroy {
 
   @Input('fOutputId')
-  public override id: string = `f-node-output-${ uniqueId++ }`;
+  public override fId: string = `f-node-output-${ uniqueId++ }`;
 
   @Input('fOutputMultiple')
   public override multiple: boolean = false;
@@ -60,22 +61,20 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnD
   public override isSelfConnectable: boolean = true;
 
   public get hostElement(): HTMLElement | SVGElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+
   constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      @Inject(F_NODE) private fNode: FNodeBase,
-      private fComponentsStore: FComponentsStore,
+      @Inject(F_NODE) private fNode: FNodeBase
   ) {
     super();
   }
 
   public ngOnInit() {
-    if (!this.fNode) {
-      throw new Error('fNodeOutput must be inside fNode Directive');
-    }
-    this.fComponentsStore.addComponent(this.fComponentsStore.fOutputs, this);
+    this._fMediator.send(new AddOutputToStoreRequest(this));
     this.fNode.addConnector(this);
   }
 
@@ -87,6 +86,6 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnD
 
   public ngOnDestroy(): void {
     this.fNode.removeConnector(this);
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fOutputs, this);
+    this._fMediator.send(new RemoveOutputFromStoreRequest(this));
   }
 }

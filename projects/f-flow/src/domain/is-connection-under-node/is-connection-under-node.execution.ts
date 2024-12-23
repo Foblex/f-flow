@@ -45,7 +45,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     const isCantBeConnectedByOutput = outputsOfNode.some((x) => !x.canBeConnected);
 
     const isCantBeConnectedByInput = this.fComponentsStore.fConnections.some((x) => {
-      return inputsOfNode.find((input) => input.id === x.fInputId);
+      return inputsOfNode.find((input) => input.fId === x.fInputId);
     });
 
     if (!isCantBeConnectedByInput && outputsOfNode.length && !isCantBeConnectedByOutput && inputsOfNode.length) {
@@ -63,11 +63,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private isValidRequest(): boolean {
-    const result =
-        this.fDraggableDataContext.draggableItems.length === 1 &&
-        this.fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
-
-    return result;
+    return this.fDraggableDataContext.draggableItems.length === 1 &&
+      this.fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
   }
 
   private getOutputsForNode(node: FNodeBase): FConnectorBase[] {

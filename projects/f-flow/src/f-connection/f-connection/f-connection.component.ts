@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component, ContentChildren,
-  ElementRef,
+  ElementRef, inject,
   Input,
   OnDestroy,
   OnInit, QueryList,
@@ -18,7 +18,7 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FComponentsStore } from '../../f-storage';
+import { ComponentsDataChangedRequest } from '../../f-storage';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
@@ -28,7 +28,8 @@ import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
+import { AddConnectionToStoreRequest } from '../../domain';
+import { RemoveConnectionFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -56,7 +57,7 @@ export class FConnectionComponent
   @Input()
   public override set fText(value: string) {
     this._fText = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fText(): string {
     return this._fText;
@@ -66,7 +67,7 @@ export class FConnectionComponent
   @Input()
   public override set fStartColor(value: string) {
     this._fStartColor = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fStartColor(): string {
     return this._fStartColor;
@@ -76,7 +77,7 @@ export class FConnectionComponent
   @Input()
   public override set fEndColor(value: string) {
     this._fEndColor = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fEndColor(): string {
     return this._fEndColor;
@@ -86,7 +87,7 @@ export class FConnectionComponent
   @Input()
   public override set fOutputId(value: string) {
     this._fOutputId = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fOutputId(): string {
     return this._fOutputId;
@@ -96,7 +97,7 @@ export class FConnectionComponent
   @Input()
   public override set fInputId(value: string) {
     this._fInputId = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fInputId(): string {
     return this._fInputId;
@@ -106,7 +107,7 @@ export class FConnectionComponent
   @Input()
   public override set fRadius(value: number) {
     this._fRadius = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fRadius(): number {
     return this._fRadius;
@@ -116,7 +117,7 @@ export class FConnectionComponent
   @Input()
   public override set fOffset(value: number) {
     this._fOffset = value;
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fOffset(): number {
     return this._fOffset;
@@ -126,7 +127,7 @@ export class FConnectionComponent
   @Input()
   public override set fBehavior(value: string | EFConnectionBehavior) {
     this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fBehavior(): EFConnectionBehavior {
     return this._behavior;
@@ -136,7 +137,7 @@ export class FConnectionComponent
   @Input()
   public override set fType(value: EFConnectionType | string) {
     this._type = value as unknown as EFConnectionType; //castToEnum(value, 'fType', EFConnectionType);
-    this.fComponentsStore.componentDataChanged();
+    this._componentDataChanged();
   }
   public override get fType(): EFConnectionType {
     return this._type;
@@ -175,20 +176,24 @@ export class FConnectionComponent
     return this.fPath.hostElement;
   }
 
+  private _fMediator = inject(FMediator);
+
   constructor(
       elementReference: ElementRef<HTMLElement>,
       fConnectionFactory: FConnectionFactory,
-      private fComponentsStore: FComponentsStore,
-      private fMediator: FMediator
   ) {
     super(elementReference, fConnectionFactory);
   }
 
   public ngOnInit(): void {
-    this.fMediator.send(new AddConnectionToStoreRequest(this));
+    this._fMediator.send(new AddConnectionToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this.fMediator.send(new RemoveConnectionFromStoreRequest(this));
+    this._fMediator.send(new RemoveConnectionFromStoreRequest(this));
+  }
+
+  private _componentDataChanged(): void {
+    this._fMediator.send(new ComponentsDataChangedRequest());
   }
 }

@@ -1,9 +1,10 @@
-import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FNodeBase, F_NODE } from '../../f-node';
-import { FComponentsStore } from '../../f-storage';
 import { castToBoolean, castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddInputToStoreRequest, RemoveInputFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -11,7 +12,7 @@ let uniqueId: number = 0;
   selector: "[fNodeInput]",
   exportAs: 'fNodeInput',
   host: {
-    '[attr.data-f-input-id]': 'id',
+    '[attr.data-f-input-id]': 'fId',
     class: "f-component f-node-input",
     '[class.f-node-input-multiple]': 'multiple',
     '[class.f-node-input-disabled]': 'disabled'
@@ -21,7 +22,7 @@ let uniqueId: number = 0;
 export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDestroy {
 
   @Input('fInputId')
-  public override id: any = `f-node-input-${ uniqueId++ }`;
+  public override fId: any = `f-node-input-${ uniqueId++ }`;
 
   @Input('fInputMultiple')
   public override multiple: boolean = true;
@@ -56,19 +57,20 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
   public override isConnected: boolean = false;
 
   public get hostElement(): HTMLElement | SVGElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
     @Inject(F_NODE) private fNode: FNodeBase,
-    private fComponentsStore: FComponentsStore,
   ) {
     super();
   }
 
   public ngOnInit() {
-    this.fComponentsStore.addComponent(this.fComponentsStore.fInputs, this);
+    this._fMediator.send(new AddInputToStoreRequest(this));
     this.fNode.addConnector(this);
   }
 
@@ -80,6 +82,6 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
 
   public ngOnDestroy(): void {
     this.fNode.removeConnector(this);
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fInputs, this);
+    this._fMediator.send(new RemoveInputFromStoreRequest(this));
   }
 }

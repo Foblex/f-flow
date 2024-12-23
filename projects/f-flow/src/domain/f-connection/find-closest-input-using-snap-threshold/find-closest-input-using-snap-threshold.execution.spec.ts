@@ -30,30 +30,30 @@ describe('FindClosestInputUsingSnapThresholdExecution', () => {
     const result = fMediator.send<IConnectorWithRect>(
       new FindClosestInputUsingSnapThresholdRequest({ x: 10, y: 10 }, [ {
         fConnector: {
-          id: 'input1'
+          fId: 'input1'
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(12, 12, 10, 10)),
       }, {
         fConnector: {
-          id: 'input2'
+          fId: 'input2'
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
       }, ], 15)
     );
     expect(result).toBeDefined();
-    expect(result?.fConnector.id).toBe('input1');
+    expect(result?.fConnector.fId).toBe('input1');
   });
 
   it('should return undefined if the only element is exactly at snapThreshold distance', () => {
     const result = fMediator.send<IConnectorWithRect>(
       new FindClosestInputUsingSnapThresholdRequest({ x: 0, y: 0 }, [ {
         fConnector: {
-          id: 'input1'
+          fId: 'input1'
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(10, 0, 10, 10)),
       }, {
         fConnector: {
-          id: 'input2'
+          fId: 'input2'
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
       }, ], 10)

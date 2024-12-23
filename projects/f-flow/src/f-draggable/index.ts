@@ -4,6 +4,8 @@ export * from './connections';
 
 export * from './domain';
 
+export * from '../domain/f-draggable/is-drag-started';
+
 export * from './node';
 
 export * from './node-resize';

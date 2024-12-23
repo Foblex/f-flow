@@ -12,7 +12,6 @@ import { FConnectionDragHandleComponent } from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
 import { IConnectionText } from './f-connection-text';
 import { IHasStateChanges } from '../../i-has-state-changes';
-import { FMarkerBase } from '../f-marker';
 import { EFConnectableSide } from '../../f-connectors';
 import { FConnectionFactory } from '../f-connection-builder';
 import { IHasHostElement } from '../../i-has-host-element';

@@ -37,7 +37,7 @@ export class PutOutputConnectionHandlersToArrayExecution
   }
 
   public getOutputConnections(node: FNodeBase): FConnectionBase[] {
-    const outputsIds = new Set(this.getOutputsForNode(node).map((x) => x.id));
+    const outputsIds = new Set(this.getOutputsForNode(node).map((x) => x.fId));
     return this.fConnections.filter((x) => outputsIds.has(x.fOutputId));
   }
 

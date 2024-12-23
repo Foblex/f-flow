@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { InputCanvasPositionRequest } from './input-canvas-position-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { PointExtensions } from '@foblex/2d';
@@ -8,11 +8,7 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(InputCanvasPositionRequest)
 export class InputCanvasPositionExecution implements IExecution<InputCanvasPositionRequest, void> {
 
-
-  constructor(
-    private fComponentsStore: FComponentsStore
-  ) {
-  }
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: InputCanvasPositionRequest): void {
     if (!request.position) {
@@ -22,7 +18,7 @@ export class InputCanvasPositionExecution implements IExecution<InputCanvasPosit
     if (!PointExtensions.isEqual(position, request.position)) {
       request.transform.position = request.position;
       request.transform.scaledPosition = PointExtensions.initialize();
-      this.fComponentsStore.fCanvas?.redraw();
+      this._fComponentsStore.fCanvas?.redraw();
     }
   }
 }

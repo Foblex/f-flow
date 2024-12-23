@@ -2,17 +2,13 @@ import {
   AfterViewInit, ContentChildren,
   Directive,
   ElementRef,
-  EventEmitter, Inject,
+  EventEmitter, inject, Inject,
   Input,
   NgZone,
   OnDestroy,
   OnInit, Optional, Output, QueryList
 } from "@angular/core";
 import { FDraggableBase } from './f-draggable-base';
-import { FComponentsStore } from '../f-storage';
-import { FDraggableDataContext } from './f-draggable-data-context';
-import { Subscription } from 'rxjs';
-import { IPoint, Point } from '@foblex/2d';
 import {
   FDropToGroupEvent, NodeDragToParentFinalizeRequest,
   NodeDragToParentPreparationRequest,
@@ -30,12 +26,20 @@ import {
 } from './connections';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
-import { EmitTransformChangesRequest, GetSelectionRequest } from '../domain';
+import {
+  AddDndToStoreRequest,
+  EmitSelectionChangeEventRequest,
+  StartDragSequenceRequest,
+  RemoveDndFromStoreRequest,
+  EndDragSequenceRequest,
+  InitializeDragSequenceRequest,
+  HandleDragSequenceRequest
+} from '../domain';
 import {
   ExternalItemFinalizeRequest,
   ExternalItemPreparationRequest,
   FCreateNodeEvent,
-  isExternalItem
+  PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
@@ -49,13 +53,15 @@ import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 
-  private subscriptions$: Subscription = new Subscription();
+  private _elementReference = inject(ElementRef);
+
+  private _fMediator = inject(FMediator);
 
   @Input('fDraggableDisabled')
   public override disabled: boolean = false;
 
   public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Output()
@@ -80,37 +86,35 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private plugins!: QueryList<IFDragAndDropPlugin>;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fDraggableDataContext: FDraggableDataContext,
     @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-    private fBrowser: BrowserService,
+    private _fBrowser: BrowserService,
   ) {
     super(ngZone);
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.fDraggable = this;
+    this._fMediator.send<void>(new AddDndToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
-    super.subscribe(this.fBrowser.document);
+    super.subscribe(this._fBrowser.document);
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
-    this.fDraggableDataContext.reset();
+
+    this._fMediator.send<void>(new InitializeDragSequenceRequest());
+
     let result: boolean = event.isMouseLeftButton();
 
     this.plugins.forEach((p) => {
       p.onPointerDown?.(event);
     });
 
-    this.fMediator.send<void>(new SingleSelectRequest(event));
+    this._fMediator.send<void>(new SingleSelectRequest(event));
 
-    this.fMediator.send<void>(new ReassignConnectionPreparationRequest(event));
+    this._fMediator.send<void>(new ReassignConnectionPreparationRequest(event));
 
-    this.fMediator.send<void>(new CreateConnectionPreparationRequest(event));
+    this._fMediator.send<void>(new CreateConnectionPreparationRequest(event));
 
     if (!result) {
       this.finalizeDragSequence();
@@ -124,58 +128,30 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
       p.prepareDragSequence?.(event);
     });
 
-    this.fMediator.send<void>(new NodeResizePreparationRequest(event));
+    this._fMediator.send<void>(new NodeResizePreparationRequest(event));
 
-    this.fMediator.send<void>(new NodeMovePreparationRequest(event));
+    this._fMediator.send<void>(new NodeMovePreparationRequest(event));
 
-    this.fMediator.send<void>(new NodeDragToParentPreparationRequest(event));
+    this._fMediator.send<void>(new NodeDragToParentPreparationRequest(event));
 
-    this.fMediator.send<void>(new CanvasMovePreparationRequest(event));
+    this._fMediator.send<void>(new CanvasMovePreparationRequest(event));
 
-    this.fMediator.send<void>(new ExternalItemPreparationRequest(event));
+    this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
 
-    this.fDraggableDataContext.draggableItems.forEach((item) => {
-      item.initialize?.();
-    });
 
-    if (this.fDraggableDataContext.draggableItems.length > 0) {
-      this.hostElement.classList.add('f-dragging');
-      this.emitSelectionChangeEvent();
-    }
+    this._fMediator.send<void>(new StartDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
-
     this.plugins.forEach((p) => {
       p.onSelect?.(event);
     });
 
-    if (this.isTargetItemExternal(event)) {
-      event.preventDefault();
-    }
-  }
-
-  private isTargetItemExternal(event: Event): boolean {
-    let isTargetItemExternal = this.isExternalItem(event.target as HTMLElement);
-    let isTargetParentItemExternal = this.isExternalItem((event.target as Node).parentNode as HTMLElement);
-    return isTargetItemExternal || isTargetParentItemExternal;
-  }
-
-  private isExternalItem(target: HTMLElement): boolean {
-    let result = false;
-    try {
-      result = isExternalItem(target);
-    } catch (e) {
-    }
-    return result;
+    this._fMediator.send<void>(new PreventDefaultIsExternalItemRequest(event));
   }
 
   public override onPointerMove(event: IPointerEvent): void {
-    const pointerPositionInCanvas = Point.fromPoint(event.getPosition()).elementTransform(this.hostElement);
-    const difference: IPoint = pointerPositionInCanvas.div(this.fDraggableDataContext.onPointerDownScale).sub(this.fDraggableDataContext.onPointerDownPosition);
-    this.fDraggableDataContext.draggableItems.forEach((item) => {
-      item.move({ ...difference });
-    });
+    this._fMediator.send<void>(new HandleDragSequenceRequest(event));
   }
 
   public override onPointerUp(event: IPointerEvent): void {
@@ -184,43 +160,30 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
       p.onPointerUp?.(event);
     });
 
-    this.fMediator.send<void>(new ReassignConnectionFinalizeRequest(event));
+    this._fMediator.send<void>(new ReassignConnectionFinalizeRequest(event));
 
-    this.fMediator.send<void>(new CreateConnectionFinalizeRequest(event));
+    this._fMediator.send<void>(new CreateConnectionFinalizeRequest(event));
 
-    this.fMediator.send<void>(new NodeResizeFinalizeRequest(event));
+    this._fMediator.send<void>(new NodeResizeFinalizeRequest(event));
 
-    this.fMediator.send<void>(new NodeMoveFinalizeRequest(event));
+    this._fMediator.send<void>(new NodeMoveFinalizeRequest(event));
 
-    this.fMediator.send<void>(new NodeDragToParentFinalizeRequest(event));
+    this._fMediator.send<void>(new NodeDragToParentFinalizeRequest(event));
 
-    this.fMediator.send<void>(new CanvasMoveFinalizeRequest(event));
+    this._fMediator.send<void>(new CanvasMoveFinalizeRequest(event));
 
-    this.fMediator.send<void>(new ExternalItemFinalizeRequest(event));
+    this._fMediator.send<void>(new ExternalItemFinalizeRequest(event));
 
-    this.hostElement.classList.remove('f-dragging');
-
-    this.fDraggableDataContext.reset();
+    this._fMediator.send<void>(new EndDragSequenceRequest());
   }
 
   protected override finalizeDragSequence(): void {
-    this.emitSelectionChangeEvent();
-  }
-
-  private emitSelectionChangeEvent(): void {
-    if (
-      !this.fDraggableDataContext.isSelectedChanged
-    ) {
-      return;
-    }
-    this.fSelectionChange.emit(this.fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest()));
-    this.fDraggableDataContext.isSelectedChanged = false;
-    this.fMediator.send<void>(new EmitTransformChangesRequest());
+    this._fMediator.send<void>(new EmitSelectionChangeEventRequest());
   }
 
   public ngOnDestroy(): void {
+    this._fMediator.send<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();
-    this.subscriptions$.unsubscribe();
   }
 }
 

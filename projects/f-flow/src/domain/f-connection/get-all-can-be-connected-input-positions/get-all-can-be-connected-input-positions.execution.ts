@@ -36,11 +36,11 @@ export class GetAllCanBeConnectedInputPositionsExecution
   }
 
   private findOutputById(fId: string): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === fId);
+    return this.fComponentsStore.fOutputs.find((x) => x.fId === fId);
   }
 
   private findOutletById(fId: string): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutlets.find((x) => x.id === fId);
+    return this.fComponentsStore.fOutlets.find((x) => x.fId === fId);
   }
 
   private getCanBeConnectedInputs(output: FConnectorBase): FConnectorBase[] {

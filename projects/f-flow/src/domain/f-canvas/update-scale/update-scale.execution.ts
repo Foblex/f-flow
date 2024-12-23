@@ -1,21 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { UpdateScaleRequest } from './update-scale-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { ITransformModel, PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 
-
 @Injectable()
 @FExecutionRegister(UpdateScaleRequest)
 export class UpdateScaleExecution implements IExecution<UpdateScaleRequest, void> {
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
-  }
+  private _fComponentsStore = inject(FComponentsStore);
 
-  constructor(
-    private fComponentsStore: FComponentsStore
-  ) {
+  private get transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
   public handle(request: UpdateScaleRequest): void {

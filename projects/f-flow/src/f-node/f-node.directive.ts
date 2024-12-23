@@ -14,14 +14,13 @@ import { BrowserService } from '@foblex/platform';
 import { merge, Subscription } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import { FResizeObserver } from './f-resize-observer';
-import { FComponentsStore } from '../f-storage';
+import { FComponentsStore, TransformChangedRequest } from '../f-storage';
 import {
   CalculateConnectorConnectableSideHandler,
   CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../f-connectors';
 import { FMediator } from '@foblex/mediator';
-import { EmitTransformChangesRequest } from '../domain';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { IHasHostElement } from '../i-has-host-element';
 
@@ -118,7 +117,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   public override redraw(): void {
     super.redraw();
-    this.fMediator.send(new EmitTransformChangesRequest());
+    this.fMediator.send(new TransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {

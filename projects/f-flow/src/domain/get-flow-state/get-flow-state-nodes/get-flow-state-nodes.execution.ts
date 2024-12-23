@@ -31,7 +31,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
   private getOutputs(hostElement: HTMLElement): IFFlowStateConnector[] {
     return this.fComponentsStore.fOutputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
-        id: x.id,
+        id: x.fId,
         fConnectableSide: x.fConnectableSide
       }
     });
@@ -40,7 +40,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
   private getInputs(hostElement: HTMLElement): IFFlowStateConnector[] {
     return this.fComponentsStore.fInputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
-        id: x.id,
+        id: x.fId,
         fConnectableSide: x.fConnectableSide
       }
     });

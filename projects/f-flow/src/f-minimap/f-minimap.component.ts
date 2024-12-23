@@ -1,17 +1,18 @@
 import {
-  AfterViewInit, ChangeDetectionStrategy, Component,
-  ElementRef, Input, OnDestroy, ViewChild,
+  AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef,
+  inject, Input, OnDestroy, ViewChild,
 } from "@angular/core";
 import { FMediator } from '@foblex/mediator';
 import { Observable, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { SubscribeOnTransformChangesRequest } from '../domain';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
+import { ListenTransformChangesRequest } from '../f-storage';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'f-minimap',
@@ -28,7 +29,8 @@ import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './dom
 })
 export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDropPlugin {
 
-  private subscriptions$: Subscription = new Subscription();
+  private _destroyRef = inject(DestroyRef);
+  private _fMediator = inject(FMediator);
 
   @ViewChild(FMinimapCanvasDirective, { static: true })
   public fMinimapCanvas!: FMinimapCanvasDirective;
@@ -42,37 +44,31 @@ export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDro
   @Input()
   public fMinSize: number = 1000;
 
-  constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fMediator: FMediator
-  ) {
-  }
-
   public ngAfterViewInit(): void {
-    this.subscriptions$.add(this.subscribeOnTransformChanges());
+    this._subscribeOnTransformChanges();
   }
 
-  private subscribeOnTransformChanges(): Subscription {
-    return this.getTransformChanges().pipe(debounceTime(5)).subscribe(() => {
+  private _subscribeOnTransformChanges(): Subscription {
+    return this._getTransformChanges().pipe(debounceTime(5), takeUntilDestroyed(this._destroyRef)).subscribe(() => {
       this.fMinimapFlow.update();
       this.fMinimapView.update();
       this.fMinimapCanvas.redraw();
     });
   }
 
-  private getTransformChanges(): Observable<void> {
-    return this.fMediator.send<Observable<void>>(new SubscribeOnTransformChangesRequest());
+  private _getTransformChanges(): Observable<void> {
+    return this._fMediator.send<Observable<void>>(new ListenTransformChangesRequest());
   }
 
   public onPointerDown(event: IPointerEvent): void {
-    this.fMediator.send(new MinimapDragPreparationRequest(event, this.fMinimapFlow.model));
+    this._fMediator.send(new MinimapDragPreparationRequest(event, this.fMinimapFlow.model));
   }
 
   public onPointerUp(event: IPointerEvent): void {
-    this.fMediator.send(new MinimapDragFinalizeRequest(event));
+    this._fMediator.send(new MinimapDragFinalizeRequest(event));
   }
 
   public ngOnDestroy(): void {
-    this.subscriptions$.unsubscribe();
+
   }
 }

@@ -1,9 +1,10 @@
-import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE, FNodeBase } from '../../f-node';
-import { FComponentsStore } from '../../f-storage';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { castToBoolean } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -11,7 +12,7 @@ let uniqueId: number = 0;
   selector: "[fNodeOutlet]",
   exportAs: 'fNodeOutlet',
   host: {
-    '[attr.data-f-outlet-id]': 'id',
+    '[attr.data-f-outlet-id]': 'fId',
     class: "f-component f-node-outlet",
     '[class.f-node-outlet-disabled]': 'disabled'
   },
@@ -20,7 +21,7 @@ let uniqueId: number = 0;
 export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnDestroy {
 
   @Input('fOutletId')
-  public override id: string = `f-node-outlet-${ uniqueId++ }`;
+  public override fId: string = `f-node-outlet-${ uniqueId++ }`;
 
   @Input('fOutletDisabled')
   public override get disabled(): boolean {
@@ -45,25 +46,24 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   public override isConnectionFromOutlet: boolean = false
 
   public get hostElement(): HTMLElement | SVGElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+
+  /// Inject FNodeBase to check if the outlet inside the node
   constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      @Inject(F_NODE) private fNode: FNodeBase,
-      private fComponentsStore: FComponentsStore,
+      @Inject(F_NODE) private fNode: FNodeBase
   ) {
     super();
   }
 
   public ngOnInit() {
-    if (!this.fNode) {
-      throw new Error('fNodeOutlet must be inside fNode Directive');
-    }
-    this.fComponentsStore.addComponent(this.fComponentsStore.fOutlets, this);
+    this._fMediator.send(new AddOutletToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fOutlets, this);
+    this._fMediator.send(new RemoveOutletFromStoreRequest(this));
   }
 }

@@ -2,15 +2,18 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Component, ContentChild,
-  ElementRef, OnDestroy,
+  ElementRef, inject, OnDestroy,
   OnInit
 } from "@angular/core";
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from './domain';
-import { FComponentsStore } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
-import { AddPatternToBackgroundRequest } from '../domain';
+import {
+  AddBackgroundToStoreRequest,
+  AddPatternToBackgroundRequest,
+  RemoveBackgroundFromStoreRequest
+} from '../domain';
 
 @Component({
   selector: "f-background",
@@ -22,33 +25,26 @@ import { AddPatternToBackgroundRequest } from '../domain';
   providers: [ { provide: F_BACKGROUND, useExisting: FBackgroundComponent } ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FBackgroundComponent extends FBackgroundBase implements OnInit, AfterContentInit, OnDestroy {
+export class FBackgroundComponent
+  extends FBackgroundBase implements OnInit, AfterContentInit, OnDestroy {
+
+  private _elementReference = inject(ElementRef);
 
   public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @ContentChild(F_BACKGROUND_PATTERN, { static: false })
   public fBackgroundPattern: IFBackgroundPattern | undefined;
 
-  constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      private fComponentsStore: FComponentsStore,
-      private fMediator: FMediator
-  ) {
-    super();
-  }
+  private _fMediator = inject(FMediator);
 
   public ngOnInit(): void {
-    this.fComponentsStore.fBackground = this;
+    this._fMediator.send(new AddBackgroundToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
-    this.fMediator.send(new AddPatternToBackgroundRequest(this.fBackgroundPattern!));
-  }
-
-  public override isBackgroundElement(element: HTMLElement | SVGElement): boolean {
-    return this.hostElement.contains(element);
+    this._fMediator.send(new AddPatternToBackgroundRequest(this.fBackgroundPattern!));
   }
 
   public setTransform(transform: ITransformModel): void {
@@ -56,6 +52,6 @@ export class FBackgroundComponent extends FBackgroundBase implements OnInit, Aft
   }
 
   public ngOnDestroy() {
-    this.fComponentsStore.fBackground = undefined;
+    this._fMediator.send(new RemoveBackgroundFromStoreRequest(this));
   }
 }

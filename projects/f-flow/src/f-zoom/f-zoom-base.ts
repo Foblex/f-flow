@@ -1,9 +1,11 @@
 import { EventExtensions } from '@foblex/drag-toolkit';
 import { IPoint, Point, RectExtensions } from '@foblex/2d';
-import { InjectionToken } from '@angular/core';
+import { inject, InjectionToken } from '@angular/core';
 import { FCanvasBase } from '../f-canvas';
-import { FComponentsStore } from '../f-storage';
 import { isNode } from '../f-node';
+import { FMediator } from '@foblex/mediator';
+import { GetCanvasRequest, GetFlowHostElementRequest } from '../domain';
+import { IsDragStartedRequest } from '../domain';
 
 export const F_ZOOM = new InjectionToken<FZoomBase>('F_ZOOM');
 
@@ -17,52 +19,53 @@ export abstract class FZoomBase {
   public abstract step: number;
   public abstract dblClickStep: number;
 
-  private listeners: Function = EventExtensions.emptyListener();
+  private _listeners: Function = EventExtensions.emptyListener();
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.flowHost;
+  private _fMediator = inject(FMediator);
+
+  private get _fFlowHostElement(): HTMLElement {
+    return this._fMediator.send(new GetFlowHostElementRequest());
   }
 
-  private get fCanvas(): FCanvasBase {
-    return this.fComponentsStore.fCanvas as FCanvasBase;
+  private get _fCanvas(): FCanvasBase {
+    return this._fMediator.send(new GetCanvasRequest());
   }
 
-  protected constructor(
-      protected fComponentsStore: FComponentsStore
-  ) {
+  private get _isDragStarted(): boolean {
+    return this._fMediator.send<boolean>(new IsDragStartedRequest());
   }
 
   protected toggleZoom(): void {
     if (this.isEnabled) {
-      this.subscribe();
+      this._subscribe();
     } else {
       this.unsubscribe();
     }
   }
 
-  private subscribe(): void {
-    this.listeners();
-    if (!this.flowHost) {
+  private _subscribe(): void {
+    this._listeners();
+    if (!this._fFlowHostElement) {
       return;
     }
 
-    this.flowHost.addEventListener('wheel', this.onWheel);
-    this.flowHost.addEventListener('dblclick', this.onDoubleClick);
-    this.listeners = () => {
-      this.flowHost.removeEventListener('wheel', this.onWheel);
-      this.flowHost.removeEventListener('dblclick', this.onDoubleClick);
+    this._fFlowHostElement.addEventListener('wheel', this._onWheel);
+    this._fFlowHostElement.addEventListener('dblclick', this._onDoubleClick);
+    this._listeners = () => {
+      this._fFlowHostElement.removeEventListener('wheel', this._onWheel);
+      this._fFlowHostElement.removeEventListener('dblclick', this._onDoubleClick);
     };
   }
 
   public getScale(): number {
-    return this.fCanvas.transform.scale || 1;
+    return this._fCanvas.transform.scale || 1;
   }
 
-  private onWheel = (event: WheelEvent) => {
+  private _onWheel = (event: WheelEvent) => {
     event.preventDefault();
     const targetElement = event.target as HTMLElement;
 
-    if (this.fComponentsStore.fDraggable?.isDragStarted || targetElement?.closest('[fLockedContext]')) {
+    if (this._isDragStarted || targetElement?.closest('[fLockedContext]')) {
       return;
     }
 
@@ -74,18 +77,18 @@ export abstract class FZoomBase {
 
     result = Math.max(this.minimum, Math.min(result, this.maximum));
 
-    const pointerPositionInFlow = new Point(event.clientX, event.clientY).elementTransform(this.flowHost);
+    const pointerPositionInFlow = new Point(event.clientX, event.clientY).elementTransform(this._fFlowHostElement);
 
-    this.fCanvas.setZoom(result, pointerPositionInFlow);
-    this.fCanvas.redraw();
-    this.fCanvas.emitCanvasChangeEvent();
+    this._fCanvas.setZoom(result, pointerPositionInFlow);
+    this._fCanvas.redraw();
+    this._fCanvas.emitCanvasChangeEvent();
   }
 
-  private onDoubleClick = (event: MouseEvent) => {
+  private _onDoubleClick = (event: MouseEvent) => {
     event.preventDefault();
     const targetElement = event.target as HTMLElement;
 
-    if (this.fComponentsStore.fDraggable?.isDragStarted || isNode(targetElement) || targetElement?.closest('[fLockedContext]')) {
+    if (this._isDragStarted || isNode(targetElement) || targetElement?.closest('[fLockedContext]')) {
       return;
     }
 
@@ -97,38 +100,38 @@ export abstract class FZoomBase {
 
     result = Math.max(this.minimum, Math.min(result, this.maximum));
 
-    const pointerPositionInFlow = new Point(event.clientX, event.clientY).elementTransform(this.flowHost);
-    this.fCanvas.setZoom(result, pointerPositionInFlow);
-    this.fCanvas.redrawWithAnimation();
-    this.fCanvas.emitCanvasChangeEvent();
+    const pointerPositionInFlow = new Point(event.clientX, event.clientY).elementTransform(this._fFlowHostElement);
+    this._fCanvas.setZoom(result, pointerPositionInFlow);
+    this._fCanvas.redrawWithAnimation();
+    this._fCanvas.emitCanvasChangeEvent();
   }
 
-  private onZoomToCenter(deltaY: number, position?: IPoint): void {
+  private _onZoomToCenter(deltaY: number, position?: IPoint): void {
     const preventDefault = () => {
     };
-    const rect = RectExtensions.fromElement(this.flowHost);
+    const rect = RectExtensions.fromElement(this._fFlowHostElement);
 
-    this.onWheel({
+    this._onWheel({
       deltaY, preventDefault, clientX: position?.x || rect.gravityCenter.x, clientY: position?.y || rect.gravityCenter.y
     } as WheelEvent);
   }
 
   public zoomIn(position?: IPoint): void {
-    this.onZoomToCenter(-1, position);
+    this._onZoomToCenter(-1, position);
   }
 
   public zoomOut(position?: IPoint): void {
-    this.onZoomToCenter(1, position);
+    this._onZoomToCenter(1, position);
   }
 
   public reset(): void {
-    this.fCanvas.resetZoom();
-    this.fCanvas.redraw();
-    this.fCanvas.emitCanvasChangeEvent();
+    this._fCanvas.resetZoom();
+    this._fCanvas.redraw();
+    this._fCanvas.emitCanvasChangeEvent();
   }
 
   protected unsubscribe(): void {
-    this.listeners();
-    this.listeners = EventExtensions.emptyListener();
+    this._listeners();
+    this._listeners = EventExtensions.emptyListener();
   }
 }

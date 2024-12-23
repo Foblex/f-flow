@@ -9,7 +9,5 @@ export abstract class FBackgroundBase implements IHasHostElement {
 
   public abstract hostElement: HTMLElement;
 
-  public abstract isBackgroundElement(element: HTMLElement | SVGElement): boolean;
-
   public abstract setTransform(transform: ITransformModel): void;
 }

@@ -71,7 +71,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getOutputsForNode(item.node).map((x) => x.id));
+    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getOutputsForNode(item.node).map((x) => x.fId));
   }
 
   private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
@@ -79,7 +79,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getAllInputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getInputsForNode(item.node).map((x) => x.id));
+    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getInputsForNode(item.node).map((x) => x.fId));
   }
 
   private getInputsForNode(node: FNodeBase): FConnectorBase[] {
@@ -92,7 +92,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
     items.forEach((node) => {
       result.push(
         new NodeDragHandler(this.fDraggableDataContext, node.node, node.min, node.max),
-        ...(node.parentNodes || []).map((parent) => new NodeResizeByChildDragHandler(this.fDraggableDataContext))
+        ...(node.parentNodes || []).map(() => new NodeResizeByChildDragHandler(this.fDraggableDataContext))
       );
     });
     return result;

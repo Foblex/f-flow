@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild,
+  Component, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild,
 } from "@angular/core";
 import {
   FCanvasBase, F_CANVAS
@@ -9,18 +9,16 @@ import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import {
   FCanvasChangeEvent,
 } from './domain';
-import { FComponentsStore } from '../f-storage';
-import { FNodeBase } from '../f-node';
 import { FMediator } from '@foblex/mediator';
 import {
+  AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
-  EmitTransformChangesRequest,
-  F_CANVAS_ANIMATION_DURATION,
   FitToFlowRequest,
   InputCanvasPositionRequest,
-  InputCanvasScaleRequest,
-  ResetScaleAndCenterRequest, ResetScaleRequest, UpdateScaleRequest,
+  InputCanvasScaleRequest, isMobile, RemoveCanvasFromStoreRequest,
+  ResetScaleAndCenterRequest, ResetScaleRequest, SetBackgroundTransformRequest, transitionEnd, UpdateScaleRequest,
 } from '../domain';
+import { TransformChangedRequest } from '../f-storage';
 
 @Component({
   selector: 'f-canvas',
@@ -35,27 +33,25 @@ import {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FCanvasComponent extends FCanvasBase implements OnInit {
+export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
+
+  private _elementReference = inject(ElementRef);
 
   @Output()
   public override fCanvasChange: EventEmitter<FCanvasChangeEvent> = new EventEmitter<FCanvasChangeEvent>();
 
   @Input()
   public set position(value: IPoint | undefined) {
-    this.fMediator.send(new InputCanvasPositionRequest(this.transform, value));
+    this._fMediator.send(new InputCanvasPositionRequest(this.transform, value));
   }
 
   @Input()
   public set scale(value: number | undefined) {
-    this.fMediator.send(new InputCanvasScaleRequest(this.transform, value));
-  }
-
-  public override get fNodes(): FNodeBase[] {
-    return this.fComponentsStore.fNodes;
+    this._fMediator.send(new InputCanvasScaleRequest(this.transform, value));
   }
 
   public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @ViewChild('fGroupsContainer', { static: true })
@@ -67,57 +63,45 @@ export class FCanvasComponent extends FCanvasBase implements OnInit {
   @ViewChild('fConnectionsContainer', { static: true })
   public override fConnectionsContainer!: ElementRef<HTMLElement>;
 
-  constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fMediator: FMediator,
-    private fComponentsStore: FComponentsStore,
-  ) {
-    super();
-  }
+  private _fMediator = inject(FMediator);
 
   public ngOnInit() {
-    this.fComponentsStore.fCanvas = this;
+    this._fMediator.send(new AddCanvasToStoreRequest(this));
   }
 
   public override redraw(): void {
-    this.fComponentsStore.fBackground?.setTransform(this.transform);
+    this._fMediator.send(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transform: ${ TransformModelExtensions.toString(this.transform) }`);
-    this.fMediator.send(new EmitTransformChangesRequest());
+    this._fMediator.send(new TransformChangedRequest());
   }
 
   public override redrawWithAnimation(): void {
-    let duration = F_CANVAS_ANIMATION_DURATION;
-    if (this.isMobile()) {
-      duration = 80;
-    }
-    this.fComponentsStore.fBackground?.setTransform(this.transform);
-    this.hostElement.setAttribute("style", `transition: transform ${ duration }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
-    setTimeout(() => this.redraw(), F_CANVAS_ANIMATION_DURATION);
-  }
-
-  private isMobile(): boolean {
-    // @ts-ignore
-    const userAgent = navigator.userAgent || navigator.vendor || window[ 'opera' ];
-    return /android|iPad|iPhone|iPod/i.test(userAgent);
+    this._fMediator.send(new SetBackgroundTransformRequest(this.transform));
+    this.hostElement.setAttribute("style", `transition: transform ${ isMobile() ? 80 : 150 }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
+    transitionEnd(this.hostElement, () => this.redraw());
   }
 
   public centerGroupOrNode(id: string, animated: boolean = true): void {
-    this.fMediator.send(new CenterGroupOrNodeRequest(id, animated));
+    this._fMediator.send(new CenterGroupOrNodeRequest(id, animated));
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    this.fMediator.send(new FitToFlowRequest(toCenter, animated));
+    this._fMediator.send(new FitToFlowRequest(toCenter, animated));
   }
 
   public resetScaleAndCenter(animated: boolean = true): void {
-    this.fMediator.send(new ResetScaleAndCenterRequest(animated));
+    this._fMediator.send(new ResetScaleAndCenterRequest(animated));
   }
 
   public override setZoom(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
-    this.fMediator.send(new UpdateScaleRequest(scale, toPosition));
+    this._fMediator.send(new UpdateScaleRequest(scale, toPosition));
   }
 
   public override resetZoom(): void {
-    this.fMediator.send(new ResetScaleRequest());
+    this._fMediator.send(new ResetScaleRequest());
+  }
+
+  public ngOnDestroy(): void {
+    this._fMediator.send(new RemoveCanvasFromStoreRequest());
   }
 }

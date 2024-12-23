@@ -25,7 +25,7 @@ export class CanvasMovePreparationValidator implements IValidator<CanvasMovePrep
   }
 
   private isBackgroundElement(targetElement: HTMLElement): boolean | undefined {
-    return this.fComponentsStore.fBackground?.isBackgroundElement(targetElement);
+    return this.fComponentsStore.fBackground?.hostElement.contains(targetElement);
   }
 
   private isDragOnHost(targetElement: HTMLElement): boolean {

@@ -1,9 +1,10 @@
 import {
-  Directive, ElementRef, Input, OnDestroy, OnInit
+  Directive, ElementRef, inject, Input, OnDestroy, OnInit
 } from "@angular/core";
 import { F_MARKER, FMarkerBase } from './f-marker-base';
 import { EFMarkerType } from './e-f-marker-type';
-import { FComponentsStore } from '../../f-storage';
+import { FMediator } from '@foblex/mediator';
+import { AddConnectionMarkerToStoreRequest, RemoveConnectionMarkerFromStoreRequest } from '../../domain';
 
 @Directive({
   selector: "svg[fMarker]",
@@ -40,8 +41,9 @@ export class FMarkerDirective extends FMarkerBase implements OnInit, OnDestroy {
   @Input()
   public override markerUnits: 'strokeWidth' | 'userSpaceOnUse' = 'strokeWidth';
 
+  private _fMediator = inject(FMediator);
+
   constructor(
-    private fComponentsStore: FComponentsStore,
     private elementReference: ElementRef<HTMLElement>,
   ) {
     super();
@@ -49,10 +51,10 @@ export class FMarkerDirective extends FMarkerBase implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.addComponent(this.fComponentsStore.fMarkers, this);
+    this._fMediator.send(new AddConnectionMarkerToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fMarkers, this);
+    this._fMediator.send(new RemoveConnectionMarkerFromStoreRequest(this));
   }
 }

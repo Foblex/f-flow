@@ -5,7 +5,7 @@ import { IHasHostElement } from '../i-has-host-element';
 
 export abstract class FConnectorBase implements IHasStateChanges, IHasHostElement {
 
-  public abstract id: string;
+  public abstract fId: string;
 
   public abstract disabled: boolean;
 
