@@ -35,10 +35,12 @@ let uniqueId: number = 0;
 })
 export class FConnectionForCreateComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnDestroy {
+    
+    public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
+    
+    public override fText: string = '';
 
-  public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
-
-  public override fText: string = '';
+    public override fTextStartOffset: string = '';
 
   private _fStartColor: string = 'black';
   @Input()

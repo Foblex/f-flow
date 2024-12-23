@@ -81,6 +81,8 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fText: string;
 
+  public abstract fTextStartOffset: string;
+
   public abstract fConnectionCenter: ElementRef<HTMLDivElement>;
 
   private penultimatePoint: IPoint = PointExtensions.initialize();

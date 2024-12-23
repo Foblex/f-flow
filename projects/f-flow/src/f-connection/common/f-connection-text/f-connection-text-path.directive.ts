@@ -35,7 +35,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   }
 
   public ngOnInit(): void {
-    this.hostElement.setAttribute('startOffset', '50%');
+    this.hostElement.setAttribute('startOffset', this.base.fTextStartOffset || '50%');
     this.hostElement.setAttribute('text-anchor', `middle`);
     this.symbolWidth = this.getSymbolWidth(this.base.fText || '');
   }
