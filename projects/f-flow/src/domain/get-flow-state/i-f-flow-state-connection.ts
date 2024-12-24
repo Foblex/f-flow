@@ -8,7 +8,7 @@ export interface IFFlowStateConnection {
 
   fInputId: string;
 
-  fType: EFConnectionType;
+  fType: EFConnectionType | string;
 
   fBehavior: EFConnectionBehavior;
 

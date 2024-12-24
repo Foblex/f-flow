@@ -64,7 +64,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fBehavior: EFConnectionBehavior;
 
-  public abstract fType: EFConnectionType;
+  public abstract fType: EFConnectionType | string;
 
   public abstract fDefs: ElementRef<SVGDefsElement>;
 

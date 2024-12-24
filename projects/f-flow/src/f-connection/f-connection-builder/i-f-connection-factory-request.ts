@@ -3,7 +3,7 @@ import { IFConnectionBuilderRequest } from './i-f-connection-builder-request';
 
 export interface IFConnectionFactoryRequest {
 
-  type: EFConnectionType;
+  type: EFConnectionType | string;
 
   payload: IFConnectionBuilderRequest;
 }

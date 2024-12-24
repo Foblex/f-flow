@@ -1,6 +1,6 @@
 import { GetFlowHostElementExecution } from './get-flow-host-element';
 import { AddFlowToStoreExecution } from './add-flow-to-store';
-import { RemoveDndFromStoreExecution } from '../f-draggable';
+import { RemoveFlowFromStoreExecution } from './remove-flow-from-store';
 
 export const F_FLOW_FEATURES = [
 
@@ -8,5 +8,5 @@ export const F_FLOW_FEATURES = [
 
   GetFlowHostElementExecution,
 
-  RemoveDndFromStoreExecution
+  RemoveFlowFromStoreExecution
 ];
