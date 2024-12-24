@@ -52,6 +52,16 @@ export class FConnectionComponent
   @Input('fConnectionId')
   public override fId: string = `f-connection-${ uniqueId++ }`;
 
+  private _fTextStartOffset: string = '';
+  @Input()
+  public override set fTextStartOffset(value: string) {
+    this._fTextStartOffset = value;
+    this.fComponentsStore.componentDataChanged();
+  }
+  public override get fTextStartOffset(): string {
+    return this._fTextStartOffset;
+  }
+
   private _fText: string = '';
   @Input()
   public override set fText(value: string) {
