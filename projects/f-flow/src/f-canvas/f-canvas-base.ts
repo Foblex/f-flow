@@ -1,18 +1,14 @@
 import { PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
 import { Directive, ElementRef, EventEmitter, InjectionToken } from '@angular/core';
 import { FCanvasChangeEvent } from './domain';
-import { FNodeBase } from '../f-node';
 import { IHasHostElement } from '../i-has-host-element';
 
 export const F_CANVAS = new InjectionToken<FCanvasBase>('F_CANVAS');
-
 
 @Directive()
 export abstract class FCanvasBase implements IHasHostElement {
 
   public abstract fCanvasChange: EventEmitter<FCanvasChangeEvent>;
-
-  public abstract fNodes: FNodeBase[];
 
   public abstract hostElement: HTMLElement;
 

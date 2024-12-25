@@ -1,6 +1,5 @@
 import { Directive, ElementRef } from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
-import { Subject } from 'rxjs';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
 import { IHasConnectionColor } from './i-has-connection-color';
@@ -11,8 +10,6 @@ import { IConnectionGradient } from './f-gradient';
 import { FConnectionDragHandleComponent } from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
 import { IConnectionText } from './f-connection-text';
-import { IHasStateChanges } from '../../i-has-state-changes';
-import { FMarkerBase } from '../f-marker';
 import { EFConnectableSide } from '../../f-connectors';
 import { FConnectionFactory } from '../f-connection-builder';
 import { IHasHostElement } from '../../i-has-host-element';
@@ -34,7 +31,7 @@ const MIXIN_BASE = mixinChangeSelection(
 export abstract class FConnectionBase extends MIXIN_BASE
   implements IHasHostElement, ICanChangeSelection,
              ICanChangeVisibility,
-             IHasStateChanges, IHasConnectionColor,
+             IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
 
   public abstract override fId: string;
@@ -55,8 +52,6 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public line: ILine = LineExtensions.initialize();
 
-  public readonly stateChanges: Subject<void> = new Subject<void>();
-
   public abstract fDraggingDisabled: boolean;
 
   public abstract override fSelectionDisabled: boolean;
@@ -65,7 +60,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fBehavior: EFConnectionBehavior;
 
-  public abstract fType: EFConnectionType;
+  public abstract fType: EFConnectionType | string;
 
   public abstract fDefs: ElementRef<SVGDefsElement>;
 

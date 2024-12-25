@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component, ContentChildren, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild
+  Component, ContentChildren, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
@@ -13,10 +13,12 @@ import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
-import { FComponentsStore } from '../../f-storage';
+import { ComponentDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -31,34 +33,19 @@ let uniqueId: number = 0;
   providers: [ { provide: F_CONNECTION, useExisting: FSnapConnectionComponent } ],
 })
 export class FSnapConnectionComponent
-  extends FConnectionBase implements AfterViewInit, OnInit, OnDestroy {
-  
+  extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+
   public override fId: string = `f-snap-connection-${ uniqueId++ }`;
 
   public override fText: string = '';
 
   public override fTextStartOffset: string = '';
 
-  private _fStartColor: string = 'black';
   @Input()
-  public override set fStartColor(value: string) {
-    this._fStartColor = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fStartColor(): string {
-    return this._fStartColor;
-  }
+  public override fStartColor: string = 'black';
 
-  private _fEndColor: string = 'black';
   @Input()
-  public override set fEndColor(value: string) {
-    this._fEndColor = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-
-  public override get fEndColor(): string {
-    return this._fEndColor;
-  }
+  public override fEndColor: string = 'black';
 
   @Input()
   public fSnapThreshold: number = 20;
@@ -67,49 +54,17 @@ export class FSnapConnectionComponent
 
   public override fInputId!: string;
 
-  private _fRadius: number = 8;
+  @Input()
+  public override fRadius: number = 8;
 
   @Input()
-  public override set fRadius(value: number) {
-    this._fRadius = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fRadius(): number {
-    return this._fRadius;
-  }
+  public override fOffset: number = 32
 
-  private _fOffset: number = 32;
+  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
+  public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
   @Input()
-  public override set fOffset(value: number) {
-    this._fOffset = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fOffset(): number {
-    return this._fOffset;
-  }
-
-  private _behavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
-
-  @Input()
-  public override set fBehavior(value: EFConnectionBehavior | string) {
-    this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fBehavior(): EFConnectionBehavior {
-    return this._behavior;
-  }
-
-  private _type: EFConnectionType = EFConnectionType.STRAIGHT;
-
-  @Input()
-  public override set fType(value: EFConnectionType | string) {
-    this._type = castToEnum(value, 'fType', EFConnectionType);
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fType(): EFConnectionType {
-    return this._type;
-  }
+  public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
   public override fDraggingDisabled: boolean = false;
 
@@ -143,23 +98,28 @@ export class FSnapConnectionComponent
     return this.fPath.hostElement;
   }
 
+  private _fMediator = inject(FMediator);
+
   constructor(
     elementReference: ElementRef<HTMLElement>,
     fConnectionFactory: FConnectionFactory,
-    private fComponentsStore: FComponentsStore
   ) {
     super(elementReference, fConnectionFactory);
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.fSnapConnection = this;
+    this._fMediator.send(new AddSnapConnectionToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
     this.hide();
   }
 
+  public ngOnChanges(): void {
+    this._fMediator.send(new ComponentDataChangedRequest());
+  }
+
   public ngOnDestroy(): void {
-    this.fComponentsStore.fSnapConnection = undefined;
+    this._fMediator.send(new RemoveSnapConnectionFromStoreRequest());
   }
 }

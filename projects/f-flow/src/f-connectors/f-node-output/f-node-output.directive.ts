@@ -1,9 +1,21 @@
-import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit, SimpleChanges
+} from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { F_NODE, FNodeBase } from '../../f-node';
-import { FComponentsStore } from '../../f-storage';
-import { castToBoolean, castToEnum } from '@foblex/utils';
+import { castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddOutputToStoreRequest, RemoveOutputFromStoreRequest } from '../../domain';
+import { FConnectorBase } from '../f-connector-base';
 
 let uniqueId: number = 0;
 
@@ -11,7 +23,7 @@ let uniqueId: number = 0;
   selector: "[fNodeOutput]",
   exportAs: 'fNodeOutput',
   host: {
-    '[attr.data-f-output-id]': 'id',
+    '[attr.data-f-output-id]': 'fId',
     class: "f-component f-node-output",
     '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
@@ -19,74 +31,58 @@ let uniqueId: number = 0;
   },
   providers: [ { provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective } ],
 })
-export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnDestroy {
+export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnChanges, OnDestroy {
 
   @Input('fOutputId')
-  public override id: string = `f-node-output-${ uniqueId++ }`;
+  public override fId: string = `f-node-output-${ uniqueId++ }`;
 
   @Input('fOutputMultiple')
   public override multiple: boolean = false;
 
-  @Input('fOutputDisabled')
-  public override get disabled(): boolean {
-    return this.isDisabled;
-  }
+  @Input({ alias: 'fOutputDisabled', transform: booleanAttribute })
+  public override disabled: boolean = false;
 
-  public override set disabled(isDisabled: boolean | undefined | string) {
-    const value = castToBoolean(isDisabled);
-    if (value !== this.isDisabled) {
-      this.isDisabled = value;
-      this.stateChanges.next();
-    }
-  }
-
-  private isDisabled: boolean = false;
-
-  @Input('fOutputConnectableSide')
-  public set _fSide(value: EFConnectableSide | string) {
-    this._fConnectableSide = castToEnum(value, 'fOutputConnectableSide', EFConnectableSide);
-    this.fNode.refresh();
-  }
-
-  public get _fSide(): EFConnectableSide {
-    return this._fConnectableSide;
-  }
-
-  public override _fConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
-
-  public override isConnected: boolean = false;
+  @Input({
+    alias: 'fOutputConnectableSide',
+    transform: (value: unknown) => castToEnum(value, 'fOutputConnectableSide', EFConnectableSide)
+  })
+  public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
   @Input()
   public override isSelfConnectable: boolean = true;
 
   public get hostElement(): HTMLElement | SVGElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+
   constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      @Inject(F_NODE) private fNode: FNodeBase,
-      private fComponentsStore: FComponentsStore,
+    @Inject(F_NODE) private fNode: FNodeBase
   ) {
     super();
   }
 
   public ngOnInit() {
-    if (!this.fNode) {
-      throw new Error('fNodeOutput must be inside fNode Directive');
-    }
-    this.fComponentsStore.addComponent(this.fComponentsStore.fOutputs, this);
+    this._fMediator.send(new AddOutputToStoreRequest(this));
     this.fNode.addConnector(this);
   }
 
-  public override setConnected(isConnected: boolean): void {
-    this.isConnected = isConnected;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes[ 'userFConnectableSide' ]) {
+      this.fNode.refresh();
+    }
+  }
+
+  public override setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
+    super.setConnected(isConnected, toConnector);
     this.hostElement.classList.toggle('f-node-output-connected', isConnected);
     this.hostElement.classList.toggle('f-node-output-not-connectable', !this.canBeConnected);
   }
 
   public ngOnDestroy(): void {
     this.fNode.removeConnector(this);
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fOutputs, this);
+    this._fMediator.send(new RemoveOutputFromStoreRequest(this));
   }
 }

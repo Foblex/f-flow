@@ -27,7 +27,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   }
 
   private getOutput(): FConnectorBase {
-    const result = this.fComponentsStore.fOutputs.find((x) => x.id === this.connection.fOutputId)!;
+    const result = this.fComponentsStore.fOutputs.find((x) => x.fId === this.connection.fOutputId)!;
     if (!result) {
       throw new Error(this.connectorNotFoundPrefix(`fOutput with id ${ this.connection.fOutputId } not found`));
     }
@@ -35,7 +35,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   }
 
   private getInput(): FConnectorBase {
-    const result = this.fComponentsStore.fInputs.find((x) => x.id === this.connection.fInputId)!;
+    const result = this.fComponentsStore.fInputs.find((x) => x.fId === this.connection.fInputId)!;
     if (!result) {
       throw new Error(this.connectorNotFoundPrefix(`fInput with id ${ this.connection.fInputId } not found`));
     }

@@ -3,6 +3,7 @@
     <div fNode fDragHandle
          [fNodePosition]="{ x: 0, y: 0 }"
          [fNodeSize]="{ width: 120, height: 150 }"
+         [fIncludePadding]="false"
          (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
       <div class="node-content">

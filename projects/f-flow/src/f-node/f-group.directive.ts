@@ -1,8 +1,8 @@
 import {
-  AfterViewInit,
+  AfterViewInit, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter,
+  EventEmitter, inject,
   Input,
   OnDestroy,
   OnInit,
@@ -11,19 +11,11 @@ import {
 } from "@angular/core";
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import { F_NODE, FNodeBase } from './f-node-base';
-import { merge, Subscription } from 'rxjs';
-import { startWith, debounceTime } from 'rxjs/operators';
-import { FResizeObserver } from './f-resize-observer';
-import { FComponentsStore } from '../f-storage';
-import {
-  CalculateConnectorConnectableSideHandler,
-  CalculateConnectorConnectableSideRequest,
-  FConnectorBase
-} from '../f-connectors';
+import { TransformChangedRequest } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
-import { EmitTransformChangesRequest } from '../domain';
 import { BrowserService } from '@foblex/platform';
 import { IHasHostElement } from '../i-has-host-element';
+import { AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest } from '../domain';
 
 let uniqueId: number = 0;
 
@@ -42,8 +34,6 @@ let uniqueId: number = 0;
 })
 export class FGroupDirective extends FNodeBase
   implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
-
-  private subscriptions$: Subscription = new Subscription();
 
   @Input('fGroupId')
   public override fId: string = `f-group-${ uniqueId++ }`;
@@ -85,13 +75,12 @@ export class FGroupDirective extends FNodeBase
   @Input()
   public override fConnectOnNode: boolean = true;
 
-  public override connectors: FConnectorBase[] = [];
+  private _destroyRef = inject(DestroyRef);
+  private _fMediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
     private fBrowser: BrowserService
   ) {
     super(elementReference.nativeElement);
@@ -105,7 +94,8 @@ export class FGroupDirective extends FNodeBase
     this.setStyle('left', '0');
     this.setStyle('top', '0');
     super.redraw();
-    this.fComponentsStore.addComponent(this.fComponentsStore.fNodes, this);
+
+    this._fMediator.send<void>(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -114,42 +104,18 @@ export class FGroupDirective extends FNodeBase
 
   public override redraw(): void {
     super.redraw();
-    this.fMediator.send(new EmitTransformChangesRequest());
+    this._fMediator.send(new TransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
     if(!this.fBrowser.isBrowser()) {
       return;
     }
-    this.subscriptions$.add(
-      this.subscribeOnResizeChanges()
-    );
+    this._subscribeOnResizeChanges();
   }
 
-  private subscribeOnResizeChanges(): Subscription {
-    return merge(new FResizeObserver(this.hostElement as HTMLElement), this.stateChanges).pipe(
-      debounceTime(10), startWith(null)
-    ).subscribe(() => {
-      this.connectors.forEach((fConnector: FConnectorBase) => {
-        fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
-          new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
-        );
-      });
-      this.fComponentsStore.componentDataChanged();
-    });
-  }
-
-  public override addConnector(connector: FConnectorBase): void {
-    this.connectors.push(connector);
-    this.stateChanges.next();
-  }
-
-  public override removeConnector(connector: FConnectorBase): void {
-    const index = this.connectors.indexOf(connector);
-    if (index !== -1) {
-      this.connectors.splice(index, 1);
-    }
-    this.stateChanges.next();
+  private _subscribeOnResizeChanges(): void {
+    this._fMediator.send<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public refresh(): void {
@@ -157,8 +123,7 @@ export class FGroupDirective extends FNodeBase
   }
 
   public ngOnDestroy(): void {
-    this.fComponentsStore.removeComponent(this.fComponentsStore.fNodes, this);
+    this._fMediator.send<void>(new RemoveNodeFromStoreRequest(this));
     this.stateChanges.complete();
-    this.subscriptions$.unsubscribe();
   }
 }

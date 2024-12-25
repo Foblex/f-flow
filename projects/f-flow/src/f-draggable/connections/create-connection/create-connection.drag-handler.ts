@@ -38,13 +38,13 @@ export class CreateConnectionDragHandler implements IDraggableItem {
 
   public initialize(): void {
     if (this.fSnapConnection) {
-      this.fSnapConnection.fOutputId = this.fOutput.id;
+      this.fSnapConnection.fOutputId = this.fOutput.fId;
       this.fSnapConnection.initialize();
       this.canBeConnectedInputs = this.fMediator.send<IConnectorWithRect[]>(
-        new GetAllCanBeConnectedInputPositionsRequest(this.fOutput.id)
+        new GetAllCanBeConnectedInputPositionsRequest(this.fOutput.fId)
       );
     }
-    this.fConnection.fOutputId = this.fOutput.id;
+    this.fConnection.fOutputId = this.fOutput.fId;
     this.fConnection.initialize();
 
 

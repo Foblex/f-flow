@@ -5,7 +5,7 @@ export const F_FLOW = new InjectionToken<FFlowBase>('F_FLOW');
 
 export abstract class FFlowBase implements IHasHostElement {
 
-  public abstract fFlowId: string;
+  public abstract fId: string;
 
   public abstract hostElement: HTMLElement;
 

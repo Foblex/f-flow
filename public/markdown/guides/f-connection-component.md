@@ -26,6 +26,8 @@ The **FConnectionComponent** is a component that represents a connection between
 
   - `fText: string;` The text displayed on the connection. Default: `null`
 
+  - `fTextStartOffset: number;` The offset of the text from the start of the connection. Default: `50%`
+
 ## Styles
   - `.f-component` A general class applied to all F components for shared styling.
 

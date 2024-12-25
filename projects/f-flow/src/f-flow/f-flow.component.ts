@@ -1,12 +1,11 @@
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
-  Component, ElementRef, EventEmitter,
+  Component, DestroyRef, ElementRef, EventEmitter, inject,
   Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
-import { Subscription } from 'rxjs';
-import { startWith, debounceTime } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
   GetScaledNodeRectsWithFlowPositionRequest,
@@ -17,7 +16,7 @@ import {
   SelectRequest,
   SortItemLayersRequest,
   IFFlowState,
-  GetFlowStateRequest
+  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -25,7 +24,12 @@ import {
   FDraggableDataContext, FSelectionChangeEvent
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
-import { FComponentsStore, FTransformStore } from '../f-storage';
+import {
+  ComponentDataChangedRequest,
+  F_STORAGE_PROVIDERS,
+  ListenComponentsCountChangesRequest,
+  ListenComponentsDataChangesRequest
+} from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
@@ -37,13 +41,12 @@ let uniqueId: number = 0;
   templateUrl: './f-flow.component.html',
   styleUrls: [ './f-flow.component.scss' ],
   host: {
-    '[attr.id]': 'fFlowId',
+    '[attr.id]': 'fId',
     class: "f-component f-flow",
   },
   providers: [
     FMediator,
-    FComponentsStore,
-    FTransformStore,
+    ...F_STORAGE_PROVIDERS,
     FDraggableDataContext,
     FConnectionFactory,
     ...COMMON_PROVIDERS,
@@ -54,10 +57,12 @@ let uniqueId: number = 0;
 })
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
 
-  private subscription$: Subscription = new Subscription();
+  private _destroyRef = inject(DestroyRef);
 
-  @Input()
-  public override fFlowId: string = `f-flow-${ uniqueId++ }`;
+  private _fMediator = inject(FMediator);
+
+  @Input('fFlowId')
+  public override fId: string = `f-flow-${ uniqueId++ }`;
 
   public override get hostElement(): HTMLElement {
     return this.elementReference.nativeElement;
@@ -66,87 +71,85 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   @Output()
   public override fLoaded: EventEmitter<void> = new EventEmitter<void>();
 
-  private isLoaded: boolean = false;
+  private _isLoaded: boolean = false;
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
     private fBrowser: BrowserService,
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.fComponentsStore.fFlow = this;
+    this._fMediator.send(new AddFlowToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
     if (!this.fBrowser.isBrowser()) {
       return;
     }
-    this.subscription$.add(
-      this.subscribeOnElementsChanges()
-    );
-    this.subscription$.add(
-      this.subscribeOnComponentsCountChanges()
-    );
+    this._subscribeOnComponentsCountChanges();
+    this._subscribeOnElementsChanges();
   }
 
-  private subscribeOnComponentsCountChanges(): Subscription {
-    return this.fComponentsStore.componentsCount$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
-      this.fMediator.send(new SortItemLayersRequest());
+  private _subscribeOnComponentsCountChanges(): void {
+    this._fMediator.send<Observable<void>>(
+      new ListenComponentsCountChangesRequest(this._destroyRef)
+    ).subscribe(() => {
+      this._fMediator.send(new SortItemLayersRequest());
     });
   }
 
-  private subscribeOnElementsChanges(): Subscription {
-    return this.fComponentsStore.componentsData$.pipe(startWith(null), debounceTime(1)).subscribe(() => {
-      this.fMediator.send(new RedrawConnectionsRequest());
+  private _subscribeOnElementsChanges(): void {
+    this._fMediator.send<Observable<void>>(
+      new ListenComponentsDataChangesRequest(this._destroyRef)
+    ).subscribe(() => {
+      this._fMediator.send(new RedrawConnectionsRequest());
 
-      if (!this.isLoaded) {
-        this.isLoaded = true;
+      if (!this._isLoaded) {
+        this._isLoaded = true;
         this.fLoaded.emit();
       }
     });
   }
 
   public redraw(): void {
-    this.fComponentsStore.componentDataChanged();
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public reset(): void {
-    this.isLoaded = false;
+    this._isLoaded = false;
   }
 
   public getAllNodesRect(): IRect | null {
-    return this.fMediator.send<IRect | null>(new GetScaledNodeRectsWithFlowPositionRequest());
+    return this._fMediator.send<IRect | null>(new GetScaledNodeRectsWithFlowPositionRequest());
   }
 
   public getSelection(): FSelectionChangeEvent {
-    return this.fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest());
+    return this._fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest());
   }
 
   public getPositionInFlow(position: IPoint): IRect {
-    return this.fMediator.send(new GetPositionInFlowRequest(position));
+    return this._fMediator.send(new GetPositionInFlowRequest(position));
   }
 
   public getState(): IFFlowState {
-    return this.fMediator.send(new GetFlowStateRequest());
+    return this._fMediator.send(new GetFlowStateRequest());
   }
 
   public selectAll(): void {
-    this.fMediator.send<void>(new SelectAllRequest());
+    this._fMediator.send<void>(new SelectAllRequest());
   }
 
   public select(nodes: string[], connections: string[]): void {
-    this.fMediator.send<void>(new SelectRequest(nodes, connections));
+    this._fMediator.send<void>(new SelectRequest(nodes, connections));
   }
 
   public clearSelection(): void {
-    this.fMediator.send<void>(new ClearSelectionRequest());
+    this._fMediator.send<void>(new ClearSelectionRequest());
   }
 
   public ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
+    this._fMediator.send(new RemoveFlowFromStoreRequest());
   }
 }

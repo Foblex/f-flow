@@ -5,16 +5,28 @@ import { ResetScaleExecution } from './reset-scale';
 import { UpdateScaleExecution } from './update-scale';
 import { InputCanvasPositionExecution } from './input-canvas-position';
 import { InputCanvasScaleExecution } from './input-canvas-scale';
+import { AddCanvasToStoreExecution } from './add-canvas-to-store';
+import { RemoveCanvasFromStoreExecution } from './remove-canvas-from-store';
+import { GetCanvasExecution } from './get-canvas';
+import { RedrawCanvasWithAnimationExecution } from './redraw-canvas-with-animation';
 
 export const F_CANVAS_FEATURES = [
+
+  AddCanvasToStoreExecution,
 
   CenterGroupOrNodeExecution,
 
   FitToFlowExecution,
 
+  GetCanvasExecution,
+
   InputCanvasPositionExecution,
 
   InputCanvasScaleExecution,
+
+  RedrawCanvasWithAnimationExecution,
+
+  RemoveCanvasFromStoreExecution,
 
   ResetScaleExecution,
 

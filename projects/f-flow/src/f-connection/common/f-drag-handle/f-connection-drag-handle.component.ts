@@ -29,12 +29,12 @@ export class FConnectionDragHandleComponent implements IHasHostElement {
   }
 
   public redraw(penultimatePoint: IPoint, endPoint: IPoint): void {
-    const point = this.calculateCircleCenter(penultimatePoint, endPoint, 8);
+    const point = this._calculateCircleCenter(penultimatePoint, endPoint, 8);
     this.hostElement.setAttribute('cx', point.x.toString());
     this.hostElement.setAttribute('cy', point.y.toString());
   }
 
-  private calculateCircleCenter(start: IPoint, end: IPoint, radius: number): IPoint {
+  private _calculateCircleCenter(start: IPoint, end: IPoint, radius: number): IPoint {
     const direction = { x: end.x - start.x, y: end.y - start.y };
     const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y) || 1;
     const unitDirection = { x: direction.x / length, y: direction.y / length };

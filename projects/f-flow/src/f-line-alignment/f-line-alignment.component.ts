@@ -1,11 +1,11 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { IPoint, IRect, ISize, ITransformModel, RectExtensions, SizeExtensions } from '@foblex/2d';
 import { ILineAlignmentResult, LineService, NearestCoordinateFinder } from './domain';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
-import { GetElementRectInFlowRequest } from '../domain';
+import { GetElementRectInFlowRequest, GetFlowHostElementRequest } from '../domain';
 import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 
@@ -38,19 +38,20 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
 
   private rects: IRect[] = [];
 
+  private _fMediator = inject(FMediator);
+
   private get transform(): ITransformModel {
     return this.fComponentsStore.fCanvas!.transform;
   }
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
+  private get _fFlowHostElement(): HTMLElement {
+    return this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest());
   }
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
     private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator,
     fBrowser: BrowserService
   ) {
     super();
@@ -62,10 +63,10 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
   }
 
   public override initialize(allNodes: FNodeBase[], currentNodes: FNodeBase[]): void {
-    this.size = this.flowHost.getBoundingClientRect();
+    this.size = this._fFlowHostElement.getBoundingClientRect();
     this.rects = [];
     const draggedNodeRects = currentNodes.map((x) => {
-      return this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
+      return this._fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
     });
     this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
 
@@ -74,7 +75,7 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
     });
 
     this.rects = allNodesExcludeCurrents.map((x) => {
-      return this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
+      return this._fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
     });
   }
 

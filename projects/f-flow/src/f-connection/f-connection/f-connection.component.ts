@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component, ContentChildren,
-  ElementRef,
-  Input,
+  ElementRef, inject,
+  Input, OnChanges,
   OnDestroy,
   OnInit, QueryList,
   ViewChild
@@ -18,7 +18,7 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FComponentsStore } from '../../f-storage';
+import { ComponentDataChangedRequest } from '../../f-storage';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
@@ -28,7 +28,8 @@ import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
+import { AddConnectionToStoreRequest } from '../../domain';
+import { RemoveConnectionFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -47,110 +48,40 @@ let uniqueId: number = 0;
   providers: [ { provide: F_CONNECTION, useExisting: FConnectionComponent } ],
 })
 export class FConnectionComponent
-    extends FConnectionBase implements OnInit, OnDestroy {
+  extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
 
   @Input('fConnectionId')
   public override fId: string = `f-connection-${ uniqueId++ }`;
 
-  private _fTextStartOffset: string = '';
   @Input()
-  public override set fTextStartOffset(value: string) {
-    this._fTextStartOffset = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fTextStartOffset(): string {
-    return this._fTextStartOffset;
-  }
+  public override fText: string = '';
 
-  private _fText: string = '';
   @Input()
-  public override set fText(value: string) {
-    this._fText = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fText(): string {
-    return this._fText;
-  }
+  public override fTextStartOffset: string = '';
 
-  private _fStartColor: string = 'black';
   @Input()
-  public override set fStartColor(value: string) {
-    this._fStartColor = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fStartColor(): string {
-    return this._fStartColor;
-  }
+  public override fStartColor: string = 'black';
 
-  private _fEndColor: string = 'black';
   @Input()
-  public override set fEndColor(value: string) {
-    this._fEndColor = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fEndColor(): string {
-    return this._fEndColor;
-  }
+  public override fEndColor: string = 'black';
 
-  private _fOutputId!: string;
   @Input()
-  public override set fOutputId(value: string) {
-    this._fOutputId = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fOutputId(): string {
-    return this._fOutputId;
-  }
+  public override fOutputId: string = '';
 
-  private _fInputId!: string;
   @Input()
-  public override set fInputId(value: string) {
-    this._fInputId = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fInputId(): string {
-    return this._fInputId;
-  }
+  public override fInputId: string = '';
 
-  private _fRadius: number = 8;
   @Input()
-  public override set fRadius(value: number) {
-    this._fRadius = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fRadius(): number {
-    return this._fRadius;
-  }
+  public override fRadius: number = 8;
 
-  private _fOffset: number = 32;
   @Input()
-  public override set fOffset(value: number) {
-    this._fOffset = value;
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fOffset(): number {
-    return this._fOffset;
-  }
+  public override fOffset: number = 32
 
-  private _behavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
-  @Input()
-  public override set fBehavior(value: string | EFConnectionBehavior) {
-    this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fBehavior(): EFConnectionBehavior {
-    return this._behavior;
-  }
+  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
+  public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
-  private _type: EFConnectionType = EFConnectionType.STRAIGHT;
   @Input()
-  public override set fType(value: EFConnectionType | string) {
-    this._type = value as unknown as EFConnectionType; //castToEnum(value, 'fType', EFConnectionType);
-    this.fComponentsStore.componentDataChanged();
-  }
-  public override get fType(): EFConnectionType {
-    return this._type;
-  }
+  public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
   @Input('fReassignDisabled')
   public override fDraggingDisabled: boolean = false;
@@ -181,24 +112,29 @@ export class FConnectionComponent
 
   @ContentChildren(FConnectionCenterDirective, { descendants: true })
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
+
   public override get boundingElement(): HTMLElement | SVGElement {
     return this.fPath.hostElement;
   }
 
+  private _fMediator = inject(FMediator);
+
   constructor(
-      elementReference: ElementRef<HTMLElement>,
-      fConnectionFactory: FConnectionFactory,
-      private fComponentsStore: FComponentsStore,
-      private fMediator: FMediator
+    elementReference: ElementRef<HTMLElement>,
+    fConnectionFactory: FConnectionFactory,
   ) {
     super(elementReference, fConnectionFactory);
   }
 
   public ngOnInit(): void {
-    this.fMediator.send(new AddConnectionToStoreRequest(this));
+    this._fMediator.send(new AddConnectionToStoreRequest(this));
+  }
+
+  public ngOnChanges(): void {
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this.fMediator.send(new RemoveConnectionFromStoreRequest(this));
+    this._fMediator.send(new RemoveConnectionFromStoreRequest(this));
   }
 }

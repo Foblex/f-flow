@@ -12,6 +12,12 @@ import { FDraggableBase } from '../f-draggable';
 @Injectable()
 export class FComponentsStore {
 
+  private readonly transformChanges: Subject<void> = new Subject<void>();
+
+  public get transform$(): Observable<void> {
+    return this.transformChanges.asObservable();
+  }
+
   private readonly componentsDataChanges: Subject<void> = new Subject<void>();
   public get componentsData$(): Observable<void> {
     return this.componentsDataChanges.asObservable();
@@ -73,5 +79,9 @@ export class FComponentsStore {
 
   public componentDataChanged(): void {
     this.componentsDataChanges.next();
+  }
+
+  public transformChanged(): void {
+    this.transformChanges.next();
   }
 }

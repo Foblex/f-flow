@@ -48,11 +48,11 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   }
 
   private getOutput(): FConnectorBase {
-    return this.fComponentsStore.fOutputs.find((x) => x.id === this.fConnection.fOutputId)!;
+    return this.fComponentsStore.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
   }
 
   private getInput(): FConnectorBase {
-    return this.fComponentsStore.fInputs.find((x) => x.id === this.fConnection.fInputId)!
+    return this.fComponentsStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!
   }
 
   public move(difference: IPoint): void {

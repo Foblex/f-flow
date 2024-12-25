@@ -7,7 +7,6 @@ import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalIte
 @FValidatorRegister(ExternalItemPreparationRequest)
 export class ExternalItemPreparationValidator implements IValidator<ExternalItemPreparationRequest> {
 
-
   constructor(
     private fExternalItemService: FExternalItemService
   ) {

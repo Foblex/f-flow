@@ -12,8 +12,6 @@ export * from './f-node.directive';
 
 export * from './f-node-base';
 
-export * from './f-resize-observer';
-
 export * from './providers';
 
 

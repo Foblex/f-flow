@@ -3,7 +3,6 @@ import {
   Directive, Input, OnDestroy
 } from "@angular/core";
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
-import { FComponentsStore } from '../f-storage';
 import { castToBoolean } from '@foblex/utils';
 
 @Directive({
@@ -40,12 +39,6 @@ export class FZoomDirective extends FZoomBase implements AfterViewInit, OnDestro
 
   @Input('fZoomDblClickStep')
   public override dblClickStep: number = 0.5;
-
-  constructor(
-      fComponentsStore: FComponentsStore,
-  ) {
-    super(fComponentsStore);
-  }
 
   public ngAfterViewInit(): void {
     super.toggleZoom();

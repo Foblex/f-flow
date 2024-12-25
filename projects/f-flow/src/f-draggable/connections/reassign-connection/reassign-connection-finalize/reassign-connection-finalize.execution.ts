@@ -46,7 +46,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
         this.dragHandler.fConnection.fId,
         this.dragHandler.fConnection.fOutputId,
         this.dragHandler.fConnection.fInputId,
-        input?.id,
+        input?.fId,
         event.getPosition()
       )
     );
@@ -57,6 +57,6 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   }
 
   private isReassignToDifferentInput(inputsUnderPointer: FConnectorBase): boolean {
-    return this.dragHandler.fConnection.fInputId !== inputsUnderPointer.id;
+    return this.dragHandler.fConnection.fInputId !== inputsUnderPointer.fId;
   }
 }
