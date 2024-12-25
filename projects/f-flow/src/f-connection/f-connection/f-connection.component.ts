@@ -54,6 +54,9 @@ export class FConnectionComponent
   public override fId: string = `f-connection-${ uniqueId++ }`;
 
   @Input()
+  public override fTextStartOffset: string = '';
+
+  @Input()
   public override fText: string = '';
 
   @Input()
