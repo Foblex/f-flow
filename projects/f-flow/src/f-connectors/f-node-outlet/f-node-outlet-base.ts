@@ -8,8 +8,6 @@ export abstract class FNodeOutletBase extends FConnectorBase {
 
   public abstract isConnectionFromOutlet: boolean;
 
-  public override isConnected: boolean = false;
-
   private outputs: FConnectorBase[] = [];
 
   public get canBeConnected(): boolean {

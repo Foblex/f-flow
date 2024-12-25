@@ -1,10 +1,21 @@
-import { Directive, ElementRef, inject, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit, SimpleChanges
+} from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FNodeBase, F_NODE } from '../../f-node';
-import { castToBoolean, castToEnum } from '@foblex/utils';
+import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddInputToStoreRequest, RemoveInputFromStoreRequest } from '../../domain';
+import { FConnectorBase } from '../f-connector-base';
 
 let uniqueId: number = 0;
 
@@ -19,7 +30,7 @@ let uniqueId: number = 0;
   },
   providers: [ { provide: F_NODE_INPUT, useExisting: FNodeInputDirective } ],
 })
-export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDestroy {
+export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnChanges, OnDestroy {
 
   @Input('fInputId')
   public override fId: any = `f-node-input-${ uniqueId++ }`;
@@ -27,34 +38,14 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
   @Input('fInputMultiple')
   public override multiple: boolean = true;
 
-  @Input('fInputDisabled')
-  public override get disabled(): boolean {
-    return this.isDisabled;
-  }
+  @Input({ alias: 'fInputDisabled', transform: booleanAttribute })
+  public override disabled: boolean = false;
 
-  public override set disabled(isDisabled: boolean | undefined | string) {
-    const value = castToBoolean(isDisabled);
-    if (value !== this.isDisabled) {
-      this.isDisabled = value;
-      this.stateChanges.next();
-    }
-  }
-
-  private isDisabled: boolean = false;
-
-  @Input('fInputConnectableSide')
-  public set _fSide(value: EFConnectableSide | string) {
-    this._fConnectableSide = castToEnum(value, 'fInputConnectableSide', EFConnectableSide);
-    this.fNode.refresh();
-  }
-
-  public get _fSide(): EFConnectableSide {
-    return this._fConnectableSide;
-  }
-
-  public override _fConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
-
-  public override isConnected: boolean = false;
+  @Input({
+    alias: 'fInputConnectableSide',
+    transform: (value: unknown) => castToEnum(value, 'fInputConnectableSide', EFConnectableSide)
+  })
+  public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
   public get hostElement(): HTMLElement | SVGElement {
     return this._elementReference.nativeElement;
@@ -74,8 +65,14 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnDes
     this.fNode.addConnector(this);
   }
 
-  public override setConnected(isConnected: boolean): void {
-    this.isConnected = isConnected;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes[ 'userFConnectableSide' ]) {
+      this.fNode.refresh();
+    }
+  }
+
+  public override setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
+    super.setConnected(isConnected, toConnector);
     this.hostElement.classList.toggle('f-node-input-connected', isConnected);
     this.hostElement.classList.toggle('f-node-input-not-connectable', !this.canBeConnected);
   }

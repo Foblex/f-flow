@@ -9,10 +9,10 @@ export class CalculateConnectorConnectableSideHandler
   public handle(request: CalculateConnectorConnectableSideRequest): EFConnectableSide {
     let result: EFConnectableSide;
 
-    if (request.fConnector._fConnectableSide === EFConnectableSide.AUTO) {
+    if (request.fConnector.userFConnectableSide === EFConnectableSide.AUTO) {
       result = this.getSideByDelta(request.fConnector.hostElement, request.fNodeHost);
     } else {
-      result = request.fConnector._fConnectableSide;
+      result = request.fConnector.userFConnectableSide;
     }
     return result;
   }

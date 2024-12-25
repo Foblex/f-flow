@@ -1,9 +1,7 @@
-import { Subject } from 'rxjs';
 import { EFConnectableSide } from './e-f-connectable-side';
-import { IHasStateChanges } from '../i-has-state-changes';
 import { IHasHostElement } from '../i-has-host-element';
 
-export abstract class FConnectorBase implements IHasStateChanges, IHasHostElement {
+export abstract class FConnectorBase implements IHasHostElement {
 
   public abstract fId: string;
 
@@ -11,23 +9,28 @@ export abstract class FConnectorBase implements IHasStateChanges, IHasHostElemen
 
   public abstract hostElement: HTMLElement | SVGElement;
 
-  public readonly stateChanges: Subject<void> = new Subject<void>();
-
   public abstract canBeConnected: boolean;
 
-  public abstract isConnected: boolean;
+  private _isConnected: boolean = false;
+
+  public get isConnected(): boolean {
+    return this._isConnected;
+  }
+
+  public toConnector: FConnectorBase | undefined;
 
   public isSelfConnectable: boolean = true;
 
   public fConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
-  public _fConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
+  public userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
   public isContains(element: HTMLElement | SVGElement): boolean {
     return this.hostElement.contains(element);
   }
 
-  public setConnected(isConnected: boolean): void {
-    this.isConnected = isConnected;
+  public setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
+    this._isConnected = isConnected;
+    this.toConnector = toConnector;
   }
 }

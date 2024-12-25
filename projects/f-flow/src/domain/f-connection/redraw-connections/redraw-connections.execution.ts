@@ -40,13 +40,13 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private resetConnectors(): void {
-    this.fComponentsStore.fOutputs.forEach((output) => output.setConnected(false));
-    this.fComponentsStore.fInputs.forEach((input) => input.setConnected(false));
+    this.fComponentsStore.fOutputs.forEach((output) => output.setConnected(false, undefined));
+    this.fComponentsStore.fInputs.forEach((input) => input.setConnected(false, undefined));
   }
 
   private setupConnection(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): void {
-    output.setConnected(true);
-    input.setConnected(true);
+    output.setConnected(true, input);
+    input.setConnected(true, output);
 
     const line = this.getLine(output, input, connection);
 

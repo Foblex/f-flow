@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component, ContentChildren, ElementRef, inject, Input, OnDestroy, OnInit, QueryList, ViewChild
+  Component, ContentChildren, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
@@ -36,85 +36,35 @@ let uniqueId: number = 0;
   providers: [ { provide: F_CONNECTION, useExisting: FConnectionForCreateComponent } ],
 })
 export class FConnectionForCreateComponent
-  extends FConnectionBase implements AfterViewInit, OnInit, OnDestroy {
-    
-    public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
-    
-    public override fText: string = '';
+  extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
-    public override fTextStartOffset: string = '';
+  public override fId: string = `f-connection-for-create-${ uniqueId++ }`;
 
-  private _fStartColor: string = 'black';
+  public override fText: string = '';
+
+  public override fTextStartOffset: string = '';
+
   @Input()
-  public override set fStartColor(value: string) {
-    this._fStartColor = value;
-    this._componentDataChanged();
-  }
+  public override fStartColor: string = 'black';
 
-  public override get fStartColor(): string {
-    return this._fStartColor;
-  }
-
-  private _fEndColor: string = 'black';
   @Input()
-  public override set fEndColor(value: string) {
-    this._fEndColor = value;
-    this._componentDataChanged();
-  }
-
-  public override get fEndColor(): string {
-    return this._fEndColor;
-  }
+  public override fEndColor: string = 'black';
 
   public override fOutputId!: string;
 
   public override fInputId!: string;
 
-  private _fRadius: number = 8;
   @Input()
-  public override set fRadius(value: number) {
-    this._fRadius = value;
-    this._componentDataChanged();
-  }
-
-  public override get fRadius(): number {
-    return this._fRadius;
-  }
-
-  private _fOffset: number = 32;
-  @Input()
-  public override set fOffset(value: number) {
-    this._fOffset = value;
-    this._componentDataChanged();
-  }
-
-  public override get fOffset(): number {
-    return this._fOffset;
-  }
-
-  private _behavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
+  public override fRadius: number = 8;
 
   @Input()
-  public override set fBehavior(value: EFConnectionBehavior | string) {
-    this._behavior = castToEnum(value, 'fBehavior', EFConnectionBehavior);
-    this._componentDataChanged();
-  }
+  public override fOffset: number = 32
 
-  public override get fBehavior(): EFConnectionBehavior {
-    return this._behavior;
-  }
-
-  private _type: EFConnectionType = EFConnectionType.STRAIGHT;
+  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
+  public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
   @Input()
-  public override set fType(value: EFConnectionType | string) {
-    this._type = castToEnum(value, 'fType', EFConnectionType);
-    this._componentDataChanged();
-  }
-
-  public override get fType(): EFConnectionType {
-    return this._type;
-  }
+  public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
   public override fDraggingDisabled: boolean = false;
 
@@ -165,11 +115,11 @@ export class FConnectionForCreateComponent
     this.hide();
   }
 
-  public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveConnectionForCreateFromStoreRequest());
+  public ngOnChanges(): void {
+    this._fMediator.send(new ComponentsDataChangedRequest());
   }
 
-  private _componentDataChanged(): void {
-    this._fMediator.send(new ComponentsDataChangedRequest());
+  public ngOnDestroy(): void {
+    this._fMediator.send(new RemoveConnectionForCreateFromStoreRequest());
   }
 }
