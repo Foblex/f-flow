@@ -1,6 +1,6 @@
 import { DestroyRef } from '@angular/core';
 
-export class ListenComponentsCountChangedRequest {
+export class ListenComponentsCountChangesRequest {
 
   constructor(
     public destroyRef: DestroyRef

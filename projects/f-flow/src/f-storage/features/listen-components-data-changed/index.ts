@@ -1,3 +1,3 @@
-export * from './listen-components-data-changed.execution';
+export * from './listen-components-data-changes.execution';
 
-export * from './listen-components-data-changed-request';
+export * from './listen-components-data-changes-request';

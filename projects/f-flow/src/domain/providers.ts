@@ -20,6 +20,7 @@ import { F_CONNECTION_FEATURES } from './f-connection';
 import { F_CONNECTORS_FEATURES } from './f-connectors';
 import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
+import { F_NODE_FEATURES } from './f-node';
 
 export const COMMON_PROVIDERS = [
 
@@ -34,6 +35,8 @@ export const COMMON_PROVIDERS = [
   ...F_DRAGGABLE_FEATURES,
 
   ...F_FLOW_FEATURES,
+
+  ...F_NODE_FEATURES,
 
   CreateRoundedRectFromElementExecution,
 

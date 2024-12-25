@@ -25,10 +25,10 @@ import {
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import {
-  ComponentsDataChangedRequest,
+  ComponentDataChangedRequest,
   F_STORAGE_PROVIDERS,
-  ListenComponentsCountChangedRequest,
-  ListenComponentsDataChangedRequest
+  ListenComponentsCountChangesRequest,
+  ListenComponentsDataChangesRequest
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
@@ -92,14 +92,18 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._subscribeOnElementsChanges();
   }
 
-  private _subscribeOnComponentsCountChanges(): Subscription {
-    return this._fMediator.send<Observable<void>>(new ListenComponentsCountChangedRequest(this._destroyRef)).subscribe(() => {
+  private _subscribeOnComponentsCountChanges(): void {
+    this._fMediator.send<Observable<void>>(
+      new ListenComponentsCountChangesRequest(this._destroyRef)
+    ).subscribe(() => {
       this._fMediator.send(new SortItemLayersRequest());
     });
   }
 
-  private _subscribeOnElementsChanges(): Subscription {
-    return this._fMediator.send<Observable<void>>(new ListenComponentsDataChangedRequest(this._destroyRef)).subscribe(() => {
+  private _subscribeOnElementsChanges(): void {
+    this._fMediator.send<Observable<void>>(
+      new ListenComponentsDataChangesRequest(this._destroyRef)
+    ).subscribe(() => {
       this._fMediator.send(new RedrawConnectionsRequest());
 
       if (!this._isLoaded) {
@@ -110,7 +114,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this._fMediator.send(new ComponentsDataChangedRequest());
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public reset(): void {

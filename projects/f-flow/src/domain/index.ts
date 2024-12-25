@@ -12,6 +12,8 @@ export * from './f-draggable';
 
 export * from './f-flow';
 
+export * from './f-node';
+
 export * from './f-selection';
 
 export * from './get-can-be-selected-items';

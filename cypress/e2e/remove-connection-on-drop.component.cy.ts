@@ -10,8 +10,7 @@ describe('RemoveConnectionOnDropComponent', () => {
     cy.get('.f-connection-drag-handle').first()
       .trigger('mousedown', { button: 0, force: true })
       .trigger('mousemove', { clientX: 0, clientY: 0 })
-      .trigger('mousemove', { clientX: 20, clientY: 10 })
-      .trigger('mousemove', { clientX: 120, clientY: 110 })
+      .trigger('mousemove', { clientX: 420, clientY: 110 })
       .trigger('mouseup');
 
     cy.get('#connection_f-connection-012').should('not.exist');

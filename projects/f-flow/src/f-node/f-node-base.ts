@@ -3,13 +3,10 @@ import { Subject } from 'rxjs';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import { IHasStateChanges } from '../i-has-state-changes';
 import {
-  CalculateConnectorConnectableSideHandler,
-  CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
-import { FDropToGroupEvent } from '../f-draggable';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
@@ -56,11 +53,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, 
 
   public abstract refresh(): void;
 
-  public abstract connectors: FConnectorBase[];
-
-  public abstract addConnector(connector: FConnectorBase): void;
-
-  public abstract removeConnector(connector: FConnectorBase): void;
+  public connectors: FConnectorBase[] = [];
 
   protected abstract setStyle(name: string, value: string): void;
 
@@ -93,11 +86,16 @@ export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, 
     this.hostElement.classList.remove(className);
   }
 
-  public calculateConnectorsSides(): void {
-    this.connectors.forEach((fConnector: FConnectorBase) => {
-      fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
-        new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
-      );
-    });
+  public addConnector(connector: FConnectorBase): void {
+    this.connectors.push(connector);
+    this.refresh();
+  }
+
+  public removeConnector(connector: FConnectorBase): void {
+    const index = this.connectors.indexOf(connector);
+    if (index !== -1) {
+      this.connectors.splice(index, 1);
+    }
+    this.refresh();
   }
 }

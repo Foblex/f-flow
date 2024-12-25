@@ -48,8 +48,8 @@ export class FMinimapComponent implements AfterViewInit, OnDestroy, IFDragAndDro
     this._subscribeOnTransformChanges();
   }
 
-  private _subscribeOnTransformChanges(): Subscription {
-    return this._getTransformChanges().pipe(debounceTime(5), takeUntilDestroyed(this._destroyRef)).subscribe(() => {
+  private _subscribeOnTransformChanges(): void {
+    this._getTransformChanges().pipe(debounceTime(5), takeUntilDestroyed(this._destroyRef)).subscribe(() => {
       this.fMinimapFlow.update();
       this.fMinimapView.update();
       this.fMinimapCanvas.redraw();

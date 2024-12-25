@@ -13,7 +13,7 @@ import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
-import { ComponentsDataChangedRequest } from '../../f-storage';
+import { ComponentDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 //TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
 // TypeError: Class extends value undefined is not a constructor or null
@@ -116,7 +116,7 @@ export class FConnectionForCreateComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new ComponentsDataChangedRequest());
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public ngOnDestroy(): void {

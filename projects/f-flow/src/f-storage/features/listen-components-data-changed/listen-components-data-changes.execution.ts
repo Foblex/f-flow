@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { ListenComponentsCountChangedRequest } from './listen-components-count-changed-request';
+import { ListenComponentsDataChangesRequest } from './listen-components-data-changes-request';
 import { FComponentsStore } from '../../../f-storage';
 import { Observable } from 'rxjs';
 import { debounceTime, startWith } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
-@FExecutionRegister(ListenComponentsCountChangedRequest)
-export class ListenComponentsCountChangedExecution implements IExecution<ListenComponentsCountChangedRequest, void> {
+@FExecutionRegister(ListenComponentsDataChangesRequest)
+export class ListenComponentsDataChangesExecution implements IExecution<ListenComponentsDataChangesRequest, void> {
 
   private _fComponentsStore = inject(FComponentsStore);
 
-  public handle(request: ListenComponentsCountChangedRequest): Observable<any> {
-    return this._fComponentsStore.componentsCount$
+  public handle(request: ListenComponentsDataChangesRequest): Observable<any> {
+    return this._fComponentsStore.componentsData$
       .pipe(
         startWith(null), debounceTime(1), takeUntilDestroyed(request.destroyRef)
       );

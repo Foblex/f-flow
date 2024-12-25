@@ -13,7 +13,7 @@ import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
-import { ComponentsDataChangedRequest } from '../../f-storage';
+import { ComponentDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
@@ -116,7 +116,7 @@ export class FSnapConnectionComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new ComponentsDataChangedRequest());
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public ngOnDestroy(): void {

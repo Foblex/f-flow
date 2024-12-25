@@ -18,7 +18,7 @@ import {
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { ComponentsDataChangedRequest } from '../../f-storage';
+import { ComponentDataChangedRequest } from '../../f-storage';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
@@ -131,7 +131,7 @@ export class FConnectionComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new ComponentsDataChangedRequest());
+    this._fMediator.send(new ComponentDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
