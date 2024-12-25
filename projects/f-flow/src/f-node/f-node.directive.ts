@@ -1,8 +1,8 @@
 import {
-  AfterViewInit,
+  AfterViewInit, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter,
+  EventEmitter, inject,
   Input,
   OnDestroy,
   OnInit,
@@ -11,18 +11,17 @@ import {
 } from "@angular/core";
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
-import { merge, Subscription } from 'rxjs';
+import { merge } from 'rxjs';
 import { startWith, debounceTime } from 'rxjs/operators';
 import { FResizeObserver } from './f-resize-observer';
 import { FComponentsStore, TransformChangedRequest } from '../f-storage';
 import {
-  CalculateConnectorConnectableSideHandler,
-  CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { IHasHostElement } from '../i-has-host-element';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 let uniqueId: number = 0;
 
@@ -40,8 +39,6 @@ let uniqueId: number = 0;
   ],
 })
 export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
-
-  private subscriptions$: Subscription = new Subscription();
 
   @Input('fNodeId')
   public override fId: string = `f-node-${ uniqueId++ }`;
@@ -90,6 +87,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   public override connectors: FConnectorBase[] = [];
 
+  private _destroyRef = inject(DestroyRef);
+
   constructor(
     elementReference: ElementRef<HTMLElement>,
     private renderer: Renderer2,
@@ -124,27 +123,21 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     if(!this.fBrowser.isBrowser()) {
       return;
     }
-    this.subscriptions$.add(
-      this.subscribeOnResizeChanges()
-    );
+    this._subscribeOnResizeChanges();
   }
 
-  private subscribeOnResizeChanges(): Subscription {
-    return merge(new FResizeObserver(this.hostElement as HTMLElement), this.stateChanges).pipe(
-      debounceTime(10), startWith(null)
+  private _subscribeOnResizeChanges(): void {
+    merge(new FResizeObserver(this.hostElement as HTMLElement), this.stateChanges).pipe(
+      debounceTime(10), startWith(null), takeUntilDestroyed(this._destroyRef)
     ).subscribe(() => {
-      this.connectors.forEach((fConnector: FConnectorBase) => {
-        fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
-          new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
-        );
-      });
+      this.calculateConnectorsSides();
       this.fComponentsStore.componentDataChanged();
     });
   }
 
   public override addConnector(connector: FConnectorBase): void {
     this.connectors.push(connector);
-    this.stateChanges.next();
+    this.refresh();
   }
 
   public override removeConnector(connector: FConnectorBase): void {
@@ -152,7 +145,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     if (index !== -1) {
       this.connectors.splice(index, 1);
     }
-    this.stateChanges.next();
+    this.refresh();
   }
 
   public refresh(): void {
@@ -162,6 +155,5 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   public ngOnDestroy(): void {
     this.fComponentsStore.removeComponent(this.fComponentsStore.fNodes, this);
     this.stateChanges.complete();
-    this.subscriptions$.unsubscribe();
   }
 }

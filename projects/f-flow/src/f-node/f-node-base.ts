@@ -2,7 +2,11 @@ import { EventEmitter, InjectionToken } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import { IHasStateChanges } from '../i-has-state-changes';
-import { FConnectorBase } from '../f-connectors';
+import {
+  CalculateConnectorConnectableSideHandler,
+  CalculateConnectorConnectableSideRequest,
+  FConnectorBase
+} from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
 import { FDropToGroupEvent } from '../f-draggable';
@@ -87,5 +91,13 @@ export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, 
 
   public removeClass(className: string): void {
     this.hostElement.classList.remove(className);
+  }
+
+  public calculateConnectorsSides(): void {
+    this.connectors.forEach((fConnector: FConnectorBase) => {
+      fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
+        new CalculateConnectorConnectableSideRequest(fConnector, this.hostElement)
+      );
+    });
   }
 }
