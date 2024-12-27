@@ -23,7 +23,7 @@ import {
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import {
-  ComponentDataChangedRequest,
+  NotifyDataChangedRequest,
   F_STORAGE_PROVIDERS,
   ListenCountChangesRequest,
   ListenDataChangesRequest
@@ -113,7 +113,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this._fMediator.send(new ComponentDataChangedRequest());
+    this._fMediator.send(new NotifyDataChangedRequest());
   }
 
   public reset(): void {

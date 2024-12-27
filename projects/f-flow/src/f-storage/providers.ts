@@ -1,4 +1,4 @@
-import { ComponentDataChangedExecution } from './features/component-data-changed';
+import { NotifyDataChangedExecution } from './features/notify-data-changed';
 import { ListenDataChangesExecution } from './features/listen-components-data-changed';
 import { FComponentsStore } from './f-components-store';
 import { ListenCountChangesExecution } from './features/listen-count-changes';
@@ -7,7 +7,7 @@ import { NotifyTransformChangedExecution } from './features/notify-transform-cha
 
 export const F_STORAGE_PROVIDERS = [
 
-  ComponentDataChangedExecution,
+  NotifyDataChangedExecution,
 
   ListenCountChangesExecution,
 

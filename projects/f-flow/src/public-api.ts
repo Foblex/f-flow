@@ -33,5 +33,3 @@ export * from './reactivity';
 export * from './f-flow.module';
 
 export * from './i-has-host-element';
-
-export * from './i-has-state-changes';

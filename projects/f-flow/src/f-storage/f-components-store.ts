@@ -50,10 +50,6 @@ export class FComponentsStore {
 
   public fDraggable: FDraggableBase | undefined;
 
-  public findNode(element: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this.fNodes.find(n => n.isContains(element));
-  }
-
   public addComponent<T>(collection: T[], component: T): void {
     collection.push(component);
     this.countChanged();

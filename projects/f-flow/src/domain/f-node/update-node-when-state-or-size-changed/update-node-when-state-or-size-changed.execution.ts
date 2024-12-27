@@ -6,7 +6,7 @@ import {
   CalculateConnectorConnectableSideRequest,
   FConnectorBase
 } from '../../../f-connectors';
-import { ComponentDataChangedRequest } from '../../../f-storage';
+import { NotifyDataChangedRequest } from '../../../f-storage';
 import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 import { FResizeChannel } from '../../../reactivity';
 
@@ -24,11 +24,11 @@ export class UpdateNodeWhenStateOrSizeChangedExecution implements IExecution<Upd
       stateChanges
     ).pipe(notifyOnStart(), debounceTime(10)).listen(request.destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
-      this._fMediator.send<void>(new ComponentDataChangedRequest());
+      this._fMediator.send<void>(new NotifyDataChangedRequest());
     });
   }
 
-  private _calculateConnectorsConnectableSide(fConnectors: FConnectorBase[], hostElement: HTMLElement): void {
+  private _calculateConnectorsConnectableSide(fConnectors: FConnectorBase[], hostElement: HTMLElement | SVGElement): void {
     fConnectors.forEach((fConnector: FConnectorBase) => {
       fConnector.fConnectableSide = new CalculateConnectorConnectableSideHandler().handle(
         new CalculateConnectorConnectableSideRequest(fConnector, hostElement)

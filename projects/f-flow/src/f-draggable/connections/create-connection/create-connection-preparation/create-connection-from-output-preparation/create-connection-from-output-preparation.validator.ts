@@ -20,7 +20,8 @@ export class CreateConnectionFromOutputPreparationValidator implements IValidato
   }
 
   private getNode(event: IPointerEvent): FNodeBase {
-    return this.fComponentsStore.findNode(event.targetElement)!;
+    return this.fComponentsStore
+      .fNodes.find(n => n.isContains(event.targetElement))!;
   }
 
   private isNodeOutput(targetElement: HTMLElement, node: FNodeBase): boolean {

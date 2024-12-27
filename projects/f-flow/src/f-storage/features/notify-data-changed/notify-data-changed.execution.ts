@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { ComponentDataChangedRequest } from './component-data-changed-request';
+import { NotifyDataChangedRequest } from './notify-data-changed-request';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
-@FExecutionRegister(ComponentDataChangedRequest)
-export class ComponentDataChangedExecution implements IExecution<ComponentDataChangedRequest, void> {
+@FExecutionRegister(NotifyDataChangedRequest)
+export class NotifyDataChangedExecution implements IExecution<NotifyDataChangedRequest, void> {
 
   private _fComponentsStore = inject(FComponentsStore);
 
-  public handle(request: ComponentDataChangedRequest): void {
+  public handle(request: NotifyDataChangedRequest): void {
     this._fComponentsStore.dataChanged();
   }
 }

@@ -35,11 +35,11 @@ export class NodeDragToParentPreparationExecution
   }
 
   public handle(request: NodeDragToParentPreparationRequest): void {
-    const fNode = this.fComponentsStore.findNode(request.event.targetElement);
+    const fNode = this.fComponentsStore
+      .fNodes.find(n => n.isContains(request.event.targetElement));
     if (!fNode) {
       throw new Error('Node not found');
     }
-
 
     this.fDraggableDataContext.draggableItems.push(
       new NodeDragToParentDragHandler(

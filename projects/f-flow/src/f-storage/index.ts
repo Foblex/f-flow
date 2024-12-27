@@ -1,4 +1,4 @@
-export * from './features/component-data-changed';
+export * from './features/notify-data-changed';
 
 export * from './features/listen-components-data-changed';
 
