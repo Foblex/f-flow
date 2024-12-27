@@ -28,6 +28,8 @@ export * from './f-zoom';
 
 export * from './mixins';
 
+export * from './reactive';
+
 export * from './f-flow.module';
 
 export * from './i-has-host-element';

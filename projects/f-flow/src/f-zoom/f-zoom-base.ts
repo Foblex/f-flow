@@ -39,7 +39,7 @@ export abstract class FZoomBase {
     if (this.isEnabled) {
       this._subscribe();
     } else {
-      this.unsubscribe();
+      this.dispose();
     }
   }
 
@@ -130,7 +130,7 @@ export abstract class FZoomBase {
     this._fCanvas.emitCanvasChangeEvent();
   }
 
-  protected unsubscribe(): void {
+  protected dispose(): void {
     this._listeners();
     this._listeners = EventExtensions.emptyListener();
   }

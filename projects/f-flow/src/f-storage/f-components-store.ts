@@ -8,22 +8,25 @@ import { FBackgroundBase } from '../f-backgroud';
 import { FNodeBase } from '../f-node';
 import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
+import { FChannel } from '../reactive/f-channel';
 
 @Injectable()
 export class FComponentsStore {
 
-  private readonly transformChanges: Subject<void> = new Subject<void>();
+  private _transformChanges = new FChannel();
 
-  public get transform$(): Observable<void> {
-    return this.transformChanges.asObservable();
+  public get transformChanges(): FChannel {
+    return this._transformChanges;
   }
 
   private readonly componentsDataChanges: Subject<void> = new Subject<void>();
+
   public get componentsData$(): Observable<void> {
     return this.componentsDataChanges.asObservable();
   }
 
   private readonly componentsCountChanges: Subject<void> = new Subject<void>();
+
   public get componentsCount$(): Observable<void> {
     return this.componentsCountChanges.asObservable();
   }
@@ -81,7 +84,7 @@ export class FComponentsStore {
     this.componentsDataChanges.next();
   }
 
-  public transformChanged(): void {
-    this.transformChanges.next();
+  public notifyTransformChanged(): void {
+    this._transformChanges.notify();
   }
 }

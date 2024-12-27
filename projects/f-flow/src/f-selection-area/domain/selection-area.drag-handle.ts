@@ -1,5 +1,5 @@
 import { IPoint, Point, RectExtensions } from '@foblex/2d';
-import { FComponentsStore, TransformChangedRequest } from '../../f-storage';
+import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
 import { ISelectableWithRect } from '../../domain';
 import { FMediator } from '@foblex/mediator';
 import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
@@ -61,7 +61,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
         this.selectedByMove.push(item.element);
       }
     });
-    this.fMediator.send<void>(new TransformChangedRequest());
+    this.fMediator.send<void>(new NotifyTransformChangedRequest());
   }
 
   public complete(): void {

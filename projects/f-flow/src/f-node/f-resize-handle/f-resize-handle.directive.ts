@@ -1,11 +1,11 @@
 import {
-  Directive, ElementRef, HostBinding, InjectionToken, Input
+  Directive, ElementRef, HostBinding, inject, InjectionToken, Input
 } from "@angular/core";
 import { EFResizeHandleType } from './e-f-resize-handle-type';
 import { IHasHostElement } from '../../i-has-host-element';
 import { castToEnum } from '@foblex/utils';
 
-export const F_RESIZE_HANDLE: InjectionToken<FResizeHandleDirective> = new InjectionToken<FResizeHandleDirective>('F_RESIZE_HANDLE');
+export const F_RESIZE_HANDLE = new InjectionToken<FResizeHandleDirective>('F_RESIZE_HANDLE');
 
 @Directive({
   selector: "[fResizeHandle]",
@@ -17,14 +17,13 @@ export const F_RESIZE_HANDLE: InjectionToken<FResizeHandleDirective> = new Injec
 })
 export class FResizeHandleDirective implements IHasHostElement {
 
-  public _type: EFResizeHandleType = EFResizeHandleType.LEFT_TOP;
-  @Input('fResizeHandleType')
-  public set type(type: EFResizeHandleType) {
-    this._type = castToEnum(type, 'fResizeHandleType', EFResizeHandleType);
-  }
-  public get type(): EFResizeHandleType {
-    return this._type;
-  }
+  private _elementReference = inject(ElementRef);
+
+  @Input({
+    alias: 'fResizeHandleType',
+    transform: (x: unknown) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType)
+  })
+  public type: EFResizeHandleType = EFResizeHandleType.LEFT_TOP;
 
   @HostBinding('class')
   public get typeClass(): string {
@@ -32,11 +31,6 @@ export class FResizeHandleDirective implements IHasHostElement {
   }
 
   public get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
-  }
-
-  constructor(
-    private elementReference: ElementRef<HTMLElement>
-  ) {
+    return this._elementReference.nativeElement;
   }
 }

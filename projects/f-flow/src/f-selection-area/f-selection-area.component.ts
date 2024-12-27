@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit } from '@angular/core';
 import { FSelectionAreaBase } from './f-selection-area-base';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { IPointerEvent } from '@foblex/drag-toolkit';
@@ -19,15 +19,11 @@ import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from '.
 })
 export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin  {
 
-  public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
-  }
+  private _fMediator = inject(FMediator);
+  private _elementReference = inject(ElementRef);
 
-  constructor(
-      private elementReference: ElementRef<HTMLElement>,
-      private fMediator: FMediator
-  ) {
-    super();
+  public override get hostElement(): HTMLElement {
+    return this._elementReference.nativeElement;
   }
 
   public ngOnInit(): void {
@@ -51,10 +47,10 @@ export class FSelectionAreaComponent extends FSelectionAreaBase implements OnIni
   }
 
   public onPointerDown(event: IPointerEvent): void {
-    this.fMediator.send(new SelectionAreaPreparationRequest(event, this));
+    this._fMediator.send(new SelectionAreaPreparationRequest(event, this));
   }
 
   public onPointerUp(event: IPointerEvent): void {
-    this.fMediator.send(new SelectionAreaFinalizeRequest(event));
+    this._fMediator.send(new SelectionAreaFinalizeRequest(event));
   }
 }

@@ -5,7 +5,6 @@ import {
   Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
-import { Observable, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
   GetScaledNodeRectsWithFlowPositionRequest,
@@ -14,7 +13,6 @@ import {
   RedrawConnectionsRequest,
   SelectAllRequest,
   SelectRequest,
-  SortItemLayersRequest,
   IFFlowState,
   GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest
 } from '../domain';
@@ -27,12 +25,13 @@ import { FConnectionFactory } from '../f-connection';
 import {
   ComponentDataChangedRequest,
   F_STORAGE_PROVIDERS,
-  ListenComponentsCountChangesRequest,
+  UpdateLayersWhenComponentsChangedRequest,
   ListenComponentsDataChangesRequest
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
+import { Observable } from 'rxjs';
 
 let uniqueId: number = 0;
 
@@ -88,20 +87,18 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     if (!this.fBrowser.isBrowser()) {
       return;
     }
-    this._subscribeOnComponentsCountChanges();
+    this._updateLayersWhenComponentsChanged();
     this._subscribeOnElementsChanges();
   }
 
-  private _subscribeOnComponentsCountChanges(): void {
-    this._fMediator.send<Observable<void>>(
-      new ListenComponentsCountChangesRequest(this._destroyRef)
-    ).subscribe(() => {
-      this._fMediator.send(new SortItemLayersRequest());
-    });
+  private _updateLayersWhenComponentsChanged(): void {
+    this._fMediator.send(
+      new UpdateLayersWhenComponentsChangedRequest(this._destroyRef)
+    );
   }
 
   private _subscribeOnElementsChanges(): void {
-    this._fMediator.send<Observable<void>>(
+    this._fMediator.send<Observable<any>>(
       new ListenComponentsDataChangesRequest(this._destroyRef)
     ).subscribe(() => {
       this._fMediator.send(new RedrawConnectionsRequest());

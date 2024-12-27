@@ -1,18 +1,17 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  ElementRef, Input, OnDestroy,
-  OnInit
+  Component, DestroyRef,
+  ElementRef, inject, Input, OnChanges,
+  OnInit, SimpleChanges
 } from "@angular/core";
 import {
   IPoint, ISize, ITransformModel,
   PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
-import { Subject, Subscription } from 'rxjs';
-import { startWith } from 'rxjs/operators';
 import { createSVGElement } from '../../domain';
 import { BrowserService } from '@foblex/platform';
+import { FChannel, FChannelHub, notifyOnStart } from '../../reactive';
 
 let uniqueId: number = 0;
 
@@ -27,105 +26,90 @@ let uniqueId: number = 0;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FRectPatternComponent implements OnInit, OnDestroy, IFBackgroundPattern {
+export class FRectPatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
 
-  private _subscription$: Subscription = new Subscription();
+  private _destroyRef = inject(DestroyRef);
 
-  private _stateChanges: Subject<void> = new Subject<void>();
+  private _elementReference = inject(ElementRef);
+
+  private _stateChanges = new FChannel();
 
   public get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Input()
   public id: string = `f-pattern-${ uniqueId++ }`;
 
-  private _vColor: string = 'rgba(0,0,0,0.1)';
+  @Input()
+  public vColor: string = 'rgba(0,0,0,0.1)';
 
   @Input()
-  public set vColor(value: string) {
-    this._vColor = value;
-    this._stateChanges.next();
-  }
-
-  private _hColor: string = 'rgba(0,0,0,0.1)';
+  public hColor: string = 'rgba(0,0,0,0.1)';
 
   @Input()
-  public set hColor(value: string) {
-    this._hColor = value;
-    this._stateChanges.next();
-  }
-
-  private _vSize: number = 20;
+  public vSize: number = 20;
 
   @Input()
-  public set vSize(value: number) {
-    this._vSize = value;
-    this._stateChanges.next();
-  }
-
-  private _hSize: number = 20;
-
-  @Input()
-  public set hSize(value: number) {
-    this._hSize = value;
-    this._stateChanges.next();
-  }
+  public hSize: number = 20;
 
   private _transform: ITransformModel = TransformModelExtensions.default();
 
   private _position: IPoint = PointExtensions.initialize();
 
-  private _size: ISize = SizeExtensions.initialize(this._hSize, this._vSize);
+  private _size: ISize = SizeExtensions.initialize(this.hSize, this.vSize);
 
   private _pattern!: SVGPatternElement;
   private _vLine!: SVGLineElement;
   private _hLine!: SVGLineElement;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fBrowser: BrowserService
+    private _fBrowser: BrowserService
   ) {
-    this.createPattern();
+    this._createPattern();
   }
 
-  private createPattern(): void {
-    this._pattern = createSVGElement('pattern', this.fBrowser);
+  private _createPattern(): void {
+    this._pattern = createSVGElement('pattern', this._fBrowser);
     this._pattern.setAttribute('patternUnits', 'userSpaceOnUse');
     this.hostElement.appendChild(this._pattern);
 
-    this._vLine = createSVGElement('line', this.fBrowser);
+    this._vLine = createSVGElement('line', this._fBrowser);
     this._pattern.appendChild(this._vLine);
 
-    this._hLine = createSVGElement('line', this.fBrowser);
+    this._hLine = createSVGElement('line', this._fBrowser);
     this._pattern.appendChild(this._hLine);
   }
 
   public ngOnInit(): void {
-    this._subscription$.add(this.subscribeToStateChanges());
+    this._listenStateChanges();
   }
 
-  private subscribeToStateChanges(): Subscription {
-    return this._stateChanges.pipe(startWith(null)).subscribe(() => {
-      this.redraw();
-    });
+  private _listenStateChanges(): void {
+    new FChannelHub(this._stateChanges).pipe(notifyOnStart()).listen(this._destroyRef, () => this._redraw());
   }
 
-  private calculatePattern(): void {
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes['vSize'] || changes['hSize'] || changes['vColor'] || changes['hColor']) {
+      this._refresh();
+    }
+  }
+
+  private _redraw(): void {
+    this._calculatePattern();
+    this._redrawPattern();
+
+    this.redrawLine(this._vLine, this.vColor, this._size.width, 0, this._size.width, this._size.height);
+    this.redrawLine(this._hLine, this.hColor, 0, this._size.height, this._size.width, this._size.height);
+  }
+
+  private _calculatePattern(): void {
     this._position.x = this._transform.position.x + this._transform.scaledPosition.x;
     this._position.y = this._transform.position.y + this._transform.scaledPosition.y;
-    this._size = SizeExtensions.initialize(this._hSize * this._transform.scale, this._vSize * this._transform.scale);
+    this._size = SizeExtensions.initialize(this.hSize * this._transform.scale, this.vSize * this._transform.scale);
   }
 
-  private redraw(): void {
-    this.calculatePattern();
-    this.redrawPattern();
-
-    this.redrawLine(this._vLine, this._vColor, this._size.width, 0, this._size.width, this._size.height);
-    this.redrawLine(this._hLine, this._hColor, 0, this._size.height, this._size.width, this._size.height);
-  }
-
-  private redrawPattern(): void {
+  private _redrawPattern(): void {
     this._pattern.setAttribute('x', `${ this._position.x }`);
     this._pattern.setAttribute('y', `${ this._position.y }`);
     this._pattern.setAttribute('width', `${ this._size.width }`);
@@ -142,10 +126,10 @@ export class FRectPatternComponent implements OnInit, OnDestroy, IFBackgroundPat
 
   public setTransform(transform: ITransformModel): void {
     this._transform = transform;
-    this._stateChanges.next();
+    this._refresh();
   }
 
-  public ngOnDestroy(): void {
-    this._subscription$.unsubscribe();
+  private _refresh(): void {
+    this._stateChanges.notify();
   }
 }

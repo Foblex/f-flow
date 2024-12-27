@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import { F_NODE, FNodeBase } from './f-node-base';
-import { TransformChangedRequest } from '../f-storage';
+import { NotifyTransformChangedRequest } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 import { IHasHostElement } from '../i-has-host-element';
@@ -104,26 +104,25 @@ export class FGroupDirective extends FNodeBase
 
   public override redraw(): void {
     super.redraw();
-    this._fMediator.send(new TransformChangedRequest());
+    this._fMediator.send(new NotifyTransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
     if(!this.fBrowser.isBrowser()) {
       return;
     }
-    this._subscribeOnResizeChanges();
+    this._listenStateSizeChanges();
   }
 
-  private _subscribeOnResizeChanges(): void {
+  private _listenStateSizeChanges(): void {
     this._fMediator.send<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public refresh(): void {
-    this.stateChanges.next();
+    this.stateChanges.notify();
   }
 
   public ngOnDestroy(): void {
     this._fMediator.send<void>(new RemoveNodeFromStoreRequest(this));
-    this.stateChanges.complete();
   }
 }

@@ -1,21 +1,21 @@
 import { ComponentDataChangedExecution } from './features/component-data-changed';
 import { ListenComponentsDataChangesExecution } from './features/listen-components-data-changed';
 import { FComponentsStore } from './f-components-store';
-import { ListenComponentsCountChangesExecution } from './features/listen-components-count-changes';
+import { UpdateLayersWhenComponentsChangedExecution } from './features/update-layers-when-components-changed';
 import { ListenTransformChangesExecution } from './features/listen-transform-changes';
-import { TransformChangedExecution } from './features/transform-changed';
+import { NotifyTransformChangedExecution } from './features/notify-transform-changed';
 
 export const F_STORAGE_PROVIDERS = [
 
   ComponentDataChangedExecution,
 
-  ListenComponentsCountChangesExecution,
+  UpdateLayersWhenComponentsChangedExecution,
 
   ListenComponentsDataChangesExecution,
 
   ListenTransformChangesExecution,
 
-  TransformChangedExecution,
+  NotifyTransformChangedExecution,
 
   FComponentsStore,
 ];

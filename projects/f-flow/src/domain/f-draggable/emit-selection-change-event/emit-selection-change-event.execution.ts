@@ -4,7 +4,7 @@ import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-r
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
 import { GetSelectionRequest } from '../../f-selection';
-import { TransformChangedRequest } from '../../../f-storage/features/transform-changed';
+import { NotifyTransformChangedRequest } from '../../../f-storage/features/notify-transform-changed';
 
 @Injectable()
 @FExecutionRegister(EmitSelectionChangeEventRequest)
@@ -28,6 +28,6 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
     }
     this._fSelectionChange.emit(this._fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest()));
     this._fDraggableDataContext.isSelectedChanged = false;
-    this._fMediator.send<void>(new TransformChangedRequest());
+    this._fMediator.send<void>(new NotifyTransformChangedRequest());
   }
 }
