@@ -29,7 +29,7 @@ export class ConnectionDragHandler extends ConnectionBaseDragHandler {
     this.targetRestrictions = { min, max };
   }
 
-  public override move(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     this.redrawConnection(this.getNewLineValue(difference));
   }
 

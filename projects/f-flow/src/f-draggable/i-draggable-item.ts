@@ -2,9 +2,9 @@ import { IPoint } from '@foblex/2d';
 
 export interface IDraggableItem {
 
-  initialize?(): void;
+  prepareDragSequence?(): void;
 
-  move(difference: IPoint): void;
+  onPointerMove(difference: IPoint): void;
 
-  complete?(): void;
+  onPointerUp?(): void;
 }

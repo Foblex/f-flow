@@ -13,12 +13,15 @@ export class NodeResizeByChildDragHandler implements IDraggableItem {
 
   }
 
+  public prepareDragSequence() {
+  }
 
-  public move(difference: IPoint): void {
+
+  public onPointerMove(difference: IPoint): void {
 
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
 
   }
 }

@@ -25,7 +25,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.originalRect = this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(this.fNode));
 
     this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
@@ -36,7 +36,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
     }
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     const changedRect = this.changePosition(difference, this.changeSize(difference, this.restrictions.minSize));
 
     this.childRestrictions(changedRect, this.restrictions.childRect!);
@@ -71,7 +71,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
     );
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fNode.sizeChange.emit(
       RectExtensions.initialize(
         this.fNode.position.x, this.fNode.position.y, this.fNode.size?.width, this.fNode.size?.height

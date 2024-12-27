@@ -14,7 +14,7 @@ export class NodeResizeFinalizeExecution implements IExecution<NodeResizeFinaliz
 
   public handle(request: NodeResizeFinalizeRequest): void {
     this.fDraggableDataContext.draggableItems.forEach((x) => {
-      x.complete?.();
+      x.onPointerUp?.();
     });
   }
 }

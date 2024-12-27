@@ -29,11 +29,11 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   EmitSelectionChangeEventRequest,
-  StartDragSequenceRequest,
+  PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
   EndDragSequenceRequest,
   InitializeDragSequenceRequest,
-  HandleDragSequenceRequest
+  OnPointerMoveRequest
 } from '../domain';
 import {
   ExternalItemFinalizeRequest,
@@ -134,7 +134,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
 
 
-    this._fMediator.send<void>(new StartDragSequenceRequest());
+    this._fMediator.send<void>(new PrepareDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
@@ -144,7 +144,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerMove(event: IPointerEvent): void {
-    this._fMediator.send<void>(new HandleDragSequenceRequest(event));
+    this._fMediator.send<void>(new OnPointerMoveRequest(event));
   }
 
   public override onPointerUp(event: IPointerEvent): void {

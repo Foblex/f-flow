@@ -38,7 +38,7 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
       this.getExternalItemElementsFromPoint(request.event.getPosition())
     );
 
-    this.dragHandler.complete();
+    this.dragHandler.onPointerUp();
   }
 
   private getExternalItemElementsFromPoint(position: IPoint): HTMLElement[] {

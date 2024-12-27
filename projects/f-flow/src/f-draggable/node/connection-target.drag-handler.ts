@@ -19,7 +19,7 @@ export class ConnectionTargetDragHandler extends ConnectionBaseDragHandler {
     super(fMediator, fComponentsStore, connection);
   }
 
-  public override move(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     this.redrawConnection(this.getNewLineValue(difference));
   }
 

@@ -19,11 +19,11 @@ export class FMinimapDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.fComponentsStore.fCanvas?.hostElement.classList.add('f-scaled-animate');
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     if (this.lastDifference && this.isSamePoint(difference, this.lastDifference)) {
       return;
     }
@@ -43,7 +43,7 @@ export class FMinimapDragHandler implements IDraggableItem {
     ));
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fComponentsStore.fCanvas?.hostElement.classList.remove('f-scaled-animate');
     this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
   }

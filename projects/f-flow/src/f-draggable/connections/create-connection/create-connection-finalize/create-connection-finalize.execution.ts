@@ -30,7 +30,7 @@ export class CreateConnectionFinalizeExecution
 
   public handle(request: CreateConnectionFinalizeRequest): void {
     this.emitEvent(request.event);
-    this.dragHandler.complete();
+    this.dragHandler.onPointerUp();
   }
 
   private getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {

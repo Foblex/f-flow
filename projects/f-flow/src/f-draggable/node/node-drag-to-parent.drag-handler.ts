@@ -24,7 +24,7 @@ export class NodeDragToParentDragHandler implements IDraggableItem {
     this.onPointerDownPosition = this.fDraggableDataContext.onPointerDownPosition;
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     let point = Point.fromPoint(this.onPointerDownPosition).add(difference).mult(this.transform.scale);
     const isInclude = this.notDraggedNodesRects.findIndex((x) => RectExtensions.isIncludePoint(x.rect, point));
     if (isInclude !== -1) {
@@ -47,7 +47,7 @@ export class NodeDragToParentDragHandler implements IDraggableItem {
     this.fNodeWithRect = null;
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.unmarkIncludeNode();
   }
 }

@@ -30,8 +30,8 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
       this.getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
     this.getItems().forEach((x) => {
-      x.move({ ...difference });
-      x.complete?.();
+      x.onPointerMove({ ...difference });
+      x.onPointerUp?.();
     });
     this.fMediator.send(new IsConnectionUnderNodeRequest());
     this.fDraggableDataContext.fLineAlignment?.complete();

@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { HandleDragSequenceRequest } from './handle-drag-sequence-request';
+import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 
 @Injectable()
-@FExecutionRegister(HandleDragSequenceRequest)
-export class HandleDragSequenceExecution implements IExecution<HandleDragSequenceRequest, void> {
+@FExecutionRegister(OnPointerMoveRequest)
+export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, void> {
 
   private _fComponentsStore = inject(FComponentsStore);
 
@@ -18,7 +18,7 @@ export class HandleDragSequenceExecution implements IExecution<HandleDragSequenc
 
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
-  public handle(request: HandleDragSequenceRequest): void {
+  public handle(request: OnPointerMoveRequest): void {
     this._setDifferenceToDraggableItems(
       this._getDifferenceBetweenPointerAndPointerDown(request.event)
     );
@@ -26,7 +26,7 @@ export class HandleDragSequenceExecution implements IExecution<HandleDragSequenc
 
   private _setDifferenceToDraggableItems(difference: IPoint): void {
     this._fDraggableDataContext.draggableItems.forEach((item) => {
-      item.move({ ...difference });
+      item.onPointerMove({ ...difference });
     });
   }
 

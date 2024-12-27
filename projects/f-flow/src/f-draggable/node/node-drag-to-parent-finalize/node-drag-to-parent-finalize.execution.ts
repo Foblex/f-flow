@@ -24,7 +24,7 @@ export class NodeDragToParentFinalizeExecution
     if(item.fNodeWithRect) {
       this.emitDroppedChildrenEvent(item.fNodeWithRect.node.fId, request.event);
     }
-    item.complete?.();
+    item.onPointerUp?.();
   }
 
   private emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {
