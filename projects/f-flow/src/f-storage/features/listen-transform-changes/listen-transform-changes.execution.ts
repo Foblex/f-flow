@@ -2,7 +2,7 @@ import { ListenTransformChangesRequest } from './listen-transform-changes.reques
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../index';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { FChannelHub } from '../../../reactive';
+import { FChannelHub } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(ListenTransformChangesRequest)
@@ -13,13 +13,9 @@ export class ListenTransformChangesExecution
 
   public handle(request: ListenTransformChangesRequest): FChannelHub {
     return new FChannelHub(
-      this._fComponentsStore.transformChanges
+      this._fComponentsStore.transformChanges$,
+      this._fComponentsStore.dataChanges$,
+      this._fComponentsStore.countChanges$
     );
-    //
-    //   [
-    //   this._fComponentsStore.transformChanges,
-    //   // toSignal(this._fComponentsStore.componentsData$),
-    //   // toSignal(this._fComponentsStore.componentsCount$)
-    // ]);
   }
 }

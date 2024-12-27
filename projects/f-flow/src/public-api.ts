@@ -28,7 +28,7 @@ export * from './f-zoom';
 
 export * from './mixins';
 
-export * from './reactive';
+export * from './reactivity';
 
 export * from './f-flow.module';
 

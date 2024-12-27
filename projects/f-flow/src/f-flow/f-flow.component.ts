@@ -14,7 +14,7 @@ import {
   SelectAllRequest,
   SelectRequest,
   IFFlowState,
-  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest
+  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -25,13 +25,13 @@ import { FConnectionFactory } from '../f-connection';
 import {
   ComponentDataChangedRequest,
   F_STORAGE_PROVIDERS,
-  UpdateLayersWhenComponentsChangedRequest,
-  ListenComponentsDataChangesRequest
+  ListenCountChangesRequest,
+  ListenDataChangesRequest
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
-import { Observable } from 'rxjs';
+import { FChannelHub } from '../reactivity';
 
 let uniqueId: number = 0;
 
@@ -87,20 +87,22 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     if (!this.fBrowser.isBrowser()) {
       return;
     }
-    this._updateLayersWhenComponentsChanged();
-    this._subscribeOnElementsChanges();
+    this._listenCountChanges();
+    this._listenDataChanges();
   }
 
-  private _updateLayersWhenComponentsChanged(): void {
-    this._fMediator.send(
-      new UpdateLayersWhenComponentsChangedRequest(this._destroyRef)
-    );
+  private _listenCountChanges(): void {
+    this._fMediator.send<FChannelHub>(
+      new ListenCountChangesRequest()
+    ).listen(this._destroyRef, () => {
+      this._fMediator.send(new SortItemLayersRequest())
+    });
   }
 
-  private _subscribeOnElementsChanges(): void {
-    this._fMediator.send<Observable<any>>(
-      new ListenComponentsDataChangesRequest(this._destroyRef)
-    ).subscribe(() => {
+  private _listenDataChanges(): void {
+    this._fMediator.send<FChannelHub>(
+      new ListenDataChangesRequest()
+    ).listen(this._destroyRef,() => {
       this._fMediator.send(new RedrawConnectionsRequest());
 
       if (!this._isLoaded) {

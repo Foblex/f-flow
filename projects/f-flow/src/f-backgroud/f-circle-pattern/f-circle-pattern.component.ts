@@ -13,7 +13,7 @@ import {
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../../domain';
-import { FChannel, FChannelHub, notifyOnStart } from '../../reactive';
+import { FChannel, FChannelHub, notifyOnStart } from '../../reactivity';
 
 let uniqueId: number = 0;
 

@@ -7,8 +7,8 @@ import {
   FConnectorBase
 } from '../../../f-connectors';
 import { ComponentDataChangedRequest } from '../../../f-storage';
-import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactive';
-import { FResizeChannel } from '../../../reactive';
+import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
+import { FResizeChannel } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)

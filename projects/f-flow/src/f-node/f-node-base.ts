@@ -5,7 +5,7 @@ import {
 } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
-import { FChannel } from '../reactive';
+import { FChannel } from '../reactivity';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 

@@ -2,7 +2,7 @@ export * from './features/component-data-changed';
 
 export * from './features/listen-components-data-changed';
 
-export * from './features/update-layers-when-components-changed';
+export * from './features/listen-count-changes';
 
 export * from './features/listen-transform-changes';
 

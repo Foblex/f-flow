@@ -11,6 +11,6 @@ export class NotifyTransformChangedExecution
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: NotifyTransformChangedRequest): void {
-    this._fComponentsStore.notifyTransformChanged();
+    this._fComponentsStore.transformChanged();
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import { ITransformModel } from '@foblex/2d';
 import { FConnectionBase, FMarkerBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
@@ -8,28 +7,16 @@ import { FBackgroundBase } from '../f-backgroud';
 import { FNodeBase } from '../f-node';
 import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
-import { FChannel } from '../reactive/f-channel';
+import { FChannel } from '../reactivity';
 
 @Injectable()
 export class FComponentsStore {
 
-  private _transformChanges = new FChannel();
+  public readonly transformChanges$ = new FChannel();
 
-  public get transformChanges(): FChannel {
-    return this._transformChanges;
-  }
+  public readonly dataChanges$ = new FChannel();
 
-  private readonly componentsDataChanges: Subject<void> = new Subject<void>();
-
-  public get componentsData$(): Observable<void> {
-    return this.componentsDataChanges.asObservable();
-  }
-
-  private readonly componentsCountChanges: Subject<void> = new Subject<void>();
-
-  public get componentsCount$(): Observable<void> {
-    return this.componentsCountChanges.asObservable();
-  }
+  public readonly countChanges$ = new FChannel();
 
   public get flowHost(): HTMLElement {
     return this.fFlow?.hostElement!;
@@ -69,22 +56,26 @@ export class FComponentsStore {
 
   public addComponent<T>(collection: T[], component: T): void {
     collection.push(component);
-    this.componentsCountChanges.next();
+    this.countChanged();
   }
 
   public removeComponent<T>(collection: T[], component: T): void {
     const index = collection.indexOf(component);
     if (index > -1) {
       collection.splice(index, 1);
-      this.componentsCountChanges.next();
+      this.countChanged();
     }
   }
 
-  public componentDataChanged(): void {
-    this.componentsDataChanges.next();
+  public countChanged(): void {
+    this.countChanges$.notify();
   }
 
-  public notifyTransformChanged(): void {
-    this._transformChanges.notify();
+  public dataChanged(): void {
+    this.dataChanges$.notify();
+  }
+
+  public transformChanged(): void {
+    this.transformChanges$.notify();
   }
 }

@@ -10,7 +10,7 @@ import { IPointerEvent } from '@foblex/drag-toolkit';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
 import { ListenTransformChangesRequest } from '../f-storage';
-import { debounceTime, FChannelHub, notifyOnStart } from '../reactive';
+import { debounceTime, FChannelHub, notifyOnStart } from '../reactivity';
 
 @Component({
   selector: 'f-minimap',

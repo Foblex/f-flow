@@ -12,7 +12,7 @@ export class RemoveConnectionFromStoreExecution implements IExecution<RemoveConn
 
   public handle(request: RemoveConnectionFromStoreRequest): void {
     this._fComponentsStore.fConnections.splice(this._getIndexOfConnection(request.fConnection), 1);
-    this._fComponentsStore.componentDataChanged();
+    this._fComponentsStore.dataChanged();
   }
 
   private _getIndexOfConnection(fConnection: FConnectionBase): number {

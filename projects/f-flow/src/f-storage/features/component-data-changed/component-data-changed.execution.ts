@@ -10,6 +10,6 @@ export class ComponentDataChangedExecution implements IExecution<ComponentDataCh
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: ComponentDataChangedRequest): void {
-    this._fComponentsStore.componentDataChanged();
+    this._fComponentsStore.dataChanged();
   }
 }
