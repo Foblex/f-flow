@@ -22,10 +22,6 @@ export class FComponentsStore {
     return this.fFlow?.hostElement!;
   }
 
-  public get transform(): ITransformModel {
-    return this.fCanvas?.transform!;
-  }
-
   public fFlow: FFlowBase | undefined;
 
   public fCanvas: FCanvasBase | undefined;

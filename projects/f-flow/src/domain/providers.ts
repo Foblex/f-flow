@@ -21,6 +21,7 @@ import { F_CONNECTORS_FEATURES } from './f-connectors';
 import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
+import { F_LINE_ALIGNMENT_FEATURES } from './f-line-alignment';
 
 export const COMMON_PROVIDERS = [
 
@@ -35,6 +36,8 @@ export const COMMON_PROVIDERS = [
   ...F_DRAGGABLE_FEATURES,
 
   ...F_FLOW_FEATURES,
+
+  ...F_LINE_ALIGNMENT_FEATURES,
 
   ...F_NODE_FEATURES,
 

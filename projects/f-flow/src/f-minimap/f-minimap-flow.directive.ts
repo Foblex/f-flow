@@ -58,7 +58,7 @@ export class FMinimapFlowDirective {
   }
 
   private normalizeRect(rect: IRect): IRect {
-    return RectExtensions.div(rect, this.fComponentsStore.transform.scale);
+    return RectExtensions.div(rect, this.fComponentsStore.fCanvas!.transform.scale);
   }
 
   private ensureMinimumSize(rect: IRect): IRect {

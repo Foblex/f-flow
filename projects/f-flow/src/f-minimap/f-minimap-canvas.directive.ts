@@ -25,7 +25,7 @@ export class FMinimapCanvasDirective {
   }
 
   private get flowScale(): number {
-    return this.fComponentsStore.transform.scale;
+    return this.fComponentsStore.fCanvas!.transform.scale;
   }
 
   constructor(

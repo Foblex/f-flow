@@ -9,7 +9,7 @@ import { FDraggableDataContext } from '../f-draggable-data-context';
 export class NodeDragToParentDragHandler implements IDraggableItem {
 
   private get transform(): ITransformModel {
-    return this.fComponentsStore.transform;
+    return this.fComponentsStore.fCanvas!.transform;
   }
 
   private onPointerDownPosition: IPoint = PointExtensions.initialize();

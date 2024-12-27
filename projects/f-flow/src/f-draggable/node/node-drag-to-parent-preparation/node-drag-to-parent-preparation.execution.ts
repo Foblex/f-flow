@@ -20,7 +20,7 @@ export class NodeDragToParentPreparationExecution
   }
 
   private get transform(): ITransformModel {
-    return this.fComponentsStore.transform;
+    return this.fComponentsStore.fCanvas!.transform;
   }
 
   private get fCanvasPosition(): IPoint {

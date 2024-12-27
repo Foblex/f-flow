@@ -60,11 +60,13 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   private _fMediator = inject(FMediator);
 
+  private _elementReference = inject(ElementRef);
+
   @Input('fFlowId')
   public override fId: string = `f-flow-${ uniqueId++ }`;
 
   public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Output()
@@ -73,7 +75,6 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _isLoaded: boolean = false;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
     private fBrowser: BrowserService,
   ) {
     super();

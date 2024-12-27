@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetElementRectInFlowRequest } from './get-element-rect-in-flow-request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
@@ -9,22 +9,20 @@ import { CreateRoundedRectFromElementRequest } from '../create-rounded-rect-from
 @FExecutionRegister(GetElementRectInFlowRequest)
 export class GetElementRectInFlowExecution implements IExecution<GetElementRectInFlowRequest, IRoundedRect> {
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.transform;
+  private _fComponentsStore = inject(FComponentsStore);
+
+  private _fMediator = inject(FMediator);
+
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
   private get flowHost(): HTMLElement {
-    return this.fComponentsStore.flowHost;
-  }
-
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator
-  ) {
+    return this._fComponentsStore.flowHost;
   }
 
   public handle(request: GetElementRectInFlowRequest): IRoundedRect {
-    const systemRect = this.fMediator.send<IRoundedRect>(new CreateRoundedRectFromElementRequest(request.element));
+    const systemRect = this._getElementRoundRect(request.element);
     const position = this.transformElementPositionInFlow(systemRect);
     const size = this.transformElementSizeInFlow(systemRect);
 
@@ -34,11 +32,17 @@ export class GetElementRectInFlowExecution implements IExecution<GetElementRectI
     );
   }
 
+  private _getElementRoundRect(element: HTMLElement | SVGElement): IRoundedRect {
+    return this._fMediator.send<IRoundedRect>(
+      new CreateRoundedRectFromElementRequest(element)
+    );
+  }
+
   private transformElementPositionInFlow(rect: IRoundedRect): IPoint {
-    return Point.fromPoint(rect).elementTransform(this.flowHost).sub(this.transform.scaledPosition).sub(this.transform.position).div(this.transform.scale);
+    return Point.fromPoint(rect).elementTransform(this.flowHost).sub(this._transform.scaledPosition).sub(this._transform.position).div(this._transform.scale);
   }
 
   private transformElementSizeInFlow(rect: IRoundedRect): ISize {
-    return SizeExtensions.initialize(rect.width / this.transform.scale, rect.height / this.transform.scale);
+    return SizeExtensions.initialize(rect.width / this._transform.scale, rect.height / this._transform.scale);
   }
 }

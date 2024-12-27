@@ -16,7 +16,7 @@ export class FMinimapViewDirective {
   }
 
   private get flowScale(): number {
-    return this.fComponentsStore!.transform!.scale!;
+    return this.fComponentsStore!.fCanvas!.transform.scale!;
   }
 
   constructor(
@@ -26,11 +26,14 @@ export class FMinimapViewDirective {
   }
 
   public update(): void {
-    const viewBox = RectExtensions.div(RectExtensions.fromElement(this.fComponentsStore.flowHost), this.flowScale);
-    this.setAttributes(viewBox);
+    this._setAttributes(this._calculateViewBox());
   }
 
-  private setAttributes(viewBox: IRect): void {
+  private _calculateViewBox(): IRect {
+    return RectExtensions.div(RectExtensions.fromElement(this.fComponentsStore.flowHost), this.flowScale);
+  }
+
+  private _setAttributes(viewBox: IRect): void {
     viewBox = checkRectIsFinite(viewBox);
     this.hostElement.setAttribute('x', '0');
     this.hostElement.setAttribute('y', '0');

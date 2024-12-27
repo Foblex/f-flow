@@ -12,6 +12,8 @@ export * from './f-draggable';
 
 export * from './f-flow';
 
+export * from './f-line-alignment';
+
 export * from './f-node';
 
 export * from './f-selection';
