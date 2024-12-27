@@ -11,6 +11,7 @@ import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
 import { ListenTransformChangesRequest } from '../f-storage';
 import { debounceTime, FChannelHub, notifyOnStart } from '../reactivity';
+import { BrowserService } from '@foblex/platform';
 
 @Component({
   selector: 'f-minimap',
@@ -29,6 +30,7 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
 
   private _destroyRef = inject(DestroyRef);
   private _fMediator = inject(FMediator);
+  private _fBrowser = inject(BrowserService);
 
   @ViewChild(FMinimapCanvasDirective, { static: true })
   public fMinimapCanvas!: FMinimapCanvasDirective;
@@ -53,6 +55,9 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
   }
 
   private _redraw(): void {
+    if (!this._fBrowser.isBrowser()) {
+      return;
+    }
     this.fMinimapFlow.update();
     this.fMinimapView.update();
     this.fMinimapCanvas.redraw();
