@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.0.1](https://github.com/foblex/flow/compare/v16.0.0...v17.0.1) (2024-12-29)
+
+### Features
+
+* Removed RXJS dependency ([52811e3](https://github.com/foblex/flow/commit/52811e35e1828448c72935384c7e034f35b08461))
+* Positioning support for fText ([52811e3](https://github.com/foblex/flow/commit/52811e35e1828448c72935384c7e034f35b08461))
+
+### Bug Fixes
+
+* IOS issue with recalculate after animation ([369c54d](https://github.com/foblex/flow/commit/369c54debdf2fad87a3cbcb82343aea04d3ac2dc))
+
+### Documentation
+
+* Added AutoSnap example ([7e7e4f5](https://github.com/foblex/flow/commit/7e7e4f5ab402b8cec84fbae5f36ff3bceb5bdd37))
+* Added Background example ([6735cf5](https://github.com/foblex/flow/commit/6735cf5dd636dad4838032765f5da862763d6f1f))
+* Added ConnectionBehaviours examples ([fac0ff1](https://github.com/foblex/flow/commit/fac0ff118f8f1143186f3d29174468af1fff45f1))
+* Added ConnectionMarkers example ([377b610](https://github.com/foblex/flow/commit/377b6109e6ca65f654f62976fe50b8277d7d542b))
+* Added ConnectionType and CustomConnectionType examples ([eb248c0](https://github.com/foblex/flow/commit/eb248c044bf854a208e4930e405b990a24840328))
+* Added Connector examples ([9b7d1ed](https://github.com/foblex/flow/commit/9b7d1edd5b537feeb132e2564e61538c2baa784b))
+* Added CustomConnections example ([fcfce91](https://github.com/foblex/flow/commit/fcfce91ea082d503d54f982fd624bded6838e3fc))
+* Added DragToGroup example ([d1d2ab9](https://github.com/foblex/flow/commit/d1d2ab999b4f57f17a30c18a9c7b4aa15d6015c2))
+* Added HelpInPositioning example ([ec4cef8](https://github.com/foblex/flow/commit/ec4cef837158f7301b76a56d855a242b63e3c663))
+* Added Minimap example ([82c57cd](https://github.com/foblex/flow/commit/82c57cdf8a018c0f37921756d1801c0b0dc3d980))
+* Added NodeSelection example ([87daaaa](https://github.com/foblex/flow/commit/87daaaa211360dd9d1b11e0c6a6ac27d93987d1f))
+* Added RemoveOnDrop and CreateOnDrop examples ([015865d](https://github.com/foblex/flow/commit/015865d2bf2ba75483fed2c28bacc827d646a116))
+* Added SelectionArea example ([71bf4fc](https://github.com/foblex/flow/commit/71bf4fcc6ec74189439b926fa3d544b4ca6da569))
+* Added TournamentBracket example ([a934e8c](https://github.com/foblex/flow/commit/a934e8c015d50541d3d19865251feb0c78281294))
+* Added UmlDiagram example ([1f48560](https://github.com/foblex/flow/commit/1f485605f38606952fa4e6e4c23aba32813428bd))
+* Added Zoom example ([044452f](https://github.com/foblex/flow/commit/044452f4f868e9772be3b14619ef4ebcdae46cbf))
+
+### Tests
+
+* Added E2E tests: DragHandle, DragToConnect, DragToReassign ([3513d63](https://github.com/foblex/flow/commit/3513d63d78c45e7d3f6a327f39aa7c58ecaacd51))
+* Fixed: RemoveOnDrop and DragToReassign tests ([a1a2a79](https://github.com/foblex/flow/commit/a1a2a798e0059d5cb1815289427c3bb1cc734c8d))
+
 ## [16.0.0](https://github.com/foblex/flow/compare/v12.6.0...v16.0.0) (2024-09-24)
 
 

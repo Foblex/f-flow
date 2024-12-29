@@ -1,5 +1,5 @@
 {
-  "version": "16.0.0",
+  "version": "17.0.1",
   "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
