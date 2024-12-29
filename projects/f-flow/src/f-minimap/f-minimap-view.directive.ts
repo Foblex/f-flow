@@ -1,7 +1,7 @@
-import { Directive, ElementRef } from "@angular/core";
-import { FComponentsStore } from '../f-storage';
-import { IRect, RectExtensions } from '@foblex/2d';
-import { checkRectIsFinite } from './domain';
+import { Directive, ElementRef, inject } from "@angular/core";
+import { IRect, setRectToElement } from '@foblex/2d';
+import { FMediator } from '@foblex/mediator';
+import { MinimapCalculateViewBoxRequest } from './domain';
 
 @Directive({
   selector: 'rect[fMinimapView]',
@@ -11,30 +11,18 @@ import { checkRectIsFinite } from './domain';
 })
 export class FMinimapViewDirective {
 
-  public get hostElement(): SVGRectElement {
-    return this.elementReference.nativeElement;
+  private _fMediator = inject(FMediator);
+
+  private _elementReference = inject(ElementRef);
+
+  public get hostElement(): SVGGElement {
+    return this._elementReference.nativeElement;
   }
 
-  private get flowScale(): number {
-    return this.fComponentsStore!.transform!.scale!;
-  }
-
-  constructor(
-    private elementReference: ElementRef<SVGRectElement>,
-    private fComponentsStore: FComponentsStore
-  ) {
-  }
-
-  public update(): void {
-    const viewBox = RectExtensions.div(RectExtensions.fromElement(this.fComponentsStore.flowHost), this.flowScale);
-    this.setAttributes(viewBox);
-  }
-
-  private setAttributes(viewBox: IRect): void {
-    viewBox = checkRectIsFinite(viewBox);
-    this.hostElement.setAttribute('x', '0');
-    this.hostElement.setAttribute('y', '0');
-    this.hostElement.setAttribute('width', viewBox.width.toString());
-    this.hostElement.setAttribute('height', viewBox.height.toString());
+  public redraw(): void {
+    setRectToElement(
+      this._fMediator.send<IRect>(new MinimapCalculateViewBoxRequest()),
+      this.hostElement
+    );
   }
 }

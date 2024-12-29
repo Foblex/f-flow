@@ -1,9 +1,9 @@
 import {
-  Directive, ElementRef, InjectionToken
+  Directive, ElementRef, inject, InjectionToken
 } from "@angular/core";
 import { IHasHostElement } from '../../i-has-host-element';
 
-export const F_DRAG_HANDLE: InjectionToken<FDragHandleDirective> = new InjectionToken<FDragHandleDirective>('F_DRAG_HANDLE');
+export const F_DRAG_HANDLE = new InjectionToken<FDragHandleDirective>('F_DRAG_HANDLE');
 
 @Directive({
   selector: "[fDragHandle]",
@@ -14,12 +14,9 @@ export const F_DRAG_HANDLE: InjectionToken<FDragHandleDirective> = new Injection
 })
 export class FDragHandleDirective implements IHasHostElement {
 
-  public get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
-  }
+  private _elementReference = inject(ElementRef);
 
-  constructor(
-    private elementReference: ElementRef<HTMLElement>
-  ) {
+  public get hostElement(): HTMLElement {
+    return this._elementReference.nativeElement;
   }
 }

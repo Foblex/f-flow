@@ -27,7 +27,7 @@ export class NodeMovePreparationValidator implements IValidator<NodeMovePreparat
   }
 
   private getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    return this.fComponentsStore.findNode(targetElement);
+    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement));
   }
 
   private isNodeCanBeDragged(node: FNodeBase | undefined): boolean {

@@ -22,7 +22,8 @@ export class CreateConnectionFromOutletPreparationExecution
 
   public handle(request: CreateConnectionFromOutletPreparationRequest): void {
     const { event } = request;
-    const node = this.fComponentsStore.findNode(event.targetElement)!;
+    const node = this.fComponentsStore
+      .fNodes.find(n => n.isContains(event.targetElement))!;
 
     const outlet = this.fComponentsStore.fOutlets.find((x) => {
       return x.hostElement.contains(event.targetElement);

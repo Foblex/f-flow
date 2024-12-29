@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, ElementRef, inject,
+  ViewChild
+} from '@angular/core';
 import { FCanvasComponent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
 
 @Component({
@@ -13,24 +18,22 @@ import { FCanvasComponent, FFlowModule, FReassignConnectionEvent } from '@foblex
 })
 export class DragToReassignComponent {
 
+  private _elementReference = inject(ElementRef);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
+
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;
 
   public connections: { outputId: string, inputId: string }[] = [
-    { outputId: '1', inputId: '2' },
+    { outputId: '1', inputId: 'input-1' },
   ];
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
-
   public reassignConnection(event: FReassignConnectionEvent): void {
-    if(!event.newFInputId) {
+    if (!event.newFInputId) {
       return;
     }
     this.connections = [ { outputId: event.fOutputId, inputId: event.newFInputId } ];
-    this.changeDetectorRef.detectChanges();
+    this._changeDetectorRef.detectChanges();
   }
 
   public onLoaded(): void {

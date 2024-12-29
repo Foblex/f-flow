@@ -20,10 +20,6 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: StartDragSequenceRequest): void {
-    this._fDraggableDataContext.draggableItems.forEach((item) => {
-      item.initialize?.();
-    });
-
     if (this._fDraggableDataContext.draggableItems.length > 0) {
       this._hostElement.classList.add('f-dragging');
       this._fMediator.send<void>(new EmitSelectionChangeEventRequest());

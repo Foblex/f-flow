@@ -8,6 +8,7 @@ import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanChangeSelection } from '../../mixins';
+import { FNodeBase } from '../../f-node';
 
 @Injectable()
 @FExecutionRegister(SingleSelectRequest)
@@ -33,7 +34,11 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
   }
 
   private getSelectableItem(event: IPointerEvent): ICanChangeSelection | undefined {
-    return this.fComponentsStore.findNode(event.targetElement) || this.getConnectionHandler(event.targetElement);
+    return this._findNode(event.targetElement) || this.getConnectionHandler(event.targetElement);
+  }
+
+  private _findNode(targetElement: HTMLElement): FNodeBase | undefined {
+    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement));
   }
 
   private getConnectionHandler(element: HTMLElement | SVGElement): FConnectionBase | undefined {

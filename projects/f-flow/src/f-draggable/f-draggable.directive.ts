@@ -29,11 +29,11 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   EmitSelectionChangeEventRequest,
-  StartDragSequenceRequest,
+  PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
   EndDragSequenceRequest,
   InitializeDragSequenceRequest,
-  HandleDragSequenceRequest
+  OnPointerMoveRequest
 } from '../domain';
 import {
   ExternalItemFinalizeRequest,
@@ -104,11 +104,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.send<void>(new InitializeDragSequenceRequest());
 
-    let result: boolean = event.isMouseLeftButton();
-
-    this.plugins.forEach((p) => {
-      p.onPointerDown?.(event);
-    });
+    this.plugins.forEach((p) => p.onPointerDown?.(event));
 
     this._fMediator.send<void>(new SingleSelectRequest(event));
 
@@ -116,17 +112,16 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.send<void>(new CreateConnectionPreparationRequest(event));
 
-    if (!result) {
+    const isMouseLeftButton = event.isMouseLeftButton();
+    if (!isMouseLeftButton) {
       this.finalizeDragSequence();
     }
-    return result;
+    return isMouseLeftButton;
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {
 
-    this.plugins.forEach((p) => {
-      p.prepareDragSequence?.(event);
-    });
+    this.plugins.forEach((p) => p.prepareDragSequence?.(event));
 
     this._fMediator.send<void>(new NodeResizePreparationRequest(event));
 
@@ -139,26 +134,22 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
 
 
-    this._fMediator.send<void>(new StartDragSequenceRequest());
+    this._fMediator.send<void>(new PrepareDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
-    this.plugins.forEach((p) => {
-      p.onSelect?.(event);
-    });
+    this.plugins.forEach((x) => x.onSelect?.(event));
 
     this._fMediator.send<void>(new PreventDefaultIsExternalItemRequest(event));
   }
 
   public override onPointerMove(event: IPointerEvent): void {
-    this._fMediator.send<void>(new HandleDragSequenceRequest(event));
+    this._fMediator.send<void>(new OnPointerMoveRequest(event));
   }
 
   public override onPointerUp(event: IPointerEvent): void {
 
-    this.plugins.forEach((p) => {
-      p.onPointerUp?.(event);
-    });
+    this.plugins.forEach((x) => x.onPointerUp?.(event));
 
     this._fMediator.send<void>(new ReassignConnectionFinalizeRequest(event));
 

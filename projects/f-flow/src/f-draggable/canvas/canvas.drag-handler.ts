@@ -11,16 +11,16 @@ export class CanvasDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.onPointerDownPosition = this.fComponentsStore.fCanvas!.transform.position;
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     this.fComponentsStore.fCanvas!.setPosition(Point.fromPoint(this.onPointerDownPosition).add(difference));
     this.fComponentsStore.fCanvas!.redraw();
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
   }
 }

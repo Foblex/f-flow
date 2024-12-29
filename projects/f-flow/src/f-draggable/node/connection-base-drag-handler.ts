@@ -21,7 +21,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.fOutputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getOutput()));
     this.fInputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getInput()));
   }
@@ -46,7 +46,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
     return `ConnectionDragHandler Error: Connection From (fOutput)${ this.connection.fOutputId } To (fInput)${ this.connection.fInputId }. ${ message }. Please ensure that all f-connections are associated with existing connectors`;
   }
 
-  public abstract move(difference: IPoint): void;
+  public abstract onPointerMove(difference: IPoint): void;
 
   protected getDifference(difference: IPoint, restrictions: INodeMoveRestrictions): IPoint {
     return {

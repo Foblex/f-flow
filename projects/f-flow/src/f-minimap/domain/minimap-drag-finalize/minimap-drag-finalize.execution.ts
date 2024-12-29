@@ -14,7 +14,7 @@ export class MinimapDragFinalizeExecution implements IExecution<MinimapDragFinal
 
   public handle(request: MinimapDragFinalizeRequest): void {
     this.fDraggableDataContext.draggableItems.forEach((x) => {
-      x.complete?.();
+      x.onPointerUp?.();
     });
   }
 }

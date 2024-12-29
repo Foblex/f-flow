@@ -11,6 +11,6 @@ export class AddConnectionToStoreExecution implements IExecution<AddConnectionTo
 
   public handle(request: AddConnectionToStoreRequest): void {
     this._fComponentsStore.fConnections.push(request.fConnection);
-    this._fComponentsStore.componentDataChanged();
+    this._fComponentsStore.dataChanged();
   }
 }

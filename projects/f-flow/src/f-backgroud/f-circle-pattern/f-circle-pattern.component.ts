@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  ElementRef, Input, OnDestroy,
-  OnInit
+  Component, DestroyRef,
+  ElementRef, inject, Input, OnChanges, OnDestroy,
+  OnInit, SimpleChanges
 } from "@angular/core";
 import {
   IPoint,
@@ -13,8 +13,7 @@ import {
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../../domain';
-import { Subject, Subscription } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { FChannel, FChannelHub, notifyOnStart } from '../../reactivity';
 
 let uniqueId: number = 0;
 
@@ -29,36 +28,28 @@ let uniqueId: number = 0;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FCirclePatternComponent implements OnInit, OnDestroy, IFBackgroundPattern {
+export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
 
-  private _subscription$: Subscription = new Subscription();
+  private _destroyRef = inject(DestroyRef);
 
-  private _stateChanges: Subject<void> = new Subject<void>();
+  private _elementReference = inject(ElementRef);
+
+  private _stateChanges = new FChannel();
 
   public get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Input()
   public id: string = `f-pattern-${ uniqueId++ }`;
 
-
-  private _color: string = 'rgba(0,0,0,0.1)';
+  @Input()
+  public color: string = 'rgba(0,0,0,0.1)';
 
   @Input()
-  public set color(value: string) {
-    this._color = value;
-    this._stateChanges.next();
-  }
+  public radius: number = 20;
 
-  private _radius: number = 20;
   private _scaledRadius: number = 20;
-
-  @Input()
-  public set radius(value: number) {
-    this._radius = value;
-    this._stateChanges.next();
-  }
 
   private _transform: ITransformModel = TransformModelExtensions.default();
 
@@ -68,63 +59,66 @@ export class FCirclePatternComponent implements OnInit, OnDestroy, IFBackgroundP
   private _circle!: SVGCircleElement;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fBrowser: BrowserService
+    private _fBrowser: BrowserService
   ) {
-    this.createPattern();
+    this._createPattern();
   }
 
-  private createPattern(): void {
-    this._pattern = createSVGElement('pattern', this.fBrowser);
+  private _createPattern(): void {
+    this._pattern = createSVGElement('pattern', this._fBrowser);
     this._pattern.setAttribute('patternUnits', 'userSpaceOnUse');
     this.hostElement.appendChild(this._pattern);
 
-    this._circle = createSVGElement('circle', this.fBrowser);
+    this._circle = createSVGElement('circle', this._fBrowser);
     this._pattern.appendChild(this._circle);
   }
 
   public ngOnInit(): void {
-    this._subscription$.add(this.subscribeToStateChanges());
+    this._listenStateChanges();
   }
 
-  private subscribeToStateChanges(): Subscription {
-    return this._stateChanges.pipe(startWith(null)).subscribe(() => {
-      this.redraw();
-    });
+  private _listenStateChanges(): void {
+    new FChannelHub(this._stateChanges).pipe(notifyOnStart()).listen(this._destroyRef, () => this._redraw());
   }
 
-  private calculatePattern(): void {
+  public ngOnChanges(changes: SimpleChanges) {
+    if (changes['radius'] || changes['color']) {
+      this._refresh();
+    }
+  }
+
+  private _redraw(): void {
+    this._calculatePattern();
+    this._redrawPattern();
+    this._redrawElement();
+  }
+
+  private _calculatePattern(): void {
     this._position.x = this._transform.position.x + this._transform.scaledPosition.x;
     this._position.y = this._transform.position.y + this._transform.scaledPosition.y;
-    this._scaledRadius = this._radius * this._transform.scale;
+    this._scaledRadius = this.radius * this._transform.scale;
   }
 
-  private redraw(): void {
-    this.calculatePattern();
-    this.redrawPattern();
-    this.redrawElement();
-  }
-
-  private redrawPattern(): void {
+  private _redrawPattern(): void {
     this._pattern.setAttribute('x', `${ this._position.x }`);
     this._pattern.setAttribute('y', `${ this._position.y }`);
     this._pattern.setAttribute('width', `${ this._scaledRadius }`);
     this._pattern.setAttribute('height', `${ this._scaledRadius }`);
   }
 
-  private redrawElement(): void {
-    this._circle.setAttribute('fill', this._color);
+  private _redrawElement(): void {
+    this._circle.setAttribute('fill', this.color);
     this._circle.setAttribute('cx', `${ this._scaledRadius / 2 }`);
     this._circle.setAttribute('cy', `${ this._scaledRadius / 2 }`);
-    this._circle.setAttribute('r', `${ this._scaledRadius / this._radius }`);
+    this._circle.setAttribute('r', `${ this._scaledRadius / this.radius }`);
   }
 
   public setTransform(transform: ITransformModel): void {
     this._transform = transform;
-    this._stateChanges.next();
+    this._refresh();
   }
 
-  public ngOnDestroy(): void {
-    this._subscription$.unsubscribe();
+  private _refresh(): void {
+    this._stateChanges.notify();
   }
 }

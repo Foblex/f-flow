@@ -41,12 +41,16 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
   private getSelectedNodes(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
     const result = this.fDraggableDataContext.selectedItems
-      .map((x) => this.fComponentsStore.findNode(x.hostElement))
+      .map((x) => this._findNode(x.hostElement))
       .filter((x): x is FNodeBase => !!x);
     if(nodeWithDisabledSelection) {
       result.push(nodeWithDisabledSelection);
     }
     return result;
+  }
+
+  private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
+    return this.fComponentsStore.fNodes.find(n => n.isContains(hostElement));
   }
 
   private getNodesWithRestrictions(selectedNodes: FNodeBase[]): INodeWithDistanceRestrictions[] {

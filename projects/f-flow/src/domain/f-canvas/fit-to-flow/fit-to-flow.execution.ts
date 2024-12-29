@@ -3,7 +3,7 @@ import { FitToFlowRequest } from './fit-to-flow-request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { GetNodesRectRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
+import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(FitToFlowRequest)
@@ -18,7 +18,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
   private _fMediator = inject(FMediator);
 
   public handle(request: FitToFlowRequest): void {
-    const fNodesRect = this._fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
+    const fNodesRect = this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }

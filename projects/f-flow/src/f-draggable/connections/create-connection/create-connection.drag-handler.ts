@@ -36,7 +36,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     if (this.fSnapConnection) {
       this.fSnapConnection.fOutputId = this.fOutput.fId;
       this.fSnapConnection.initialize();
@@ -55,10 +55,10 @@ export class CreateConnectionDragHandler implements IDraggableItem {
     );
 
     this.fConnection.show();
-    this.move(PointExtensions.initialize());
+    this.onPointerMove(PointExtensions.initialize());
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     this.drawTempConnection(this.toConnectorRect.addPoint(difference));
     if (this.fSnapConnection) {
       this.drawSnapConnection(this.getClosetInput(difference));
@@ -110,7 +110,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
     );
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fConnection.redraw();
     this.fConnection.hide();
     this.fSnapConnection?.hide();

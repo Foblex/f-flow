@@ -1,5 +1,4 @@
 import { GetConnectionLineExecution } from './get-connection-line';
-import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import {
   MoveFrontElementsBeforeTargetElementExecution,
@@ -21,6 +20,7 @@ import { F_CONNECTORS_FEATURES } from './f-connectors';
 import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
+import { F_LINE_ALIGNMENT_FEATURES } from './f-line-alignment';
 
 export const COMMON_PROVIDERS = [
 
@@ -35,6 +35,8 @@ export const COMMON_PROVIDERS = [
   ...F_DRAGGABLE_FEATURES,
 
   ...F_FLOW_FEATURES,
+
+  ...F_LINE_ALIGNMENT_FEATURES,
 
   ...F_NODE_FEATURES,
 
@@ -53,8 +55,6 @@ export const COMMON_PROVIDERS = [
   ...GET_FLOW_STATE_PROVIDERS,
 
   GetScaledNodeRectsWithFlowPositionExecution,
-
-  GetNodesRectExecution,
 
   GetPositionInFlowExecution,
 

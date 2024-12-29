@@ -31,7 +31,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     if (this.fSnapConnection) {
       this.fSnapConnection.fOutputId = this.fConnection.fOutputId;
       this.fSnapConnection.initialize();
@@ -55,7 +55,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
     return this.fComponentsStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     this.drawConnection({
       fRect: this.toConnectorRect.addPoint(difference),
       fConnector: this.fInputWithRect.fConnector
@@ -110,7 +110,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
     );
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.drawConnection(this.fInputWithRect);
     this.fSnapConnection?.hide();
   }

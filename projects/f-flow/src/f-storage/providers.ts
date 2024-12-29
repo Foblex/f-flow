@@ -1,21 +1,21 @@
-import { ComponentDataChangedExecution } from './features/component-data-changed';
-import { ListenComponentsDataChangesExecution } from './features/listen-components-data-changed';
+import { NotifyDataChangedExecution } from './features/notify-data-changed';
+import { ListenDataChangesExecution } from './features/listen-components-data-changed';
 import { FComponentsStore } from './f-components-store';
-import { ListenComponentsCountChangesExecution } from './features/listen-components-count-changes';
+import { ListenCountChangesExecution } from './features/listen-count-changes';
 import { ListenTransformChangesExecution } from './features/listen-transform-changes';
-import { TransformChangedExecution } from './features/transform-changed';
+import { NotifyTransformChangedExecution } from './features/notify-transform-changed';
 
 export const F_STORAGE_PROVIDERS = [
 
-  ComponentDataChangedExecution,
+  NotifyDataChangedExecution,
 
-  ListenComponentsCountChangesExecution,
+  ListenCountChangesExecution,
 
-  ListenComponentsDataChangesExecution,
+  ListenDataChangesExecution,
 
   ListenTransformChangesExecution,
 
-  TransformChangedExecution,
+  NotifyTransformChangedExecution,
 
   FComponentsStore,
 ];

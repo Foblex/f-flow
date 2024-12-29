@@ -21,7 +21,8 @@ export class CreateConnectionPreparationValidator implements IValidator<CreateCo
   }
 
   private getNode(event: IPointerEvent): FNodeBase | undefined {
-    return this.fComponentsStore.findNode(event.targetElement);
+    return this.fComponentsStore
+      .fNodes.find(n => n.isContains(event.targetElement));
   }
 
   private isValidConditions(): boolean {

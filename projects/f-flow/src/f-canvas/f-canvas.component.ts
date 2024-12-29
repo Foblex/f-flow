@@ -18,7 +18,7 @@ import {
   InputCanvasScaleRequest, isMobile, RemoveCanvasFromStoreRequest,
   ResetScaleAndCenterRequest, ResetScaleRequest, SetBackgroundTransformRequest, transitionEnd, UpdateScaleRequest,
 } from '../domain';
-import { TransformChangedRequest } from '../f-storage';
+import { NotifyTransformChangedRequest } from '../f-storage';
 
 @Component({
   selector: 'f-canvas',
@@ -72,7 +72,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   public override redraw(): void {
     this._fMediator.send(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transform: ${ TransformModelExtensions.toString(this.transform) }`);
-    this._fMediator.send(new TransformChangedRequest());
+    this._fMediator.send(new NotifyTransformChangedRequest());
   }
 
   public override redrawWithAnimation(): void {

@@ -1,13 +1,13 @@
-import { Component, ElementRef, inject, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input } from '@angular/core';
 import { IPoint, IRect, ISize, ITransformModel, RectExtensions, SizeExtensions } from '@foblex/2d';
 import { ILineAlignmentResult, LineService, NearestCoordinateFinder } from './domain';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
-import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
-import { GetElementRectInFlowRequest, GetFlowHostElementRequest } from '../domain';
+import { GetCanvasRequest, GetElementRectInFlowRequest, GetFlowHostElementRequest } from '../domain';
 import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
+import { FCanvasBase } from '../f-canvas';
 
 @Component({
   selector: "f-line-alignment",
@@ -21,7 +21,7 @@ import { BrowserService } from '@foblex/platform';
     { provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent }
   ],
 })
-export class FLineAlignmentComponent extends FLineAlignmentBase implements OnInit {
+export class FLineAlignmentComponent extends FLineAlignmentBase implements AfterViewInit {
 
   @Input()
   public fAlignThreshold: number = 10;
@@ -40,8 +40,10 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
 
   private _fMediator = inject(FMediator);
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
+  private _fCanvas: FCanvasBase | undefined;
+
+  private get _transform(): ITransformModel {
+    return this._fCanvas!.transform;
   }
 
   private get _fFlowHostElement(): HTMLElement {
@@ -50,7 +52,6 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
 
   constructor(
     private elementReference: ElementRef<HTMLElement>,
-    private fComponentsStore: FComponentsStore,
     private fDraggableDataContext: FDraggableDataContext,
     fBrowser: BrowserService
   ) {
@@ -58,7 +59,8 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
     this.lineService = new LineService(fBrowser, this.hostElement);
   }
 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
+    this._fCanvas = this._fMediator.send(new GetCanvasRequest());
     this.fDraggableDataContext.fLineAlignment = this;
   }
 
@@ -86,12 +88,12 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
   private drawIntersectingLines(difference: IPoint): void {
     const intersect = this.findNearestCoordinate(difference);
     if (intersect.xResult.value !== undefined) {
-      this.lineService.drawVerticalLine(intersect.xResult.value, this.size, this.transform);
+      this.lineService.drawVerticalLine(intersect.xResult.value, this.size, this._transform);
     } else {
       this.lineService.hideVerticalLine();
     }
     if (intersect.yResult.value !== undefined) {
-      this.lineService.drawHorizontalLine(intersect.yResult.value, this.size, this.transform);
+      this.lineService.drawHorizontalLine(intersect.yResult.value, this.size, this._transform);
     } else {
       this.lineService.hideHorizontalLine();
     }

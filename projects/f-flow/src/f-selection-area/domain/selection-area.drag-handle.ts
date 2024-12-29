@@ -1,5 +1,5 @@
 import { IPoint, Point, RectExtensions } from '@foblex/2d';
-import { FComponentsStore, TransformChangedRequest } from '../../f-storage';
+import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
 import { ISelectableWithRect } from '../../domain';
 import { FMediator } from '@foblex/mediator';
 import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
@@ -25,7 +25,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
   ) {
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.canBeSelected = this.fMediator.send(new GetCanBeSelectedItemsRequest());
 
     this.fSelectionArea.show();
@@ -37,7 +37,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
     );
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     const currentPoint = Point.fromPoint(difference).add(this.fDraggableDataContext.onPointerDownPosition);
     const x: number = Math.min(this.fDraggableDataContext.onPointerDownPosition.x, currentPoint.x);
     const y: number = Math.min(this.fDraggableDataContext.onPointerDownPosition.y, currentPoint.y);
@@ -61,10 +61,10 @@ export class SelectionAreaDragHandle implements IDraggableItem {
         this.selectedByMove.push(item.element);
       }
     });
-    this.fMediator.send<void>(new TransformChangedRequest());
+    this.fMediator.send<void>(new NotifyTransformChangedRequest());
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fSelectionArea.hide();
     this.fDraggableDataContext.selectedItems.push(...this.selectedByMove);
     if (this.selectedByMove.length > 0) {

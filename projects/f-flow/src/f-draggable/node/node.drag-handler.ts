@@ -19,7 +19,7 @@ export class NodeDragHandler implements IDraggableItem {
     this.onPointerDownPosition = { ...fNode.position };
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     const restrictedDifference = this.getDifference(difference, { min: this.minDistance, max: this.maxDistance });
 
     this.redrawNode(this.getNewPosition(restrictedDifference));
@@ -42,7 +42,7 @@ export class NodeDragHandler implements IDraggableItem {
     this.fNode.redraw();
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fNode.positionChange.emit(this.fNode.position);
   }
 }

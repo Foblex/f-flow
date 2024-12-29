@@ -22,7 +22,7 @@ export class ExternalItemDragHandler implements IDraggableItem {
     return `position: absolute; left: 0; top: 0; transform: translate(${ position.x }px, ${ position.y }px)`;
   }
 
-  public initialize(): void {
+  public prepareDragSequence(): void {
     this.onPointerDownRect = this.getExternalItemRect();
     this.placeholder = deepCloneNode(this.externalItem.hostElement);
     this.placeholder.setAttribute('style', this.getStyle(Point.fromPoint(this.onPointerDownRect)));
@@ -38,13 +38,13 @@ export class ExternalItemDragHandler implements IDraggableItem {
     return RectExtensions.initialize(offsetLeft, offsetTop, rect.width, rect.height);
   }
 
-  public move(difference: IPoint): void {
+  public onPointerMove(difference: IPoint): void {
     this.difference = difference;
     const position = Point.fromPoint(this.onPointerDownRect).add(this.difference);
     this.placeholder!.setAttribute('style', this.getStyle(position));
   }
 
-  public complete(): void {
+  public onPointerUp(): void {
     this.fBrowser.document.body.removeChild(this.placeholder!);
   }
 }

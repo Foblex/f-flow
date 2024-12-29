@@ -9,7 +9,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 export class GetPositionInFlowExecution implements IExecution<GetPositionInFlowRequest, IPoint> {
 
   private get transform(): ITransformModel {
-    return this.fComponentsStore.transform;
+    return this.fComponentsStore.fCanvas!.transform;
   }
 
   private get flowHost(): HTMLElement {

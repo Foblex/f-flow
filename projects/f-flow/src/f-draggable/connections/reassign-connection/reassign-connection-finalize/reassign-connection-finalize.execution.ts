@@ -31,7 +31,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
 
   public handle(request: ReassignConnectionFinalizeRequest): void {
     this.emitEvent(request.event);
-    this.dragHandler.complete();
+    this.dragHandler.onPointerUp();
   }
 
   private emitEvent(event: IPointerEvent): void {

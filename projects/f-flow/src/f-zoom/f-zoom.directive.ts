@@ -45,6 +45,6 @@ export class FZoomDirective extends FZoomBase implements AfterViewInit, OnDestro
   }
 
   public ngOnDestroy(): void {
-    super.unsubscribe();
+    super.dispose();
   }
 }

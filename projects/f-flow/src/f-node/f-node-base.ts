@@ -1,12 +1,11 @@
 import { EventEmitter, InjectionToken } from '@angular/core';
-import { Subject } from 'rxjs';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
-import { IHasStateChanges } from '../i-has-state-changes';
 import {
   FConnectorBase
 } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
+import { FChannel } from '../reactivity';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
@@ -18,13 +17,13 @@ const MIXIN_BASE = mixinChangeSelection(
       }
     });
 
-export abstract class FNodeBase extends MIXIN_BASE implements IHasStateChanges, ICanChangeSelection, IHasHostElement {
+export abstract class FNodeBase extends MIXIN_BASE implements ICanChangeSelection, IHasHostElement {
 
   public abstract override fId: string;
 
   public abstract fParentId: string | null | undefined;
 
-  public readonly stateChanges: Subject<void> = new Subject<void>();
+  public readonly stateChanges = new FChannel();
 
 
   public abstract positionChange: EventEmitter<IPoint>;

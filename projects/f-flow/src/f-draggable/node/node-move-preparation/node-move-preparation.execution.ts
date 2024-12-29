@@ -57,7 +57,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private getNode(targetElement: HTMLElement): FNodeBase {
-    return this.fComponentsStore.findNode(targetElement)!;
+    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement))!;
   }
 
   private createDragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {

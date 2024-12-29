@@ -4,6 +4,7 @@ describe('DragToConnectComponent', () => {
   })
 
   it('should start creating a connection and show connection-for-create element', function () {
+    cy.get('f-flow').scrollIntoView();
     cy.get('.f-connection-for-create').should('exist')
       .invoke('css', 'display').should('equal', 'none');
 

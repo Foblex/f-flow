@@ -33,7 +33,8 @@ export class CanvasMovePreparationValidator implements IValidator<CanvasMovePrep
   }
 
   private getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this.fComponentsStore.findNode(targetElement);
+    let result = this.fComponentsStore.fNodes
+      .find(n => n.isContains(targetElement));
     if (result && result.fDraggingDisabled) {
       result = undefined;
     }

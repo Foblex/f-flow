@@ -5,7 +5,6 @@ import {
   Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
-import { Observable, Subscription } from 'rxjs';
 import {
   ClearSelectionRequest,
   GetScaledNodeRectsWithFlowPositionRequest,
@@ -14,9 +13,8 @@ import {
   RedrawConnectionsRequest,
   SelectAllRequest,
   SelectRequest,
-  SortItemLayersRequest,
   IFFlowState,
-  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest
+  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -25,14 +23,15 @@ import {
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import {
-  ComponentDataChangedRequest,
+  NotifyDataChangedRequest,
   F_STORAGE_PROVIDERS,
-  ListenComponentsCountChangesRequest,
-  ListenComponentsDataChangesRequest
+  ListenCountChangesRequest,
+  ListenDataChangesRequest
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
+import { FChannelHub } from '../reactivity';
 
 let uniqueId: number = 0;
 
@@ -61,11 +60,13 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   private _fMediator = inject(FMediator);
 
+  private _elementReference = inject(ElementRef);
+
   @Input('fFlowId')
   public override fId: string = `f-flow-${ uniqueId++ }`;
 
   public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Output()
@@ -74,7 +75,6 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _isLoaded: boolean = false;
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
     private fBrowser: BrowserService,
   ) {
     super();
@@ -88,33 +88,37 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     if (!this.fBrowser.isBrowser()) {
       return;
     }
-    this._subscribeOnComponentsCountChanges();
-    this._subscribeOnElementsChanges();
+    this._listenCountChanges();
+    this._listenDataChanges();
   }
 
-  private _subscribeOnComponentsCountChanges(): void {
-    this._fMediator.send<Observable<void>>(
-      new ListenComponentsCountChangesRequest(this._destroyRef)
-    ).subscribe(() => {
-      this._fMediator.send(new SortItemLayersRequest());
+  private _listenCountChanges(): void {
+    this._fMediator.send<FChannelHub>(
+      new ListenCountChangesRequest()
+    ).listen(this._destroyRef, () => {
+      this._fMediator.send(new SortItemLayersRequest())
     });
   }
 
-  private _subscribeOnElementsChanges(): void {
-    this._fMediator.send<Observable<void>>(
-      new ListenComponentsDataChangesRequest(this._destroyRef)
-    ).subscribe(() => {
+  private _listenDataChanges(): void {
+    this._fMediator.send<FChannelHub>(
+      new ListenDataChangesRequest()
+    ).listen(this._destroyRef,() => {
       this._fMediator.send(new RedrawConnectionsRequest());
 
-      if (!this._isLoaded) {
-        this._isLoaded = true;
-        this.fLoaded.emit();
-      }
+      this._emitLoaded();
     });
+  }
+
+  private _emitLoaded(): void {
+    if (!this._isLoaded) {
+      this._isLoaded = true;
+      this.fLoaded.emit();
+    }
   }
 
   public redraw(): void {
-    this._fMediator.send(new ComponentDataChangedRequest());
+    this._fMediator.send(new NotifyDataChangedRequest());
   }
 
   public reset(): void {

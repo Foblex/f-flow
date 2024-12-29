@@ -21,11 +21,11 @@ export class RedrawCanvasWithAnimationExecution implements IExecution<RedrawCanv
 
   private _redrawWithAnimation(): void {
     this._fComponentsStore.fCanvas!.redrawWithAnimation();
-    transitionEnd(this._fCanvasElement, () => this._fComponentsStore.componentDataChanged());
+    transitionEnd(this._fCanvasElement, () => this._fComponentsStore.dataChanged());
   }
 
   private _redraw(): void {
     this._fComponentsStore.fCanvas!.redraw();
-    this._fComponentsStore.componentDataChanged();
+    this._fComponentsStore.dataChanged();
   }
 }

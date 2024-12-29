@@ -56,6 +56,7 @@ export class NodeResizePreparationExecution implements IExecution<NodeResizePrep
   }
 
   private getNode(targetElement: HTMLElement): FNodeBase {
-    return this.fComponentsStore.findNode(targetElement)!;
+    return this.fComponentsStore
+      .fNodes.find(n => n.isContains(targetElement))!;
   }
 }

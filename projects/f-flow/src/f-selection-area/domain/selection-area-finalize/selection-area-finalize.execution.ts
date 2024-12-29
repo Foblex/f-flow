@@ -14,7 +14,7 @@ export class SelectionAreaFinalizeExecution implements IExecution<SelectionAreaF
 
   public handle(request: SelectionAreaFinalizeRequest): void {
     this.fDraggableDataContext.draggableItems.forEach((x) => {
-      x.complete?.();
+      x.onPointerUp?.();
     });
   }
 }
