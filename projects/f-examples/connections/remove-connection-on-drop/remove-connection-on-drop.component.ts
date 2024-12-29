@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import {
   FCanvasComponent,
   FFlowComponent,
@@ -18,6 +18,9 @@ import { IPoint } from '@foblex/2d';
   ]
 })
 export class RemoveConnectionOnDropComponent {
+
+  private _elementReference = inject(ElementRef);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;
@@ -41,18 +44,13 @@ export class RemoveConnectionOnDropComponent {
     { outputId: this.nodes[1].id, inputId: this.nodes[2].id }
   ];
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
-
   public onConnectionDropped(event: FReassignConnectionEvent): void {
     if (!event.newFInputId) {
       this.removeConnection(event);
     } else {
       this.reassignConnection(event);
     }
-    this.changeDetectorRef.detectChanges();
+    this._changeDetectorRef.detectChanges();
   }
 
   private removeConnection(event: FReassignConnectionEvent): void {

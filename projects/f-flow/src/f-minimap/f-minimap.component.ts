@@ -58,8 +58,8 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
     if (!this._fBrowser.isBrowser()) {
       return;
     }
-    this.fMinimapFlow.update();
-    this.fMinimapView.update();
+    this.fMinimapFlow.redraw();
+    this.fMinimapView.redraw();
     this.fMinimapCanvas.redraw();
   }
 

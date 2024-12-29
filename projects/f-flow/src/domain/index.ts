@@ -30,13 +30,9 @@ export * from './get-flow-state';
 
 export * from './get-scaled-node-rects-with-flow-position';
 
-export * from './get-nodes-rect';
-
 export * from './get-position-in-flow';
 
 export * from './is-connection-under-node';
-
-export * from './f-connection/redraw-connections';
 
 export * from './sort-item-layers';
 

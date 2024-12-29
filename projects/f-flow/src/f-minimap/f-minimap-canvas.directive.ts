@@ -1,77 +1,32 @@
 import {
-  Directive, ElementRef,
+  Directive, ElementRef, inject,
 } from "@angular/core";
-import { FComponentsStore } from '../f-storage';
-import {
-  IRect,
-  RectExtensions
-} from '@foblex/2d';
-import { FNodeBase, FNodeDirective } from '../f-node';
-import { BrowserService } from '@foblex/platform';
-import { createSVGElement } from '../domain';
-import { checkRectIsFinite } from './domain';
+import { FMediator } from '@foblex/mediator';
+import { MinimapDrawNodesRequest } from './domain';
 
 @Directive({
   selector: 'g[fMinimapCanvas]'
 })
 export class FMinimapCanvasDirective {
 
+  private _fMediator = inject(FMediator);
+
+  private _elementReference = inject(ElementRef);
+
   public get hostElement(): SVGGElement {
-    return this.elementReference.nativeElement;
-  }
-
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.flowHost;
-  }
-
-  private get flowScale(): number {
-    return this.fComponentsStore.fCanvas!.transform.scale;
-  }
-
-  constructor(
-    private elementReference: ElementRef<SVGGElement>,
-    private fComponentsStore: FComponentsStore,
-    private fBrowser: BrowserService
-  ) {
+    return this._elementReference.nativeElement;
   }
 
   public redraw(): void {
-    this.clearCanvas();
-    this.fComponentsStore.fNodes.forEach((x) => this.renderNode(x));
+    this._clearCanvas();
+
+    this._fMediator.send<SVGRectElement[]>(new MinimapDrawNodesRequest())
+      .forEach((x) => {
+        this.hostElement.appendChild(x);
+      });
   }
 
-  private clearCanvas(): void {
+  private _clearCanvas(): void {
     this.hostElement.innerHTML = '';
-  }
-
-  private renderNode(node: FNodeBase): void {
-    const element = createSVGElement('rect', this.fBrowser);
-    this.configureNodeElement(element, node);
-    this.hostElement.appendChild(element);
-  }
-
-  private configureNodeElement(element: SVGRectElement, node: FNodeBase): void {
-    this.setElementAttributes(element, this.getNodeRect(node));
-    this.applyClassList(element, node, node instanceof FNodeDirective);
-  }
-
-  private getNodeRect(node: FNodeBase): IRect {
-    const nodeRectInFlow = RectExtensions.elementTransform(RectExtensions.fromElement(node.hostElement), this.flowHost);
-    return RectExtensions.div(nodeRectInFlow, this.flowScale);
-  }
-
-  private setElementAttributes(element: SVGRectElement, rect: IRect): void {
-    rect = checkRectIsFinite(rect);
-    element.setAttribute('x', rect.x.toString());
-    element.setAttribute('y', rect.y.toString());
-    element.setAttribute('width', rect.width.toString());
-    element.setAttribute('height', rect.height.toString());
-  }
-
-  private applyClassList(element: SVGRectElement, node: FNodeBase, isNode: boolean): void {
-    element.classList.add('f-component', isNode ? 'f-minimap-node' : 'f-minimap-group');
-    if (node.isSelected()) {
-      element.classList.add('f-selected');
-    }
   }
 }

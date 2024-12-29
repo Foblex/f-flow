@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ResetScaleAndCenterRequest } from './reset-scale-and-center-request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { GetNodesRectRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
+import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
   private _fMediator = inject(FMediator);
 
   public handle(request: ResetScaleAndCenterRequest): void {
-    const fNodesRect = this._fMediator.send<IRect | null>(new GetNodesRectRequest()) || RectExtensions.initialize();
+    const fNodesRect = this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }

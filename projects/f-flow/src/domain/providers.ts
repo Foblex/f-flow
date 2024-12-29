@@ -1,5 +1,4 @@
 import { GetConnectionLineExecution } from './get-connection-line';
-import { GetNodesRectExecution } from './get-nodes-rect';
 import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
 import {
   MoveFrontElementsBeforeTargetElementExecution,
@@ -56,8 +55,6 @@ export const COMMON_PROVIDERS = [
   ...GET_FLOW_STATE_PROVIDERS,
 
   GetScaledNodeRectsWithFlowPositionExecution,
-
-  GetNodesRectExecution,
 
   GetPositionInFlowExecution,
 

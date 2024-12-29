@@ -12,7 +12,8 @@ import { FResizeChannel } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
-export class UpdateNodeWhenStateOrSizeChangedExecution implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
+export class UpdateNodeWhenStateOrSizeChangedExecution
+  implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
 
   private _fMediator = inject(FMediator);
 

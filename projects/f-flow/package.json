@@ -33,7 +33,7 @@
     "@angular/core": ">=15.0.0",
     "@foblex/platform": "1.0.4",
     "@foblex/mediator": "1.1.0",
-    "@foblex/2d": "1.1.0",
+    "@foblex/2d": "1.1.4",
     "@foblex/drag-toolkit": "1.1.0",
     "@foblex/utils": "1.1.0"
   },
