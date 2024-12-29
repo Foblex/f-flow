@@ -1,4 +1,4 @@
-import { FChannelOperator } from '@foblex/flow';
+import { FChannelOperator } from './types';
 
 export function debounceTime(delay: number): FChannelOperator {
   let timeoutId: any;

@@ -1,4 +1,4 @@
-import { FLineAlignmentBase } from '@foblex/flow';
+import { FLineAlignmentBase } from '../../../f-line-alignment';
 
 export class AddLineAlignmentToStoreRequest {
 
