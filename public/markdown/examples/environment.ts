@@ -101,6 +101,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component')
       },
       {
+        tag: 'assign-node-to-connection-on-drop',
+        component: import('../../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component')
+      },
+      {
         tag: 'auto-snap',
         component: import('../../../projects/f-examples/connections/auto-snap/auto-snap.component')
       },
@@ -358,10 +362,6 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
       },
       {
         link: 'drag-to-reassign',
@@ -372,10 +372,6 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
       },
       {
         link: 'create-node-on-connection-drop',
@@ -396,6 +392,20 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'assign-node-to-connection-on-drop',
+        text: 'Assign Node to Connection on Drop',
+        description: 'Assign a node to a connection when node is dropped and intersects with a connection in Foblex Flow for Angular.',
+        image: './previews/examples/assign-node-to-connection-on-drop.light.png',
+        image_dark: './previews/examples/assign-node-to-connection-on-drop.dark.png',
+        image_width: 791,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'auto-snap',
@@ -436,10 +446,6 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
       },
       {
         link: 'connection-behaviours',
@@ -450,10 +456,6 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
       },
       {
         link: 'connection-markers',
@@ -542,11 +544,6 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        }
-
       },
       {
         link: 'minimap',

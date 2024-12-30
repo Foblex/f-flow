@@ -4,11 +4,14 @@ import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { DragAndDropBase, ICanRunOutsideAngular } from '@foblex/drag-toolkit';
 import { FDropToGroupEvent } from './node';
+import { FNodeIntersectedWithConnections } from './domain';
 
 @Directive()
 export abstract class FDraggableBase extends DragAndDropBase  {
 
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
+
+  public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
 
   public abstract fCreateNode: EventEmitter<FCreateNodeEvent>;
 
