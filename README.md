@@ -18,6 +18,49 @@
 Foblex Flow is an [Angular](https://angular.dev/) library built to simplify the creation and management of dynamic, interactive flows. 
 Whether you're developing complex systems or lightweight visualizations, Foblex Flow provides a robust set of tools to help automate node manipulation and inter-node connections with ease. It's fully compatible with Angular 12+, Server-Side Rendering (SSR), and the Composition API.
 
+### Architecture
+
+```mermaid
+flowchart TD
+ subgraph FlowComponentProviders["Flow Component Providers"]
+        FComponentsStorage["FComponentsStorage"]
+        FMediator["FMediator"]
+ end
+ subgraph FlowComponentContent["Flow Component Content"]
+        FBackgroundComponent["f-background"]
+        FLineAlignmentComponent["f-line-alignment"]
+        FCanvasComponent["f-canvas"]
+        FSelectionAreaComponent["f-selection-area"]
+        FMinimapComponent["f-minimap"]
+ end
+ subgraph CanvasComponentContent["Canvas Component Content"]
+        FConnectionComponent["f-connections"]
+        FNodeComponent["f-nodes"]
+ end
+ subgraph DraggableDirectiveMethods["Draggable Directive Methods"]
+        onPointerDown["onPointerDown"]
+        prepareDragSequence["prepareDragSequence"]
+        onPointerMove["onPointerMove"]
+        endDragSequence["endDragSequence"]
+ end
+    FoblexFlow --> FlowComponent["Flow Component"]
+    FlowComponent --> FlowComponentContent & FDraggableDirective & FlowComponentProviders
+    FCanvasComponent --> CanvasComponentContent
+    FBackgroundComponent --> Features["Features For Each Component Registered"]
+    FLineAlignmentComponent --> Features
+    FSelectionAreaComponent --> Features
+    FMinimapComponent --> Features
+    CanvasComponentContent --> Features
+    FMediator <--> InjectFeature["Inject Feature"]
+    Features --> InjectFeature
+    onPointerDown --> InjectFeature
+    prepareDragSequence --> InjectFeature
+    onPointerMove --> InjectFeature
+    endDragSequence --> InjectFeature
+    InjectFeature --> Redraw
+    FDraggableDirective --> DraggableDirectiveMethods
+```
+
 ### Examples
 
 Explore practical use cases to see Foblex Flow in action:
