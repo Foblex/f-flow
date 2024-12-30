@@ -6,7 +6,6 @@ import {
 } from './update-item-and-children-layers';
 import { GetPositionInFlowExecution } from './get-position-in-flow';
 import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
-import { IsConnectionUnderNodeExecution } from './is-connection-under-node';
 import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
 import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
@@ -57,8 +56,6 @@ export const COMMON_PROVIDERS = [
   GetScaledNodeRectsWithFlowPositionExecution,
 
   GetPositionInFlowExecution,
-
-  IsConnectionUnderNodeExecution,
 
   SortItemLayersExecution,
 

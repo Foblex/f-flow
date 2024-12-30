@@ -12,13 +12,15 @@ The **FDraggableDirective** enhances a component, typically a flow [f-flow](f-fl
 
  - `fSelectionChange: EventEmitter<FSelectionChangeEvent>;` Emits an event when the selection within the flow changes.
 
-[//]: # ( - `fConnectionIntersectNode: EventEmitter<FConnectionIntersectNodeEvent>;` Emits an event when an unconnected node is dragged and released over a connection.  )
+ - `fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;` Emits an event when node is dragged and released over a connection.  
 
  - `fCreateNode: EventEmitter<FCreateNodeEvent>;` Emits an event when an external item, marked with the [FExternalItemDirective](f-external-item-directive), is dragged into the flow, allowing for node creation.
 
  - `fReassignConnection: EventEmitter<FReassignConnectionEvent>;` Emits an event when a connection is reassigned to a different [FNodeInputDirective](f-node-input-directive).
 
  - `fCreateConnection: EventEmitter<FCreateConnectionEvent>;` Emits an event when a new connection is created within the flow. To do this you need to pull a connection from [fOutput](f-node-output-directive) to [fInput](f-node-input-directive).
+
+ - `fDropToGroup: EventEmitter<FDropToGroupEvent>;` Emits an event when a node or group is dropped into a node or group.
 
 ## Properties
 

@@ -6,7 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   IsConnectionUnderNodeRequest
-} from '../../../domain/is-connection-under-node/is-connection-under-node.request';
+} from '../../domain/is-connection-under-node/is-connection-under-node.request';
 import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 

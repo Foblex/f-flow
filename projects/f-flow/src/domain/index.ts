@@ -32,8 +32,6 @@ export * from './get-scaled-node-rects-with-flow-position';
 
 export * from './get-position-in-flow';
 
-export * from './is-connection-under-node';
-
 export * from './sort-item-layers';
 
 export * from './update-item-and-children-layers';

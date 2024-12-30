@@ -1,0 +1,15 @@
+@use "../../flow-common";
+
+::ng-deep assign-node-to-connection-on-drop {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}

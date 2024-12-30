@@ -46,6 +46,7 @@ import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
+import { FNodeIntersectedWithConnections } from './domain';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -67,8 +68,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fSelectionChange: EventEmitter<FSelectionChangeEvent> = new EventEmitter<FSelectionChangeEvent>();
 
-  // @Output()
-  // public override fConnectionIntersectNode: EventEmitter<ConnectionIntersectNodeEvent> = new EventEmitter<ConnectionIntersectNodeEvent>();
+  @Output()
+  public override fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections> = new EventEmitter<FNodeIntersectedWithConnections>();
 
   @Output()
   public override fCreateNode: EventEmitter<FCreateNodeEvent> = new EventEmitter<FCreateNodeEvent>();

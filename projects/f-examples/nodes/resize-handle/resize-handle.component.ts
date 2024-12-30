@@ -29,6 +29,5 @@ export class ResizeHandleComponent {
 
 
   public onNodeSizeChanged(rect: IRect): void {
-    console.log('Node size changed', rect);
   }
 }

@@ -1,4 +1,4 @@
-export interface IHasHostElement {
+export interface IHasHostElement<T = HTMLElement | SVGElement> {
 
-  hostElement: HTMLElement | SVGElement;
+  hostElement: T;
 }
