@@ -30,7 +30,6 @@
               }
             ],
             "styles": [
-//              "projects/f-docs/src/assets/styles/styles.scss",
               "src/styles/styles.scss"
             ],
             "scripts": [],
@@ -133,23 +132,23 @@
         }
       }
     },
-    "f-docs": {
+    "m-render": {
       "projectType": "library",
-      "root": "projects/f-docs",
-      "sourceRoot": "projects/f-docs/src",
+      "root": "projects/m-render",
+      "sourceRoot": "projects/m-render/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/f-docs/ng-package.json"
+            "project": "projects/m-render/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/f-docs/tsconfig.lib.prod.json"
+              "tsConfig": "projects/m-render/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/f-docs/tsconfig.lib.json"
+              "tsConfig": "projects/m-render/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -157,7 +156,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/f-docs/tsconfig.spec.json",
+            "tsConfig": "projects/m-render/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import {
   FThemeButtonComponent
-} from '@foblex/f-docs';
+} from '@foblex/m-render';
 
 @Component({
   selector: 'header[header]',

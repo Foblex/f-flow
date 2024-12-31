@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
 import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
-import { F_ENVIRONMENT } from '@foblex/f-docs';
+import { F_ENVIRONMENT } from '@foblex/m-render';
 
 export const routes: Routes = [
   {
@@ -13,14 +13,14 @@ export const routes: Routes = [
     providers: [
       { provide: F_ENVIRONMENT, useValue: GUIDES_ENVIRONMENT }
     ],
-    loadChildren: () => import('@foblex/f-docs').then(m => m.F_DOCUMENTATION_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCUMENTATION_ROUTES)
   },
   {
     path: 'examples',
     providers: [
       { provide: F_ENVIRONMENT, useValue: EXAMPLES_ENVIRONMENT }
     ],
-    loadChildren: () => import('@foblex/f-docs').then(m => m.F_DOCUMENTATION_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCUMENTATION_ROUTES)
   },
   {
     path: '**',

@@ -1,4 +1,4 @@
-import { IDocsEnvironment, INavigationGroup } from '@foblex/f-docs';
+import { IDocsEnvironment, INavigationGroup } from '@foblex/m-render';
 
 export const EXAMPLES_ENVIRONMENT: IDocsEnvironment = createEnvironment();
 

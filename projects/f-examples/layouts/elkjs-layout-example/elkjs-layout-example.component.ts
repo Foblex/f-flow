@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
-import { FCheckboxComponent } from '@foblex/f-docs';
+import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
 
 @Component({

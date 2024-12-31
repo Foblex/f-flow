@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/f-docs';
+import { FCheckboxComponent } from '@foblex/m-render';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({

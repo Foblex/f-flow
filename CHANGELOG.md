@@ -47,7 +47,7 @@ All notable changes to this project will be documented in this file. See [standa
 * Added Server Side Rendering (SSR) support ([ba73083](https://github.com/foblex/flow/commit/ba7308383ec498f2ce79718d502ec75bd220a1b8))
 * Added snap connection to create functionality ([82b3872](https://github.com/foblex/flow/commit/82b38725db63093c2a126867345d2780049492c3))
 * Added snap connection to reassign functionality ([37972df](https://github.com/foblex/flow/commit/37972df1ccf933d0590d8efa8cc253b17f462464))
-* Added SSR support to f-docs ([a3d6595](https://github.com/foblex/flow/commit/a3d6595fb28df1e8bfd61ccc8e989ec26e43f58d))
+* Added SSR support to m-render ([a3d6595](https://github.com/foblex/flow/commit/a3d6595fb28df1e8bfd61ccc8e989ec26e43f58d))
 * Changed imports from @foblex/core to @foblex/mediator, @foblex/platform, @foblex/2d ([30a60da](https://github.com/foblex/flow/commit/30a60da2e64aa87be52e6fb90f06f780b2dc0777))
 * Changed imports from @foblex/core to @foblex/utils, @foblex/drag-toolkit ([26d9631](https://github.com/foblex/flow/commit/26d96313b86d068d9912b3c6ff28ca0fa6c14039))
 * Cleanup after delete @foblex/core ([9aa5717](https://github.com/foblex/flow/commit/9aa5717434849c1a9b612e503d67c1a893b6b6e3))
@@ -93,7 +93,7 @@ All notable changes to this project will be documented in this file. See [standa
 * Modified layers sorting functionality after adding f-group ([3c60249](https://github.com/foblex/flow/commit/3c602498df9dfdcd4a5a74bc174dd23000015eca))
 * Moved external item drag and drop functionality to component directory ([8b9dbb1](https://github.com/foblex/flow/commit/8b9dbb114eec8816a10e7de9494bcc6e82187911))
 * Moved selection area drag and drop functionality to component directory ([121a63e](https://github.com/foblex/flow/commit/121a63e1fdc8d5bdb7be9127c0008ba9f2de14e0))
-* Updated to f-docs v1.2.2 ([bdaa267](https://github.com/foblex/flow/commit/bdaa267a705b701cbd5bb0886940f925412a79bd))
+* Updated to m-render v1.2.2 ([bdaa267](https://github.com/foblex/flow/commit/bdaa267a705b701cbd5bb0886940f925412a79bd))
 
 
 ### Bug Fixes
@@ -124,7 +124,7 @@ All notable changes to this project will be documented in this file. See [standa
 * Add various site icons and upgrade library to Zoneless ([e561e69](https://github.com/foblex/flow/commit/e561e6972a723ea299005518057963ba260961af))
 * Added minimap functionality ([f5eece6](https://github.com/foblex/flow/commit/f5eece6df6e556a0ec0bbfa26ec623ce368f60ef))
 * Added Zoneless support ([a8c5812](https://github.com/foblex/flow/commit/a8c581285d8c9e6f246cbd2f2a07c346ce1ba131))
-* Update to f-docs v1.2.1 ([8067764](https://github.com/foblex/flow/commit/80677640c5d917b564964987b575d9fb28e28ce5))
+* Update to m-render v1.2.1 ([8067764](https://github.com/foblex/flow/commit/80677640c5d917b564964987b575d9fb28e28ce5))
 
 
 ### Documentation

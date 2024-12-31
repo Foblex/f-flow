@@ -4,7 +4,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { Subscription } from 'rxjs';
 import { BrowserService } from '@foblex/platform';
 import { takeScreenshot } from './take-screenshot';
-import { CookiePopup, FAnalyticsService, FMetaService, IMetaData } from '@foblex/f-docs';
+import { CookiePopup, FAnalyticsService, FMetaService, IMetaData } from '@foblex/m-render';
 import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
 import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
 

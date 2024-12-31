@@ -4,7 +4,7 @@ import * as dagre from "dagre";
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
-import { FCheckboxComponent } from '@foblex/f-docs';
+import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
 
 interface INodeViewModel {
