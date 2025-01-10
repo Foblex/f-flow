@@ -21,6 +21,9 @@ export class MinimapCalculateViewBoxExecution implements IExecution<MinimapCalcu
   }
 
   public handle(request: MinimapCalculateViewBoxRequest): IRect {
+    if(!this._fFlow || !this._fCanvas) {
+      return RectExtensions.initialize();
+    }
     return this._getRectForMinimapView();
   }
 
