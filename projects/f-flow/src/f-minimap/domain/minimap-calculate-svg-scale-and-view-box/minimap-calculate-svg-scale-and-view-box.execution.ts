@@ -26,6 +26,10 @@ export class MinimapCalculateSvgScaleAndViewBoxExecution
   }
 
   public handle(request: MinimapCalculateSvgScaleAndViewBoxRequest): IFMinimapScaleAndViewBox {
+    if(!this._fFlow) {
+      return { scale: 1, viewBox: RectExtensions.initialize(0, 0, 0, 0) };
+    }
+
     const nodesRect = this._getScaledNodesBoundingBox(request.minSize);
     const minimapRect = this._getMinimapRect(request.element);
     const scale = this._calculateViewScale(nodesRect, minimapRect);
