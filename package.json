@@ -68,7 +68,7 @@
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "1.1.5",
     "@foblex/drag-toolkit": "1.1.0",
-    "@foblex/m-render": "2.5.1",
+    "@foblex/m-render": "2.5.3",
     "@foblex/mediator": "1.1.0",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.0",
@@ -78,7 +78,10 @@
     "html2canvas": "^1.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "~0.14.3",
+    "markdown-it": ">=14.1.0",
+    "markdown-it-container": ">=4.0.0",
+    "prismjs": ">=1.29.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.0",

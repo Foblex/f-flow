@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
 import { IHeroFlowNode } from '../domain/i-hero-flow-node';
 
 @Component({
-  selector: 'div[hero-node]',
-  templateUrl: './hero-node.component.html',
-  styleUrls: [ './hero-node.component.scss' ],
+  selector: 'div[home-page-background-node]',
+  templateUrl: './home-page-background-node.component.html',
+  styleUrls: [ './home-page-background-node.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroNodeComponent {
+export class HomePageBackgroundNodeComponent {
 
   @Input({ required: true })
   public node!: IHeroFlowNode;

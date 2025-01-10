@@ -9,7 +9,7 @@
       ],
       "@pro-examples": [
         "./projects/f-pro-examples/public-api.ts"
-      ]
+      ],
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

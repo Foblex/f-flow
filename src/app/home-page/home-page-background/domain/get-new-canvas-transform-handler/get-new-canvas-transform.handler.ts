@@ -23,7 +23,7 @@ export class GetNewCanvasTransformHandler implements IHandler<GetNewCanvasTransf
   }
 
   private getHeroImageElement(): HTMLElement {
-    return this.fBrowser.document.querySelector('#hero-image') as HTMLElement
+    return this.fBrowser.document.querySelector('#home-page-image') as HTMLElement
   }
 
   private getHeroImageRect(): IRect {
