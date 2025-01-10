@@ -20,21 +20,21 @@ import {
 import {
   GetNewCanvasTransformRequest
 } from './domain/get-new-canvas-transform-handler/get-new-canvas-transform.request';
-import { HeroNodeComponent } from './hero-node/hero-node.component';
+import { HomePageBackgroundNodeComponent } from './home-page-background-node/home-page-background-node.component';
 import { BrowserService } from '@foblex/platform';
 
 @Component({
-  selector: 'hero-flow',
-  templateUrl: './hero-flow.component.html',
-  styleUrls: [ './hero-flow.component.scss' ],
+  selector: 'home-page-background',
+  templateUrl: './home-page-background.component.html',
+  styleUrls: [ './home-page-background.component.scss' ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FFlowModule,
-    HeroNodeComponent
+    HomePageBackgroundNodeComponent
   ]
 })
-export class HeroFlowComponent implements OnInit, OnDestroy {
+export class HomePageBackgroundComponent implements OnInit, OnDestroy {
 
   private subscription$: Subscription = new Subscription();
 
