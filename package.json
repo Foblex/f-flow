@@ -68,7 +68,7 @@
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "1.1.5",
     "@foblex/drag-toolkit": "1.1.0",
-    "@foblex/m-render": "2.5.2",
+    "@foblex/m-render": "2.5.3",
     "@foblex/mediator": "1.1.0",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.0",

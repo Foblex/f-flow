@@ -6,22 +6,19 @@ import { HomePageImageComponent } from '../../src/app/home-page/home-page-image/
 
 export const HOME_ENVIRONMENT: IHomePageEnvironment = {
   logo: './logo.svg',
-  title: 'Foblex MRender',
-  socialLinks: [
-    { icon: 'github', link: 'https://github.com/Foblex/m-render' },
-  ],
-  // backgroundComponent: HomePageBackgroundComponent,
-  // heroImageComponent: HomePageImageComponent,
+  title: 'Foblex Flow',
+  backgroundComponent: HomePageBackgroundComponent,
+  heroImageComponent: HomePageImageComponent,
   hero: {
-    headline: 'Foblex MRender',
+    headline: 'Foblex Flow',
     tagline1: 'Built with Angular',
-    tagline2: 'Easy Markdown Renderer',
-    subDescription: 'Supports SSR, Angular Components, and Dynamic Themes',
+    tagline2: 'Flow-Chart Library',
+    subDescription: 'Supports Angular 12+, SSR, and Composition API.',
   },
   buttons: [{
     primary: true,
     text: 'Get Started',
-    routerLink: '/docs/get-started/',
+    routerLink: '/docs/get-started',
   }, {
     text: 'Examples',
     routerLink: '/examples/overview',
@@ -31,16 +28,16 @@ export const HOME_ENVIRONMENT: IHomePageEnvironment = {
   }],
   features: [{
     headline: 'Easy to Use',
-    description: 'Provide a simple configuration, and the library renders your Markdown documents instantly. Specify basic parameters like language, navigation, and document directory.',
+    description: 'Create sophisticated diagrams effortlessly with a straightforward and intuitive API. Whether you’re a beginner or a pro, a few lines of code are all you need to get started.',
   }, {
     headline: 'Customizable',
-    description: 'Adapt the library to suit your project. Configure logos, headers, navigation, and components, ensuring every aspect aligns with your specific requirements.',
+    description: 'Build with total flexibility in mind. Foblex Flow allows you to easily integrate any content within nodes, providing full control over the look and feel, ensuring it adapts perfectly to your project’s needs.',
   }, {
     headline: 'Visualization',
-    description: 'Convert Markdown files into complete pages with Angular component support. Perfect for building documentation, guides, or content-focused projects.',
+    description: 'Transform complex data into clear, visual representations. Foblex Flow turns information into intuitive diagrams, helping users rapidly understand, analyze, and navigate intricate relationships.',
   }, {
-    headline: 'Advanced Features',
-    description: 'Enhance your documents with Angular components. Embed custom elements directly into the text for an intuitive representation of complex information.',
+    headline: 'Interactive',
+    description: 'Foblex Flow takes interactivity to the next level. With fluid drag-and-drop node movement, seamless connection creation, and smooth zooming, exploring your diagrams is an effortless, enjoyable experience.',
   }],
   footer: {
     text: 'MIT License | Copyright © 2022 - Present',

@@ -17,14 +17,14 @@ export const routes: Routes = [
     providers: [
       { provide: F_DOCS_ENVIRONMENT, useValue: GUIDES_ENVIRONMENT }
     ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCUMENTATION_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCS_ROUTES)
   },
   {
     path: 'examples',
     providers: [
       { provide: F_DOCS_ENVIRONMENT, useValue: EXAMPLES_ENVIRONMENT }
     ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCUMENTATION_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCS_ROUTES)
   },
   {
     path: '**',
