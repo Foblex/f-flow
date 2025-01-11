@@ -1,16 +1,12 @@
-import { GetConnectionLineExecution } from './get-connection-line';
-import { GetElementRectInFlowExecution } from './get-element-rect-in-flow';
+import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
 import {
   MoveFrontElementsBeforeTargetElementExecution,
   UpdateItemAndChildrenLayersExecution
 } from './update-item-and-children-layers';
-import { GetPositionInFlowExecution } from './get-position-in-flow';
-import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
-import { GetScaledNodeRectsWithFlowPositionExecution } from './get-scaled-node-rects-with-flow-position';
+import { GetNormalizedPointExecution } from './get-normalized-point';
 import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
-import { CreateRoundedRectFromElementExecution } from './create-rounded-rect-from-element';
-import { GET_FLOW_STATE_PROVIDERS } from './get-flow-state';
+import { GetElementRoundedRectExecution } from './get-element-rounded-rect';
 import { F_SELECTION_FEATURES } from './f-selection';
 import { F_BACKGROUND_FEATURES } from './f-background';
 import { F_CANVAS_FEATURES } from './f-canvas';
@@ -39,23 +35,15 @@ export const COMMON_PROVIDERS = [
 
   ...F_NODE_FEATURES,
 
-  CreateRoundedRectFromElementExecution,
+  GetElementRoundedRectExecution,
 
   ...F_SELECTION_FEATURES,
 
-  GetCanBeSelectedItemsExecution,
-
   GetDeepChildrenNodesAndGroupsExecution,
 
-  GetConnectionLineExecution,
+  GetNormalizedElementRectExecution,
 
-  GetElementRectInFlowExecution,
-
-  ...GET_FLOW_STATE_PROVIDERS,
-
-  GetScaledNodeRectsWithFlowPositionExecution,
-
-  GetPositionInFlowExecution,
+  GetNormalizedPointExecution,
 
   SortItemLayersExecution,
 

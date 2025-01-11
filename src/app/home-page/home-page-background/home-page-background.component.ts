@@ -84,7 +84,7 @@ export class HomePageBackgroundComponent implements OnInit, OnDestroy {
 
   private modifyPosition(): void {
     const result = new GetNewCanvasTransformHandler(this.fBrowser).handle(
-      new GetNewCanvasTransformRequest(this.fFlowComponent.getAllNodesRect() || RectExtensions.initialize())
+      new GetNewCanvasTransformRequest(this.fFlowComponent.getNodesBoundingBox() || RectExtensions.initialize())
     );
     this.scale = result.scale;
     this.canvasPosition = result.position;

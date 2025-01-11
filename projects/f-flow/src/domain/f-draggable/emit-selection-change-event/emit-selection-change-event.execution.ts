@@ -3,7 +3,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
-import { GetSelectionRequest } from '../../f-selection';
+import { GetCurrentSelectionRequest, ICurrentSelection } from '../../f-selection';
 import { NotifyTransformChangedRequest } from '../../../f-storage/features/notify-transform-changed';
 
 @Injectable()
@@ -26,8 +26,19 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
     ) {
       return;
     }
-    this._fSelectionChange.emit(this._fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest()));
+
+    this._emitSelectionChange(this._getSelection());
     this._fDraggableDataContext.isSelectedChanged = false;
     this._fMediator.send<void>(new NotifyTransformChangedRequest());
+  }
+
+  private _getSelection(): ICurrentSelection {
+    return this._fMediator.send<ICurrentSelection>(new GetCurrentSelectionRequest());
+  }
+
+  private _emitSelectionChange(selection: ICurrentSelection): void {
+    this._fSelectionChange.emit(
+      new FSelectionChangeEvent(selection.nodes, selection.groups, selection.connections)
+    );
   }
 }

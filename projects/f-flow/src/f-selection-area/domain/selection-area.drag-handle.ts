@@ -1,20 +1,19 @@
 import { IPoint, Point, RectExtensions } from '@foblex/2d';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
-import { ISelectableWithRect } from '../../domain';
+import { GetCanBeSelectedItemsRequest, ICanBeSelected } from '../../domain';
 import { FMediator } from '@foblex/mediator';
-import { GetCanBeSelectedItemsRequest } from '../../domain/get-can-be-selected-items/get-can-be-selected-items-request';
 import { FDraggableDataContext, IDraggableItem } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
 import { ICanChangeSelection } from '../../mixins';
 
 export class SelectionAreaDragHandle implements IDraggableItem {
 
-  private canBeSelected: ISelectableWithRect[] = [];
-
-  private selectedByMove: ICanChangeSelection[] = [];
+  private _canBeSelected: ICanBeSelected[] = [];
+  private _selectedByMove: ICanChangeSelection[] = [];
 
   private get canvasPosition(): Point {
-    return Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position).add(this.fComponentsStore.fCanvas!.transform.scaledPosition);
+    return Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position)
+      .add(this.fComponentsStore.fCanvas!.transform.scaledPosition);
   }
 
   constructor(
@@ -26,7 +25,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
   }
 
   public prepareDragSequence(): void {
-    this.canBeSelected = this.fMediator.send(new GetCanBeSelectedItemsRequest());
+    this._canBeSelected = this.fMediator.send(new GetCanBeSelectedItemsRequest());
 
     this.fSelectionArea.show();
     this.fSelectionArea.draw(
@@ -48,8 +47,8 @@ export class SelectionAreaDragHandle implements IDraggableItem {
     this.fSelectionArea.draw(
       RectExtensions.initialize(x, y, width, height)
     );
-    this.selectedByMove = [];
-    this.canBeSelected.forEach((item) => {
+    this._selectedByMove = [];
+    this._canBeSelected.forEach((item) => {
       item.element.deselect();
 
       const itemRect = RectExtensions.addPoint(item.rect, this.canvasPosition);
@@ -58,7 +57,7 @@ export class SelectionAreaDragHandle implements IDraggableItem {
       if (isIntersect) {
 
         item.element.select();
-        this.selectedByMove.push(item.element);
+        this._selectedByMove.push(item.element);
       }
     });
     this.fMediator.send<void>(new NotifyTransformChangedRequest());
@@ -66,8 +65,8 @@ export class SelectionAreaDragHandle implements IDraggableItem {
 
   public onPointerUp(): void {
     this.fSelectionArea.hide();
-    this.fDraggableDataContext.selectedItems.push(...this.selectedByMove);
-    if (this.selectedByMove.length > 0) {
+    this.fDraggableDataContext.selectedItems.push(...this._selectedByMove);
+    if (this._selectedByMove.length > 0) {
       this.fDraggableDataContext.isSelectedChanged = true;
     }
   }

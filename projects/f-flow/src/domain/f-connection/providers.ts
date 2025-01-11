@@ -11,6 +11,7 @@ import { RemoveSnapConnectionFromStoreExecution } from './remove-snap-connection
 import { AddConnectionMarkerToStoreExecution } from './add-connection-marker-to-store';
 import { RemoveConnectionMarkerFromStoreExecution } from './remove-connection-marker-from-store';
 import { RedrawConnectionsExecution } from './redraw-connections';
+import { CalculateConnectionLineByBehaviorExecution } from './calculate-connection-line-by-behavior';
 
 export const F_CONNECTION_FEATURES = [
 
@@ -27,6 +28,8 @@ export const F_CONNECTION_FEATURES = [
   FindClosestInputUsingSnapThresholdExecution,
 
   GetAllCanBeConnectedInputPositionsExecution,
+
+  CalculateConnectionLineByBehaviorExecution,
 
   GetConnectorWithRectExecution,
 

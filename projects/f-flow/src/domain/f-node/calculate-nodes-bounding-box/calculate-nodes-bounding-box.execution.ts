@@ -15,10 +15,12 @@ export class CalculateNodesBoundingBoxExecution implements IExecution<CalculateN
   }
 
   private _getNodesRects(): IRect[] {
-    return this._fComponentsStore.fNodes.map((x) => this._getElementRect(x.hostElement));
+    return this._fComponentsStore.fNodes.map((x) => {
+      return this._getElementRect(x.hostElement);
+    });
   }
 
-  private _getElementRect(element: HTMLElement): IRect {
-    return RectExtensions.fromElement(element);
+  private _getElementRect(element: HTMLElement | SVGElement): IRect {
+    return RectExtensions.fromElement(element)
   }
 }

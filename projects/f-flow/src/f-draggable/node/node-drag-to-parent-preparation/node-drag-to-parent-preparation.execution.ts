@@ -4,7 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { GetElementRectInFlowRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
@@ -51,7 +51,7 @@ export class NodeDragToParentPreparationExecution
 
   private getNotDraggedNodesRects(): INodeWithRect[] {
     return this.getNotDraggedNodes(this.getDraggedNodes()).map((x) => {
-      const rect = this.fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
+      const rect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
       return {
         node: x,
         rect: RectExtensions.initialize(

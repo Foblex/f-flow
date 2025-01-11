@@ -7,19 +7,19 @@ import {
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
   ClearSelectionRequest,
-  GetScaledNodeRectsWithFlowPositionRequest,
-  GetPositionInFlowRequest,
-  GetSelectionRequest,
+  CalculateNodesBoundingBoxNormalizedPositionRequest,
+  GetNormalizedPointRequest,
+  GetCurrentSelectionRequest,
   RedrawConnectionsRequest,
   SelectAllRequest,
   SelectRequest,
   IFFlowState,
-  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest
+  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest, ICurrentSelection
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import {
-  FDraggableDataContext, FSelectionChangeEvent
+  FDraggableDataContext
 } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import {
@@ -125,16 +125,16 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._isLoaded = false;
   }
 
-  public getAllNodesRect(): IRect | null {
-    return this._fMediator.send<IRect | null>(new GetScaledNodeRectsWithFlowPositionRequest());
+  public getNodesBoundingBox(): IRect | null {
+    return this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxNormalizedPositionRequest());
   }
 
-  public getSelection(): FSelectionChangeEvent {
-    return this._fMediator.send<FSelectionChangeEvent>(new GetSelectionRequest());
+  public getSelection(): ICurrentSelection {
+    return this._fMediator.send<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
   public getPositionInFlow(position: IPoint): IRect {
-    return this._fMediator.send(new GetPositionInFlowRequest(position));
+    return this._fMediator.send(new GetNormalizedPointRequest(position));
   }
 
   public getState(): IFFlowState {

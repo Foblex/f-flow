@@ -1,6 +1,8 @@
 export * from './clear-selection';
 
-export * from './get-selection';
+export * from './get-can-be-selected-items';
+
+export * from './get-current-selection';
 
 export * from './select';
 

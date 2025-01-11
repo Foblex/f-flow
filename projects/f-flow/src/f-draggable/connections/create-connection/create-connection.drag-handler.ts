@@ -2,7 +2,7 @@ import { IDraggableItem } from '../../i-draggable-item';
 import {
   FindClosestInputUsingSnapThresholdRequest,
   GetAllCanBeConnectedInputPositionsRequest,
-  GetConnectionLineRequest,
+  CalculateConnectionLineByBehaviorRequest,
   GetConnectorWithRectRequest,
   IConnectorWithRect
 } from '../../../domain';
@@ -66,7 +66,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   }
 
   private drawTempConnection(fInputRect: RoundedRect): void {
-    const line = this.fMediator.send<ILine>(new GetConnectionLineRequest(
+    const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
         this.fOutputWithRect.fRect,
         fInputRect,
         this.fConnection.fBehavior,
@@ -81,7 +81,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
 
   private drawSnapConnection(fInputWithRect: IConnectorWithRect | undefined): void {
     if (fInputWithRect) {
-      const line = this.fMediator.send<ILine>(new GetConnectionLineRequest(
+      const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
           this.fOutputWithRect.fRect,
           fInputWithRect.fRect,
           this.fSnapConnection!.fBehavior,

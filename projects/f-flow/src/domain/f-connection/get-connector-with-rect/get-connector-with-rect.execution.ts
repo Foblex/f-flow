@@ -3,7 +3,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetConnectorWithRectRequest } from './get-connector-with-rect-request';
 import { IRoundedRect } from '@foblex/2d';
 import { IConnectorWithRect } from './i-connector-with-rect';
-import { GetElementRectInFlowRequest } from '../../get-element-rect-in-flow';
+import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 
 @Injectable()
 @FExecutionRegister(GetConnectorWithRectRequest)
@@ -17,7 +17,7 @@ export class GetConnectorWithRectExecution implements IExecution<GetConnectorWit
   public handle(request: GetConnectorWithRectRequest): IConnectorWithRect {
     return {
       fConnector: request.connector,
-      fRect: this.fMediator.send<IRoundedRect>(new GetElementRectInFlowRequest(request.connector.hostElement))
+      fRect: this.fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(request.connector.hostElement))
     }
   }
 }
