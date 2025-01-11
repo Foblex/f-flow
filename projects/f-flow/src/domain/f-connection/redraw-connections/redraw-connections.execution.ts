@@ -2,11 +2,11 @@ import { ILine } from '@foblex/2d';
 import { Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
-import { GetConnectionLineRequest } from '../../get-connection-line';
+import { CalculateConnectionLineByBehaviorRequest } from '../calculate-connection-line-by-behavior';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { GetElementRectInFlowRequest } from '../../get-element-rect-in-flow';
+import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 
 @Injectable()
@@ -59,9 +59,9 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
-    return this.fMediator.send(new GetConnectionLineRequest(
-        this.fMediator.send(new GetElementRectInFlowRequest(output.hostElement)),
-        this.fMediator.send(new GetElementRectInFlowRequest(input.hostElement)),
+    return this.fMediator.send(new CalculateConnectionLineByBehaviorRequest(
+        this.fMediator.send(new GetNormalizedElementRectRequest(output.hostElement)),
+        this.fMediator.send(new GetNormalizedElementRectRequest(input.hostElement)),
         connection.fBehavior,
         output.fConnectableSide,
         input.fConnectableSide

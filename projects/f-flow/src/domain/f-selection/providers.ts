@@ -1,16 +1,17 @@
 import { ClearSelectionExecution } from './clear-selection';
-import { GetSelectionExecution } from './get-selection';
+import { GetCurrentSelectionExecution } from './get-current-selection';
 import { SelectExecution } from './select';
 import { SelectAllExecution } from './select-all';
-import {
-  SelectAndUpdateNodeLayerExecution
-} from './select-and-update-node-layer/select-and-update-node-layer.execution';
+import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
+import { GetCanBeSelectedItemsExecution } from './get-can-be-selected-items';
 
 export const F_SELECTION_FEATURES = [
 
   ClearSelectionExecution,
 
-  GetSelectionExecution,
+  GetCanBeSelectedItemsExecution,
+
+  GetCurrentSelectionExecution,
 
   SelectExecution,
 

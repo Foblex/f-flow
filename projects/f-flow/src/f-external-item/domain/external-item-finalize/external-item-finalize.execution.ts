@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FCreateNodeEvent } from '../f-create-node.event';
-import { GetElementRectInFlowRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 
@@ -59,6 +59,6 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   }
 
   private getRectInCanvas(): IRect {
-    return this.fMediator.send<IRect>(new GetElementRectInFlowRequest(this.dragHandler.placeholder!));
+    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.dragHandler.placeholder!));
   }
 }

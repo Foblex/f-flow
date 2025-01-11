@@ -2,7 +2,7 @@ import { ILine, IPoint, RoundedRect } from '@foblex/2d';
 import { FConnectionBase } from '../../f-connection';
 import { FMediator } from '@foblex/mediator';
 import {
-  GetConnectionLineRequest,
+  CalculateConnectionLineByBehaviorRequest,
 } from '../../domain';
 import { ConnectionBaseDragHandler } from './connection-base-drag-handler';
 import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
@@ -34,7 +34,7 @@ export class ConnectionDragHandler extends ConnectionBaseDragHandler {
   }
 
   private getNewLineValue(difference: IPoint): ILine {
-    return this.fMediator.send<ILine>(new GetConnectionLineRequest(
+    return this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRoundedRect(this.fOutputWithRect.fRect).addPoint(this.getDifference({ ...difference }, this.sourceRestrictions)),
       RoundedRect.fromRoundedRect(this.fInputWithRect.fRect).addPoint(this.getDifference({ ...difference }, this.targetRestrictions)),
       this.connection.fBehavior,

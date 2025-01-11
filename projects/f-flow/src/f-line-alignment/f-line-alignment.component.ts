@@ -4,7 +4,7 @@ import { ILineAlignmentResult, LineService, NearestCoordinateFinder } from './do
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
-import { GetCanvasRequest, GetElementRectInFlowRequest, GetFlowHostElementRequest } from '../domain';
+import { GetCanvasRequest, GetNormalizedElementRectRequest, GetFlowHostElementRequest } from '../domain';
 import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 import { FCanvasBase } from '../f-canvas';
@@ -68,7 +68,7 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
     this.size = this._fFlowHostElement.getBoundingClientRect();
     this.rects = [];
     const draggedNodeRects = currentNodes.map((x) => {
-      return this._fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
+      return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     });
     this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
 
@@ -77,7 +77,7 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
     });
 
     this.rects = allNodesExcludeCurrents.map((x) => {
-      return this._fMediator.send<IRect>(new GetElementRectInFlowRequest(x.hostElement));
+      return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     });
   }
 

@@ -7,7 +7,7 @@ import { FDraggableDataContext, FNodeIntersectedWithConnections, NodeDragHandler
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
-import { GetElementRectInFlowRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(IsConnectionUnderNodeRequest)
@@ -80,7 +80,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {
-    const fNodeRect = this._fMediator.send<IRoundedRect>(new GetElementRectInFlowRequest(fNode.hostElement));
+    const fNodeRect = this._fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
     return this._fComponentsStore.fConnections.filter((x) => {
       return this._isConnectionHasIntersectionsWithNode(x, fNodeRect);
     });

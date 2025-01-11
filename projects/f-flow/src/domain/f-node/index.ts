@@ -2,6 +2,8 @@ export * from './add-node-to-store';
 
 export * from './calculate-nodes-bounding-box';
 
+export * from './calculate-nodes-bounding-box-normalized-position';
+
 export * from './get-nodes';
 
 export * from './update-node-when-state-or-size-changed';
