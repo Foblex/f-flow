@@ -3,9 +3,10 @@ import { GetNodeResizeRestrictionsRequest } from './get-node-resize-restrictions
 import { IRect, SizeExtensions } from '@foblex/2d';
 import { INodeResizeRestrictions } from './i-node-resize-restrictions';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { GetNodePaddingRequest, GetNormalizedParentNodeRectRequest } from '../../domain';
+import { GetNormalizedParentNodeRectRequest } from '../../domain';
 import { GetNormalizedChildrenNodesRectRequest } from '../get-normalized-children-nodes-rect';
 import { FNodeBase } from '../../../f-node';
+import { GetNodePaddingRequest } from '../../../domain';
 
 
 @Injectable()

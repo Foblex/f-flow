@@ -66,22 +66,29 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   @Output()
-  public override fSelectionChange: EventEmitter<FSelectionChangeEvent> = new EventEmitter<FSelectionChangeEvent>();
+  public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
 
   @Output()
-  public override fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections> = new EventEmitter<FNodeIntersectedWithConnections>();
+  public override fNodeIntersectedWithConnections = new EventEmitter<FNodeIntersectedWithConnections>();
 
   @Output()
-  public override fCreateNode: EventEmitter<FCreateNodeEvent> = new EventEmitter<FCreateNodeEvent>();
+  public override fCreateNode = new EventEmitter<FCreateNodeEvent>();
 
   @Output()
-  public override fReassignConnection: EventEmitter<FReassignConnectionEvent> = new EventEmitter<FReassignConnectionEvent>();
+  public override fReassignConnection = new EventEmitter<FReassignConnectionEvent>();
 
   @Output()
-  public override fCreateConnection: EventEmitter<FCreateConnectionEvent> = new EventEmitter<FCreateConnectionEvent>();
+  public override fCreateConnection = new EventEmitter<FCreateConnectionEvent>();
 
   @Output()
-  public override fDropToGroup: EventEmitter<FDropToGroupEvent> = new EventEmitter<FDropToGroupEvent>();
+  public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
+
+  @Input()
+  public override vCellSize = 1;
+
+
+  @Input()
+  public override hCellSize = 1;
 
   @ContentChildren(F_DRAG_AND_DROP_PLUGIN, { descendants: true })
   private plugins!: QueryList<IFDragAndDropPlugin>;

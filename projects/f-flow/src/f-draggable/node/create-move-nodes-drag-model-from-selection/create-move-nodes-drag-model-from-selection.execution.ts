@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CreateMoveNodesDragModelFromSelectionRequest } from './create-move-nodes-drag-model-from-selection.request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -14,8 +14,8 @@ import {
   PutInputConnectionHandlersToArrayRequest
 } from './domain/put-input-connection-handlers-to-array';
 import { NodeResizeByChildDragHandler } from '../node-resize-by-child.drag-handler';
-import { GetParentNodesRequest, IsArrayHasParentNodeRequest } from '../../domain';
-import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
+import { IsArrayHasParentNodeRequest } from '../../domain';
+import { GetDeepChildrenNodesAndGroupsRequest, GetParentNodesRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 
 @Injectable()
@@ -23,15 +23,14 @@ import { flatMap } from '@foblex/utils';
 export class CreateMoveNodesDragModelFromSelectionExecution
   implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, IDraggableItem[]> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: CreateMoveNodesDragModelFromSelectionRequest): IDraggableItem[] {
-    const itemsToDrag = this.getNodesWithRestrictions(this.getSelectedNodes(request.nodeWithDisabledSelection));
+    const itemsToDrag = this._getNodesWithRestrictions(
+      this._getSelectedNodes(request.nodeWithDisabledSelection)
+    );
     return this.getDragHandlersWithConnections(
       this.getDragHandlersFromNodes(itemsToDrag),
       this.getAllOutputIds(itemsToDrag),
@@ -39,27 +38,31 @@ export class CreateMoveNodesDragModelFromSelectionExecution
     );
   }
 
-  private getSelectedNodes(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
-    const result = this.fDraggableDataContext.selectedItems
-      .map((x) => this._findNode(x.hostElement))
-      .filter((x): x is FNodeBase => !!x);
+  private _getSelectedNodes(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
+    const result = this._getNodesFromSelection();
     if(nodeWithDisabledSelection) {
       result.push(nodeWithDisabledSelection);
     }
     return result;
   }
 
-  private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this.fComponentsStore.fNodes.find(n => n.isContains(hostElement));
+  private _getNodesFromSelection(): FNodeBase[] {
+    return this._fDraggableDataContext.selectedItems
+      .map((x) => this._findNode(x.hostElement))
+      .filter((x): x is FNodeBase => !!x);
   }
 
-  private getNodesWithRestrictions(selectedNodes: FNodeBase[]): INodeWithDistanceRestrictions[] {
+  private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
+    return this._fComponentsStore.fNodes.find(n => n.isContains(hostElement));
+  }
+
+  private _getNodesWithRestrictions(nodesToDrag: FNodeBase[]): INodeWithDistanceRestrictions[] {
     const result: INodeWithDistanceRestrictions[] = [];
 
-    selectedNodes.forEach((x) => {
-      const hasParentNodeInSelected = this.fMediator.send<boolean>(new IsArrayHasParentNodeRequest(x, selectedNodes));
-      const restrictions = this.fMediator.send<INodeMoveRestrictions>(new GetNodeMoveRestrictionsRequest(x, hasParentNodeInSelected));
-      const parentNodes = this.fMediator.send<FNodeBase[]>(new GetParentNodesRequest(x));
+    nodesToDrag.forEach((x) => {
+      const hasParentNodeInSelected = this._fMediator.send<boolean>(new IsArrayHasParentNodeRequest(x, nodesToDrag));
+      const restrictions = this._fMediator.send<INodeMoveRestrictions>(new GetNodeMoveRestrictionsRequest(x, hasParentNodeInSelected));
+      const parentNodes = this._fMediator.send<FNodeBase[]>(new GetParentNodesRequest(x));
       result.push({ node: x, parentNodes, ...restrictions }, ...this.getChildrenItemsToDrag(x, restrictions));
     });
 
@@ -71,7 +74,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getChildrenNodes(fId: string): FNodeBase[] {
-    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
+    return this._fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
   private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {
@@ -79,7 +82,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
-    return this.fComponentsStore.fOutputs.filter((x) => node.isContains(x.hostElement));
+    return this._fComponentsStore.fOutputs.filter((x) => node.isContains(x.hostElement));
   }
 
   private getAllInputIds(items: INodeWithDistanceRestrictions[]): string[] {
@@ -87,7 +90,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private getInputsForNode(node: FNodeBase): FConnectorBase[] {
-    return this.fComponentsStore.fInputs.filter((x) => node.isContains(x.hostElement));
+    return this._fComponentsStore.fInputs.filter((x) => node.isContains(x.hostElement));
   }
 
   private getDragHandlersFromNodes(items: INodeWithDistanceRestrictions[]): IDraggableItem[] {
@@ -95,8 +98,8 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
     items.forEach((node) => {
       result.push(
-        new NodeDragHandler(this.fDraggableDataContext, node.node, node.min, node.max),
-        ...(node.parentNodes || []).map(() => new NodeResizeByChildDragHandler(this.fDraggableDataContext))
+        new NodeDragHandler(this._fDraggableDataContext, this._fComponentsStore, node.node, node.min, node.max),
+        ...(node.parentNodes || []).map(() => new NodeResizeByChildDragHandler(this._fDraggableDataContext))
       );
     });
     return result;
@@ -107,8 +110,8 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   ): IDraggableItem[] {
     let result: IDraggableItem[] = handlers;
     handlers.filter((x) => x instanceof NodeDragHandler).forEach((dragHandler) => {
-      this.fMediator.send(new PutOutputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, inputIds, result));
-      this.fMediator.send(new PutInputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, outputIds, result));
+      this._fMediator.send(new PutOutputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, inputIds, result));
+      this._fMediator.send(new PutInputConnectionHandlersToArrayRequest(dragHandler as NodeDragHandler, outputIds, result));
     });
     return result;
   }

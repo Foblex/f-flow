@@ -2,12 +2,12 @@ import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
-import { GetNormalizedNodeRectRequest } from '../domain';
 import { GetNodeResizeRestrictionsRequest, INodeResizeRestrictions } from './get-node-resize-restrictions';
 import { ApplyChildResizeRestrictionsRequest } from './apply-child-resize-restrictions';
 import { CalculateChangedSizeRequest } from './calculate-changed-size';
 import { CalculateChangedPositionRequest } from './calculate-changed-position';
 import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-restrictions';
+import { GetNormalizedElementRectRequest } from '../../domain';
 
 export class NodeResizeDragHandler implements IDraggableItem {
 
@@ -26,7 +26,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   }
 
   public prepareDragSequence(): void {
-    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(this.fNode));
+    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.fNode.hostElement));
 
     this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
     if (this.restrictions.childRect) {

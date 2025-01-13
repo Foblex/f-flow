@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { GetNormalizedParentNodeRectRequest } from './get-normalized-parent-node-rect.request';
 import { IRect, RectExtensions } from '@foblex/2d';
-import { GetNormalizedNodeRectRequest } from '../get-normalized-node-rect';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
-import { GetNodePaddingRequest } from '../get-node-padding';
+import { GetNodePaddingRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(GetNormalizedParentNodeRectRequest)
@@ -32,18 +32,18 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private getParentRect(node: FNodeBase): IRect {
-    const rect = this.getNormalizedNodeRect(node);
+    const rect = this._getNodeRect(node);
     const padding = this.getNodePadding(node, rect);
     return RectExtensions.initialize(
-      rect.x + padding[0],
-      rect.y + padding[1],
-      rect.width - padding[0] - padding[2],
-      rect.height - padding[1] - padding[3]
+      rect.x + padding[ 0 ],
+      rect.y + padding[ 1 ],
+      rect.width - padding[ 0 ] - padding[ 2 ],
+      rect.height - padding[ 1 ] - padding[ 3 ]
     );
   }
 
-  private getNormalizedNodeRect(node: FNodeBase): IRect {
-    return this.fMediator.send<IRect>(new GetNormalizedNodeRectRequest(node));
+  private _getNodeRect(fNode: FNodeBase): IRect {
+    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
   }
 
   private getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {

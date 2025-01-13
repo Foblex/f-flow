@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NodeMovePreparationRequest } from './node-move-preparation.request';
 import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -14,66 +14,68 @@ import { SelectAndUpdateNodeLayerRequest } from '../../../domain';
 @FExecutionRegister(NodeMovePreparationRequest)
 export class NodeMovePreparationExecution implements IExecution<NodeMovePreparationRequest, void> {
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
-  }
-
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
   }
 
   public handle(request: NodeMovePreparationRequest): void {
-    const node = this.getNode(request.event.targetElement);
-    if (!node) {
+
+    const itemsToDrag = this._calculateDraggableItems(
+      this._getNode(request.event.targetElement)
+    );
+
+    this._initializeLineAlignment(itemsToDrag);
+
+    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost).div(this._transform.scale);
+    this._fDraggableDataContext.draggableItems = itemsToDrag;
+  }
+
+  private _getNode(targetElement: HTMLElement): FNodeBase {
+    const result = this._fComponentsStore.fNodes.find(n => n.isContains(targetElement))!;
+    if (!result) {
       throw new Error('Node not found');
     }
-    let itemsToDrag: IDraggableItem[] = [];
-    if (!node.fSelectionDisabled) {
-      this.selectAndUpdateNodeLayer(node);
-      itemsToDrag = this.createDragModelFromSelection();
+    return result;
+  }
+
+  //We drag nodes from selection model
+  private _calculateDraggableItems(fNode: FNodeBase): IDraggableItem[] {
+    let result: IDraggableItem[] = [];
+    if (!fNode.fSelectionDisabled) {
+      // Need to select node before drag
+      this._fMediator.send(new SelectAndUpdateNodeLayerRequest(fNode));
+
+      result = this._dragModelFromSelection();
     } else {
-      itemsToDrag = this.createDragModelFromSelection(node);
+      // User can drag node that can't be selected
+      result = this._dragModelFromSelection(fNode);
     }
-
-    this.initializeLineAlignment(this.filterNodesFromDraggableItems(itemsToDrag));
-
-    this.fDraggableDataContext.onPointerDownScale = this.transform.scale;
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this.flowHost).div(this.transform.scale);
-    this.fDraggableDataContext.draggableItems = itemsToDrag;
+    return result;
   }
 
-  private selectAndUpdateNodeLayer(node: FNodeBase) {
-    this.fMediator.send(
-      new SelectAndUpdateNodeLayerRequest(node)
-    );
-  }
-
-  private getNode(targetElement: HTMLElement): FNodeBase {
-    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement))!;
-  }
-
-  private createDragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
-    return this.fMediator.send(
+  private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
+    return this._fMediator.send(
       new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );
   }
 
-  private initializeLineAlignment(nodesToDrag: FNodeBase[]): void {
-    this.fDraggableDataContext.fLineAlignment?.initialize(
-      this.fComponentsStore.fNodes,
-      nodesToDrag
+  private _initializeLineAlignment(itemsToDrag: IDraggableItem[]): void {
+    this._fDraggableDataContext.fLineAlignment?.initialize(
+      this._fComponentsStore.fNodes, this._filterNodesFromDraggableItems(itemsToDrag)
     );
   }
 
-  private filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
+  private _filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
     return items.filter((x) => x instanceof NodeDragHandler)
       .map(x => (x as NodeDragHandler).fNode);
   }
