@@ -176,6 +176,10 @@ function createEnvironment(): IDocsEnvironment {
         tag: 'tournament-bracket',
         component: import('../../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component')
       },
+      {
+        tag: 'grid-system-example',
+        component: import('../../../projects/f-examples/extensions/grid-system-example/grid-system-example.component')
+      }
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -544,6 +548,20 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'grid-system',
+        text: 'Grid System',
+        description: 'Add a grid system to Foblex Flow diagrams for Angular.',
+        image: './previews/examples/grid-system-example.light.png',
+        image_dark: './previews/examples/grid-system-example.dark.png',
+        image_width: 821,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'minimap',
