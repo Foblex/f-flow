@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IsArrayHasParentNodeRequest } from './is-array-has-parent-node.request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
-import { GetParentNodesRequest } from '../get-parent-nodes';
+import { GetParentNodesRequest } from '../../../domain/f-node/get-parent-nodes';
 
 @Injectable()
 @FExecutionRegister(IsArrayHasParentNodeRequest)

@@ -1,7 +1,7 @@
 import {
   Directive, ElementRef, inject, InjectionToken
 } from "@angular/core";
-import { IHasHostElement } from '../../i-has-host-element';
+import { IHasHostElement } from '../i-has-host-element';
 
 export const F_DRAG_HANDLE = new InjectionToken<FDragHandleDirective>('F_DRAG_HANDLE');
 

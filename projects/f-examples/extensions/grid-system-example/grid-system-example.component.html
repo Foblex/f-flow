@@ -1,0 +1,10 @@
+<f-flow fDraggable [vCellSize]="32" [hCellSize]="32" (fLoaded)="onLoaded()">
+  <f-background>
+    <f-rect-pattern [vSize]="32" [hSize]="32"></f-rect-pattern>
+  </f-background>
+  <f-canvas fZoom>
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
+    <div fNode [fNodePosition]="{ x: 32, y: 32 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
+    <div fNode [fNodePosition]="{ x: 192, y: 96 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
+  </f-canvas>
+</f-flow>

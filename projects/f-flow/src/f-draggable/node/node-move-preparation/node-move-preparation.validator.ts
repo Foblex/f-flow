@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NodeMovePreparationRequest } from './node-move-preparation.request';
 import { FValidatorRegister, IValidator } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -10,31 +10,28 @@ import { isClosestElementHasClass } from '@foblex/utils';
 @FValidatorRegister(NodeMovePreparationRequest)
 export class NodeMovePreparationValidator implements IValidator<NodeMovePreparationRequest> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext
-  ) {
-  }
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: NodeMovePreparationRequest): boolean {
-    return this.isDragHandlesEmpty()
-      && this.isDragHandleElement(request.event.targetElement)
-      && this.isNodeCanBeDragged(this.getNode(request.event.targetElement));
+    return this._isDragHandlesEmpty()
+      && this._isDragHandleElement(request.event.targetElement)
+      && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
   }
 
-  private isDragHandlesEmpty(): boolean {
-    return !this.fDraggableDataContext.draggableItems.length;
+  private _isDragHandlesEmpty(): boolean {
+    return !this._fDraggableDataContext.draggableItems.length;
   }
 
-  private getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement));
+  private _isDragHandleElement(element: HTMLElement): boolean {
+    return isClosestElementHasClass(element, '.f-drag-handle');
   }
 
-  private isNodeCanBeDragged(node: FNodeBase | undefined): boolean {
-    return !!node && !node.fDraggingDisabled;
+  private _isNodeCanBeDragged(fNode: FNodeBase | undefined): boolean {
+    return !!fNode && !fNode.fDraggingDisabled;
   }
 
-  private isDragHandleElement(targetElement: HTMLElement): boolean {
-    return isClosestElementHasClass(targetElement, '.f-drag-handle');
+  private _getNode(element: HTMLElement): FNodeBase | undefined {
+    return this._fComponentsStore.fNodes.find(x => x.isContains(element));
   }
 }

@@ -21,6 +21,10 @@ export abstract class FDraggableBase extends DragAndDropBase  {
 
   public abstract fDropToGroup: EventEmitter<FDropToGroupEvent>;
 
+  public abstract vCellSize: number;
+
+  public abstract hCellSize: number;
+
   protected constructor(
     ngZone: ICanRunOutsideAngular | undefined
   ) {

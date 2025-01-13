@@ -6,6 +6,8 @@ import { CalculateNodesBoundingBoxExecution } from './calculate-nodes-bounding-b
 import {
   CalculateNodesBoundingBoxNormalizedPositionExecution
 } from './calculate-nodes-bounding-box-normalized-position';
+import { GetNodePaddingExecution } from './get-node-padding';
+import { GetParentNodesExecution } from './get-parent-nodes';
 
 export const F_NODE_FEATURES = [
 
@@ -15,7 +17,11 @@ export const F_NODE_FEATURES = [
 
   CalculateNodesBoundingBoxNormalizedPositionExecution,
 
+  GetNodePaddingExecution,
+
   GetNodesExecution,
+
+  GetParentNodesExecution,
 
   UpdateNodeWhenStateOrSizeChangedExecution,
 
