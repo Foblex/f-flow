@@ -4,6 +4,7 @@ describe('ResizeHandleComponent', () => {
   });
 
   it('should drag fNode ResizeHandle and update node size', function() {
+    cy.get('f-flow').scrollIntoView();
 
     cy.get('div[data-f-node-id=\'f-node-0\']').invoke('css', 'transform')
       .should('equal', 'matrix(1, 0, 0, 1, 0, 0)');
