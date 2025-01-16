@@ -1,40 +1,34 @@
-import { ILine, IPoint, IRect, Line, Point } from '@foblex/2d';
+import { ILine, IPoint, IRect } from '@foblex/2d';
 import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
 import { EFConnectableSide } from '../../../f-connectors';
 
 export function fixedOutboundBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
-  return new Line(
-    positions[ payload.outputSide === EFConnectableSide.AUTO ? EFConnectableSide.BOTTOM : payload.outputSide ](payload.outputRect),
-    positions[ payload.inputSide === EFConnectableSide.AUTO ? EFConnectableSide.TOP : payload.inputSide ](payload.inputRect)
-  );
+  return {
+    point1: _getPosition(
+      payload.outputRect,
+      payload.outputSide === EFConnectableSide.AUTO ? EFConnectableSide.BOTTOM : payload.outputSide
+    ),
+    point2: _getPosition(
+      payload.inputRect,
+      payload.inputSide === EFConnectableSide.AUTO ? EFConnectableSide.TOP : payload.inputSide
+    )
+  };
 }
 
-const positions = {
-  [ EFConnectableSide.TOP ]: (rect: IRect): IPoint => {
-    const result = new Point();
-    result.y = rect.y;
-    result.x = rect.x + rect.width / 2;
-    return result;
-  },
-  [ EFConnectableSide.BOTTOM ]: (rect: IRect): IPoint => {
-    const result = new Point();
-    result.y = rect.y + rect.height;
-    result.x = rect.x + rect.width / 2;
-    return result;
-  },
-  [ EFConnectableSide.LEFT ]: (rect: IRect): IPoint => {
-    const result = new Point();
-    result.x = rect.x;
-    result.y = rect.y + rect.height / 2;
-    return result;
-  },
-  [ EFConnectableSide.RIGHT ]: (rect: IRect): IPoint => {
-    const result = new Point();
-    result.x = rect.x + rect.width;
-    result.y = rect.y + rect.height / 2;
-    return result;
-  },
-};
+function _getPosition(rect: IRect, side: EFConnectableSide): IPoint {
+  switch (side) {
+    case EFConnectableSide.TOP:
+      return { x: rect.x + rect.width / 2, y: rect.y };
+    case EFConnectableSide.BOTTOM:
+      return { x: rect.x + rect.width / 2, y: rect.y + rect.height };
+    case EFConnectableSide.LEFT:
+      return { x: rect.x, y: rect.y + rect.height / 2 };
+    case EFConnectableSide.RIGHT:
+      return { x: rect.x + rect.width, y: rect.y + rect.height / 2 };
+    default:
+      throw new Error(`Unknown side: ${ side }`);
+  }
+}
 
 
 

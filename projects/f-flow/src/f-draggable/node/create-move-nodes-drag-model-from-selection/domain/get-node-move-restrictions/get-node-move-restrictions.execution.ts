@@ -30,7 +30,7 @@ export class GetNodeMoveRestrictionsExecution
   }
 
   private _getNodeRect(fNode: FNodeBase): IRect {
-    return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
+    return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
   }
 
   private getParentNodeRect(fNode: FNodeBase): IRect {

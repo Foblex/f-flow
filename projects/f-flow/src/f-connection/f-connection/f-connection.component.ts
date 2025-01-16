@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component, ContentChildren,
   ElementRef, inject,
@@ -66,10 +67,10 @@ export class FConnectionComponent
   public override fEndColor: string = 'black';
 
   @Input()
-  public override fOutputId: string = '';
+  public override fOutputId: any = '';
 
   @Input()
-  public override fInputId: string = '';
+  public override fInputId: any = '';
 
   @Input()
   public override fRadius: number = 8;
@@ -83,10 +84,10 @@ export class FConnectionComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  @Input('fReassignDisabled')
+  @Input({ alias: 'fReassignDisabled', transform: booleanAttribute })
   public override fDraggingDisabled: boolean = false;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fSelectionDisabled: boolean = false;
 
   @ViewChild('defs', { static: true })

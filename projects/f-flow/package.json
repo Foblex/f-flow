@@ -32,8 +32,8 @@
     "@angular/common": ">=15.0.0",
     "@angular/core": ">=15.0.0",
     "@foblex/platform": "1.0.4",
-    "@foblex/mediator": "1.1.0",
-    "@foblex/2d": "1.1.5",
+    "@foblex/mediator": "1.1.2",
+    "@foblex/2d": "1.1.7",
     "@foblex/drag-toolkit": "1.1.0",
     "@foblex/utils": "1.1.0"
   },

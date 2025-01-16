@@ -24,9 +24,9 @@ export class ConnectionTargetDragHandler extends ConnectionBaseDragHandler {
   }
 
   private getNewLineValue(difference: IPoint): ILine {
-    return this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
-      RoundedRect.fromRoundedRect(this.fOutputWithRect.fRect),
-      RoundedRect.fromRoundedRect(this.fInputWithRect.fRect).addPoint(this.getDifference({ ...difference }, { min: this.minDistance, max: this.maxDistance })),
+    return this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+      this.fOutputWithRect.fRect,
+      RoundedRect.fromRoundedRect(this.fInputWithRect.fRect).addPoint(this.getRestrictedDifference({ ...difference }, { min: this.minDistance, max: this.maxDistance })),
       this.connection.fBehavior,
       this.fOutputWithRect.fConnector.fConnectableSide,
       this.fInputWithRect.fConnector.fConnectableSide

@@ -28,7 +28,7 @@ export class GetNormalizedChildrenNodesRectExecution
   }
 
   private normalizeRect(fNode: FNodeBase): IRect {
-    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
+    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
   }
 
   private concatRectWithParentPadding(rect: IRect, padding: [ number, number, number, number ]): IRect {

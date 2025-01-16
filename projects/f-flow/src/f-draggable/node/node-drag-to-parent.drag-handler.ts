@@ -8,11 +8,14 @@ import { FDraggableDataContext } from '../f-draggable-data-context';
 @Directive()
 export class NodeDragToParentDragHandler implements IDraggableItem {
 
-  private get transform(): ITransformModel {
+  private DEBOUNCE_TIME = 15;
+
+  private get _transform(): ITransformModel {
     return this.fComponentsStore.fCanvas!.transform;
   }
 
-  private onPointerDownPosition: IPoint = PointExtensions.initialize();
+  private _onPointerDownPosition: IPoint = PointExtensions.initialize();
+  private _debounceTimer: any = null;
 
   public fNodeWithRect: INodeWithRect | null = null;
 
@@ -21,33 +24,51 @@ export class NodeDragToParentDragHandler implements IDraggableItem {
     private fDraggableDataContext: FDraggableDataContext,
     private notDraggedNodesRects: INodeWithRect[],
   ) {
-    this.onPointerDownPosition = this.fDraggableDataContext.onPointerDownPosition;
+    this._onPointerDownPosition = this.fDraggableDataContext.onPointerDownPosition;
   }
 
-  public onPointerMove(difference: IPoint): void {
-    let point = Point.fromPoint(this.onPointerDownPosition).add(difference).mult(this.transform.scale);
-    const isInclude = this.notDraggedNodesRects.findIndex((x) => RectExtensions.isIncludePoint(x.rect, point));
-    if (isInclude !== -1) {
-      this.markIncludeNode(this.notDraggedNodesRects[isInclude]);
+  private _toggleParentNode(difference: IPoint): void {
+    const isInclude = this._isNodeInsideAnotherNode(this._getNewPosition(difference));
+    if (isInclude) {
+      this._markIncludeNode(isInclude);
     } else {
-      this.unmarkIncludeNode();
+      this._unmarkIncludeNode();
     }
   }
 
-  private markIncludeNode(nodeWithRect: INodeWithRect): void {
-    this.unmarkIncludeNode();
+  private _getNewPosition(difference: IPoint): IPoint {
+    return Point.fromPoint(this._onPointerDownPosition).add(difference).mult(this._transform.scale);
+  }
+
+  private _isNodeInsideAnotherNode(point: IPoint): INodeWithRect | undefined {
+    return this.notDraggedNodesRects.find((x) => RectExtensions.isIncludePoint(x.rect, point));
+  }
+
+  public onPointerMove(difference: IPoint): void {
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+    }
+
+    this._debounceTimer = setTimeout(() => this._toggleParentNode(difference), this.DEBOUNCE_TIME);
+  }
+
+  private _markIncludeNode(nodeWithRect: INodeWithRect): void {
+    this._unmarkIncludeNode();
     this.fNodeWithRect = nodeWithRect;
     nodeWithRect.node.setClass('f-parent-for-drop');
   }
 
-  private unmarkIncludeNode(): void {
-    if(this.fNodeWithRect) {
-      this.fNodeWithRect.node.removeClass('f-parent-for-drop');
-    }
+  private _unmarkIncludeNode(): void {
+    this.fNodeWithRect?.node.removeClass('f-parent-for-drop');
     this.fNodeWithRect = null;
   }
 
   public onPointerUp(): void {
-    this.unmarkIncludeNode();
+    this._unmarkIncludeNode();
+
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+      this._debounceTimer = null;
+    }
   }
 }

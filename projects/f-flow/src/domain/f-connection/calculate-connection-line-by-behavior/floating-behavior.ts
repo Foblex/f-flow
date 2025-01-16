@@ -1,4 +1,4 @@
-import { GetIntersections, ILine, IPoint, Line } from '@foblex/2d';
+import { GetIntersections, ILine, IPoint } from '@foblex/2d';
 import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
 
 export function floatingBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
@@ -22,8 +22,8 @@ function _toRoundedRectIntersections(payload: CalculateConnectionLineByBehaviorR
 }
 
 function _getIntersectionsLine(from: IPoint, to: IPoint, payload: CalculateConnectionLineByBehaviorRequest): ILine {
-  return new Line(
-    from ? from : payload.outputRect.gravityCenter,
-    to ? to : payload.inputRect.gravityCenter
-  );
+  return {
+    point1: from ? from : payload.outputRect.gravityCenter,
+    point2: to ? to : payload.inputRect.gravityCenter
+  };
 }

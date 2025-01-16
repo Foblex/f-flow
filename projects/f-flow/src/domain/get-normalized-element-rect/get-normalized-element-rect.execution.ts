@@ -2,7 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { GetNormalizedElementRectRequest } from './get-normalized-element-rect-request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
-import { IRoundedRect, RoundedRect, IPoint, ISize, Point, SizeExtensions, ITransformModel  } from '@foblex/2d';
+import {
+  IRoundedRect,
+  RoundedRect,
+  IPoint,
+  ISize,
+  Point,
+  SizeExtensions,
+  ITransformModel,
+  RectExtensions
+} from '@foblex/2d';
 import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
 
 @Injectable()
@@ -17,7 +26,7 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
   }
 
   public handle(request: GetNormalizedElementRectRequest): IRoundedRect {
-    const systemRect = this._getElementRoundedRect(request.element);
+    const systemRect = this._getElementRoundedRect(request);
     const position = this._normalizePosition(systemRect);
     const size = this._normalizeSize(systemRect);
 
@@ -27,10 +36,10 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     );
   }
 
-  private _getElementRoundedRect(element: HTMLElement | SVGElement): IRoundedRect {
-    return this._fMediator.send<IRoundedRect>(
-      new GetElementRoundedRectRequest(element)
-    );
+  private _getElementRoundedRect(request: GetNormalizedElementRectRequest): IRoundedRect {
+    return request.isRoundedRect ? this._fMediator.send<IRoundedRect>(
+      new GetElementRoundedRectRequest(request.element)
+    ) : RoundedRect.fromRect(RectExtensions.fromElement(request.element));
   }
 
   private _normalizePosition(rect: IRoundedRect): IPoint {

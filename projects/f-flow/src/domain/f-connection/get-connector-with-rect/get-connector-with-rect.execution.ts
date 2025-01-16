@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetConnectorWithRectRequest } from './get-connector-with-rect-request';
 import { IRoundedRect } from '@foblex/2d';
@@ -9,15 +9,12 @@ import { GetNormalizedElementRectRequest } from '../../get-normalized-element-re
 @FExecutionRegister(GetConnectorWithRectRequest)
 export class GetConnectorWithRectExecution implements IExecution<GetConnectorWithRectRequest, IConnectorWithRect> {
 
-  constructor(
-      private fMediator: FMediator,
-  ) {
-  }
+  private _fMediator = inject(FMediator);
 
   public handle(request: GetConnectorWithRectRequest): IConnectorWithRect {
     return {
       fConnector: request.connector,
-      fRect: this.fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(request.connector.hostElement))
+      fRect: this._fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(request.connector.hostElement, true))
     }
   }
 }

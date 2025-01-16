@@ -1,4 +1,4 @@
-import { FindClosestInputUsingSnapThresholdExecution } from './find-closest-input-using-snap-threshold';
+import { FindClosestInputExecution } from './find-closest-input';
 import { GetAllCanBeConnectedInputPositionsExecution } from './get-all-can-be-connected-input-positions';
 import { GetConnectorWithRectExecution } from './get-connector-with-rect';
 import { CreateConnectionMarkersExecution } from './create-connection-markers';
@@ -25,7 +25,7 @@ export const F_CONNECTION_FEATURES = [
 
   CreateConnectionMarkersExecution,
 
-  FindClosestInputUsingSnapThresholdExecution,
+  FindClosestInputExecution,
 
   GetAllCanBeConnectedInputPositionsExecution,
 
