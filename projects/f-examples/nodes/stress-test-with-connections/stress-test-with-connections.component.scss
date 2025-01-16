@@ -1,0 +1,28 @@
+@use "../../flow-common";
+
+::ng-deep stress-test-with-connections {
+  @include flow-common.connection;
+
+  .connection-marker {
+    circle, rect, path {
+      fill: var(--connection-color);
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+  width: 100px;
+  height: 100px;
+
+  &.main-node {
+    background: var(--node-background-color-inverse);
+    color: var(--node-background-color);
+  }
+}
+
+.toolbar {
+  @include flow-common.toolbar;
+}
+
+

@@ -61,6 +61,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/nodes/stress-test/stress-test.component')
       },
       {
+        tag: 'stress-test-with-connections',
+        component: import('../../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections.component')
+      },
+      {
         tag: 'node-selection',
         component: import('../../../projects/f-examples/nodes/node-selection/node-selection.component')
       },
@@ -283,6 +287,20 @@ function nodesGroup(): INavigationGroup {
         image: './previews/examples/stress-test.light.png',
         image_dark: './previews/examples/stress-test.dark.png',
         description: 'Test the performance of Foblex Flow with a large number of nodes in Angular.',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
+      {
+        link: 'stress-test-with-connections',
+        text: 'Stress Test with Connections',
+        image: './previews/examples/stress-test-with-connections.light.png',
+        image_dark: './previews/examples/stress-test-with-connections.dark.png',
+        description: 'Test the performance of Foblex Flow with a large number of connections in Angular.',
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
