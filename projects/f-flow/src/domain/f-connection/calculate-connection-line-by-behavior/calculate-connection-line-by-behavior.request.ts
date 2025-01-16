@@ -11,6 +11,5 @@ export class CalculateConnectionLineByBehaviorRequest {
     public outputSide: EFConnectableSide,
     public inputSide: EFConnectableSide,
   ) {
-
   }
 }

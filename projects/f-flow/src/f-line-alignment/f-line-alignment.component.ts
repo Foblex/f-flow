@@ -1,6 +1,14 @@
 import { AfterViewInit, Component, ElementRef, inject, Input } from '@angular/core';
-import { IPoint, IRect, ISize, ITransformModel, RectExtensions, SizeExtensions } from '@foblex/2d';
-import { ILineAlignmentResult, LineService, NearestCoordinateFinder } from './domain';
+import {
+  findClosestAlignment,
+  IPoint,
+  IRect,
+  ISize,
+  ITransformModel,
+  RectExtensions,
+  SizeExtensions
+} from '@foblex/2d';
+import { ILineAlignmentResult, LineService } from './domain';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
@@ -23,6 +31,8 @@ import { FCanvasBase } from '../f-canvas';
 })
 export class FLineAlignmentComponent extends FLineAlignmentBase implements AfterViewInit {
 
+  private DEBOUNCE_TIME = 10;
+
   @Input()
   public fAlignThreshold: number = 10;
 
@@ -42,12 +52,10 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
 
   private _fCanvas: FCanvasBase | undefined;
 
+  private _debounceTimer: any = null;
+
   private get _transform(): ITransformModel {
     return this._fCanvas!.transform;
-  }
-
-  private get _fFlowHostElement(): HTMLElement {
-    return this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest());
   }
 
   constructor(
@@ -65,10 +73,10 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
   }
 
   public override initialize(allNodes: FNodeBase[], currentNodes: FNodeBase[]): void {
-    this.size = this._fFlowHostElement.getBoundingClientRect();
+    this.size = this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest()).getBoundingClientRect();
     this.rects = [];
     const draggedNodeRects = currentNodes.map((x) => {
-      return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
     });
     this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
 
@@ -77,12 +85,16 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
     });
 
     this.rects = allNodesExcludeCurrents.map((x) => {
-      return this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
     });
   }
 
   public override handle(difference: IPoint): void {
-    this.drawIntersectingLines(difference);
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+    }
+
+    this._debounceTimer = setTimeout(() => this.drawIntersectingLines(difference), this.DEBOUNCE_TIME);
   }
 
   private drawIntersectingLines(difference: IPoint): void {
@@ -101,13 +113,17 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
 
   public findNearestCoordinate(difference: IPoint): ILineAlignmentResult {
     const rect = RectExtensions.addPoint(this.draggedNodeRect, difference);
-    const finder = new NearestCoordinateFinder(this.rects, rect, this.fAlignThreshold);
 
-    return { xResult: finder.findNearestCoordinateByX(), yResult: finder.findNearestCoordinateByY() };
+    return findClosestAlignment(this.rects, rect, this.fAlignThreshold);
   }
 
   public override complete(): void {
     this.lineService.hideVerticalLine();
     this.lineService.hideHorizontalLine();
+
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+      this._debounceTimer = null;
+    }
   }
 }

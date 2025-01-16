@@ -26,7 +26,7 @@ export class NodeResizeDragHandler implements IDraggableItem {
   }
 
   public prepareDragSequence(): void {
-    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.fNode.hostElement));
+    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.fNode.hostElement, false));
 
     this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
     if (this.restrictions.childRect) {

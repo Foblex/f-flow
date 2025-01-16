@@ -8,7 +8,7 @@ export * from './add-snap-connection-to-store';
 
 export * from './create-connection-markers';
 
-export * from './find-closest-input-using-snap-threshold';
+export * from './find-closest-input';
 
 export * from './get-all-can-be-connected-input-positions';
 

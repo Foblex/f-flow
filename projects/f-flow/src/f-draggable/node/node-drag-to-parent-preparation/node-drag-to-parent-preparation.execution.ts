@@ -4,7 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { GetNormalizedElementRectRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest, GetParentNodesRequest } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
@@ -44,14 +44,15 @@ export class NodeDragToParentPreparationExecution
     this.fDraggableDataContext.draggableItems.push(
       new NodeDragToParentDragHandler(
         this.fComponentsStore,
-        this.fDraggableDataContext, this.getNotDraggedNodesRects()
+        this.fDraggableDataContext, this._getNotDraggedNodesRects()
       )
     );
   }
 
-  private getNotDraggedNodesRects(): INodeWithRect[] {
-    return this.getNotDraggedNodes(this.getDraggedNodes()).map((x) => {
-      const rect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+  private _getNotDraggedNodesRects(): INodeWithRect[] {
+    const draggedNodes = this._addParentNodes(this._getNodesBeingDragged());
+    return this._getNotDraggedNodes(draggedNodes).map((x) => {
+      const rect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
       return {
         node: x,
         rect: RectExtensions.initialize(
@@ -64,13 +65,20 @@ export class NodeDragToParentPreparationExecution
     });
   }
 
-  private getDraggedNodes(): FNodeBase[] {
+  private _getNodesBeingDragged(): FNodeBase[] {
     return this.fDraggableDataContext.draggableItems
       .filter((x) => x instanceof NodeDragHandler)
-      .map((x) => (x as NodeDragHandler).fNode);
+      .map((x) => x.fNode);
   }
 
-  private getNotDraggedNodes(draggedNodes: FNodeBase[]): FNodeBase[] {
+  private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {
+    return fNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
+      result.push(x, ...this.fMediator.send<FNodeBase[]>(new GetParentNodesRequest(x)));
+      return result;
+    }, []);
+  }
+
+  private _getNotDraggedNodes(draggedNodes: FNodeBase[]): FNodeBase[] {
     return this.fNodes.filter((x) => !draggedNodes.includes(x));
   }
 }

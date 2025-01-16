@@ -59,9 +59,9 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
-    return this.fMediator.send(new CalculateConnectionLineByBehaviorRequest(
-        this.fMediator.send(new GetNormalizedElementRectRequest(output.hostElement)),
-        this.fMediator.send(new GetNormalizedElementRectRequest(input.hostElement)),
+    return this.fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
+        this.fMediator.execute(new GetNormalizedElementRectRequest(output.hostElement, true)),
+        this.fMediator.execute(new GetNormalizedElementRectRequest(input.hostElement, true)),
         connection.fBehavior,
         output.fConnectableSide,
         input.fConnectableSide

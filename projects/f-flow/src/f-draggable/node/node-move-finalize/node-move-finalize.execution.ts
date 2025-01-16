@@ -29,7 +29,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
 
-    const firstNodeOrGroup = this._fDraggableDataContext.draggableItems
+    const firstNodeOrGroup: NodeDragHandler = this._fDraggableDataContext.draggableItems
       .find((x) => x instanceof NodeDragHandler)!;
 
     const differenceWithCellSize = firstNodeOrGroup.getDifferenceWithCellSize(difference);

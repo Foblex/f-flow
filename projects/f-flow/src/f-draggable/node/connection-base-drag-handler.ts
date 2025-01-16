@@ -48,7 +48,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
 
   public abstract onPointerMove(difference: IPoint): void;
 
-  protected getDifference(difference: IPoint, restrictions: INodeMoveRestrictions): IPoint {
+  protected getRestrictedDifference(difference: IPoint, restrictions: INodeMoveRestrictions): IPoint {
     return {
       x: Math.min(Math.max(difference.x, restrictions.min.x), restrictions.max.x),
       y: Math.min(Math.max(difference.y, restrictions.min.y), restrictions.max.y)
