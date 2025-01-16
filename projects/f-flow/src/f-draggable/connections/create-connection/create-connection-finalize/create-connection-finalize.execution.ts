@@ -29,8 +29,17 @@ export class CreateConnectionFinalizeExecution
   }
 
   public handle(request: CreateConnectionFinalizeRequest): void {
+    if (!this._isValid()) {
+      return;
+    }
     this.emitEvent(request.event);
     this.dragHandler.onPointerUp();
+  }
+
+  private _isValid(): boolean {
+    return this.fDraggableDataContext.draggableItems.some(
+      (x) => x instanceof CreateConnectionDragHandler
+    );
   }
 
   private getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {

@@ -20,11 +20,19 @@ export class NodeDragToParentFinalizeExecution
   }
 
   public handle(request: NodeDragToParentFinalizeRequest): void {
+    if (!this._isValid()) {
+      return;
+    }
     const item = this.getDragHandleItem();
     if(item.fNodeWithRect) {
       this.emitDroppedChildrenEvent(item.fNodeWithRect.node.fId, request.event);
     }
     item.onPointerUp?.();
+  }
+
+  private _isValid(): boolean {
+    return this.fDraggableDataContext.draggableItems
+      .some((x) => x instanceof NodeDragToParentDragHandler);
   }
 
   private emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {

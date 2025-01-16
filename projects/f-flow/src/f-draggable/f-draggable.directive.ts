@@ -148,36 +148,36 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   protected override onSelect(event: Event): void {
     this.plugins.forEach((x) => x.onSelect?.(event));
 
-    this._fMediator.send<void>(new PreventDefaultIsExternalItemRequest(event));
+    this._fMediator.execute<void>(new PreventDefaultIsExternalItemRequest(event));
   }
 
   public override onPointerMove(event: IPointerEvent): void {
-    this._fMediator.send<void>(new OnPointerMoveRequest(event));
+    this._fMediator.execute<void>(new OnPointerMoveRequest(event));
   }
 
   public override onPointerUp(event: IPointerEvent): void {
 
     this.plugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._fMediator.send<void>(new ReassignConnectionFinalizeRequest(event));
+    this._fMediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
 
-    this._fMediator.send<void>(new CreateConnectionFinalizeRequest(event));
+    this._fMediator.execute<void>(new CreateConnectionFinalizeRequest(event));
 
-    this._fMediator.send<void>(new NodeResizeFinalizeRequest(event));
+    this._fMediator.execute<void>(new NodeResizeFinalizeRequest(event));
 
-    this._fMediator.send<void>(new NodeMoveFinalizeRequest(event));
+    this._fMediator.execute<void>(new NodeMoveFinalizeRequest(event));
 
-    this._fMediator.send<void>(new NodeDragToParentFinalizeRequest(event));
+    this._fMediator.execute<void>(new NodeDragToParentFinalizeRequest(event));
 
     this._fMediator.send<void>(new CanvasMoveFinalizeRequest(event));
 
-    this._fMediator.send<void>(new ExternalItemFinalizeRequest(event));
+    this._fMediator.execute<void>(new ExternalItemFinalizeRequest(event));
 
-    this._fMediator.send<void>(new EndDragSequenceRequest());
+    this._fMediator.execute<void>(new EndDragSequenceRequest());
   }
 
   protected override finalizeDragSequence(): void {
-    this._fMediator.send<void>(new EmitSelectionChangeEventRequest());
+    this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
   }
 
   public ngOnDestroy(): void {

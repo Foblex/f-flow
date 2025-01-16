@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IsConnectionUnderNodeRequest } from './is-connection-under-node.request';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext, FNodeIntersectedWithConnections, NodeDragHandler } from '../../index';
+import { FNodeIntersectedWithConnections } from '../../index';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
@@ -17,11 +17,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _fComponentsStore = inject(FComponentsStore);
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
-
   public handle(request: IsConnectionUnderNodeRequest): void {
-
-    const fNode = this._getDraggedNodeUnderPointer();
+    const fNode = request.fNode;
 
     const fOutputConnectors = this._getNodeOutputConnectors(fNode);
     const fInputConnectors = this._getNodeInputConnectors(fNode);
@@ -33,12 +30,11 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
       const fOutputConnections = this._getOutputConnectionsId(canBeConnectedOutputs);
       const fInputConnections = this._getInputConnectionsId(canBeConnectedInputs);
-
       const fConnectionsUnderNode = this._calculateConnectionsUnderNode(fNode).filter((x) => {
         return !fOutputConnections.includes(x.fId) && !fInputConnections.includes(x.fId);
       });
 
-      if(fConnectionsUnderNode.length) {
+      if (fConnectionsUnderNode.length) {
         this._fComponentsStore.fDraggable?.fNodeIntersectedWithConnections.emit(
           new FNodeIntersectedWithConnections(
             fNode.fId,
@@ -47,10 +43,6 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
         );
       }
     }
-  }
-
-  private _getDraggedNodeUnderPointer(): FNodeBase {
-    return (this._fDraggableDataContext.draggableItems[ 0 ] as NodeDragHandler).fNode;
   }
 
   private _getNodeOutputConnectors(fNode: FNodeBase): FConnectorBase[] {

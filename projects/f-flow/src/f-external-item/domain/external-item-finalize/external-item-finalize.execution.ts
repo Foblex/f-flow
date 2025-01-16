@@ -34,11 +34,20 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   }
 
   public handle(request: ExternalItemFinalizeRequest): void {
+    if (!this._isValid()) {
+      return
+    }
     this.emitEvent(
       this.getExternalItemElementsFromPoint(request.event.getPosition())
     );
 
     this.dragHandler.onPointerUp();
+  }
+
+  private _isValid(): boolean {
+    return this.fDraggableDataContext.draggableItems.some(
+      (x) => x instanceof ExternalItemDragHandler
+    );
   }
 
   private getExternalItemElementsFromPoint(position: IPoint): HTMLElement[] {

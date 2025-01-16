@@ -11,6 +11,8 @@ import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 import { ILineAlignmentResult } from '../../../f-line-alignment';
 import { NodeDragHandler } from '../node.drag-handler';
+import { deepClone } from '@foblex/utils';
+import { FNodeBase } from '../../../f-node';
 
 @Injectable()
 @FExecutionRegister(NodeMoveFinalizeRequest)
@@ -25,6 +27,9 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   public handle(request: NodeMoveFinalizeRequest): void {
+    if (!this._isValid()) {
+      return;
+    }
     const difference = this._getDifferenceWithLineAlignment(
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
@@ -36,8 +41,13 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
     this._finalizeMove(differenceWithCellSize);
 
-    this._fMediator.send(new IsConnectionUnderNodeRequest());
     this._fDraggableDataContext.fLineAlignment?.complete();
+
+    this._applyConnectionUnderNode();
+  }
+
+  private _isValid(): boolean {
+    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof NodeDragHandler);
   }
 
   private _finalizeMove(difference: IPoint): void {
@@ -75,5 +85,13 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
       difference.y = intersection.yResult.value ? (difference.y - intersection.yResult.distance!) : difference.y;
     }
     return difference;
+  }
+
+  private _applyConnectionUnderNode(): void {
+    const isDraggedJustOneNode = this._fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
+    if (isDraggedJustOneNode) {
+      const fNode = (this._fDraggableDataContext.draggableItems[ 0 ] as NodeDragHandler).fNode;
+      setTimeout(() => this._fMediator.execute(new IsConnectionUnderNodeRequest(fNode)));
+    }
   }
 }

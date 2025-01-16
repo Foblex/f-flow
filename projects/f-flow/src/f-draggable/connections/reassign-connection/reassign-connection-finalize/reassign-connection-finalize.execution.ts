@@ -30,8 +30,17 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   }
 
   public handle(request: ReassignConnectionFinalizeRequest): void {
+    if (!this._isValid()) {
+      return;
+    }
     this.emitEvent(request.event);
     this.dragHandler.onPointerUp();
+  }
+
+  private _isValid(): boolean {
+    return this.fDraggableDataContext.draggableItems.some(
+      (x) => x instanceof ReassignConnectionDragHandler
+    );
   }
 
   private emitEvent(event: IPointerEvent): void {

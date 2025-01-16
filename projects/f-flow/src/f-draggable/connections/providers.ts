@@ -1,7 +1,6 @@
 import {
   CreateConnectionDragHandlerExecution,
   CreateConnectionFinalizeExecution,
-  CreateConnectionFinalizeValidator,
   CreateConnectionFromOutletPreparationExecution,
   CreateConnectionFromOutputPreparationExecution,
   CreateConnectionFromOutputPreparationValidator,
@@ -12,7 +11,6 @@ import {
 } from './create-connection';
 import {
   ReassignConnectionFinalizeExecution,
-  ReassignConnectionFinalizeValidator,
   ReassignConnectionPreparationExecution, ReassignConnectionPreparationValidator,
 } from './reassign-connection';
 import { GetInputUnderPointerExecution, GetInputUnderPointerValidator } from './get-input-under-pointer';
@@ -24,8 +22,6 @@ export const CONNECTIONS_PROVIDERS = [
   GetInputUnderPointerValidator,
 
   CreateConnectionFinalizeExecution,
-
-  CreateConnectionFinalizeValidator,
 
   CreateConnectionDragHandlerExecution,
 
@@ -44,8 +40,6 @@ export const CONNECTIONS_PROVIDERS = [
   CreateConnectionPreparationValidator,
 
   ReassignConnectionFinalizeExecution,
-
-  ReassignConnectionFinalizeValidator,
 
   ReassignConnectionPreparationExecution,
 
