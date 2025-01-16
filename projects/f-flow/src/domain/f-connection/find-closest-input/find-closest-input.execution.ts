@@ -1,16 +1,16 @@
-import { FindClosestInputUsingSnapThresholdRequest } from './find-closest-input-using-snap-threshold.request';
+import { FindClosestInputRequest } from './find-closest-input.request';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IPoint } from '@foblex/2d';
 import { IConnectorWithRect } from '../get-connector-with-rect';
+import { IClosestInput } from './i-closest-input';
 
 @Injectable()
-@FExecutionRegister(FindClosestInputUsingSnapThresholdRequest)
-export class FindClosestInputUsingSnapThresholdExecution
-  implements IExecution<FindClosestInputUsingSnapThresholdRequest, IConnectorWithRect | undefined> {
+@FExecutionRegister(FindClosestInputRequest)
+export class FindClosestInputExecution
+  implements IExecution<FindClosestInputRequest, IClosestInput | undefined> {
 
-
-  public handle(payload: FindClosestInputUsingSnapThresholdRequest): IConnectorWithRect | undefined {
+  public handle(payload: FindClosestInputRequest): IClosestInput | undefined {
     let result: IConnectorWithRect | undefined;
     let minDistance = Infinity;
 
@@ -23,7 +23,10 @@ export class FindClosestInputUsingSnapThresholdExecution
       }
     }
 
-    return minDistance < payload.snapThreshold ? result : undefined;
+    return result ? {
+      ...result,
+      distance: minDistance,
+    } : undefined;
   }
 
   private distanceToRectangle(point: IPoint, inputWithRect: IConnectorWithRect): number {
