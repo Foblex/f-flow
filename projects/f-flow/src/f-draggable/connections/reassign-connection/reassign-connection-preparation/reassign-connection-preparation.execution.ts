@@ -1,73 +1,82 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ReassignConnectionPreparationRequest } from './reassign-connection-preparation.request';
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { F_CONNECTION_DRAG_HANDLE_CLASS, FConnectionBase } from '../../../../f-connection';
+import { FConnectionBase } from '../../../../f-connection';
 import { ReassignConnectionDragHandler } from '../reassign-connection.drag-handler';
-import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionPreparationRequest)
 export class ReassignConnectionPreparationExecution implements IExecution<ReassignConnectionPreparationRequest, void> {
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+
+  private _fConnection: FConnectionBase | undefined;
+
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
   }
 
-  private get fConnections(): FConnectionBase[] {
-    return this.fComponentsStore.fConnections;
-  }
-
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator,
-    private fBrowser: BrowserService
-  ) {
+  private get _fConnections(): FConnectionBase[] {
+    return this._fComponentsStore.fConnections;
   }
 
   public handle(request: ReassignConnectionPreparationRequest): void {
-    const connectionToReassign = this.getConnectionHandler(
-      this.getDragHandleElement(request.event.getPosition())
-    )!;
-    if (connectionToReassign.fDraggingDisabled) {
+    if (!this._isValid(request)) {
       return;
     }
 
-    this.fMediator.send<void>(
+    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost).div(this._transform.scale);
+    this._fDraggableDataContext.draggableItems = [
+      new ReassignConnectionDragHandler(this._fMediator, this._fComponentsStore, this._fConnection!)
+    ];
+
+    setTimeout(() => this._updateConnectionLayer());
+  }
+
+  private _isValid(request: ReassignConnectionPreparationRequest): boolean {
+    this._fConnection = this._getConnectionToReassign(this._getPointInFlow(request));
+    return !!this._fConnection && !this._fDraggableDataContext.draggableItems.length;
+  }
+
+  private _getPointInFlow(request: ReassignConnectionPreparationRequest): IPoint {
+    return Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost)
+      .sub(this._transform.scaledPosition).sub(this._transform.position)
+      .div(this._transform.scale);
+  }
+
+  private _getConnectionToReassign(position: IPoint): FConnectionBase | undefined {
+    const connections = this._getConnectionsFromPoint(position);
+    return connections.length ? connections[0] : undefined;
+  }
+
+  private _getConnectionsFromPoint(position: IPoint): FConnectionBase[] {
+    return this._fConnections.filter((x) => {
+      return this._isPointInsideCircle(position, x.fDragHandle.point) && !x.fDraggingDisabled;
+    });
+  }
+
+  private _isPointInsideCircle(point: IPoint, circleCenter: IPoint): boolean {
+    return (point.x - circleCenter.x) ** 2 + (point.y - circleCenter.y) ** 2 <= 8 ** 2;
+  }
+
+  private _updateConnectionLayer(): void {
+    this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        connectionToReassign, this.fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement
+        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement
       )
     );
-
-    this.fDraggableDataContext.onPointerDownScale = this.transform.scale;
-
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this.flowHost).div(this.transform.scale);
-
-    this.fDraggableDataContext.draggableItems = [
-      new ReassignConnectionDragHandler(this.fMediator, this.fComponentsStore, connectionToReassign)
-    ];
-  }
-
-  private getDragHandleElement(position: IPoint): HTMLElement {
-    return this.getElementsFromPoint(position).filter((x) => {
-      return !!this.getConnectionHandler(x as HTMLElement) && x.classList.contains(F_CONNECTION_DRAG_HANDLE_CLASS);
-    }).find((x) => !!x)!;
-  }
-
-  private getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return this.fBrowser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
-  }
-
-  public getConnectionHandler(element: HTMLElement | SVGElement): FConnectionBase | undefined {
-    return this.fConnections.find(c => c.isContains(element));
   }
 }

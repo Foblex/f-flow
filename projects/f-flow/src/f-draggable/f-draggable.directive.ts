@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, ContentChildren,
+  AfterViewInit, booleanAttribute, ContentChildren,
   Directive,
   ElementRef,
   EventEmitter, inject, Inject,
@@ -71,6 +71,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fNodeIntersectedWithConnections = new EventEmitter<FNodeIntersectedWithConnections>();
 
+  @Input({ transform: booleanAttribute })
+  public override emitWhenNodeIntersectedWithConnection: boolean = false;
+
   @Output()
   public override fCreateNode = new EventEmitter<FCreateNodeEvent>();
 
@@ -85,7 +88,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   @Input()
   public override vCellSize = 1;
-
 
   @Input()
   public override hCellSize = 1;
@@ -109,16 +111,15 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
-
-    this._fMediator.send<void>(new InitializeDragSequenceRequest());
+    this._fMediator.execute<void>(new InitializeDragSequenceRequest());
 
     this.plugins.forEach((p) => p.onPointerDown?.(event));
 
-    this._fMediator.send<void>(new SingleSelectRequest(event));
+    this._fMediator.execute<void>(new SingleSelectRequest(event));
 
-    this._fMediator.send<void>(new ReassignConnectionPreparationRequest(event));
+    this._fMediator.execute<void>(new ReassignConnectionPreparationRequest(event));
 
-    this._fMediator.send<void>(new CreateConnectionPreparationRequest(event));
+    this._fMediator.execute<void>(new CreateConnectionPreparationRequest(event));
 
     const isMouseLeftButton = event.isMouseLeftButton();
     if (!isMouseLeftButton) {
@@ -128,7 +129,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {
-
     this.plugins.forEach((p) => p.prepareDragSequence?.(event));
 
     this._fMediator.send<void>(new NodeResizePreparationRequest(event));
@@ -140,7 +140,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.send<void>(new CanvasMovePreparationRequest(event));
 
     this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
-
 
     this._fMediator.send<void>(new PrepareDragSequenceRequest());
   }
@@ -156,7 +155,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerUp(event: IPointerEvent): void {
-
     this.plugins.forEach((x) => x.onPointerUp?.(event));
 
     this._fMediator.execute<void>(new ReassignConnectionFinalizeRequest(event));

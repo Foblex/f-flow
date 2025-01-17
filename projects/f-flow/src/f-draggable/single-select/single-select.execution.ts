@@ -23,6 +23,9 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
   }
 
   public handle(request: SingleSelectRequest): void {
+    if(!this._isValid(request)) {
+      return;
+    }
     const { event } = request;
 
     const item = this.getSelectableItem(event);
@@ -31,6 +34,11 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     }
 
     this.isMultiselectEnabled(event) ? this.multiSelect(item) : this.singleSelect(item);
+  }
+
+  private _isValid(request: SingleSelectRequest): boolean {
+    return this.fComponentsStore.fFlow!.hostElement.contains(request.event.targetElement)
+      && !this.fDraggableDataContext.draggableItems.length;
   }
 
   private getSelectableItem(event: IPointerEvent): ICanChangeSelection | undefined {

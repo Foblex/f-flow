@@ -43,7 +43,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
     this._fDraggableDataContext.fLineAlignment?.complete();
 
-    this._applyConnectionUnderNode();
+    this._applyConnectionUnderDroppedNode();
   }
 
   private _isValid(): boolean {
@@ -87,9 +87,9 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     return difference;
   }
 
-  private _applyConnectionUnderNode(): void {
+  private _applyConnectionUnderDroppedNode(): void {
     const isDraggedJustOneNode = this._fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
-    if (isDraggedJustOneNode) {
+    if (isDraggedJustOneNode && this._fComponentsStore.fDraggable?.emitWhenNodeIntersectedWithConnection) {
       const fNode = (this._fDraggableDataContext.draggableItems[ 0 ] as NodeDragHandler).fNode;
       setTimeout(() => this._fMediator.execute(new IsConnectionUnderNodeRequest(fNode)));
     }

@@ -1,4 +1,7 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fNodeIntersectedWithConnections)="onNodeIntersectedWithConnection($event)">
+<f-flow fDraggable
+        (fLoaded)="onLoaded()"
+        emitWhenNodeIntersectedWithConnection
+        (fNodeIntersectedWithConnections)="onNodeIntersectedWithConnection($event)">
   <f-canvas>
     @for (connection of connections; track connection.inputId)  {
       <f-connection [fReassignDisabled]="false"

@@ -17,6 +17,9 @@ export const F_CONNECTION_DRAG_HANDLE_CLASS = 'f-connection-drag-handle';
 })
 export class FConnectionDragHandleComponent implements IHasHostElement {
 
+  public point!: IPoint;
+  public radius: number = 8;
+
   public readonly class: string = F_CONNECTION_DRAG_HANDLE_CLASS;
 
   public get hostElement(): SVGCircleElement {
@@ -29,9 +32,9 @@ export class FConnectionDragHandleComponent implements IHasHostElement {
   }
 
   public redraw(penultimatePoint: IPoint, endPoint: IPoint): void {
-    const point = this._calculateCircleCenter(penultimatePoint, endPoint, 8);
-    this.hostElement.setAttribute('cx', point.x.toString());
-    this.hostElement.setAttribute('cy', point.y.toString());
+    this.point = this._calculateCircleCenter(penultimatePoint, endPoint, 8);
+    this.hostElement.setAttribute('cx', this.point.x.toString());
+    this.hostElement.setAttribute('cy', this.point.y.toString());
   }
 
   private _calculateCircleCenter(start: IPoint, end: IPoint, radius: number): IPoint {

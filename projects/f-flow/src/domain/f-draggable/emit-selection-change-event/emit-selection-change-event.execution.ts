@@ -4,7 +4,7 @@ import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-r
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
 import { GetCurrentSelectionRequest, ICurrentSelection } from '../../f-selection';
-import { NotifyTransformChangedRequest } from '../../../f-storage/features/notify-transform-changed';
+import { NotifyTransformChangedRequest } from '../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(EmitSelectionChangeEventRequest)
