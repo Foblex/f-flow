@@ -83,26 +83,20 @@ export class FLineAlignmentComponent
   }
 
   public override initialize(allNodes: FNodeBase[], currentNodes: FNodeBase[]): void {
-    this.size = this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest()).getBoundingClientRect();
-    this.rects = [];
-    const draggedNodeRects = currentNodes.map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
-    });
-    this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
-    console.log('draggedNodeRect', this.draggedNodeRect);
-
-
-    console.log('allNodes', this._fMediator.execute(new CalculateNodesBoundingBoxNormalizedPositionRequest(currentNodes)));
-
-
-
-    const allNodesExcludeCurrents = allNodes.filter((x) => {
-      return !currentNodes.includes(x);
-    });
-
-    this.rects = allNodesExcludeCurrents.map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
-    });
+    // this.size = this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest()).getBoundingClientRect();
+    // this.rects = [];
+    // const draggedNodeRects = currentNodes.map((x) => {
+    //   return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+    // });
+    // this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
+    //
+    // const allNodesExcludeCurrents = allNodes.filter((x) => {
+    //   return !currentNodes.includes(x);
+    // });
+    //
+    // this.rects = allNodesExcludeCurrents.map((x) => {
+    //   return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+    // });
   }
 
   public override handle(difference: IPoint): void {

@@ -1,24 +1,20 @@
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize } from '@foblex/2d';
 import { IDraggableItem } from '../../f-draggable';
 import { FComponentsStore } from '../../f-storage';
+import { LineService } from '../../f-line-alignment';
 
 export class LineAlignmentDragHandler implements IDraggableItem {
 
-  private readonly _onPointerDownPosition = PointExtensions.initialize();
-
   constructor(
     private _fComponentsStore: FComponentsStore,
-    public minDistance: IPoint,
-    public maxDistance: IPoint,
+    private _lineService: LineService,
+    private _size: ISize,
+    private _draggedNodeRect: IRect,
+    private _rects: IRect[],
   ) {
-    //this._onPointerDownPosition = { ...fNode.position };
   }
 
   public onPointerMove(difference: IPoint): void {
-  }
-
-  private _getPosition(difference: IPoint): IPoint {
-    return Point.fromPoint(this._onPointerDownPosition).add(difference);
   }
 
   public onPointerUp(): void {
