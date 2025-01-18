@@ -10,6 +10,6 @@ export class RemoveLineAlignmentFromStoreExecution implements IExecution<RemoveL
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: RemoveLineAlignmentFromStoreRequest): void {
-    this._fComponentsStore.fFlow = undefined;
+    this._fComponentsStore.fLineAlignment = undefined;
   }
 }

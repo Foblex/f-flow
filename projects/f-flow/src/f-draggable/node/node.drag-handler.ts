@@ -1,6 +1,5 @@
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
-import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FNodeBase } from '../../f-node';
 import {
   INodeMoveRestrictions
@@ -12,8 +11,7 @@ export class NodeDragHandler implements IDraggableItem {
   private readonly _onPointerDownPosition = PointExtensions.initialize();
 
   constructor(
-    private fDraggableDataContext: FDraggableDataContext,
-    private fComponentsStore: FComponentsStore,
+    private _fComponentsStore: FComponentsStore,
     public fNode: FNodeBase,
     public minDistance: IPoint,
     public maxDistance: IPoint,
@@ -25,7 +23,7 @@ export class NodeDragHandler implements IDraggableItem {
     const restrictedDifference = this._getDifference(difference, { min: this.minDistance, max: this.maxDistance });
 
     this._redraw(this._getPosition(restrictedDifference));
-    this.fDraggableDataContext.fLineAlignment?.handle(restrictedDifference);
+    this._fComponentsStore.fLineAlignment?.handle(restrictedDifference);
   }
 
   private _getPosition(difference: IPoint): IPoint {
@@ -56,8 +54,8 @@ export class NodeDragHandler implements IDraggableItem {
   }
 
   private _applyCellSize(position: IPoint): IPoint {
-    const hCellSize = this.fComponentsStore.fDraggable!.hCellSize;
-    const vCellSize = this.fComponentsStore.fDraggable!.vCellSize;
+    const hCellSize = this._fComponentsStore.fDraggable!.hCellSize;
+    const vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
     return {
       x: Math.round(position.x / hCellSize) * hCellSize,
       y: Math.round(position.y / vCellSize) * vCellSize

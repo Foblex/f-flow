@@ -70,7 +70,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private _initializeLineAlignment(itemsToDrag: IDraggableItem[]): void {
-    this._fDraggableDataContext.fLineAlignment?.initialize(
+    this._fComponentsStore.fLineAlignment?.initialize(
       this._fComponentsStore.fNodes, this._filterNodesFromDraggableItems(itemsToDrag)
     );
   }

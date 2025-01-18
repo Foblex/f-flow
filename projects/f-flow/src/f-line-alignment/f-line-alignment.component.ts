@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   findClosestAlignment,
   IPoint,
@@ -12,7 +12,14 @@ import { ILineAlignmentResult, LineService } from './domain';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import { FDraggableDataContext } from '../f-draggable';
 import { FNodeBase } from '../f-node';
-import { GetCanvasRequest, GetNormalizedElementRectRequest, GetFlowHostElementRequest } from '../domain';
+import {
+  GetCanvasRequest,
+  GetNormalizedElementRectRequest,
+  GetFlowHostElementRequest,
+  RemoveLineAlignmentFromStoreRequest,
+  AddLineAlignmentToStoreRequest,
+  CalculateNodesBoundingBoxNormalizedPositionRequest
+} from '../domain';
 import { FMediator } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 import { FCanvasBase } from '../f-canvas';
@@ -29,16 +36,13 @@ import { FCanvasBase } from '../f-canvas';
     { provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent }
   ],
 })
-export class FLineAlignmentComponent extends FLineAlignmentBase implements AfterViewInit {
+export class FLineAlignmentComponent
+  extends FLineAlignmentBase implements OnInit, AfterViewInit, OnDestroy {
 
   private DEBOUNCE_TIME = 10;
 
   @Input()
   public fAlignThreshold: number = 10;
-
-  public override get hostElement(): HTMLElement {
-    return this.elementReference.nativeElement;
-  }
 
   private lineService: LineService;
 
@@ -48,28 +52,34 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
 
   private rects: IRect[] = [];
 
+  private _elementReference = inject(ElementRef);
   private _fMediator = inject(FMediator);
 
   private _fCanvas: FCanvasBase | undefined;
 
   private _debounceTimer: any = null;
 
+  public override get hostElement(): HTMLElement {
+    return this._elementReference.nativeElement;
+  }
+
   private get _transform(): ITransformModel {
     return this._fCanvas!.transform;
   }
 
   constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fDraggableDataContext: FDraggableDataContext,
     fBrowser: BrowserService
   ) {
     super();
     this.lineService = new LineService(fBrowser, this.hostElement);
   }
 
+  public ngOnInit(): void {
+    this._fMediator.execute(new AddLineAlignmentToStoreRequest(this));
+  }
+
   public ngAfterViewInit(): void {
     this._fCanvas = this._fMediator.send(new GetCanvasRequest());
-    this.fDraggableDataContext.fLineAlignment = this;
   }
 
   public override initialize(allNodes: FNodeBase[], currentNodes: FNodeBase[]): void {
@@ -79,6 +89,12 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
       return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
     });
     this.draggedNodeRect = RectExtensions.union(draggedNodeRects) || RectExtensions.initialize();
+    console.log('draggedNodeRect', this.draggedNodeRect);
+
+
+    console.log('allNodes', this._fMediator.execute(new CalculateNodesBoundingBoxNormalizedPositionRequest(currentNodes)));
+
+
 
     const allNodesExcludeCurrents = allNodes.filter((x) => {
       return !currentNodes.includes(x);
@@ -125,5 +141,9 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements After
       clearTimeout(this._debounceTimer);
       this._debounceTimer = null;
     }
+  }
+
+  public ngOnDestroy(): void {
+    this._fMediator.execute(new RemoveLineAlignmentFromStoreRequest());
   }
 }

@@ -14,43 +14,41 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUnderNodeRequest, void> {
 
   private _fMediator = inject(FMediator);
-
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: IsConnectionUnderNodeRequest): void {
-    const fNode = request.fNode;
 
-    const fOutputConnectors = this._getNodeOutputConnectors(fNode);
-    const fInputConnectors = this._getNodeInputConnectors(fNode);
+    const fOutputConnectors = this._getOutputConnectors(request.fNode);
+    const fInputConnectors = this._getInputConnectors(request.fNode);
 
-    const canBeConnectedOutputs = fOutputConnectors.filter((x) => x.canBeConnected);
-    const canBeConnectedInputs = fInputConnectors.filter((x) => x.canBeConnected);
-
-    if (canBeConnectedOutputs.length && canBeConnectedInputs.length) {
-
-      const fOutputConnections = this._getOutputConnectionsId(canBeConnectedOutputs);
-      const fInputConnections = this._getInputConnectionsId(canBeConnectedInputs);
-      const fConnectionsUnderNode = this._calculateConnectionsUnderNode(fNode).filter((x) => {
-        return !fOutputConnections.includes(x.fId) && !fInputConnections.includes(x.fId);
-      });
-
-      if (fConnectionsUnderNode.length) {
-        this._fComponentsStore.fDraggable?.fNodeIntersectedWithConnections.emit(
-          new FNodeIntersectedWithConnections(
-            fNode.fId,
-            fConnectionsUnderNode.map((x) => x.fId)
-          )
-        );
-      }
+    if (!fOutputConnectors.length || !fInputConnectors.length) {
+      return;
     }
+
+    const fOutputConnections = this._getOutputConnectionsId(fOutputConnectors);
+    const fInputConnections = this._getInputConnectionsId(fInputConnectors);
+
+    const fConnectionsUnderNode = this._calculateConnectionsUnderNode(request.fNode).filter((x) => {
+      return !fOutputConnections.includes(x.fId) && !fInputConnections.includes(x.fId);
+    });
+
+    if (!fConnectionsUnderNode.length) {
+      return;
+    }
+
+    this._emitNodeIntersectedWithConnections(request.fNode, fConnectionsUnderNode);
   }
 
-  private _getNodeOutputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fOutputs.filter((x) => fNode.isContains(x.hostElement));
+  private _getOutputConnectors(fNode: FNodeBase): FConnectorBase[] {
+    return this._fComponentsStore.fOutputs.filter((x) => {
+      return fNode.isContains(x.hostElement) && x.canBeConnected;
+    });
   }
 
-  private _getNodeInputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fInputs.filter((x) => fNode.isContains(x.hostElement));
+  private _getInputConnectors(fNode: FNodeBase): FConnectorBase[] {
+    return this._fComponentsStore.fInputs.filter((x) => {
+      return fNode.isContains(x.hostElement) && x.canBeConnected;
+    });
   }
 
   private _getOutputConnectionsId(connectors: FConnectorBase[]): string[] {
@@ -78,5 +76,14 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _isConnectionHasIntersectionsWithNode(fConnection: FConnectionBase, fNodeRect: IRoundedRect): boolean {
     return GetIntersections.getRoundedRectIntersectionsWithSVGPath(fConnection.fPath.hostElement, fNodeRect).length > 0;
+  }
+
+  private _emitNodeIntersectedWithConnections(fNode: FNodeBase, fConnections: FConnectionBase[]): void {
+    this._fComponentsStore.fDraggable?.fNodeIntersectedWithConnections.emit(
+      new FNodeIntersectedWithConnections(
+        fNode.fId,
+        fConnections.map((x) => x.fId)
+      )
+    );
   }
 }

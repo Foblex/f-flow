@@ -98,7 +98,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
     items.forEach((node) => {
       result.push(
-        new NodeDragHandler(this._fDraggableDataContext, this._fComponentsStore, node.node, node.min, node.max),
+        new NodeDragHandler(this._fComponentsStore, node.node, node.min, node.max),
         ...(node.parentNodes || []).map(() => new NodeResizeByChildDragHandler(this._fDraggableDataContext))
       );
     });

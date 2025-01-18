@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ReassignConnectionFinalizeRequest } from './reassign-connection-finalize.request';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
@@ -14,58 +14,60 @@ import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
 @FExecutionRegister(ReassignConnectionFinalizeRequest)
 export class ReassignConnectionFinalizeExecution implements IExecution<ReassignConnectionFinalizeRequest, void> {
 
-  private get fDraggable(): FDraggableBase {
-    return this.fComponentsStore.fDraggable!;
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+
+  private get _fDraggable(): FDraggableBase {
+    return this._fComponentsStore.fDraggable!;
   }
 
-  private get dragHandler(): ReassignConnectionDragHandler {
-    return this.fDraggableDataContext.draggableItems[ 0 ] as ReassignConnectionDragHandler;
-  }
-
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
+  private get _fDragHandler(): ReassignConnectionDragHandler {
+    return this._fDraggableDataContext.draggableItems[ 0 ] as ReassignConnectionDragHandler;
   }
 
   public handle(request: ReassignConnectionFinalizeRequest): void {
-    if (!this._isValid()) {
+    if (!this._isDroppedConnectionReassignEvent()) {
       return;
     }
-    this.emitEvent(request.event);
-    this.dragHandler.onPointerUp();
+    this._applyReassignEvent(request.event);
+    this._fDragHandler.onPointerUp();
   }
 
-  private _isValid(): boolean {
-    return this.fDraggableDataContext.draggableItems.some(
+  private _isDroppedConnectionReassignEvent(): boolean {
+    return this._fDraggableDataContext.draggableItems.some(
       (x) => x instanceof ReassignConnectionDragHandler
     );
   }
 
-  private emitEvent(event: IPointerEvent): void {
-    const input = this.getInputUnderPointer(event);
+  private _applyReassignEvent(event: IPointerEvent): void {
+    const fInput = this._getInputUnderPointer(event);
     if (
-      !!input && !this.isReassignToDifferentInput(input)
+      !!fInput && !this._isReassignToDifferentInput(fInput)
     ) {
       return;
     }
-    this.fDraggable.fReassignConnection.emit(
-      new FReassignConnectionEvent(
-        this.dragHandler.fConnection.fId,
-        this.dragHandler.fConnection.fOutputId,
-        this.dragHandler.fConnection.fInputId,
-        input?.fId,
-        event.getPosition()
-      )
+    this._emitReassignConnectionEvent(event, fInput);
+  }
+
+  private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
+    return this._fMediator.send<FConnectorBase | undefined>(new GetInputUnderPointerRequest(event, this._fDragHandler));
+  }
+
+  private _isReassignToDifferentInput(fInput: FConnectorBase): boolean {
+    return this._fDragHandler.fConnection.fInputId !== fInput.fId;
+  }
+
+  private _emitReassignConnectionEvent(event: IPointerEvent, fInput?: FConnectorBase): void {
+    this._fDraggable.fReassignConnection.emit(this._getEventData(event, fInput));
+  }
+
+  private _getEventData(event: IPointerEvent, fInput?: FConnectorBase): FReassignConnectionEvent {
+    return new FReassignConnectionEvent(
+      this._fDragHandler.fConnection.fId,
+      this._fDragHandler.fConnection.fOutputId,
+      this._fDragHandler.fConnection.fInputId,
+      fInput?.fId, event.getPosition()
     );
-  }
-
-  private getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
-    return this.fMediator.send<FConnectorBase | undefined>(new GetInputUnderPointerRequest(event, this.dragHandler));
-  }
-
-  private isReassignToDifferentInput(inputsUnderPointer: FConnectorBase): boolean {
-    return this.dragHandler.fConnection.fInputId !== inputsUnderPointer.fId;
   }
 }

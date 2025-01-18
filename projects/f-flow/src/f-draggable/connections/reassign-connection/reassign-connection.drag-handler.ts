@@ -74,7 +74,13 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
   }
 
   private _drawConnection(fInputRect: IRoundedRect, fSide: EFConnectableSide): void {
-    const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
+    const line = this._getLineToPointer(fInputRect, fSide);
+    this.fConnection.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, fSide);
+    this.fConnection.redraw();
+  }
+
+  private _getLineToPointer(fInputRect: IRoundedRect, fSide: EFConnectableSide): ILine {
+    return this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
         this.fOutputWithRect.fRect,
         fInputRect,
         this.fConnection.fBehavior,
@@ -82,27 +88,27 @@ export class ReassignConnectionDragHandler implements IDraggableItem {
         fSide
       )
     );
-
-    this.fConnection.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, fSide);
-    this.fConnection.redraw();
   }
 
   private _drawSnapConnection(fClosestInput: IClosestInput | undefined): void {
     if (fClosestInput) {
-      const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
-          this.fOutputWithRect.fRect,
-          fClosestInput.fRect,
-          this.fSnapConnection!.fBehavior,
-          this.fOutputWithRect.fConnector.fConnectableSide,
-          fClosestInput.fConnector.fConnectableSide
-        )
-      );
+      const line = this._getLineToClosestInput(fClosestInput);
       this.fSnapConnection!.show();
       this.fSnapConnection!.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, fClosestInput.fConnector.fConnectableSide);
       this.fSnapConnection!.redraw();
     } else {
       this.fSnapConnection?.hide();
     }
+  }
+
+  private _getLineToClosestInput(fClosestInput: IClosestInput): ILine {
+    return this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+      this.fOutputWithRect.fRect,
+      fClosestInput.fRect,
+      this.fSnapConnection!.fBehavior,
+      this.fOutputWithRect.fConnector.fConnectableSide,
+      fClosestInput.fConnector.fConnectableSide
+    ));
   }
 
   public getClosetInput(difference: IPoint): IClosestInput | undefined {

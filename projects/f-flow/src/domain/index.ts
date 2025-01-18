@@ -34,6 +34,8 @@ export * from './i-map';
 
 export * from './is-mobile';
 
+export * from './log-execution-time';
+
 export * from './providers';
 
 export * from './transition-end';

@@ -41,7 +41,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
     this._finalizeMove(differenceWithCellSize);
 
-    this._fDraggableDataContext.fLineAlignment?.complete();
+    this._fComponentsStore.fLineAlignment?.complete();
 
     this._applyConnectionUnderDroppedNode();
   }
@@ -76,7 +76,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _getLineAlignmentDifference(difference: IPoint): ILineAlignmentResult | undefined {
-    return this._fDraggableDataContext.fLineAlignment?.findNearestCoordinate(difference);
+    return this._fComponentsStore.fLineAlignment?.findNearestCoordinate(difference);
   }
 
   private _applyLineAlignmentDifference(difference: IPoint, intersection: ILineAlignmentResult | undefined): IPoint {
