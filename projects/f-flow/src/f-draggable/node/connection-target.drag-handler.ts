@@ -1,4 +1,4 @@
-import { ILine, IPoint, RoundedRect } from '@foblex/2d';
+import { ILine, IMinMaxPoint, IPoint, RoundedRect } from '@foblex/2d';
 import {
   CalculateConnectionLineByBehaviorRequest,
 } from '../../domain';
@@ -13,8 +13,7 @@ export class ConnectionTargetDragHandler extends ConnectionBaseDragHandler {
     fMediator: FMediator,
     fComponentsStore: FComponentsStore,
     connection: FConnectionBase,
-    public minDistance: IPoint,
-    public maxDistance: IPoint
+    public restrictions: IMinMaxPoint,
   ) {
     super(fMediator, fComponentsStore, connection);
   }
@@ -26,7 +25,7 @@ export class ConnectionTargetDragHandler extends ConnectionBaseDragHandler {
   private getNewLineValue(difference: IPoint): ILine {
     return this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       this.fOutputWithRect.fRect,
-      RoundedRect.fromRoundedRect(this.fInputWithRect.fRect).addPoint(this.getRestrictedDifference({ ...difference }, { min: this.minDistance, max: this.maxDistance })),
+      RoundedRect.fromRoundedRect(this.fInputWithRect.fRect).addPoint(this.getRestrictedDifference({ ...difference }, this.restrictions)),
       this.connection.fBehavior,
       this.fOutputWithRect.fConnector.fConnectableSide,
       this.fInputWithRect.fConnector.fConnectableSide

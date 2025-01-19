@@ -22,6 +22,8 @@ describe('DragToConnectComponent', () => {
   });
 
   it('should drag from output to input and create a connection', function () {
+    cy.get('f-flow').scrollIntoView();
+
     cy.get('#f-connection-0').should('not.exist');
 
     cy.get('.f-node-output')

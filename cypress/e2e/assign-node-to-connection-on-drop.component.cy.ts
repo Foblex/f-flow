@@ -17,8 +17,8 @@ describe('AssignNodeToConnectionOnDropComponent', () => {
       const endY = targetRect.y + targetRect.height / 2;
 
       cy.get('div[data-f-node-id="3"]')
-        .trigger('mousedown', { button: 0, force: true })
-        .trigger('mousemove', { clientY: endY + 180, force: true })
+        .trigger('mousedown', { button: 0, clientY: endY, force: true })
+        .trigger('mousemove', { button: 0, clientY: endY + 140, force: true })
         .trigger('mouseup', { force: true });
 
       cy.get('#connection_232').should('exist');

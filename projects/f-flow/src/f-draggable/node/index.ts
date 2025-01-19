@@ -1,5 +1,7 @@
 export * from './create-move-nodes-drag-model-from-selection';
 
+export * from './line-alignment-preparation';
+
 export * from './node-drag-to-parent-finalize';
 
 export * from './node-drag-to-parent-preparation';
@@ -17,6 +19,8 @@ export * from './connection-source.drag-handler';
 export * from './connection-target.drag-handler';
 
 export * from './f-drop-to-group.event';
+
+export * from './line-alignment.drag-handler';
 
 export * from './node.drag-handler';
 

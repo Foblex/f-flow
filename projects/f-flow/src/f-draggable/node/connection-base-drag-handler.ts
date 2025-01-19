@@ -3,8 +3,7 @@ import { FConnectionBase } from '../../f-connection';
 import { FConnectorBase } from '../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { Directive } from '@angular/core';
-import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
-import { ILine, IPoint } from '@foblex/2d';
+import { ILine, IMinMaxPoint, IPoint } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
 import { GetConnectorWithRectRequest, IConnectorWithRect } from '../../domain';
 
@@ -48,7 +47,7 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
 
   public abstract onPointerMove(difference: IPoint): void;
 
-  protected getRestrictedDifference(difference: IPoint, restrictions: INodeMoveRestrictions): IPoint {
+  protected getRestrictedDifference(difference: IPoint, restrictions: IMinMaxPoint): IPoint {
     return {
       x: Math.min(Math.max(difference.x, restrictions.min.x), restrictions.max.x),
       y: Math.min(Math.max(difference.y, restrictions.min.y), restrictions.max.y)

@@ -5,10 +5,11 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { IDraggableItem } from '../../i-draggable-item';
-import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
 import { SelectAndUpdateNodeLayerRequest } from '../../../domain';
+import { isClosestElementHasClass } from '@foblex/utils';
+import { LineAlignmentPreparationRequest } from '../line-alignment-preparation';
 
 @Injectable()
 @FExecutionRegister(NodeMovePreparationRequest)
@@ -26,34 +27,45 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
     return this._fComponentsStore.fFlow!.hostElement;
   }
 
+  private _fNode: FNodeBase | undefined;
+
   public handle(request: NodeMovePreparationRequest): void {
-
-    const itemsToDrag = this._calculateDraggableItems(
-      this._getNode(request.event.targetElement)
-    );
-
-    this._initializeLineAlignment(itemsToDrag);
+    if(!this._isValid(request)) {
+      return;
+    }
 
     this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
-    this._fDraggableDataContext.draggableItems = itemsToDrag;
+    this._fDraggableDataContext.draggableItems = this._calculateDraggedItems(this._fNode!);
+
+    if(this._fComponentsStore.fLineAlignment) {
+      this._fMediator.execute<void>(new LineAlignmentPreparationRequest());
+    }
   }
 
-  private _getNode(targetElement: HTMLElement): FNodeBase {
-    const result = this._fComponentsStore.fNodes.find(n => n.isContains(targetElement))!;
-    if (!result) {
-      throw new Error('Node not found');
-    }
-    return result;
+  private _isValid(request: NodeMovePreparationRequest): boolean {
+    return this._fDraggableDataContext.isEmpty()
+      && this._isDragHandleElement(request.event.targetElement)
+      && !!this._getNode(request.event.targetElement);
+  }
+
+  private _isDragHandleElement(element: HTMLElement): boolean {
+    return isClosestElementHasClass(element, '.f-drag-handle');
+  }
+
+  private _getNode(element: HTMLElement): FNodeBase | undefined {
+    this._fNode = this._fComponentsStore.fNodes
+      .find(x => x.isContains(element) && !x.fDraggingDisabled);
+    return this._fNode;
   }
 
   //We drag nodes from selection model
-  private _calculateDraggableItems(fNode: FNodeBase): IDraggableItem[] {
+  private _calculateDraggedItems(fNode: FNodeBase): IDraggableItem[] {
     let result: IDraggableItem[] = [];
     if (!fNode.fSelectionDisabled) {
       // Need to select node before drag
-      this._fMediator.send(new SelectAndUpdateNodeLayerRequest(fNode));
+      this._fMediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
 
       result = this._dragModelFromSelection();
     } else {
@@ -64,19 +76,8 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
-    return this._fMediator.send(
+    return this._fMediator.execute(
       new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );
-  }
-
-  private _initializeLineAlignment(itemsToDrag: IDraggableItem[]): void {
-    this._fComponentsStore.fLineAlignment?.initialize(
-      this._fComponentsStore.fNodes, this._filterNodesFromDraggableItems(itemsToDrag)
-    );
-  }
-
-  private _filterNodesFromDraggableItems(items: IDraggableItem[]): FNodeBase[] {
-    return items.filter((x) => x instanceof NodeDragHandler)
-      .map(x => (x as NodeDragHandler).fNode);
   }
 }

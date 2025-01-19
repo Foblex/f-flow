@@ -1,17 +1,16 @@
-import { ILine, IPoint, RoundedRect } from '@foblex/2d';
+import { ILine, IMinMaxPoint, IPoint, RoundedRect } from '@foblex/2d';
 import { FConnectionBase } from '../../f-connection';
 import { FMediator } from '@foblex/mediator';
 import {
   CalculateConnectionLineByBehaviorRequest,
 } from '../../domain';
 import { ConnectionBaseDragHandler } from './connection-base-drag-handler';
-import { INodeMoveRestrictions } from './create-move-nodes-drag-model-from-selection';
 import { FComponentsStore } from '../../f-storage';
 
 export class ConnectionDragHandler extends ConnectionBaseDragHandler {
 
-  private sourceRestrictions!: INodeMoveRestrictions;
-  private targetRestrictions!: INodeMoveRestrictions;
+  private sourceRestrictions!: IMinMaxPoint;
+  private targetRestrictions!: IMinMaxPoint;
 
   constructor(
     fMediator: FMediator,
@@ -21,12 +20,12 @@ export class ConnectionDragHandler extends ConnectionBaseDragHandler {
     super(fMediator, fComponentsStore, connection);
   }
 
-  public setOutputRestrictions(min: IPoint, max: IPoint) {
-    this.sourceRestrictions = { min, max };
+  public setOutputRestrictions(restrictions: IMinMaxPoint) {
+    this.sourceRestrictions = restrictions;
   }
 
-  public setInputRestrictions(min: IPoint, max: IPoint) {
-    this.targetRestrictions = { min, max };
+  public setInputRestrictions(restrictions: IMinMaxPoint) {
+    this.targetRestrictions = restrictions;
   }
 
   public override onPointerMove(difference: IPoint): void {

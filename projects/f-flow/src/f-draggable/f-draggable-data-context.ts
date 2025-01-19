@@ -25,4 +25,8 @@ export class FDraggableDataContext {
   public markSelectionAsChanged(): void {
     this.isSelectedChanged = true;
   }
+
+  public isEmpty(): boolean {
+    return !this.draggableItems.length;
+  }
 }
