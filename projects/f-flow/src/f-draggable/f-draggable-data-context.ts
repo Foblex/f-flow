@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Point } from '@foblex/2d';
 import { IDraggableItem } from './i-draggable-item';
-import { FLineAlignmentBase } from '../f-line-alignment';
 import { ICanChangeSelection } from '../mixins';
 
 @Injectable()
@@ -17,8 +16,6 @@ export class FDraggableDataContext {
 
   public draggableItems: IDraggableItem[] = [];
 
-  public fLineAlignment: FLineAlignmentBase | undefined;
-
   public reset(): void {
     this.draggableItems = [];
     this.onPointerDownScale = 1;
@@ -27,5 +24,9 @@ export class FDraggableDataContext {
 
   public markSelectionAsChanged(): void {
     this.isSelectedChanged = true;
+  }
+
+  public isEmpty(): boolean {
+    return !this.draggableItems.length;
   }
 }

@@ -12,11 +12,11 @@ export class CalculateNodesBoundingBoxNormalizedPositionExecution implements IEx
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: CalculateNodesBoundingBoxNormalizedPositionRequest): IRect | null {
-    return RectExtensions.union(this._getNodesRects());
+    return RectExtensions.union(this._getNodesRects(request.fNodes || this._fComponentsStore.fNodes));
   }
 
-  private _getNodesRects(): IRect[] {
-    return this._fComponentsStore.fNodes.map((x) => {
+  private _getNodesRects(fNodes: FNodeBase[]): IRect[] {
+    return fNodes.map((x) => {
       return this._getElementRect(x, RectExtensions.fromElement(x.hostElement));
     });
   }

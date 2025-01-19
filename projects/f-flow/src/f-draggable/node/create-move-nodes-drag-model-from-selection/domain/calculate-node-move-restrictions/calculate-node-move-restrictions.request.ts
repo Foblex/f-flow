@@ -1,6 +1,6 @@
 import { FNodeBase } from '../../../../../f-node';
 
-export class GetNodeMoveRestrictionsRequest {
+export class CalculateNodeMoveRestrictionsRequest {
 
   constructor(
     public fNode: FNodeBase,

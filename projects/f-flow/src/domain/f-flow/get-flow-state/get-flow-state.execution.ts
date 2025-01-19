@@ -1,5 +1,5 @@
 import { GetFlowStateRequest } from './get-flow-state.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IFFlowState } from './i-f-flow-state';
 import { FComponentsStore } from '../../../f-storage';
@@ -12,23 +12,20 @@ import { GetFlowStateConnectionsRequest } from './get-flow-state-connections';
 @FExecutionRegister(GetFlowStateRequest)
 export class GetFlowStateExecution implements IExecution<GetFlowStateRequest, IFFlowState> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator
-  ) {
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(payload: GetFlowStateRequest): IFFlowState {
     return {
-      position: this.getCanvasPosition(this.fComponentsStore.fCanvas!.transform),
-      scale: this.fComponentsStore.fCanvas!.transform.scale,
-      nodes: this.fMediator.send(new GetFlowStateNodesRequest(FNodeDirective)),
-      groups: this.fMediator.send(new GetFlowStateNodesRequest(FGroupDirective)),
-      connections: this.fMediator.send(new GetFlowStateConnectionsRequest())
+      position: this._getCanvasPosition(this._fComponentsStore.fCanvas!.transform),
+      scale: this._fComponentsStore.fCanvas!.transform.scale,
+      nodes: this._fMediator.send(new GetFlowStateNodesRequest(FNodeDirective)),
+      groups: this._fMediator.send(new GetFlowStateNodesRequest(FGroupDirective)),
+      connections: this._fMediator.send(new GetFlowStateConnectionsRequest())
     }
   }
 
-  private getCanvasPosition(transform: ITransformModel): IPoint {
+  private _getCanvasPosition(transform: ITransformModel): IPoint {
     return PointExtensions.sum(transform.position, transform.scaledPosition);
   }
 }

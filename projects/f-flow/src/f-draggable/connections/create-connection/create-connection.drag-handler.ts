@@ -78,7 +78,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
   }
 
   private _drawConnectionForCreate(fInputRect: RoundedRect, fSide: EFConnectableSide): void {
-    const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
+    const line = this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
         this.fOutputWithRect.fRect,
         fInputRect,
         this.fConnection.fBehavior,
@@ -93,7 +93,7 @@ export class CreateConnectionDragHandler implements IDraggableItem {
 
   private _drawSnapConnection(fClosestInput: IClosestInput | undefined): void {
     if (fClosestInput) {
-      const line = this.fMediator.send<ILine>(new CalculateConnectionLineByBehaviorRequest(
+      const line = this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
           this.fOutputWithRect.fRect,
           fClosestInput.fRect,
           this.fSnapConnection!.fBehavior,

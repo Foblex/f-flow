@@ -10,6 +10,6 @@ export class AddLineAlignmentToStoreExecution implements IExecution<AddLineAlign
   private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: AddLineAlignmentToStoreRequest): void {
-    //this._fComponentsStore.fFlow = request.fComponent;
+    this._fComponentsStore.fLineAlignment = request.fComponent;
   }
 }

@@ -8,6 +8,7 @@ import { FNodeBase } from '../f-node';
 import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
+import { FLineAlignmentBase } from '../f-line-alignment';
 
 @Injectable()
 export class FComponentsStore {
@@ -45,6 +46,8 @@ export class FComponentsStore {
   public fOutlets: FConnectorBase[] = [];
 
   public fDraggable: FDraggableBase | undefined;
+
+  public fLineAlignment: FLineAlignmentBase | undefined;
 
   public addComponent<T>(collection: T[], component: T): void {
     collection.push(component);

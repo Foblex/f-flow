@@ -1,8 +1,10 @@
+export * from './domain/calculate-common-node-move-restrictions';
+
 export * from './domain/put-input-connection-handlers-to-array';
 
 export * from './domain/put-output-connection-handlers-to-array';
 
-export * from './domain/get-node-move-restrictions';
+export * from './domain/calculate-node-move-restrictions';
 
 export * from './providers';
 

@@ -21,14 +21,14 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
         parent: x.fParentId,
         position: x.position,
         size: x.size,
-        fOutputs: this.getOutputs(x.hostElement),
-        fInputs: this.getInputs(x.hostElement),
+        fOutputs: this._getOutputs(x.hostElement),
+        fInputs: this._getInputs(x.hostElement),
         isSelected: x.isSelected()
       };
     });
   }
 
-  private getOutputs(hostElement: HTMLElement): IFFlowStateConnector[] {
+  private _getOutputs(hostElement: HTMLElement): IFFlowStateConnector[] {
     return this.fComponentsStore.fOutputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
         id: x.fId,
@@ -37,7 +37,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
     });
   }
 
-  private getInputs(hostElement: HTMLElement): IFFlowStateConnector[] {
+  private _getInputs(hostElement: HTMLElement): IFFlowStateConnector[] {
     return this.fComponentsStore.fInputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
         id: x.fId,

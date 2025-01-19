@@ -1,9 +1,9 @@
 import { FNodeBase } from '../../../f-node';
-import { INodeMoveRestrictions } from './domain/get-node-move-restrictions';
+import { IMinMaxPoint } from '@foblex/2d';
 
-export interface INodeWithDistanceRestrictions extends INodeMoveRestrictions {
+export interface INodeWithDistanceRestrictions extends IMinMaxPoint {
 
-  node: FNodeBase;
+  fDraggedNode: FNodeBase;
 
-  parentNodes?: FNodeBase[];
+  fParentNodes?: FNodeBase[];
 }

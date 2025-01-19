@@ -1,28 +1,28 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetFlowStateConnectionsRequest } from './get-flow-state-connections-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnection } from '../i-f-flow-state-connection';
+import { FConnectionBase } from '../../../../f-connection';
 
 @Injectable()
 @FExecutionRegister(GetFlowStateConnectionsRequest)
 export class GetFlowStateConnectionsExecution implements IExecution<GetFlowStateConnectionsRequest, IFFlowStateConnection[]> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-  ) {
-  }
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: GetFlowStateConnectionsRequest): IFFlowStateConnection[] {
-    return this.fComponentsStore.fConnections.map((x) => {
-      return {
-        id: x.fId,
-        fOutputId: x.fOutputId,
-        fInputId: x.fInputId,
-        fType: x.fType,
-        fBehavior: x.fBehavior,
-        isSelected: x.isSelected()
-      }
-    });
+    return this._fComponentsStore.fConnections.map(this._mapToConnectionState);
+  }
+
+  private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {
+    return {
+      id: x.fId,
+      fOutputId: x.fOutputId,
+      fInputId: x.fInputId,
+      fType: x.fType,
+      fBehavior: x.fBehavior,
+      isSelected: x.isSelected()
+    }
   }
 }
