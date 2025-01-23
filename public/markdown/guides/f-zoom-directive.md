@@ -2,11 +2,11 @@
 
 **Selector:** [fZoom]
 
-The **FZoomDirective** directive is used to control the zoom and pan of the canvas. It is used in conjunction with the [f-canvas](f-canvas-component) component to provide zoom and pan functionality. Zooming can be done by using the mouse wheel or by double clicking on the canvas. The zoom level can be reset to the default
+The **FZoomDirective** directive is used to control the zoom of the canvas. It is used in conjunction with the [f-canvas](f-canvas-component) component to provide zoom functionality. Zooming can be done by using the mouse wheel or by double-clicking on the canvas. The zoom level can be reset to the default
 
 ## Inputs
 
-- `fZoom: boolean;` Enables or disables the zoom and pan functionality.
+- `fZoom: boolean;` Enables or disables the zoom functionality.
 
 - `fZoomMinimum: number;` The minimum zoom level allowed. Default is 0.1.
 
@@ -14,19 +14,17 @@ The **FZoomDirective** directive is used to control the zoom and pan of the canv
 
 - `fZoomStep: number;` The zoom step value. Default is 0.1.
 
-- `fZoomDblClickStep: boolean;` The zoom step value when double clicking. Default is 0.5.
-
-## Outputs
-
-- `fCanvasChange: EventEmitter<FCanvasChangeEvent>;` Emits an event when there are changes in the canvas state, like position or scale updates.
+- `fZoomDblClickStep: number;` The zoom step value when double-clicking. Default is 0.5.
 
 ## Methods
 
-- `getScale(): number;` Returns the current scale of the canvas.
+- `setZoom(point: IPoint, step: number, direction: number, animated: boolean): void;` Sets the zoom level of the [f-canvas](f-canvas-component). Point is the center of the zoom, step is the zoom step, direction is the zoom direction, and animated is whether the zoom should be animated.
 
-- `zoomIn(point?: IPoint): void;` Zooms in the canvas. If a point is provided, the zoom will be centered on that point.
+- `getZoomValue(): number;` Returns the current [f-canvas](f-canvas-component) scale.
 
-- `zoomOut(point?: IPoint): void;` Zooms out the canvas. If a point is provided, the zoom will be centered on that point.
+- `zoomIn(point?: IPoint): void;` Zooms in the [f-canvas](f-canvas-component). If a point is provided, the zoom will be centered on that point.
+
+- `zoomOut(point?: IPoint): void;` Zooms out the [f-canvas](f-canvas-component). If a point is provided, the zoom will be centered on that point.
 
 - `reset(): void;` Resets the zoom level to 1.
 
@@ -52,7 +50,7 @@ To enable zoom and pan functionality, set `fZoom` directive to [f-canvas](f-canv
 
 #### Tracking Zoom Changes
 
-To track zoom changes, use the `fCanvasChange` output.
+To track zoom changes, use the `fCanvasChange` output from fCanvas.
 
 ```html
 <f-flow>

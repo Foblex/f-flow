@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ITransformModel } from '@foblex/2d';
 import { FConnectionBase, FMarkerBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
@@ -9,6 +8,7 @@ import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
+import { IMap } from '../domain';
 
 @Injectable()
 export class FComponentsStore {
@@ -22,6 +22,8 @@ export class FComponentsStore {
   public get flowHost(): HTMLElement {
     return this.fFlow?.hostElement!;
   }
+
+  public fComponents: IMap<any> = {};
 
   public fFlow: FFlowBase | undefined;
 

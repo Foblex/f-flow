@@ -3,7 +3,6 @@ import {
   Directive,
   ElementRef,
   inject,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -11,7 +10,7 @@ import {
 } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
-import { F_NODE, FNodeBase } from '../../f-node';
+import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddOutputToStoreRequest, RemoveOutputFromStoreRequest } from '../../domain';
@@ -32,6 +31,10 @@ let uniqueId: number = 0;
   providers: [ { provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective } ],
 })
 export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnChanges, OnDestroy {
+
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+  private _fNode = inject(F_NODE);
 
   @Input('fOutputId')
   public override fId: string = `f-node-output-${ uniqueId++ }`;
@@ -55,23 +58,14 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     return this._elementReference.nativeElement;
   }
 
-  private _elementReference = inject(ElementRef);
-  private _fMediator = inject(FMediator);
-
-  constructor(
-    @Inject(F_NODE) private fNode: FNodeBase
-  ) {
-    super();
-  }
-
   public ngOnInit() {
     this._fMediator.send(new AddOutputToStoreRequest(this));
-    this.fNode.addConnector(this);
+    this._fNode.addConnector(this);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes[ 'userFConnectableSide' ]) {
-      this.fNode.refresh();
+      this._fNode.refresh();
     }
   }
 
@@ -82,7 +76,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   }
 
   public ngOnDestroy(): void {
-    this.fNode.removeConnector(this);
+    this._fNode.removeConnector(this);
     this._fMediator.send(new RemoveOutputFromStoreRequest(this));
   }
 }

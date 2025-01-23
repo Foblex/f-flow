@@ -32,9 +32,9 @@ export abstract class FCanvasBase implements IHasHostElement {
     this.transform.position = position;
   }
 
-  public abstract setZoom(scale: number, toPosition: IPoint): void;
+  public abstract setScale(scale: number, toPosition: IPoint): void;
 
-  public abstract resetZoom(): void;
+  public abstract resetScale(): void;
 
   public emitCanvasChangeEvent(): void {
     this.fCanvasChange.emit(

@@ -1,9 +1,9 @@
-import { CANVAS_MOVE_PREPARATION_PROVIDERS } from './canvas-move-preparation';
-import { CANVAS_MOVE_FINALIZE_PROVIDERS } from './canvas-move-finalize';
+import { CanvasMovePreparationExecution } from './canvas-move-preparation';
+import { CanvasMoveFinalizeExecution } from './canvas-move-finalize';
 
 export const CANVAS_PROVIDERS = [
 
-  ...CANVAS_MOVE_FINALIZE_PROVIDERS,
+  CanvasMoveFinalizeExecution,
 
-  ...CANVAS_MOVE_PREPARATION_PROVIDERS,
+  CanvasMovePreparationExecution,
 ];

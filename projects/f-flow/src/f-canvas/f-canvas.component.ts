@@ -19,6 +19,7 @@ import {
   ResetScaleAndCenterRequest, ResetScaleRequest, SetBackgroundTransformRequest, transitionEnd, UpdateScaleRequest,
 } from '../domain';
 import { NotifyTransformChangedRequest } from '../f-storage';
+import { Deprecated } from '../domain';
 
 @Component({
   selector: 'f-canvas',
@@ -93,11 +94,29 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     this._fMediator.send(new ResetScaleAndCenterRequest(animated));
   }
 
-  public override setZoom(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
+  public getScale(): number {
+    return this.transform.scale || 1;
+  }
+
+  /**
+   *  @deprecated Method "setZoom" is deprecated. Use "setScale" instead. This method will be removed in version 18.0.0.`,
+   */
+  @Deprecated('setScale')
+  public setZoom(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
+    this.setScale(scale, toPosition);
+  }
+  public override setScale(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
     this._fMediator.send(new UpdateScaleRequest(scale, toPosition));
   }
 
-  public override resetZoom(): void {
+  /**
+   *  @deprecated Method "resetZoom" is deprecated. Use "resetScale" instead. This method will be removed in version 18.0.0.`,
+   */
+  @Deprecated('resetScale')
+  public resetZoom(): void {
+    this.resetScale();
+  }
+  public override resetScale(): void {
     this._fMediator.send(new ResetScaleRequest());
   }
 

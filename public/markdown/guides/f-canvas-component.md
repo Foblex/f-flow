@@ -22,9 +22,11 @@ The **FCanvasComponent** is an Angular component that serves as a container for 
 
 - `centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void;` Centers the canvas around a group or node with the specified ID, optionally using animation.
 
-- `setZoom(value: number, toPoint: IPoint = { x: 0, y: 0 }): void;` Sets the zoom level of the canvas, optionally centering around a specified point.
+- `setScale(value: number, toPoint: IPoint = { x: 0, y: 0 }): void;` Sets the scale level of the canvas, optionally centering around a specified point.
 
-- `resetZoom(): void;` Resets the zoom level of the canvas to 1:1.
+- `getScale(): void;` Returns the current scale level of the canvas.
+
+- `resetScale(): void;` Resets the scale level of the canvas to 1:1.
 
 ## Styles
 
