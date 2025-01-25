@@ -13,7 +13,7 @@ import { EFConnectableSide } from '../e-f-connectable-side';
 import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddOutputToStoreRequest, RemoveOutputFromStoreRequest } from '../../domain';
+import { AddOutputToStoreRequest, F_CSS_CLASS, RemoveOutputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 
 let uniqueId: number = 0;
@@ -54,6 +54,13 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   @Input()
   public override isSelfConnectable: boolean = true;
 
+  @Input({ alias: 'fCanBeConnectedInputs' })
+  public canBeConnectedInputs: string[] = [];
+
+  public override get fNodeId(): string {
+    return this._fNode.fId;
+  }
+
   public get hostElement(): HTMLElement | SVGElement {
     return this._elementReference.nativeElement;
   }
@@ -69,10 +76,16 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     }
   }
 
-  public override setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
-    super.setConnected(isConnected, toConnector);
-    this.hostElement.classList.toggle('f-node-output-connected', isConnected);
-    this.hostElement.classList.toggle('f-node-output-not-connectable', !this.canBeConnected);
+  public override setConnected(toConnector: FConnectorBase): void {
+    super.setConnected(toConnector);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, true);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE, !this.canBeConnected);
+  }
+
+  public override resetConnected(): void {
+    super.resetConnected();
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, false);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE, !this.canBeConnected);
   }
 
   public ngOnDestroy(): void {

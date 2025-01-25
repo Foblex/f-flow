@@ -3,7 +3,6 @@ import {
   Directive,
   ElementRef,
   inject,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -11,10 +10,10 @@ import {
 } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
-import { FNodeBase, F_NODE } from '../../f-node';
+import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddInputToStoreRequest, RemoveInputFromStoreRequest } from '../../domain';
+import { AddInputToStoreRequest, F_CSS_CLASS, RemoveInputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 
 let uniqueId: number = 0;
@@ -32,6 +31,10 @@ let uniqueId: number = 0;
 })
 export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnChanges, OnDestroy {
 
+  private _elementReference = inject(ElementRef);
+  private _fMediator = inject(FMediator);
+  private _fNode = inject(F_NODE);
+
   @Input('fInputId')
   public override fId: any = `f-node-input-${ uniqueId++ }`;
 
@@ -47,38 +50,39 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
   })
   public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
+  public override get fNodeId(): string {
+    return this._fNode.fId;
+  }
+
   public get hostElement(): HTMLElement | SVGElement {
     return this._elementReference.nativeElement;
   }
 
-  private _elementReference = inject(ElementRef);
-  private _fMediator = inject(FMediator);
-
-  constructor(
-    @Inject(F_NODE) private fNode: FNodeBase,
-  ) {
-    super();
-  }
-
   public ngOnInit() {
     this._fMediator.send(new AddInputToStoreRequest(this));
-    this.fNode.addConnector(this);
+    this._fNode.addConnector(this);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes[ 'userFConnectableSide' ]) {
-      this.fNode.refresh();
+      this._fNode.refresh();
     }
   }
 
-  public override setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
-    super.setConnected(isConnected, toConnector);
-    this.hostElement.classList.toggle('f-node-input-connected', isConnected);
-    this.hostElement.classList.toggle('f-node-input-not-connectable', !this.canBeConnected);
+  public override setConnected(toConnector: FConnectorBase): void {
+    super.setConnected(toConnector);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_CONNECTED, true);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_NOT_CONNECTABLE, !this.canBeConnected);
+  }
+
+  public override resetConnected(): void {
+    super.resetConnected();
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_CONNECTED, false);
+    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_NOT_CONNECTABLE, !this.canBeConnected);
   }
 
   public ngOnDestroy(): void {
-    this.fNode.removeConnector(this);
+    this._fNode.removeConnector(this);
     this._fMediator.send(new RemoveInputFromStoreRequest(this));
   }
 }

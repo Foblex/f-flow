@@ -20,7 +20,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   public handle(request: RedrawConnectionsRequest): void {
-    this.resetConnectors();
+    this._resetConnectors();
 
     if (this.fComponentsStore.fTempConnection) {
       this.setMarkers(this.fComponentsStore.fTempConnection);
@@ -34,19 +34,19 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
       const output = this.fComponentsStore.fOutputs.find((x) => x.fId === connection.fOutputId);
       const input = this.fComponentsStore.fInputs.find((x) => x.fId === connection.fInputId);
       if (output && input) {
-        this.setupConnection(output, input, connection);
+        this._setupConnection(output, input, connection);
       }
     });
   }
 
-  private resetConnectors(): void {
-    this.fComponentsStore.fOutputs.forEach((output) => output.setConnected(false, undefined));
-    this.fComponentsStore.fInputs.forEach((input) => input.setConnected(false, undefined));
+  private _resetConnectors(): void {
+    this.fComponentsStore.fOutputs.forEach((x) => x.resetConnected());
+    this.fComponentsStore.fInputs.forEach((x) => x.resetConnected());
   }
 
-  private setupConnection(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): void {
-    output.setConnected(true, input);
-    input.setConnected(true, output);
+  private _setupConnection(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): void {
+    output.setConnected(input);
+    input.setConnected(output);
 
     const line = this.getLine(output, input, connection);
 

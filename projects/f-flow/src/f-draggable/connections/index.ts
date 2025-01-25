@@ -1,7 +1,7 @@
 export * from './create-connection';
 
-export * from './get-input-under-pointer';
-
 export * from './reassign-connection';
+
+export * from './i-create-reassign-connection-drag-data';
 
 export * from './providers';

@@ -8,7 +8,7 @@ import { FDraggableBase } from '../../../f-draggable-base';
 import { FReassignConnectionEvent } from '../f-reassign-connection.event';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectorBase } from '../../../../f-connectors';
-import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
+import { FindInputAtPositionRequest } from '../../../../domain';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionFinalizeRequest)
@@ -51,11 +51,17 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   }
 
   private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
-    return this._fMediator.send<FConnectorBase | undefined>(new GetInputUnderPointerRequest(event, this._fDragHandler));
+    return this._fMediator.send<FConnectorBase | undefined>(
+      new FindInputAtPositionRequest(
+        event.getPosition(),
+        this._getDragHandlerData().toConnectorRect,
+        this._getDragHandlerData().canBeConnectedInputs
+      )
+    );
   }
 
   private _isReassignToDifferentInput(fInput: FConnectorBase): boolean {
-    return this._fDragHandler.fConnection.fInputId !== fInput.fId;
+    return this._fDragHandler.getConnection().fInputId !== fInput.fId;
   }
 
   private _emitReassignConnectionEvent(event: IPointerEvent, fInput?: FConnectorBase): void {
@@ -63,11 +69,17 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   }
 
   private _getEventData(event: IPointerEvent, fInput?: FConnectorBase): FReassignConnectionEvent {
+    const fConnection = this._fDragHandler.getConnection();
+
     return new FReassignConnectionEvent(
-      this._fDragHandler.fConnection.fId,
-      this._fDragHandler.fConnection.fOutputId,
-      this._fDragHandler.fConnection.fInputId,
+      fConnection.fId,
+      fConnection.fOutputId,
+      fConnection.fInputId,
       fInput?.fId, event.getPosition()
     );
+  }
+
+  private _getDragHandlerData() {
+    return this._fDragHandler.getData();
   }
 }

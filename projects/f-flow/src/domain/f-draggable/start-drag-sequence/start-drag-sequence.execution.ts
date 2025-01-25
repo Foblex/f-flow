@@ -4,6 +4,7 @@ import { StartDragSequenceRequest } from './start-drag-sequence-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { EmitSelectionChangeEventRequest } from '../emit-selection-change-event';
+import { F_CSS_CLASS } from '../../css-cls';
 
 @Injectable()
 @FExecutionRegister(StartDragSequenceRequest)
@@ -21,7 +22,7 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
 
   public handle(request: StartDragSequenceRequest): void {
     if (this._fDraggableDataContext.draggableItems.length > 0) {
-      this._hostElement.classList.add('f-dragging');
+      this._hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
       this._fMediator.send<void>(new EmitSelectionChangeEventRequest());
     }
   }

@@ -1,6 +1,3 @@
-import { FindClosestInputExecution } from './find-closest-input';
-import { GetAllCanBeConnectedInputPositionsExecution } from './get-all-can-be-connected-input-positions';
-import { GetConnectorWithRectExecution } from './get-connector-with-rect';
 import { CreateConnectionMarkersExecution } from './create-connection-markers';
 import { AddConnectionForCreateToStoreExecution } from './add-connection-for-create-to-store';
 import { AddConnectionToStoreExecution } from './add-connection-to-store';
@@ -25,13 +22,7 @@ export const F_CONNECTION_FEATURES = [
 
   CreateConnectionMarkersExecution,
 
-  FindClosestInputExecution,
-
-  GetAllCanBeConnectedInputPositionsExecution,
-
   CalculateConnectionLineByBehaviorExecution,
-
-  GetConnectorWithRectExecution,
 
   RedrawConnectionsExecution,
 

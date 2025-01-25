@@ -5,13 +5,13 @@ import { FMediator } from '@foblex/mediator';
 import { Directive } from '@angular/core';
 import { ILine, IMinMaxPoint, IPoint } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
-import { GetConnectorWithRectRequest, IConnectorWithRect } from '../../domain';
+import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../domain';
 
 @Directive()
 export abstract class ConnectionBaseDragHandler implements IDraggableItem {
 
-  protected fOutputWithRect!: IConnectorWithRect;
-  protected fInputWithRect!: IConnectorWithRect;
+  protected fOutputWithRect!: IConnectorAndRect;
+  protected fInputWithRect!: IConnectorAndRect;
 
   protected constructor(
     protected fMediator: FMediator,
@@ -21,8 +21,8 @@ export abstract class ConnectionBaseDragHandler implements IDraggableItem {
   }
 
   public prepareDragSequence(): void {
-    this.fOutputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getOutput()));
-    this.fInputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.getInput()));
+    this.fOutputWithRect = this.fMediator.send<IConnectorAndRect>(new GetConnectorAndRectRequest(this.getOutput()));
+    this.fInputWithRect = this.fMediator.send<IConnectorAndRect>(new GetConnectorAndRectRequest(this.getInput()));
   }
 
   private getOutput(): FConnectorBase {

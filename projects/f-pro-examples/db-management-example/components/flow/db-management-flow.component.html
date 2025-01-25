@@ -55,6 +55,7 @@
                            [form]="getTableForm(table.id)"
                            [fNodeId]="table.id"
                            fNode
+                           [fConnectOnNode]="true"
                            [fNodeParentId]="table.parentId"
                            [fNodePosition]="table.position"
                            (fNodePositionChange)="moveTable($event, table)">

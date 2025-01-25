@@ -1,9 +1,9 @@
 import { FConnectorBase } from '../../../f-connectors';
 
-export class GetConnectorWithRectRequest {
+export class GetConnectorAndRectRequest {
 
   constructor(
-    public connector: FConnectorBase
+    public fConnector: FConnectorBase
   ) {
   }
 }

@@ -32,6 +32,8 @@ export * from './update-item-and-children-layers';
 
 export * from './create-dom-element';
 
+export * from './css-cls';
+
 export * from './i-f-action-trigger';
 
 export * from './i-map';

@@ -12,13 +12,8 @@ import {
   ReassignConnectionFinalizeExecution,
   ReassignConnectionPreparationExecution,
 } from './reassign-connection';
-import { GetInputUnderPointerExecution, GetInputUnderPointerValidator } from './get-input-under-pointer';
 
 export const CONNECTIONS_PROVIDERS = [
-
-  GetInputUnderPointerExecution,
-
-  GetInputUnderPointerValidator,
 
   CreateConnectionFinalizeExecution,
 

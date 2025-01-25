@@ -1,7 +1,17 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component, ContentChildren, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild
+  Component,
+  ContentChildren,
+  ElementRef,
+  inject,
+  Input,
+  numberAttribute,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
@@ -47,17 +57,17 @@ export class FSnapConnectionComponent
   @Input()
   public override fEndColor: string = 'black';
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
 
   public override fOutputId!: string;
 
   public override fInputId!: string;
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public override fRadius: number = 8;
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public override fOffset: number = 32
 
   @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })

@@ -26,7 +26,7 @@ export class CreateConnectionPreparationExecution
 
     if (isNodeOutlet(request.event.targetElement)) {
       this._fMediator.send<void>(new CreateConnectionFromOutletPreparationRequest(request.event));
-    } else if (this.isNodeOutput(request.event.targetElement, this._getNode(request.event)!)) {
+    } else if (this._isNodeOutput(request.event.targetElement, this._getNode(request.event)!)) {
       this._fMediator.send<void>(new CreateConnectionFromOutputPreparationRequest(request.event));
     }
   }
@@ -44,11 +44,11 @@ export class CreateConnectionPreparationExecution
     return !this._fDraggableDataContext.draggableItems.length && !!this._fComponentsStore.fTempConnection;
   }
 
-  private isNodeOutput(targetElement: HTMLElement, node: FNodeBase): boolean {
-    return isNodeOutput(targetElement) && !this.getOutlets(node).length;
+  private _isNodeOutput(targetElement: HTMLElement, node: FNodeBase): boolean {
+    return isNodeOutput(targetElement) && !this._getOutlets(node).length;
   }
 
-  private getOutlets(node: FNodeBase): FConnectorBase[] {
+  private _getOutlets(node: FNodeBase): FConnectorBase[] {
     return this._fComponentsStore.fOutlets.filter((x) => node.isContains(x.hostElement));
   }
 }

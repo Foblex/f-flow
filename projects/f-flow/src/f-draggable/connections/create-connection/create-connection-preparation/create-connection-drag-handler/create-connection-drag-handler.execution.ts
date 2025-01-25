@@ -37,7 +37,7 @@ export class CreateConnectionDragHandlerExecution
       .sub(this.transform.position).sub(this.transform.scaledPosition).div(this.transform.scale);
 
     this.fDraggableDataContext.draggableItems = [
-      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore, request.connector, positionRelativeToCanvasComponent)
+      new CreateConnectionDragHandler(this.fMediator, this.fComponentsStore, request.fOutput, positionRelativeToCanvasComponent)
     ];
   }
 }

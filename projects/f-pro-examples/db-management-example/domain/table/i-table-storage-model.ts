@@ -9,6 +9,8 @@ export interface ITableStorageModel {
 
   columns: ITableColumn[];
 
+  connectOnNode?: boolean;
+
   position: IPoint;
 
   parentId?: string;

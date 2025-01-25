@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, DestroyRef,
+  AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
   EventEmitter, inject,
@@ -63,16 +63,16 @@ export class FGroupDirective extends FNodeBase
   @Output('fGroupSizeChange')
   public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
 
-  @Input('fGroupDraggingDisabled')
+  @Input({ alias: 'fGroupDraggingDisabled', transform: booleanAttribute })
   public override fDraggingDisabled: boolean = false;
 
-  @Input('fGroupSelectionDisabled')
+  @Input({ alias: 'fGroupSelectionDisabled', transform: booleanAttribute })
   public override fSelectionDisabled: boolean = false;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fIncludePadding: boolean = true;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fConnectOnNode: boolean = true;
 
   private _destroyRef = inject(DestroyRef);

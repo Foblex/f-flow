@@ -3,24 +3,24 @@ import { FMediator } from '@foblex/mediator';
 import { RectExtensions, RoundedRect } from '@foblex/2d';
 import { setupTestModule } from '../../test-setup';
 import { FDraggableDataContext } from '../../../f-draggable';
-import { FindClosestInputExecution } from './find-closest-input.execution';
-import { FindClosestInputRequest } from './find-closest-input.request';
+import { CalculateClosestInputExecution } from './calculate-closest-input.execution';
+import { CalculateClosestInputRequest } from './calculate-closest-input.request';
 import { FConnectorBase } from '../../../f-connectors';
 import { IClosestInput } from '@foblex/flow';
 
-describe('FindClosestInputExecution', () => {
+describe('CalculateClosestInputExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
   let fMediator: FMediator;
 
   beforeEach(() => {
-    setupTestModule([ FindClosestInputExecution ]);
+    setupTestModule([ CalculateClosestInputExecution ]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
     fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
   it('should return undefined when canBeConnectedInputs is empty', () => {
     const result = fMediator.send(
-      new FindClosestInputRequest({ x: 50, y: 50 }, [])
+      new CalculateClosestInputRequest({ x: 50, y: 50 }, [])
     );
     expect(result).toBeUndefined();
   });
@@ -28,7 +28,7 @@ describe('FindClosestInputExecution', () => {
   it('should return the only element if its distance is less than snapThreshold', () => {
 
     const result = fMediator.send<IClosestInput>(
-      new FindClosestInputRequest({ x: 10, y: 10 }, [ {
+      new CalculateClosestInputRequest({ x: 10, y: 10 }, [ {
         fConnector: {
           fId: 'input1'
         } as FConnectorBase,
@@ -46,7 +46,7 @@ describe('FindClosestInputExecution', () => {
 
   it('should return 10 if the only element is exactly at snapThreshold distance', () => {
     const result = fMediator.send<IClosestInput>(
-      new FindClosestInputRequest({ x: 0, y: 0 }, [ {
+      new CalculateClosestInputRequest({ x: 0, y: 0 }, [ {
         fConnector: {
           fId: 'input1'
         } as FConnectorBase,

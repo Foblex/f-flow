@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component, ContentChildren,
   ElementRef, inject,
-  Input, OnChanges,
+  Input, numberAttribute, OnChanges,
   OnDestroy,
   OnInit, QueryList,
   ViewChild
@@ -72,11 +72,11 @@ export class FConnectionComponent
   @Input()
   public override fInputId: any = '';
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public override fRadius: number = 8;
 
-  @Input()
-  public override fOffset: number = 32
+  @Input({ transform: numberAttribute })
+  public override fOffset: number = 32;
 
   @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
   public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
