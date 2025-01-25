@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 
 @Component({
-  selector: 'limiting-connections',
-  styleUrls: [ './limiting-connections.component.scss' ],
-  templateUrl: './limiting-connections.component.html',
+  selector: 'connectability-check',
+  styleUrls: [ './connectability-check.component.scss' ],
+  templateUrl: './connectability-check.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     FFlowModule,
   ]
 })
-export class LimitingConnectionsComponent {
+export class ConnectabilityCheckComponent {
 
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;

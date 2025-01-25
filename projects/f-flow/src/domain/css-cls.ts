@@ -3,6 +3,8 @@ export const F_CSS_CLASS = {
   DRAG_AND_DROP: {
 
     DRAGGING: 'f-dragging',
+
+    CONNECTIONS_DRAGGING: 'f-connections-dragging',
   },
 
   CONNECTOR: {
