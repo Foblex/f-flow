@@ -16,6 +16,7 @@ import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
 import { F_LINE_ALIGNMENT_FEATURES } from './f-line-alignment';
+import { F_ZOOM_FEATURES } from './f-zoom';
 
 export const COMMON_PROVIDERS = [
 
@@ -38,6 +39,8 @@ export const COMMON_PROVIDERS = [
   GetElementRoundedRectExecution,
 
   ...F_SELECTION_FEATURES,
+
+  ...F_ZOOM_FEATURES,
 
   GetDeepChildrenNodesAndGroupsExecution,
 

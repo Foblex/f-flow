@@ -4,7 +4,13 @@ import { Injectable } from '@angular/core';
 import { CreateConnectionFromOutletPreparationRequest } from './create-connection-from-outlet-preparation.request';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
-import { FConnectorBase, FNodeOutletBase, FNodeOutputBase } from '../../../../../f-connectors';
+import {
+  FConnectorBase,
+  FNodeOutletBase,
+  FNodeOutletDirective,
+  FNodeOutputBase,
+  FNodeOutputDirective
+} from '../../../../../f-connectors';
 import { GetCanBeConnectedOutputByOutletRequest } from '../../get-can-be-connected-output-by-outlet';
 import { RequiredOutput } from '../../../../../errors';
 import { CreateConnectionDragHandlerRequest } from '../create-connection-drag-handler';
@@ -38,20 +44,20 @@ export class CreateConnectionFromOutletPreparationExecution
 
       if ((outlet as FNodeOutletBase).isConnectionFromOutlet) {
 
-        this.createDragHandler(event.getPosition(), outlet);
+        this.createDragHandler(event.getPosition(), outlet as FNodeOutletDirective);
       } else {
         const output = this.fMediator.send<FNodeOutputBase>(
-          new GetCanBeConnectedOutputByOutletRequest(outlet as FNodeOutletBase)
+          new GetCanBeConnectedOutputByOutletRequest(outlet as FNodeOutletDirective)
         );
         if (!output) {
           throw RequiredOutput();
         }
-        this.createDragHandler(event.getPosition(), output);
+        this.createDragHandler(event.getPosition(), output as FNodeOutputDirective);
       }
     }
   }
 
-  private createDragHandler(position: IPoint, output: FConnectorBase): void {
-    this.fMediator.send(new CreateConnectionDragHandlerRequest(position, output));
+  private createDragHandler(position: IPoint, fOutput: FNodeOutputDirective | FNodeOutletDirective): void {
+    this.fMediator.send(new CreateConnectionDragHandlerRequest(position, fOutput));
   }
 }

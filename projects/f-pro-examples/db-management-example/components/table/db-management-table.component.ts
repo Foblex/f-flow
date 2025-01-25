@@ -16,8 +16,6 @@ import { MatInput } from '@angular/material/input';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectionService } from '../../domain/selection.service';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { DbManagementTableHeaderComponent } from './components';
 
 @Component({
@@ -33,8 +31,6 @@ import { DbManagementTableHeaderComponent } from './components';
     FormsModule,
     MatSelect,
     MatOption,
-    MatIconButton,
-    MatIcon,
     DbManagementTableHeaderComponent,
     ReactiveFormsModule,
   ],
@@ -63,7 +59,6 @@ export class DbManagementTableComponent implements AfterViewInit, OnDestroy {
   }
 
   constructor(
-    private elementRef: ElementRef,
     private selectionService: SelectionService,
     private changeDetectorRef: ChangeDetectorRef
   ) {

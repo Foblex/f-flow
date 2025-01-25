@@ -1,138 +1,156 @@
 import { IDraggableItem } from '../../i-draggable-item';
 import {
-  FindClosestInputRequest,
-  GetAllCanBeConnectedInputPositionsRequest,
+  CalculateClosestInputRequest,
+  GetAllCanBeConnectedInputsAndRectsRequest,
   CalculateConnectionLineByBehaviorRequest,
-  GetConnectorWithRectRequest,
-  IConnectorWithRect, IClosestInput
+  GetConnectorAndRectRequest,
+  IConnectorAndRect, IClosestInput, MarkAllCanBeConnectedInputsRequest, UnmarkAllCanBeConnectedInputsRequest
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
-import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
+import {
+  EFConnectableSide,
+  FNodeOutletDirective,
+  FNodeOutputDirective
+} from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
-import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, Point, } from '@foblex/2d';
+import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
+import { ICreateReassignConnectionDragData } from '../i-create-reassign-connection-drag-data';
 
-export class CreateConnectionDragHandler implements IDraggableItem {
+export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassignConnectionDragData> {
 
-  private toConnectorRect: RoundedRect = new RoundedRect();
+  private readonly _toConnectorRect = new RoundedRect();
 
-  public get fConnection(): FConnectionBase {
-    return this.fComponentsStore.fTempConnection!;
+  private get _fConnection(): FConnectionBase {
+    return this._fComponentsStore.fTempConnection!;
   }
 
-  private get fSnapConnection(): FSnapConnectionComponent | undefined {
-    return this.fComponentsStore.fSnapConnection as FSnapConnectionComponent;
+  private get _fSnapConnection(): FSnapConnectionComponent | undefined {
+    return this._fComponentsStore.fSnapConnection as FSnapConnectionComponent;
   }
 
-  private fOutputWithRect!: IConnectorWithRect;
+  private _fOutputWithRect!: IConnectorAndRect;
 
-  private canBeConnectedInputs: IConnectorWithRect[] = [];
+  private _canBeConnectedInputs: IConnectorAndRect[] = [];
 
   constructor(
-    private fMediator: FMediator,
-    private fComponentsStore: FComponentsStore,
-    private fOutput: FConnectorBase,
-    private onPointerDownPosition: IPoint,
+    private _fMediator: FMediator,
+    private _fComponentsStore: FComponentsStore,
+    private _fOutput: FNodeOutputDirective | FNodeOutletDirective,
+    _onPointerDownPosition: IPoint,
   ) {
+    this._toConnectorRect = RoundedRect.fromRect(
+      RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y)
+    );
   }
 
   public prepareDragSequence(): void {
+    this._getAndMarkCanBeConnectedInputs();
     this._initializeSnapConnection();
     this._initializeConnectionForCreate();
 
-    this.canBeConnectedInputs = this.fMediator.send<IConnectorWithRect[]>(
-      new GetAllCanBeConnectedInputPositionsRequest(this.fOutput.fId)
-    );
+    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
 
-    this.fOutputWithRect = this.fMediator.send<IConnectorWithRect>(new GetConnectorWithRectRequest(this.fOutput));
-
-    this.toConnectorRect = RoundedRect.fromRect(
-      RectExtensions.initialize(this.onPointerDownPosition.x, this.onPointerDownPosition.y)
-    );
-
-    this.fConnection.show();
+    this._fConnection.show();
     this.onPointerMove(PointExtensions.initialize());
   }
 
+  private _getAndMarkCanBeConnectedInputs(): void {
+    this._canBeConnectedInputs = this._fMediator.execute<IConnectorAndRect[]>(
+      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutput)
+    );
+
+    this._fMediator.execute(
+      new MarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+    );
+  }
+
   private _initializeSnapConnection(): void {
-    if (!this.fSnapConnection) {
+    if (!this._fSnapConnection) {
       return;
     }
-    this.fSnapConnection.fOutputId = this.fOutput.fId;
-    this.fSnapConnection.initialize();
+    this._fSnapConnection.fOutputId = this._fOutput.fId;
+    this._fSnapConnection.initialize();
   }
 
   private _initializeConnectionForCreate(): void {
-    this.fConnection.fOutputId = this.fOutput.fId;
-    this.fConnection.initialize();
+    this._fConnection.fOutputId = this._fOutput.fId;
+    this._fConnection.initialize();
   }
 
   public onPointerMove(difference: IPoint): void {
     const fClosestInput = this._findClosestInput(difference);
 
-    this._drawConnectionForCreate(this.toConnectorRect.addPoint(difference), fClosestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP);
+    this._drawConnectionForCreate(
+      this._toConnectorRect.addPoint(difference),
+      fClosestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP
+    );
 
-    if (this.fSnapConnection) {
+    if (this._fSnapConnection) {
       this._drawSnapConnection(this._getClosestInputForSnapConnection(fClosestInput));
     }
   }
 
-  private _drawConnectionForCreate(fInputRect: RoundedRect, fSide: EFConnectableSide): void {
-    const line = this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
-        this.fOutputWithRect.fRect,
-        fInputRect,
-        this.fConnection.fBehavior,
-        this.fOutputWithRect.fConnector.fConnectableSide,
+  private _drawConnectionForCreate(toConnectorRect: IRoundedRect, fSide: EFConnectableSide): void {
+    const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+        this._fOutputWithRect.fRect,
+        toConnectorRect,
+        this._fConnection.fBehavior,
+        this._fOutputWithRect.fConnector.fConnectableSide,
         fSide
       )
     );
 
-    this.fConnection.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, fSide);
-    this.fConnection.redraw();
+    this._fConnection.setLine(line.point1, this._fOutputWithRect.fConnector.fConnectableSide, line.point2, fSide);
+    this._fConnection.redraw();
   }
 
   private _drawSnapConnection(fClosestInput: IClosestInput | undefined): void {
     if (fClosestInput) {
-      const line = this.fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
-          this.fOutputWithRect.fRect,
+      const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+          this._fOutputWithRect.fRect,
           fClosestInput.fRect,
-          this.fSnapConnection!.fBehavior,
-          this.fOutputWithRect.fConnector.fConnectableSide,
+          this._fSnapConnection!.fBehavior,
+          this._fOutputWithRect.fConnector.fConnectableSide,
           fClosestInput.fConnector.fConnectableSide
         )
       );
-      this.fSnapConnection!.show();
-      this.fSnapConnection!.setLine(line.point1, this.fOutputWithRect.fConnector.fConnectableSide, line.point2, fClosestInput.fConnector.fConnectableSide);
-      this.fSnapConnection!.redraw();
+      this._fSnapConnection!.show();
+      this._fSnapConnection!.setLine(line.point1, this._fOutputWithRect.fConnector.fConnectableSide, line.point2, fClosestInput.fConnector.fConnectableSide);
+      this._fSnapConnection!.redraw();
     } else {
-      this.fSnapConnection?.hide();
+      this._fSnapConnection?.hide();
     }
-  }
-
-  public getClosetInput(difference: IPoint): IClosestInput | undefined {
-    if (!this.fSnapConnection) {
-      return undefined;
-    }
-
-    return this._getClosestInputForSnapConnection(this._findClosestInput(difference));
   }
 
   private _findClosestInput(difference: IPoint): IClosestInput | undefined {
-    return this.fMediator.send<IClosestInput | undefined>(
-      new FindClosestInputRequest(
-        Point.fromPoint(this.toConnectorRect).add(difference),
-        this.canBeConnectedInputs,
+    return this._fMediator.execute<IClosestInput | undefined>(
+      new CalculateClosestInputRequest(
+        this._toConnectorRect.addPoint(difference),
+        this._canBeConnectedInputs,
       )
     );
   }
 
   private _getClosestInputForSnapConnection(fClosestInput: IClosestInput | undefined): IClosestInput | undefined {
-    return fClosestInput && fClosestInput.distance < this.fSnapConnection!.fSnapThreshold ? fClosestInput : undefined;
+    return fClosestInput && fClosestInput.distance < this._fSnapConnection!.fSnapThreshold ? fClosestInput : undefined;
   }
 
   public onPointerUp(): void {
-    this.fConnection.redraw();
-    this.fConnection.hide();
-    this.fSnapConnection?.hide();
+    this._fConnection.redraw();
+    this._fConnection.hide();
+    this._fSnapConnection?.hide();
+
+    this._fMediator.execute(
+      new UnmarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+    );
+  }
+
+  public getData(): ICreateReassignConnectionDragData {
+    return {
+      toConnectorRect: this._toConnectorRect,
+      fOutputId: this._fOutput.fId,
+      canBeConnectedInputs: this._canBeConnectedInputs
+    }
   }
 }

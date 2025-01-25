@@ -1,5 +1,3 @@
-export * from './domain';
-
 export * from './f-node-input';
 
 export * from './f-node-outlet';

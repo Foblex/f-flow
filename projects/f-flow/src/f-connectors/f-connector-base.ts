@@ -5,6 +5,8 @@ export abstract class FConnectorBase implements IHasHostElement {
 
   public abstract fId: string;
 
+  public abstract fNodeId: string;
+
   public abstract disabled: boolean;
 
   public abstract hostElement: HTMLElement | SVGElement;
@@ -17,7 +19,7 @@ export abstract class FConnectorBase implements IHasHostElement {
     return this._isConnected;
   }
 
-  public toConnector: FConnectorBase | undefined;
+  public toConnector: FConnectorBase[] = [];
 
   public isSelfConnectable: boolean = true;
 
@@ -29,8 +31,13 @@ export abstract class FConnectorBase implements IHasHostElement {
     return this.hostElement.contains(element);
   }
 
-  public setConnected(isConnected: boolean, toConnector?: FConnectorBase): void {
-    this._isConnected = isConnected;
-    this.toConnector = toConnector;
+  public setConnected(toConnector: FConnectorBase): void {
+    this._isConnected = true;
+    this.toConnector.push(toConnector);
+  }
+
+  public resetConnected(): void {
+    this._isConnected = false;
+    this.toConnector = [];
   }
 }

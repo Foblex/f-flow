@@ -14,10 +14,11 @@ export interface IDatabaseStorage {
   groups: IGroupStorageModel[];
 }
 
-const CUSTOMERS = {
+const CUSTOMERS: ITableStorageModel = {
   id: 'customers',
   name: 'Customers',
   parentId: 'customer_group',
+  connectOnNode: true,
   position: { x: 700, y: 50 },
   columns: [ {
     id: 'customer_id',

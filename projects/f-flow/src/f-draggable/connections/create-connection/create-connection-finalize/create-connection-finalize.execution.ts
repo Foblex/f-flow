@@ -10,14 +10,14 @@ import { OutputNotFound } from '../../../../errors';
 import { GetCanBeConnectedOutputByOutletRequest } from '../get-can-be-connected-output-by-outlet';
 import { FCreateConnectionEvent } from '../f-create-connection.event';
 import { CreateConnectionDragHandler } from '../create-connection.drag-handler';
-import { GetInputUnderPointerRequest } from '../../get-input-under-pointer';
+import { FindInputAtPositionRequest } from '../../../../domain';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionFinalizeRequest)
 export class CreateConnectionFinalizeExecution
   implements IHandler<CreateConnectionFinalizeRequest, void> {
 
-  private get dragHandler(): CreateConnectionDragHandler {
+  private get _fDragHandler(): CreateConnectionDragHandler {
     return this.fDraggableDataContext.draggableItems[ 0 ] as CreateConnectionDragHandler;
   }
 
@@ -33,7 +33,7 @@ export class CreateConnectionFinalizeExecution
       return;
     }
     this.emitEvent(request.event);
-    this.dragHandler.onPointerUp();
+    this._fDragHandler.onPointerUp();
   }
 
   private _isValid(): boolean {
@@ -44,7 +44,7 @@ export class CreateConnectionFinalizeExecution
 
   private getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {
     if (!output) {
-      throw OutputNotFound(this.dragHandler.fConnection.fOutputId);
+      throw OutputNotFound(this._getDragHandlerData().fOutputId);
     }
     return isNodeOutlet(output.hostElement) ? this.fMediator.send<FNodeOutputBase>(
       new GetCanBeConnectedOutputByOutletRequest(output as FNodeOutletBase)
@@ -52,24 +52,34 @@ export class CreateConnectionFinalizeExecution
   }
 
   private getOutput(): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutputs.find((x) => x.fId === this.dragHandler.fConnection.fOutputId);
+    return this.fComponentsStore.fOutputs.find((x) => x.fId === this._getDragHandlerData().fOutputId);
   }
 
   private getOutlet(): FConnectorBase | undefined {
-    return this.fComponentsStore.fOutlets.find((x) => x.fId === this.dragHandler.fConnection.fOutputId);
+    return this.fComponentsStore.fOutlets.find((x) => x.fId === this._getDragHandlerData().fOutputId);
   }
 
   private emitEvent(event: IPointerEvent): void {
     this.fComponentsStore.fDraggable?.fCreateConnection.emit(
       new FCreateConnectionEvent(
         this.getTargetOutput(this.getOutput() || this.getOutlet()).fId,
-        this.getInputUnderPointer(event)?.fId,
+        this._getInputUnderPointer(event)?.fId,
         event.getPosition()
       )
     );
   }
 
-  private getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
-    return this.fMediator.send<FConnectorBase | undefined>(new GetInputUnderPointerRequest(event, this.dragHandler));
+  private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
+    return this.fMediator.send<FConnectorBase | undefined>(
+      new FindInputAtPositionRequest(
+        event.getPosition(),
+        this._getDragHandlerData().toConnectorRect,
+        this._getDragHandlerData().canBeConnectedInputs
+      )
+    );
+  }
+
+  private _getDragHandlerData() {
+    return this._fDragHandler.getData();
   }
 }

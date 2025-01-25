@@ -8,13 +8,7 @@ export * from './add-snap-connection-to-store';
 
 export * from './create-connection-markers';
 
-export * from './find-closest-input';
-
-export * from './get-all-can-be-connected-input-positions';
-
 export * from './calculate-connection-line-by-behavior';
-
-export * from './get-connector-with-rect';
 
 export * from './redraw-connections';
 

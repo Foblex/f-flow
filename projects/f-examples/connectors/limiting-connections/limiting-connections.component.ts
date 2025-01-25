@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'limiting-connections',
@@ -11,8 +9,6 @@ import { MatIcon } from '@angular/material/icon';
   standalone: true,
   imports: [
     FFlowModule,
-    FCheckboxComponent,
-    MatIcon
   ]
 })
 export class LimitingConnectionsComponent {

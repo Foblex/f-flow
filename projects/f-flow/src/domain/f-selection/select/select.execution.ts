@@ -1,5 +1,5 @@
 import { SelectRequest } from './select.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -8,34 +8,31 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(SelectRequest)
 export class SelectExecution implements IExecution<SelectRequest, void> {
 
-  constructor(
-    private fDataContext: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-  ) {
-  }
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: SelectRequest): void {
-    this.fDraggableDataContext.selectedItems.forEach((x) => {
+    this._fDraggableDataContext.selectedItems.forEach((x) => {
       x.deselect();
     });
-    this.fDraggableDataContext.selectedItems = [];
+    this._fDraggableDataContext.selectedItems = [];
 
     request.nodes.forEach((key) => {
-      const node = this.fDataContext.fNodes.find((x) => x.fId === key);
+      const node = this._fComponentsStore.fNodes.find((x) => x.fId === key);
       if(node) {
         node.select();
-        this.fDraggableDataContext.selectedItems.push(node);
+        this._fDraggableDataContext.selectedItems.push(node);
       }
     });
 
     request.connections.forEach((key) => {
-      const connection = this.fDataContext.fConnections.find((x) => x.fId === key);
+      const connection = this._fComponentsStore.fConnections.find((x) => x.fId === key);
       if(connection) {
         connection.select();
-        this.fDraggableDataContext.selectedItems.push(connection);
+        this._fDraggableDataContext.selectedItems.push(connection);
       }
     });
 
-    this.fDraggableDataContext.isSelectedChanged = true;
+    this._fDraggableDataContext.isSelectedChanged = true;
   }
 }

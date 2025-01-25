@@ -18,6 +18,8 @@ export * from './f-node';
 
 export * from './f-selection';
 
+export * from './f-zoom';
+
 export * from './get-deep-children-nodes-and-groups';
 
 export * from './get-normalized-element-rect';
@@ -30,9 +32,15 @@ export * from './update-item-and-children-layers';
 
 export * from './create-dom-element';
 
+export * from './css-cls';
+
+export * from './i-f-action-trigger';
+
 export * from './i-map';
 
 export * from './is-mobile';
+
+export * from './log-deprecated';
 
 export * from './log-execution-time';
 

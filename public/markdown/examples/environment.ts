@@ -85,6 +85,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/connectors/limiting-connections/limiting-connections.component')
       },
       {
+        tag: 'connectability-check',
+        component: import('../../../projects/f-examples/connectors/connectability-check/connectability-check.component')
+      },
+      {
         tag: 'connectable-side',
         component: import('../../../projects/f-examples/connectors/connectable-side/connectable-side.component')
       },
@@ -356,6 +360,20 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'connectability-check',
+        text: 'Connectability Check',
+        description: 'Check if nodes can be connected in Foblex Flow diagrams for Angular.',
+        image: './previews/examples/connectability-check.light.png',
+        image_dark: './previews/examples/connectability-check.dark.png',
+        image_width: 726,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       },
       {
         link: 'connectable-side',

@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, DestroyRef,
+  AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
   EventEmitter, inject,
@@ -66,17 +66,17 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   @Output('fNodeSizeChange')
   public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
 
-  @Input('fNodeDraggingDisabled')
+  @Input({ alias: 'fNodeDraggingDisabled', transform: booleanAttribute })
   public override fDraggingDisabled: boolean = false;
 
-  @Input('fNodeSelectionDisabled')
+  @Input({ alias: 'fNodeSelectionDisabled', transform: booleanAttribute })
   public override fSelectionDisabled: boolean = false;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fIncludePadding: boolean = true;
 
-  //TODO: Add ability to connect to first connectable input if node is under pointer
-  @Input()
+  //Add ability to connect to first connectable input if node is at pointer position
+  @Input({ transform: booleanAttribute })
   public override fConnectOnNode: boolean = true;
 
   private _destroyRef = inject(DestroyRef);

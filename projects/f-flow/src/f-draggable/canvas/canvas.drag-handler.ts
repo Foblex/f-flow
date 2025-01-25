@@ -7,20 +7,20 @@ export class CanvasDragHandler implements IDraggableItem {
   private onPointerDownPosition: IPoint = PointExtensions.initialize();
 
   constructor(
-      private fComponentsStore: FComponentsStore
+      private _fComponentsStore: FComponentsStore
   ) {
   }
 
   public prepareDragSequence(): void {
-    this.onPointerDownPosition = this.fComponentsStore.fCanvas!.transform.position;
+    this.onPointerDownPosition = this._fComponentsStore.fCanvas!.transform.position;
   }
 
   public onPointerMove(difference: IPoint): void {
-    this.fComponentsStore.fCanvas!.setPosition(Point.fromPoint(this.onPointerDownPosition).add(difference));
-    this.fComponentsStore.fCanvas!.redraw();
+    this._fComponentsStore.fCanvas!.setPosition(Point.fromPoint(this.onPointerDownPosition).add(difference));
+    this._fComponentsStore.fCanvas!.redraw();
   }
 
   public onPointerUp(): void {
-    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
+    this._fComponentsStore.fCanvas!.emitCanvasChangeEvent();
   }
 }

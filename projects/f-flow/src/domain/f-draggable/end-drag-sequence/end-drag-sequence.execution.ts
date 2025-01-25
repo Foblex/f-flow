@@ -3,6 +3,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { EndDragSequenceRequest } from './end-drag-sequence-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { F_CSS_CLASS } from '../../css-cls';
 
 @Injectable()
 @FExecutionRegister(EndDragSequenceRequest)
@@ -17,7 +18,7 @@ export class EndDragSequenceExecution implements IExecution<EndDragSequenceReque
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: EndDragSequenceRequest): void {
-    this._hostElement.classList.remove('f-dragging');
+    this._hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
 
     this._fDraggableDataContext.reset();
   }
