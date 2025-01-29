@@ -599,8 +599,8 @@ function extensionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
         badge: {
-          text: 'New',
-          type: 'info'
+          text: 'Updated',
+          type: 'warning'
         }
       },
       {

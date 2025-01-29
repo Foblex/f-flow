@@ -109,6 +109,12 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Input()
   public override fCellSizeWhileDragging: boolean = false;
 
+  @Output()
+  public override fDragStarted = new EventEmitter<void>();
+
+  @Output()
+  public override fDragEnded = new EventEmitter<void>();
+
   @ContentChildren(F_DRAG_AND_DROP_PLUGIN, { descendants: true })
   private plugins!: QueryList<IFDragAndDropPlugin>;
 

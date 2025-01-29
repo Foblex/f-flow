@@ -8,7 +8,7 @@ import { GetNormalizedElementRectRequest, GetParentNodesRequest } from '../../..
 import { FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
-import { NodeDragHandler } from '../node.drag-handler';
+import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 
 @Injectable()
 @FExecutionRegister(NodeDragToParentPreparationRequest)
@@ -67,8 +67,8 @@ export class NodeDragToParentPreparationExecution
 
   private _getNodesBeingDragged(): FNodeBase[] {
     return this.fDraggableDataContext.draggableItems
-      .filter((x) => x instanceof NodeDragHandler)
-      .map((x) => x.fNode);
+      .find((x) => x instanceof SummaryNodeDragHandler)!
+      .fHandlers.map((x) => x.fNode);
   }
 
   private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {

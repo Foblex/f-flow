@@ -29,6 +29,10 @@ export abstract class FDraggableBase extends DragAndDropBase  {
 
   public abstract fCellSizeWhileDragging: boolean;
 
+  public abstract fDragStarted: EventEmitter<void>;
+
+  public abstract fDragEnded: EventEmitter<void>;
+
   protected constructor(
     ngZone: ICanRunOutsideAngular | undefined
   ) {

@@ -13,6 +13,7 @@ import { ILineAlignmentResult } from '../../../f-line-alignment';
 import { NodeDragHandler } from '../node.drag-handler';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
 import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
+import { FNodeBase } from '../../../f-node';
 
 @Injectable()
 @FExecutionRegister(NodeMoveFinalizeRequest)
@@ -86,10 +87,18 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _applyConnectionUnderDroppedNode(): void {
-    const isDraggedJustOneNode = this._fDraggableDataContext.draggableItems[ 0 ] instanceof NodeDragHandler;
-    if (isDraggedJustOneNode && this._fComponentsStore.fDraggable?.emitWhenNodeIntersectedWithConnection) {
-      const fNode = (this._fDraggableDataContext.draggableItems[ 0 ] as NodeDragHandler).fNode;
+    if (this._isDraggedJustOneNode() && this._fComponentsStore.fDraggable?.emitWhenNodeIntersectedWithConnection) {
+
+      const fNode = this._getFirstNodeOrGroup();
       setTimeout(() => this._fMediator.execute(new IsConnectionUnderNodeRequest(fNode)));
     }
+  }
+
+  private _isDraggedJustOneNode(): boolean {
+    return (this._fDraggableDataContext.draggableItems[ 0 ] as SummaryNodeDragHandler).fHandlers.length === 1;
+  }
+
+  private _getFirstNodeOrGroup(): FNodeBase {
+    return (this._fDraggableDataContext.draggableItems[ 0 ] as SummaryNodeDragHandler).fHandlers[ 0 ].fNode;
   }
 }

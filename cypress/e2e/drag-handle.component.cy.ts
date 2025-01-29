@@ -14,7 +14,7 @@ describe('DragHandleComponent', () => {
       .trigger('mouseup', { clientX: 0, clientY: 0 });
 
     cy.get('.f-node.f-drag-handle').invoke('css', 'transform')
-      .should('equal', 'matrix(1, 0, 0, 1, 150, 0)');
+      .should('equal', 'matrix(1, 0, 0, 1, 150, 0.5)');
   });
 
   it('should click fNode element and update its selection state', function() {
