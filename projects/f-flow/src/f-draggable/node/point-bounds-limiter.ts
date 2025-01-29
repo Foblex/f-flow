@@ -13,7 +13,6 @@ export class PointBoundsLimiter {
     private _onPointerDown: IPoint,
     private readonly _limit: IMinMaxPoint
   ) {
-    this._validate(_limit);
   }
 
   public limit(difference: IPoint, adjustCellSize: boolean): IPoint {
@@ -49,12 +48,5 @@ export class PointBoundsLimiter {
 
   private _snapToGrid(value: number, cellSize: number): number {
     return Math.round(value / cellSize) * cellSize;
-  }
-
-  private _validate(limit: IMinMaxPoint): void {
-    const { min, max } = limit;
-    if (min.x > max.x || min.y > max.y) {
-      throw new Error('Invalid restrictions: min values must be less than or equal to max values.');
-    }
   }
 }

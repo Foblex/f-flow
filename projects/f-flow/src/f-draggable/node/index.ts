@@ -1,3 +1,5 @@
+export * from './connection-drag-handlers';
+
 export * from './create-move-nodes-drag-model-from-selection';
 
 export * from './line-alignment-preparation';
@@ -24,10 +26,5 @@ export * from './point-bounds-limiter';
 
 export * from './providers';
 
-export * from './source-connection.drag-handler';
+export * from './summary-node.drag-handler';
 
-export * from './base-connection.drag-handler';
-
-export * from './source-target-connection.drag-handler';
-
-export * from './target-connection.drag-handler';

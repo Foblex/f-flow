@@ -12,6 +12,7 @@ import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler
 import { ILineAlignmentResult } from '../../../f-line-alignment';
 import { NodeDragHandler } from '../node.drag-handler';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
+import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 
 @Injectable()
 @FExecutionRegister(NodeMoveFinalizeRequest)
@@ -33,8 +34,8 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
 
-    const firstNodeOrGroup: NodeDragHandler = this._fDraggableDataContext.draggableItems
-      .find((x) => x instanceof NodeDragHandler)!;
+    const firstNodeOrGroup: SummaryNodeDragHandler = this._fDraggableDataContext.draggableItems
+      .find((x) => x instanceof SummaryNodeDragHandler)!;
 
     this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
 
@@ -42,7 +43,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof NodeDragHandler);
+    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof SummaryNodeDragHandler);
   }
 
   private _finalizeMove(difference: IPoint): void {

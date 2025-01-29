@@ -1,5 +1,4 @@
-<f-flow fDraggable [vCellSize]="96" [hCellSize]="96"
-        [fCellSizeWhileDragging]="true"
+<f-flow fDraggable
         (contextmenu)="onContextMenu($event)"
         [cdkContextMenuTriggerFor]="menu.template"
         (cdkContextMenuClosed)="menu.dispose()"
@@ -8,7 +7,7 @@
         (fCreateConnection)="createConnection($event)"
         (fSelectionChange)="selectionChanged($event)">
   <f-background>
-    <f-rect-pattern [vSize]="96" [hSize]="96"></f-rect-pattern>
+    <f-circle-pattern></f-circle-pattern>
   </f-background>
   <f-line-alignment></f-line-alignment>
   <f-canvas fZoom (fCanvasChange)="canvasChanged($event)">

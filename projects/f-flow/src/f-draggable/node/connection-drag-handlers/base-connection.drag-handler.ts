@@ -1,10 +1,10 @@
 import { ILine, IPoint, PointExtensions, RoundedRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { CalculateConnectionLineByBehaviorRequest, GetConnectorAndRectRequest, IConnectorAndRect } from '../../domain';
-import { FConnectorBase } from '../../f-connectors';
-import { FComponentsStore } from '../../f-storage';
-import { fInject } from '../f-injector';
-import { FConnectionBase } from '../../f-connection';
+import { CalculateConnectionLineByBehaviorRequest, GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
+import { FConnectorBase } from '../../../f-connectors';
+import { FComponentsStore } from '../../../f-storage';
+import { fInject } from '../../f-injector';
+import { FConnectionBase } from '../../../f-connection';
 
 export class BaseConnectionDragHandler {
 

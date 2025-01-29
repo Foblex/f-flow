@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { LineAlignmentPreparationRequest } from './line-alignment-preparation.request';
-import { IMinMaxPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
+import { IMinMaxPoint, IRect, ISize } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetFlowHostElementRequest } from '../../../domain';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext, NodeDragHandler } from '../../index';
+import { FDraggableDataContext, SummaryNodeDragHandler } from '../../index';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { LineService } from '../../../f-line-alignment';
@@ -24,21 +24,15 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   private _lineService: LineService | undefined;
 
   public handle(request: LineAlignmentPreparationRequest): void {
-    this._addLineAlignmentDragHandler(this._getDraggedNodes());
+    this._addLineAlignmentDragHandler(request.fNodes, request.commonRect);
   }
 
-  private _getDraggedNodes(): FNodeBase[] {
-    return this._fDraggableDataContext.draggableItems
-      .filter((x) => x instanceof NodeDragHandler)
-      .map((x) => x.fNode);
-  }
-
-  private _addLineAlignmentDragHandler(fNodes: FNodeBase[]): void {
+  private _addLineAlignmentDragHandler(fNodes: FNodeBase[], commonRect: IRect): void {
     this._fDraggableDataContext.draggableItems.push(
       new LineAlignmentDragHandler(
         this._lineService || this._createLineService(),
         this._getFlowHostSize(),
-        this._getDraggedNodesBoundingRect(fNodes),
+        commonRect,
         this._getStaticNodeRects(fNodes),
         this._getCommonRestrictions()
       )
@@ -58,12 +52,6 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
     return this._lineService;
   }
 
-  private _getDraggedNodesBoundingRect(fNodes: FNodeBase[]): IRect {
-    return RectExtensions.union(fNodes.map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
-    })) || RectExtensions.initialize();
-  }
-
   private _getStaticNodeRects(fNodes: FNodeBase[]): IRect[] {
     return this._getStaticNodes(fNodes).map((x) => {
       return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
@@ -77,6 +65,6 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _getCommonRestrictions(): IMinMaxPoint {
     return this._fDraggableDataContext.draggableItems
-      .filter((x) => x instanceof NodeDragHandler)[0].restrictions;
+      .filter((x) => x instanceof SummaryNodeDragHandler)[0].limits;
   }
 }

@@ -1,21 +1,22 @@
 import { inject, Injectable } from '@angular/core';
-import { CalculateNodeMoveRestrictionsRequest } from './calculate-node-move-restrictions.request';
-import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '@foblex/2d';
+import { CalculateNodeMoveLimitsRequest } from './calculate-node-move-limits.request';
+import { IPoint, IRect, PointExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetNormalizedParentNodeRectRequest } from '../../../../domain';
 import { FNodeBase } from '../../../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../../../domain';
+import { INodeMoveLimits } from '../../i-node-move-limits';
 
 @Injectable()
-@FExecutionRegister(CalculateNodeMoveRestrictionsRequest)
-export class CalculateNodeMoveRestrictionsExecution
-  implements IExecution<CalculateNodeMoveRestrictionsRequest, IMinMaxPoint> {
+@FExecutionRegister(CalculateNodeMoveLimitsRequest)
+export class CalculateNodeMoveLimitsExecution
+  implements IExecution<CalculateNodeMoveLimitsRequest, INodeMoveLimits> {
 
   private _fMediator = inject(FMediator);
 
-  public handle(request: CalculateNodeMoveRestrictionsRequest): IMinMaxPoint {
+  public handle(request: CalculateNodeMoveLimitsRequest): INodeMoveLimits {
     if(!request.fNode.fParentId || request.hasParentNodeInSelected) {
-      return { ...DEFAULT_RESTRICTIONS };
+      return { ...DEFAULT_LIMITS };
     }
 
     return this._calculateDifference(
@@ -31,7 +32,7 @@ export class CalculateNodeMoveRestrictionsExecution
     return this._fMediator.execute<IRect>(new GetNormalizedParentNodeRectRequest(fNode));
   }
 
-  private _calculateDifference(fParentRect: IRect, fRect: IRect): IMinMaxPoint {
+  private _calculateDifference(fParentRect: IRect, fRect: IRect): INodeMoveLimits {
     return {
       min: this._calculateMinimumDifference(fParentRect, fRect),
       max: this._calculateMaximumDifference(fParentRect, fRect)
@@ -50,7 +51,7 @@ export class CalculateNodeMoveRestrictionsExecution
   }
 }
 
-const DEFAULT_RESTRICTIONS: IMinMaxPoint = {
+const DEFAULT_LIMITS: INodeMoveLimits = {
   min: PointExtensions.initialize(-Infinity, -Infinity),
   max: PointExtensions.initialize(Infinity, Infinity)
 };

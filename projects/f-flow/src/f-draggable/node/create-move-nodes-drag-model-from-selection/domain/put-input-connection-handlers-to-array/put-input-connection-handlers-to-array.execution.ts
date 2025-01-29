@@ -4,9 +4,9 @@ import { FComponentsStore } from '../../../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../../f-node';
 import { FConnectionBase } from '../../../../../f-connection';
-import { BaseConnectionDragHandler } from '../../../base-connection.drag-handler';
-import { SourceTargetConnectionDragHandler } from '../../../source-target-connection.drag-handler';
-import { TargetConnectionDragHandler } from '../../../target-connection.drag-handler';
+import { BaseConnectionDragHandler } from '../../../connection-drag-handlers/base-connection.drag-handler';
+import { SourceTargetConnectionDragHandler } from '../../../connection-drag-handlers/source-target-connection.drag-handler';
+import { TargetConnectionDragHandler } from '../../../connection-drag-handlers/target-connection.drag-handler';
 
 @Injectable()
 @FExecutionRegister(PutInputConnectionHandlersToArrayRequest)

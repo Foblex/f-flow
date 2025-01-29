@@ -1,5 +1,5 @@
 import { BaseConnectionDragHandler } from './base-connection.drag-handler';
-import { FConnectionBase } from '../../f-connection';
+import { FConnectionBase } from '../../../f-connection';
 import { IPoint } from '@foblex/2d';
 
 export class SourceTargetConnectionDragHandler extends BaseConnectionDragHandler {

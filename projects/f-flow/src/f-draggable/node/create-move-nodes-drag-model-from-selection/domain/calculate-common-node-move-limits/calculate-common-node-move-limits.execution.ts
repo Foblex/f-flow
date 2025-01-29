@@ -1,14 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { CalculateCommonNodeMoveRestrictionsRequest } from './calculate-common-node-move-restrictions.request';
-import { IMinMaxPoint, IPoint } from '@foblex/2d';
+import { CalculateCommonNodeMoveLimitsRequest } from './calculate-common-node-move-limits.request';
+import { IPoint } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { INodeWithDistanceRestrictions } from '../../i-node-with-distance-restrictions';
 import { FComponentsStore } from '../../../../../f-storage';
+import { INodeMoveLimitsAndPosition } from '../../i-node-move-limits-and-position';
+import { INodeMoveLimits } from '../../i-node-move-limits';
 
 @Injectable()
-@FExecutionRegister(CalculateCommonNodeMoveRestrictionsRequest)
-export class CalculateCommonNodeMoveRestrictionsExecution
-  implements IExecution<CalculateCommonNodeMoveRestrictionsRequest, IMinMaxPoint> {
+@FExecutionRegister(CalculateCommonNodeMoveLimitsRequest)
+export class CalculateCommonNodeMoveLimitsExecution
+  implements IExecution<CalculateCommonNodeMoveLimitsRequest, INodeMoveLimits> {
 
   private _fComponentsStore = inject(FComponentsStore);
 
@@ -20,19 +21,19 @@ export class CalculateCommonNodeMoveRestrictionsExecution
     return this._fComponentsStore.fDraggable!.hCellSize;
   }
 
-  public handle(request: CalculateCommonNodeMoveRestrictionsRequest): IMinMaxPoint {
-    return this._calculateCommonRestrictions(request.restrictions);
+  public handle(request: CalculateCommonNodeMoveLimitsRequest): INodeMoveLimits {
+    return this._calculateCommonLimits(request.limits);
   }
 
-  private _calculateCommonRestrictions(restrictions: INodeWithDistanceRestrictions[]): IMinMaxPoint {
-    this._snapLimitToGrid(restrictions[0]);
-    return restrictions.reduce((result: IMinMaxPoint, x) => {
+  private _calculateCommonLimits(limits: INodeMoveLimitsAndPosition[]): INodeMoveLimits {
+    this._snapLimitToGrid(limits[0]);
+    return limits.reduce((result: INodeMoveLimits, x) => {
       this._snapLimitToGrid(x);
       return this._clampRestrictions(result, x);
-    }, restrictions[0]);
+    }, limits[0]);
   }
 
-  private _clampRestrictions(common: IMinMaxPoint, x: INodeWithDistanceRestrictions): IMinMaxPoint {
+  private _clampRestrictions(common: INodeMoveLimits, x: INodeMoveLimitsAndPosition): INodeMoveLimits {
     common.min = this._clampMinRestrictions(common.min, x.min);
     common.max = this._clampMaxRestrictions(common.max, x.max);
     return common;
@@ -52,9 +53,8 @@ export class CalculateCommonNodeMoveRestrictionsExecution
     }
   }
 
-  private _snapLimitToGrid(restriction: INodeWithDistanceRestrictions): void {
-    const { min, max, fDraggedNode } = restriction;
-    const position = fDraggedNode.position;
+  private _snapLimitToGrid(restriction: INodeMoveLimitsAndPosition): void {
+    const { min, max, position } = restriction;
     restriction.min = {
       x: this._snapLimitToGridMinimum(position.x + min.x, this._hCellSize) - position.x,
       y: this._snapLimitToGridMinimum(position.y + min.y, this._vCellSize) - position.y,

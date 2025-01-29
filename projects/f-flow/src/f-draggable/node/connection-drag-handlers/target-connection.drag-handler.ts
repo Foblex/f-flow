@@ -1,4 +1,4 @@
-import { FConnectionBase } from '../../f-connection';
+import { FConnectionBase } from '../../../f-connection';
 import { BaseConnectionDragHandler } from './base-connection.drag-handler';
 import { IPoint } from '@foblex/2d';
 
