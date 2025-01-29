@@ -13,15 +13,15 @@ export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
 
   public handle(request: SelectAllRequest): void {
     this._fDraggableDataContext.selectedItems.forEach((x) => {
-      x.deselect();
+      x.unmarkAsSelected();
     });
     this._fDraggableDataContext.selectedItems = [];
     this._fComponentsStore.fNodes.forEach((x) => {
-      x.select();
+      x.markAsSelected();
       this._fDraggableDataContext.selectedItems.push(x);
     });
     this._fComponentsStore.fConnections.forEach((x) => {
-      x.select();
+      x.markAsSelected();
       this._fDraggableDataContext.selectedItems.push(x);
     });
     this._fDraggableDataContext.isSelectedChanged = true;

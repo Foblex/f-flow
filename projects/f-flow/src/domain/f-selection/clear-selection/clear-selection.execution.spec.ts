@@ -3,15 +3,15 @@ import { FMediator } from '@foblex/mediator';
 import { ClearSelectionRequest } from './clear-selection.request';
 import { ClearSelectionExecution } from './clear-selection.execution';
 import { setupTestModule } from '../../test-setup';
-import { ICanChangeSelection } from '../../../mixins';
+import { ISelectable } from '../../../mixins';
 import { FDraggableDataContext } from '../../../f-draggable';
 
-export const MOCK_SELECTABLE_ITEM: ICanChangeSelection = {
+export const MOCK_SELECTABLE_ITEM: ISelectable = {
   fId: '1',
   fSelectionDisabled: false,
   hostElement: document.createElement('svg'),
-  select: jasmine.createSpy('select'),
-  deselect: jasmine.createSpy('deselect'),
+  markAsSelected: jasmine.createSpy('markAsSelected'),
+  unmarkAsSelected: jasmine.createSpy('unmarkAsSelected'),
   isSelected: jasmine.createSpy('isSelected').and.returnValue(true)
 };
 
@@ -32,7 +32,7 @@ describe('ClearSelectionExecution', () => {
     expect(fDraggableDataContext.selectedItems.length).toBe(2);
     expect(fDraggableDataContext.isSelectedChanged).toBe(false);
 
-    fMediator.send<void>(new ClearSelectionRequest());
+    fMediator.execute<void>(new ClearSelectionRequest());
     expect(fDraggableDataContext.selectedItems.length).toBe(0);
     expect(fDraggableDataContext.isSelectedChanged).toBe(true);
   });

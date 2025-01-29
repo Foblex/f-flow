@@ -13,12 +13,12 @@ import { PutOutputConnectionHandlersToArrayRequest } from './domain/put-output-c
 import {
   PutInputConnectionHandlersToArrayRequest
 } from './domain/put-input-connection-handlers-to-array';
-import { NodeResizeByChildDragHandler } from '../node-resize-by-child.drag-handler';
 import { IsArrayHasParentNodeRequest } from '../../domain';
 import { GetDeepChildrenNodesAndGroupsRequest, GetParentNodesRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 import { CalculateCommonNodeMoveRestrictionsRequest } from './domain/calculate-common-node-move-restrictions';
 import { IMinMaxPoint } from '@foblex/2d';
+import { BaseConnectionDragHandler } from '../base-connection.drag-handler';
 
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
@@ -34,7 +34,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       this._getDraggedNodes(request.nodeWithDisabledSelection)
     );
     return this.getDragHandlersWithConnections(
-      this.getDragHandlersFromNodes(fItemsToDrag),
+      this._mapToNodeDragHandlers(fItemsToDrag),
       this.getAllOutputIds(fItemsToDrag),
       this.getAllInputIds(fItemsToDrag)
     );
@@ -116,26 +116,21 @@ export class CreateMoveNodesDragModelFromSelectionExecution
     return this._fComponentsStore.fInputs.filter((x) => node.isContains(x.hostElement));
   }
 
-  private getDragHandlersFromNodes(items: INodeWithDistanceRestrictions[]): IDraggableItem[] {
-    let result: IDraggableItem[] = [];
-
-    items.forEach((node) => {
-      result.push(
-        new NodeDragHandler(this._fComponentsStore, node.fDraggedNode, { min: node.min, max: node.max }),
-        ...(node.fParentNodes || []).map(() => new NodeResizeByChildDragHandler(this._fDraggableDataContext))
-      );
-    });
-    return result;
+  private _mapToNodeDragHandlers(items: INodeWithDistanceRestrictions[]): NodeDragHandler[] {
+    return items.map((x) => new NodeDragHandler(
+      x.fDraggedNode, { min: x.min, max: x.max })
+    );
   }
 
   private getDragHandlersWithConnections(
-    handlers: IDraggableItem[], outputIds: string[], inputIds: string[]
+    handlers: NodeDragHandler[], outputIds: string[], inputIds: string[]
   ): IDraggableItem[] {
-    let result: IDraggableItem[] = handlers;
-    handlers.filter((x) => x instanceof NodeDragHandler).forEach((x) => {
-      this._fMediator.execute(new PutOutputConnectionHandlersToArrayRequest(x, inputIds, result));
-      this._fMediator.execute(new PutInputConnectionHandlersToArrayRequest(x, outputIds, result));
+    const fConnectionHandlers: BaseConnectionDragHandler[] = [];
+    handlers.forEach((fNodeHandler) => {
+      this._fMediator.execute(new PutOutputConnectionHandlersToArrayRequest(fNodeHandler, inputIds, fConnectionHandlers));
+      this._fMediator.execute(new PutInputConnectionHandlersToArrayRequest(fNodeHandler, outputIds, fConnectionHandlers));
     });
-    return result;
+
+    return handlers;
   }
 }

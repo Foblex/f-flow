@@ -150,7 +150,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public clearSelection(): void {
-    this._fMediator.send<void>(new ClearSelectionRequest());
+    this._fMediator.execute<void>(new ClearSelectionRequest());
   }
 
   public ngOnDestroy(): void {

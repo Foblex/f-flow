@@ -1,10 +1,10 @@
 import { AbstractConstructor, Constructor } from '../constructor';
 import { IHasHostElement } from '../../i-has-host-element';
-import { ICanChangeSelection } from './i-can-change-selection';
+import { ISelectable } from './i-selectable';
 
 export const F_SELECTED_CLASS = 'f-selected';
 
-type CanChangeSelectionConstructor = Constructor<ICanChangeSelection> & AbstractConstructor<ICanChangeSelection>;
+type CanChangeSelectionConstructor = Constructor<ISelectable> & AbstractConstructor<ISelectable>;
 
 export function mixinChangeSelection<T extends AbstractConstructor<IHasHostElement>>(base: T): CanChangeSelectionConstructor & T;
 export function mixinChangeSelection<T extends Constructor<IHasHostElement>>(base: T): CanChangeSelectionConstructor & T {
@@ -14,13 +14,13 @@ export function mixinChangeSelection<T extends Constructor<IHasHostElement>>(bas
 
     public fSelectionDisabled: boolean = false;
 
-    public deselect(): void {
-      this.deselectChild?.();
+    public unmarkAsSelected(): void {
+      this.unmarkChildrenAsSelected?.();
       this.hostElement.classList.remove(F_SELECTED_CLASS);
     }
 
-    public select(): void {
-      this.selectChild?.();
+    public markAsSelected(): void {
+      this.markChildrenAsSelected?.();
       if (!this.isSelected()) {
         this.hostElement.classList.add(F_SELECTED_CLASS);
       }
@@ -30,10 +30,10 @@ export function mixinChangeSelection<T extends Constructor<IHasHostElement>>(bas
       return this.hostElement.classList.contains(F_SELECTED_CLASS);
     }
 
-    public selectChild(): void {
+    public markChildrenAsSelected(): void {
     }
 
-    public deselectChild(): void {
+    public unmarkChildrenAsSelected(): void {
     }
 
     constructor(...args: any[]) {

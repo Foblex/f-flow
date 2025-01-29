@@ -8,16 +8,19 @@ import {
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import {
-  EFConnectableSide,
-  FNodeOutletDirective,
-  FNodeOutputDirective
+  EFConnectableSide, FNodeOutletBase,
+  FNodeOutputBase,
 } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { ICreateReassignConnectionDragData } from '../i-create-reassign-connection-drag-data';
+import { fInject } from '../../f-injector';
 
 export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassignConnectionDragData> {
+
+  private _fMediator = fInject(FMediator);
+  private _fComponentsStore = fInject(FComponentsStore);
 
   private readonly _toConnectorRect = new RoundedRect();
 
@@ -34,9 +37,7 @@ export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassi
   private _canBeConnectedInputs: IConnectorAndRect[] = [];
 
   constructor(
-    private _fMediator: FMediator,
-    private _fComponentsStore: FComponentsStore,
-    private _fOutput: FNodeOutputDirective | FNodeOutletDirective,
+    private _fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
     _onPointerDownPosition: IPoint,
   ) {
     this._toConnectorRect = RoundedRect.fromRect(
@@ -49,7 +50,7 @@ export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassi
     this._initializeSnapConnection();
     this._initializeConnectionForCreate();
 
-    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
+    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutputOrOutlet));
 
     this._fConnection.show();
     this.onPointerMove(PointExtensions.initialize());
@@ -57,7 +58,7 @@ export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassi
 
   private _getAndMarkCanBeConnectedInputs(): void {
     this._canBeConnectedInputs = this._fMediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutput)
+      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutputOrOutlet)
     );
 
     this._fMediator.execute(
@@ -69,12 +70,12 @@ export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassi
     if (!this._fSnapConnection) {
       return;
     }
-    this._fSnapConnection.fOutputId = this._fOutput.fId;
+    this._fSnapConnection.fOutputId = this._fOutputOrOutlet.fId;
     this._fSnapConnection.initialize();
   }
 
   private _initializeConnectionForCreate(): void {
-    this._fConnection.fOutputId = this._fOutput.fId;
+    this._fConnection.fOutputId = this._fOutputOrOutlet.fId;
     this._fConnection.initialize();
   }
 
@@ -149,7 +150,7 @@ export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassi
   public getData(): ICreateReassignConnectionDragData {
     return {
       toConnectorRect: this._toConnectorRect,
-      fOutputId: this._fOutput.fId,
+      fOutputId: this._fOutputOrOutlet.fId,
       canBeConnectedInputs: this._canBeConnectedInputs
     }
   }

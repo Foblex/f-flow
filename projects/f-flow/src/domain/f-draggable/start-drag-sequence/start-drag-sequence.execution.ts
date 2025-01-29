@@ -11,7 +11,6 @@ import { F_CSS_CLASS } from '../../css-cls';
 export class StartDragSequenceExecution implements IExecution<StartDragSequenceRequest, void> {
 
   private _fMediator = inject(FMediator);
-
   private _fComponentsStore = inject(FComponentsStore);
 
   private get _hostElement(): HTMLElement {

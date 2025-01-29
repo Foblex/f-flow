@@ -12,7 +12,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
 
   private fItemsContainer!: HTMLElement;
 
-  private get fItemsFromContainer(): HTMLElement[] {
+  private get _fItemElements(): HTMLElement[] {
     return Array.from(this.fItemsContainer.children) as HTMLElement[];
   }
 
@@ -25,26 +25,26 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
 
   public handle(request: SortItemsByParentRequest): void {
     this.fItemsContainer = request.fItemsContainer;
-    this.getItems().forEach((parent: FNodeBase) => {
-      this.moveChildrenItems(this.getSortedChildrenItems(parent), parent);
+    this._getItemsOfContainer().forEach((fItem: FNodeBase) => {
+      this.moveChildrenItems(this._getSortedChildrenItems(fItem), fItem);
     });
   }
 
-  private getItems(): FNodeBase[] {
-    return this.fComponentsStore.fNodes.filter((x) => this.fItemsContainer.contains(x.hostElement));
+  private _getItemsOfContainer(): FNodeBase[] {
+    return this.fComponentsStore.fNodes
+      .filter((x) => this.fItemsContainer.contains(x.hostElement));
   }
 
-  private getSortedChildrenItems(
-    parent: FNodeBase,
+  private _getSortedChildrenItems(
+    fItem: FNodeBase,
   ): HTMLElement[] {
-    const allElements = this.fItemsFromContainer;
-    const parentIndex = allElements.indexOf(parent.hostElement);
-    return this.getChildrenGroups(parent.fId)
-      .filter((child: HTMLElement) => allElements.indexOf(child) < parentIndex)
-      .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
+    const indexInContainer = this._fItemElements.indexOf(fItem.hostElement);
+    return this._getChildrenItems(fItem.fId)
+      .filter((child: HTMLElement) => this._fItemElements.indexOf(child) < indexInContainer)
+      .sort((a, b) => this._fItemElements.indexOf(a) - this._fItemElements.indexOf(b));
   }
 
-  private getChildrenGroups(fId: string): HTMLElement[] {
+  private _getChildrenItems(fId: string): HTMLElement[] {
     return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .filter((x) => this.fItemsContainer.contains(x.hostElement)).map((x) => x.hostElement);
   }

@@ -1,4 +1,5 @@
-<f-flow fDraggable
+<f-flow fDraggable [vCellSize]="96" [hCellSize]="96"
+        [fCellSizeWhileDragging]="true"
         (contextmenu)="onContextMenu($event)"
         [cdkContextMenuTriggerFor]="menu.template"
         (cdkContextMenuClosed)="menu.dispose()"
@@ -7,7 +8,7 @@
         (fCreateConnection)="createConnection($event)"
         (fSelectionChange)="selectionChanged($event)">
   <f-background>
-    <f-circle-pattern></f-circle-pattern>
+    <f-rect-pattern [vSize]="96" [hSize]="96"></f-rect-pattern>
   </f-background>
   <f-line-alignment></f-line-alignment>
   <f-canvas fZoom (fCanvasChange)="canvasChanged($event)">
@@ -49,7 +50,20 @@
         <div fConnectionCenter db-management-connection-toolbar [viewModel]="connection"></div>
       </f-connection>
     }
-
+    @for (group of viewModel.groups; track group.id) {
+      <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position"
+           [fGroupSize]="group.size" fDragHandle>
+        <div class="group-title">{{ group.name }}</div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      </div>
+    }
     @for (table of viewModel.tables; track table.id) {
       <db-management-table [viewModel]="table"
                            [form]="getTableForm(table.id)"
@@ -61,16 +75,7 @@
                            (fNodePositionChange)="moveTable($event, table)">
       </db-management-table>
     }
-    @for (group of viewModel.groups; track group.id) {
-      <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position"
-           [fGroupSize]="group.size" fDragHandle>
-        <div class="group-title">{{ group.name }}</div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
-      </div>
-    }
+
   </f-canvas>
   <f-selection-area></f-selection-area>
   <f-minimap [fMinSize]="2000"></f-minimap>

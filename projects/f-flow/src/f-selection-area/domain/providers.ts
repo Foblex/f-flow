@@ -1,9 +1,9 @@
-import { SELECTION_AREA_FINALIZE_PROVIDERS } from './selection-area-finalize';
-import { SELECTION_AREA_PREPARATION_PROVIDERS } from './selection-area-preparation';
+import { SelectionAreaPreparationExecution } from './selection-area-preparation';
+import { SelectionAreaFinalizeExecution } from './selection-area-finalize';
 
 export const F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS = [
 
-  ...SELECTION_AREA_FINALIZE_PROVIDERS,
+  SelectionAreaPreparationExecution,
 
-  ...SELECTION_AREA_PREPARATION_PROVIDERS
+  SelectionAreaFinalizeExecution
 ];

@@ -3,7 +3,7 @@ import { ApplyChildResizeRestrictionsRequest } from './apply-child-resize-restri
 import { IRect } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
-const OFFSET = 0;
+const CHILD_RESIZE_OFFSET = 0;
 
 @Injectable()
 @FExecutionRegister(ApplyChildResizeRestrictionsRequest)
@@ -11,39 +11,43 @@ export class ApplyChildResizeRestrictionsExecution
   implements IExecution<ApplyChildResizeRestrictionsRequest, void> {
 
   public handle(request: ApplyChildResizeRestrictionsRequest): void {
-    this.applyRestrictions(request.rect, request.restrictionsRect);
+    this._apply(request.rect, request.restrictionsRect);
   }
 
-  private applyRestrictions(rect: IRect, restrictionsRect: IRect): void {
-    this.left(rect, restrictionsRect);
-    this.top(rect, restrictionsRect);
-    this.right(rect, restrictionsRect);
-    this.bottom(rect, restrictionsRect);
+  private _apply(rect: IRect, restrictionsRect: IRect): void {
+    this._restrictLeft(rect, restrictionsRect);
+    this._restrictTop(rect, restrictionsRect);
+    this._restrictRight(rect, restrictionsRect);
+    this._restrictBottom(rect, restrictionsRect);
   }
 
-  private left(rect: IRect, restrictionsRect: IRect): void {
-    if (rect.x > restrictionsRect.x - OFFSET) {
-      rect.width += rect.x - restrictionsRect.x - OFFSET;
-      rect.x = restrictionsRect.x - OFFSET;
+  private _restrictLeft(rect: IRect, restrictions: IRect): void {
+    const delta = rect.x - (restrictions.x - CHILD_RESIZE_OFFSET);
+    if (delta > 0) {
+      rect.x -= delta;
+      rect.width += delta;
     }
   }
 
-  private top(rect: IRect, restrictionsRect: IRect): void {
-    if (rect.y > restrictionsRect.y - OFFSET) {
-      rect.height += rect.y - restrictionsRect.y - OFFSET;
-      rect.y = restrictionsRect.y - OFFSET;
+  private _restrictTop(rect: IRect, restrictions: IRect): void {
+    const delta = rect.y - (restrictions.y - CHILD_RESIZE_OFFSET);
+    if (delta > 0) {
+      rect.y -= delta;
+      rect.height += delta;
     }
   }
 
-  private right(rect: IRect, restrictionsRect: IRect): void {
-    if (rect.x + rect.width <= restrictionsRect.x + restrictionsRect.width + OFFSET) {
-      rect.width = restrictionsRect.x + restrictionsRect.width - rect.x + OFFSET;
+  private _restrictRight(rect: IRect, restrictions: IRect): void {
+    const maxRight = restrictions.x + restrictions.width + CHILD_RESIZE_OFFSET;
+    if (rect.x + rect.width <= maxRight) {
+      rect.width = maxRight - rect.x;
     }
   }
 
-  private bottom(rect: IRect, restrictionsRect: IRect): void {
-    if (rect.y + rect.height <= restrictionsRect.y + restrictionsRect.height + OFFSET) {
-      rect.height = restrictionsRect.y + restrictionsRect.height - rect.y + OFFSET;
+  private _restrictBottom(rect: IRect, restrictions: IRect): void {
+    const maxBottom = restrictions.y + restrictions.height + CHILD_RESIZE_OFFSET;
+    if (rect.y + rect.height <= maxBottom) {
+      rect.height = maxBottom - rect.y;
     }
   }
 }

@@ -26,7 +26,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
   private selectNodeIfNotSelected(fNode: FNodeBase) {
     if (!this.fDraggableDataContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled) {
       this.fDraggableDataContext.selectedItems.push(fNode);
-      fNode.select();
+      fNode.markAsSelected();
       this.fDraggableDataContext.isSelectedChanged = true;
     }
   }

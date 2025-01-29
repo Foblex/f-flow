@@ -2,9 +2,9 @@ import { IRect, ISize } from '@foblex/2d';
 
 export interface INodeResizeRestrictions {
 
-  parentRect: IRect;
+  parentBounds: IRect;
 
-  childRect: IRect | null;
+  childrenBounds: IRect | null;
 
-  minSize: ISize;
+  minimumSize: ISize;
 }

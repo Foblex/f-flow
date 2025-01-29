@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { IRect, ITransformModel, RectExtensions } from '@foblex/2d';
-import { ICanBeSelected } from './i-can-be-selected';
+import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
 import { GetCanBeSelectedItemsRequest } from './get-can-be-selected-items-request';
 import { FNodeBase } from '../../../f-node';
 import { FConnectionBase } from '../../../f-connection';
@@ -11,10 +11,11 @@ import { GetNormalizedElementRectRequest } from '../../get-normalized-element-re
 
 @Injectable()
 @FExecutionRegister(GetCanBeSelectedItemsRequest)
-export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSelected[]> {
+export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSelectedElementAndRect[]> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   private get fNodes(): FNodeBase[] {
     return this._fComponentsStore.fNodes;
@@ -28,22 +29,17 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
     return this._fComponentsStore.fCanvas!.transform;
   }
 
-  constructor(
-      private fDraggableDataContext: FDraggableDataContext,
-  ) {
-  }
-
-  public handle(): ICanBeSelected[] {
+  public handle(): ICanBeSelectedElementAndRect[] {
     return [ ...this.getNodesWithRects(), ...this.getConnectionsWithRects() ].filter((x) => {
-      return !this.fDraggableDataContext.selectedItems.includes(x.element);
+      return !this._fDraggableDataContext.selectedItems.includes(x.element);
     });
   }
 
-  private getNodesWithRects(): ICanBeSelected[] {
+  private getNodesWithRects(): ICanBeSelectedElementAndRect[] {
     return this.fNodes.filter((x) => !x.fSelectionDisabled).map((x) => {
       return {
         element: x,
-        rect: RectExtensions.mult(
+        fRect: RectExtensions.mult(
           this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false)),
           this.transform.scale
         )
@@ -51,11 +47,11 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
     });
   }
 
-  private getConnectionsWithRects(): ICanBeSelected[] {
+  private getConnectionsWithRects(): ICanBeSelectedElementAndRect[] {
     return this.fConnections.filter((x) => !x.fSelectionDisabled).map((x) => {
       return {
         element: x,
-        rect: RectExtensions.mult(
+        fRect: RectExtensions.mult(
           this._fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.boundingElement, false)),
           this.transform.scale
         )

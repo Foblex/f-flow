@@ -22,7 +22,7 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
       stateChanges
     ).pipe(notifyOnStart(), debounceTime(10)).listen(request.destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
-      this._fMediator.send<void>(new NotifyDataChangedRequest());
+      this._fMediator.execute<void>(new NotifyDataChangedRequest());
     });
   }
 

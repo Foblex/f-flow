@@ -11,8 +11,6 @@ import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 import { ILineAlignmentResult } from '../../../f-line-alignment';
 import { NodeDragHandler } from '../node.drag-handler';
-import { deepClone } from '@foblex/utils';
-import { FNodeBase } from '../../../f-node';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
 
 @Injectable()
@@ -38,9 +36,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     const firstNodeOrGroup: NodeDragHandler = this._fDraggableDataContext.draggableItems
       .find((x) => x instanceof NodeDragHandler)!;
 
-    const differenceWithCellSize = firstNodeOrGroup.getDifferenceWithCellSize(difference);
-
-    this._finalizeMove(differenceWithCellSize);
+    this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
 
     this._applyConnectionUnderDroppedNode();
   }

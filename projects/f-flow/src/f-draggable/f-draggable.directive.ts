@@ -2,7 +2,7 @@ import {
   AfterViewInit, booleanAttribute, ContentChildren,
   Directive,
   ElementRef,
-  EventEmitter, inject, Inject,
+  EventEmitter, inject, Inject, Injector,
   Input,
   NgZone,
   OnDestroy,
@@ -33,7 +33,7 @@ import {
   RemoveDndFromStoreRequest,
   EndDragSequenceRequest,
   InitializeDragSequenceRequest,
-  OnPointerMoveRequest
+  OnPointerMoveRequest, FEventTrigger, TriggerEvent, defaultEventTrigger
 } from '../domain';
 import {
   ExternalItemFinalizeRequest,
@@ -44,9 +44,10 @@ import {
 import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FNodeIntersectedWithConnections } from './domain';
+import { FInjector } from './f-injector';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -57,6 +58,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private _elementReference = inject(ElementRef);
 
   private _fMediator = inject(FMediator);
+  private _fPlatform = inject(PlatformService);
+  private _injector = inject(Injector);
 
   @Input('fDraggableDisabled')
   public override disabled: boolean = false;
@@ -64,6 +67,17 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
+
+  @Input()
+  public fMultiSelectTrigger: FEventTrigger = (event: TriggerEvent) => {
+    return (this._fPlatform.getOS() === EOperationSystem.MAC_OS) ? event.metaKey : event.ctrlKey;
+  };
+
+  @Input()
+  public fReassignConnectionTrigger: FEventTrigger = defaultEventTrigger;
+
+  @Input()
+  public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
 
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
@@ -92,6 +106,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Input()
   public override hCellSize = 1;
 
+  @Input()
+  public override fCellSizeWhileDragging: boolean = false;
+
   @ContentChildren(F_DRAG_AND_DROP_PLUGIN, { descendants: true })
   private plugins!: QueryList<IFDragAndDropPlugin>;
 
@@ -103,7 +120,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public ngOnInit(): void {
-    this._fMediator.send<void>(new AddDndToStoreRequest(this));
+    this._fMediator.execute<void>(new AddDndToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
@@ -111,37 +128,40 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
+    FInjector.set(this._injector);
+
     this._fMediator.execute<void>(new InitializeDragSequenceRequest());
 
     this.plugins.forEach((p) => p.onPointerDown?.(event));
 
-    this._fMediator.execute<void>(new SingleSelectRequest(event));
+    this._fMediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
 
-    this._fMediator.execute<void>(new ReassignConnectionPreparationRequest(event));
+    this._fMediator.execute<void>(new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
 
-    this._fMediator.execute<void>(new CreateConnectionPreparationRequest(event));
+    this._fMediator.execute<void>(new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
 
-    const isMouseLeftButton = event.isMouseLeftButton();
-    if (!isMouseLeftButton) {
+    const isMouseLeftOrTouch = event.isMouseLeftButton();
+    if (!isMouseLeftOrTouch) {
       this.finalizeDragSequence();
     }
-    return isMouseLeftButton;
+    return isMouseLeftOrTouch;
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {
+
     this.plugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._fMediator.send<void>(new NodeResizePreparationRequest(event));
+    this._fMediator.execute<void>(new NodeResizePreparationRequest(event));
 
-    this._fMediator.send<void>(new NodeMovePreparationRequest(event));
+    this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 
     this._fMediator.send<void>(new NodeDragToParentPreparationRequest(event));
 
-    this._fMediator.send<void>(new CanvasMovePreparationRequest(event));
+    this._fMediator.execute<void>(new CanvasMovePreparationRequest(event));
 
     this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
 
-    this._fMediator.send<void>(new PrepareDragSequenceRequest());
+    this._fMediator.execute<void>(new PrepareDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
@@ -167,20 +187,26 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeDragToParentFinalizeRequest(event));
 
-    this._fMediator.send<void>(new CanvasMoveFinalizeRequest(event));
+    this._fMediator.execute<void>(new CanvasMoveFinalizeRequest(event));
 
     this._fMediator.execute<void>(new ExternalItemFinalizeRequest(event));
 
     this._fMediator.execute<void>(new EndDragSequenceRequest());
+
+    FInjector.clear();
   }
 
   protected override finalizeDragSequence(): void {
     this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
+
+    FInjector.clear();
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send<void>(new RemoveDndFromStoreRequest());
+    this._fMediator.execute<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();
+
+    FInjector.clear();
   }
 }
 

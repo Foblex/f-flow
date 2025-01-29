@@ -18,25 +18,25 @@ describe('SelectAllExecution', () => {
     fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
-  it('should deselect all items and clear selectedItems array', () => {
+  it('should unmarkAsSelected all items and clear selectedItems array', () => {
     const mockSelectedItems = [
-      { deselect: jasmine.createSpy('deselect') },
-      { deselect: jasmine.createSpy('deselect') }
+      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
+      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') }
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 
     fMediator.send(new SelectAllRequest());
 
     mockSelectedItems.forEach(item => {
-      expect(item.deselect).toHaveBeenCalled();
+      expect(item.unmarkAsSelected).toHaveBeenCalled();
     });
     expect(fDraggableDataContext.selectedItems.length).toBe(0);
     expect(fDraggableDataContext.isSelectedChanged).toBe(true);
   });
 
   it('should select all nodes and connections', () => {
-    const mockNode = { fId: 'node1', select: jasmine.createSpy('select') };
-    const mockConnection = { fId: 'conn1', select: jasmine.createSpy('select') };
+    const mockNode = { fId: 'node1', markAsSelected: jasmine.createSpy('markAsSelected') };
+    const mockConnection = { fId: 'conn1', markAsSelected: jasmine.createSpy('markAsSelected') };
 
     fComponentsStore.fNodes = [mockNode] as any;
     fComponentsStore.fConnections = [mockConnection] as any;
@@ -44,8 +44,8 @@ describe('SelectAllExecution', () => {
 
     fMediator.send(new SelectAllRequest());
 
-    expect(mockNode.select).toHaveBeenCalled();
-    expect(mockConnection.select).toHaveBeenCalled();
+    expect(mockNode.markAsSelected).toHaveBeenCalled();
+    expect(mockConnection.markAsSelected).toHaveBeenCalled();
     expect(fDraggableDataContext.selectedItems.length).toEqual(2);
     expect(fDraggableDataContext.isSelectedChanged).toBe(true);
   });

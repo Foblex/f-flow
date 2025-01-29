@@ -260,6 +260,10 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        }
       },
       {
         link: 'grouping',

@@ -1,12 +1,12 @@
 import { NodeDragHandler } from '../../../node.drag-handler';
-import { IDraggableItem } from '../../../../i-draggable-item';
+import { BaseConnectionDragHandler } from '../../../base-connection.drag-handler';
 
 export class PutInputConnectionHandlersToArrayRequest {
 
   constructor(
-    public nodeDragHandler: NodeDragHandler,
+    public fDragHandler: NodeDragHandler,
     public outputIds: string[],
-    public result: IDraggableItem[]
+    public result: BaseConnectionDragHandler[]
   ) {
   }
 }

@@ -14,7 +14,7 @@ import { EFConnectableSide } from '../../f-connectors';
 import { FConnectionFactory } from '../f-connection-builder';
 import { IHasHostElement } from '../../i-has-host-element';
 import {
-  ICanChangeSelection, ICanChangeVisibility,
+  ISelectable, ICanChangeVisibility,
   mixinChangeSelection, mixinChangeVisibility
 } from '../../mixins';
 
@@ -29,7 +29,7 @@ const MIXIN_BASE = mixinChangeSelection(
 
 @Directive()
 export abstract class FConnectionBase extends MIXIN_BASE
-  implements IHasHostElement, ICanChangeSelection,
+  implements IHasHostElement, ISelectable,
              ICanChangeVisibility,
              IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
@@ -122,11 +122,11 @@ export abstract class FConnectionBase extends MIXIN_BASE
     return `position: absolute; pointerEvents: all; transform: translate(-50%, -50%); left: ${ position.x }px; top: ${ position.y }px`;
   }
 
-  public override selectChild(): void {
+  public override markChildrenAsSelected(): void {
     this.fPath.select();
   }
 
-  public override deselectChild(): void {
+  public override unmarkChildrenAsSelected(): void {
     this.fPath.deselect();
   }
 

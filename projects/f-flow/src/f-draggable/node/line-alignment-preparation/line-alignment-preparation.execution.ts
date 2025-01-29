@@ -36,7 +36,6 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   private _addLineAlignmentDragHandler(fNodes: FNodeBase[]): void {
     this._fDraggableDataContext.draggableItems.push(
       new LineAlignmentDragHandler(
-        this._fComponentsStore,
         this._lineService || this._createLineService(),
         this._getFlowHostSize(),
         this._getDraggedNodesBoundingRect(fNodes),

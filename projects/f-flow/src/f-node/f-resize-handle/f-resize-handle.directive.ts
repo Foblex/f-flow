@@ -11,7 +11,7 @@ export const F_RESIZE_HANDLE = new InjectionToken<FResizeHandleDirective>('F_RES
   selector: "[fResizeHandle]",
   host: {
     class: `f-resize-handle f-component`,
-    '[attr.data-f-resize-handle-type]': 'type',
+    '[attr.data-f-resize-handle-type]': 'type.toUpperCase()',
   },
   providers: [ { provide: F_RESIZE_HANDLE, useExisting: FResizeHandleDirective } ],
 })

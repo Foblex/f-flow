@@ -1,38 +1,52 @@
 import { IHandler } from '@foblex/mediator';
-import { IPoint } from '@foblex/2d';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromOutputPreparationRequest } from './create-connection-from-output-preparation.request';
-import { FConnectorBase, FNodeOutputDirective } from '../../../../../f-connectors';
-import { CreateConnectionDragHandlerRequest } from '../create-connection-drag-handler';
+import { FConnectorBase, FNodeOutputBase, isNodeOutput } from '../../../../../f-connectors';
+import { CreateConnectionDragHandlerPreparationRequest } from '../create-connection-drag-handler-preparation';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
+import { FNodeBase } from '../../../../../f-node';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionFromOutputPreparationRequest)
 export class CreateConnectionFromOutputPreparationExecution
   implements IHandler<CreateConnectionFromOutputPreparationRequest, void> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-  ) {
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: CreateConnectionFromOutputPreparationRequest): void {
-    const { event } = request;
-
-    const fOutput = this.fComponentsStore.fOutputs.find((x) => {
-      return x.hostElement.contains(event.targetElement);
-    });
-    if (!fOutput) {
-      throw new Error('Output not found');
+    if(!this._isValid(request)) {
+      return;
     }
+    const fOutput = this._getOutput(request.event.targetElement);
+
     if (fOutput.canBeConnected) {
-      this.createDragHandler(event.getPosition(), fOutput as FNodeOutputDirective);
+      this._fMediator.execute(
+        new CreateConnectionDragHandlerPreparationRequest(request.event.getPosition(), fOutput)
+      );
     }
   }
 
-  private createDragHandler(position: IPoint, fOutput: FNodeOutputDirective): void {
-    this.fMediator.send(new CreateConnectionDragHandlerRequest(position, fOutput));
+  private _isValid(request: CreateConnectionFromOutputPreparationRequest): boolean {
+    return this._isNodeOutput(request.event.targetElement, request.fNode);
+  }
+
+  private _isNodeOutput(element: HTMLElement, fNode: FNodeBase): boolean {
+    return isNodeOutput(element) && !this._getNodeOutlets(fNode).length;
+  }
+
+  private _getNodeOutlets(node: FNodeBase): FConnectorBase[] {
+    return this._fComponentsStore.fOutlets
+      .filter((x) => node.isContains(x.hostElement));
+  }
+
+  private _getOutput(element: Element): FNodeOutputBase {
+    const result = this._fComponentsStore.fOutputs
+      .find((x) => x.hostElement.contains(element));
+    if (!result) {
+      throw new Error('Output not found');
+    }
+    return result as FNodeOutputBase;
   }
 }

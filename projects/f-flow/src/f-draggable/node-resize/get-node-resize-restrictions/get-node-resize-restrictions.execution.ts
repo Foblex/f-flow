@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetNodeResizeRestrictionsRequest } from './get-node-resize-restrictions.request';
 import { IRect, SizeExtensions } from '@foblex/2d';
 import { INodeResizeRestrictions } from './i-node-resize-restrictions';
@@ -14,24 +14,27 @@ import { GetNodePaddingRequest } from '../../../domain';
 export class GetNodeResizeRestrictionsExecution
   implements IExecution<GetNodeResizeRestrictionsRequest, INodeResizeRestrictions> {
 
-  constructor(
-    private fMediator: FMediator
-  ) {
-  }
+  private _fMediator = inject(FMediator);
 
   public handle(request: GetNodeResizeRestrictionsRequest): INodeResizeRestrictions {
-    const fNodePaddings = this.getNodePaddings(request.fNode, request.rect);
-    const childRect = this.fMediator.send<IRect | null>(new GetNormalizedChildrenNodesRectRequest(request.fNode, fNodePaddings));
-    const parentRect = this.fMediator.send<IRect>(new GetNormalizedParentNodeRectRequest(request.fNode));
+    const paddings = this._calculateNodePaddings(request.fNode, request.rect);
 
     return {
-      parentRect,
-      childRect,
-      minSize: SizeExtensions.initialize(fNodePaddings[0] + fNodePaddings[2], fNodePaddings[1] + fNodePaddings[3])
+      parentBounds: this._getNormalizedParentBounds(request.fNode),
+      childrenBounds: this._getNormalizedChildrenBounds(request.fNode, paddings),
+      minimumSize: SizeExtensions.initialize(paddings[0] + paddings[2], paddings[1] + paddings[3])
     }
   }
 
-  private getNodePaddings(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this.fMediator.send<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+  private _calculateNodePaddings(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
+    return this._fMediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+  }
+
+  private _getNormalizedParentBounds(fNode: FNodeBase): IRect {
+    return this._fMediator.execute<IRect>(new GetNormalizedParentNodeRectRequest(fNode));
+  }
+
+  private _getNormalizedChildrenBounds(fNode: FNodeBase, fNodePaddings: [ number, number, number, number ]): IRect | null {
+    return this._fMediator.execute<IRect | null>(new GetNormalizedChildrenNodesRectRequest(fNode, fNodePaddings));
   }
 }

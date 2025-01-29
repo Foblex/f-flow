@@ -55,7 +55,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   public override isSelfConnectable: boolean = true;
 
   @Input({ alias: 'fCanBeConnectedInputs' })
-  public canBeConnectedInputs: string[] = [];
+  public override canBeConnectedInputs: string[] = [];
 
   public override get fNodeId(): string {
     return this._fNode.fId;

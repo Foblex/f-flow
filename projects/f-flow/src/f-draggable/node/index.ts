@@ -10,14 +10,6 @@ export * from './node-move-preparation';
 
 export * from './node-move-finalize';
 
-export * from './connection.drag-handler';
-
-export * from './connection-base-drag-handler';
-
-export * from './connection-source.drag-handler';
-
-export * from './connection-target.drag-handler';
-
 export * from './f-drop-to-group.event';
 
 export * from './line-alignment.drag-handler';
@@ -28,4 +20,14 @@ export * from './node-drag-to-parent.drag-handler';
 
 export * from './node-resize-by-child.drag-handler';
 
+export * from './point-bounds-limiter';
+
 export * from './providers';
+
+export * from './source-connection.drag-handler';
+
+export * from './base-connection.drag-handler';
+
+export * from './source-target-connection.drag-handler';
+
+export * from './target-connection.drag-handler';

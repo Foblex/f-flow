@@ -108,7 +108,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   public override redraw(): void {
     super.redraw();
-    this._fMediator.send(new NotifyTransformChangedRequest());
+    this._fMediator.execute(new NotifyTransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
@@ -119,7 +119,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   private _listenStateSizeChanges(): void {
-    this._fMediator.send<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
+    this._fMediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public override refresh(): void {
@@ -127,6 +127,6 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send<void>(new RemoveNodeFromStoreRequest(this));
+    this._fMediator.execute<void>(new RemoveNodeFromStoreRequest(this));
   }
 }

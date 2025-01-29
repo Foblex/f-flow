@@ -1,35 +1,40 @@
-import { IMinMaxPoint, IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IMinMaxPoint, IPoint, PointExtensions } from '@foblex/2d';
 import { IDraggableItem } from '../i-draggable-item';
 import { FNodeBase } from '../../f-node';
 import { FComponentsStore } from '../../f-storage';
+import { fInject } from '../f-injector';
+import { PointBoundsLimiter } from './point-bounds-limiter';
+import { BaseConnectionDragHandler } from './base-connection.drag-handler';
 
 export class NodeDragHandler implements IDraggableItem {
 
+  private _fComponentStore = fInject(FComponentsStore);
   private readonly _onPointerDownPosition = PointExtensions.initialize();
 
+  private readonly _fBoundsLimiter: PointBoundsLimiter;
+
   constructor(
-    private _fComponentsStore: FComponentsStore,
     public fNode: FNodeBase,
     public restrictions: IMinMaxPoint,
+    public fSourceHandlers: BaseConnectionDragHandler[] = [],
+    public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
     this._onPointerDownPosition = { ...fNode.position };
+    this._fBoundsLimiter = new PointBoundsLimiter(this._onPointerDownPosition, restrictions);
   }
 
   public onPointerMove(difference: IPoint): void {
-    const restrictedDifference = this._getDifference(difference);
+    const adjustCellSize = this._fComponentStore.fDraggable!.fCellSizeWhileDragging;
+    const differenceWithRestrictions = this._fBoundsLimiter.limit(difference, adjustCellSize);
 
-    this._redraw(this._getPosition(restrictedDifference));
+    this._redraw(this._calculateNewPosition(differenceWithRestrictions));
+
+    this.fSourceHandlers.forEach((x) => x.setSourceDifference(differenceWithRestrictions));
+    this.fTargetHandlers.forEach((x) => x.setTargetDifference(differenceWithRestrictions));
   }
 
-  private _getPosition(difference: IPoint): IPoint {
-    return Point.fromPoint(this._onPointerDownPosition).add(difference);
-  }
-
-  private _getDifference(difference: IPoint): IPoint {
-    return {
-      x: Math.min(Math.max(difference.x, this.restrictions.min.x), this.restrictions.max.x),
-      y: Math.min(Math.max(difference.y, this.restrictions.min.y), this.restrictions.max.y)
-    }
+  private _calculateNewPosition(difference: IPoint): IPoint {
+    return PointExtensions.sum(this._onPointerDownPosition, difference);
   }
 
   private _redraw(position: IPoint): void {
@@ -41,18 +46,7 @@ export class NodeDragHandler implements IDraggableItem {
     this.fNode.positionChange.emit(this.fNode.position);
   }
 
-  public getDifferenceWithCellSize(difference: IPoint): IPoint {
-    const position = this._getPosition(this._getDifference(difference));
-
-    return Point.fromPoint(this._applyCellSize(position)).sub(this._onPointerDownPosition);
-  }
-
-  private _applyCellSize(position: IPoint): IPoint {
-    const hCellSize = this._fComponentsStore.fDraggable!.hCellSize;
-    const vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
-    return {
-      x: Math.round(position.x / hCellSize) * hCellSize,
-      y: Math.round(position.y / vCellSize) * vCellSize
-    };
+  public calculateRestrictedDifference(difference: IPoint): IPoint {
+    return this._fBoundsLimiter.limit(difference, true);
   }
 }

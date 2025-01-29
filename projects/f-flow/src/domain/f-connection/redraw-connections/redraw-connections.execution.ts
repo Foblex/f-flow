@@ -55,7 +55,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     connection.setLine(line.point1, output.fConnectableSide, line.point2, input.fConnectableSide);
 
     connection.initialize();
-    connection.isSelected() ? connection.select() : null;
+    connection.isSelected() ? connection.markAsSelected() : null;
   }
 
   private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {

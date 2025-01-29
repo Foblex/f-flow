@@ -39,7 +39,7 @@ export class ReassignConnectionPreparationExecution implements IExecution<Reassi
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
     this._fDraggableDataContext.draggableItems = [
-      new ReassignConnectionDragHandler(this._fMediator, this._fComponentsStore, this._fConnection!)
+      new ReassignConnectionDragHandler(this._fConnection!)
     ];
 
     setTimeout(() => this._updateConnectionLayer());

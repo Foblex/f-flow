@@ -13,7 +13,6 @@ import { IsDragStartedRequest } from '../../f-draggable';
 export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
 
   private _fMediator = inject(FMediator);
-
   private _fComponentsStore = inject(FComponentsStore);
 
   private get _fHost(): HTMLElement {

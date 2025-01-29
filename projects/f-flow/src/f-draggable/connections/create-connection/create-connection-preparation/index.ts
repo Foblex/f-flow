@@ -1,4 +1,4 @@
-export * from './create-connection-drag-handler';
+export * from './create-connection-drag-handler-preparation';
 
 export * from './create-connection-from-outlet-preparation';
 

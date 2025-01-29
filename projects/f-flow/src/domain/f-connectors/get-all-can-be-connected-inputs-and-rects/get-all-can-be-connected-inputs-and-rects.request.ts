@@ -1,9 +1,9 @@
-import { FNodeOutletDirective, FNodeOutputDirective } from '../../../f-connectors';
+import { FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
 
 export class GetAllCanBeConnectedInputsAndRectsRequest {
 
   constructor(
-    public fOutput: FNodeOutputDirective | FNodeOutletDirective,
+    public fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
   ) {
   }
 }

@@ -1,16 +1,17 @@
 import { findClosestAlignment, IMinMaxPoint, IPoint, IRect, ISize, ITransformModel, RectExtensions } from '@foblex/2d';
-import { IDraggableItem } from '../index';
+import { fInject, IDraggableItem, PointBoundsLimiter } from '../index';
 import { FComponentsStore } from '../../f-storage';
 import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
 
 export class LineAlignmentDragHandler implements IDraggableItem {
+
+  private _fComponentsStore = fInject(FComponentsStore);
 
   private _debounceTimer: any = null;
 
   private readonly _transform: ITransformModel;
 
   constructor(
-    private _fComponentsStore: FComponentsStore,
     private _lineService: LineService,
     private _size: ISize,
     private _draggedNodeRect: IRect,

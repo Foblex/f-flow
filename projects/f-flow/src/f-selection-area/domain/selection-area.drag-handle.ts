@@ -1,73 +1,80 @@
-import { IPoint, Point, RectExtensions } from '@foblex/2d';
+import { IPoint, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
-import { GetCanBeSelectedItemsRequest, ICanBeSelected } from '../../domain';
+import { GetCanBeSelectedItemsRequest, ICanBeSelectedElementAndRect } from '../../domain';
 import { FMediator } from '@foblex/mediator';
 import { FDraggableDataContext, IDraggableItem } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
-import { ICanChangeSelection } from '../../mixins';
+import { ISelectable } from '../../mixins';
 
 export class SelectionAreaDragHandle implements IDraggableItem {
 
-  private _canBeSelected: ICanBeSelected[] = [];
-  private _selectedByMove: ICanChangeSelection[] = [];
+  private _canBeSelected: ICanBeSelectedElementAndRect[] = [];
+  private _selectedByMove: ISelectable[] = [];
 
-  private get canvasPosition(): Point {
-    return Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position)
-      .add(this.fComponentsStore.fCanvas!.transform.scaledPosition);
+  private get _fCanvasPosition(): IPoint {
+    return Point.fromPoint(this._fComponentsStore.fCanvas!.transform.position)
+      .add(this._fComponentsStore.fCanvas!.transform.scaledPosition);
   }
 
   constructor(
-    private fComponentsStore: FComponentsStore,
-    private fSelectionArea: FSelectionAreaBase,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator,
+    private _fComponentsStore: FComponentsStore,
+    private _fSelectionArea: FSelectionAreaBase,
+    private _fDraggableDataContext: FDraggableDataContext,
+    private _fMediator: FMediator,
   ) {
   }
 
   public prepareDragSequence(): void {
-    this._canBeSelected = this.fMediator.send(new GetCanBeSelectedItemsRequest());
+    this._canBeSelected = this._fMediator.execute(new GetCanBeSelectedItemsRequest());
 
-    this.fSelectionArea.show();
-    this.fSelectionArea.draw(
+    this._fSelectionArea.show();
+    this._fSelectionArea.draw(
       RectExtensions.initialize(
-        this.fDraggableDataContext.onPointerDownPosition.x,
-        this.fDraggableDataContext.onPointerDownPosition.y
+        this._fDraggableDataContext.onPointerDownPosition.x,
+        this._fDraggableDataContext.onPointerDownPosition.y
       )
     );
   }
 
   public onPointerMove(difference: IPoint): void {
-    const currentPoint = Point.fromPoint(difference).add(this.fDraggableDataContext.onPointerDownPosition);
-    const x: number = Math.min(this.fDraggableDataContext.onPointerDownPosition.x, currentPoint.x);
-    const y: number = Math.min(this.fDraggableDataContext.onPointerDownPosition.y, currentPoint.y);
+    const currentPoint = Point.fromPoint(difference).add(this._fDraggableDataContext.onPointerDownPosition);
+
+    const point = this._getMinimumPoint(this._fDraggableDataContext.onPointerDownPosition, currentPoint);
 
     const width = Math.abs(difference.x);
     const height = Math.abs(difference.y);
 
-    this.fSelectionArea.draw(
-      RectExtensions.initialize(x, y, width, height)
-    );
+    const fSelectionAreaRect = RectExtensions.initialize(point.x, point.y, width, height);
+
+    this._fSelectionArea.draw(fSelectionAreaRect);
     this._selectedByMove = [];
     this._canBeSelected.forEach((item) => {
-      item.element.deselect();
+      item.element.unmarkAsSelected();
 
-      const itemRect = RectExtensions.addPoint(item.rect, this.canvasPosition);
+      const fItemRect = RectExtensions.addPoint(item.fRect, this._fCanvasPosition);
 
-      const isIntersect = RectExtensions.intersectionWithRect(itemRect, RectExtensions.initialize(x, y, width, height));
+      const isIntersect = RectExtensions.intersectionWithRect(fItemRect, fSelectionAreaRect);
       if (isIntersect) {
 
-        item.element.select();
+        item.element.markAsSelected();
         this._selectedByMove.push(item.element);
       }
     });
-    this.fMediator.send<void>(new NotifyTransformChangedRequest());
+    this._fMediator.execute<void>(new NotifyTransformChangedRequest());
+  }
+
+  private _getMinimumPoint(point1: IPoint, point2: IPoint): IPoint {
+    return PointExtensions.initialize(
+      Math.min(point1.x, point2.x),
+      Math.min(point1.y, point2.y)
+    );
   }
 
   public onPointerUp(): void {
-    this.fSelectionArea.hide();
-    this.fDraggableDataContext.selectedItems.push(...this._selectedByMove);
+    this._fSelectionArea.hide();
+    this._fDraggableDataContext.selectedItems.push(...this._selectedByMove);
     if (this._selectedByMove.length > 0) {
-      this.fDraggableDataContext.isSelectedChanged = true;
+      this._fDraggableDataContext.isSelectedChanged = true;
     }
   }
 }

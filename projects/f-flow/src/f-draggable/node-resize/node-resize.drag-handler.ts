@@ -8,74 +8,90 @@ import { CalculateChangedSizeRequest } from './calculate-changed-size';
 import { CalculateChangedPositionRequest } from './calculate-changed-position';
 import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-restrictions';
 import { GetNormalizedElementRectRequest } from '../../domain';
+import { fInject } from '../f-injector';
 
 export class NodeResizeDragHandler implements IDraggableItem {
 
-  private originalRect!: IRect;
+  private _fMediator = fInject(FMediator);
 
-  private restrictions!: INodeResizeRestrictions;
-
-  private childRestrictions: (rect: IRect, restrictionsRect: IRect) => void = () => {
-  };
+  private _originalRect!: IRect;
+  private _resizeRestrictions!: INodeResizeRestrictions;
 
   constructor(
-    private fMediator: FMediator,
-    public fNode: FNodeBase,
-    public fResizeHandleType: EFResizeHandleType,
+    private _fNode: FNodeBase,
+    private _fResizeHandleType: EFResizeHandleType,
   ) {
   }
 
   public prepareDragSequence(): void {
-    this.originalRect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.fNode.hostElement, false));
+    this._originalRect = this._getOriginalNodeRect();
+    this._resizeRestrictions = this._getNodeResizeRestrictions();
+  }
 
-    this.restrictions = this.fMediator.send<INodeResizeRestrictions>(new GetNodeResizeRestrictionsRequest(this.fNode, this.originalRect));
-    if (this.restrictions.childRect) {
-      this.childRestrictions = (rect: IRect, restrictionsRect: IRect) => {
-        this.applyChildRestrictions(rect, restrictionsRect);
-      };
-    }
+  private _getOriginalNodeRect(): IRect {
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode.hostElement, false));
+  }
+
+  private _getNodeResizeRestrictions(): INodeResizeRestrictions {
+    return this._fMediator.execute<INodeResizeRestrictions>(
+      new GetNodeResizeRestrictionsRequest(this._fNode, this._originalRect)
+    );
   }
 
   public onPointerMove(difference: IPoint): void {
-    const changedRect = this.changePosition(difference, this.changeSize(difference, this.restrictions.minSize));
-
-    this.childRestrictions(changedRect, this.restrictions.childRect!);
-    this.applyParentRestrictions(changedRect, this.restrictions.parentRect);
-
-    this.fNode.updatePosition(changedRect);
-    this.fNode.updateSize(changedRect);
-    this.fNode.redraw();
+    this._applyResizeChanges(this._calculateChangedRect(difference));
   }
 
-  private changeSize(difference: IPoint, minSize: ISize): IRect {
-    return this.fMediator.send<IRect>(
-      new CalculateChangedSizeRequest(this.originalRect, difference, this.fResizeHandleType)
+  private _calculateChangedRect(difference: IPoint): IRect {
+    return this._calculatePosition(difference, this._calculateSize(difference, this._resizeRestrictions.minimumSize));
+  }
+
+  private _calculateSize(difference: IPoint, minimumSize: ISize): IRect {
+    return this._fMediator.send<IRect>(
+      new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
     );
   }
 
-  private changePosition(difference: IPoint, changedRect: IRect): IRect {
-    return this.fMediator.send<IRect>(
-      new CalculateChangedPositionRequest(this.originalRect, changedRect, difference, this.fResizeHandleType)
+  private _calculatePosition(difference: IPoint, changedSize: IRect): IRect {
+    return this._fMediator.send<IRect>(
+      new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, this._fResizeHandleType)
     );
   }
 
-  private applyChildRestrictions(rect: IRect, restrictionsRect: IRect): void {
-    this.fMediator.send(
-      new ApplyChildResizeRestrictionsRequest(rect, restrictionsRect)
+  private _applyResizeChanges(changedRect: IRect): void {
+    if(this._resizeRestrictions.childrenBounds) {
+      this._applyChildRestrictions(changedRect, this._resizeRestrictions.childrenBounds);
+    }
+
+    this._applyParentRestrictions(changedRect, this._resizeRestrictions.parentBounds);
+    this._updateNodeRendering(changedRect);
+  }
+
+  private _updateNodeRendering(changedRect: IRect): void {
+    this._fNode.updatePosition(changedRect);
+    this._fNode.updateSize(changedRect);
+    this._fNode.redraw();
+  }
+
+  private _applyChildRestrictions(changedRect: IRect, restrictions: IRect): void {
+    this._fMediator.execute(
+      new ApplyChildResizeRestrictionsRequest(changedRect, restrictions)
     );
   }
 
-  private applyParentRestrictions(rect: IRect, restrictionsRect: IRect): void {
-    this.fMediator.send(
-      new ApplyParentResizeRestrictionsRequest(rect, restrictionsRect)
+  private _applyParentRestrictions(changedRect: IRect, restrictions: IRect): void {
+    this._fMediator.execute(
+      new ApplyParentResizeRestrictionsRequest(changedRect, restrictions)
     );
   }
 
   public onPointerUp(): void {
-    this.fNode.sizeChange.emit(
-      RectExtensions.initialize(
-        this.fNode.position.x, this.fNode.position.y, this.fNode.size?.width, this.fNode.size?.height
-      )
+    this._fNode.sizeChange.emit(this._getNewRect());
+  }
+
+  private _getNewRect(): IRect {
+    return RectExtensions.initialize(
+      this._fNode.position.x, this._fNode.position.y, this._fNode.size?.width, this._fNode.size?.height
     );
   }
 }
