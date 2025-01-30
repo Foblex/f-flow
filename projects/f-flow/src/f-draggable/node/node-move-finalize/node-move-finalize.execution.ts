@@ -87,7 +87,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _applyConnectionUnderDroppedNode(): void {
-    if (this._isDraggedJustOneNode() && this._fComponentsStore.fDraggable?.emitWhenNodeIntersectedWithConnection) {
+    if (this._isDraggedJustOneNode() && this._fComponentsStore.fDraggable?.fEmitOnNodeIntersect) {
 
       const fNode = this._getFirstNodeOrGroup();
       setTimeout(() => this._fMediator.execute(new IsConnectionUnderNodeRequest(fNode)));

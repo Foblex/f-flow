@@ -1,6 +1,6 @@
 <f-flow fDraggable
         (fLoaded)="onLoaded()"
-        emitWhenNodeIntersectedWithConnection
+        fEmitOnNodeIntersect
         (fNodeIntersectedWithConnections)="onNodeIntersectedWithConnection($event)">
   <f-canvas>
     @for (connection of connections; track connection.inputId)  {

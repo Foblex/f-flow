@@ -13,7 +13,7 @@ export abstract class FDraggableBase extends DragAndDropBase  {
 
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
 
-  public abstract emitWhenNodeIntersectedWithConnection: boolean;
+  public abstract fEmitOnNodeIntersect: boolean;
 
   public abstract fCreateNode: EventEmitter<FCreateNodeEvent>;
 

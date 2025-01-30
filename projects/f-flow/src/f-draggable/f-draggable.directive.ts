@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter, inject, Inject, Injector,
   Input,
-  NgZone,
+  NgZone, numberAttribute,
   OnDestroy,
   OnInit, Optional, Output, QueryList
 } from "@angular/core";
@@ -61,7 +61,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private _fPlatform = inject(PlatformService);
   private _injector = inject(Injector);
 
-  @Input('fDraggableDisabled')
+  @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
 
   public override get hostElement(): HTMLElement {
@@ -86,7 +86,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public override fNodeIntersectedWithConnections = new EventEmitter<FNodeIntersectedWithConnections>();
 
   @Input({ transform: booleanAttribute })
-  public override emitWhenNodeIntersectedWithConnection: boolean = false;
+  public override fEmitOnNodeIntersect: boolean = false;
 
   @Output()
   public override fCreateNode = new EventEmitter<FCreateNodeEvent>();
@@ -100,13 +100,13 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public override vCellSize = 1;
 
-  @Input()
+  @Input({ transform: numberAttribute })
   public override hCellSize = 1;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fCellSizeWhileDragging: boolean = false;
 
   @Output()
