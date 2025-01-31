@@ -134,6 +134,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component')
       },
       {
+        tag: 'connection-text',
+        component: import('../../../projects/f-examples/connections/connection-text/connection-text.component')
+      },
+      {
         tag: 'custom-connections',
         component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component')
       },
@@ -462,20 +466,14 @@ function connectionGroup(): INavigationGroup {
         description: 'Automatically snap connections to nodes in Foblex Flow, enabling easier diagram creation in Angular.',
         image: './previews/examples/auto-snap.light.png',
         image_dark: './previews/examples/auto-snap.dark.png',
-        image_width: 791,
+        image_width: 781,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        }
       },
-      // {
-      //   link: 'connection-selection',
-      //   text: 'Connection Selection',
-      //   description: 'Select connections in Foblex Flow diagrams for Angular.',
-      //   image: './previews/examples/connection-selection.light.png',
-      //   image_dark: './previews/examples/connection-selection.dark.png',
-      //   image_width: 806,
-      //   image_height: 600,
-      //   image_type: 'image/png',
-      // },
       {
         link: 'connection-types',
         text: 'Connection Types',
@@ -517,6 +515,20 @@ function connectionGroup(): INavigationGroup {
         image_type: 'image/png',
       },
       {
+        link: 'connection-text',
+        text: 'Connection Text',
+        description: 'Add text to connections in Foblex Flow diagrams for Angular.',
+        image: './previews/examples/connection-text.light.png',
+        image_dark: './previews/examples/connection-text.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
+      {
         link: 'custom-connections',
         text: 'Custom Connections',
         description: 'Create and customize connections in Foblex Flow diagrams for Angular.',
@@ -526,14 +538,6 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
-      // {
-      //   link: 'connection-text',
-      //   text: 'Connection Text',
-      // },
-      // {
-      //   link: 'connection-center',
-      //   text: 'Connection Center',
-      // },
     ]
   }
 }

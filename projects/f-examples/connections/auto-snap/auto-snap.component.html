@@ -1,16 +1,28 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
   <f-canvas>
-    <f-connection-for-create></f-connection-for-create>
-    <f-snap-connection [fSnapThreshold]="100"></f-snap-connection>
+    <f-connection-for-create fType="segment"></f-connection-for-create>
+    <f-snap-connection [fSnapThreshold]="100" fType="segment"></f-snap-connection>
 
     @for (connection of connections; track connection.inputId)  {
-      <f-connection [fReassignDisabled]="true"
+      <f-connection [fReassignDisabled]="true" fType="segment"
                     [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
       </f-connection>
     }
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 24 }" fNodeOutput fOutputConnectableSide="right">drag me</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 24 }" fNodeInput fInputConnectableSide="left">to me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 24 }">
+      <div fNodeOutput fOutputConnectableSide="left" class="left"></div>
+      <div fNodeOutput fOutputConnectableSide="top" class="top"></div>
+      <div fNodeOutput fOutputConnectableSide="right" class="right"></div>
+      <div fNodeOutput fOutputConnectableSide="bottom" class="bottom"></div>
+      I'm a node
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 24 }">
+      <div fNodeInput fInputConnectableSide="left" class="left"></div>
+      <div fNodeInput fInputConnectableSide="top" class="top"></div>
+      <div fNodeInput fInputConnectableSide="right" class="right"></div>
+      <div fNodeInput fInputConnectableSide="bottom" class="bottom"></div>
+      I'm a node
+    </div>
 
   </f-canvas>
 </f-flow>

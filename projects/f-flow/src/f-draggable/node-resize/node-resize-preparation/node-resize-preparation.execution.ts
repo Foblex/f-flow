@@ -40,11 +40,9 @@ export class NodeResizePreparationExecution implements IExecution<NodeResizePrep
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
+    const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
     this._fDraggableDataContext.draggableItems = [
-      new NodeResizeDragHandler(
-        this._fNode!,
-        EFResizeHandleType[ this._getHandleType(request.event.targetElement) ]
-      )
+      new NodeResizeDragHandler(this._fNode!, resizeHandleType)
     ];
   }
 

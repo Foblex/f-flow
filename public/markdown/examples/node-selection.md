@@ -2,7 +2,7 @@
 
 ## Description
 
-This guide demonstrates how to select nodes in Foblex Flow for Angular. Use a `mouse click` to select a single node, or hold the `SHIFT` or `CTRL/CMD` key `while clicking` to select multiple nodes.
+This guide demonstrates how to select nodes in Foblex Flow for Angular. Use a `mouse click` to select a single node, or hold the `CTRL/CMD` key `while clicking` to select multiple nodes.
 ## Example
 
 ::: ng-component <node-selection></node-selection> [height]="600"

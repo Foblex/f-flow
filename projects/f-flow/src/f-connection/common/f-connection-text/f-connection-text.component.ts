@@ -46,7 +46,7 @@ export class FConnectionTextComponent implements IConnectionText {
   }
 
   public redraw(line: ILine): void {
-
+    this.textPathDirective.redraw();
     const isTextReverse: boolean = FConnectionTextComponent.isTextReverse(line);
     const dyValue = this.calculateDy(this.textPathDirective.fontSize, isTextReverse);
 
