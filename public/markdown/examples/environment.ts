@@ -138,6 +138,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/connections/connection-text/connection-text.component')
       },
       {
+        tag: 'connection-center',
+        component: import('../../../projects/f-examples/connections/connection-center/connection-center.component')
+      },
+      {
         tag: 'custom-connections',
         component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component')
       },
@@ -520,6 +524,20 @@ function connectionGroup(): INavigationGroup {
         description: 'Add text to connections in Foblex Flow diagrams for Angular.',
         image: './previews/examples/connection-text.light.png',
         image_dark: './previews/examples/connection-text.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
+      {
+        link: 'connection-center',
+        text: 'Connection Center',
+        description: 'Add centered content to connections with Foblex Flow for Angular',
+        image: './previews/examples/connection-center.light.png',
+        image_dark: './previews/examples/connection-center.dark.png',
         image_width: 781,
         image_height: 600,
         image_type: 'image/png',
