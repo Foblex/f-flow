@@ -10,7 +10,7 @@ export * from './node';
 
 export * from './node-resize';
 
-export * from './single-select';
+export * from './f-single-select';
 
 export * from './f-draggable.directive';
 

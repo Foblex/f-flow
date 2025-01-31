@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { SingleSelectRequest } from './single-select.request';
+import { FSingleSelectRequest } from './f-single-select.request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectionBase } from '../../f-connection';
@@ -48,14 +48,14 @@ import { FNodeBase } from '../../f-node';
  */
 
 @Injectable()
-@FExecutionRegister(SingleSelectRequest)
-export class SingleSelectExecution implements IExecution<SingleSelectRequest, void> {
+@FExecutionRegister(FSingleSelectRequest)
+export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
-  public handle(request: SingleSelectRequest): void {
+  public handle(request: FSingleSelectRequest): void {
     if (!this._isValid(request)) {
       return;
     }
@@ -67,7 +67,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     this._isMultiSelect(request) ? this._multiSelect(fItem) : this._singleSelect(fItem);
   }
 
-  private _isValid(request: SingleSelectRequest): boolean {
+  private _isValid(request: FSingleSelectRequest): boolean {
     return this._isEventInFlowBounds(request.event) && this._fDraggableDataContext.isEmpty();
   }
 
@@ -96,7 +96,7 @@ export class SingleSelectExecution implements IExecution<SingleSelectRequest, vo
     }
   }
 
-  private _isMultiSelect(request: SingleSelectRequest): boolean {
+  private _isMultiSelect(request: FSingleSelectRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fMultiSelectTrigger)
   }
 

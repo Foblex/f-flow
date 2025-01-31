@@ -1,7 +1,7 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FEventTrigger } from '../../domain';
 
-export class SingleSelectRequest {
+export class FSingleSelectRequest {
 
   constructor(
     public event: IPointerEvent,

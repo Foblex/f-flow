@@ -41,7 +41,7 @@ import {
   FCreateNodeEvent,
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
-import { SingleSelectRequest } from './single-select';
+import { FSingleSelectRequest } from './f-single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
@@ -59,6 +59,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   private _elementReference = inject(ElementRef);
 
+  private _fResult = inject(FDragHandlerResult);
   private _fMediator = inject(FMediator);
   private _fPlatform = inject(PlatformService);
   private _injector = inject(Injector);
@@ -138,11 +139,13 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public override onPointerDown(event: IPointerEvent): boolean {
     FInjector.set(this._injector);
 
+    this._fResult.clear();
+
     this._fMediator.execute<void>(new InitializeDragSequenceRequest());
 
     this.plugins.forEach((p) => p.onPointerDown?.(event));
 
-    this._fMediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
+    this._fMediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
 
     this._fMediator.execute<void>(new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
 
@@ -208,6 +211,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     FInjector.clear();
+
+    this._fResult.clear();
   }
 
   public ngOnDestroy(): void {

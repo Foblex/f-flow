@@ -1,6 +1,6 @@
 import { CANVAS_PROVIDERS } from './f-canvas';
 import { CONNECTIONS_PROVIDERS } from './f-connection';
-import { SINGLE_SELECT_PROVIDERS } from './single-select';
+import { SINGLE_SELECT_PROVIDERS } from './f-single-select';
 import { NODE_PROVIDERS } from './node';
 import { NODE_RESIZE_PROVIDERS } from './node-resize';
 import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
