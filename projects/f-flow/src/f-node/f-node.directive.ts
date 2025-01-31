@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
@@ -42,8 +42,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   @Input('fNodePosition')
   public override set position(value: IPoint) {
-    this._position = PointExtensions.castToPoint(value);
-    this.refresh();
+    if(!PointExtensions.isEqual(this._position, value)) {
+      this._position = value;
+      this.redraw();
+      this.refresh();
+    }
   }
 
   public override get position(): IPoint {
@@ -55,8 +58,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   @Input('fNodeSize')
   public override set size(value: ISize) {
-    this._size = value;
-    this.refresh();
+    if(!this.size || !SizeExtensions.isEqual(this._size!, value)) {
+      this._size = value;
+      this.redraw();
+      this.refresh()
+    }
   }
 
   public override get size(): ISize {

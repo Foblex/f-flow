@@ -143,7 +143,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem<ICreateReas
   }
 
   public onPointerUp(): void {
-    this._drawConnection(this._fInputWithRect.fRect, this._fInputWithRect.fConnector.fConnectableSide);
+    this._drawConnection(this._toConnectorRect, this._fInputWithRect.fConnector.fConnectableSide);
     this._fSnapConnection?.hide();
 
     this._fMediator.execute(

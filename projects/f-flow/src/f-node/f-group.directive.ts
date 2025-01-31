@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
@@ -43,8 +43,11 @@ export class FGroupDirective extends FNodeBase
 
   @Input('fGroupPosition')
   public override set position(value: IPoint) {
-    this._position = PointExtensions.castToPoint(value);
-    this.refresh();
+    if(!PointExtensions.isEqual(this._position, value)) {
+      this._position = value;
+      this.redraw();
+      this.refresh();
+    }
   }
   public override get position(): IPoint {
     return this._position;
@@ -54,8 +57,11 @@ export class FGroupDirective extends FNodeBase
 
   @Input('fGroupSize')
   public override set size(value: ISize) {
-    this._size = value;
-    this.refresh();
+    if(!this.size || !SizeExtensions.isEqual(this._size!, value)) {
+      this._size = value;
+      this.redraw();
+      this.refresh()
+    }
   }
   public override get size(): ISize {
     return this._size!;

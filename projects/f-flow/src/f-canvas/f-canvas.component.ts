@@ -43,12 +43,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   @Input()
   public set position(value: IPoint | undefined) {
-    this._fMediator.send(new InputCanvasPositionRequest(this.transform, value));
+    this._fMediator.execute(new InputCanvasPositionRequest(this.transform, PointExtensions.castToPoint(value)));
   }
 
   @Input()
   public set scale(value: number | undefined) {
-    this._fMediator.send(new InputCanvasScaleRequest(this.transform, value));
+    this._fMediator.execute(new InputCanvasScaleRequest(this.transform, value));
   }
 
   public override get hostElement(): HTMLElement {
@@ -67,31 +67,31 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private _fMediator = inject(FMediator);
 
   public ngOnInit() {
-    this._fMediator.send(new AddCanvasToStoreRequest(this));
+    this._fMediator.execute(new AddCanvasToStoreRequest(this));
   }
 
   public override redraw(): void {
-    this._fMediator.send(new SetBackgroundTransformRequest(this.transform));
+    this._fMediator.execute(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transform: ${ TransformModelExtensions.toString(this.transform) }`);
-    this._fMediator.send(new NotifyTransformChangedRequest());
+    this._fMediator.execute(new NotifyTransformChangedRequest());
   }
 
   public override redrawWithAnimation(): void {
-    this._fMediator.send(new SetBackgroundTransformRequest(this.transform));
+    this._fMediator.execute(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transition: transform ${ isMobile() ? 80 : 150 }ms ease-in-out; transform: ${ TransformModelExtensions.toString(this.transform) }`);
     transitionEnd(this.hostElement, () => this.redraw());
   }
 
   public centerGroupOrNode(id: string, animated: boolean = true): void {
-    this._fMediator.send(new CenterGroupOrNodeRequest(id, animated));
+    this._fMediator.execute(new CenterGroupOrNodeRequest(id, animated));
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    this._fMediator.send(new FitToFlowRequest(toCenter, animated));
+    this._fMediator.execute(new FitToFlowRequest(toCenter, animated));
   }
 
   public resetScaleAndCenter(animated: boolean = true): void {
-    this._fMediator.send(new ResetScaleAndCenterRequest(animated));
+    this._fMediator.execute(new ResetScaleAndCenterRequest(animated));
   }
 
   public getScale(): number {

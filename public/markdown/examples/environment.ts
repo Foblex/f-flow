@@ -16,6 +16,7 @@ function createEnvironment(): IDocsEnvironment {
       connectionGroup(),
       layoutGroup(),
       extensionGroup(),
+      advancedGroup(),
       proExamplesGroup(),
     ],
     headerNavigation: [ {
@@ -187,6 +188,10 @@ function createEnvironment(): IDocsEnvironment {
       {
         tag: 'grid-system-example',
         component: import('../../../projects/f-examples/extensions/grid-system-example/grid-system-example.component')
+      },
+      {
+        tag: 'undo-redo',
+        component: import('../../../projects/f-examples/advanced/undo-redo/undo-redo.component')
       }
     ],
     socialLinks: [
@@ -447,8 +452,8 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
         badge: {
-          text: 'New',
-          type: 'info'
+          text: 'Updated',
+          type: 'warning'
         }
       },
       {
@@ -634,6 +639,28 @@ function extensionGroup(): INavigationGroup {
         image_type: 'image/png',
       }
     ],
+  }
+}
+
+function advancedGroup(): INavigationGroup {
+  return {
+    text: 'Advanced',
+    items: [
+      {
+        link: 'undo-redo',
+        text: 'Undo/Redo',
+        description: 'Add Undo and Redo functionality with Foblex Flow for Angular.',
+        image: './previews/examples/undo-redo.light.png',
+        image_dark: './previews/examples/undo-redo.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      }
+    ]
   }
 }
 
