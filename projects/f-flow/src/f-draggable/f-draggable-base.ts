@@ -1,5 +1,5 @@
 import { Directive, EventEmitter, } from '@angular/core';
-import { FCreateConnectionEvent, FReassignConnectionEvent } from './connections';
+import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { DragAndDropBase, ICanRunOutsideAngular } from '@foblex/drag-toolkit';

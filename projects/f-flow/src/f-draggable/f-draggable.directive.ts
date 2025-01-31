@@ -19,11 +19,11 @@ import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-c
 import {
   FCreateConnectionEvent,
   FReassignConnectionEvent,
-  ReassignConnectionPreparationRequest,
-  ReassignConnectionFinalizeRequest,
-  CreateConnectionPreparationRequest,
-  CreateConnectionFinalizeRequest
-} from './connections';
+  FReassignConnectionPreparationRequest,
+  FReassignConnectionFinalizeRequest,
+  FCreateConnectionPreparationRequest,
+  FCreateConnectionFinalizeRequest
+} from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -48,10 +48,12 @@ import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platf
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FNodeIntersectedWithConnections } from './domain';
 import { FInjector } from './f-injector';
+import { FDragHandlerResult } from './f-drag-handler';
 
 @Directive({
   selector: "f-flow[fDraggable]",
-  exportAs: 'fDraggable'
+  exportAs: 'fDraggable',
+  providers: [ FDragHandlerResult ]
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 
@@ -142,9 +144,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
 
-    this._fMediator.execute<void>(new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
+    this._fMediator.execute<void>(new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
 
-    this._fMediator.execute<void>(new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
+    this._fMediator.execute<void>(new FCreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
 
     const isMouseLeftOrTouch = event.isMouseLeftButton();
     if (!isMouseLeftOrTouch) {
@@ -183,9 +185,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public override onPointerUp(event: IPointerEvent): void {
     this.plugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._fMediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
+    this._fMediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new CreateConnectionFinalizeRequest(event));
+    this._fMediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
 
     this._fMediator.execute<void>(new NodeResizeFinalizeRequest(event));
 
