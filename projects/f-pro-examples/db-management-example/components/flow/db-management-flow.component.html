@@ -49,7 +49,20 @@
         <div fConnectionCenter db-management-connection-toolbar [viewModel]="connection"></div>
       </f-connection>
     }
-
+    @for (group of viewModel.groups; track group.id) {
+      <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position"
+           [fGroupSize]="group.size" fDragHandle>
+        <div class="group-title">{{ group.name }}</div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      </div>
+    }
     @for (table of viewModel.tables; track table.id) {
       <db-management-table [viewModel]="table"
                            [form]="getTableForm(table.id)"
@@ -61,16 +74,7 @@
                            (fNodePositionChange)="moveTable($event, table)">
       </db-management-table>
     }
-    @for (group of viewModel.groups; track group.id) {
-      <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position"
-           [fGroupSize]="group.size" fDragHandle>
-        <div class="group-title">{{ group.name }}</div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
-        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
-      </div>
-    }
+
   </f-canvas>
   <f-selection-area></f-selection-area>
   <f-minimap [fMinSize]="2000"></f-minimap>

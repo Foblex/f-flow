@@ -1,35 +1,41 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SelectionAreaPreparationRequest } from './selection-area-preparation.request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { isValidEventTrigger } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(SelectionAreaPreparationRequest)
 export class SelectionAreaPreparationExecution implements IExecution<SelectionAreaPreparationRequest, void> {
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
   }
 
   public handle(request: SelectionAreaPreparationRequest): void {
-    this.fDraggableDataContext.draggableItems = [
+    if (!this._isValid(request)) {
+      return;
+    }
+    this._fDraggableDataContext.draggableItems = [
       new SelectionAreaDragHandle(
-        this.fComponentsStore, request.fSelectionArea, this.fDraggableDataContext, this.fMediator
+        this._fComponentsStore, request.fSelectionArea, this._fDraggableDataContext, this._fMediator
       )
     ];
 
-    this.fDraggableDataContext.onPointerDownScale = 1;
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this.flowHost);
+    this._fDraggableDataContext.onPointerDownScale = 1;
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost);
+  }
+
+  private _isValid(request: SelectionAreaPreparationRequest): boolean {
+    return this._fDraggableDataContext.isEmpty()
+      && isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 }

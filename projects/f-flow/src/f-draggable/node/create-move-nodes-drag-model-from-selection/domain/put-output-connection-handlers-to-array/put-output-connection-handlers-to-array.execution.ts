@@ -1,78 +1,62 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PutOutputConnectionHandlersToArrayRequest } from './put-output-connection-handlers-to-array.request';
 import { FComponentsStore } from '../../../../../f-storage';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../../f-node';
-import { NodeDragHandler } from '../../../node.drag-handler';
-import { IDraggableItem } from '../../../../i-draggable-item';
-import { ConnectionDragHandler } from '../../../connection.drag-handler';
-import { ConnectionSourceDragHandler } from '../../../connection-source.drag-handler';
-import { FConnectorBase } from '../../../../../f-connectors';
 import { FConnectionBase } from '../../../../../f-connection';
+import { SourceTargetConnectionDragHandler } from '../../../connection-drag-handlers/source-target-connection.drag-handler';
+import { BaseConnectionDragHandler } from '../../../connection-drag-handlers/base-connection.drag-handler';
+import { SourceConnectionDragHandler } from '../../../connection-drag-handlers/source-connection.drag-handler';
 
 @Injectable()
 @FExecutionRegister(PutOutputConnectionHandlersToArrayRequest)
 export class PutOutputConnectionHandlersToArrayExecution
   implements IExecution<PutOutputConnectionHandlersToArrayRequest, void> {
 
-  private get fConnections(): FConnectionBase[] {
-    return this.fComponentsStore.fConnections;
-  }
+  private _fComponentsStore = inject(FComponentsStore);
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator
-  ) {
+  private get _fConnections(): FConnectionBase[] {
+    return this._fComponentsStore.fConnections;
   }
 
   public handle(request: PutOutputConnectionHandlersToArrayRequest): void {
-    this.getOutputConnections(request.nodeDragHandler.fNode).forEach((connection) => {
-      const index = this.getExistingConnectionHandlerIndex(request.result, connection);
-      if (index !== -1) {
-        this.updateExistingConnectionHandler(request.result, index, request.nodeDragHandler);
-      } else {
-        request.result.push(this.createNewConnectionHandler(request.nodeDragHandler, request.inputIds, connection));
-      }
+    this._getOutputConnections(request.fDragHandler.fNode).forEach((fConnection) => {
+      this._createAndSetConnectionToNodeHandler(fConnection, request);
     });
   }
 
-  public getOutputConnections(node: FNodeBase): FConnectionBase[] {
-    const outputsIds = new Set(this.getOutputsForNode(node).map((x) => x.fId));
-    return this.fConnections.filter((x) => outputsIds.has(x.fOutputId));
+  public _getOutputConnections(node: FNodeBase): FConnectionBase[] {
+    const ids = new Set(this._getNodeOutputIds(node));
+    return this._fConnections.filter((x) => ids.has(x.fOutputId));
   }
 
-  private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
-    return this.fComponentsStore.fOutputs.filter((x) => node.isContains(x.hostElement));
+  private _getNodeOutputIds(node: FNodeBase): string[] {
+    return this._fComponentsStore.fOutputs
+      .filter((x) => node.isContains(x.hostElement))
+      .map((x) => x.fId);
   }
 
-  private getExistingConnectionHandlerIndex(result: IDraggableItem[], connection: FConnectionBase): number {
-    return result.findIndex(
-      (x) => x instanceof ConnectionDragHandler && x.connection.fId === connection.fId
-    );
+  private _createAndSetConnectionToNodeHandler(fConnection: FConnectionBase, request: PutOutputConnectionHandlersToArrayRequest): void {
+    let fHandler = this._getExistingConnectionHandler(request.result, fConnection);
+    if (!fHandler) {
+      fHandler = this._createConnectionHandler(request.inputIds, fConnection);
+      request.result.push(fHandler);
+    }
+    request.fDragHandler.fSourceHandlers.push(fHandler);
   }
 
-  private createNewConnectionHandler(nodeDragHandler: NodeDragHandler, inputIds: string[], connection: FConnectionBase): IDraggableItem {
-    let result: IDraggableItem;
-    if (inputIds.includes(connection.fInputId)) {
-      result = this.getNewConnectionHandler(connection, nodeDragHandler);
+  private _getExistingConnectionHandler(fHandlers: BaseConnectionDragHandler[], fConnection: FConnectionBase): BaseConnectionDragHandler | undefined {
+    return fHandlers.find((x) => x.fConnection.fId === fConnection.fId);
+  }
+
+  private _createConnectionHandler(inputIds: string[], fConnection: FConnectionBase): BaseConnectionDragHandler {
+    let result: BaseConnectionDragHandler;
+    if (inputIds.includes(fConnection.fInputId)) {
+      result = new SourceTargetConnectionDragHandler(fConnection);
     } else {
-      result = this.getNewSourceConnectionHandler(connection, nodeDragHandler);
+      result = new SourceConnectionDragHandler(fConnection)
     }
     return result;
-  }
-
-  private getNewConnectionHandler(connection: FConnectionBase, nodeDragHandler: NodeDragHandler): ConnectionDragHandler {
-    const handler = new ConnectionDragHandler(this.fMediator, this.fComponentsStore, connection);
-    handler.setOutputRestrictions(nodeDragHandler.restrictions);
-    return handler;
-  }
-
-  private updateExistingConnectionHandler(result: IDraggableItem[], index: number, nodeDragHandler: NodeDragHandler): void {
-    (result[ index ] as ConnectionDragHandler).setOutputRestrictions(nodeDragHandler.restrictions);
-  }
-
-  private getNewSourceConnectionHandler(connection: FConnectionBase, nodeDragHandler: NodeDragHandler): ConnectionSourceDragHandler {
-    return new ConnectionSourceDragHandler(this.fMediator, this.fComponentsStore, connection, nodeDragHandler.restrictions);
   }
 }
 

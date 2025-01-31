@@ -2,7 +2,7 @@ import { IHandler } from '@foblex/mediator';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
-import { FConnectorBase, isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
+import { isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { CreateConnectionPreparationRequest } from './create-connection-preparation.request';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
@@ -19,15 +19,21 @@ export class CreateConnectionPreparationExecution
   private _fComponentsStore = inject(FComponentsStore);
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
+  private _fNode: FNodeBase | undefined;
+
   public handle(request: CreateConnectionPreparationRequest): void {
     if (!this._isValid(request)) {
       return;
     }
 
     if (isNodeOutlet(request.event.targetElement)) {
-      this._fMediator.send<void>(new CreateConnectionFromOutletPreparationRequest(request.event));
-    } else if (this._isNodeOutput(request.event.targetElement, this._getNode(request.event)!)) {
-      this._fMediator.send<void>(new CreateConnectionFromOutputPreparationRequest(request.event));
+      this._fMediator.execute<void>(
+        new CreateConnectionFromOutletPreparationRequest(request.event, this._fNode!)
+      );
+    } else if (isNodeOutput(request.event.targetElement)) {
+      this._fMediator.execute<void>(
+        new CreateConnectionFromOutputPreparationRequest(request.event, this._fNode!)
+      );
     }
   }
 
@@ -36,19 +42,12 @@ export class CreateConnectionPreparationExecution
   }
 
   private _getNode(event: IPointerEvent): FNodeBase | undefined {
-    return this._fComponentsStore
+    this._fNode = this._fComponentsStore
       .fNodes.find(n => n.isContains(event.targetElement));
+    return this._fNode;
   }
 
   private _isValidConditions(): boolean {
-    return !this._fDraggableDataContext.draggableItems.length && !!this._fComponentsStore.fTempConnection;
-  }
-
-  private _isNodeOutput(targetElement: HTMLElement, node: FNodeBase): boolean {
-    return isNodeOutput(targetElement) && !this._getOutlets(node).length;
-  }
-
-  private _getOutlets(node: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fOutlets.filter((x) => node.isContains(x.hostElement));
+    return this._fDraggableDataContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
   }
 }

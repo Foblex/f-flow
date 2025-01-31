@@ -4,12 +4,12 @@ import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { IDraggableItem } from '../../i-draggable-item';
 import { FNodeBase } from '../../../f-node';
 import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
 import { SelectAndUpdateNodeLayerRequest } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
 import { LineAlignmentPreparationRequest } from '../line-alignment-preparation';
+import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 
 @Injectable()
 @FExecutionRegister(NodeMovePreparationRequest)
@@ -34,13 +34,19 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
       return;
     }
 
+    const summaryDragHandler = this._calculateDraggedItems(this._fNode!);
+
     this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
-    this._fDraggableDataContext.draggableItems = this._calculateDraggedItems(this._fNode!);
+    this._fDraggableDataContext.draggableItems = [summaryDragHandler];
 
     if(this._fComponentsStore.fLineAlignment) {
-      this._fMediator.execute<void>(new LineAlignmentPreparationRequest());
+      this._fMediator.execute<void>(
+        new LineAlignmentPreparationRequest(
+          summaryDragHandler.fHandlers.map((x) => x.fNode), summaryDragHandler.commonRect
+        )
+      );
     }
   }
 
@@ -61,8 +67,8 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
   }
 
   //We drag nodes from selection model
-  private _calculateDraggedItems(fNode: FNodeBase): IDraggableItem[] {
-    let result: IDraggableItem[] = [];
+  private _calculateDraggedItems(fNode: FNodeBase): SummaryNodeDragHandler {
+    let result: SummaryNodeDragHandler;
     if (!fNode.fSelectionDisabled) {
       // Need to select node before drag
       this._fMediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
@@ -75,7 +81,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
     return result;
   }
 
-  private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): IDraggableItem[] {
+  private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): SummaryNodeDragHandler {
     return this._fMediator.execute(
       new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );

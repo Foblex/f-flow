@@ -29,11 +29,11 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
 
     this._emitSelectionChange(this._getSelection());
     this._fDraggableDataContext.isSelectedChanged = false;
-    this._fMediator.send<void>(new NotifyTransformChangedRequest());
+    this._fMediator.execute<void>(new NotifyTransformChangedRequest());
   }
 
   private _getSelection(): ICurrentSelection {
-    return this._fMediator.send<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._fMediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
   private _emitSelectionChange(selection: ICurrentSelection): void {

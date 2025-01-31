@@ -16,6 +16,7 @@ function createEnvironment(): IDocsEnvironment {
       connectionGroup(),
       layoutGroup(),
       extensionGroup(),
+      advancedGroup(),
       proExamplesGroup(),
     ],
     headerNavigation: [ {
@@ -133,6 +134,14 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/connections/connection-markers/connection-markers.component')
       },
       {
+        tag: 'connection-text',
+        component: import('../../../projects/f-examples/connections/connection-text/connection-text.component')
+      },
+      {
+        tag: 'connection-center',
+        component: import('../../../projects/f-examples/connections/connection-center/connection-center.component')
+      },
+      {
         tag: 'custom-connections',
         component: import('../../../projects/f-examples/connections/custom-connections/custom-connections.component')
       },
@@ -187,6 +196,10 @@ function createEnvironment(): IDocsEnvironment {
       {
         tag: 'grid-system-example',
         component: import('../../../projects/f-examples/extensions/grid-system-example/grid-system-example.component')
+      },
+      {
+        tag: 'undo-redo',
+        component: import('../../../projects/f-examples/advanced/undo-redo/undo-redo.component')
       }
     ],
     socialLinks: [
@@ -260,6 +273,10 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        }
       },
       {
         link: 'grouping',
@@ -443,8 +460,8 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
         badge: {
-          text: 'New',
-          type: 'info'
+          text: 'Updated',
+          type: 'warning'
         }
       },
       {
@@ -453,20 +470,14 @@ function connectionGroup(): INavigationGroup {
         description: 'Automatically snap connections to nodes in Foblex Flow, enabling easier diagram creation in Angular.',
         image: './previews/examples/auto-snap.light.png',
         image_dark: './previews/examples/auto-snap.dark.png',
-        image_width: 791,
+        image_width: 781,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        }
       },
-      // {
-      //   link: 'connection-selection',
-      //   text: 'Connection Selection',
-      //   description: 'Select connections in Foblex Flow diagrams for Angular.',
-      //   image: './previews/examples/connection-selection.light.png',
-      //   image_dark: './previews/examples/connection-selection.dark.png',
-      //   image_width: 806,
-      //   image_height: 600,
-      //   image_type: 'image/png',
-      // },
       {
         link: 'connection-types',
         text: 'Connection Types',
@@ -508,6 +519,34 @@ function connectionGroup(): INavigationGroup {
         image_type: 'image/png',
       },
       {
+        link: 'connection-text',
+        text: 'Connection Text',
+        description: 'Add text to connections in Foblex Flow diagrams for Angular.',
+        image: './previews/examples/connection-text.light.png',
+        image_dark: './previews/examples/connection-text.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
+      {
+        link: 'connection-center',
+        text: 'Connection Center',
+        description: 'Add centered content to connections with Foblex Flow for Angular',
+        image: './previews/examples/connection-center.light.png',
+        image_dark: './previews/examples/connection-center.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
+      {
         link: 'custom-connections',
         text: 'Custom Connections',
         description: 'Create and customize connections in Foblex Flow diagrams for Angular.',
@@ -517,14 +556,6 @@ function connectionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
       },
-      // {
-      //   link: 'connection-text',
-      //   text: 'Connection Text',
-      // },
-      // {
-      //   link: 'connection-center',
-      //   text: 'Connection Center',
-      // },
     ]
   }
 }
@@ -595,8 +626,8 @@ function extensionGroup(): INavigationGroup {
         image_height: 600,
         image_type: 'image/png',
         badge: {
-          text: 'New',
-          type: 'info'
+          text: 'Updated',
+          type: 'warning'
         }
       },
       {
@@ -630,6 +661,28 @@ function extensionGroup(): INavigationGroup {
         image_type: 'image/png',
       }
     ],
+  }
+}
+
+function advancedGroup(): INavigationGroup {
+  return {
+    text: 'Advanced',
+    items: [
+      {
+        link: 'undo-redo',
+        text: 'Undo/Redo',
+        description: 'Add Undo and Redo functionality with Foblex Flow for Angular.',
+        image: './previews/examples/undo-redo.light.png',
+        image_dark: './previews/examples/undo-redo.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      }
+    ]
   }
 }
 

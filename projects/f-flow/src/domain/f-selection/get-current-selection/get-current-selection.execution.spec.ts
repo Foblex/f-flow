@@ -41,7 +41,7 @@ describe('GetSelectionExecution', () => {
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 
-    const result = fMediator.send<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
 
     expect(result.nodes).toEqual([ 'node1' ]);
     expect(result.groups).toEqual([ 'group1' ]);
@@ -51,7 +51,7 @@ describe('GetSelectionExecution', () => {
   it('should return empty FSelectionChangeEvent when no items are selected', () => {
     fDraggableDataContext.selectedItems = [];
 
-    const result = fMediator.send<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
 
     expect(result.nodes).toEqual([]);
     expect(result.connections).toEqual([]);

@@ -1,5 +1,5 @@
 import { NODE_RESIZE_FINALIZE_PROVIDERS } from './node-resize-finalize';
-import { NODE_RESIZE_PREPARATION_PROVIDERS } from './node-resize-preparation';
+import { NodeResizePreparationExecution } from './node-resize-preparation';
 import { GetNodeResizeRestrictionsExecution } from './get-node-resize-restrictions';
 import { ApplyChildResizeRestrictionsExecution } from './apply-child-resize-restrictions';
 import { ApplyParentResizeRestrictionsExecution } from './apply-parent-resize-restrictions';
@@ -23,5 +23,5 @@ export const NODE_RESIZE_PROVIDERS = [
 
   ...NODE_RESIZE_FINALIZE_PROVIDERS,
 
-  ...NODE_RESIZE_PREPARATION_PROVIDERS,
+  NodeResizePreparationExecution,
 ];

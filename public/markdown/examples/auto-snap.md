@@ -2,7 +2,7 @@
 
 ## Description
 
-This guide explains how to automatically snap connections when they are dropped near a connector, offering a comprehensive solution for building interactive flow-based diagrams.
+This guide explains how to automatically snap connections when they are dropped near a connector, offering a comprehensive solution for building interactive flow-based diagrams. To implement this functionality, you need to add the `<f-snap-connection>` component inside the `<f-canvas>`. This component handles temporary connection display and snapping to the nearest connector when the threshold is reached.
 
 ## Example
 

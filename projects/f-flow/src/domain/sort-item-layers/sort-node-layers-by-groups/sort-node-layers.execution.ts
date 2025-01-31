@@ -48,7 +48,7 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
   }
 
   private getChildrenNodes(fId: string): HTMLElement[] {
-    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .filter((x) => this.fNodesContainer.contains(x.hostElement)).map((x) => x.hostElement);
   }
 

@@ -11,4 +11,6 @@ export abstract class FNodeOutputBase extends FConnectorBase {
   public override get canBeConnected(): boolean {
     return !this.disabled && (this.multiple ? true : !this.isConnected);
   }
+
+  public abstract canBeConnectedInputs: string[];
 }

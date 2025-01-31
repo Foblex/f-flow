@@ -57,7 +57,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
 
     fComponentsStore.fNodes = [ group1, group2, node1, node2, node3 ];
 
-    fMediator.send(new SortItemLayersRequest());
+    fMediator.execute(new SortItemLayersRequest());
 
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(0)).toEqual(node2.hostElement);
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(1)).toEqual(node3.hostElement);
@@ -80,7 +80,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
 
     fComponentsStore.fNodes = [ group1, group2, node1, node2 ];
 
-    fMediator.send(new SortItemLayersRequest());
+    fMediator.execute(new SortItemLayersRequest());
 
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(0)).toEqual(node1.hostElement);
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(1)).toEqual(node2.hostElement);
@@ -102,7 +102,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
 
     fComponentsStore.fNodes = [ group1, group2, node1, node2 ];
 
-    fMediator.send(new SortItemLayersRequest());
+    fMediator.execute(new SortItemLayersRequest());
 
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(0)).toEqual(node2.hostElement);
     expect(fComponentsStore.fCanvas.fNodesContainer.nativeElement.children.item(1)).toEqual(node1.hostElement);

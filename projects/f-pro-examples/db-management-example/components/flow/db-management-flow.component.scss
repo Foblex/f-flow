@@ -9,7 +9,7 @@
 
   .f-background {
     circle {
-      fill: var(--db-background-component-color);
+      stroke: var(--db-background-component-color);
     }
   }
 
@@ -150,10 +150,22 @@
   border: 1px solid var(--db-primary-1);
   border-radius: 1px;
 
+  &.f-resize-handle-left {
+    top: 50%;
+    left: var(--resize-handle-offset);
+    cursor: col-resize;
+  }
+
   &.f-resize-handle-left-top {
     top: var(--resize-handle-offset);
     left: var(--resize-handle-offset);
     cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-top {
+    top: var(--resize-handle-offset);
+    left: 50%;
+    cursor: row-resize;
   }
 
   &.f-resize-handle-right-top {
@@ -162,15 +174,27 @@
     cursor: nesw-resize;
   }
 
-  &.f-resize-handle-left-bottom {
-    bottom: var(--resize-handle-offset);
-    left: var(--resize-handle-offset);
-    cursor: nesw-resize;
+  &.f-resize-handle-right {
+    top: 50%;
+    right: var(--resize-handle-offset);
+    cursor: col-resize;
   }
 
   &.f-resize-handle-right-bottom {
     bottom: var(--resize-handle-offset);
     right: var(--resize-handle-offset);
     cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-bottom {
+    bottom: var(--resize-handle-offset);
+    left: 50%;
+    cursor: row-resize;
+  }
+
+  &.f-resize-handle-left-bottom {
+    bottom: var(--resize-handle-offset);
+    left: var(--resize-handle-offset);
+    cursor: nesw-resize;
   }
 }

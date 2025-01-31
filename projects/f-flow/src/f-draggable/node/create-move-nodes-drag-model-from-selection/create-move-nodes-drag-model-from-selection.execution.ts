@@ -6,37 +6,49 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
-import { FConnectorBase } from '../../../f-connectors';
-import { INodeWithDistanceRestrictions } from './i-node-with-distance-restrictions';
-import { CalculateNodeMoveRestrictionsRequest } from './domain/calculate-node-move-restrictions';
+import { CalculateNodeMoveLimitsRequest } from './domain/calculate-node-move-limits';
 import { PutOutputConnectionHandlersToArrayRequest } from './domain/put-output-connection-handlers-to-array';
 import {
   PutInputConnectionHandlersToArrayRequest
 } from './domain/put-input-connection-handlers-to-array';
-import { NodeResizeByChildDragHandler } from '../node-resize-by-child.drag-handler';
 import { IsArrayHasParentNodeRequest } from '../../domain';
-import { GetDeepChildrenNodesAndGroupsRequest, GetParentNodesRequest } from '../../../domain';
+import {
+  GetDeepChildrenNodesAndGroupsRequest,
+  GetNormalizedElementRectRequest,
+  GetParentNodesRequest
+} from '../../../domain';
 import { flatMap } from '@foblex/utils';
-import { CalculateCommonNodeMoveRestrictionsRequest } from './domain/calculate-common-node-move-restrictions';
-import { IMinMaxPoint } from '@foblex/2d';
+import { CalculateCommonNodeMoveLimitsRequest } from './domain/calculate-common-node-move-limits';
+import { IMinMaxPoint, IRect, RectExtensions } from '@foblex/2d';
+import { BaseConnectionDragHandler } from '../connection-drag-handlers';
+import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
+import { INodeMoveLimitsAndPosition } from './i-node-move-limits-and-position';
+import { INodeMoveLimits } from './i-node-move-limits';
 
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
 export class CreateMoveNodesDragModelFromSelectionExecution
-  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, IDraggableItem[]> {
+  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, SummaryNodeDragHandler> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
-  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): IDraggableItem[] {
-    const fItemsToDrag = this._getNodesWithRestrictions(
-      this._getDraggedNodes(request.nodeWithDisabledSelection)
+  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): SummaryNodeDragHandler {
+    const fDraggedNodes = this._getDraggedNodes(request.nodeWithDisabledSelection);
+
+    const fNodesToDrag = this._getNodesToDragWithCommonLimits(fDraggedNodes);
+
+    const fDragHandlers = this._mapToNodeDragHandlers(fNodesToDrag);
+
+    this._setConnectionsHandlersToNodes(fDragHandlers, this._getAllOutputIds(fNodesToDrag), this._getAllInputIds(fNodesToDrag));
+
+    const commonLimits = this._calculateCommonLimits(
+      this._getNodesMoveLimits(fNodesToDrag, [], fDraggedNodes)
     );
-    return this.getDragHandlersWithConnections(
-      this.getDragHandlersFromNodes(fItemsToDrag),
-      this.getAllOutputIds(fItemsToDrag),
-      this.getAllInputIds(fItemsToDrag)
+
+    return new SummaryNodeDragHandler(
+      commonLimits, fDragHandlers, this._getDraggedNodesBoundingRect(fNodesToDrag)
     );
   }
 
@@ -59,22 +71,23 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       .find(n => n.isContains(hostElement));
   }
 
-  private _getNodesWithRestrictions(fDraggedNodes: FNodeBase[]): INodeWithDistanceRestrictions[] {
-    const result: INodeWithDistanceRestrictions[] = [];
-
-    fDraggedNodes.forEach((x) => {
-      const fParentNodes = this._fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
-      const restrictions = this._getNodeMoveRestrictions(x, fParentNodes, fDraggedNodes);
-      result.push({ fDraggedNode: x, fParentNodes, ...restrictions }, ...this._getChildrenItemsToDrag(x, restrictions));
-    });
-
-    this._applyCommonRestrictions(result);
-    return result;
+  private _getNodesToDragWithCommonLimits(fDraggedNodes: FNodeBase[]): FNodeBase[] {
+    return fDraggedNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
+      result.push(x);
+      return result.concat(this._getChildrenNodes(x.fId));
+    }, []);
   }
 
-  private _getNodeMoveRestrictions(fNode: FNodeBase, fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): IMinMaxPoint {
+  private _getNodesMoveLimits(fNodes: FNodeBase[], fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimitsAndPosition[] {
+    return fDraggedNodes.map((x) => {
+      const fParentNodes = this._fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
+      return { position: x.position, ...this._getNodeMoveLimits(x, fParentNodes, fDraggedNodes) };
+    });
+  }
+
+  private _getNodeMoveLimits(fNode: FNodeBase, fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimits {
     return this._fMediator.execute<IMinMaxPoint>(
-      new CalculateNodeMoveRestrictionsRequest(fNode, this._isParentNodeInArray(fParentNodes, fDraggedNodes))
+      new CalculateNodeMoveLimitsRequest(fNode, this._isParentNodeInArray(fParentNodes, fDraggedNodes))
     );
   }
 
@@ -82,60 +95,51 @@ export class CreateMoveNodesDragModelFromSelectionExecution
     return this._fMediator.execute<boolean>(new IsArrayHasParentNodeRequest(fParentNodes, fDraggedNodes))
   }
 
-  private _getChildrenItemsToDrag(node: FNodeBase, restrictions: IMinMaxPoint): INodeWithDistanceRestrictions[] {
-    return this._getChildrenNodes(node.fId).map((x) => ({ fDraggedNode: x, ...restrictions }));
-  }
-
   private _getChildrenNodes(fId: string): FNodeBase[] {
     return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
-  private _applyCommonRestrictions(restrictions: INodeWithDistanceRestrictions[]): void {
-    const commonRestrictions = this._fMediator.execute<IMinMaxPoint>(
-      new CalculateCommonNodeMoveRestrictionsRequest(restrictions)
+  private _calculateCommonLimits(limits: INodeMoveLimitsAndPosition[]): IMinMaxPoint {
+    return this._fMediator.execute<IMinMaxPoint>(
+      new CalculateCommonNodeMoveLimitsRequest(limits)
     );
-    restrictions.forEach((x) => {
-      x.min = commonRestrictions.min;
-      x.max = commonRestrictions.max;
+  }
+
+  private _getAllOutputIds(fNodes: FNodeBase[]): string[] {
+    return flatMap(fNodes, (fNode) => this._getNodeOutputIds(fNode));
+  }
+
+  private _getNodeOutputIds(fNode: FNodeBase): string[] {
+    return this._fComponentsStore.fOutputs.filter((x) => fNode.fId === x.fNodeId)
+      .map((x) => x.fId);
+  }
+
+  private _getAllInputIds(fNodes: FNodeBase[]): string[] {
+    return flatMap(fNodes, (fNode) => this._getNodeInputIds(fNode));
+  }
+
+  private _getNodeInputIds(fNode: FNodeBase): string[] {
+    return this._fComponentsStore.fInputs.filter((x) => fNode.fId === x.fNodeId)
+      .map((x) => x.fId);
+  }
+
+  private _mapToNodeDragHandlers(items: FNodeBase[]): NodeDragHandler[] {
+    return items.map((x) => new NodeDragHandler(x));
+  }
+
+  private _setConnectionsHandlersToNodes(
+    handlers: NodeDragHandler[], outputIds: string[], inputIds: string[]
+  ): void {
+    const fConnectionHandlers: BaseConnectionDragHandler[] = [];
+    handlers.forEach((fNodeHandler) => {
+      this._fMediator.execute(new PutOutputConnectionHandlersToArrayRequest(fNodeHandler, inputIds, fConnectionHandlers));
+      this._fMediator.execute(new PutInputConnectionHandlersToArrayRequest(fNodeHandler, outputIds, fConnectionHandlers));
     });
   }
 
-  private getAllOutputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getOutputsForNode(item.fDraggedNode).map((x) => x.fId));
-  }
-
-  private getOutputsForNode(node: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fOutputs.filter((x) => node.isContains(x.hostElement));
-  }
-
-  private getAllInputIds(items: INodeWithDistanceRestrictions[]): string[] {
-    return flatMap(items, (item: INodeWithDistanceRestrictions) => this.getInputsForNode(item.fDraggedNode).map((x) => x.fId));
-  }
-
-  private getInputsForNode(node: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fInputs.filter((x) => node.isContains(x.hostElement));
-  }
-
-  private getDragHandlersFromNodes(items: INodeWithDistanceRestrictions[]): IDraggableItem[] {
-    let result: IDraggableItem[] = [];
-
-    items.forEach((node) => {
-      result.push(
-        new NodeDragHandler(this._fComponentsStore, node.fDraggedNode, { min: node.min, max: node.max }),
-        ...(node.fParentNodes || []).map(() => new NodeResizeByChildDragHandler(this._fDraggableDataContext))
-      );
-    });
-    return result;
-  }
-
-  private getDragHandlersWithConnections(
-    handlers: IDraggableItem[], outputIds: string[], inputIds: string[]
-  ): IDraggableItem[] {
-    let result: IDraggableItem[] = handlers;
-    handlers.filter((x) => x instanceof NodeDragHandler).forEach((x) => {
-      this._fMediator.execute(new PutOutputConnectionHandlersToArrayRequest(x, inputIds, result));
-      this._fMediator.execute(new PutInputConnectionHandlersToArrayRequest(x, outputIds, result));
-    });
-    return result;
+  private _getDraggedNodesBoundingRect(fNodes: FNodeBase[]): IRect {
+    return RectExtensions.union(fNodes.map((x) => {
+      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+    })) || RectExtensions.initialize();
   }
 }

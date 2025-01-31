@@ -13,14 +13,14 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
 
   public handle(request: SelectRequest): void {
     this._fDraggableDataContext.selectedItems.forEach((x) => {
-      x.deselect();
+      x.unmarkAsSelected();
     });
     this._fDraggableDataContext.selectedItems = [];
 
     request.nodes.forEach((key) => {
       const node = this._fComponentsStore.fNodes.find((x) => x.fId === key);
       if(node) {
-        node.select();
+        node.markAsSelected();
         this._fDraggableDataContext.selectedItems.push(node);
       }
     });
@@ -28,7 +28,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     request.connections.forEach((key) => {
       const connection = this._fComponentsStore.fConnections.find((x) => x.fId === key);
       if(connection) {
-        connection.select();
+        connection.markAsSelected();
         this._fDraggableDataContext.selectedItems.push(connection);
       }
     });

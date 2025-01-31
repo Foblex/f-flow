@@ -13,7 +13,7 @@ export abstract class FDraggableBase extends DragAndDropBase  {
 
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
 
-  public abstract emitWhenNodeIntersectedWithConnection: boolean;
+  public abstract fEmitOnNodeIntersect: boolean;
 
   public abstract fCreateNode: EventEmitter<FCreateNodeEvent>;
 
@@ -26,6 +26,12 @@ export abstract class FDraggableBase extends DragAndDropBase  {
   public abstract vCellSize: number;
 
   public abstract hCellSize: number;
+
+  public abstract fCellSizeWhileDragging: boolean;
+
+  public abstract fDragStarted: EventEmitter<void>;
+
+  public abstract fDragEnded: EventEmitter<void>;
 
   protected constructor(
     ngZone: ICanRunOutsideAngular | undefined

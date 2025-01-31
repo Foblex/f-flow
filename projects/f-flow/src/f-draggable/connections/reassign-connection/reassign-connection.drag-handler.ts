@@ -7,12 +7,16 @@ import {
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import { EFConnectableSide, FConnectorBase, FNodeOutputDirective } from '../../../f-connectors';
-import { FMediator } from '@foblex/mediator';
 import { ILine, IPoint, RectExtensions, RoundedRect } from '@foblex/2d';
-import { FComponentsStore } from '../../../f-storage';
 import { ICreateReassignConnectionDragData } from '../i-create-reassign-connection-drag-data';
+import { fInject } from '../../f-injector';
+import { FMediator } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
 
 export class ReassignConnectionDragHandler implements IDraggableItem<ICreateReassignConnectionDragData> {
+
+  private _fMediator = fInject(FMediator);
+  private _fComponentsStore = fInject(FComponentsStore);
 
   private readonly _toConnectorRect = new RoundedRect();
 
@@ -42,8 +46,6 @@ export class ReassignConnectionDragHandler implements IDraggableItem<ICreateReas
   }
 
   constructor(
-    private _fMediator: FMediator,
-    private _fComponentsStore: FComponentsStore,
     private _fConnection: FConnectionBase,
   ) {
     this._toConnectorRect = RoundedRect.fromRect(
@@ -141,7 +143,7 @@ export class ReassignConnectionDragHandler implements IDraggableItem<ICreateReas
   }
 
   public onPointerUp(): void {
-    this._drawConnection(this._fInputWithRect.fRect, this._fInputWithRect.fConnector.fConnectableSide);
+    this._drawConnection(this._toConnectorRect, this._fInputWithRect.fConnector.fConnectableSide);
     this._fSnapConnection?.hide();
 
     this._fMediator.execute(

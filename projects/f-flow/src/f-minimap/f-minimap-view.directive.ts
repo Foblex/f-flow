@@ -21,7 +21,7 @@ export class FMinimapViewDirective {
 
   public redraw(): void {
     setRectToElement(
-      this._fMediator.send<IRect>(new MinimapCalculateViewBoxRequest()),
+      this._fMediator.execute<IRect>(new MinimapCalculateViewBoxRequest()),
       this.hostElement
     );
   }

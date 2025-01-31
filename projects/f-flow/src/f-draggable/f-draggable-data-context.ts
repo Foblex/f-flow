@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Point } from '@foblex/2d';
 import { IDraggableItem } from './i-draggable-item';
-import { ICanChangeSelection } from '../mixins';
+import { ISelectable } from '../mixins';
 
 @Injectable()
 export class FDraggableDataContext {
 
-  public selectedItems: ICanChangeSelection[] = [];
+  public selectedItems: ISelectable[] = [];
 
   public isSelectedChanged: boolean = false;
 

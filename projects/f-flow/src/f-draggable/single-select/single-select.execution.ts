@@ -1,110 +1,152 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SingleSelectRequest } from './single-select.request';
-import { UpdateItemAndChildrenLayersRequest } from '../../domain';
+import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectionBase } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
-import { EOperationSystem, PlatformService } from '@foblex/platform';
-import { ICanChangeSelection } from '../../mixins';
+import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
+
+/**
+ * Implements the functionality for selecting elements in a graphical interface.
+ * This class handles both single and multi-selection, updating the selection state
+ * of elements and managing related data.
+ *
+ * Logic flow:
+ * 1. **Validate the selection event**:
+ *    - The event is considered valid if it occurs within the flow boundaries
+ *      and there are no active draggable data operations.
+ *
+ * 2. **Determine the target element to select**:
+ *    - The target element is determined based on the event’s target.
+ *      It can be a node, a group of nodes, or a connection.
+ *    - If no element is found, the current selection state is cleared.
+ *
+ * 3. **Update element layers**:
+ *    - If an element is found, its visual layer and the layers of its child elements are updated.
+ *
+ * 4. **Single or multi-selection**:
+ *    - If the event meets the criteria for multi-selection (e.g., a modifier key is pressed),
+ *      multi-selection logic is applied.
+ *    - Otherwise, single-selection logic is used.
+ *
+ * 5. **Single-selection logic**:
+ *    - If the element is not selected and can be selected:
+ *      - Clear the selection of all other elements.
+ *      - Mark the current element as selected.
+ *    - If the element cannot be selected, the current selection is cleared.
+ *
+ * 6. **Multi-selection logic**:
+ *    - If the element is already selected, it is removed from the selection.
+ *    - If the element is not selected and can be selected, it is added to the selection.
+ *
+ * 7. **Manage selection state**:
+ *    - Adding or removing an element from the selection triggers the corresponding methods.
+ *    - Selection state is tracked in the shared context for future use.
+ */
 
 @Injectable()
 @FExecutionRegister(SingleSelectRequest)
 export class SingleSelectExecution implements IExecution<SingleSelectRequest, void> {
 
-  constructor(
-    private fPlatform: PlatformService,
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: SingleSelectRequest): void {
-    if(!this._isValid(request)) {
+    if (!this._isValid(request)) {
       return;
     }
-    const { event } = request;
 
-    const item = this.getSelectableItem(event);
-    if (item) {
-      this.fMediator.send<void>(new UpdateItemAndChildrenLayersRequest(item, item.hostElement.parentElement!));
-    }
+    const fItem = this._getItemToSelect(request.event);
 
-    this.isMultiselectEnabled(event) ? this.multiSelect(item) : this.singleSelect(item);
+    setTimeout(() => this._updateItemAndChildrenLayers(fItem));
+
+    this._isMultiSelect(request) ? this._multiSelect(fItem) : this._singleSelect(fItem);
   }
 
   private _isValid(request: SingleSelectRequest): boolean {
-    return this.fComponentsStore.fFlow!.hostElement.contains(request.event.targetElement)
-      && !this.fDraggableDataContext.draggableItems.length;
+    return this._isEventInFlowBounds(request.event) && this._fDraggableDataContext.isEmpty();
   }
 
-  private getSelectableItem(event: IPointerEvent): ICanChangeSelection | undefined {
-    return this._findNode(event.targetElement) || this.getConnectionHandler(event.targetElement);
+  private _isEventInFlowBounds(event: IPointerEvent): boolean {
+    return this._fComponentsStore.fFlow!.hostElement.contains(event.targetElement);
   }
 
-  private _findNode(targetElement: HTMLElement): FNodeBase | undefined {
-    return this.fComponentsStore.fNodes.find(n => n.isContains(targetElement));
+  private _getItemToSelect(event: IPointerEvent): ISelectable | undefined {
+    return this._getNodeOrGroup(event.targetElement) || this._getConnection(event.targetElement);
   }
 
-  private getConnectionHandler(element: HTMLElement | SVGElement): FConnectionBase | undefined {
-    return this.fComponentsStore.fConnections.find(c => c.isContains(element) || c.fConnectionCenter?.nativeElement?.contains(element));
+  private _getNodeOrGroup(targetElement: HTMLElement): FNodeBase | undefined {
+    return this._fComponentsStore.fNodes.find((x) => (x).isContains(targetElement));
   }
 
-  private isMultiselectEnabled(event: IPointerEvent): boolean {
-    return this.isCommandButton(this.fPlatform.getOS()!, event.originalEvent) ||
-      this.isShiftPressed(event.originalEvent);
+  private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {
+    return this._fComponentsStore.fConnections
+      .find(c => c.isContains(element) || c.fConnectionCenter?.nativeElement?.contains(element));
   }
 
-  private isShiftPressed(event: { shiftKey: boolean }): boolean {
-    return event.shiftKey;
+  private _updateItemAndChildrenLayers(fItem?: ISelectable): void {
+    if (fItem) {
+      this._fMediator.execute<void>(
+        new UpdateItemAndChildrenLayersRequest(fItem, fItem.hostElement.parentElement!)
+      );
+    }
   }
 
-  private isCommandButton(platform: EOperationSystem, event: { metaKey: boolean, ctrlKey: boolean }): boolean {
-    return platform === EOperationSystem.MAC_OS ? event.metaKey : event.ctrlKey;
+  private _isMultiSelect(request: SingleSelectRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fMultiSelectTrigger)
   }
 
-  private singleSelect(item: ICanChangeSelection | undefined): void {
-    if (item) {
-      if (!item.isSelected() && !item.fSelectionDisabled) {
-        this.clearSelection();
-        this.selectItem(item);
-      } else if(item.fSelectionDisabled) {
-        this.clearSelection();
+  private _singleSelect(fItem?: ISelectable): void {
+    if (fItem) {
+      if (this._isItemNotSelectedAndSelectable(fItem)) {
+        this._clearSelection();
+        this._selectItem(fItem);
+      } else if (fItem.fSelectionDisabled) {
+        this._clearSelection();
       }
     } else {
-      this.clearSelection();
+      this._clearSelection();
     }
   }
 
-  private multiSelect(item: ICanChangeSelection | undefined): void {
-    if (item && !item.fSelectionDisabled) {
-      item.isSelected() ? this.deselectItem(item) : this.selectItem(item);
-    }
+  private _isItemNotSelectedAndSelectable(item: ISelectable): boolean {
+    return !item.isSelected() && !item.fSelectionDisabled;
   }
 
-  private deselectItem(item: ICanChangeSelection): void {
-    const index = this.fDraggableDataContext.selectedItems.indexOf(item);
-    if (index > -1) {
-      this.fDraggableDataContext.selectedItems.splice(index, 1);
-    }
-    item.deselect();
-    this.fDraggableDataContext.markSelectionAsChanged();
-  }
-
-  private selectItem(item: ICanChangeSelection): void {
-    this.fDraggableDataContext.selectedItems.push(item);
-    item.select();
-    this.fDraggableDataContext.markSelectionAsChanged();
-  }
-
-  private clearSelection(): void {
-    this.fDraggableDataContext.selectedItems.forEach((x) => {
-      x.deselect();
-      this.fDraggableDataContext.markSelectionAsChanged();
+  private _clearSelection(): void {
+    this._fDraggableDataContext.selectedItems.forEach((x) => {
+      x.unmarkAsSelected();
+      this._fDraggableDataContext.markSelectionAsChanged();
     });
-    this.fDraggableDataContext.selectedItems = [];
+    this._fDraggableDataContext.selectedItems = [];
+  }
+
+  private _multiSelect(fItem?: ISelectable): void {
+    if (fItem && !fItem.fSelectionDisabled) {
+      fItem.isSelected() ? this._deselectItem(fItem) : this._selectItem(fItem);
+    }
+  }
+
+  private _deselectItem(fItem: ISelectable): void {
+    this._removeItemFromSelectedItems(fItem);
+    fItem.unmarkAsSelected();
+    this._fDraggableDataContext.markSelectionAsChanged();
+  }
+
+  private _removeItemFromSelectedItems(fItem: ISelectable): void {
+    const indexInSelection = this._fDraggableDataContext.selectedItems.indexOf(fItem);
+    if (indexInSelection > -1) {
+      this._fDraggableDataContext.selectedItems.splice(indexInSelection, 1);
+    }
+  }
+
+  private _selectItem(fItem: ISelectable): void {
+    this._fDraggableDataContext.selectedItems.push(fItem);
+    fItem.markAsSelected();
+    this._fDraggableDataContext.markSelectionAsChanged();
   }
 }

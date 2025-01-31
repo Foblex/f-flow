@@ -68,6 +68,6 @@ export class ExternalItemFinalizeExecution implements IExecution<ExternalItemFin
   }
 
   private getRectInCanvas(): IRect {
-    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(this.dragHandler.placeholder!, false));
+    return this.fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this.dragHandler.placeholder!, false));
   }
 }

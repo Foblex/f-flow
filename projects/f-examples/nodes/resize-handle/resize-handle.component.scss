@@ -23,10 +23,22 @@
   background-color: var(--node-background-color);
   border: 1px solid var(--node-border-color);
 
+  &.f-resize-handle-left {
+    top: calc(50% - 6px);
+    left: -6px;
+    cursor: col-resize;
+  }
+
   &.f-resize-handle-left-top {
     top: -6px;
     left: -6px;
     cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-top {
+    top: -6px;
+    left: calc(50% - 6px);
+    cursor: row-resize;
   }
 
   &.f-resize-handle-right-top {
@@ -35,15 +47,27 @@
     cursor: nesw-resize;
   }
 
-  &.f-resize-handle-left-bottom {
-    bottom: -6px;
-    left: -6px;
-    cursor: nesw-resize;
+  &.f-resize-handle-right {
+    top: calc(50% - 6px);
+    right: -6px;
+    cursor: col-resize;
   }
 
   &.f-resize-handle-right-bottom {
     bottom: -6px;
     right: -6px;
     cursor: nwse-resize;
+  }
+
+  &.f-resize-handle-bottom {
+    bottom: -6px;
+    left: calc(50% - 6px);
+    cursor: row-resize;
+  }
+
+  &.f-resize-handle-left-bottom {
+    bottom: -6px;
+    left: -6px;
+    cursor: nesw-resize;
   }
 }

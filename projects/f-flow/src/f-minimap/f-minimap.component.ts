@@ -49,7 +49,7 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
   }
 
   private _listenTransformChanges(): void {
-    this._fMediator.send<FChannelHub>(new ListenTransformChangesRequest()).pipe(
+    this._fMediator.execute<FChannelHub>(new ListenTransformChangesRequest()).pipe(
       notifyOnStart(), debounceTime(5)
     ).listen(this._destroyRef, () => this._redraw());
   }
@@ -64,10 +64,10 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
   }
 
   public onPointerDown(event: IPointerEvent): void {
-    this._fMediator.send(new MinimapDragPreparationRequest(event, this.fMinimapFlow.model));
+    this._fMediator.execute(new MinimapDragPreparationRequest(event, this.fMinimapFlow.model));
   }
 
   public onPointerUp(event: IPointerEvent): void {
-    this._fMediator.send(new MinimapDragFinalizeRequest(event));
+    this._fMediator.execute(new MinimapDragFinalizeRequest(event));
   }
 }

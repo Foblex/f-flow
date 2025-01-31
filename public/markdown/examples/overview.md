@@ -10,6 +10,7 @@ All examples are available in our [GitHub repository](https://github.com/Foblex/
 [Connections]
 [Layouts]
 [Extensions]
+[Advanced]
 [Pro Examples]
 ::: 
 

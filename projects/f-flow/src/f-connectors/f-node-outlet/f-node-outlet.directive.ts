@@ -39,7 +39,7 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   public override isConnectionFromOutlet: boolean = false;
 
   @Input({ alias: 'fCanBeConnectedInputs' })
-  public canBeConnectedInputs: string[] = [];
+  public override canBeConnectedInputs: string[] = [];
 
   public override get fNodeId(): string {
     return this._fNode.fId;
@@ -50,10 +50,10 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   }
 
   public ngOnInit() {
-    this._fMediator.send(new AddOutletToStoreRequest(this));
+    this._fMediator.execute(new AddOutletToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveOutletFromStoreRequest(this));
+    this._fMediator.execute(new RemoveOutletFromStoreRequest(this));
   }
 }

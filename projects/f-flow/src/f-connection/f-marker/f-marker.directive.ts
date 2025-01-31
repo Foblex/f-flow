@@ -51,10 +51,10 @@ export class FMarkerDirective extends FMarkerBase implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddConnectionMarkerToStoreRequest(this));
+    this._fMediator.execute(new AddConnectionMarkerToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveConnectionMarkerFromStoreRequest(this));
+    this._fMediator.execute(new RemoveConnectionMarkerFromStoreRequest(this));
   }
 }

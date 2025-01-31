@@ -1,0 +1,20 @@
+@use "../../flow-common";
+
+::ng-deep connection-center {
+  @include flow-common.connection;
+
+  .f-connection-center {
+    padding: 12px;
+    background: var(--node-background-color);
+    border-radius: var(--node-border-radius);
+    border: 0.2px solid var(--node-border-color);
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+.toolbar {
+  @include flow-common.toolbar;
+}

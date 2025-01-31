@@ -18,7 +18,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
   public handle(request: SelectAndUpdateNodeLayerRequest): void {
     this.selectNodeIfNotSelected(request.fNode);
 
-    this.fMediator.send<void>(
+    this.fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(request.fNode, request.fNode.hostElement.parentElement as HTMLElement)
     );
   }
@@ -26,7 +26,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
   private selectNodeIfNotSelected(fNode: FNodeBase) {
     if (!this.fDraggableDataContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled) {
       this.fDraggableDataContext.selectedItems.push(fNode);
-      fNode.select();
+      fNode.markAsSelected();
       this.fDraggableDataContext.isSelectedChanged = true;
     }
   }

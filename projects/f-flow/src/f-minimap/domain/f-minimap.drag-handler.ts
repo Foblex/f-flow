@@ -38,7 +38,7 @@ export class FMinimapDragHandler implements IDraggableItem {
   }
 
   private getNewPosition(eventPoint: IPoint): IPoint {
-    return this.fMediator.send<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
+    return this.fMediator.execute<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
       this.flowRect, this.canvasPosition, eventPoint, this.minimap
     ));
   }

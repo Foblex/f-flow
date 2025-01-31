@@ -4,7 +4,7 @@ import {
   FConnectorBase
 } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
-import { ICanChangeSelection, mixinChangeSelection } from '../mixins';
+import { ISelectable, mixinChangeSelection } from '../mixins';
 import { FChannel } from '../reactivity';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
@@ -17,7 +17,7 @@ const MIXIN_BASE = mixinChangeSelection(
       }
     });
 
-export abstract class FNodeBase extends MIXIN_BASE implements ICanChangeSelection, IHasHostElement {
+export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
 
   public abstract override fId: string;
 

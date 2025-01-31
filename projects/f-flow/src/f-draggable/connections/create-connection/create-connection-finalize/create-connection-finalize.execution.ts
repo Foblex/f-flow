@@ -46,7 +46,7 @@ export class CreateConnectionFinalizeExecution
     if (!output) {
       throw OutputNotFound(this._getDragHandlerData().fOutputId);
     }
-    return isNodeOutlet(output.hostElement) ? this.fMediator.send<FNodeOutputBase>(
+    return isNodeOutlet(output.hostElement) ? this.fMediator.execute<FNodeOutputBase>(
       new GetCanBeConnectedOutputByOutletRequest(output as FNodeOutletBase)
     ) : output;
   }
@@ -70,7 +70,7 @@ export class CreateConnectionFinalizeExecution
   }
 
   private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
-    return this.fMediator.send<FConnectorBase | undefined>(
+    return this.fMediator.execute<FConnectorBase | undefined>(
       new FindInputAtPositionRequest(
         event.getPosition(),
         this._getDragHandlerData().toConnectorRect,

@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
 } from "@angular/core";
-import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { FMediator } from '@foblex/mediator';
@@ -42,8 +42,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   @Input('fNodePosition')
   public override set position(value: IPoint) {
-    this._position = PointExtensions.castToPoint(value);
-    this.refresh();
+    if(!PointExtensions.isEqual(this._position, value)) {
+      this._position = value;
+      this.redraw();
+      this.refresh();
+    }
   }
 
   public override get position(): IPoint {
@@ -55,8 +58,11 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   @Input('fNodeSize')
   public override set size(value: ISize) {
-    this._size = value;
-    this.refresh();
+    if(!this.size || !SizeExtensions.isEqual(this._size!, value)) {
+      this._size = value;
+      this.redraw();
+      this.refresh()
+    }
   }
 
   public override get size(): ISize {
@@ -99,7 +105,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     this.setStyle('top', '0');
     super.redraw();
 
-    this._fMediator.send<void>(new AddNodeToStoreRequest(this));
+    this._fMediator.execute<void>(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -108,7 +114,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
 
   public override redraw(): void {
     super.redraw();
-    this._fMediator.send(new NotifyTransformChangedRequest());
+    this._fMediator.execute(new NotifyTransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
@@ -119,7 +125,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   private _listenStateSizeChanges(): void {
-    this._fMediator.send<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
+    this._fMediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public override refresh(): void {
@@ -127,6 +133,6 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send<void>(new RemoveNodeFromStoreRequest(this));
+    this._fMediator.execute<void>(new RemoveNodeFromStoreRequest(this));
   }
 }

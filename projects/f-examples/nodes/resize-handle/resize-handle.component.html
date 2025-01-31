@@ -37,10 +37,14 @@
 
     <div fNode fDragHandle
          [fNodePosition]="{ x: 150, y: 100 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.TOP"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
-      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.BOTTOM"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
       <div class="node-content">
         Node with all ResizeHandles
       </div>

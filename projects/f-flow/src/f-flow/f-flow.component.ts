@@ -81,7 +81,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddFlowToStoreRequest(this));
+    this._fMediator.execute(new AddFlowToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
@@ -93,18 +93,18 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   private _listenCountChanges(): void {
-    this._fMediator.send<FChannelHub>(
+    this._fMediator.execute<FChannelHub>(
       new ListenCountChangesRequest()
     ).listen(this._destroyRef, () => {
-      this._fMediator.send(new SortItemLayersRequest())
+      this._fMediator.execute(new SortItemLayersRequest())
     });
   }
 
   private _listenDataChanges(): void {
-    this._fMediator.send<FChannelHub>(
+    this._fMediator.execute<FChannelHub>(
       new ListenDataChangesRequest()
     ).listen(this._destroyRef,() => {
-      this._fMediator.send(new RedrawConnectionsRequest());
+      this._fMediator.execute(new RedrawConnectionsRequest());
 
       this._emitLoaded();
     });
@@ -118,7 +118,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this._fMediator.send(new NotifyDataChangedRequest());
+    this._fMediator.execute(new NotifyDataChangedRequest());
   }
 
   public reset(): void {
@@ -126,34 +126,34 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public getNodesBoundingBox(): IRect | null {
-    return this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxNormalizedPositionRequest());
+    return this._fMediator.execute<IRect | null>(new CalculateNodesBoundingBoxNormalizedPositionRequest());
   }
 
   public getSelection(): ICurrentSelection {
-    return this._fMediator.send<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._fMediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
   public getPositionInFlow(position: IPoint): IRect {
-    return this._fMediator.send(new GetNormalizedPointRequest(position));
+    return this._fMediator.execute(new GetNormalizedPointRequest(position));
   }
 
   public getState(): IFFlowState {
-    return this._fMediator.send(new GetFlowStateRequest());
+    return this._fMediator.execute(new GetFlowStateRequest());
   }
 
   public selectAll(): void {
-    this._fMediator.send<void>(new SelectAllRequest());
+    this._fMediator.execute<void>(new SelectAllRequest());
   }
 
   public select(nodes: string[], connections: string[]): void {
-    this._fMediator.send<void>(new SelectRequest(nodes, connections));
+    this._fMediator.execute<void>(new SelectRequest(nodes, connections));
   }
 
   public clearSelection(): void {
-    this._fMediator.send<void>(new ClearSelectionRequest());
+    this._fMediator.execute<void>(new ClearSelectionRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveFlowFromStoreRequest());
+    this._fMediator.execute(new RemoveFlowFromStoreRequest());
   }
 }

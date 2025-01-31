@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NodeResizePreparationRequest } from './node-resize-preparation.request';
 import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -7,56 +7,72 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
-import { IDraggableItem } from '../../i-draggable-item';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
 import { NodeResizeDragHandler } from '../node-resize.drag-handler';
-import { getDataAttrValueFromClosestElementWithClass } from '@foblex/utils';
+import { getDataAttrValueFromClosestElementWithClass, isClosestElementHasClass } from '@foblex/utils';
 
 @Injectable()
 @FExecutionRegister(NodeResizePreparationRequest)
 export class NodeResizePreparationExecution implements IExecution<NodeResizePreparationRequest, void> {
 
-  private get transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
   }
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
-  }
+  private _fNode: FNodeBase | undefined;
 
   public handle(request: NodeResizePreparationRequest): void {
-    this.selectAndUpdateNodeLayer(request.event.targetElement);
+    if(!this._isValid(request)) {
+      return;
+    }
 
-    const handleType = getDataAttrValueFromClosestElementWithClass(request.event.targetElement, 'fResizeHandleType', '.f-resize-handle');
-    const itemsToDrag: IDraggableItem[] = [
-      new NodeResizeDragHandler(
-        this.fMediator,
-        this.getNode(request.event.targetElement),
-        EFResizeHandleType[ handleType as keyof typeof EFResizeHandleType ]
-      )
+    this._selectAndUpdateNodeLayer();
+
+    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost).div(this._transform.scale);
+
+    const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
+    this._fDraggableDataContext.draggableItems = [
+      new NodeResizeDragHandler(this._fNode!, resizeHandleType)
     ];
-
-    this.fDraggableDataContext.onPointerDownScale = this.transform.scale;
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this.flowHost).div(this.transform.scale);
-    this.fDraggableDataContext.draggableItems = itemsToDrag;
   }
 
-  private selectAndUpdateNodeLayer(targetElement: HTMLElement) {
-    this.fMediator.send(
-      new SelectAndUpdateNodeLayerRequest(this.getNode(targetElement))
+  private _isValid(request: NodeResizePreparationRequest): boolean {
+    return this._fDraggableDataContext.isEmpty()
+      && this._isDragHandleElement(request.event.targetElement)
+      && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
+  }
+
+  private _isDragHandleElement(element: HTMLElement): boolean {
+    return isClosestElementHasClass(element, '.f-resize-handle');
+  }
+
+  private _isNodeCanBeDragged(fNode?: FNodeBase): boolean {
+    return !!fNode && !fNode.fDraggingDisabled;
+  }
+
+  private _getNode(element: HTMLElement): FNodeBase | undefined {
+    this._fNode = this._fComponentsStore
+      .fNodes.find(x => x.isContains(element));
+    return this._fNode;
+  }
+
+  private _selectAndUpdateNodeLayer() {
+    this._fMediator.execute(
+      new SelectAndUpdateNodeLayerRequest(this._fNode!)
     );
   }
 
-  private getNode(targetElement: HTMLElement): FNodeBase {
-    return this.fComponentsStore
-      .fNodes.find(n => n.isContains(targetElement))!;
+  private _getHandleType(element: HTMLElement): keyof typeof EFResizeHandleType {
+    return getDataAttrValueFromClosestElementWithClass(element, 'fResizeHandleType', '.f-resize-handle');
   }
 }

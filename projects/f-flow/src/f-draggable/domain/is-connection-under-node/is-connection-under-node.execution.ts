@@ -70,7 +70,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {
-    const fNodeRect = this._fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(fNode.hostElement, true));
+    const fNodeRect = this._fMediator.execute<IRoundedRect>(new GetNormalizedElementRectRequest(fNode.hostElement, true));
     return this._fComponentsStore.fConnections.filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
   }
 

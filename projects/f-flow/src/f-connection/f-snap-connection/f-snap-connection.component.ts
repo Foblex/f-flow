@@ -118,7 +118,7 @@ export class FSnapConnectionComponent
   }
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddSnapConnectionToStoreRequest(this));
+    this._fMediator.execute(new AddSnapConnectionToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
@@ -126,10 +126,10 @@ export class FSnapConnectionComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new NotifyDataChangedRequest());
+    this._fMediator.execute(new NotifyDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveSnapConnectionFromStoreRequest());
+    this._fMediator.execute(new RemoveSnapConnectionFromStoreRequest());
   }
 }

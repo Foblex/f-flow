@@ -1,12 +1,10 @@
 import {
-  CreateConnectionDragHandlerExecution,
+  CreateConnectionDragHandlerPreparationExecution,
   CreateConnectionFinalizeExecution,
   CreateConnectionFromOutletPreparationExecution,
   CreateConnectionFromOutputPreparationExecution,
-  CreateConnectionFromOutputPreparationValidator,
   CreateConnectionPreparationExecution,
   GetCanBeConnectedOutputByOutletExecution,
-  GetCanBeConnectedOutputByOutletValidator
 } from './create-connection';
 import {
   ReassignConnectionFinalizeExecution,
@@ -17,17 +15,13 @@ export const CONNECTIONS_PROVIDERS = [
 
   CreateConnectionFinalizeExecution,
 
-  CreateConnectionDragHandlerExecution,
+  CreateConnectionDragHandlerPreparationExecution,
 
   CreateConnectionFromOutletPreparationExecution,
 
   GetCanBeConnectedOutputByOutletExecution,
 
-  GetCanBeConnectedOutputByOutletValidator,
-
   CreateConnectionFromOutputPreparationExecution,
-
-  CreateConnectionFromOutputPreparationValidator,
 
   CreateConnectionPreparationExecution,
 

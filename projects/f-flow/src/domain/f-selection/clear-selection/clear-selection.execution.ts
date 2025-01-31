@@ -1,5 +1,5 @@
 import { ClearSelectionRequest } from './clear-selection.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 
@@ -7,14 +7,11 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(ClearSelectionRequest)
 export class ClearSelectionExecution implements IExecution<ClearSelectionRequest, void> {
 
-  constructor(
-    private fDraggableDataContext: FDraggableDataContext,
-  ) {
-  }
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: ClearSelectionRequest): void {
-    this.fDraggableDataContext.selectedItems.forEach((x) => x.deselect());
-    this.fDraggableDataContext.selectedItems = [];
-    this.fDraggableDataContext.isSelectedChanged = true;
+    this._fDraggableDataContext.selectedItems.forEach((x) => x.unmarkAsSelected());
+    this._fDraggableDataContext.selectedItems = [];
+    this._fDraggableDataContext.isSelectedChanged = true;
   }
 }

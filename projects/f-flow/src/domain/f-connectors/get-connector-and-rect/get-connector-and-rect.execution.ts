@@ -20,6 +20,6 @@ export class GetConnectorAndRectExecution implements IExecution<GetConnectorAndR
   }
 
   private _getConnectorRect(fConnector: FConnectorBase): IRoundedRect {
-    return this._fMediator.send<IRoundedRect>(new GetNormalizedElementRectRequest(fConnector.hostElement, true));
+    return this._fMediator.execute<IRoundedRect>(new GetNormalizedElementRectRequest(fConnector.hostElement, true));
   }
 }

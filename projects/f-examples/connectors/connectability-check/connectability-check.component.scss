@@ -15,6 +15,12 @@
   }
 }
 
+.f-node-output {
+  &:not(.f-node) {
+    border-radius: 4px;
+  }
+}
+
 .f-connections-dragging {
   .f-node-input {
     &:not(.f-node-input-can-be-connected-to) {

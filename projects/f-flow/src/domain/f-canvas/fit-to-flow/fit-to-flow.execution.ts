@@ -18,7 +18,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
   private _fMediator = inject(FMediator);
 
   public handle(request: FitToFlowRequest): void {
-    const fNodesRect = this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
+    const fNodesRect = this._fMediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }
@@ -30,7 +30,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
       request.toCenter
     );
 
-    this._fMediator.send(new RedrawCanvasWithAnimationRequest(request.animated));
+    this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
   }
 
   public fitToParent(rect: IRect, parentRect: IRect, points: IPoint[], toCenter: IPoint): void {

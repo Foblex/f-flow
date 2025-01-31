@@ -11,7 +11,6 @@ import { F_CSS_CLASS } from '../../css-cls';
 export class StartDragSequenceExecution implements IExecution<StartDragSequenceRequest, void> {
 
   private _fMediator = inject(FMediator);
-
   private _fComponentsStore = inject(FComponentsStore);
 
   private get _hostElement(): HTMLElement {
@@ -23,7 +22,12 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
   public handle(request: StartDragSequenceRequest): void {
     if (this._fDraggableDataContext.draggableItems.length > 0) {
       this._hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
-      this._fMediator.send<void>(new EmitSelectionChangeEventRequest());
+      this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
+      this._emitDragStarted();
     }
+  }
+
+  private _emitDragStarted(): void {
+    this._fComponentsStore.fDraggable?.fDragStarted?.emit();
   }
 }

@@ -19,7 +19,7 @@ describe('CalculateClosestInputExecution', () => {
   });
 
   it('should return undefined when canBeConnectedInputs is empty', () => {
-    const result = fMediator.send(
+    const result = fMediator.execute(
       new CalculateClosestInputRequest({ x: 50, y: 50 }, [])
     );
     expect(result).toBeUndefined();
@@ -27,7 +27,7 @@ describe('CalculateClosestInputExecution', () => {
 
   it('should return the only element if its distance is less than snapThreshold', () => {
 
-    const result = fMediator.send<IClosestInput>(
+    const result = fMediator.execute<IClosestInput>(
       new CalculateClosestInputRequest({ x: 10, y: 10 }, [ {
         fConnector: {
           fId: 'input1'
@@ -45,7 +45,7 @@ describe('CalculateClosestInputExecution', () => {
   });
 
   it('should return 10 if the only element is exactly at snapThreshold distance', () => {
-    const result = fMediator.send<IClosestInput>(
+    const result = fMediator.execute<IClosestInput>(
       new CalculateClosestInputRequest({ x: 0, y: 0 }, [ {
         fConnector: {
           fId: 'input1'

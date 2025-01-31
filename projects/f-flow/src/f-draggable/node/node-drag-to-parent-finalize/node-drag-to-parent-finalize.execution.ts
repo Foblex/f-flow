@@ -3,10 +3,10 @@ import { NodeDragToParentFinalizeRequest } from './node-drag-to-parent-finalize.
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
-import { NodeDragHandler } from '../node.drag-handler';
 import { FDropToGroupEvent } from '../f-drop-to-group.event';
 import { FComponentsStore } from '../../../f-storage';
 import { IPointerEvent } from '@foblex/drag-toolkit';
+import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 
 @Injectable()
 @FExecutionRegister(NodeDragToParentFinalizeRequest)
@@ -56,7 +56,7 @@ export class NodeDragToParentFinalizeExecution
 
   private getDraggedNodeIds(): string[] {
     return this.fDraggableDataContext.draggableItems
-      .filter((x) => x instanceof NodeDragHandler)
+      .find((x) => x instanceof SummaryNodeDragHandler)!.fHandlers
       .map((x) => x.fNode.fId);
   }
 }

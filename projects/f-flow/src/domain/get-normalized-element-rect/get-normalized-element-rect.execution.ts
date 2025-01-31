@@ -37,7 +37,7 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
   }
 
   private _getElementRoundedRect(request: GetNormalizedElementRectRequest): IRoundedRect {
-    return request.isRoundedRect ? this._fMediator.send<IRoundedRect>(
+    return request.isRoundedRect ? this._fMediator.execute<IRoundedRect>(
       new GetElementRoundedRectRequest(request.element)
     ) : RoundedRect.fromRect(RectExtensions.fromElement(request.element));
   }

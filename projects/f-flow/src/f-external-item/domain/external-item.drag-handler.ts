@@ -1,10 +1,12 @@
 import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FExternalItemBase } from '../../f-external-item';
-import { IDraggableItem } from '../../f-draggable';
+import { fInject, IDraggableItem } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { deepCloneNode } from '@foblex/utils';
 
 export class ExternalItemDragHandler implements IDraggableItem {
+
+  private _fBrowser = fInject(BrowserService);
 
   public placeholder: HTMLElement | SVGElement | undefined;
 
@@ -14,7 +16,6 @@ export class ExternalItemDragHandler implements IDraggableItem {
 
   constructor(
     public externalItem: FExternalItemBase,
-    private fBrowser: BrowserService
   ) {
   }
 
@@ -26,13 +27,13 @@ export class ExternalItemDragHandler implements IDraggableItem {
     this.onPointerDownRect = this.getExternalItemRect();
     this.placeholder = deepCloneNode(this.externalItem.hostElement);
     this.placeholder.setAttribute('style', this.getStyle(Point.fromPoint(this.onPointerDownRect)));
-    this.fBrowser.document.body.appendChild(this.placeholder);
+    this._fBrowser.document.body.appendChild(this.placeholder);
   }
 
   private getExternalItemRect(): IRect {
     const rect = this.externalItem.hostElement.getBoundingClientRect();
-    const scrollTop = this.fBrowser.window.pageYOffset || this.fBrowser.document.documentElement.scrollTop;
-    const scrollLeft = this.fBrowser.window.pageXOffset || this.fBrowser.document.documentElement.scrollLeft;
+    const scrollTop = this._fBrowser.window.pageYOffset || this._fBrowser.document.documentElement.scrollTop;
+    const scrollLeft = this._fBrowser.window.pageXOffset || this._fBrowser.document.documentElement.scrollLeft;
     const offsetTop = rect.top + scrollTop;
     const offsetLeft = rect.left + scrollLeft;
     return RectExtensions.initialize(offsetLeft, offsetTop, rect.width, rect.height);
@@ -45,6 +46,6 @@ export class ExternalItemDragHandler implements IDraggableItem {
   }
 
   public onPointerUp(): void {
-    this.fBrowser.document.body.removeChild(this.placeholder!);
+    this._fBrowser.document.body.removeChild(this.placeholder!);
   }
 }

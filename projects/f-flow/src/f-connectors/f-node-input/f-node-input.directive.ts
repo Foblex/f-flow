@@ -59,7 +59,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
   }
 
   public ngOnInit() {
-    this._fMediator.send(new AddInputToStoreRequest(this));
+    this._fMediator.execute(new AddInputToStoreRequest(this));
     this._fNode.addConnector(this);
   }
 
@@ -83,6 +83,6 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
 
   public ngOnDestroy(): void {
     this._fNode.removeConnector(this);
-    this._fMediator.send(new RemoveInputFromStoreRequest(this));
+    this._fMediator.execute(new RemoveInputFromStoreRequest(this));
   }
 }

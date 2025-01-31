@@ -18,6 +18,8 @@ export * from './f-draggable-base';
 
 export * from './f-draggable-data-context';
 
+export * from './f-injector';
+
 export * from './f-selection-change-event';
 
 export * from './i-f-drag-and-drop-plugin';
