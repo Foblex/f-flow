@@ -18,7 +18,7 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
   private _fMediator = inject(FMediator);
 
   public handle(request: ResetScaleAndCenterRequest): void {
-    const fNodesRect = this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
+    const fNodesRect = this._fMediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }
@@ -28,7 +28,7 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
       this._fComponentsStore.fNodes.map((x) => x.position)
     );
 
-    this._fMediator.send(new RedrawCanvasWithAnimationRequest(request.animated));
+    this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
   }
 
   public oneToOneCentering(rect: IRect, parentRect: IRect, points: IPoint[]): void {

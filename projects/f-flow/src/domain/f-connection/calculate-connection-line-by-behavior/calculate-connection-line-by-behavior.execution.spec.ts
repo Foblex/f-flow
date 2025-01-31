@@ -16,7 +16,7 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
   });
 
   it('should handle floating behavior correctly', () => {
-    const result: ILine = fMediator.send(new CalculateConnectionLineByBehaviorRequest(
+    const result: ILine = fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRect({ x: 0, y: 0, width: 100, height: 100, gravityCenter: PointExtensions.initialize(50, 50) }),
       RoundedRect.fromRect({
         x: 100,
@@ -35,7 +35,7 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
   });
 
   it('should handle fixed center behavior correctly', () => {
-    const result: ILine = fMediator.send(new CalculateConnectionLineByBehaviorRequest(
+    const result: ILine = fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRect({ x: 0, y: 0, width: 100, height: 100, gravityCenter: PointExtensions.initialize(50, 50) }),
       RoundedRect.fromRect({
         x: 100,
@@ -54,7 +54,7 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
   });
 
   it('should handle fixed outbound behavior correctly', () => {
-    const result: ILine = fMediator.send(new CalculateConnectionLineByBehaviorRequest(
+    const result: ILine = fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRect({ x: 0, y: 0, width: 100, height: 100, gravityCenter: PointExtensions.initialize(50, 50) }),
       RoundedRect.fromRect({
         x: 100,

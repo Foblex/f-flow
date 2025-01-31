@@ -73,7 +73,7 @@ export class FindInputAtPositionExecution
     }
     const position = Point.fromPoint(request.toConnectorRect).add(this._calculateDifference(request.pointerPosition));
 
-    const fClosestInput = this._fMediator.send<IClosestInput | undefined>(
+    const fClosestInput = this._fMediator.execute<IClosestInput | undefined>(
       new CalculateClosestInputRequest(position, request.canBeConnectedInputs)
     );
 

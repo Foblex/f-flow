@@ -51,7 +51,7 @@ export class ReassignConnectionFinalizeExecution implements IExecution<ReassignC
   }
 
   private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
-    return this._fMediator.send<FConnectorBase | undefined>(
+    return this._fMediator.execute<FConnectorBase | undefined>(
       new FindInputAtPositionRequest(
         event.getPosition(),
         this._getDragHandlerData().toConnectorRect,

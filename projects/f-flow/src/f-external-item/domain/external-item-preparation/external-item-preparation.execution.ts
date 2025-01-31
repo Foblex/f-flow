@@ -1,40 +1,46 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ExternalItemPreparationRequest } from './external-item-preparation.request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
-import { FExternalItemBase, FExternalItemService, getExternalItem } from '../../../f-external-item';
+import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
 import { ExternalItemDragHandler } from '../external-item.drag-handler';
 import { FDraggableDataContext } from '../../../f-draggable';
-import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(ExternalItemPreparationRequest)
 export class ExternalItemPreparationExecution implements IExecution<ExternalItemPreparationRequest, void> {
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
-  }
+  private _fExternalItemService = inject(FExternalItemService);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _fComponentsStore = inject(FComponentsStore);
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
-    private fExternalItemService: FExternalItemService,
-    private fBrowser: BrowserService
-  ) {
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
   }
 
   public handle(request: ExternalItemPreparationRequest): void {
-    this.fDraggableDataContext.onPointerDownScale = 1;
+    if (!this._isValid(request)) {
+      return;
+    }
+    this._fDraggableDataContext.onPointerDownScale = 1;
 
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this.flowHost);
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this._fHost);
 
-    this.fDraggableDataContext.draggableItems = [
-      new ExternalItemDragHandler(this.getExternalItem(request.event.targetElement), this.fBrowser)
+    this._fDraggableDataContext.draggableItems = [
+      new ExternalItemDragHandler(this._getExternalItem(request.event.targetElement)!)
     ];
   }
 
-  private getExternalItem(targetElement: HTMLElement): FExternalItemBase<any> {
-    return this.fExternalItemService.getItem(getExternalItem(targetElement))!;
+  private _isValid(request: ExternalItemPreparationRequest): boolean {
+    return this._isValidExternalItem(request.event.targetElement, this._getExternalItem(request.event.targetElement));
+  }
+
+  private _isValidExternalItem(element: HTMLElement, fExternalItem?: FExternalItemBase): boolean {
+    return isExternalItem(element) && !!fExternalItem && !fExternalItem.fDisabled;
+  }
+
+  private _getExternalItem(targetElement: HTMLElement): FExternalItemBase<any> | undefined {
+    return this._fExternalItemService.getItem(getExternalItem(targetElement));
   }
 }

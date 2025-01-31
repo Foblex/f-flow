@@ -24,11 +24,11 @@ export class GetNormalizedChildrenNodesRectExecution
   }
 
   private getChildrenNodes(fId: string): FNodeBase[] {
-    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
+    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
   private normalizeRect(fNode: FNodeBase): IRect {
-    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
+    return this.fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
   }
 
   private concatRectWithParentPadding(rect: IRect, padding: [ number, number, number, number ]): IRect {

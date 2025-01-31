@@ -20,7 +20,7 @@ export class FMinimapCanvasDirective {
   public redraw(): void {
     this._clearCanvas();
 
-    this._fMediator.send<SVGRectElement[]>(new MinimapDrawNodesRequest())
+    this._fMediator.execute<SVGRectElement[]>(new MinimapDrawNodesRequest())
       .forEach((x) => {
         this.hostElement.appendChild(x);
       });

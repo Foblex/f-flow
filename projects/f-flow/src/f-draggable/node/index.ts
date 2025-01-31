@@ -20,8 +20,6 @@ export * from './node.drag-handler';
 
 export * from './node-drag-to-parent.drag-handler';
 
-export * from './node-resize-by-child.drag-handler';
-
 export * from './point-bounds-limiter';
 
 export * from './providers';

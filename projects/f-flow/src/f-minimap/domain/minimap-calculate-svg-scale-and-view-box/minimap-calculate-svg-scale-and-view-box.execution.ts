@@ -48,7 +48,7 @@ export class MinimapCalculateSvgScaleAndViewBoxExecution
   }
 
   private _calculateNodesBoundingBox(): IRect {
-    return this._fMediator.send<IRect | null>(new CalculateNodesBoundingBoxRequest())
+    return this._fMediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest())
       || RectExtensions.initialize(0, 0, 0, 0);
   }
 

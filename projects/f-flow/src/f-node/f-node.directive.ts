@@ -105,7 +105,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     this.setStyle('top', '0');
     super.redraw();
 
-    this._fMediator.send<void>(new AddNodeToStoreRequest(this));
+    this._fMediator.execute<void>(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {

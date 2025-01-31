@@ -35,6 +35,9 @@ export class NodeDragToParentPreparationExecution
   }
 
   public handle(request: NodeDragToParentPreparationRequest): void {
+    if(!this._isValid()) {
+      return;
+    }
     const fNode = this.fComponentsStore
       .fNodes.find(n => n.isContains(request.event.targetElement));
     if (!fNode) {
@@ -49,10 +52,15 @@ export class NodeDragToParentPreparationExecution
     );
   }
 
+  private _isValid(): boolean {
+    return this.fDraggableDataContext.draggableItems
+      .some((x) => x instanceof SummaryNodeDragHandler);
+  }
+
   private _getNotDraggedNodesRects(): INodeWithRect[] {
     const draggedNodes = this._addParentNodes(this._getNodesBeingDragged());
     return this._getNotDraggedNodes(draggedNodes).map((x) => {
-      const rect = this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+      const rect = this.fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
       return {
         node: x,
         rect: RectExtensions.initialize(
@@ -73,7 +81,7 @@ export class NodeDragToParentPreparationExecution
 
   private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {
     return fNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
-      result.push(x, ...this.fMediator.send<FNodeBase[]>(new GetParentNodesRequest(x)));
+      result.push(x, ...this.fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
       return result;
     }, []);
   }

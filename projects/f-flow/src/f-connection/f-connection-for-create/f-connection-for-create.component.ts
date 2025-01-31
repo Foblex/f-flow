@@ -118,7 +118,7 @@ export class FConnectionForCreateComponent
   }
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddConnectionForCreateToStoreRequest(this));
+    this._fMediator.execute(new AddConnectionForCreateToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
@@ -126,10 +126,10 @@ export class FConnectionForCreateComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new NotifyDataChangedRequest());
+    this._fMediator.execute(new NotifyDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveConnectionForCreateFromStoreRequest());
+    this._fMediator.execute(new RemoveConnectionForCreateFromStoreRequest());
   }
 }

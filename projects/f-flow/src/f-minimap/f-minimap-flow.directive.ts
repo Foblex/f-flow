@@ -24,7 +24,7 @@ export class FMinimapFlowDirective {
   public model: FMinimapData = new FMinimapData(this.hostElement);
 
   public redraw(): void {
-    const { scale, viewBox} = this._fMediator.send<IFMinimapScaleAndViewBox>(
+    const { scale, viewBox} = this._fMediator.execute<IFMinimapScaleAndViewBox>(
       new MinimapCalculateSvgScaleAndViewBoxRequest(this.hostElement, this.fMinSize)
     );
     this.model = new FMinimapData(this.hostElement, scale, viewBox);

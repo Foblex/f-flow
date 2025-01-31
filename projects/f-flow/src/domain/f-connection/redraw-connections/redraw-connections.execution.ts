@@ -70,7 +70,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private setMarkers(connection: FConnectionBase): void {
-    this.fMediator.send(
+    this.fMediator.execute(
       new CreateConnectionMarkersRequest(connection)
     );
   }

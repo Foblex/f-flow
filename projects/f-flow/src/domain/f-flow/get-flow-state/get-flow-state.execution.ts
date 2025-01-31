@@ -19,9 +19,9 @@ export class GetFlowStateExecution implements IExecution<GetFlowStateRequest, IF
     return {
       position: this._getCanvasPosition(this._fComponentsStore.fCanvas!.transform),
       scale: this._fComponentsStore.fCanvas!.transform.scale,
-      nodes: this._fMediator.send(new GetFlowStateNodesRequest(FNodeDirective)),
-      groups: this._fMediator.send(new GetFlowStateNodesRequest(FGroupDirective)),
-      connections: this._fMediator.send(new GetFlowStateConnectionsRequest())
+      nodes: this._fMediator.execute(new GetFlowStateNodesRequest(FNodeDirective)),
+      groups: this._fMediator.execute(new GetFlowStateNodesRequest(FGroupDirective)),
+      connections: this._fMediator.execute(new GetFlowStateConnectionsRequest())
     }
   }
 

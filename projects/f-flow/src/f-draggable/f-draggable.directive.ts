@@ -161,11 +161,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 
-    this._fMediator.send<void>(new NodeDragToParentPreparationRequest(event));
+    this._fMediator.execute<void>(new NodeDragToParentPreparationRequest(event));
 
     this._fMediator.execute<void>(new CanvasMovePreparationRequest(event));
 
-    this._fMediator.send<void>(new ExternalItemPreparationRequest(event));
+    this._fMediator.execute<void>(new ExternalItemPreparationRequest(event));
 
     this._fMediator.execute<void>(new PrepareDragSequenceRequest());
   }

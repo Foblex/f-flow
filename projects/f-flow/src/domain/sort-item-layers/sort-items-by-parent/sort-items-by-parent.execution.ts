@@ -45,7 +45,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getChildrenItems(fId: string): HTMLElement[] {
-    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .filter((x) => this.fItemsContainer.contains(x.hostElement)).map((x) => x.hostElement);
   }
 

@@ -69,7 +69,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
     const allElements = Array.from(itemContainer.children) as HTMLElement[];
     const targetIndex = allElements.findIndex((x) => x === item);
     if (this.isAnythingNeedToBeMoved(allElements, targetIndex, elementsThatShouldBeInFront)) {
-      this.fMediator.send(
+      this.fMediator.execute(
         new MoveFrontElementsBeforeTargetElementRequest(itemContainer, allElements, elementsThatShouldBeInFront, targetIndex)
       );
     }
@@ -97,6 +97,6 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
   }
 
   private getChildrenNodesAndGroups(fId: string): HTMLElement[] {
-    return this.fMediator.send<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
+    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
   }
 }

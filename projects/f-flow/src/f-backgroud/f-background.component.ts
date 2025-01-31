@@ -40,11 +40,11 @@ export class FBackgroundComponent
   private _fMediator = inject(FMediator);
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddBackgroundToStoreRequest(this));
+    this._fMediator.execute(new AddBackgroundToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
-    this._fMediator.send(new AddPatternToBackgroundRequest(this.fBackgroundPattern!));
+    this._fMediator.execute(new AddPatternToBackgroundRequest(this.fBackgroundPattern!));
   }
 
   public setTransform(transform: ITransformModel): void {
@@ -52,6 +52,6 @@ export class FBackgroundComponent
   }
 
   public ngOnDestroy() {
-    this._fMediator.send(new RemoveBackgroundFromStoreRequest(this));
+    this._fMediator.execute(new RemoveBackgroundFromStoreRequest(this));
   }
 }

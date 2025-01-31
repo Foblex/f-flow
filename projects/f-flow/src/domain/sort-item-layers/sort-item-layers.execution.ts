@@ -19,8 +19,8 @@ export class SortItemLayersExecution implements IExecution<SortItemLayersRequest
     if(!this.fComponentsStore.fCanvas) {
       return;
     }
-    this.fMediator.send(new SortItemsByParentRequest(this.fComponentsStore.fCanvas.fGroupsContainer.nativeElement));
-    this.fMediator.send(new SortNodeLayersRequest());
-    this.fMediator.send(new SortItemsByParentRequest(this.fComponentsStore.fCanvas.fNodesContainer.nativeElement));
+    this.fMediator.execute(new SortItemsByParentRequest(this.fComponentsStore.fCanvas.fGroupsContainer.nativeElement));
+    this.fMediator.execute(new SortNodeLayersRequest());
+    this.fMediator.execute(new SortItemsByParentRequest(this.fComponentsStore.fCanvas.fNodesContainer.nativeElement));
   }
 }

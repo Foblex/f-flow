@@ -47,13 +47,13 @@ export class NodeResizeDragHandler implements IDraggableItem {
   }
 
   private _calculateSize(difference: IPoint, minimumSize: ISize): IRect {
-    return this._fMediator.send<IRect>(
+    return this._fMediator.execute<IRect>(
       new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
     );
   }
 
   private _calculatePosition(difference: IPoint, changedSize: IRect): IRect {
-    return this._fMediator.send<IRect>(
+    return this._fMediator.execute<IRect>(
       new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, this._fResizeHandleType)
     );
   }

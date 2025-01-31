@@ -69,8 +69,8 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
     fCanvas.fNodesContainer.nativeElement.append(node4.hostElement, node1.hostElement, node2.hostElement, node3.hostElement);
 
     fComponentsStore.fNodes = [ group1, group2, node1, node2, node3, node4 ];
-    fMediator.send(new SortItemLayersRequest());
-    fMediator.send(new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer.nativeElement));
+    fMediator.execute(new SortItemLayersRequest());
+    fMediator.execute(new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer.nativeElement));
 
     expect(fCanvas.fGroupsContainer.nativeElement.children.item(0)).toEqual(group2.hostElement);
     expect(fCanvas.fGroupsContainer.nativeElement.children.item(1)).toEqual(group1.hostElement);
@@ -98,7 +98,7 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
 
     fComponentsStore.fNodes = [ group1, group2, node1, node2, node3, node4 ];
 
-    fMediator.send(new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer.nativeElement));
+    fMediator.execute(new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer.nativeElement));
 
     expect(fCanvas.fGroupsContainer.nativeElement.children.item(0)).toEqual(group2.hostElement);
     expect(fCanvas.fGroupsContainer.nativeElement.children.item(1)).toEqual(group1.hostElement);

@@ -128,14 +128,14 @@ export class FConnectionComponent
   }
 
   public ngOnInit(): void {
-    this._fMediator.send(new AddConnectionToStoreRequest(this));
+    this._fMediator.execute(new AddConnectionToStoreRequest(this));
   }
 
   public ngOnChanges(): void {
-    this._fMediator.send(new NotifyDataChangedRequest());
+    this._fMediator.execute(new NotifyDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveConnectionFromStoreRequest(this));
+    this._fMediator.execute(new RemoveConnectionFromStoreRequest(this));
   }
 }

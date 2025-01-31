@@ -40,7 +40,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   }
 
   private _getFlowHostSize(): ISize {
-    return this._fMediator.send<HTMLElement>(new GetFlowHostElementRequest())
+    return this._fMediator.execute<HTMLElement>(new GetFlowHostElementRequest())
       .getBoundingClientRect();
   }
 

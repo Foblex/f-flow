@@ -22,7 +22,7 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
   public handle(request: StartDragSequenceRequest): void {
     if (this._fDraggableDataContext.draggableItems.length > 0) {
       this._hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
-      this._fMediator.send<void>(new EmitSelectionChangeEventRequest());
+      this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
       this._emitDragStarted();
     }
   }

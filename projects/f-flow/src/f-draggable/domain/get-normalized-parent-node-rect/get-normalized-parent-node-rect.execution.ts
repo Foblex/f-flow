@@ -43,10 +43,10 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNodeRect(fNode: FNodeBase): IRect {
-    return this.fMediator.send<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
+    return this.fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
   }
 
   private getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this.fMediator.send<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+    return this.fMediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
   }
 }

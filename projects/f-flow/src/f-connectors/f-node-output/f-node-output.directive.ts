@@ -66,7 +66,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   }
 
   public ngOnInit() {
-    this._fMediator.send(new AddOutputToStoreRequest(this));
+    this._fMediator.execute(new AddOutputToStoreRequest(this));
     this._fNode.addConnector(this);
   }
 
@@ -90,6 +90,6 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
 
   public ngOnDestroy(): void {
     this._fNode.removeConnector(this);
-    this._fMediator.send(new RemoveOutputFromStoreRequest(this));
+    this._fMediator.execute(new RemoveOutputFromStoreRequest(this));
   }
 }

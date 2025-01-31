@@ -106,7 +106,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     this.setScale(scale, toPosition);
   }
   public override setScale(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
-    this._fMediator.send(new UpdateScaleRequest(scale, toPosition));
+    this._fMediator.execute(new UpdateScaleRequest(scale, toPosition));
   }
 
   /**
@@ -117,10 +117,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     this.resetScale();
   }
   public override resetScale(): void {
-    this._fMediator.send(new ResetScaleRequest());
+    this._fMediator.execute(new ResetScaleRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.send(new RemoveCanvasFromStoreRequest());
+    this._fMediator.execute(new RemoveCanvasFromStoreRequest());
   }
 }

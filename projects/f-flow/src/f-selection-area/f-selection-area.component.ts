@@ -53,10 +53,10 @@ export class FSelectionAreaComponent extends FSelectionAreaBase implements OnIni
   }
 
   public onPointerDown(event: IPointerEvent): void {
-    this._fMediator.send(new SelectionAreaPreparationRequest(event, this, this.fTrigger));
+    this._fMediator.execute(new SelectionAreaPreparationRequest(event, this, this.fTrigger));
   }
 
   public onPointerUp(event: IPointerEvent): void {
-    this._fMediator.send(new SelectionAreaFinalizeRequest(event));
+    this._fMediator.execute(new SelectionAreaFinalizeRequest(event));
   }
 }

@@ -25,7 +25,7 @@ describe('SelectAllExecution', () => {
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 
-    fMediator.send(new SelectAllRequest());
+    fMediator.execute(new SelectAllRequest());
 
     mockSelectedItems.forEach(item => {
       expect(item.unmarkAsSelected).toHaveBeenCalled();
@@ -42,7 +42,7 @@ describe('SelectAllExecution', () => {
     fComponentsStore.fConnections = [mockConnection] as any;
     fDraggableDataContext.selectedItems = [];
 
-    fMediator.send(new SelectAllRequest());
+    fMediator.execute(new SelectAllRequest());
 
     expect(mockNode.markAsSelected).toHaveBeenCalled();
     expect(mockConnection.markAsSelected).toHaveBeenCalled();
@@ -55,7 +55,7 @@ describe('SelectAllExecution', () => {
     fComponentsStore.fConnections = [] as any;
     fDraggableDataContext.selectedItems = [];
 
-    fMediator.send(new SelectAllRequest());
+    fMediator.execute(new SelectAllRequest());
 
     expect(fDraggableDataContext.selectedItems.length).toBe(0);
     expect(fDraggableDataContext.isSelectedChanged).toBe(true);
