@@ -15,7 +15,7 @@ import {
   NodeMoveFinalizeRequest,
   NodeMovePreparationRequest
 } from './node';
-import { CanvasMoveFinalizeRequest, CanvasMovePreparationRequest } from './canvas';
+import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
   FCreateConnectionEvent,
   FReassignConnectionEvent,
@@ -163,7 +163,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeDragToParentPreparationRequest(event));
 
-    this._fMediator.execute<void>(new CanvasMovePreparationRequest(event));
+    this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event));
 
     this._fMediator.execute<void>(new ExternalItemPreparationRequest(event));
 
@@ -193,7 +193,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeDragToParentFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new CanvasMoveFinalizeRequest(event));
+    this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
     this._fMediator.execute<void>(new ExternalItemFinalizeRequest(event));
 

@@ -1,12 +1,12 @@
 import { IMinMaxPoint, IPoint, IRect } from '@foblex/2d';
-import { IDraggableItem } from '../i-draggable-item';
+import { IFDragHandler } from '../f-drag-handler/i-f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { fInject } from '../f-injector';
 import { PointBoundsLimiter } from './point-bounds-limiter';
 import { NodeDragHandler } from './node.drag-handler';
 // import { FMediator } from '@foblex/mediator';
 
-export class SummaryNodeDragHandler implements IDraggableItem {
+export class SummaryNodeDragHandler implements IFDragHandler {
 
  // private _fMediator = fInject(FMediator);
   private _fComponentStore = fInject(FComponentsStore);

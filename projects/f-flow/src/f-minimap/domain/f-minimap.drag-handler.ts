@@ -1,11 +1,11 @@
 import { IPoint, IRect, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
-import { IDraggableItem } from '../../f-draggable';
+import { IFDragHandler } from '../../f-draggable';
 import { FMediator } from '@foblex/mediator';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point';
 import { FMinimapData } from './f-minimap-data';
 
-export class FMinimapDragHandler implements IDraggableItem {
+export class FMinimapDragHandler implements IFDragHandler {
 
   private lastDifference: IPoint | null = null;
 

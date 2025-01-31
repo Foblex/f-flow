@@ -1,10 +1,10 @@
 import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FExternalItemBase } from '../../f-external-item';
-import { fInject, IDraggableItem } from '../../f-draggable';
+import { fInject, IFDragHandler } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { deepCloneNode } from '@foblex/utils';
 
-export class ExternalItemDragHandler implements IDraggableItem {
+export class ExternalItemDragHandler implements IFDragHandler {
 
   private _fBrowser = fInject(BrowserService);
 

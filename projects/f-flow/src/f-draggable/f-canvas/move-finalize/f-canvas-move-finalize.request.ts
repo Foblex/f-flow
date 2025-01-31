@@ -1,6 +1,6 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 
-export class CanvasMoveFinalizeRequest {
+export class FCanvasMoveFinalizeRequest {
 
   constructor(
     public event: IPointerEvent

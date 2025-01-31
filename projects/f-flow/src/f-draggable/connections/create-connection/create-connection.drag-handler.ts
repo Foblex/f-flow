@@ -1,4 +1,4 @@
-import { IDraggableItem } from '../../i-draggable-item';
+import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
 import {
   CalculateClosestInputRequest,
   GetAllCanBeConnectedInputsAndRectsRequest,
@@ -17,7 +17,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { ICreateReassignConnectionDragData } from '../i-create-reassign-connection-drag-data';
 import { fInject } from '../../f-injector';
 
-export class CreateConnectionDragHandler implements IDraggableItem<ICreateReassignConnectionDragData> {
+export class CreateConnectionDragHandler implements IFDragHandler<ICreateReassignConnectionDragData> {
 
   private _fMediator = fInject(FMediator);
   private _fComponentsStore = fInject(FComponentsStore);

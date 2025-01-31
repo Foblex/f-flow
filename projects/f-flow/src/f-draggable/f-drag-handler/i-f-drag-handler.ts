@@ -1,6 +1,6 @@
 import { IPoint } from '@foblex/2d';
 
-export interface IDraggableItem<TData = any> {
+export interface IFDragHandler<TData = any> {
 
   prepareDragSequence?(): void;
 

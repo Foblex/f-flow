@@ -1,4 +1,4 @@
-import { CANVAS_PROVIDERS } from './canvas';
+import { CANVAS_PROVIDERS } from './f-canvas';
 import { CONNECTIONS_PROVIDERS } from './connections';
 import { SINGLE_SELECT_PROVIDERS } from './single-select';
 import { NODE_PROVIDERS } from './node';
