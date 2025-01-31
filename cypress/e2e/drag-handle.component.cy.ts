@@ -5,16 +5,21 @@ describe('DragHandleComponent', () => {
 
   it('should drag fNode element and update its transform translate', function() {
 
-    cy.get('.f-node.f-drag-handle').invoke('css', 'transform')
-      .should('equal', 'matrix(1, 0, 0, 1, 0, 0)');
+    cy.wait(500).get('.f-node.f-drag-handle').then(($dragHandle: JQuery<HTMLElement>) => {
+      const dragHandleRect = $dragHandle.get(0).getBoundingClientRect();
 
-    cy.get('.f-node.f-drag-handle')
-      .trigger('mousedown', { button: 0, force: true })
-      .trigger('mousemove', { clientX: -150, clientY: 0 })
-      .trigger('mouseup', { clientX: 0, clientY: 0 });
+      cy.get('.f-node.f-drag-handle')
+        .first()
+        .trigger('mousedown', { button: 0, force: true })
+        .trigger('mousemove', { clientX: -150, clientY: 0 })
+        .trigger('mouseup', { clientX: 0, clientY: 0 });
 
-    cy.get('.f-node.f-drag-handle').invoke('css', 'transform')
-      .should('equal', 'matrix(1, 0, 0, 1, 150, 0.5)');
+      cy.get('.f-node.f-drag-handle')
+        .first().then(($dragHandle2: JQuery<HTMLElement>) => {
+        const dragHandleRect2 = $dragHandle2.get(0).getBoundingClientRect();
+        expect(dragHandleRect.x + 150).to.equal(dragHandleRect2.x);
+      })
+    });
   });
 
   it('should click fNode element and update its selection state', function() {

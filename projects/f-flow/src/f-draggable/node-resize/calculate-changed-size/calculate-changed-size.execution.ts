@@ -13,7 +13,7 @@ export class CalculateChangedSizeExecution
     return this.change(
       request.originalRect,
       request.difference,
-      RESIZE_DIRECTIONS[request.fResizeHandleType],
+      RESIZE_DIRECTIONS[ request.fResizeHandleType ],
     );
   }
 
@@ -23,7 +23,6 @@ export class CalculateChangedSizeExecution
       rect.width + direction.x * difference.x,
       rect.height + direction.y * difference.y
     );
-
 
     if (result.width < 0) {
       result.x = result.width;

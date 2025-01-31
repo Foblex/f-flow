@@ -10,7 +10,6 @@ import {
 import { IDraggableItem } from '../../i-draggable-item';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 import { ILineAlignmentResult } from '../../../f-line-alignment';
-import { NodeDragHandler } from '../node.drag-handler';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
 import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 import { FNodeBase } from '../../../f-node';
