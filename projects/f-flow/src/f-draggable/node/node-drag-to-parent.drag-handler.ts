@@ -1,12 +1,14 @@
 import { Directive } from '@angular/core';
 import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler/i-f-drag-handler';
+import { IFDragHandler } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 
 @Directive()
 export class NodeDragToParentDragHandler implements IFDragHandler {
+
+  public fEventType = 'move-node-to-parent';
 
   private DEBOUNCE_TIME = 15;
 

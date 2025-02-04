@@ -26,6 +26,6 @@ export class NodeSelectionComponent {
   }
 
   public onSelectionChange(event: FSelectionChangeEvent): void {
-    this.selection.push(event.nodes);
+    this.selection.push(event.fNodeIds);
   }
 }

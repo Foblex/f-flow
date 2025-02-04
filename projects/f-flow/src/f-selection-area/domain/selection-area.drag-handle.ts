@@ -8,6 +8,8 @@ import { ISelectable } from '../../mixins';
 
 export class SelectionAreaDragHandle implements IFDragHandler {
 
+  public fEventType: string = 'selection-area';
+
   private _canBeSelected: ICanBeSelectedElementAndRect[] = [];
   private _selectedByMove: ISelectable[] = [];
 

@@ -15,6 +15,9 @@ import { IFReassignConnectionDragResult } from './i-f-reassign-connection-drag-r
 
 export class FReassignConnectionDragHandler implements IFDragHandler {
 
+  public fEventType = 'reassign-connection';
+  public fData: any;
+
   private _fResult = fInject(FDragHandlerResult<IFReassignConnectionDragResult>);
 
   private _fMediator = fInject(FMediator);
@@ -53,6 +56,9 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(this._fConnection.line.point2.x, this._fConnection.line.point2.y)
     );
+    this.fData = {
+      fConnectionId: this._fConnection.fId
+    };
   }
 
   public prepareDragSequence(): void {

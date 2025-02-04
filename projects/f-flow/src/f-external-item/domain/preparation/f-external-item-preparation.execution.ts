@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { ExternalItemPreparationRequest } from './external-item-preparation.request';
+import { FExternalItemPreparationRequest } from './f-external-item-preparation.request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
-import { ExternalItemDragHandler } from '../external-item.drag-handler';
+import { FExternalItemDragHandler } from '../f-external-item.drag-handler';
 import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
-@FExecutionRegister(ExternalItemPreparationRequest)
-export class ExternalItemPreparationExecution implements IExecution<ExternalItemPreparationRequest, void> {
+@FExecutionRegister(FExternalItemPreparationRequest)
+export class FExternalItemPreparationExecution implements IExecution<FExternalItemPreparationRequest, void> {
 
   private _fExternalItemService = inject(FExternalItemService);
   private _fDraggableDataContext = inject(FDraggableDataContext);
@@ -19,7 +19,7 @@ export class ExternalItemPreparationExecution implements IExecution<ExternalItem
     return this._fComponentsStore.fFlow!.hostElement;
   }
 
-  public handle(request: ExternalItemPreparationRequest): void {
+  public handle(request: FExternalItemPreparationRequest): void {
     if (!this._isValid(request)) {
       return;
     }
@@ -28,11 +28,13 @@ export class ExternalItemPreparationExecution implements IExecution<ExternalItem
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this._fHost);
 
     this._fDraggableDataContext.draggableItems = [
-      new ExternalItemDragHandler(this._getExternalItem(request.event.targetElement)!)
+      new FExternalItemDragHandler(
+        this._getExternalItem(request.event.targetElement)!,
+      )
     ];
   }
 
-  private _isValid(request: ExternalItemPreparationRequest): boolean {
+  private _isValid(request: FExternalItemPreparationRequest): boolean {
     return this._isValidExternalItem(request.event.targetElement, this._getExternalItem(request.event.targetElement));
   }
 

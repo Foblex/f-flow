@@ -5,6 +5,8 @@ import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
 
 export class LineAlignmentDragHandler implements IFDragHandler {
 
+  public fEventType = 'line-alignment';
+
   private _fComponentsStore = fInject(FComponentsStore);
 
   private _debounceTimer: any = null;

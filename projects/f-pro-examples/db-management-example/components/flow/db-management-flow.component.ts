@@ -128,8 +128,8 @@ export class DbManagementFlowComponent implements OnInit {
   }
 
   public selectionChanged(event: FSelectionChangeEvent): void {
-    this.isSingleSelection = event.connections.length + event.nodes.length === 1;
-    this.selectionService.setTables(event.nodes);
+    this.isSingleSelection = event.fConnectionIds.length + event.fNodeIds.length === 1;
+    this.selectionService.setTables(event.fNodeIds);
     this.changeDetectorRef.markForCheck();
   }
 

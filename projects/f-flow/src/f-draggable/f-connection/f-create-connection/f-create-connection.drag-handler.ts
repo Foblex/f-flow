@@ -19,6 +19,9 @@ import { IFCreateConnectionDragResult } from './i-f-create-connection-drag-resul
 
 export class FCreateConnectionDragHandler implements IFDragHandler {
 
+  public fEventType = 'create-connection';
+  public fData: any;
+
   private _fResult = fInject(FDragHandlerResult<IFCreateConnectionDragResult>);
 
   private _fMediator = fInject(FMediator);
@@ -45,6 +48,9 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y)
     );
+    this.fData = {
+      fOutputOrOutletId: this._fOutputOrOutlet.fId,
+    };
   }
 
   public prepareDragSequence(): void {

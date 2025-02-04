@@ -1,7 +1,5 @@
-import { Directive, InjectionToken } from '@angular/core';
+import { Directive, TemplateRef } from '@angular/core';
 import { IHasHostElement } from '../i-has-host-element';
-
-export const F_EXTERNAL_ITEM = new InjectionToken<FExternalItemBase>('F_EXTERNAL_ITEM');
 
 @Directive()
 export abstract class FExternalItemBase<TData = any> implements IHasHostElement {
@@ -13,4 +11,10 @@ export abstract class FExternalItemBase<TData = any> implements IHasHostElement 
   public abstract fData: TData | undefined;
 
   public abstract fDisabled: boolean;
+
+  public abstract fPreview: TemplateRef<any> | undefined;
+
+  public abstract fPreviewMatchSize: boolean;
+
+  public abstract fPlaceholder: TemplateRef<any> | undefined;
 }

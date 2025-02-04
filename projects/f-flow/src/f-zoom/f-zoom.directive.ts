@@ -55,6 +55,9 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     }
   }
 
+  /**
+   *  @deprecated`,
+   */
   @Input()
   public fZoomTriggers: IFActionTrigger<EFZoomAction>[] = [
     { event: EFTriggerEvent.WHEEL, action: EFZoomAction.WHEEL },
@@ -102,6 +105,9 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
     this._disposeListeners();
     this._validateTriggers();
+    if(!this._isEnabled) {
+      return;
+    }
 
     this.fZoomTriggers.forEach((x) => {
       this._triggersListener.push(

@@ -1,6 +1,6 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 
-export class ExternalItemFinalizeRequest {
+export class FExternalItemFinalizeRequest {
 
   constructor(
     public event: IPointerEvent

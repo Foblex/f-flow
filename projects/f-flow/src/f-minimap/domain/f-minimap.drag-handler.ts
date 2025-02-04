@@ -7,6 +7,8 @@ import { FMinimapData } from './f-minimap-data';
 
 export class FMinimapDragHandler implements IFDragHandler {
 
+  public fEventType = 'minimap';
+
   private lastDifference: IPoint | null = null;
 
   constructor(

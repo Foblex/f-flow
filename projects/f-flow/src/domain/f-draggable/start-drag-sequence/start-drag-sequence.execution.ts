@@ -12,12 +12,11 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   private get _hostElement(): HTMLElement {
     return this._fComponentsStore.fDraggable!.hostElement;
   }
-
-  private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: StartDragSequenceRequest): void {
     if (this._fDraggableDataContext.draggableItems.length > 0) {
@@ -28,6 +27,9 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
   }
 
   private _emitDragStarted(): void {
-    this._fComponentsStore.fDraggable?.fDragStarted?.emit();
+    this._fComponentsStore.fDraggable?.fDragStarted?.emit({
+      fEventType: this._fDraggableDataContext.draggableItems[ 0 ].fEventType,
+      fData: { ...this._fDraggableDataContext.draggableItems[ 0 ].fData }
+    });
   }
 }

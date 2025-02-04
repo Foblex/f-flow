@@ -36,8 +36,8 @@ import {
   OnPointerMoveRequest, FEventTrigger, TriggerEvent, defaultEventTrigger
 } from '../domain';
 import {
-  ExternalItemFinalizeRequest,
-  ExternalItemPreparationRequest,
+  FExternalItemFinalizeRequest,
+  FExternalItemPreparationRequest,
   FCreateNodeEvent,
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
@@ -46,7 +46,7 @@ import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
-import { FNodeIntersectedWithConnections } from './domain';
+import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FInjector } from './f-injector';
 import { FDragHandlerResult } from './f-drag-handler';
 
@@ -113,7 +113,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public override fCellSizeWhileDragging: boolean = false;
 
   @Output()
-  public override fDragStarted = new EventEmitter<void>();
+  public override fDragStarted = new EventEmitter<FDragStartedEvent>();
 
   @Output()
   public override fDragEnded = new EventEmitter<void>();
@@ -170,7 +170,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event));
 
-    this._fMediator.execute<void>(new ExternalItemPreparationRequest(event));
+    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event));
 
     this._fMediator.execute<void>(new PrepareDragSequenceRequest());
   }
@@ -200,7 +200,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new ExternalItemFinalizeRequest(event));
+    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
     this._fMediator.execute<void>(new EndDragSequenceRequest());
 

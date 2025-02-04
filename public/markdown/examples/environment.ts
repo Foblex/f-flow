@@ -14,7 +14,6 @@ function createEnvironment(): IDocsEnvironment {
       nodesGroup(),
       connectorGroup(),
       connectionGroup(),
-      layoutGroup(),
       extensionGroup(),
       advancedGroup(),
       proExamplesGroup(),
@@ -184,10 +183,6 @@ function createEnvironment(): IDocsEnvironment {
       {
         tag: 'uml-diagram-example',
         component: import('../../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component')
-      },
-      {
-        tag: 'mind-map-example',
-        component: import('../../../projects/f-pro-examples/mind-map-example/flow/mind-map-example.component')
       },
       {
         tag: 'tournament-bracket',
@@ -560,34 +555,6 @@ function connectionGroup(): INavigationGroup {
   }
 }
 
-function layoutGroup(): INavigationGroup {
-  return {
-    text: 'Layouts',
-    items: [
-      {
-        link: 'dagre-layout',
-        text: 'Dagre Layout',
-        image: './previews/examples/dagre-layout.light.png',
-        image_dark: './previews/examples/dagre-layout.dark.png',
-        description: 'Use Dagre.js in Foblex Flow for structured tree diagrams in Angular.',
-        image_width: 806,
-        image_height: 600,
-        image_type: 'image/png',
-      },
-      {
-        link: 'elkjs-layout',
-        text: 'ELKJS Layout',
-        image: './previews/examples/elkjs-layout.light.png',
-        image_dark: './previews/examples/elkjs-layout.dark.png',
-        description: 'Create structured tree diagrams with ELKJS in Foblex Flow for Angular.',
-        image_width: 806,
-        image_height: 600,
-        image_type: 'image/png',
-      }
-    ],
-  }
-}
-
 function extensionGroup(): INavigationGroup {
   return {
     text: 'Extensions',
@@ -649,6 +616,10 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        }
       },
       {
         link: 'background',
@@ -681,6 +652,26 @@ function advancedGroup(): INavigationGroup {
           text: 'New',
           type: 'info'
         }
+      },
+      {
+        link: 'dagre-layout',
+        text: 'Dagre Layout',
+        image: './previews/examples/dagre-layout.light.png',
+        image_dark: './previews/examples/dagre-layout.dark.png',
+        description: 'Use Dagre.js in Foblex Flow for structured tree diagrams in Angular.',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
+      },
+      {
+        link: 'elkjs-layout',
+        text: 'ELKJS Layout',
+        image: './previews/examples/elkjs-layout.light.png',
+        image_dark: './previews/examples/elkjs-layout.dark.png',
+        description: 'Create structured tree diagrams with ELKJS in Foblex Flow for Angular.',
+        image_width: 806,
+        image_height: 600,
+        image_type: 'image/png',
       }
     ]
   }
@@ -724,29 +715,7 @@ function proExamplesGroup(): INavigationGroup {
       image_dark: './previews/examples/tournament-bracket.dark.png',
       image_width: 821,
       image_height: 600,
-      image_type: 'image/png',
-      badge: {
-        text: 'New',
-        type: 'info'
-      }
-    }
-    //   {
-    //   text: 'Mind Map',
-    //   link: 'mind-map-example',
-    //   description: 'Design a mind map using Angular and Foblex Flow.',
-    //   image: './previews/examples/mind-map-example.light.png',
-    //   image_dark: './previews/examples/mind-map-example.dark.png',
-    //   image_width: 821,
-    //   image_height: 600,
-    //   image_type: 'image/png',
-    // }
-      //   {
-      //   text: 'Call Center Flow',
-      //   link: 'https://github.com/Foblex/f-flow-example',
-      // }, {
-      //   text: 'Scheme Editor',
-      //   link: 'https://github.com/Foblex/f-scheme-editor',
-      // }
-    ]
+      image_type: 'image/png'
+    } ]
   }
 }

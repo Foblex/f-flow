@@ -35,7 +35,7 @@
     "@foblex/mediator": "1.1.2",
     "@foblex/2d": "1.1.9",
     "@foblex/drag-toolkit": "1.1.0",
-    "@foblex/utils": "1.1.0"
+    "@foblex/utils": "1.1.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"

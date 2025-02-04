@@ -12,6 +12,9 @@ import { fInject } from '../f-injector';
 
 export class NodeResizeDragHandler implements IFDragHandler {
 
+  public fEventType = 'node-resize';
+  public fData: any;
+
   private _fMediator = fInject(FMediator);
 
   private _originalRect!: IRect;
@@ -21,6 +24,9 @@ export class NodeResizeDragHandler implements IFDragHandler {
     private _fNode: FNodeBase,
     private _fResizeHandleType: EFResizeHandleType,
   ) {
+    this.fData = {
+      fNodeId: _fNode.fId,
+    }
   }
 
   public prepareDragSequence(): void {

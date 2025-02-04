@@ -1,7 +1,7 @@
 import { GetCurrentSelectionRequest } from './get-current-selection.request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
+import { FDraggableDataContext } from '../../../f-draggable';
 import { ICurrentSelection } from './i-current-selection';
 
 @Injectable()
@@ -12,9 +12,9 @@ export class GetCurrentSelectionExecution implements IExecution<GetCurrentSelect
 
   public handle(): ICurrentSelection {
     return {
-      nodes: this._getSelectedNodes(),
-      groups: this._getSelectedGroups(),
-      connections: this._getSelectedConnections()
+      fNodeIds: this._getSelectedNodes(),
+      fGroupIds: this._getSelectedGroups(),
+      fConnectionIds: this._getSelectedConnections()
     }
   }
 

@@ -71,7 +71,7 @@
     "@foblex/m-render": "2.5.4",
     "@foblex/mediator": "1.1.2",
     "@foblex/platform": "1.0.4",
-    "@foblex/utils": "1.1.0",
+    "@foblex/utils": "1.1.1",
     "dagre": "^0.8.5",
     "elkjs": "^0.9.3",
     "express": "^4.18.2",
