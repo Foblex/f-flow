@@ -1,5 +1,5 @@
 import { ILine } from '@foblex/2d';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
 import { CalculateConnectionLineByBehaviorRequest } from '../calculate-connection-line-by-behavior';
@@ -13,55 +13,64 @@ import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 @FExecutionRegister(RedrawConnectionsRequest)
 export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsRequest, void> {
 
-  constructor(
-    private readonly fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-  ) {
-  }
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: RedrawConnectionsRequest): void {
     this._resetConnectors();
 
-    if (this.fComponentsStore.fTempConnection) {
-      this.setMarkers(this.fComponentsStore.fTempConnection);
+    if (this._fComponentsStore.fTempConnection) {
+      this._setMarkers(this._fComponentsStore.fTempConnection);
     }
 
-    if (this.fComponentsStore.fSnapConnection) {
-      this.setMarkers(this.fComponentsStore.fSnapConnection);
+    if (this._fComponentsStore.fSnapConnection) {
+      this._setMarkers(this._fComponentsStore.fSnapConnection);
     }
 
-    this.fComponentsStore.fConnections.forEach((connection) => {
-      const output = this.fComponentsStore.fOutputs.find((x) => x.fId === connection.fOutputId);
-      const input = this.fComponentsStore.fInputs.find((x) => x.fId === connection.fInputId);
-      if (output && input) {
-        this._setupConnection(output, input, connection);
-      }
+    this._fComponentsStore.fConnections.forEach((x) => {
+      this._setupConnection(this._getOutput(x.fOutputId), this._getInput(x.fInputId), x);
     });
   }
 
+  private _getOutput(id: string): FConnectorBase {
+    const result = this._fComponentsStore.fOutputs.find((x) => x.fId === id)!;
+    if(!result) {
+      throw new Error(`Output with id ${id} not found`);
+    }
+    return result;
+  }
+
+  private _getInput(id: string): FConnectorBase {
+    const result = this._fComponentsStore.fInputs.find((x) => x.fId === id)!;
+    if(!result) {
+      throw new Error(`Input with id ${id} not found`);
+    }
+    return result;
+  }
+
   private _resetConnectors(): void {
-    this.fComponentsStore.fOutputs.forEach((x) => x.resetConnected());
-    this.fComponentsStore.fInputs.forEach((x) => x.resetConnected());
+    this._fComponentsStore.fOutputs.forEach((x) => x.resetConnected());
+    this._fComponentsStore.fInputs.forEach((x) => x.resetConnected());
   }
 
-  private _setupConnection(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): void {
-    output.setConnected(input);
-    input.setConnected(output);
+  private _setupConnection(fOutput: FConnectorBase, fInput: FConnectorBase, fConnection: FConnectionBase): void {
+    fOutput.setConnected(fInput);
+    fInput.setConnected(fOutput);
 
-    const line = this.getLine(output, input, connection);
+    const line = this._getLine(fOutput, fInput, fConnection);
 
-    this.setMarkers(connection);
+    this._setMarkers(fConnection);
 
-    connection.setLine(line.point1, output.fConnectableSide, line.point2, input.fConnectableSide);
+    fConnection.setLine(line.point1, fOutput.fConnectableSide, line.point2, fInput.fConnectableSide);
 
-    connection.initialize();
-    connection.isSelected() ? connection.markAsSelected() : null;
+    fConnection.initialize();
+    fConnection.isSelected() ? fConnection.markAsSelected() : null;
   }
 
-  private getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
-    return this.fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
-        this.fMediator.execute(new GetNormalizedElementRectRequest(output.hostElement, true)),
-        this.fMediator.execute(new GetNormalizedElementRectRequest(input.hostElement, true)),
+  private _getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
+    return this._fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
+        this._fMediator.execute(new GetNormalizedElementRectRequest(output.hostElement, true)),
+        this._fMediator.execute(new GetNormalizedElementRectRequest(input.hostElement, true)),
         connection.fBehavior,
         output.fConnectableSide,
         input.fConnectableSide
@@ -69,8 +78,8 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     );
   }
 
-  private setMarkers(connection: FConnectionBase): void {
-    this.fMediator.execute(
+  private _setMarkers(connection: FConnectionBase): void {
+    this._fMediator.execute(
       new CreateConnectionMarkersRequest(connection)
     );
   }
