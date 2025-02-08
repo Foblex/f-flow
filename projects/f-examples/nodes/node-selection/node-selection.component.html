@@ -2,14 +2,24 @@
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
     <f-connection fOutputId="output1" fInputId="input2" fBehavior="floating"></f-connection>
-    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
-    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
-    <div fNode [fNodePosition]="{ x: 144, y: 154 }" fNodeInput fInputId="input2" fDragHandle [fNodeSelectionDisabled]="true">
-      I'm a node with disabled selection
+    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fDragHandle>
+      <div fNodeOutput [isSelfConnectable]="false" fOutputConnectableSide="right" class="right"
+           fOutputId="output1"></div>
+      I'm a node
+    </div>
+    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fDragHandle>
+      <div fNodeInput fInputConnectableSide="left" class="left" fInputId="input1"></div>
+      I'm a node
+    </div>
+    <div fNode [fNodePosition]="{ x: 144, y: 154 }" fDragHandle
+         [fNodeSelectionDisabled]="true">
+      <div fNodeInput fInputConnectableSide="top" class="top" fInputId="input2"></div>
+      Disabled selection
     </div>
   </f-canvas>
 </f-flow>
 <div class="overlay">
+  Events:
   @for (item of selection; track item) {
     <div>Selection changed: {{ item }}</div>
   }

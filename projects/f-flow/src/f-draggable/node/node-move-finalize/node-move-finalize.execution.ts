@@ -7,7 +7,7 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
-import { IDraggableItem } from '../../i-draggable-item';
+import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
 import { ILineAlignmentResult } from '../../../f-line-alignment';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
@@ -53,7 +53,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     });
   }
 
-  private _getItems(): IDraggableItem[] {
+  private _getItems(): IFDragHandler[] {
     return this._fDraggableDataContext.draggableItems
       .filter((x) => !(x instanceof NodeDragToParentDragHandler));
   }

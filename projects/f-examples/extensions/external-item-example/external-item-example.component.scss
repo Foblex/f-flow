@@ -1,0 +1,43 @@
+@use "../../flow-common";
+
+.f-node {
+  @include flow-common.node;
+}
+
+.toolbar {
+  @include flow-common.toolbar;
+}
+
+
+.external-panel {
+  background-color: var(--node-background-color);
+  width: 170px;
+  border-radius: 4px;
+  padding: 4px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.external-item, .external-item-placeholder, .external-item-preview {
+  padding: 4px;
+  min-height: 24px;
+  background-color: var(--node-background-color);
+  border: 1px solid var(--node-border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: center;
+  user-select: none;
+}
+
+.external-item-placeholder {
+  background-color: var(--disabled-color);
+}
+
+.external-item-preview {
+  background-color: var(--node-background-color);
+  border: 1px dashed var(--node-border-color);
+}

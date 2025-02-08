@@ -7,9 +7,9 @@ Example of a tree layout using the [dagre.js](https://github.com/dagrejs/dagre) 
 ## Example
 
 ::: ng-component <dagre-layout-example></dagre-layout-example> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/dagre-layout-example/dagre-layout-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/dagre-layout-example/dagre-layout-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/dagre-layout-example/dagre-layout-example.component.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 

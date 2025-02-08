@@ -1,12 +1,18 @@
-import { EXTERNAL_ITEM_PREPARATION_PROVIDERS } from './external-item-preparation';
-import { EXTERNAL_ITEM_FINALIZE_PROVIDERS } from './external-item-finalize';
+import { FExternalItemPreparationExecution } from './preparation';
+import { FExternalItemFinalizeExecution } from './finalize';
 import { PreventDefaultIsExternalItemExecution } from './prevent-default-is-external-item';
+import { FExternalItemCreatePreviewExecution } from './create-preview';
+import { FExternalItemCreatePlaceholderExecution } from './create-placeholder';
 
 export const F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS = [
 
-  ...EXTERNAL_ITEM_FINALIZE_PROVIDERS,
+  FExternalItemCreatePlaceholderExecution,
 
-  ...EXTERNAL_ITEM_PREPARATION_PROVIDERS,
+  FExternalItemCreatePreviewExecution,
+
+  FExternalItemFinalizeExecution,
+
+  FExternalItemPreparationExecution,
 
   PreventDefaultIsExternalItemExecution,
 ];

@@ -43,9 +43,9 @@ describe('GetSelectionExecution', () => {
 
     const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
 
-    expect(result.nodes).toEqual([ 'node1' ]);
-    expect(result.groups).toEqual([ 'group1' ]);
-    expect(result.connections).toEqual([ 'connection2' ]);
+    expect(result.fNodeIds).toEqual([ 'node1' ]);
+    expect(result.fGroupIds).toEqual([ 'group1' ]);
+    expect(result.fConnectionIds).toEqual([ 'connection2' ]);
   });
 
   it('should return empty FSelectionChangeEvent when no items are selected', () => {
@@ -53,7 +53,7 @@ describe('GetSelectionExecution', () => {
 
     const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
 
-    expect(result.nodes).toEqual([]);
-    expect(result.connections).toEqual([]);
+    expect(result.fNodeIds).toEqual([]);
+    expect(result.fConnectionIds).toEqual([]);
   });
 });

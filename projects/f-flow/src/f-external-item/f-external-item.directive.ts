@@ -1,11 +1,22 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { FExternalItemBase, F_EXTERNAL_ITEM } from './f-external-item-base';
+import {
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef
+} from '@angular/core';
+import { FExternalItemBase } from './f-external-item-base';
 import { FExternalItemService } from './f-external-item.service';
+import { F_EXTERNAL_ITEM } from './f-external-item-token';
 
 let uniqueId: number = 0;
 
 @Directive({
   selector: "[fExternalItem]",
+  standalone: true,
   host: {
     '[attr.id]': 'fExternalItemId',
     class: "f-component f-external-item",
@@ -17,28 +28,33 @@ let uniqueId: number = 0;
 })
 export class FExternalItemDirective<TData> extends FExternalItemBase<TData> implements OnInit, OnDestroy {
 
+  private _elementReference = inject(ElementRef);
+  private _fExternalItemService = inject(FExternalItemService);
+
   @Input()
   public override fExternalItemId: string = `f-external-item-${ uniqueId++ }`;
 
   public override get hostElement(): HTMLElement | SVGElement {
-    return this.elementReference.nativeElement;
+    return this._elementReference.nativeElement;
   }
 
   @Input()
   public override fData: TData | undefined;
 
-  @Input()
+  @Input({ transform: booleanAttribute })
   public override fDisabled: boolean = false;
 
-  constructor(
-    private elementReference: ElementRef<HTMLElement>,
-    private fExternalItemService: FExternalItemService,
-  ) {
-    super();
-  }
+  @Input()
+  public override fPreview: TemplateRef<any> | undefined;
+
+  @Input({ transform: booleanAttribute })
+  public override fPreviewMatchSize: boolean = true;
+
+  @Input()
+  public override fPlaceholder: TemplateRef<any> | undefined;
 
   public ngOnInit(): void {
-    this.fExternalItemService.registerItem(this);
+    this._fExternalItemService.registerItem(this);
     this.disablePointerEvents(Array.from(this.hostElement.children) as HTMLElement[]);
   }
 
@@ -50,6 +66,6 @@ export class FExternalItemDirective<TData> extends FExternalItemBase<TData> impl
   }
 
   public ngOnDestroy(): void {
-    this.fExternalItemService.removeItem(this);
+    this._fExternalItemService.removeItem(this);
   }
 }

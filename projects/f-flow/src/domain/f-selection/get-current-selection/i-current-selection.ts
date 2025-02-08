@@ -1,8 +1,8 @@
 export interface ICurrentSelection {
 
-  nodes: string[];
+  fNodeIds: string[];
 
-  groups: string[];
+  fGroupIds: string[];
 
-  connections: string[];
+  fConnectionIds: string[];
 }

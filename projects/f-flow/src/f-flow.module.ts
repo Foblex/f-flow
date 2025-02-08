@@ -7,7 +7,6 @@ import { F_BACKGROUND_PROVIDERS } from './f-backgroud';
 import { F_CANVAS_PROVIDERS } from './f-canvas';
 import { F_CONNECTORS_PROVIDERS } from './f-connectors';
 import { FDraggableDirective } from './f-draggable';
-import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
 import { F_SELECTION_AREA_PROVIDERS } from './f-selection-area';
 import { F_LINE_ALIGNMENT_PROVIDERS } from './f-line-alignment';
 import { F_MINIMAP_PROVIDERS } from './f-minimap';
@@ -20,7 +19,6 @@ import { F_ZOOM_PROVIDERS } from './f-zoom';
     ...F_ZOOM_PROVIDERS,
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
-    ...F_EXTERNAL_ITEM_PROVIDERS,
     ...F_FLOW_PROVIDERS,
     ...F_LINE_ALIGNMENT_PROVIDERS,
     ...F_MINIMAP_PROVIDERS,
@@ -38,7 +36,6 @@ import { F_ZOOM_PROVIDERS } from './f-zoom';
     ...F_ZOOM_PROVIDERS,
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
-    ...F_EXTERNAL_ITEM_PROVIDERS,
     ...F_FLOW_PROVIDERS,
     ...F_LINE_ALIGNMENT_PROVIDERS,
     ...F_MINIMAP_PROVIDERS,

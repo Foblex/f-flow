@@ -1,4 +1,4 @@
-import { IPoint, Point, RectExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, Point, RectExtensions } from '@foblex/2d';
 import { FindInputAtPositionRequest } from './find-input-at-position.request';
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '@foblex/platform';
@@ -6,7 +6,6 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FConnectorBase } from '../../../f-connectors';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../../f-draggable';
 import { IClosestInput } from '../i-closest-input';
 import { CalculateClosestInputRequest } from '../calculate-closest-input';
 import { FSnapConnectionComponent } from '../../../f-connection';
@@ -19,8 +18,15 @@ export class FindInputAtPositionExecution
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
   private _fBrowser = inject(BrowserService);
+
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
+  }
+
+  private get _fHost(): HTMLElement {
+    return this._fComponentsStore.fFlow!.hostElement;
+  }
 
   private get _fNodes(): FNodeBase[] {
     return this._fComponentsStore.fNodes;
@@ -55,15 +61,15 @@ export class FindInputAtPositionExecution
 
   private _getConnectableInputsAtPosition(request: FindInputAtPositionRequest): FConnectorBase[] {
     return request.canBeConnectedInputs.filter((x) => {
-      return RectExtensions.isIncludePoint(x.fRect, this._calculateDifference(request.pointerPosition));
+      return RectExtensions.isIncludePoint(x.fRect, this._getPointInFlow(request.pointerPosition));
     }).map((x) => x.fConnector);
   }
 
-  private _calculateDifference(position: IPoint): IPoint {
+  private _getPointInFlow(position: IPoint): IPoint {
     return Point.fromPoint(position)
-      .elementTransform(this._fComponentsStore.flowHost)
-      .div(this._fDraggableDataContext.onPointerDownScale)
-      .sub(this._fDraggableDataContext.onPointerDownPosition);
+      .elementTransform(this._fHost)
+      .sub(this._transform.scaledPosition).sub(this._transform.position)
+      .div(this._transform.scale);
   }
 
   //if the closest input is valid, return it
@@ -71,10 +77,9 @@ export class FindInputAtPositionExecution
     if (!this._fSnapConnection) {
       return undefined;
     }
-    const position = Point.fromPoint(request.toConnectorRect).add(this._calculateDifference(request.pointerPosition));
 
     const fClosestInput = this._fMediator.execute<IClosestInput | undefined>(
-      new CalculateClosestInputRequest(position, request.canBeConnectedInputs)
+      new CalculateClosestInputRequest(this._getPointInFlow(request.pointerPosition), request.canBeConnectedInputs)
     );
 
     return this._isValidClosestInput(fClosestInput) ? fClosestInput : undefined;

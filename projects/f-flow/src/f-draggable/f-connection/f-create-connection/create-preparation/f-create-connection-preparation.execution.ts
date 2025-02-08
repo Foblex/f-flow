@@ -1,0 +1,53 @@
+import { IHandler } from '@foblex/mediator';
+import { IPointerEvent } from '@foblex/drag-toolkit';
+import { inject, Injectable } from '@angular/core';
+import { FComponentsStore } from '../../../../f-storage';
+import { isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
+import { FNodeBase } from '../../../../f-node';
+import { FCreateConnectionPreparationRequest } from './f-create-connection-preparation.request';
+import { FExecutionRegister, FMediator } from '@foblex/mediator';
+import { FCreateConnectionFromOutletPreparationRequest } from './from-outlet-preparation';
+import { FCreateConnectionFromOutputPreparationRequest } from './from-output-preparation';
+import { FDraggableDataContext } from '../../../f-draggable-data-context';
+
+@Injectable()
+@FExecutionRegister(FCreateConnectionPreparationRequest)
+export class FCreateConnectionPreparationExecution
+  implements IHandler<FCreateConnectionPreparationRequest, void> {
+
+  private _fMediator = inject(FMediator);
+  private _fComponentsStore = inject(FComponentsStore);
+  private _fDraggableDataContext = inject(FDraggableDataContext);
+
+  private _fNode: FNodeBase | undefined;
+
+  public handle(request: FCreateConnectionPreparationRequest): void {
+    if (!this._isValid(request)) {
+      return;
+    }
+
+    if (isNodeOutlet(request.event.targetElement)) {
+      this._fMediator.execute<void>(
+        new FCreateConnectionFromOutletPreparationRequest(request.event, this._fNode!)
+      );
+    } else if (isNodeOutput(request.event.targetElement)) {
+      this._fMediator.execute<void>(
+        new FCreateConnectionFromOutputPreparationRequest(request.event, this._fNode!)
+      );
+    }
+  }
+
+  private _isValid(request: FCreateConnectionPreparationRequest): boolean {
+    return !!this._getNode(request.event) && this._isValidConditions();
+  }
+
+  private _getNode(event: IPointerEvent): FNodeBase | undefined {
+    this._fNode = this._fComponentsStore
+      .fNodes.find(n => n.isContains(event.targetElement));
+    return this._fNode;
+  }
+
+  private _isValidConditions(): boolean {
+    return this._fDraggableDataContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
+  }
+}

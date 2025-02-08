@@ -1,16 +1,16 @@
-export * from './canvas';
+export * from './f-canvas';
 
-export * from './connections';
+export * from './f-drag-handler';
+
+export * from './f-connection';
 
 export * from './domain';
-
-export * from '../domain/f-draggable/is-drag-started';
 
 export * from './node';
 
 export * from './node-resize';
 
-export * from './single-select';
+export * from './f-single-select';
 
 export * from './f-draggable.directive';
 
@@ -23,8 +23,6 @@ export * from './f-injector';
 export * from './f-selection-change-event';
 
 export * from './i-f-drag-and-drop-plugin';
-
-export * from './i-draggable-item';
 
 export * from './providers';
 

@@ -3,7 +3,7 @@ import { CreateMoveNodesDragModelFromSelectionRequest } from './create-move-node
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { IDraggableItem } from '../../i-draggable-item';
+import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
 import { NodeDragHandler } from '../node.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CalculateNodeMoveLimitsRequest } from './domain/calculate-node-move-limits';

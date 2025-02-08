@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy, Component,
 } from '@angular/core';
-import { FFlowModule } from '@foblex/flow';
+import { FExternalItemDirective, FFlowModule } from '@foblex/flow';
 import { ENodeType } from '../../domain';
 import { NODE_CONFIGURATION } from '../../domain';
 
@@ -13,6 +13,7 @@ import { NODE_CONFIGURATION } from '../../domain';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FFlowModule,
+    FExternalItemDirective,
   ]
 })
 export class VpPaletteComponent {

@@ -1,9 +1,11 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { IDraggableItem } from '../i-draggable-item';
+import { IFDragHandler } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
 
-export class NodeDragHandler implements IDraggableItem {
+export class NodeDragHandler implements IFDragHandler {
+
+  public fEventType = 'move-node';
 
   private readonly _onPointerDownPosition = PointExtensions.initialize();
 

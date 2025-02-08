@@ -13,9 +13,18 @@
   }
 }
 
+.f-node-input, .f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}
+
+.f-node-output {
+  &:not(.f-node) {
+    border-radius: 4px;
+  }
+}
+
 .overlay {
-  position: absolute;
-  right: 10px;
-  top: 0;
-  font-size: 12px;
+  @include flow-common.overlay;
 }

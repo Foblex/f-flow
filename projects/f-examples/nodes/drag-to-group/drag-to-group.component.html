@@ -1,11 +1,9 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fDropToGroup)="onDropToGroup($event)">
   <f-canvas>
-
     <div fGroup fDragHandle fGroupId="group1"
          [fGroupPosition]="{ x: 0, y: 0 }" [fGroupSize]="{ width: 200, height: 200 }">
       I'm Group
     </div>
-
     <div fNode fDragHandle [fNodeParentId]="parentGroup"
          [fNodePosition]="{ x: 320, y: 100 }">
       {{ nodeText}}

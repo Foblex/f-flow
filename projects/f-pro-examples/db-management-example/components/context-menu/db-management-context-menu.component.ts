@@ -54,8 +54,8 @@ export class DbManagementContextMenuComponent implements OnInit, OnDestroy {
   private subscribeToSelectionChanges(): Subscription {
     return this.selectionService.selection$.subscribe((selection) => {
       this.column = selection.column;
-      if (this.root.fFlowComponent.getSelection().nodes.length === 1) {
-        this.table = this.root.fFlowComponent.getSelection().nodes[ 0 ];
+      if (this.root.fFlowComponent.getSelection().fNodeIds.length === 1) {
+        this.table = this.root.fFlowComponent.getSelection().fNodeIds[ 0 ];
       } else {
         this.table = null;
         this.column = null;

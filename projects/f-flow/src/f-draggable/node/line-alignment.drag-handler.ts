@@ -1,9 +1,11 @@
 import { findClosestAlignment, IMinMaxPoint, IPoint, IRect, ISize, ITransformModel, RectExtensions } from '@foblex/2d';
-import { fInject, IDraggableItem, PointBoundsLimiter } from '../index';
+import { fInject, IFDragHandler, PointBoundsLimiter } from '../index';
 import { FComponentsStore } from '../../f-storage';
 import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
 
-export class LineAlignmentDragHandler implements IDraggableItem {
+export class LineAlignmentDragHandler implements IFDragHandler {
+
+  public fEventType = 'line-alignment';
 
   private _fComponentsStore = fInject(FComponentsStore);
 
