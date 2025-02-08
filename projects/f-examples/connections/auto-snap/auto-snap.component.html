@@ -1,7 +1,7 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
-  <f-canvas>
+  <f-canvas fZoom>
     <f-connection-for-create fType="segment"></f-connection-for-create>
-    <f-snap-connection [fSnapThreshold]="100" fType="segment"></f-snap-connection>
+    <f-snap-connection [fSnapThreshold]="50" fType="segment"></f-snap-connection>
 
     @for (connection of connections; track connection.inputId)  {
       <f-connection [fReassignDisabled]="true" fType="segment"
@@ -10,7 +10,6 @@
     }
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 24 }">
-      <div fNodeOutput fOutputConnectableSide="left" class="left"></div>
       <div fNodeOutput fOutputConnectableSide="top" class="top"></div>
       <div fNodeOutput fOutputConnectableSide="right" class="right"></div>
       <div fNodeOutput fOutputConnectableSide="bottom" class="bottom"></div>
@@ -19,7 +18,6 @@
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 24 }">
       <div fNodeInput fInputConnectableSide="left" class="left"></div>
       <div fNodeInput fInputConnectableSide="top" class="top"></div>
-      <div fNodeInput fInputConnectableSide="right" class="right"></div>
       <div fNodeInput fInputConnectableSide="bottom" class="bottom"></div>
       I'm a node
     </div>

@@ -51,6 +51,7 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
     ) {
       return;
     }
+
     this._emitReassignConnectionEvent(event, fInput);
   }
 

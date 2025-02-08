@@ -1,0 +1,48 @@
+<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateNode)="onCreateNode($event)">
+  <f-canvas>
+    @for (node of nodes; track node.id) {
+      <div fNode [fNodePosition]="node.position" fDragHandle>{{ node.text }}</div>
+    }
+  </f-canvas>
+</f-flow>
+<div class="toolbar">
+  <f-checkbox [checked]="isMatchSize" (change)="onPreviewMatchSizeChange($event)">Is preview match size </f-checkbox>
+</div>
+
+<div class="external-panel">
+  <div class="external-item" fExternalItem [fData]="'Data 1'" [fPreviewMatchSize]="isMatchSize">
+    External item with data
+  </div>
+  <div class="external-item" fExternalItem [fPreviewMatchSize]="isMatchSize">
+    External item
+  </div>
+  <div class="external-item" fExternalItem [fPreviewMatchSize]="isMatchSize">
+    With placeholder
+    <div class="external-item-placeholder" *fExternalItemPlaceholder>
+      Placeholder
+    </div>
+  </div>
+  <div class="external-item" fExternalItem [fPlaceholder]="placeholderTemplate" [fPreviewMatchSize]="isMatchSize">
+    With placeholder 2
+  </div>
+  <div class="external-item" fExternalItem [fPreviewMatchSize]="isMatchSize">
+    With preview
+    <div class="external-item-preview" *fExternalItemPreview>
+      Preview
+    </div>
+  </div>
+  <div class="external-item" fExternalItem [fPreview]="previewTemplate" [fPreviewMatchSize]="isMatchSize">
+    With preview 2
+  </div>
+</div>
+
+<ng-template #placeholderTemplate>
+  <div class="external-item-placeholder">
+    Placeholder 2
+  </div>
+</ng-template>
+<ng-template #previewTemplate>
+  <div class="external-item-preview">
+    Preview 2
+  </div>
+</ng-template>

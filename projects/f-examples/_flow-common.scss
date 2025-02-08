@@ -216,3 +216,20 @@
     line-height: normal;
   }
 }
+
+@mixin overlay {
+  overflow: auto;
+  width: 260px;
+  height: calc(100% - 20px);
+  position: absolute;
+  padding: 10px;
+  right: 10px;
+  top: 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  background-color: var(--node-background-color);
+  box-shadow: var(--node-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

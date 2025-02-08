@@ -146,11 +146,11 @@ function createEnvironment(): IDocsEnvironment {
       },
       {
         tag: 'dagre-layout-example',
-        component: import('../../../projects/f-examples/layouts/dagre-layout-example/dagre-layout-example.component')
+        component: import('../../../projects/f-examples/advanced/dagre-layout-example/dagre-layout-example.component')
       },
       {
         tag: 'elkjs-layout-example',
-        component: import('../../../projects/f-examples/layouts/elkjs-layout-example/elkjs-layout-example.component')
+        component: import('../../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component')
       },
       {
         tag: 'selection-area',
@@ -195,6 +195,14 @@ function createEnvironment(): IDocsEnvironment {
       {
         tag: 'undo-redo',
         component: import('../../../projects/f-examples/advanced/undo-redo/undo-redo.component')
+      },
+      {
+        tag: 'external-item',
+        component: import('../../../projects/f-examples/extensions/external-item-example/external-item-example.component')
+      },
+      {
+        tag: 'drag-start-end-events',
+        component: import('../../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component')
       }
     ],
     socialLinks: [
@@ -255,7 +263,7 @@ function nodesGroup(): INavigationGroup {
         description: 'Select nodes in Foblex Flow diagrams for Angular.',
         image: './previews/examples/node-selection.light.png',
         image_dark: './previews/examples/node-selection.dark.png',
-        image_width: 806,
+        image_width: 781,
         image_height: 600,
         image_type: 'image/png'
       },
@@ -559,10 +567,20 @@ function extensionGroup(): INavigationGroup {
   return {
     text: 'Extensions',
     items: [
-      // {
-      //   link: 'add-node-from-palette',
-      //   text: 'Add Node from Palette',
-      // },
+      {
+        link: 'external-item',
+        text: 'Add Node from Palette',
+        description: 'Add nodes to the diagram from an external palette in Foblex Flow for Angular.',
+        image: './previews/examples/external-item.light.png',
+        image_dark: './previews/examples/external-item.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
+      },
       {
         link: 'selection-area',
         text: 'Selection Area',
@@ -672,6 +690,20 @@ function advancedGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+      },
+      {
+        link: 'drag-start-end-events',
+        text: 'Drag Start/End Events',
+        description: 'Listen to drag start and end events in Foblex Flow for Angular.',
+        image: './previews/examples/drag-start-end-events.light.png',
+        image_dark: './previews/examples/drag-start-end-events.dark.png',
+        image_width: 781,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        }
       }
     ]
   }
