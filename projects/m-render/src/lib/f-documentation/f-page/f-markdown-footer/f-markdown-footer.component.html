@@ -1,0 +1,31 @@
+@if (editLink) {
+  <f-footer-edit-information>
+    <a f-footer-edit-link [href]="editLink">
+      {{ navigation.editLink?.text || 'Edit this page on GitHub' }}
+    </a>
+
+    <!--  <f-footer-last-updated>-->
+    <!--    Last updated: <span>{{ lastUpdated.datetime }}</span>-->
+    <!--  </f-footer-last-updated>-->
+  </f-footer-edit-information>
+}
+
+@if (previousLink || nextLink) {
+  <nav f-footer-navigation>
+    @if (previousLink) {
+      <a f-footer-navigation-button
+         [href]="previousLink.link"
+         [description]="navigation.previous"
+         [link]="previousLink">
+      </a>
+    }
+    @if (nextLink) {
+      <a f-footer-navigation-button class="next"
+         [href]="nextLink.link"
+         [description]="navigation.next"
+         [link]="nextLink">
+      </a>
+    }
+  </nav>
+}
+

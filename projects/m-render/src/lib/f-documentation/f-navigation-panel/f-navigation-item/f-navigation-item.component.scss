@@ -1,0 +1,25 @@
+:host {
+  font-weight: 500;
+  color: var(--secondary-text);
+  flex-grow: 1;
+  padding: 4px 0;
+  line-height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--primary-1);
+  }
+
+  &.active {
+    color: var(--primary-1);
+  }
+}
+

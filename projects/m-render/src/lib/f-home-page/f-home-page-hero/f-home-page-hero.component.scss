@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: 100%;
+  }
+
+  @media (min-width: 960px) {
+    width: 50%;
+  }
+}
+
+.powered, h1 {
+  letter-spacing: -.4px;
+  line-height: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
+  white-space: pre-wrap;
+  pointer-events: all;
+
+  @media (min-width: 640px) {
+    line-height: 56px;
+    font-size: 48px;
+  }
+
+  @media (min-width: 960px) {
+    line-height: 64px;
+    font-size: 56px;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+h1 {
+  background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+  background-clip: text;
+  color: transparent;
+}
+
+.second-description {
+  line-height: 28px;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  color: var(--secondary-text);
+  margin: 0 auto;
+  width: fit-content;
+  pointer-events: all;
+  text-align: center;
+  padding: 8px 16px 0;
+
+  @media (min-width: 640px) {
+    padding-top: 12px;
+    line-height: 32px;
+    font-size: 20px;
+  }
+
+  @media (min-width: 960px) {
+    line-height: 36px;
+    font-size: 24px;
+    margin: 0;
+    text-align: left;
+    padding: 8px 0 0;
+  }
+}
+
+
+

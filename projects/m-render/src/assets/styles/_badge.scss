@@ -1,0 +1,63 @@
+.f-badge {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  padding: 0 10px;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &.tip {
+    color: var(--f-badge-tip-color);
+    background-color: var(--f-badge-tip-background);
+  }
+
+  &.info {
+    color: var(--f-badge-info-color);
+    background-color: var(--f-badge-info-background);
+  }
+
+  &.warning {
+    color: var(--f-badge-warning-color);
+    background-color: var(--f-badge-warning-background);
+  }
+
+  &.danger {
+    color: var(--f-badge-danger-color);
+    background-color: var(--f-badge-danger-background);
+  }
+
+  &.success {
+    color: var(--f-badge-success-color);
+    background-color: var(--f-badge-success-background);
+  }
+}
+
+f-navigation-panel {
+  .f-badge {
+    padding: 0 6px;
+    line-height: 14px;
+  }
+}
+
+.m-render h1 > .f-badge {
+  margin-top: 4px;
+  vertical-align: top;
+}
+
+.m-render h2 > .f-badge {
+  margin-top: 3px;
+  padding: 0 8px;
+  vertical-align: top;
+}
+
+.m-render h3 > .f-badge {
+  vertical-align: middle;
+}
+
+.m-render h4 > .f-badge,
+.m-render h5 > .f-badge,
+.m-render h6 > .f-badge {
+  vertical-align: middle;
+  line-height: 18px;
+}

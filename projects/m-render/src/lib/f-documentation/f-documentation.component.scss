@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  gap: 10px;
+}
+
+.f-backdrop  {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: var(--z-index-backdrop);
+  background: var(--backdrop-color);
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  @media (min-width: 960px) {
+    position: unset;
+  }
+}
+
+.popover {
+  position: fixed;
+  min-width: 120px;
+  bottom: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  background-color: var(--code-view-copy-button-hover-background);
+  border: 1px solid var(--code-view-copy-button-border-color);
+  color: var(--primary-text);
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: var(--z-index-popover);
+  opacity: 1;
+}
+
+

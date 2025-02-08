@@ -1,0 +1,11 @@
+@for (button of viewModel; track button.text) {
+  @if (button.routerLink) {
+    <a class="f-button" [class.primary]="button.primary" routerLink="{{ button.routerLink }}">{{ button.text }}</a>
+  } @else if(button.href) {
+    <a class="f-button" [class.primary]="button.primary" href="{{ button.href }}">{{ button.text }}</a>
+  }
+
+}
+<!--<a class="f-button primary" routerLink="/docs/get-started">Get Started</a>-->
+<!--<a class="f-button" routerLink="/examples/overview">Examples</a>-->
+<!--<a class="f-button" href="https://github.com/Foblex/m-render">Github</a>-->

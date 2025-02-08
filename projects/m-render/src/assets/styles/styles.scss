@@ -1,0 +1,75 @@
+@import "./_variables";
+@import "./_badge";
+@import "./_alert";
+@import "./_button";
+@import "./_fonts";
+@import "./_icons";
+@import "./_preview-group";
+@import "./_code-group";
+@import "./_code-view";
+@import "./_code-highlight";
+@import './_doc-text';
+
+html {
+  height: 100%;
+  line-height: 1.4;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+
+  &.dark {
+    color-scheme: dark;
+  }
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 24px;
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--primary-text);
+  background-color: var(--background-color);
+  font-synthesis: style;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  margin: 0;
+}
+
+strong, b {
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.flex-space {
+  flex: 1;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+}

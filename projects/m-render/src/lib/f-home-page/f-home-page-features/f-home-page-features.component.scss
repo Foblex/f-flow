@@ -1,0 +1,56 @@
+:host {
+  margin-top: 64px;
+  margin-bottom: 64px;
+  width: 100%;
+  display: block;
+  padding: 0 24px;
+
+  .feature-list {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 1248px;
+    pointer-events: all;
+  }
+
+  .feature {
+    width: 100%;
+    border-radius: 4px;
+    background-color: var(--soft-background);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+
+    h2 {
+      margin: 0;
+      line-height: 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    p {
+      flex-grow: 1;
+      padding-top: 8px;
+      line-height: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--secondary-text);
+    }
+  }
+
+  @media (min-width: 640px) {
+    padding: 0 48px;
+
+    .feature {
+      width: calc(50% - 12px);
+    }
+  }
+
+  @media (min-width: 960px) {
+    padding: 0 64px;
+    .feature {
+      width: calc(25% - 12px);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  padding-top: 32px;
+  gap: 12px;
+  width: fit-content;
+  margin: 0 auto;
+
+  @media (min-width: 960px) {
+    margin: 0;
+  }
+}

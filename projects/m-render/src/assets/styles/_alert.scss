@@ -1,0 +1,50 @@
+.m-render {
+
+  .f-alert {
+    margin: 16px 0;
+    border-radius: var(--f-alert-border-radius);
+    padding: 16px 16px 8px;
+    line-height: 24px;
+    font-size: 14px;
+    border: none;
+
+    .f-alert-title {
+      margin: 0;
+      line-height: inherit;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    p {
+      &:last-child {
+        margin: 8px 0 !important;
+        line-height: inherit;
+      }
+    }
+
+    &.tip {
+      color: var(--f-alert-tip-color);
+      background-color: var(--f-alert-tip-background);
+    }
+
+    &.info {
+      color: var(--f-alert-info-color);
+      background-color: var(--f-alert-info-background);
+    }
+
+    &.warning {
+      color: var(--f-alert-warning-color);
+      background-color: var(--f-alert-warning-background);
+    }
+
+    &.danger {
+      color: var(--f-alert-danger-color);
+      background-color: var(--f-alert-danger-background);
+    }
+
+    &.success {
+      color: var(--f-alert-success-color);
+      background-color: var(--f-alert-success-background);
+    }
+  }
+}

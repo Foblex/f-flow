@@ -1,0 +1,9 @@
+<div class="feature-list">
+  @for (feature of viewModel; track feature.headline) {
+    <div class="feature">
+      <h2>{{ feature.headline }}</h2>
+      <p>{{ feature.description }}</p>
+    </div>
+  }
+</div>
+

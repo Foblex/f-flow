@@ -1,0 +1,12 @@
+:host {
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary-text);
+
+  @media (min-width: 640px) {
+    line-height: 32px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}

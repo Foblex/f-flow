@@ -1,0 +1,27 @@
+:host {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    overflow-wrap: break-word;
+    color: var(--secondary-text);
+    max-width: 180px;
+
+    a {
+      display: block;
+      line-height: var(--on-page-navigation-item-height);
+      font-size: 14px;
+      color: inherit;
+      font-weight: 400;
+    }
+
+    &.active {
+      color: var(--primary-text);
+    }
+  }
+
+  li + ul {
+    padding: 0 16px;
+  }
+}

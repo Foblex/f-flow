@@ -1,0 +1,13 @@
+@if (viewModel) {
+  <img [src]="src" [alt]="viewModel.description" [title]="viewModel.text">
+  <div class="title">
+    {{ viewModel.text }}
+    @if (viewModel.badge) {
+      <span class="f-badge {{viewModel.badge.type}}">{{ viewModel.badge.text }}</span>
+    }
+  </div>
+  <div class="description">{{ viewModel.description }}</div>
+}
+
+
+

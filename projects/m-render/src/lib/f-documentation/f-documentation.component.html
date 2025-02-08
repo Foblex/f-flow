@@ -1,0 +1,10 @@
+<div class="f-backdrop" [class.visible]="isNavigationVisible" (click)="onToggleNavigation(false)"></div>
+<f-navigation-panel [class.visible]="isNavigationVisible"></f-navigation-panel>
+
+<f-scrollable-container>
+  <f-header></f-header>
+  <router-outlet></router-outlet>
+</f-scrollable-container>
+@if (popoverMessage) {
+  <div class="popover">{{ popoverMessage }}</div>
+}

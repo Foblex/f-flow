@@ -1,0 +1,42 @@
+.f-button {
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color .25s, background-color .25s;
+
+  border-radius: 4px;
+  padding: 0 20px;
+  line-height: 38px;
+  font-size: 14px;
+
+  color: var(--button-default-text);
+  background-color: var(--button-default-bg);
+  cursor: pointer;
+  pointer-events: all;
+
+  &:hover {
+    color: var(--button-default-hover-text);
+    background-color: var(--button-default-hover-bg);
+  }
+
+  &:active {
+    color: var(--button-default-active-text);
+    background-color: var(--button-default-active-bg);
+  }
+
+  &.primary {
+    color: var(--button-primary-text);
+    background-color: var(--button-primary-bg);
+
+    &:hover {
+      color: var(--button-primary-hover-text);
+      background-color: var(--button-primary-hover-bg);
+    }
+
+    &:active {
+      color: var(--button-primary-active-text);
+      background-color: var(--button-primary-active-bg);
+    }
+  }
+}

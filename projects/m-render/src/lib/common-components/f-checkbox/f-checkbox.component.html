@@ -1,0 +1,14 @@
+<input #input
+       [id]="id"
+       type="checkbox"
+       [checked]="checked"
+       (click)="onInputClick()"
+       (change)="onInteractionEvent($event)"/>
+<div class="f-checkbox-container" (click)="onTouchTargetClick()">
+  <svg class="f-checkbox-checkmark" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+    <path class="f-checkbox-checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+  </svg>
+</div>
+<label [for]="id" #label>
+  <ng-content></ng-content>
+</label>
