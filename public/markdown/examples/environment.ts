@@ -273,7 +273,7 @@ function nodesGroup(): INavigationGroup {
         image: './previews/examples/resize-handle.light.png',
         image_dark: './previews/examples/resize-handle.dark.png',
         description: 'Add resize handles to make nodes adjustable in Foblex Flow diagrams for Angular',
-        image_width: 806,
+        image_width: 781,
         image_height: 600,
         image_type: 'image/png',
         badge: {
