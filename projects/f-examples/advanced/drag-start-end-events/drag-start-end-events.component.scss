@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep drag-start-end-events {
+::ng-deep f-flow {
   @include flow-common.connection;
 
   .connection-marker {

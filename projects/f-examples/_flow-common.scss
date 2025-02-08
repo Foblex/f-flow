@@ -87,6 +87,29 @@
   }
 }
 
+@mixin connection-marker {
+  .connection-marker {
+    circle, rect, path {
+      fill: var(--connection-color);
+    }
+  }
+
+  .f-connection {
+    &.f-selected {
+
+      .f-connection-path {
+        stroke: var(--minimap-node-selected-color);
+      }
+
+      .connection-marker {
+        circle, rect, path {
+          fill: var(--minimap-node-selected-color);
+        }
+      }
+    }
+  }
+}
+
 @mixin background {
   .f-background {
     line {
@@ -195,6 +218,30 @@
     bottom: -8px;
     right: -8px;
   }
+}
+
+
+@mixin connector {
+  .f-node-input, .f-node-output {
+    &:not(.f-node) {
+      @include connectors;
+      
+      &.f-node-input-connected, &.f-node-output-connected {
+        background-color: var(--minimap-view-color);
+      }
+
+      &.f-node-output-not-connectable, &.f-node-input-not-connectable {
+        background-color: var(--disabled-color);
+      }
+    }
+  }
+
+  .f-node-output {
+    &:not(.f-node) {
+      border-radius: 4px;
+    }
+  }
+
 }
 
 

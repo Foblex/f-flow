@@ -1,9 +1,5 @@
 @use "../../flow-common";
 
-::ng-deep drag-to-group {
-  @include flow-common.connection;
-}
-
 .f-node, .f-group {
   @include flow-common.node;
 

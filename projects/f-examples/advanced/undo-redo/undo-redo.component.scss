@@ -1,27 +1,8 @@
 @use "../../flow-common";
 
-::ng-deep undo-redo {
+::ng-deep f-flow {
   @include flow-common.connection;
-
-  .connection-marker {
-    circle, rect, path {
-      fill: var(--connection-color);
-    }
-  }
-
-  .f-connection {
-    &.f-selected {
-
-      .f-connection-path {
-        stroke: var(--minimap-node-selected-color);
-      }
-      .connection-marker {
-        circle, rect, path {
-          fill: var(--minimap-node-selected-color);
-        }
-      }
-    }
-  }
+  @include flow-common.connection-marker;
 }
 
 .f-node {

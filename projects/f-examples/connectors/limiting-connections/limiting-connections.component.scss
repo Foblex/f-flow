@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep limiting-connections {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
@@ -9,25 +9,7 @@
   width: 160px;
 }
 
-.f-node-input, .f-node-output {
-  &:not(.f-node) {
-    @include flow-common.connectors;
-  }
-
-  &.f-node-input-connected, &.f-node-output-connected {
-    background-color: var(--minimap-view-color);
-  }
-
-  &.f-node-output-not-connectable, &.f-node-input-not-connectable {
-    background-color: var(--disabled-color);
-  }
-}
-
-.f-node-output {
-  &:not(.f-node) {
-    border-radius: 4px;
-  }
-}
+@include flow-common.connector;
 
 .toolbar {
   @include flow-common.toolbar;

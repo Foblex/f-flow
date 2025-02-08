@@ -10,6 +10,7 @@ import { IHasHostElement } from '../../../i-has-host-element';
 @Component({
   selector: "path[fConnectionSelection]",
   template: '',
+  styleUrls: ['./f-connection-selection.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: "f-component f-connection-selection",

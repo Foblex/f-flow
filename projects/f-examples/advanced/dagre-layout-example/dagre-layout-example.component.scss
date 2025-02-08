@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep dagre-layout-example {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 

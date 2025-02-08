@@ -1,9 +1,5 @@
 @use "../../flow-common";
 
-::ng-deep resize-handle {
-  @include flow-common.connection;
-}
-
 .f-node, .f-group {
   position: relative;
   @include flow-common.node;

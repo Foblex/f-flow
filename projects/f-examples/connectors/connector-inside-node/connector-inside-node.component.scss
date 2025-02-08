@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep connector-inside-node {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
