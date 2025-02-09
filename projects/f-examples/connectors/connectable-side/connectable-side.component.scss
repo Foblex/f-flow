@@ -1,7 +1,10 @@
 @use "../../flow-common";
 
+::ng-deep f-flow {
+  @include flow-common.connection;
+}
+
 .f-node {
-  position: relative;
   @include flow-common.node;
   width: 180px;
 }

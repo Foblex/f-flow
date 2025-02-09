@@ -1,12 +1,8 @@
 @use "../../flow-common";
 
-::ng-deep drag-to-reassign {
+::ng-deep f-flow {
   @include flow-common.connection;
-  .f-connection {
-    .f-connection-drag-handle {
-      fill: var(--connection-color);
-    }
-  }
+  @include flow-common.connection-visible-drag-handle;
 }
 
 .f-node {

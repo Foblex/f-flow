@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep connection-center {
+::ng-deep f-flow {
   @include flow-common.connection;
 
   .f-connection-center {

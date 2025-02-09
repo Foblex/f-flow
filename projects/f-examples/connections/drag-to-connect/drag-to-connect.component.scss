@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep drag-to-connect {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 

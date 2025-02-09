@@ -45,6 +45,11 @@ export class FPreviewGroupFiltersComponent {
   }
 
   protected onFilterClick(filter: IKeyValue): void {
-    this.activeFilter.set(filter);
+    this.activeFilter.update((current) => {
+      if (current === filter) {
+        return null;
+      }
+      return filter;
+    });
   }
 }

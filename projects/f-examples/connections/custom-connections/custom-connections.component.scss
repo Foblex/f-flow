@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep custom-connections {
+::ng-deep f-flow {
   .f-connection {
 
     .f-connection-drag-handle {
@@ -9,12 +9,10 @@
     }
 
     .f-connection-selection {
-      fill: none;
       stroke-width: 20;
     }
 
     .f-connection-path {
-      fill: none;
       stroke-width: 6;
     }
 

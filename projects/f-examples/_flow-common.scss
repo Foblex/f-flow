@@ -87,6 +87,14 @@
   }
 }
 
+@mixin connection-visible-drag-handle {
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: var(--connection-color);
+    }
+  }
+}
+
 @mixin connection-marker {
   .connection-marker {
     circle, rect, path {
@@ -225,10 +233,6 @@
   .f-node-input, .f-node-output {
     &:not(.f-node) {
       @include connectors;
-      
-      &.f-node-input-connected, &.f-node-output-connected {
-        background-color: var(--minimap-view-color);
-      }
 
       &.f-node-output-not-connectable, &.f-node-input-not-connectable {
         background-color: var(--disabled-color);
@@ -241,7 +245,6 @@
       border-radius: 4px;
     }
   }
-
 }
 
 
