@@ -1,17 +1,7 @@
 @use "../../flow-common";
 
-::ng-deep selection-area {
+::ng-deep f-flow {
   @include flow-common.connection;
-  @include flow-common.background;
-
-  .f-connection {
-
-    &.f-selected {
-      .f-connection-path {
-        stroke: var(--node-selected-border-color);
-      }
-    }
-  }
 }
 
 .f-selection-area {
@@ -25,3 +15,5 @@
     border: 1px solid var(--node-selected-border-color);
   }
 }
+
+@include flow-common.connector;

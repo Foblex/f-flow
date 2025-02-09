@@ -11,9 +11,9 @@ import { generateGuid } from '@foblex/utils';
 import { FCheckboxComponent } from '@foblex/m-render';
 
 @Component({
-  selector: 'external-item-example',
-  styleUrls: [ './external-item-example.component.scss' ],
-  templateUrl: './external-item-example.component.html',
+  selector: 'add-node-from-palette',
+  styleUrls: [ './add-node-from-palette.component.scss' ],
+  templateUrl: './add-node-from-palette.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -21,10 +21,10 @@ import { FCheckboxComponent } from '@foblex/m-render';
     FExternalItemDirective,
     FExternalItemPlaceholderDirective,
     FExternalItemPreviewDirective,
-    FCheckboxComponent
+    FCheckboxComponent,
   ]
 })
-export class ExternalItemExampleComponent {
+export class AddNodeFromPaletteComponent {
 
   private _changeDetectorRef = inject(ChangeDetectorRef);
 

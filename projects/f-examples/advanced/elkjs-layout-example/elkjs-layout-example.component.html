@@ -1,28 +1,26 @@
-@if (nodes.length) {
-  <f-flow fDraggable (fLoaded)="onLoaded()">
-    <f-canvas fZoom>
-      @for (connection of connections;track connection.id) {
-        <f-connection [fOffset]="8" [fOutputId]="connection.from" [fInputId]="connection.to" fType="segment"
-                      fBehavior="fixed"></f-connection>
-      }
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas fZoom>
+    @for (connection of connections();track connection.id) {
+      <f-connection [fOffset]="8" [fOutputId]="connection.from" [fInputId]="connection.to" fType="segment"
+                    fBehavior="fixed"></f-connection>
+    }
 
-      @for (node of nodes;track node.id) {
-        <div fNode [fNodePosition]="node.position"
-             fDragHandle
-             fNodeOutput [fOutputId]="node.connectorId"
+    @for (node of nodes();track node.id) {
+      <div fNode [fNodePosition]="node.position"
+           fDragHandle
+           fNodeInput [fInputId]="node.connectorId"
+           [fInputConnectableSide]="configuration.inputSide">
+        {{ node.connectorId }}
+        <div fNodeOutput [fOutputId]="node.connectorId"
              [fOutputConnectableSide]="configuration.outputSide"
-             fNodeInput [fInputId]="node.connectorId"
-             [fInputConnectableSide]="configuration.inputSide">
-          {{ node.connectorId }}
-        </div>
-      }
-    </f-canvas>
-  </f-flow>
-  <div class="toolbar">
-    <button class="f-button" (click)="horizontal()">Horizontal</button>
-    <button class="f-button" (click)="vertical()">Vertical</button>
-    <f-checkbox [checked]="isAutoLayout" (change)="onAutoLayoutChange($event)">Auto Layout
-    </f-checkbox>
-  </div>
-
-}
+             [ngClass]="configuration.outputSide"></div>
+      </div>
+    }
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <button class="f-button" (click)="horizontal()">Horizontal</button>
+  <button class="f-button" (click)="vertical()">Vertical</button>
+  <f-checkbox [checked]="isAutoLayout" (change)="onAutoLayoutChange($event)">Auto Layout
+  </f-checkbox>
+</div>

@@ -7,9 +7,9 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
-import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
+import { IFDragHandler } from '../../f-drag-handler';
 import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
-import { ILineAlignmentResult } from '../../../f-line-alignment';
+import { ILineAlignmentResult, INearestCoordinateResult } from '../../../f-line-alignment';
 import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
 import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
 import { FNodeBase } from '../../../f-node';
@@ -65,6 +65,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _getDifferenceWithLineAlignment(difference: IPoint): IPoint {
+
     return this._applyLineAlignmentDifference(
       difference,
       this._getLineAlignmentDifference(difference)
@@ -79,10 +80,14 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
   private _applyLineAlignmentDifference(difference: IPoint, intersection: ILineAlignmentResult | undefined): IPoint {
     if (intersection) {
-      difference.x = intersection.xResult.value ? (difference.x - intersection.xResult.distance!) : difference.x;
-      difference.y = intersection.yResult.value ? (difference.y - intersection.yResult.distance!) : difference.y;
+      difference.x = this._isIntersectValue(intersection.xResult) ? (difference.x - intersection.xResult.distance!) : difference.x;
+      difference.y = this._isIntersectValue(intersection.yResult) ? (difference.y - intersection.yResult.distance!) : difference.y;
     }
     return difference;
+  }
+
+  private _isIntersectValue(result: INearestCoordinateResult): boolean {
+    return result.value !== undefined && result.value !== null;
   }
 
   private _applyConnectionUnderDroppedNode(): void {

@@ -9,6 +9,4 @@
   width: 180px;
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

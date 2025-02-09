@@ -84,6 +84,12 @@
         stroke: var(--snap-connection-color);
       }
     }
+
+    &.f-selected {
+      .f-connection-path {
+        stroke: var(--minimap-node-selected-color);
+      }
+    }
   }
 }
 
@@ -105,35 +111,11 @@
   .f-connection {
     &.f-selected {
 
-      .f-connection-path {
-        stroke: var(--minimap-node-selected-color);
-      }
-
       .connection-marker {
         circle, rect, path {
           fill: var(--minimap-node-selected-color);
         }
       }
-    }
-  }
-}
-
-@mixin background {
-  .f-background {
-    line {
-      stroke: var(--background-element-color);
-    }
-
-    circle {
-      fill: var(--background-element-color);
-    }
-  }
-}
-
-@mixin line-alignment {
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--connection-color);
     }
   }
 }
@@ -240,7 +222,7 @@
     }
   }
 
-  .f-node-output {
+  .f-node-input {
     &:not(.f-node) {
       border-radius: 4px;
     }
@@ -248,22 +230,24 @@
 }
 
 
-@mixin toolbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  position: absolute;
-  right: 16px;
-  top: 16px;
+@mixin examples-toolbar {
+  .examples-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
 
-  button {
-    font-weight: 500;
-    border: none;
-    border-radius: 2px;
-    padding: 4px 8px;
-    line-height: normal;
+    button {
+      font-weight: 500;
+      border: none;
+      border-radius: 2px;
+      padding: 4px 8px;
+      line-height: normal;
+    }
   }
 }
 

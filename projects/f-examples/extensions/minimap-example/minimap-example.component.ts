@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
 
 @Component({
@@ -14,14 +14,9 @@ import { FCanvasComponent, FFlowModule } from '@foblex/flow';
 export class MinimapExampleComponent {
 
   @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  protected fCanvas!: FCanvasComponent;
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
-
-  public onLoaded(): void {
+  protected onLoaded(): void {
     this.fCanvas.resetScaleAndCenter(false);
   }
 }

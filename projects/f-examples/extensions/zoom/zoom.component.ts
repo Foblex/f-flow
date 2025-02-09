@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
 
@@ -15,33 +15,28 @@ import { FCheckboxComponent } from '@foblex/m-render';
 })
 export class ZoomComponent {
 
+
   @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  protected fCanvas!: FCanvasComponent;
 
   @ViewChild(FZoomDirective, { static: true })
-  public fZoom!: FZoomDirective;
+  protected fZoom!: FZoomDirective;
 
-  public isZoomEnabled: boolean = true;
+  protected isZoomEnabled: boolean = true;
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
-
-  public onLoaded(): void {
+  protected onLoaded(): void {
     this.fCanvas.resetScaleAndCenter(false);
   }
 
-  public onZoomIn(): void {
+  protected onZoomIn(): void {
     this.fZoom.zoomIn();
   }
 
-  public onZoomOut(): void {
+  protected onZoomOut(): void {
     this.fZoom.zoomOut();
   }
 
-  public onZoomOnMouseWheelChanged(checked: boolean): void {
+  protected onZoomOnMouseWheelChanged(checked: boolean): void {
     this.isZoomEnabled = checked;
-    this.changeDetectorRef.detectChanges();
   }
 }

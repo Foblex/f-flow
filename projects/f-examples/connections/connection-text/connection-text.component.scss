@@ -8,6 +8,4 @@
   @include flow-common.node;
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

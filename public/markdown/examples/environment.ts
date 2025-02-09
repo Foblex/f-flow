@@ -157,8 +157,8 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/extensions/selection-area/selection-area.component')
       },
       {
-        tag: 'help-in-positioning-example',
-        component: import('../../../projects/f-examples/extensions/help-in-positioning-example/help-in-positioning-example.component')
+        tag: 'help-in-positioning',
+        component: import('../../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component')
       },
       {
         tag: 'zoom',
@@ -189,16 +189,16 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component')
       },
       {
-        tag: 'grid-system-example',
-        component: import('../../../projects/f-examples/extensions/grid-system-example/grid-system-example.component')
+        tag: 'grid-system',
+        component: import('../../../projects/f-examples/extensions/grid-system/grid-system.component')
       },
       {
         tag: 'undo-redo',
         component: import('../../../projects/f-examples/advanced/undo-redo/undo-redo.component')
       },
       {
-        tag: 'external-item',
-        component: import('../../../projects/f-examples/extensions/external-item-example/external-item-example.component')
+        tag: 'add-node-from-palette',
+        component: import('../../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component')
       },
       {
         tag: 'drag-start-end-events',
@@ -568,11 +568,11 @@ function extensionGroup(): INavigationGroup {
     text: 'Extensions',
     items: [
       {
-        link: 'external-item',
+        link: 'add-node-from-palette',
         text: 'Add Node from Palette',
         description: 'Add nodes to the diagram from an external palette in Foblex Flow for Angular.',
-        image: './previews/examples/external-item.light.png',
-        image_dark: './previews/examples/external-item.dark.png',
+        image: './previews/examples/add-node-from-palette.light.png',
+        image_dark: './previews/examples/add-node-from-palette.dark.png',
         image_width: 781,
         image_height: 600,
         image_type: 'image/png',
@@ -595,8 +595,8 @@ function extensionGroup(): INavigationGroup {
         link: 'help-in-positioning',
         text: 'Help in Positioning',
         description: 'Automatically align nodes to each other in Foblex Flow for Angular.',
-        image: './previews/examples/help-in-positioning-example.light.png',
-        image_dark: './previews/examples/help-in-positioning-example.dark.png',
+        image: './previews/examples/help-in-positioning.light.png',
+        image_dark: './previews/examples/help-in-positioning.dark.png',
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
@@ -605,9 +605,9 @@ function extensionGroup(): INavigationGroup {
         link: 'grid-system',
         text: 'Grid System',
         description: 'Add a grid system to Foblex Flow diagrams for Angular.',
-        image: './previews/examples/grid-system-example.light.png',
-        image_dark: './previews/examples/grid-system-example.dark.png',
-        image_width: 821,
+        image: './previews/examples/grid-system.light.png',
+        image_dark: './previews/examples/grid-system.dark.png',
+        image_width: 770,
         image_height: 600,
         image_type: 'image/png',
         badge: {

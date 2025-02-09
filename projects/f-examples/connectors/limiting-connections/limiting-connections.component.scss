@@ -11,6 +11,4 @@
 
 @include flow-common.connector;
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

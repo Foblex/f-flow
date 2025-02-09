@@ -7,9 +7,6 @@
 .f-node {
   @include flow-common.node;
 }
-
-
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.connector;
+@include flow-common.examples-toolbar;
 

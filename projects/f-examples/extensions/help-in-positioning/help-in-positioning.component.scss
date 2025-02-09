@@ -2,7 +2,12 @@
 
 ::ng-deep f-flow {
   @include flow-common.connection;
-  @include flow-common.connection-marker;
+
+  .f-line-alignment {
+    .f-line {
+      background-color: var(--connection-color);
+    }
+  }
 }
 
 .f-node {
@@ -11,6 +16,3 @@
 
 @include flow-common.connector;
 
-.overlay {
-  @include flow-common.overlay;
-}

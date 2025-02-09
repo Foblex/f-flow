@@ -47,7 +47,7 @@
 </f-flow>
 <div class="overlay">
   <div>Event list:</div>
-  @for (item of events; track item) {
+  @for (item of events(); track item) {
     <div>{{ item }}</div>
   }
 </div>

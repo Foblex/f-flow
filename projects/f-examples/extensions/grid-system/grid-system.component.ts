@@ -3,9 +3,9 @@ import { FCanvasComponent, FFlowModule } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
 
 @Component({
-  selector: 'grid-system-example',
-  styleUrls: [ './grid-system-example.component.scss' ],
-  templateUrl: './grid-system-example.component.html',
+  selector: 'grid-system',
+  styleUrls: [ './grid-system.component.scss' ],
+  templateUrl: './grid-system.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -13,7 +13,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
     FCheckboxComponent,
   ]
 })
-export class GridSystemExampleComponent {
+export class GridSystemComponent {
 
   protected adjustCellSizeWhileDragging: boolean = false;
 

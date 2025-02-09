@@ -1,6 +1,6 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, inject,
+  ChangeDetectionStrategy,
+  Component, signal,
   ViewChild
 } from '@angular/core';
 import {
@@ -21,14 +21,13 @@ import { generateGuid } from '@foblex/utils';
   ]
 })
 export class DragStartEndEventsComponent {
-  private _changeDetectorRef = inject(ChangeDetectorRef);
 
   @ViewChild(FCanvasComponent, { static: true })
   protected fCanvas!: FCanvasComponent;
 
   protected readonly eMarkerType = EFMarkerType;
 
-  protected events: string[] = [];
+  protected events = signal<string[]>([])
 
   protected nodes = [ {
     id: '1',
@@ -50,16 +49,20 @@ export class DragStartEndEventsComponent {
   }
 
   protected onDragStarted(event: FDragStartedEvent): void {
-    this.events.push(`EVENT: ${ event.fEventType }, DATA: ${ JSON.stringify(event.fData) }`);
-    this._changeDetectorRef.markForCheck();
+    this.events.update((x) => {
+      x = x.concat(`EVENT: ${ event.fEventType }, DATA: ${ JSON.stringify(event.fData) }`);
+      return x;
+    });
   }
 
   protected onDragEnded(): void {
-    this.events.push(`EVENT: drag-ended`);
+    this.events.update((x) => {
+      x.push(`EVENT: drag-ended`);
+      return x;
+    });
   }
 
   protected onConnectionCreated(event: FCreateConnectionEvent): void {
-    console.log('onConnectionCreated', event);
     if (event.fInputId) {
       this._createConnection(event.fOutputId, event.fInputId);
     }

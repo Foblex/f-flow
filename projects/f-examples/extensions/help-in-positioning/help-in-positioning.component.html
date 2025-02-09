@@ -1,19 +1,14 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
-  <f-canvas [fZoom]="isZoomEnabled">
+  <f-line-alignment [fAlignThreshold]="40"></f-line-alignment>
+  <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
     <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>
       <div fNodeOutput fOutputId="output1" class="right"></div>
       I'm a node
     </div>
-    <div fNode [fNodePosition]="{ x: 200, y: 0 }"  fDragHandle>
+    <div fNode [fNodePosition]="{ x: 200, y: 100 }"  fDragHandle>
       <div fNodeInput fInputId="input1" class="left"></div>
       I'm a node
     </div>
   </f-canvas>
 </f-flow>
-<div class="examples-toolbar">
-  <button class="f-button" (click)="onZoomIn()">Zoom In</button>
-  <button class="f-button" (click)="onZoomOut()">Zoom Out</button>
-  <f-checkbox [checked]="isZoomEnabled" (change)="onZoomOnMouseWheelChanged($event)">Enable Wheel and Dbl Click</f-checkbox>
-</div>
-
