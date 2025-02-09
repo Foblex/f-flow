@@ -1,4 +1,4 @@
-<f-flow fDraggable (fCreateConnection)="addConnection($event)">
+<f-flow fDraggable (fCreateConnection)="addConnection($event)" (fLoaded)="onLoaded()">
   <f-canvas>
     <f-connection-for-create [fBehavior]="'floating'"></f-connection-for-create>
     @for (connection of connections; track connection.inputId)  {
@@ -6,7 +6,7 @@
                     [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
       </f-connection>
     }
-    <div class="node-with-outlet" fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }">
+    <div class="node-with-outlet" fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }">
       <div class="node-line">
         <div>Output 1</div><div fNodeOutput fOutputConnectableSide="right"></div>
       </div>
@@ -22,8 +22,8 @@
         <div fNodeOutlet [isConnectionFromOutlet]="true"></div>
       </div>
     </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 40 }" fNodeInput fInputConnectableSide="left">to Me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" fNodeInput fInputConnectableSide="left">to Me</div>
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 100 }" fNodeInput fInputConnectableSide="left">to Me</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 160 }" fNodeInput fInputConnectableSide="left">to Me</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 200 }" fNodeInput fInputConnectableSide="left">to Me</div>
   </f-canvas>
 </f-flow>

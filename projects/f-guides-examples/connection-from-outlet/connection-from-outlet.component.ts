@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { PointExtensions } from '@foblex/2d';
 
 @Component({
   selector: 'connection-from-outlet',
@@ -13,18 +14,18 @@ import { FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 })
 export class ConnectionFromOutletComponent {
 
-  public connections: { outputId: string, inputId: string }[] = [];
+  protected fCanvas = viewChild.required(FCanvasComponent);
 
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+  protected onLoaded(): void {
+    this.fCanvas().fitToScreen(PointExtensions.initialize(), false);
   }
+
+  public connections: { outputId: string, inputId: string }[] = [];
 
   public addConnection(event: FCreateConnectionEvent): void {
     if(!event.fInputId) {
       return;
     }
-    this.connections.push({ outputId: event.fOutputId, inputId: event.fInputId });
-    this.changeDetectorRef.detectChanges();
+    this.connections = this.connections.concat({ outputId: event.fOutputId, inputId: event.fInputId });
   }
 }
