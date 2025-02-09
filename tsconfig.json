@@ -7,10 +7,9 @@
       "@foblex/flow": [
         "./projects/f-flow/src/public-api.ts"
       ],
-      "@foblex/m-render": [
-        "./projects/m-render/src/public-api.ts"
-      ],
-
+//      "@foblex/m-render": [
+//        "./projects/m-render/src/public-api.ts"
+//      ],
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

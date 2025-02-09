@@ -246,6 +246,7 @@ function nodesGroup(): INavigationGroup {
         image_width: 795,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'drag-handle',
@@ -256,6 +257,7 @@ function nodesGroup(): INavigationGroup {
         image_width: 795,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'node-selection',
@@ -265,7 +267,8 @@ function nodesGroup(): INavigationGroup {
         image_dark: './previews/examples/node-selection.dark.png',
         image_width: 781,
         image_height: 600,
-        image_type: 'image/png'
+        image_type: 'image/png',
+        date: new Date('2025-01-31 17:16:33')
       },
       {
         link: 'resize-handle',
@@ -279,7 +282,8 @@ function nodesGroup(): INavigationGroup {
         badge: {
           text: 'Updated',
           type: 'warning'
-        }
+        },
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'grouping',
@@ -290,6 +294,7 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'drag-to-group',
@@ -303,7 +308,8 @@ function nodesGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2024-12-01 23:05:25')
       },
       {
         link: 'stress-test',
@@ -317,7 +323,8 @@ function nodesGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2024-11-22 17:19:38')
       },
       {
         link: 'stress-test-with-connections',
@@ -331,8 +338,9 @@ function nodesGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
-      }
+        },
+        date: new Date('2025-01-16 19:19:10')
+      },
     ],
   }
 }
@@ -350,6 +358,7 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'connector-inside-node',
@@ -360,6 +369,7 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'connector-outlet',
@@ -370,6 +380,7 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'limiting-connections',
@@ -380,6 +391,7 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'connectability-check',
@@ -393,7 +405,8 @@ function connectorGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-01-25 15:04:46')
       },
       {
         link: 'connectable-side',
@@ -404,6 +417,7 @@ function connectorGroup(): INavigationGroup {
         image_width: 726,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-03 14:17:29')
       },
     ],
   }
@@ -422,6 +436,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'drag-to-reassign',
@@ -432,6 +447,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'create-node-on-connection-drop',
@@ -442,6 +458,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'remove-connection-on-drop',
@@ -452,6 +469,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 16:04:08')
       },
       {
         link: 'assign-node-to-connection-on-drop',
@@ -465,7 +483,8 @@ function connectionGroup(): INavigationGroup {
         badge: {
           text: 'Updated',
           type: 'warning'
-        }
+        },
+        date: new Date('2024-12-30 15:26:54')
       },
       {
         link: 'auto-snap',
@@ -479,7 +498,8 @@ function connectionGroup(): INavigationGroup {
         badge: {
           text: 'Updated',
           type: 'warning'
-        }
+        },
+        date: new Date('2025-01-31 17:16:33')
       },
       {
         link: 'connection-types',
@@ -490,6 +510,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 20:12:01')
       },
       {
         link: 'custom-connection-type',
@@ -500,6 +521,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-02 20:12:01')
       },
       {
         link: 'connection-behaviours',
@@ -510,6 +532,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-03 00:50:53')
       },
       {
         link: 'connection-markers',
@@ -520,6 +543,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-06 14:49:44')
       },
       {
         link: 'connection-text',
@@ -533,7 +557,8 @@ function connectionGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-01-31 17:16:33')
       },
       {
         link: 'connection-center',
@@ -547,7 +572,8 @@ function connectionGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-01-31 18:23:26')
       },
       {
         link: 'custom-connections',
@@ -558,6 +584,7 @@ function connectionGroup(): INavigationGroup {
         image_width: 791,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-03 01:32:33')
       },
     ]
   }
@@ -579,7 +606,8 @@ function extensionGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-02-09 12:37:27')
       },
       {
         link: 'selection-area',
@@ -590,6 +618,7 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-06 13:57:22')
       },
       {
         link: 'help-in-positioning',
@@ -600,6 +629,7 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2025-02-09 12:37:27')
       },
       {
         link: 'grid-system',
@@ -613,7 +643,8 @@ function extensionGroup(): INavigationGroup {
         badge: {
           text: 'Updated',
           type: 'warning'
-        }
+        },
+        date: new Date('2025-02-09 12:37:27')
       },
       {
         link: 'minimap',
@@ -624,6 +655,7 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-06 13:00:05')
       },
       {
         link: 'zoom',
@@ -637,7 +669,8 @@ function extensionGroup(): INavigationGroup {
         badge: {
           text: 'Updated',
           type: 'warning'
-        }
+        },
+        date: new Date('2024-10-06 13:57:22')
       },
       {
         link: 'background',
@@ -648,6 +681,7 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2024-10-06 14:49:44')
       }
     ],
   }
@@ -669,7 +703,8 @@ function advancedGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-01-31 14:33:57')
       },
       {
         link: 'dagre-layout',
@@ -680,6 +715,7 @@ function advancedGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2025-02-08 14:01:26')
       },
       {
         link: 'elkjs-layout',
@@ -690,6 +726,7 @@ function advancedGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
+        date: new Date('2025-02-08 14:01:26')
       },
       {
         link: 'drag-start-end-events',
@@ -703,7 +740,8 @@ function advancedGroup(): INavigationGroup {
         badge: {
           text: 'New',
           type: 'info'
-        }
+        },
+        date: new Date('2025-02-08 14:01:26')
       }
     ]
   }

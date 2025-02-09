@@ -1,6 +1,0 @@
-@for (item of items;track item.hash) {
-  <li [class.active]="item.isActive"><a class="text-ellipsis" [href]="item.hash">{{ item.title }}</a></li>
-  @if (item.children) {
-    <ul f-table-of-content-items [items]="item.children"></ul>
-  }
-}
