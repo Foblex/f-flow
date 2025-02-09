@@ -1,14 +1,20 @@
 ::ng-deep :root {
+  --background-element-color: rgba(0, 0, 0, 0.1);
+  --selection-area-color: rgba(100, 108, 255, 0.14);
+
+  --disabled-color: #e2e2e2;
   --node-background-color: #ffffff;
+  --node-background-color-inverse: #000000;
   --node-border-radius: 2px;
   --node-border-color: rgba(60, 60, 67, 0.36);
+  --node-selected-border-color: #3451b2;
   --node-color: rgba(60, 60, 67, 0.78);
   --node-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
 
   --connection-color: rgba(60, 60, 67, 0.78);
   --snap-connection-color: rgba(60, 60, 67, 0.38);
-  --connection-gradient-1: #915930;
-  --connection-gradient-2: #18794e;
+  --connection-gradient-1: #b8272c;
+  --connection-gradient-2: #30a46c;
 
   --outlet-color: #3451b2;
   --input-output-color: rgba(60, 60, 67, 0.78);
@@ -19,16 +25,22 @@
   --minimap-view-color: rgba(100, 108, 255, 0.14);
 
   &.dark {
+    --background-element-color: rgba(255, 255, 255, 0.1);
+    --selection-area-color: rgba(100, 108, 255, 0.16);
+
+    --disabled-color: #2c2c2e;
     --node-background-color: #000000;
+    --node-background-color-inverse: #ffffff;
     --node-border-radius: 2px;
     --node-border-color: rgba(235, 235, 245, 0.38);
+    --node-selected-border-color: #a8b1ff;
     --node-color: rgba(235, 235, 245, 0.6);
     --node-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
 
     --connection-color: rgba(235, 235, 245, 0.6);
     --snap-connection-color: rgba(235, 235, 245, 0.2);
-    --connection-gradient-1: #f9b44e;
-    --connection-gradient-2: #3dd68c;
+    --connection-gradient-1: #f66f81;
+    --connection-gradient-2: #298459;
 
     --outlet-color: #a8b1ff;
     --input-output-color: rgba(235, 235, 245, 0.6);
@@ -38,6 +50,12 @@
     --minimap-node-selected-color: #a8b1ff;
     --minimap-view-color: rgba(100, 108, 255, 0.16);
   }
+
+  --form-field-text-color: var(--node-color);
+  --form-field-background: var(--minimap-view-color);
+  --form-field-panel-shadow: var(--shadow-4);
+  --form-field-panel-background: var(--node-background-color);
+  --form-field-active-color: var(--minimap-node-selected-color);
 }
 
 @mixin connection {
@@ -108,8 +126,8 @@
 }
 
 @mixin node {
-  width: 100px;
-  padding: 4px;
+  width: 120px;
+  padding: 24px;
   color: var(--node-color);
   text-align: center;
   background: var(--node-background-color);
@@ -123,29 +141,72 @@
 }
 
 @mixin connectors {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 0.2px solid var(--node-border-color);
+  background-color: var(--node-background-color);
 
+  &.left {
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-  .connectors-line {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    width: calc(100% - 8px);
+  &.right {
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
-    .f-node-output, .f-node-input {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 0.2px solid var(--node-border-color);
-      background-color: var(--node-background-color);
+  &.top {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.top-left {
+    top: -8px;
+    left: -8px;
+  }
+
+  &.top-right {
+    top: -8px;
+    right: -8px;
+  }
+
+  &.bottom {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.bottom-left {
+    bottom: -8px;
+    left: -8px;
+  }
+
+  &.bottom-right {
+    bottom: -8px;
+    right: -8px;
+  }
+}
+
+@mixin connector {
+  .f-node-input, .f-node-output {
+    &:not(.f-node) {
+      @include connectors;
+
+      &.f-node-output-not-connectable, &.f-node-input-not-connectable {
+        background-color: var(--disabled-color);
+      }
     }
+  }
 
-    &.top {
-      top: -8px
-    }
-
-    &.bottom {
-      bottom: -8px;
+  .f-node-input {
+    &:not(.f-node) {
+      border-radius: 4px;
     }
   }
 }

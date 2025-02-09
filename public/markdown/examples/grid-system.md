@@ -9,10 +9,10 @@ This guide demonstrates how to position nodes in a grid system using Foblex Flow
 
 ## Example
 
-::: ng-component <grid-system-example></grid-system-example> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system-example/grid-system-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system-example/grid-system-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system-example/grid-system-example.component.scss
+::: ng-component <grid-system></grid-system> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system/grid-system.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system/grid-system.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/grid-system/grid-system.component.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 

@@ -11,29 +11,29 @@
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 75 }" >
       <div fNodeOutput fOutputId="1" class="right"></div>
-      I can only be connected to one input
+      Connect to one input only
     </div>
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 225 }" >
       <div fNodeOutput fOutputId="2" class="right" [fOutputMultiple]="true"></div>
-      I can be connected to multiple inputs
+      Connect to multiple inputs
     </div>
 
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" >
       <div fNodeInput fInputId="1" [fInputMultiple]="false" class="left"></div>
-      I can only be connected with one output
+      Connect to one output only
     </div>
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 150 }">
       <div fNodeInput fInputId="2" [fInputMultiple]="true" class="left"></div>
-      I can be connected with multiple outputs
+      Connect to multiple outputs
     </div>
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 300 }">
       <div fNodeInput fInputId="3" [fInputMultiple]="true" class="left"></div>
-      I can be connected with multiple outputs
+      Connect to multiple outputs
     </div>
 
   </f-canvas>
 </f-flow>
-<div class="toolbar">
+<div class="examples-toolbar">
   <button class="f-button" (click)="onDeleteConnections()">Delete Connections</button>
 </div>

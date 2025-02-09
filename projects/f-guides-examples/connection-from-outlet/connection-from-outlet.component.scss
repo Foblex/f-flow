@@ -1,6 +1,6 @@
 @use "../flow-common";
 
-::ng-deep connection-from-outlet {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 

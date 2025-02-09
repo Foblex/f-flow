@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep node-with-position-example {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 

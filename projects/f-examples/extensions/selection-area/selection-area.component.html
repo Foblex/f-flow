@@ -2,8 +2,14 @@
   <f-selection-area></f-selection-area>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
-    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
-    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
+    <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>
+      <div fNodeOutput fOutputId="output1" class="right"></div>
+      I'm a node
+    </div>
+    <div fNode [fNodePosition]="{ x: 200, y: 0 }"  fDragHandle>
+      <div fNodeInput fInputId="input1" class="left"></div>
+      I'm a node
+    </div>
   </f-canvas>
 </f-flow>
 

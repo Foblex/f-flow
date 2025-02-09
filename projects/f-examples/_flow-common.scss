@@ -84,25 +84,38 @@
         stroke: var(--snap-connection-color);
       }
     }
-  }
-}
 
-@mixin background {
-  .f-background {
-    line {
-      stroke: var(--background-element-color);
-    }
-
-    circle {
-      fill: var(--background-element-color);
+    &.f-selected {
+      .f-connection-path {
+        stroke: var(--minimap-node-selected-color);
+      }
     }
   }
 }
 
-@mixin line-alignment {
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--connection-color);
+@mixin connection-visible-drag-handle {
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: var(--connection-color);
+    }
+  }
+}
+
+@mixin connection-marker {
+  .connection-marker {
+    circle, rect, path {
+      fill: var(--connection-color);
+    }
+  }
+
+  .f-connection {
+    &.f-selected {
+
+      .connection-marker {
+        circle, rect, path {
+          fill: var(--minimap-node-selected-color);
+        }
+      }
     }
   }
 }
@@ -198,22 +211,43 @@
 }
 
 
-@mixin toolbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  position: absolute;
-  right: 16px;
-  top: 16px;
+@mixin connector {
+  .f-node-input, .f-node-output {
+    &:not(.f-node) {
+      @include connectors;
 
-  button {
-    font-weight: 500;
-    border: none;
-    border-radius: 2px;
-    padding: 4px 8px;
-    line-height: normal;
+      &.f-node-output-not-connectable, &.f-node-input-not-connectable {
+        background-color: var(--disabled-color);
+      }
+    }
+  }
+
+  .f-node-input {
+    &:not(.f-node) {
+      border-radius: 4px;
+    }
+  }
+}
+
+
+@mixin examples-toolbar {
+  .examples-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+
+    button {
+      font-weight: 500;
+      border: none;
+      border-radius: 2px;
+      padding: 4px 8px;
+      line-height: normal;
+    }
   }
 }
 

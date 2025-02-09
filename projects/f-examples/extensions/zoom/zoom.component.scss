@@ -1,13 +1,11 @@
 @use "../../flow-common";
 
-::ng-deep zoom {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
 .f-node {
   @include flow-common.node;
 }
-
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.connector;
+@include flow-common.examples-toolbar;

@@ -1,14 +1,21 @@
 @use "../../flow-common";
 
-::ng-deep background-example {
+::ng-deep f-flow {
   @include flow-common.connection;
-  @include flow-common.background;
+
+  .f-background {
+    line {
+      stroke: var(--background-element-color);
+    }
+
+    circle {
+      fill: var(--background-element-color);
+    }
+  }
 }
 
 .f-node {
   @include flow-common.node;
 }
-
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.connector;
+@include flow-common.examples-toolbar;

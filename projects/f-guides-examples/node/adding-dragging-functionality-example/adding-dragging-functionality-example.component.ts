@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FFlowModule } from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { FCanvasComponent, FFlowModule } from '@foblex/flow';
+import { PointExtensions } from '@foblex/2d';
 
 @Component({
   selector: 'adding-dragging-functionality-example',
@@ -13,4 +14,9 @@ import { FFlowModule } from '@foblex/flow';
 })
 export class AddingDraggingFunctionalityExampleComponent {
 
+  protected fCanvas = viewChild.required(FCanvasComponent);
+
+  protected onLoaded(): void {
+    this.fCanvas().fitToScreen(PointExtensions.initialize(), false);
+  }
 }

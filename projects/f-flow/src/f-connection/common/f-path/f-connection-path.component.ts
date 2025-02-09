@@ -14,6 +14,7 @@ import {
 @Component({
   selector: "path[f-connection-path]",
   template: '',
+  styleUrls: ['./f-connection-path.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: "f-component f-connection-path",

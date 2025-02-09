@@ -1,4 +1,4 @@
-<f-flow fDraggable>
+<f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
     <f-connection fType="segment" fOutputId="output1" fInputId="input1"></f-connection>
     <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right">right</div>

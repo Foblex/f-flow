@@ -1,13 +1,8 @@
 @use "../../flow-common";
 
-::ng-deep stress-test-with-connections {
+::ng-deep f-flow {
   @include flow-common.connection;
-
-  .connection-marker {
-    circle, rect, path {
-      fill: var(--connection-color);
-    }
-  }
+  @include flow-common.connection-marker;
 }
 
 .f-node {
@@ -21,8 +16,5 @@
   }
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
-
+@include flow-common.examples-toolbar;
 

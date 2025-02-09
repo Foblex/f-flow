@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep connection-behaviours {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 

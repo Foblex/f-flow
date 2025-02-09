@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, ViewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
 import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'elkjs-layout-example',
@@ -12,50 +13,43 @@ import { generateGuid } from '@foblex/utils';
   standalone: true,
   imports: [
     FFlowModule,
-    FCheckboxComponent
+    FCheckboxComponent,
+    NgClass
   ]
 })
 export class ElkjsLayoutExampleComponent implements OnInit {
 
   private ELK!: any;
 
-  public nodes: any[] = [];
-  public connections: any[] = [];
+  protected nodes = signal<any[]>([]);
+  protected connections = signal<any[]>([]);
 
-  public configuration = CONFIGURATION[ Direction.TOP_TO_BOTTOM ];
+  protected configuration = CONFIGURATION[ Direction.TOP_TO_BOTTOM ];
 
   @ViewChild(FFlowComponent, { static: false })
-  public fFlowComponent!: FFlowComponent;
+  protected fFlowComponent!: FFlowComponent;
 
   @ViewChild(FCanvasComponent, { static: false })
-  public fCanvasComponent!: FCanvasComponent;
+  protected fCanvasComponent!: FCanvasComponent;
 
-  public isAutoLayout: boolean = true;
-
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+  protected isAutoLayout: boolean = true;
 
   public ngOnInit(): void {
     this.getData(Direction.TOP_TO_BOTTOM);
   }
 
-  public onLoaded(): void {
+  protected onLoaded(): void {
     this.fitToScreen();
   }
 
   private getData(direction: Direction): void {
     this.configuration = CONFIGURATION[ direction ];
-    if (this.isAutoLayout) {
-      this.fFlowComponent?.reset();
-      // if auto layout is disabled, onLoaded will be called only after the first rendering of the flow
-    }
     this.mapGraphData({
       id: 'root',
       layoutOptions: {
         'elk.algorithm': 'layered',
         'elk.direction': direction,
+        "spacing.nodeNodeBetweenLayers": 40
       },
       ...GRAPH_DATA
     });
@@ -65,9 +59,12 @@ export class ElkjsLayoutExampleComponent implements OnInit {
     return this.loadElk().then(ELK => {
       return new ELK().layout(configuration);
     }).then((data: any) => {
-      this.connections = this.getConnections(data);
-      this.nodes = this.getNodes(data);
-      this.changeDetectorRef.detectChanges();
+      if (this.isAutoLayout) {
+        this.fFlowComponent?.reset();
+        // if auto layout is disabled, onLoaded will be called only after the first rendering of the flow
+      }
+      this.connections.set(this.getConnections(data));
+      this.nodes.set(this.getNodes(data));
     }).catch(console.error);
   }
 
@@ -102,19 +99,19 @@ export class ElkjsLayoutExampleComponent implements OnInit {
     });
   }
 
-  public horizontal(): void {
+  protected horizontal(): void {
     this.getData(Direction.LEFT_TO_RIGHT);
   }
 
-  public vertical(): void {
+  protected vertical(): void {
     this.getData(Direction.TOP_TO_BOTTOM);
   }
 
-  public fitToScreen(): void {
+  protected fitToScreen(): void {
     this.fCanvasComponent?.fitToScreen(PointExtensions.initialize(50, 50), false);
   }
 
-  public onAutoLayoutChange(checked: boolean): void {
+  protected onAutoLayoutChange(checked: boolean): void {
     this.isAutoLayout = checked;
   }
 }

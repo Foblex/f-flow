@@ -1,8 +1,0 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
-  <f-line-alignment [fAlignThreshold]="40"></f-line-alignment>
-  <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
-    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
-    <div fNode [fNodePosition]="{ x: 244, y: 124 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
-  </f-canvas>
-</f-flow>

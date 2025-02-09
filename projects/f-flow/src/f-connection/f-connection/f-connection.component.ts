@@ -1,24 +1,31 @@
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
-  Component, ContentChildren,
-  ElementRef, inject,
-  Input, numberAttribute, OnChanges,
+  Component,
+  ContentChildren,
+  ElementRef,
+  inject,
+  Input,
+  numberAttribute,
+  OnChanges,
   OnDestroy,
-  OnInit, QueryList,
-  ViewChild
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewEncapsulation
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
   CONNECTION_PATH,
   CONNECTION_TEXT,
+  EFConnectionBehavior,
+  EFConnectionType,
   FConnectionDragHandleComponent,
   FConnectionSelectionComponent,
   IConnectionGradient,
-  IConnectionPath, IConnectionText,
+  IConnectionPath,
+  IConnectionText,
 } from '../common';
-import { EFConnectionBehavior } from '../common';
-import { EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { FConnectionFactory } from '../f-connection-builder';
@@ -29,8 +36,7 @@ import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddConnectionToStoreRequest } from '../../domain';
-import { RemoveConnectionFromStoreRequest } from '../../domain';
+import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
 
 let uniqueId: number = 0;
 

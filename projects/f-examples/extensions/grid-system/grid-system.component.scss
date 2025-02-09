@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep grid-system-example {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
@@ -8,6 +8,4 @@
   @include flow-common.node;
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

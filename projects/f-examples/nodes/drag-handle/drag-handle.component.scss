@@ -1,9 +1,5 @@
 @use "../../flow-common";
 
-::ng-deep drag-handle {
-  @include flow-common.connection;
-}
-
 .f-node {
   @include flow-common.node;
   cursor: default;

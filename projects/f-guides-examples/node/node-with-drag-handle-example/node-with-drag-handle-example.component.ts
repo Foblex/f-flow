@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FFlowModule } from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, viewChild, ViewChild } from '@angular/core';
+import { FCanvasComponent, FFlowModule } from '@foblex/flow';
 
 @Component({
   selector: 'node-with-drag-handle-example',
@@ -13,4 +13,9 @@ import { FFlowModule } from '@foblex/flow';
 })
 export class NodeWithDragHandleExampleComponent {
 
+  protected fCanvas = viewChild.required(FCanvasComponent);
+
+  protected onLoaded(): void {
+    this.fCanvas().resetScaleAndCenter(false);
+  }
 }

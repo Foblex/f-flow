@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep connector-outlet {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
@@ -8,11 +8,7 @@
   @include flow-common.node;
 }
 
-.f-node-input, .f-node-output {
-  &:not(.f-node) {
-    @include flow-common.connectors;
-  }
-}
+@include flow-common.connector;
 
 .f-node-outlet {
   position: absolute;
@@ -28,6 +24,4 @@
   }
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

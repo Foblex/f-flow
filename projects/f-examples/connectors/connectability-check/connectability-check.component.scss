@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep connectability-check {
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
@@ -9,17 +9,7 @@
   width: 180px;
 }
 
-.f-node-input, .f-node-output {
-  &:not(.f-node) {
-    @include flow-common.connectors;
-  }
-}
-
-.f-node-output {
-  &:not(.f-node) {
-    border-radius: 4px;
-  }
-}
+@include flow-common.connector;
 
 .f-connections-dragging {
   .f-node-input {
@@ -29,6 +19,4 @@
   }
 }
 
-.toolbar {
-  @include flow-common.toolbar;
-}
+@include flow-common.examples-toolbar;

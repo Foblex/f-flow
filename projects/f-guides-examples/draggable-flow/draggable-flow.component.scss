@@ -1,11 +1,8 @@
 @use "../flow-common";
 
-::ng-deep draggable-flow {
-  @include flow-common.connection;
-}
-
-f-flow {
+::ng-deep f-flow {
   height: 300px;
+  @include flow-common.connection;
 }
 
 .f-node {

@@ -1,6 +1,6 @@
 @use "../../flow-common";
 
-::ng-deep adding-dragging-functionality-example{
+::ng-deep f-flow {
   @include flow-common.connection;
 }
 
@@ -8,4 +8,3 @@
   @include flow-common.node;
 }
 
-@include flow-common.connectors;
