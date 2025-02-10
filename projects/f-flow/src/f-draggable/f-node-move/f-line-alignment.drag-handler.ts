@@ -3,7 +3,7 @@ import { fInject, IFDragHandler, PointBoundsLimiter } from '../index';
 import { FComponentsStore } from '../../f-storage';
 import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
 
-export class LineAlignmentDragHandler implements IFDragHandler {
+export class FLineAlignmentDragHandler implements IFDragHandler {
 
   public fEventType = 'line-alignment';
 

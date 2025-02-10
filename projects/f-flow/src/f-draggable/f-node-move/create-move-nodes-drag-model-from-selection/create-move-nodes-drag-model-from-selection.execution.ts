@@ -4,7 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
-import { NodeDragHandler } from '../node.drag-handler';
+import { FNodeMoveDragHandler } from '../f-node-move.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CalculateNodeMoveLimitsRequest } from './domain/calculate-node-move-limits';
 import { PutOutputConnectionHandlersToArrayRequest } from './domain/put-output-connection-handlers-to-array';
@@ -21,20 +21,20 @@ import { flatMap } from '@foblex/utils';
 import { CalculateCommonNodeMoveLimitsRequest } from './domain/calculate-common-node-move-limits';
 import { IMinMaxPoint, IRect, RectExtensions } from '@foblex/2d';
 import { BaseConnectionDragHandler } from '../connection-drag-handlers';
-import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
+import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
 import { INodeMoveLimitsAndPosition } from './i-node-move-limits-and-position';
 import { INodeMoveLimits } from './i-node-move-limits';
 
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
 export class CreateMoveNodesDragModelFromSelectionExecution
-  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, SummaryNodeDragHandler> {
+  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, FSummaryNodeMoveDragHandler> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
-  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): SummaryNodeDragHandler {
+  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): FSummaryNodeMoveDragHandler {
     const fDraggedNodes = this._getDraggedNodes(request.nodeWithDisabledSelection);
 
     const fNodesToDrag = this._getNodesToDragWithCommonLimits(fDraggedNodes);
@@ -47,7 +47,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       this._getNodesMoveLimits(fNodesToDrag, [], fDraggedNodes)
     );
 
-    return new SummaryNodeDragHandler(
+    return new FSummaryNodeMoveDragHandler(
       commonLimits, fDragHandlers, this._getDraggedNodesBoundingRect(fNodesToDrag)
     );
   }
@@ -123,12 +123,12 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       .map((x) => x.fId);
   }
 
-  private _mapToNodeDragHandlers(items: FNodeBase[]): NodeDragHandler[] {
-    return items.map((x) => new NodeDragHandler(x));
+  private _mapToNodeDragHandlers(items: FNodeBase[]): FNodeMoveDragHandler[] {
+    return items.map((x) => new FNodeMoveDragHandler(x));
   }
 
   private _setConnectionsHandlersToNodes(
-    handlers: NodeDragHandler[], outputIds: string[], inputIds: string[]
+    handlers: FNodeMoveDragHandler[], outputIds: string[], inputIds: string[]
   ): void {
     const fConnectionHandlers: BaseConnectionDragHandler[] = [];
     handlers.forEach((fNodeHandler) => {

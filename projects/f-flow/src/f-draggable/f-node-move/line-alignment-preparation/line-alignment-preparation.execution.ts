@@ -5,8 +5,8 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetFlowHostElementRequest } from '../../../domain';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext, SummaryNodeDragHandler } from '../../index';
-import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
+import { FDraggableDataContext, FSummaryNodeMoveDragHandler } from '../../index';
+import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { LineService } from '../../../f-line-alignment';
 import { BrowserService } from '@foblex/platform';
@@ -29,7 +29,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _addLineAlignmentDragHandler(fNodes: FNodeBase[], commonRect: IRect): void {
     this._fDraggableDataContext.draggableItems.push(
-      new LineAlignmentDragHandler(
+      new FLineAlignmentDragHandler(
         this._lineService || this._createLineService(),
         this._getFlowHostSize(),
         commonRect,
@@ -65,6 +65,6 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _getCommonRestrictions(): IMinMaxPoint {
     return this._fDraggableDataContext.draggableItems
-      .filter((x) => x instanceof SummaryNodeDragHandler)[0].limits;
+      .filter((x) => x instanceof FSummaryNodeMoveDragHandler)[0].limits;
   }
 }

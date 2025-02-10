@@ -1,6 +1,6 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 
-export class NodeDragToParentFinalizeRequest {
+export class FNodeDragToParentFinalizeRequest {
 
   constructor(
     public event: IPointerEvent

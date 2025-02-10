@@ -4,16 +4,20 @@ import { IFDragHandler } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';
+import { fInject } from '../f-injector';
 
 @Directive()
-export class NodeDragToParentDragHandler implements IFDragHandler {
+export class FNodeDragToParentDragHandler implements IFDragHandler {
+
+  private _fComponentsStore = fInject(FComponentsStore);
+  private _fDraggableDataContext = fInject(FDraggableDataContext);
 
   public fEventType = 'move-node-to-parent';
 
-  private DEBOUNCE_TIME = 15;
+  private _DEBOUNCE_TIME = 15;
 
   private get _transform(): ITransformModel {
-    return this.fComponentsStore.fCanvas!.transform;
+    return this._fComponentsStore.fCanvas!.transform;
   }
 
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
@@ -22,11 +26,9 @@ export class NodeDragToParentDragHandler implements IFDragHandler {
   public fNodeWithRect: INodeWithRect | null = null;
 
   constructor(
-    private fComponentsStore: FComponentsStore,
-    private fDraggableDataContext: FDraggableDataContext,
     private notDraggedNodesRects: INodeWithRect[],
   ) {
-    this._onPointerDownPosition = this.fDraggableDataContext.onPointerDownPosition;
+    this._onPointerDownPosition = this._fDraggableDataContext.onPointerDownPosition;
   }
 
   private _toggleParentNode(difference: IPoint): void {
@@ -51,7 +53,7 @@ export class NodeDragToParentDragHandler implements IFDragHandler {
       clearTimeout(this._debounceTimer);
     }
 
-    this._debounceTimer = setTimeout(() => this._toggleParentNode(difference), this.DEBOUNCE_TIME);
+    this._debounceTimer = setTimeout(() => this._toggleParentNode(difference), this._DEBOUNCE_TIME);
   }
 
   private _markIncludeNode(nodeWithRect: INodeWithRect): void {

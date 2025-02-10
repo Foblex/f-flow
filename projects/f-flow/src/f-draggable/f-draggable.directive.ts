@@ -10,11 +10,9 @@ import {
 } from "@angular/core";
 import { FDraggableBase } from './f-draggable-base';
 import {
-  FDropToGroupEvent, NodeDragToParentFinalizeRequest,
-  NodeDragToParentPreparationRequest,
   NodeMoveFinalizeRequest,
   NodeMovePreparationRequest
-} from './node';
+} from './f-node-move';
 import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
   FCreateConnectionEvent,
@@ -49,6 +47,11 @@ import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FInjector } from './f-injector';
 import { FDragHandlerResult } from './f-drag-handler';
+import {
+  FDropToGroupEvent,
+  FNodeDragToParentFinalizeRequest,
+  FNodeDragToParentPreparationRequest
+} from './f-node-drag-to-parent';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -169,7 +172,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 
-    this._fMediator.execute<void>(new NodeDragToParentPreparationRequest(event));
+    this._fMediator.execute<void>(new FNodeDragToParentPreparationRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event));
 
@@ -199,7 +202,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeMoveFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new NodeDragToParentFinalizeRequest(event));
+    this._fMediator.execute<void>(new FNodeDragToParentFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 

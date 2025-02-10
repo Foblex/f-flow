@@ -8,10 +8,10 @@ import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
 import { IFDragHandler } from '../../f-drag-handler';
-import { NodeDragToParentDragHandler } from '../node-drag-to-parent.drag-handler';
+import { FNodeDragToParentDragHandler } from '../../f-node-drag-to-parent/f-node-drag-to-parent.drag-handler';
 import { ILineAlignmentResult, INearestCoordinateResult } from '../../../f-line-alignment';
-import { LineAlignmentDragHandler } from '../line-alignment.drag-handler';
-import { SummaryNodeDragHandler } from '../summary-node.drag-handler';
+import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
+import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
 import { FNodeBase } from '../../../f-node';
 
 @Injectable()
@@ -34,8 +34,8 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
 
-    const firstNodeOrGroup: SummaryNodeDragHandler = this._fDraggableDataContext.draggableItems
-      .find((x) => x instanceof SummaryNodeDragHandler)!;
+    const firstNodeOrGroup: FSummaryNodeMoveDragHandler = this._fDraggableDataContext.draggableItems
+      .find((x) => x instanceof FSummaryNodeMoveDragHandler)!;
 
     this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
 
@@ -43,7 +43,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof SummaryNodeDragHandler);
+    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof FSummaryNodeMoveDragHandler);
   }
 
   private _finalizeMove(difference: IPoint): void {
@@ -55,7 +55,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
   private _getItems(): IFDragHandler[] {
     return this._fDraggableDataContext.draggableItems
-      .filter((x) => !(x instanceof NodeDragToParentDragHandler));
+      .filter((x) => !(x instanceof FNodeDragToParentDragHandler));
   }
 
   private _getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
@@ -74,7 +74,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
   private _getLineAlignmentDifference(difference: IPoint): ILineAlignmentResult | undefined {
     return this._fDraggableDataContext.draggableItems
-      .find((x) => x instanceof LineAlignmentDragHandler)
+      .find((x) => x instanceof FLineAlignmentDragHandler)
       ?.findNearestCoordinate(difference);
   }
 
@@ -99,10 +99,10 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
   }
 
   private _isDraggedJustOneNode(): boolean {
-    return (this._fDraggableDataContext.draggableItems[ 0 ] as SummaryNodeDragHandler).fHandlers.length === 1;
+    return (this._fDraggableDataContext.draggableItems[ 0 ] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
   }
 
   private _getFirstNodeOrGroup(): FNodeBase {
-    return (this._fDraggableDataContext.draggableItems[ 0 ] as SummaryNodeDragHandler).fHandlers[ 0 ].fNode;
+    return (this._fDraggableDataContext.draggableItems[ 0 ] as FSummaryNodeMoveDragHandler).fHandlers[ 0 ].fNode;
   }
 }

@@ -3,7 +3,7 @@ import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { DragAndDropBase, ICanRunOutsideAngular } from '@foblex/drag-toolkit';
-import { FDropToGroupEvent } from './node';
+import { FDropToGroupEvent } from './f-node-move';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 
 @Directive()

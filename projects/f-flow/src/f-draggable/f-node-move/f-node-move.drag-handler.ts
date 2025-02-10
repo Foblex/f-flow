@@ -3,7 +3,7 @@ import { IFDragHandler } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
 
-export class NodeDragHandler implements IFDragHandler {
+export class FNodeMoveDragHandler implements IFDragHandler {
 
   public fEventType = 'move-node';
 
