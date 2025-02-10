@@ -14,7 +14,7 @@ import {
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FMediator } from '@foblex/mediator';
 import {
-  AddZoomToStoreRequest,
+  AddZoomToStoreRequest, defaultEventTrigger,
   Deprecated,
   FEventTrigger,
   GetCanvasRequest,
@@ -48,10 +48,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   public isEnabled: boolean = false;
 
   @Input()
-  public fWheelTrigger: FEventTrigger = (event: TriggerEvent) => true;
+  public fWheelTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input()
-  public fDblClickTrigger: FEventTrigger = (event: TriggerEvent) => true;
+  public fDblClickTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input({ alias: 'fZoomMinimum', transform: numberAttribute })
   public override minimum: number = 0.1;
@@ -82,7 +82,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes[ 'fZoomTriggers' ] || changes[ 'isEnabled' ]) {
+    if (changes[ 'isEnabled' ]) {
       this._listenTriggers();
     }
   }
