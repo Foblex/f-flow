@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { NodeMoveFinalizeRequest } from './node-move-finalize.request';
+import { FNodeMoveFinalizeRequest } from './f-node-move-finalize.request';
 import { IPoint, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -8,15 +8,15 @@ import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
 import { IFDragHandler } from '../../f-drag-handler';
-import { FNodeDropToGroupDragHandler } from '../../f-drop-to-group/f-node-drop-to-group.drag-handler';
+import { FNodeDropToGroupDragHandler } from '../../f-drop-to-group';
 import { ILineAlignmentResult, INearestCoordinateResult } from '../../../f-line-alignment';
 import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
 import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
 import { FNodeBase } from '../../../f-node';
 
 @Injectable()
-@FExecutionRegister(NodeMoveFinalizeRequest)
-export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeRequest, void> {
+@FExecutionRegister(FNodeMoveFinalizeRequest)
+export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeRequest, void> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
@@ -26,7 +26,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
     return this._fComponentsStore.fFlow!.hostElement;
   }
 
-  public handle(request: NodeMoveFinalizeRequest): void {
+  public handle(request: FNodeMoveFinalizeRequest): void {
     if (!this._isValid()) {
       return;
     }

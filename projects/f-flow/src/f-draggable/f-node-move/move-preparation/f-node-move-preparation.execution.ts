@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { NodeMovePreparationRequest } from './node-move-preparation.request';
+import { FNodeMovePreparationRequest } from './f-node-move-preparation.request';
 import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -12,8 +12,8 @@ import { LineAlignmentPreparationRequest } from '../line-alignment-preparation';
 import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
 
 @Injectable()
-@FExecutionRegister(NodeMovePreparationRequest)
-export class NodeMovePreparationExecution implements IExecution<NodeMovePreparationRequest, void> {
+@FExecutionRegister(FNodeMovePreparationRequest)
+export class FNodeMovePreparationExecution implements IExecution<FNodeMovePreparationRequest, void> {
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
@@ -29,7 +29,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
 
   private _fNode: FNodeBase | undefined;
 
-  public handle(request: NodeMovePreparationRequest): void {
+  public handle(request: FNodeMovePreparationRequest): void {
     if(!this._isValid(request)) {
       return;
     }
@@ -50,7 +50,7 @@ export class NodeMovePreparationExecution implements IExecution<NodeMovePreparat
     }
   }
 
-  private _isValid(request: NodeMovePreparationRequest): boolean {
+  private _isValid(request: FNodeMovePreparationRequest): boolean {
     return this._fDraggableDataContext.isEmpty()
       && this._isDragHandleElement(request.event.targetElement)
       && !!this._getNode(request.event.targetElement);

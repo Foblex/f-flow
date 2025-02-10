@@ -1,6 +1,6 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 
-export class NodeMovePreparationRequest {
+export class FNodeMoveFinalizeRequest {
 
   constructor(
     public event: IPointerEvent

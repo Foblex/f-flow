@@ -10,8 +10,8 @@ import {
 } from "@angular/core";
 import { FDraggableBase } from './f-draggable-base';
 import {
-  NodeMoveFinalizeRequest,
-  NodeMovePreparationRequest
+  FNodeMoveFinalizeRequest,
+  FNodeMovePreparationRequest
 } from './f-node-move';
 import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
@@ -170,7 +170,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
-    this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
+    this._fMediator.execute<void>(new FNodeMovePreparationRequest(event));
 
     this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
 
@@ -200,7 +200,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeResizeFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new NodeMoveFinalizeRequest(event));
+    this._fMediator.execute<void>(new FNodeMoveFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
 

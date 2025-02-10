@@ -1,6 +1,6 @@
-import { NodeMovePreparationExecution } from './node-move-preparation.execution';
+import { FNodeMovePreparationExecution } from './f-node-move-preparation.execution';
 
 export const NODE_MOVE_PREPARATION_PROVIDERS = [
 
-  NodeMovePreparationExecution,
+  FNodeMovePreparationExecution,
 ];
