@@ -1,7 +1,7 @@
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FEventTrigger } from '../../../domain';
 
-export class NodeResizePreparationRequest {
+export class FNodeResizePreparationRequest {
 
   constructor(
     public event: IPointerEvent,

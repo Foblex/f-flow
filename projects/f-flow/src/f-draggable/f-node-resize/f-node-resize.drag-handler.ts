@@ -1,5 +1,5 @@
 import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler/i-f-drag-handler';
+import { IFDragHandler } from '../f-drag-handler';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
 import { GetNodeResizeRestrictionsRequest, INodeResizeRestrictions } from './get-node-resize-restrictions';
@@ -10,7 +10,7 @@ import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-rest
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { fInject } from '../f-injector';
 
-export class NodeResizeDragHandler implements IFDragHandler {
+export class FNodeResizeDragHandler implements IFDragHandler {
 
   public fEventType = 'node-resize';
   public fData: any;
@@ -26,7 +26,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
   ) {
     this.fData = {
       fNodeId: _fNode.fId,
-    }
+    };
   }
 
   public prepareDragSequence(): void {

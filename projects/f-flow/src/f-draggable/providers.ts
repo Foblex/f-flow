@@ -2,7 +2,7 @@ import { CANVAS_PROVIDERS } from './f-canvas';
 import { CONNECTIONS_PROVIDERS } from './f-connection';
 import { SINGLE_SELECT_PROVIDERS } from './f-single-select';
 import { NODE_PROVIDERS } from './node';
-import { NODE_RESIZE_PROVIDERS } from './node-resize';
+import { NODE_RESIZE_PROVIDERS } from './f-node-resize';
 import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
 import { F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS } from '../f-external-item';
 import { F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS } from '../f-selection-area';

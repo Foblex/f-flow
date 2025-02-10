@@ -42,7 +42,7 @@ import {
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
 import { FSingleSelectRequest } from './f-single-select';
-import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './node-resize';
+import { FNodeResizeFinalizeRequest, FNodeResizePreparationRequest } from './f-node-resize';
 import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
@@ -165,7 +165,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this.plugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._fMediator.execute<void>(new NodeResizePreparationRequest(event, this.fNodeResizeTrigger));
+    this._fMediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
     this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 
@@ -195,7 +195,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new NodeResizeFinalizeRequest(event));
+    this._fMediator.execute<void>(new FNodeResizeFinalizeRequest(event));
 
     this._fMediator.execute<void>(new NodeMoveFinalizeRequest(event));
 

@@ -8,7 +8,7 @@ export * from './domain';
 
 export * from './node';
 
-export * from './node-resize';
+export * from './f-node-resize';
 
 export * from './f-single-select';
 

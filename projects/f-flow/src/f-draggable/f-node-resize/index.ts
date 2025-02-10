@@ -10,11 +10,11 @@ export * from './get-normalized-children-nodes-rect';
 
 export * from './get-node-resize-restrictions';
 
-export * from './node-resize-finalize';
+export * from './resize-finalize';
 
-export * from './node-resize-preparation';
+export * from './resize-preparation';
 
-export * from './node-resize.drag-handler';
+export * from './f-node-resize.drag-handler';
 
 export * from './providers';
 
