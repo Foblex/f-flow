@@ -6,6 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
 import { FExternalItemDragHandler } from '../f-external-item.drag-handler';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { isValidEventTrigger } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(FExternalItemPreparationRequest)
@@ -20,7 +21,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
   }
 
   public handle(request: FExternalItemPreparationRequest): void {
-    if (!this._isValid(request)) {
+    if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
     this._fDraggableDataContext.onPointerDownScale = 1;
@@ -44,5 +45,9 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
 
   private _getExternalItem(targetElement: HTMLElement): FExternalItemBase<any> | undefined {
     return this._fExternalItemService.getItem(getExternalItem(targetElement));
+  }
+
+  private _isValidTrigger(request: FExternalItemPreparationRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 }

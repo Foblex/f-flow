@@ -94,6 +94,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Input()
   public fCanvasMoveTrigger: FEventTrigger = defaultEventTrigger;
 
+  @Input()
+  public fExternalItemTrigger: FEventTrigger = defaultEventTrigger;
+
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
 
@@ -182,7 +185,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
 
-    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event));
+    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
     this._fMediator.execute<void>(new PrepareDragSequenceRequest());
   }
