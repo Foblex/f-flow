@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { FReassignConnectionPreparationRequest } from './f-reassign-connection-preparation.request';
-import { IPoint, ITransformModel, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { UpdateItemAndChildrenLayersRequest } from '../../../../domain';
+import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FConnectionBase } from '../../../../f-connection';
 import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-handler';
@@ -31,7 +31,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   }
 
   public handle(request: FReassignConnectionPreparationRequest): void {
-    if (!this._isValid(request)) {
+    if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
 
@@ -48,6 +48,10 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _isValid(request: FReassignConnectionPreparationRequest): boolean {
     this._fConnection = this._getConnectionToReassign(this._getPointInFlow(request));
     return !!this._fConnection && !this._fDraggableDataContext.draggableItems.length;
+  }
+
+  private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 
   private _getPointInFlow(request: FReassignConnectionPreparationRequest): IPoint {

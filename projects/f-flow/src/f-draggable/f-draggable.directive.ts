@@ -82,6 +82,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Input()
   public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
 
+  @Input()
+  public fNodeResizeTrigger: FEventTrigger = defaultEventTrigger;
+
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
 
@@ -162,7 +165,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this.plugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._fMediator.execute<void>(new NodeResizePreparationRequest(event));
+    this._fMediator.execute<void>(new NodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
     this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 

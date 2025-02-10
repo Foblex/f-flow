@@ -97,7 +97,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isMultiSelect(request: FSingleSelectRequest): boolean {
-    return isValidEventTrigger(request.event.originalEvent, request.fMultiSelectTrigger)
+    return isValidEventTrigger(request.event.originalEvent, request.fMultiSelectTrigger);
   }
 
   private _singleSelect(fItem?: ISelectable): void {
