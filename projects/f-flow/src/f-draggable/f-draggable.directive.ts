@@ -31,7 +31,7 @@ import {
   RemoveDndFromStoreRequest,
   EndDragSequenceRequest,
   InitializeDragSequenceRequest,
-  OnPointerMoveRequest, FEventTrigger, TriggerEvent, defaultEventTrigger
+  OnPointerMoveRequest, FEventTrigger, FTriggerEvent, defaultEventTrigger
 } from '../domain';
 import {
   FExternalItemFinalizeRequest,
@@ -75,7 +75,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   @Input()
-  public fMultiSelectTrigger: FEventTrigger = (event: TriggerEvent) => {
+  public fMultiSelectTrigger: FEventTrigger = (event: FTriggerEvent) => {
     return (this._fPlatform.getOS() === EOperationSystem.MAC_OS) ? event.metaKey : event.ctrlKey;
   };
 

@@ -5,7 +5,7 @@ import { IPointerEvent } from '@foblex/drag-toolkit';
 import { IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './domain';
-import { FEventTrigger, TriggerEvent } from '../domain';
+import { FEventTrigger, FTriggerEvent } from '../domain';
 
 @Component({
   selector: "f-selection-area",
@@ -24,7 +24,7 @@ export class FSelectionAreaComponent extends FSelectionAreaBase implements OnIni
   private _elementReference = inject(ElementRef);
 
   @Input()
-  public fTrigger: FEventTrigger = (event: TriggerEvent) => {
+  public fTrigger: FEventTrigger = (event: FTriggerEvent) => {
     return event.shiftKey;
   };
 

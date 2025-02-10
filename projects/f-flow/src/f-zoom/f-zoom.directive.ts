@@ -21,7 +21,7 @@ import {
   GetFlowHostElementRequest, isValidEventTrigger,
   RemoveZoomFromStoreRequest,
   ResetZoomRequest,
-  SetZoomRequest, TriggerEvent
+  SetZoomRequest
 } from '../domain';
 import { FCanvasBase } from '../f-canvas';
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
