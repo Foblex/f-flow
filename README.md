@@ -82,6 +82,10 @@ Explore practical use cases to see Foblex Flow in action:
 5. **Drag-and-Drop:** Simplified drag-and-drop functionality for intuitive flow manipulation.
 6. **Zoom and Pan Support:** Explore large flows with smooth zooming and panning controls.
 
+### Roadmap
+
+We have a detailed roadmap for the development of Foblex Flow. Check out the [Roadmap](./ROADMAP.md) to see the upcoming features and milestones.
+
 ### Getting Started and Documentation
 
 For a comprehensive guide on how to install, configure, and use Foblex Flow in your Angular project, visit our [Documentation](https://flow.foblex.com/docs/get-started).
