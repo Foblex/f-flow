@@ -7,7 +7,7 @@ import { FDraggableDataContext } from '../f-draggable-data-context';
 import { fInject } from '../f-injector';
 
 @Directive()
-export class FNodeDragToParentDragHandler implements IFDragHandler {
+export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
   private _fComponentsStore = fInject(FComponentsStore);
   private _fDraggableDataContext = fInject(FDraggableDataContext);

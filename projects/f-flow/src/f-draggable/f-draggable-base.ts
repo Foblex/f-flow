@@ -4,7 +4,7 @@ import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { DragAndDropBase, ICanRunOutsideAngular } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDropToGroupEvent } from './f-node-drag-to-parent';
+import { FDropToGroupEvent } from './f-drop-to-group';
 
 @Directive()
 export abstract class FDraggableBase extends DragAndDropBase  {

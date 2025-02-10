@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FNodeDragToParentPreparationRequest } from './f-node-drag-to-parent-preparation.request';
+import { FNodeDropToGroupPreparationRequest } from './f-node-drop-to-group-preparation.request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
@@ -7,13 +7,13 @@ import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from 
 import { GetNormalizedElementRectRequest, GetParentNodesRequest } from '../../../domain';
 import { FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeDragToParentDragHandler } from '../f-node-drag-to-parent.drag-handler';
+import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
 import { FSummaryNodeMoveDragHandler } from '../../f-node-move';
 
 @Injectable()
-@FExecutionRegister(FNodeDragToParentPreparationRequest)
-export class FNodeDragToParentPreparationExecution
-  implements IExecution<FNodeDragToParentPreparationRequest, void> {
+@FExecutionRegister(FNodeDropToGroupPreparationRequest)
+export class FNodeDropToGroupPreparationExecution
+  implements IExecution<FNodeDropToGroupPreparationRequest, void> {
 
   private _fMediator = inject(FMediator);
   private _fDraggableDataContext = inject(FDraggableDataContext);
@@ -31,7 +31,7 @@ export class FNodeDragToParentPreparationExecution
     return PointExtensions.sum(this._transform.position, this._transform.scaledPosition)
   }
 
-  public handle(request: FNodeDragToParentPreparationRequest): void {
+  public handle(request: FNodeDropToGroupPreparationRequest): void {
     if(!this._isValid()) {
       return;
     }
@@ -42,7 +42,7 @@ export class FNodeDragToParentPreparationExecution
     }
 
     this._fDraggableDataContext.draggableItems.push(
-      new FNodeDragToParentDragHandler(
+      new FNodeDropToGroupDragHandler(
         this._getNotDraggedNodesRects()
       )
     );

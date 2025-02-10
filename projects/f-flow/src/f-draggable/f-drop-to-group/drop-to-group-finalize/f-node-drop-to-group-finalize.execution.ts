@@ -1,22 +1,22 @@
 import { inject, Injectable } from '@angular/core';
-import { FNodeDragToParentFinalizeRequest } from './f-node-drag-to-parent-finalize.request';
+import { FNodeDropToGroupFinalizeRequest } from './f-node-drop-to-group-finalize.request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeDragToParentDragHandler } from '../f-node-drag-to-parent.drag-handler';
+import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
 import { FComponentsStore } from '../../../f-storage';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FSummaryNodeMoveDragHandler } from '../../f-node-move';
 import { FDropToGroupEvent } from '../f-drop-to-group.event';
 
 @Injectable()
-@FExecutionRegister(FNodeDragToParentFinalizeRequest)
-export class FNodeDragToParentFinalizeExecution
-  implements IExecution<FNodeDragToParentFinalizeRequest, void> {
+@FExecutionRegister(FNodeDropToGroupFinalizeRequest)
+export class FNodeDropToGroupFinalizeExecution
+  implements IExecution<FNodeDropToGroupFinalizeRequest, void> {
 
   private _fDraggableDataContext = inject(FDraggableDataContext);
   private _fComponentsStore = inject(FComponentsStore);
 
-  public handle(request: FNodeDragToParentFinalizeRequest): void {
+  public handle(request: FNodeDropToGroupFinalizeRequest): void {
     if (!this._isValid()) {
       return;
     }
@@ -29,7 +29,7 @@ export class FNodeDragToParentFinalizeExecution
 
   private _isValid(): boolean {
     return this._fDraggableDataContext.draggableItems
-      .some((x) => x instanceof FNodeDragToParentDragHandler);
+      .some((x) => x instanceof FNodeDropToGroupDragHandler);
   }
 
   private _emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {
@@ -38,7 +38,7 @@ export class FNodeDragToParentFinalizeExecution
     );
   }
 
-  private _getDragHandleItem(): FNodeDragToParentDragHandler {
+  private _getDragHandleItem(): FNodeDropToGroupDragHandler {
     const result = this._findDragHandleItem();
     if(!result) {
       throw new Error('NodeDragToParentDragHandler not found');
@@ -46,9 +46,9 @@ export class FNodeDragToParentFinalizeExecution
     return result;
   }
 
-  private _findDragHandleItem(): FNodeDragToParentDragHandler | undefined {
+  private _findDragHandleItem(): FNodeDropToGroupDragHandler | undefined {
     return this._fDraggableDataContext.draggableItems
-      .find((x) => x instanceof FNodeDragToParentDragHandler);
+      .find((x) => x instanceof FNodeDropToGroupDragHandler);
   }
 
   private _getDraggedNodeIds(): string[] {

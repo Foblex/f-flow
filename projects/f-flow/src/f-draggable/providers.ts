@@ -7,7 +7,7 @@ import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers
 import { F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS } from '../f-external-item';
 import { F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS } from '../f-selection-area';
 import { DRAG_AND_DROP_COMMON_PROVIDERS } from './domain';
-import { NODE_DRAG_TO_PARENT_PROVIDERS } from './f-node-drag-to-parent';
+import { NODE_DROP_TO_GROUP_PROVIDERS } from './f-drop-to-group';
 
 export const F_DRAGGABLE_PROVIDERS = [
 
@@ -23,7 +23,7 @@ export const F_DRAGGABLE_PROVIDERS = [
 
   ...NODE_PROVIDERS,
 
-  ...NODE_DRAG_TO_PARENT_PROVIDERS,
+  ...NODE_DROP_TO_GROUP_PROVIDERS,
 
   ...NODE_RESIZE_PROVIDERS,
 

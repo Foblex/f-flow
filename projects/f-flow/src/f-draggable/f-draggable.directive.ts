@@ -49,9 +49,9 @@ import { FInjector } from './f-injector';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
   FDropToGroupEvent,
-  FNodeDragToParentFinalizeRequest,
-  FNodeDragToParentPreparationRequest
-} from './f-node-drag-to-parent';
+  FNodeDropToGroupFinalizeRequest,
+  FNodeDropToGroupPreparationRequest
+} from './f-drop-to-group';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -172,7 +172,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeMovePreparationRequest(event));
 
-    this._fMediator.execute<void>(new FNodeDragToParentPreparationRequest(event));
+    this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event));
 
@@ -202,7 +202,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new NodeMoveFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FNodeDragToParentFinalizeRequest(event));
+    this._fMediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 

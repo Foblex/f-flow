@@ -6,7 +6,7 @@ export * from './f-connection';
 
 export * from './f-drag-handler';
 
-export * from './f-node-drag-to-parent';
+export * from './f-drop-to-group';
 
 export * from './f-node-move';
 

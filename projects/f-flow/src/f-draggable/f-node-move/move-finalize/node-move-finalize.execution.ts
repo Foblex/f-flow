@@ -8,7 +8,7 @@ import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
 import { IFDragHandler } from '../../f-drag-handler';
-import { FNodeDragToParentDragHandler } from '../../f-node-drag-to-parent/f-node-drag-to-parent.drag-handler';
+import { FNodeDropToGroupDragHandler } from '../../f-drop-to-group/f-node-drop-to-group.drag-handler';
 import { ILineAlignmentResult, INearestCoordinateResult } from '../../../f-line-alignment';
 import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
 import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
@@ -55,7 +55,7 @@ export class NodeMoveFinalizeExecution implements IExecution<NodeMoveFinalizeReq
 
   private _getItems(): IFDragHandler[] {
     return this._fDraggableDataContext.draggableItems
-      .filter((x) => !(x instanceof FNodeDragToParentDragHandler));
+      .filter((x) => !(x instanceof FNodeDropToGroupDragHandler));
   }
 
   private _getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
