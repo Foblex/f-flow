@@ -6,7 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeBase } from '../../../f-node';
 import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
-import { SelectAndUpdateNodeLayerRequest } from '../../../domain';
+import { isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
 import { LineAlignmentPreparationRequest } from '../line-alignment-preparation';
 import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
@@ -30,7 +30,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   private _fNode: FNodeBase | undefined;
 
   public handle(request: FNodeMovePreparationRequest): void {
-    if(!this._isValid(request)) {
+    if(!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
 
@@ -64,6 +64,10 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     this._fNode = this._fComponentsStore.fNodes
       .find(x => x.isContains(element) && !x.fDraggingDisabled);
     return this._fNode;
+  }
+
+  private _isValidTrigger(request: FNodeMovePreparationRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 
   //We drag nodes from selection model

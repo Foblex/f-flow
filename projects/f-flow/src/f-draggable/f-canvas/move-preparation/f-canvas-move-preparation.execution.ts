@@ -6,6 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FCanvasDragHandler } from '../f-canvas.drag-handler';
 import { FNodeBase } from '../../../f-node';
+import { isValidEventTrigger } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(FCanvasMovePreparationRequest)
@@ -19,7 +20,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   }
 
   public handle(request: FCanvasMovePreparationRequest): void {
-    if(!this._isValid(request)) {
+    if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
     this._fDraggableDataContext.onPointerDownScale = 1;
@@ -48,5 +49,9 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
       result = undefined;
     }
     return result;
+  }
+
+  private _isValidTrigger(request: FCanvasMovePreparationRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 }
