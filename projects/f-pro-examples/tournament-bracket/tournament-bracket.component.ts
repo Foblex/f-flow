@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FCanvasComponent,
-  FFlowModule, FNodeBase,
+  FFlowModule, FNodeBase, FZoomDirective,
 } from '@foblex/flow';
 import { ITournamentBracketItem } from './i-tournament-bracket-item';
 import { TournamentBracket } from './tournament-bracket';
@@ -18,6 +18,7 @@ import { PointExtensions } from '@foblex/2d';
   imports: [
     FFlowModule,
     DatePipe,
+    FZoomDirective,
   ]
 })
 export class TournamentBracketComponent implements OnInit {

@@ -13,7 +13,7 @@ import {
   FCanvasComponent,
   FCreateConnectionEvent,
   FFlowModule,
-  FReassignConnectionEvent
+  FReassignConnectionEvent, FZoomDirective
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
@@ -66,6 +66,7 @@ const STORE: IState = {
   standalone: true,
   imports: [
     FFlowModule,
+    FZoomDirective,
   ]
 })
 export class UndoRedoComponent implements OnInit {

@@ -34,7 +34,8 @@ import { VpToolbarComponent } from '../toolbar/vp-toolbar.component';
     FFlowModule,
     VpToolbarComponent,
     VpPaletteComponent,
-    VpNodeComponent
+    VpNodeComponent,
+    FZoomDirective
   ]
 })
 export class VpFlowComponent implements OnInit {

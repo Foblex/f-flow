@@ -36,8 +36,6 @@ export * from './css-cls';
 
 export * from './f-event-trigger';
 
-export * from './i-f-action-trigger';
-
 export * from './i-map';
 
 export * from './is-mobile';

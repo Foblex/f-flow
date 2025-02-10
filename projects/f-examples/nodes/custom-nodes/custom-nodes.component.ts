@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angul
 import {
   FCanvasChangeEvent,
   FCanvasComponent,
-  FFlowModule
+  FFlowModule, FZoomDirective
 } from '@foblex/flow';
 import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
@@ -23,7 +23,8 @@ import { BrowserService } from '@foblex/platform';
     MatButton,
     MatFormFieldModule,
     MatSelect,
-    MatOption
+    MatOption,
+    FZoomDirective
   ]
 })
 export class CustomNodesComponent implements OnDestroy {

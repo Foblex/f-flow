@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { FCanvasComponent, FCreateConnectionEvent, FFlowModule, FZoomDirective } from '@foblex/flow';
 
 @Component({
   selector: 'auto-snap',
@@ -8,7 +8,8 @@ import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/f
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    FZoomDirective
   ]
 })
 export class AutoSnapComponent {

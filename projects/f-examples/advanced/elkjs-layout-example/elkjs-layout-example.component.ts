@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal, ViewChild } from '@angular/core';
-import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
+import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
 import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
@@ -14,7 +14,8 @@ import { NgClass } from '@angular/common';
   imports: [
     FFlowModule,
     FCheckboxComponent,
-    NgClass
+    NgClass,
+    FZoomDirective
   ]
 })
 export class ElkjsLayoutExampleComponent implements OnInit {

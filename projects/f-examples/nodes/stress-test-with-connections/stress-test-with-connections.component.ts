@@ -6,7 +6,7 @@ import {
   EFMarkerType,
   FCanvasComponent,
   FFlowComponent,
-  FFlowModule
+  FFlowModule, FZoomDirective
 } from '@foblex/flow';
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -27,6 +27,7 @@ import { MatSelect, MatSelectChange } from '@angular/material/select';
     MatLabel,
     MatOption,
     MatSelect,
+    FZoomDirective,
   ]
 })
 export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit {

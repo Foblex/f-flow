@@ -6,7 +6,7 @@ import {
 import {
   EFMarkerType,
   FCanvasComponent, FCreateConnectionEvent, FDragStartedEvent,
-  FFlowModule, FReassignConnectionEvent,
+  FFlowModule, FReassignConnectionEvent, FZoomDirective,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 
@@ -18,6 +18,7 @@ import { generateGuid } from '@foblex/utils';
   standalone: true,
   imports: [
     FFlowModule,
+    FZoomDirective,
   ]
 })
 export class DragStartEndEventsComponent {

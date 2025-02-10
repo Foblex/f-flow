@@ -20,8 +20,6 @@ import { FEventTrigger, TriggerEvent } from '../domain';
 })
 export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin  {
 
-
-
   private _fMediator = inject(FMediator);
   private _elementReference = inject(ElementRef);
 

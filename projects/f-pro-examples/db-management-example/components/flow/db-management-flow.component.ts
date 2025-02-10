@@ -51,7 +51,8 @@ import { BrowserService } from '@foblex/platform';
     DbManagementTableComponent,
     CdkContextMenuTrigger,
     DbManagementContextMenuComponent,
-    DbManagementConnectionToolbarComponent
+    DbManagementConnectionToolbarComponent,
+    FZoomDirective
   ],
   host: {
     '[class.single-selection]': 'isSingleSelection'
