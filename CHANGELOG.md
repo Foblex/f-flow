@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.4.0](https://github.com/foblex/flow/compare/v17.2.1...v17.4.0) (2025-02-10)
+
+### Features
+
+* Added CustomTriggers for fDraggable, fZoom to allow for custom drag and zoom triggers ([34c87b8](https://github.com/foblex/flow/commit/34c87b84fd6ffe9443a61e93c2066f98aae6f1cb))
+* Enhance f-flow components with loading handlers and improved styling ([abd779c](https://github.com/foblex/flow/commit/abd779c9bfdf7469955ce83fedb18759083f6f40))
+* Added fDragStarted with data and fDragEnded events ([4ef0e17](https://github.com/foblex/flow/commit/4ef0e177eb35060d0eb5de2b90f545f7051476a1))
+* Added Connection Validation to prevent connections between incompatible connectors ([4ef0e17](https://github.com/foblex/flow/commit/4ef0e177eb35060d0eb5de2b90f545f7051476a1))
+* Added Grid System for fDraggable to allow for movement in grid increments ([23f39c5](https://github.com/foblex/flow/commit/23f39c556536e8d38e91df134f487c40f1715cc9))
+* Added fEmitOnNodeIntersect event to know when a node is intersected by connection ([23f39c5](https://github.com/foblex/flow/commit/23f39c556536e8d38e91df134f487c40f1715cc9))
+* Refactor styles and components for f-flow integration ([05ada49](https://github.com/foblex/flow/commit/05ada49295eeffbef102c86ead77241ef9a7871b))
+* Added Top, Left, Bottom, Right Resize Handles ([05ada49](https://github.com/foblex/flow/commit/05ada49295eeffbef102c86ead77241ef9a7871b))
+
+### Documentation
+
+* Added StressTestWithConnections example ([7e7e4f5](https://github.com/foblex/flow/commit/7e7e4f5ab402b8cec84fbae5f36ff3bceb5bdd37))
+* Added ConnectabilityCheck examples ([fac0ff1](https://github.com/foblex/flow/commit/fac0ff118f8f1143186f3d29174468af1fff45f1))
+* Added AssignNodeToConnection example ([377b610](https://github.com/foblex/flow/commit/377b6109e6ca65f654f62976fe50b8277d7d542b))
+* Added ConnectionText and CustomConnectionType examples ([eb248c0](https://github.com/foblex/flow/commit/eb248c044bf854a208e4930e405b990a24840328))
+* Added ConnectionCenter examples ([9b7d1ed](https://github.com/foblex/flow/commit/9b7d1edd5b537feeb132e2564e61538c2baa784b))
+* Added AddNodeToPalette example ([d1d2ab9](https://github.com/foblex/flow/commit/d1d2ab999b4f57f17a30c18a9c7b4aa15d6015c2))
+* Added GridSystem example ([ec4cef8](https://github.com/foblex/flow/commit/ec4cef837158f7301b76a56d855a242b63e3c663))
+* Added Undo/Redo example ([82c57cd](https://github.com/foblex/flow/commit/82c57cdf8a018c0f37921756d1801c0b0dc3d980))
+* Added DragStart/EndEvents example ([87daaaa](https://github.com/foblex/flow/commit/87daaaa211360dd9d1b11e0c6a6ac27d93987d1f))
+* Added CustomEventTriggers example ([015865d](https://github.com/foblex/flow/commit/015865d2bf2ba75483fed2c28bacc827d646a116))
+* Updated ResizeHandle example ([6735cf5](https://github.com/foblex/flow/commit/6735cf5dd636dad4838032765f5da862763d6f1f))
+* Updated AutoSnap example ([fcfce91](https://github.com/foblex/flow/commit/fcfce91ea082d503d54f982fd624bded6838e3fc))
+
 ## [17.0.1](https://github.com/foblex/flow/compare/v16.0.0...v17.0.1) (2024-12-29)
 
 ### Features

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FCanvasComponent,
-  FFlowModule
+  FFlowModule, FZoomDirective
 } from '@foblex/flow';
 import { NgForOf } from '@angular/common';
 import { PointExtensions } from '@foblex/2d';
@@ -15,6 +15,7 @@ import { PointExtensions } from '@foblex/2d';
   imports: [
     FFlowModule,
     NgForOf,
+    FZoomDirective,
   ]
 })
 export class StressTestComponent implements OnInit {

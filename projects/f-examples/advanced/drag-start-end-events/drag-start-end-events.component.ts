@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  Component, signal,
-  ViewChild
+  Component, signal, viewChild,
 } from '@angular/core';
 import {
   EFMarkerType,
   FCanvasComponent, FCreateConnectionEvent, FDragStartedEvent,
-  FFlowModule, FReassignConnectionEvent,
+  FFlowModule, FReassignConnectionEvent, FZoomDirective,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 
@@ -18,12 +17,12 @@ import { generateGuid } from '@foblex/utils';
   standalone: true,
   imports: [
     FFlowModule,
+    FZoomDirective,
   ]
 })
 export class DragStartEndEventsComponent {
 
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvas!: FCanvasComponent;
+  protected fCanvas = viewChild(FCanvasComponent);
 
   protected readonly eMarkerType = EFMarkerType;
 
@@ -45,7 +44,7 @@ export class DragStartEndEventsComponent {
   } ];
 
   protected onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 
   protected onDragStarted(event: FDragStartedEvent): void {

@@ -10,11 +10,11 @@ import { FCheckboxComponent } from '@foblex/m-render';
   standalone: true,
   imports: [
     FFlowModule,
-    FCheckboxComponent
+    FCheckboxComponent,
+    FZoomDirective
   ]
 })
 export class ZoomComponent {
-
 
   @ViewChild(FCanvasComponent, { static: true })
   protected fCanvas!: FCanvasComponent;

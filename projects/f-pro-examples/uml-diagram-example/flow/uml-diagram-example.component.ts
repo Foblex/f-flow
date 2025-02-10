@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild, } fro
 import {
   EFMarkerType,
   FCanvasComponent,
-  FFlowModule,
+  FFlowModule, FZoomDirective,
 } from '@foblex/flow';
 import { Point } from '@foblex/2d';
 import { UML_CHART_GROUPS } from './groups';
@@ -19,6 +19,7 @@ import { UML_CHART_CONNECTIONS } from './connections';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FFlowModule,
+    FZoomDirective,
   ]
 })
 export class UmlDiagramExampleComponent {

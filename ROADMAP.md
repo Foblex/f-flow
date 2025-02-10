@@ -25,12 +25,13 @@ This roadmap outlines the key milestones and objectives for the project's develo
   Removes the strict input/output designation for nodes, allowing connections to be created and attached in any direction.  
   [Details](https://github.com/Foblex/f-flow/discussions/88)
 
-- **Customize triggers for drag and zoom events** *(In Progress)*  
-  Enables users to define their own key combinations for triggering events like drag, zoom, and other interactions.
-
 ---
 
 ### Completed Tasks
+
+- **Customize triggers for drag and zoom events** (Completed on 2025-02-10)
+
+  Enables users to define their own key combinations for triggering events like drag, zoom, and other interactions.
 
 - **DragStart and DragEnd events with data** (Completed on 2025-02-07)  
   Implemented events that transmit data when dragging starts and ends.

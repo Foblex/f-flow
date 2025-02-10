@@ -10,13 +10,11 @@ import { FDraggableDirective } from './f-draggable';
 import { F_SELECTION_AREA_PROVIDERS } from './f-selection-area';
 import { F_LINE_ALIGNMENT_PROVIDERS } from './f-line-alignment';
 import { F_MINIMAP_PROVIDERS } from './f-minimap';
-import { F_ZOOM_PROVIDERS } from './f-zoom';
 
 @NgModule({
   declarations: [
     ...F_BACKGROUND_PROVIDERS,
     ...F_CANVAS_PROVIDERS,
-    ...F_ZOOM_PROVIDERS,
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
     ...F_FLOW_PROVIDERS,
@@ -33,7 +31,6 @@ import { F_ZOOM_PROVIDERS } from './f-zoom';
   exports: [
     ...F_BACKGROUND_PROVIDERS,
     ...F_CANVAS_PROVIDERS,
-    ...F_ZOOM_PROVIDERS,
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
     ...F_FLOW_PROVIDERS,

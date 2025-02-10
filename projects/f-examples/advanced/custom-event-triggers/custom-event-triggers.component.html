@@ -1,0 +1,47 @@
+<f-flow fDraggable
+        [fNodeMoveTrigger]="nodeMoveTrigger"
+        [fCreateConnectionTrigger]="connectionTrigger"
+        (fLoaded)="onLoaded()"
+        (fCreateConnection)="onConnectionCreated($event)"
+        (fReassignConnection)="onConnectionReassigned($event)">
+  <f-canvas fZoom [fWheelTrigger]="zoomTrigger">
+    <f-connection-for-create fBehavior="fixed" fType="segment">
+      <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.START" class="connection-marker"
+           [height]="5" [width]="5"
+           [refX]="2.5" [refY]="2.5" markerUnits="strokeWidth">
+        <circle cx="350" cy="350" r="350"/>
+      </svg>
+      <svg viewBox="0 0 6 7" fMarker [type]="eMarkerType.END" class="connection-marker"
+           [height]="7" [width]="6"
+           [refX]="5.5" [refY]="3.5" markerUnits="strokeWidth" orient="auto">
+        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z"/>
+      </svg>
+
+    </f-connection-for-create>
+    @for (connection of connections; track connection.id) {
+      <f-connection [fConnectionId]="connection.id"
+                    [fOutputId]="connection.source"
+                    [fInputId]="connection.target" fBehavior="fixed" fType="segment" [fSelectionDisabled]="true">
+        <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.START" class="connection-marker"
+             [height]="5" [width]="5"
+             [refX]="2.5" [refY]="2.5" markerUnits="strokeWidth">
+          <circle cx="350" cy="350" r="350"/>
+        </svg>
+        <svg viewBox="0 0 6 7" fMarker [type]="eMarkerType.END" class="connection-marker"
+             [height]="7" [width]="6"
+             [refX]="5.5" [refY]="3.5" markerUnits="strokeWidth" orient="auto">
+          <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z"/>
+        </svg>
+      </f-connection>
+    }
+    @for (node of nodes; track node.id) {
+      <div fNode [fNodePosition]="node.position"
+           fDragHandle (fNodePositionChange)="onNodeChanged(node.id, $event)">{{ node.text }}
+        <div fNodeInput fInputConnectableSide="left" class="left"></div>
+        <div fNodeOutput [isSelfConnectable]="false" fOutputConnectableSide="top" class="top"></div>
+        <div fNodeInput fInputConnectableSide="right" class="right"></div>
+        <div fNodeOutput [isSelfConnectable]="false" fOutputConnectableSide="bottom" class="bottom"></div>
+      </div>
+    }
+  </f-canvas>
+</f-flow>

@@ -9,6 +9,8 @@ import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FCreateConnectionFromOutletPreparationRequest } from './from-outlet-preparation';
 import { FCreateConnectionFromOutputPreparationRequest } from './from-output-preparation';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
+import { FReassignConnectionPreparationRequest } from '../../f-reassign-connection';
+import { isValidEventTrigger } from '../../../../domain';
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionPreparationRequest)
@@ -22,7 +24,7 @@ export class FCreateConnectionPreparationExecution
   private _fNode: FNodeBase | undefined;
 
   public handle(request: FCreateConnectionPreparationRequest): void {
-    if (!this._isValid(request)) {
+    if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
 
@@ -49,5 +51,9 @@ export class FCreateConnectionPreparationExecution
 
   private _isValidConditions(): boolean {
     return this._fDraggableDataContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
+  }
+
+  private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {
+    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 }

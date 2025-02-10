@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { FSelectionAreaBase } from './f-selection-area-base';
-import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
+import { F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { IPointerEvent } from '@foblex/drag-toolkit';
 import { IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './domain';
-import { FEventTrigger, TriggerEvent } from '../domain';
+import { FEventTrigger, FTriggerEvent } from '../domain';
 
 @Component({
   selector: "f-selection-area",
@@ -15,18 +15,16 @@ import { FEventTrigger, TriggerEvent } from '../domain';
     'class': 'f-selection-area f-component'
   },
   providers: [
-    { provide: F_DRAG_AND_DROP_PLUGIN, useExisting: FSelectionAreaComponent },
+    { provide: F_BEFORE_MAIN_PLUGIN, useExisting: FSelectionAreaComponent },
   ],
 })
 export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin  {
-
-
 
   private _fMediator = inject(FMediator);
   private _elementReference = inject(ElementRef);
 
   @Input()
-  public fTrigger: FEventTrigger = (event: TriggerEvent) => {
+  public fTrigger: FEventTrigger = (event: FTriggerEvent) => {
     return event.shiftKey;
   };
 

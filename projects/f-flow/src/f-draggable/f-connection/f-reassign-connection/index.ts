@@ -1,6 +1,6 @@
-export * from './reassign-connection-finalize';
+export * from './reassign-finalize';
 
-export * from './reassign-connection-preparation';
+export * from './reassign-preparation';
 
 export * from './f-reassign-connection.drag-handler';
 

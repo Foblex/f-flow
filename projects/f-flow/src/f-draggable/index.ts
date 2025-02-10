@@ -1,14 +1,16 @@
-export * from './f-canvas';
+export * from './domain';
 
-export * from './f-drag-handler';
+export * from './f-canvas';
 
 export * from './f-connection';
 
-export * from './domain';
+export * from './f-drag-handler';
 
-export * from './node';
+export * from './f-drop-to-group';
 
-export * from './node-resize';
+export * from './f-node-move';
+
+export * from './f-node-resize';
 
 export * from './f-single-select';
 

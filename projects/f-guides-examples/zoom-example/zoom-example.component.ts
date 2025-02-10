@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FFlowModule } from '@foblex/flow';
+import { FFlowModule, FZoomDirective } from '@foblex/flow';
 
 @Component({
   selector: 'zoom-example',
@@ -8,7 +8,8 @@ import { FFlowModule } from '@foblex/flow';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    FZoomDirective
   ]
 })
 export class ZoomExampleComponent {

@@ -203,6 +203,10 @@ function createEnvironment(): IDocsEnvironment {
       {
         tag: 'drag-start-end-events',
         component: import('../../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component')
+      },
+      {
+        tag: 'custom-event-triggers',
+        component: import('../../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component')
       }
     ],
     socialLinks: [
@@ -305,10 +309,6 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        },
         date: new Date('2024-12-01 23:05:25')
       },
       {
@@ -320,10 +320,6 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        },
         date: new Date('2024-11-22 17:19:38')
       },
       {
@@ -335,10 +331,6 @@ function nodesGroup(): INavigationGroup {
         image_width: 806,
         image_height: 600,
         image_type: 'image/png',
-        badge: {
-          text: 'New',
-          type: 'info'
-        },
         date: new Date('2025-01-16 19:19:10')
       },
     ],
@@ -742,6 +734,21 @@ function advancedGroup(): INavigationGroup {
           type: 'info'
         },
         date: new Date('2025-02-08 14:01:26')
+      },
+      {
+        link: 'custom-event-triggers',
+        text: 'Custom Event Triggers',
+        description: 'Create custom event triggers in Foblex Flow for Angular.',
+        image: './previews/examples/custom-event-triggers.light.png',
+        image_dark: './previews/examples/custom-event-triggers.dark.png',
+        image_width: 802,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        },
+        date: new Date('2025-02-10 19:00:00')
       }
     ]
   }

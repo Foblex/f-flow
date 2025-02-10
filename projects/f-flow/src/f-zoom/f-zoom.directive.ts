@@ -14,12 +14,11 @@ import {
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FMediator } from '@foblex/mediator';
 import {
-  AddZoomToStoreRequest,
+  AddZoomToStoreRequest, defaultEventTrigger,
   Deprecated,
-  EFTriggerEvent,
+  FEventTrigger,
   GetCanvasRequest,
-  GetFlowHostElementRequest,
-  IFActionTrigger,
+  GetFlowHostElementRequest, isValidEventTrigger,
   RemoveZoomFromStoreRequest,
   ResetZoomRequest,
   SetZoomRequest
@@ -28,11 +27,11 @@ import { FCanvasBase } from '../f-canvas';
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
-import { EFZoomAction } from './e-f-zoom-action';
 
 @Directive({
   selector: "f-canvas[fZoom]",
   exportAs: 'fComponent',
+  standalone: true,
   host: {
     'class': 'f-zoom f-component'
   },
@@ -45,24 +44,14 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _triggersListener: Function[] = [];
 
-  private _isEnabled: boolean = false;
-
   @Input({ alias: 'fZoom', transform: booleanAttribute })
-  protected set fZoom(isEnabled: boolean) {
-    if (isEnabled !== this._isEnabled) {
-      this._isEnabled = isEnabled;
-      this._listenTriggers();
-    }
-  }
+  public isEnabled: boolean = false;
 
-  /**
-   *  @deprecated`,
-   */
   @Input()
-  public fZoomTriggers: IFActionTrigger<EFZoomAction>[] = [
-    { event: EFTriggerEvent.WHEEL, action: EFZoomAction.WHEEL },
-    { event: EFTriggerEvent.DOUBLE_CLICK, action: EFZoomAction.DOUBLE_CLICK }
-  ];
+  public fWheelTrigger: FEventTrigger = defaultEventTrigger;
+
+  @Input()
+  public fDblClickTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input({ alias: 'fZoomMinimum', transform: numberAttribute })
   public override minimum: number = 0.1;
@@ -93,7 +82,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes[ 'fZoomTriggers' ]) {
+    if (changes[ 'isEnabled' ]) {
       this._listenTriggers();
     }
   }
@@ -104,47 +93,16 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     }
 
     this._disposeListeners();
-    this._validateTriggers();
-    if(!this._isEnabled) {
+    if (!this.isEnabled) {
       return;
     }
 
-    this.fZoomTriggers.forEach((x) => {
-      this._triggersListener.push(
-        this._rendered.listen(this._fHost, x.event, this._getAction(x))
-      );
-    });
+    this._triggersListener.push(this._rendered.listen(this._fHost, 'wheel', this._onWheel));
+    this._triggersListener.push(this._rendered.listen(this._fHost, 'dblclick', this._onDoubleClick));
   }
 
-  private _validateTriggers(): void {
-
-    const SUPPORTED_EVENTS = Object.values(EFTriggerEvent);
-    const SUPPORTED_ACTIONS = Object.values(EFZoomAction);
-
-    this.fZoomTriggers.forEach((trigger) => {
-      if (!SUPPORTED_EVENTS.includes(trigger.event)) {
-        throw new Error(`Unsupported event: ${ trigger.event }`);
-      }
-
-      if (!SUPPORTED_ACTIONS.includes(trigger.action)) {
-        throw new Error(`Unsupported action: ${ trigger.action }`);
-      }
-    });
-  }
-
-  private _getAction(trigger: IFActionTrigger): (event: Event) => void {
-    switch (trigger.action) {
-      case EFZoomAction.WHEEL:
-        return (event: Event) => this._onWheel(event as WheelEvent, trigger);
-      case EFZoomAction.DOUBLE_CLICK:
-        return (event: Event) => this._onDoubleClick(event as MouseEvent, trigger);
-      default:
-        throw new Error(`Unknown action: ${ trigger.action }`);
-    }
-  }
-
-  private _onWheel = (event: WheelEvent, trigger: IFActionTrigger) => {
-    if (trigger.validator && !trigger.validator(event)) {
+  private _onWheel = (event: WheelEvent) => {
+    if (!isValidEventTrigger(event, this.fWheelTrigger)) {
       return;
     }
     event.preventDefault();
@@ -164,8 +122,8 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     return deltaY > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
   }
 
-  private _onDoubleClick = (event: MouseEvent, trigger: IFActionTrigger) => {
-    if (trigger.validator && !trigger.validator(event)) {
+  private _onDoubleClick = (event: MouseEvent) => {
+    if (!isValidEventTrigger(event, this.fDblClickTrigger)) {
       return;
     }
     event.preventDefault();

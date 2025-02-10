@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { FCanvasComponent, FFlowModule } from '@foblex/flow';
+import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
 
 @Component({
@@ -11,6 +11,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
   imports: [
     FFlowModule,
     FCheckboxComponent,
+    FZoomDirective,
   ]
 })
 export class GridSystemComponent {
