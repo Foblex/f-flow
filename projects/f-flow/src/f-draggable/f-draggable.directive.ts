@@ -41,7 +41,7 @@ import {
 } from '../f-external-item';
 import { FSingleSelectRequest } from './f-single-select';
 import { FNodeResizeFinalizeRequest, FNodeResizePreparationRequest } from './f-node-resize';
-import { F_DRAG_AND_DROP_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
+import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
@@ -133,8 +133,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDragEnded = new EventEmitter<void>();
 
-  @ContentChildren(F_DRAG_AND_DROP_PLUGIN, { descendants: true })
-  private plugins!: QueryList<IFDragAndDropPlugin>;
+  @ContentChildren(F_BEFORE_MAIN_PLUGIN, { descendants: true })
+  private _beforePlugins!: QueryList<IFDragAndDropPlugin>;
+
+  @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
+  private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
   constructor(
     @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
@@ -158,13 +161,15 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new InitializeDragSequenceRequest());
 
-    this.plugins.forEach((p) => p.onPointerDown?.(event));
+    this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
     this._fMediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
 
     this._fMediator.execute<void>(new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
 
     this._fMediator.execute<void>(new FCreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
+
+    this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
 
     const isMouseLeftOrTouch = event.isMouseLeftButton();
     if (!isMouseLeftOrTouch) {
@@ -175,7 +180,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   protected override prepareDragSequence(event: IPointerEvent) {
 
-    this.plugins.forEach((p) => p.prepareDragSequence?.(event));
+    this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
 
     this._fMediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
@@ -187,12 +192,12 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
+    this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
+
     this._fMediator.execute<void>(new PrepareDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
-    this.plugins.forEach((x) => x.onSelect?.(event));
-
     this._fMediator.execute<void>(new PreventDefaultIsExternalItemRequest(event));
   }
 
@@ -201,7 +206,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerUp(event: IPointerEvent): void {
-    this.plugins.forEach((x) => x.onPointerUp?.(event));
+    this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._fMediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
 
@@ -216,6 +221,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
+
+    this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._fMediator.execute<void>(new EndDragSequenceRequest());
 
