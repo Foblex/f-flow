@@ -58,7 +58,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
       new FExternalItemCreatePlaceholderRequest(this._fExternalItem)
     );
 
-    this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost);
+    this._fBrowser.document.body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
   }
 
   private _matchElementSize(target: HTMLElement, sourceRect: IRect): void {
