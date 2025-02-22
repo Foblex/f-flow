@@ -1,13 +1,13 @@
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
-  Component, ContentChild,
+  Component, contentChild,
   ElementRef, inject, OnDestroy,
   OnInit
 } from "@angular/core";
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
-import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from './domain';
+import { F_BACKGROUND_PATTERN } from './domain';
 import { FMediator } from '@foblex/mediator';
 import {
   AddBackgroundToStoreRequest,
@@ -34,8 +34,7 @@ export class FBackgroundComponent
     return this._elementReference.nativeElement;
   }
 
-  @ContentChild(F_BACKGROUND_PATTERN, { static: false })
-  public fBackgroundPattern: IFBackgroundPattern | undefined;
+  protected fBackgroundPattern = contentChild(F_BACKGROUND_PATTERN);
 
   private _fMediator = inject(FMediator);
 
@@ -44,11 +43,11 @@ export class FBackgroundComponent
   }
 
   public ngAfterContentInit(): void {
-    this._fMediator.execute(new AddPatternToBackgroundRequest(this.fBackgroundPattern!));
+    this._fMediator.execute(new AddPatternToBackgroundRequest(this.fBackgroundPattern()));
   }
 
   public setTransform(transform: ITransformModel): void {
-    this.fBackgroundPattern?.setTransform(transform);
+    this.fBackgroundPattern()?.setTransform(transform);
   }
 
   public ngOnDestroy() {
