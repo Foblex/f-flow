@@ -1,6 +1,14 @@
 import {
   ChangeDetectionStrategy,
-  Component, effect, ElementRef, inject, Injector, input, Input, OnDestroy, OnInit, output, viewChild, ViewChild,
+  Component,
+  ElementRef,
+  inject,
+  Injector,
+  input,
+  OnDestroy,
+  OnInit,
+  output,
+  viewChild,
 } from "@angular/core";
 import {
   FCanvasBase, F_CANVAS
@@ -20,6 +28,7 @@ import {
 } from '../domain';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { Deprecated } from '../domain';
+import { mediatorEffect } from '../reactivity';
 
 @Component({
   selector: 'f-canvas',
@@ -50,29 +59,26 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   public override fGroupsContainer = viewChild.required<ElementRef<HTMLElement>>('fGroupsContainer');
-  public override fNodesContainer  = viewChild.required<ElementRef<HTMLElement>>('fNodesContainer');
-  public override fConnectionsContainer  = viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
-
-  constructor() {
-    super();
-    this._initializePositionChange();
-    this._initializeScaleChange();
-  }
-
-  private _initializePositionChange(): void {
-    effect(() => {
-      this._fMediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
-    }, { injector: this._injector });
-  }
-
-  private _initializeScaleChange(): void {
-    effect(() => {
-      this._fMediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
-    }, { injector: this._injector });
-  }
+  public override fNodesContainer = viewChild.required<ElementRef<HTMLElement>>('fNodesContainer');
+  public override fConnectionsContainer = viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
 
   public ngOnInit() {
     this._fMediator.execute(new AddCanvasToStoreRequest(this));
+
+    this._positionEffect();
+    this._scaleEffect();
+  }
+
+  private _positionEffect(): void {
+    mediatorEffect(() => {
+      return new InputCanvasPositionRequest(this.transform, PointExtensions.castToPoint(this.position()));
+    }, { injector: this._injector });
+  }
+
+  private _scaleEffect(): void {
+    mediatorEffect(() => {
+      return new InputCanvasScaleRequest(this.transform, this.scale());
+    }, { injector: this._injector });
   }
 
   public override redraw(): void {

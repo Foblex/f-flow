@@ -17,7 +17,7 @@ import {
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime, skip, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface INode {
@@ -112,7 +112,6 @@ export class UndoRedoComponent implements OnInit {
       }
 
       this._stateChanged();
-
       this.viewModel.position = event.position;
       this.viewModel.scale = event.scale;
     });
@@ -122,6 +121,7 @@ export class UndoRedoComponent implements OnInit {
     this._isFirstCanvasChange = false;
     this.viewModel.position = event.position;
     this.viewModel.scale = event.scale;
+    this._changeDetectorRef.markForCheck();
   }
 
   protected onConnectionCreated(event: FCreateConnectionEvent): void {
