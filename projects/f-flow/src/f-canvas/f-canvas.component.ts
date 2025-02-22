@@ -36,9 +36,9 @@ import { Deprecated } from '../domain';
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
+  private readonly _fMediator = inject(FMediator);
   private readonly _elementReference = inject(ElementRef);
   private readonly _injector = inject(Injector);
-  private _fMediator = inject(FMediator);
 
   public override fCanvasChange = output<FCanvasChangeEvent>();
 

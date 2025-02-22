@@ -28,15 +28,14 @@ import {
 export class FBackgroundComponent
   extends FBackgroundBase implements OnInit, AfterContentInit, OnDestroy {
 
-  private _elementReference = inject(ElementRef);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _elementReference = inject(ElementRef);
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
 
   protected fBackgroundPattern = contentChild(F_BACKGROUND_PATTERN);
-
-  private _fMediator = inject(FMediator);
 
   public ngOnInit(): void {
     this._fMediator.execute(new AddBackgroundToStoreRequest(this));
