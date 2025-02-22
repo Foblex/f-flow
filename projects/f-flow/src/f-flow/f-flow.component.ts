@@ -1,8 +1,7 @@
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
-  Component, DestroyRef, ElementRef, EventEmitter, inject,
-  Input, OnDestroy, OnInit, Output
+  Component, DestroyRef, ElementRef, inject, input, OnDestroy, OnInit, output
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
@@ -39,6 +38,7 @@ let uniqueId: number = 0;
   selector: 'f-flow',
   templateUrl: './f-flow.component.html',
   styleUrls: [ './f-flow.component.scss' ],
+  standalone: true,
   host: {
     '[attr.id]': 'fId',
     class: "f-component f-flow",
@@ -57,35 +57,26 @@ let uniqueId: number = 0;
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
 
   private _destroyRef = inject(DestroyRef);
-
   private _fMediator = inject(FMediator);
-
+  private _browserService = inject(BrowserService);
   private _elementReference = inject(ElementRef);
 
-  @Input('fFlowId')
-  public override fId: string = `f-flow-${ uniqueId++ }`;
+  public override fId = input<string>(`f-flow-${ uniqueId++ }`, { alias: 'fFlowId' });
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
 
-  @Output()
-  public override fLoaded: EventEmitter<void> = new EventEmitter<void>();
+  public override fLoaded = output<void>();
 
   private _isLoaded: boolean = false;
-
-  constructor(
-    private fBrowser: BrowserService,
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     this._fMediator.execute(new AddFlowToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
-    if (!this.fBrowser.isBrowser()) {
+    if (!this._browserService.isBrowser()) {
       return;
     }
     this._listenCountChanges();
@@ -103,7 +94,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _listenDataChanges(): void {
     this._fMediator.execute<FChannelHub>(
       new ListenDataChangesRequest()
-    ).listen(this._destroyRef,() => {
+    ).listen(this._destroyRef, () => {
       this._fMediator.execute(new RedrawConnectionsRequest());
 
       this._emitLoaded();

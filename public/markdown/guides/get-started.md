@@ -25,7 +25,7 @@ This command will add Foblex Flow to your package.json.
 
 Add the [f-flow](f-flow-component) component to your HTML template to get started:
 
-::: ng-component <draggable-flow></draggable-flow>
+::: ng-component <draggable-flow></draggable-flow> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.scss

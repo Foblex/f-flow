@@ -1,64 +1,67 @@
 import { SortNodeLayersRequest } from './sort-node-layers.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
 import { BrowserService } from '@foblex/platform';
+import { FCanvasBase } from '../../../f-canvas';
 
 @Injectable()
 @FExecutionRegister(SortNodeLayersRequest)
 export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest, void> {
 
-  private get fGroupsContainer(): HTMLElement {
-    return this.fComponentsStore.fCanvas!.fGroupsContainer.nativeElement;
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fBrowser = inject(BrowserService);
+
+  private get _fCanvas(): FCanvasBase {
+    return this._fComponentsStore.fCanvas!;
   }
 
-  private get fNodesContainer(): HTMLElement {
-    return this.fComponentsStore.fCanvas!.fNodesContainer.nativeElement;
+  private get _fGroupsContainer(): HTMLElement {
+    return this._fCanvas.fGroupsContainer().nativeElement;
   }
 
-  private get fNodesContainerElements(): HTMLElement[] {
-    return Array.from(this.fNodesContainer.children) as HTMLElement[];
+  private get _fNodesContainer(): HTMLElement {
+    return this._fCanvas.fNodesContainer().nativeElement;
   }
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-    private fBrowser: BrowserService,
-  ) {
+  private get _fNodeElements(): HTMLElement[] {
+    return Array.from(this._fNodesContainer.children) as HTMLElement[];
   }
 
   public handle(request: SortNodeLayersRequest): void {
-    this.getGroups().forEach((parent: FNodeBase) => {
-      this.moveChildrenNodes(this.getSortedChildrenNodes(parent));
+    this._getGroups().forEach((parent: FNodeBase) => {
+      this._moveChildrenNodes(this._getSortedChildrenNodes(parent));
     });
   }
 
-  private getGroups(): FNodeBase[] {
-    return this.fComponentsStore.fNodes.filter((x) => this.fGroupsContainer.contains(x.hostElement));
+  private _getGroups(): FNodeBase[] {
+    return this._fComponentsStore.fNodes
+      .filter((x) => this._fGroupsContainer.contains(x.hostElement));
   }
 
-  private getSortedChildrenNodes(
+  private _getSortedChildrenNodes(
     parent: FNodeBase,
   ): HTMLElement[] {
-    const allElements = this.fNodesContainerElements;
-    return this.getChildrenNodes(parent.fId)
+    const allElements = this._fNodeElements;
+    return this._getChildrenNodes(parent.fId)
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }
 
-  private getChildrenNodes(fId: string): HTMLElement[] {
-    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
-      .filter((x) => this.fNodesContainer.contains(x.hostElement)).map((x) => x.hostElement);
+  private _getChildrenNodes(fId: string): HTMLElement[] {
+    return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .filter((x) => this._fNodesContainer.contains(x.hostElement)).map((x) => x.hostElement);
   }
 
-  private moveChildrenNodes(
+  private _moveChildrenNodes(
     sortedChildrenGroups: HTMLElement[],
   ): void {
-    const fragment = this.fBrowser.document.createDocumentFragment();
+    const fragment = this._fBrowser.document.createDocumentFragment();
     sortedChildrenGroups.forEach((childGroup: HTMLElement) => {
       fragment.appendChild(childGroup); // Append automatically removes the element from its current position
     });
-    this.fNodesContainer.appendChild(fragment);
+    this._fNodesContainer.appendChild(fragment);
   }
 }

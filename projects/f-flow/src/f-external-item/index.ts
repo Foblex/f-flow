@@ -13,3 +13,5 @@ export * from './f-external-item-preview.directive';
 export * from './f-external-item-token';
 
 export * from './is-external-item';
+
+export * from './providers';

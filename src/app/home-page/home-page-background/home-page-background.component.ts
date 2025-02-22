@@ -31,7 +31,7 @@ import { BrowserService } from '@foblex/platform';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FFlowModule,
-    HomePageBackgroundNodeComponent
+    HomePageBackgroundNodeComponent,
   ]
 })
 export class HomePageBackgroundComponent implements OnInit, OnDestroy {

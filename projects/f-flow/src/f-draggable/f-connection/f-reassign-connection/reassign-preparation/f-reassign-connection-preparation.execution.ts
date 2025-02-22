@@ -79,7 +79,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _updateConnectionLayer(): void {
     this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement
+        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer().nativeElement
       )
     );
   }

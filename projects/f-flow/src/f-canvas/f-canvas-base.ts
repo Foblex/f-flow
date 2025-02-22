@@ -1,5 +1,5 @@
 import { PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
-import { Directive, ElementRef, EventEmitter, InjectionToken } from '@angular/core';
+import { Directive, ElementRef, InjectionToken, OutputEmitterRef, Signal } from '@angular/core';
 import { FCanvasChangeEvent } from './domain';
 import { IHasHostElement } from '../i-has-host-element';
 
@@ -8,15 +8,15 @@ export const F_CANVAS = new InjectionToken<FCanvasBase>('F_CANVAS');
 @Directive()
 export abstract class FCanvasBase implements IHasHostElement {
 
-  public abstract fCanvasChange: EventEmitter<FCanvasChangeEvent>;
+  public abstract fCanvasChange: OutputEmitterRef<FCanvasChangeEvent>;
 
   public abstract hostElement: HTMLElement;
 
-  public abstract fGroupsContainer: ElementRef<HTMLElement>;
+  public abstract fGroupsContainer: Signal<ElementRef<HTMLElement>>;
 
-  public abstract fNodesContainer: ElementRef<HTMLElement>;
+  public abstract fNodesContainer: Signal<ElementRef<HTMLElement>>;
 
-  public abstract fConnectionsContainer: ElementRef<HTMLElement>;
+  public abstract fConnectionsContainer: Signal<ElementRef<HTMLElement>>;
 
   public transform = TransformModelExtensions.default();
 
