@@ -19,6 +19,7 @@ import {
   selector: "f-background",
   template: "<svg><ng-content></ng-content></svg>",
   styleUrls: [ "./f-background.component.scss" ],
+  standalone: true,
   host: {
     'class': 'f-component f-background'
   },

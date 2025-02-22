@@ -15,7 +15,6 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
 
 @NgModule({
   declarations: [
-    ...F_BACKGROUND_PROVIDERS,
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
     ...F_LINE_ALIGNMENT_PROVIDERS,
@@ -28,6 +27,7 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
   imports: [
     ...F_FLOW_PROVIDERS,
     ...F_CANVAS_PROVIDERS,
+    ...F_BACKGROUND_PROVIDERS,
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
 
