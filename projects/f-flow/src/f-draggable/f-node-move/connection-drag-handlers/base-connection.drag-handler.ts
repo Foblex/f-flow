@@ -68,8 +68,9 @@ export class BaseConnectionDragHandler {
 
   private _redrawConnection(line: ILine): void {
     this.fConnection.setLine(
-      line.point1, this._fOutputWithRect.fConnector.fConnectableSide,
-      line.point2, this._fInputWithRect.fConnector.fConnectableSide
+      line,
+      this._fOutputWithRect.fConnector.fConnectableSide,
+      this._fInputWithRect.fConnector.fConnectableSide
     );
     this.fConnection.redraw();
   }

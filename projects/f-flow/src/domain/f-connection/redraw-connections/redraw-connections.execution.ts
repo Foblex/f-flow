@@ -61,7 +61,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
 
     this._setMarkers(fConnection);
 
-    fConnection.setLine(line.point1, fOutput.fConnectableSide, line.point2, fInput.fConnectableSide);
+    fConnection.setLine(line, fOutput.fConnectableSide, fInput.fConnectableSide);
 
     fConnection.initialize();
     fConnection.isSelected() ? fConnection.markAsSelected() : null;

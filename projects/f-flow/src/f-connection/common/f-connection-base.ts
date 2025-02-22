@@ -7,7 +7,7 @@ import { IHasConnectionFromTo } from './i-has-connection-from-to';
 import { IHasConnectionText } from './i-has-connection-text';
 import { IConnectionPath } from './f-path';
 import { IConnectionGradient } from './f-gradient';
-import { FConnectionDragHandleComponent } from './f-drag-handle';
+import { FConnectionDragHandleEndComponent } from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
 import { IConnectionText } from './f-connection-text';
 import { EFConnectableSide } from '../../f-connectors';
@@ -68,7 +68,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fGradient: IConnectionGradient;
 
-  public abstract fDragHandle: FConnectionDragHandleComponent;
+  public abstract fDragHandle: FConnectionDragHandleEndComponent;
 
   public abstract fSelection: FConnectionSelectionComponent;
 
@@ -99,11 +99,11 @@ export abstract class FConnectionBase extends MIXIN_BASE
     return (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element);
   }
 
-  public setLine(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): void {
-    this.line = LineExtensions.initialize(source, target);
-    const pathResult = this.getPathResult(source, sourceSide, target, targetSide);
+  public setLine({ point1, point2 }: ILine, sourceSide: EFConnectableSide, targetSide: EFConnectableSide): void {
+    this.line = LineExtensions.initialize(point1, point2);
+    const pathResult = this.getPathResult(point1, sourceSide, point2, targetSide);
     this.path = pathResult.path;
-    this.penultimatePoint = pathResult.penultimatePoint || source;
+    this.penultimatePoint = pathResult.penultimatePoint || point1;
     this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
   }
 
