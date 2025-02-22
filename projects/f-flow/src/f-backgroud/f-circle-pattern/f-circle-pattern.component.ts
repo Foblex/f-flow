@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component, DestroyRef,
-  ElementRef, inject, Input, OnChanges, OnDestroy,
+  ElementRef, inject, input, Input, OnChanges, OnDestroy,
   OnInit, SimpleChanges
 } from "@angular/core";
 import {
@@ -20,6 +20,7 @@ let uniqueId: number = 0;
 @Component({
   selector: "f-circle-pattern",
   template: ``,
+  standalone: true,
   host: {
     '[attr.id]': 'id'
   },
@@ -30,24 +31,19 @@ let uniqueId: number = 0;
 })
 export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
 
-  private _destroyRef = inject(DestroyRef);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _elementReference = inject(ElementRef);
+  private readonly _fBrowser = inject(BrowserService);
 
-  private _elementReference = inject(ElementRef);
-
-  private _stateChanges = new FChannel();
+  private readonly _stateChanges = new FChannel();
 
   public get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
 
-  @Input()
-  public id: string = `f-pattern-${ uniqueId++ }`;
-
-  @Input()
-  public color: string = 'rgba(0,0,0,0.1)';
-
-  @Input()
-  public radius: number = 20;
+  public id = input<string>(`f-pattern-${ uniqueId++ }`);
+  public color = input<string>('rgba(0,0,0,0.1)');
+  public radius = input<number>(20);
 
   private _scaledRadius: number = 20;
 
@@ -59,7 +55,6 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   private _circle!: SVGCircleElement;
 
   constructor(
-    private _fBrowser: BrowserService
   ) {
     this._createPattern();
   }
@@ -96,7 +91,7 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   private _calculatePattern(): void {
     this._position.x = this._transform.position.x + this._transform.scaledPosition.x;
     this._position.y = this._transform.position.y + this._transform.scaledPosition.y;
-    this._scaledRadius = this.radius * this._transform.scale;
+    this._scaledRadius = this.radius() * this._transform.scale;
   }
 
   private _redrawPattern(): void {
@@ -107,10 +102,10 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   }
 
   private _redrawElement(): void {
-    this._circle.setAttribute('fill', this.color);
+    this._circle.setAttribute('fill', this.color());
     this._circle.setAttribute('cx', `${ this._scaledRadius / 2 }`);
     this._circle.setAttribute('cy', `${ this._scaledRadius / 2 }`);
-    this._circle.setAttribute('r', `${ this._scaledRadius / this.radius }`);
+    this._circle.setAttribute('r', `${ this._scaledRadius / this.radius() }`);
   }
 
   public setTransform(transform: ITransformModel): void {
