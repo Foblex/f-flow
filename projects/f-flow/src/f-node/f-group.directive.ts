@@ -53,7 +53,24 @@ export class FGroupDirective extends FNodeBase
     return this._position;
   }
   @Output('fGroupPositionChange')
-  public override positionChange: EventEmitter<IPoint> = new EventEmitter<IPoint>();
+  public override positionChange = new EventEmitter<IPoint>();
+
+
+  @Input('fGroupRotate')
+  public override set rotate(value: number) {
+    if(this._rotate !== value) {
+      this._rotate = value;
+      this.redraw();
+      this.refresh();
+    }
+  }
+  public override get rotate(): number {
+    return this._rotate;
+  }
+
+  @Output('fGroupRotateChange')
+  public override rotateChange = new EventEmitter<number>();
+
 
   @Input('fGroupSize')
   public override set size(value: ISize) {
@@ -67,7 +84,7 @@ export class FGroupDirective extends FNodeBase
     return this._size!;
   }
   @Output('fGroupSizeChange')
-  public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
+  public override sizeChange = new EventEmitter<IRect>();
 
   @Input({ alias: 'fGroupDraggingDisabled', transform: booleanAttribute })
   public override fDraggingDisabled: boolean = false;

@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, InjectionToken, Input
+  Directive, ElementRef, InjectionToken
 } from "@angular/core";
 import { IHasHostElement } from '../../i-has-host-element';
 
@@ -9,21 +9,10 @@ export const F_ROTATE_HANDLE: InjectionToken<FRotateHandleDirective> = new Injec
   selector: "[fRotateHandle]",
   host: {
     class: `f-rotate-handle f-component`,
-    '[class.f-rotate-handle-disabled]': 'disabled',
   },
-  standalone: true,
   providers: [ { provide: F_ROTATE_HANDLE, useExisting: FRotateHandleDirective } ],
 })
 export class FRotateHandleDirective implements IHasHostElement {
-
-  private isDisabled: boolean = false;
-  // @Input('fRotateHandleDisabled')
-  // public set disabled(isDisabled: boolean | undefined | string) {
-  //   this.isDisabled = BooleanExtensions.castToBoolean(isDisabled);
-  // }
-  public get disabled(): boolean {
-    return this.isDisabled;
-  }
 
   public get hostElement(): HTMLElement {
     return this.elementReference.nativeElement;

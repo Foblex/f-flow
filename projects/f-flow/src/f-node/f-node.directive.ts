@@ -65,6 +65,22 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     }
   }
 
+  @Input('fNodeRotate')
+  public override set rotate(value: number) {
+    if(this._rotate !== value) {
+      this._rotate = value;
+      this.redraw();
+      this.refresh();
+    }
+  }
+  public override get rotate(): number {
+    return this._rotate;
+  }
+
+  @Output('fNodeRotateChange')
+  public override rotateChange = new EventEmitter<number>();
+
+
   public override get size(): ISize {
     return this._size!;
   }
