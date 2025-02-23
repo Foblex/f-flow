@@ -1,5 +1,6 @@
 import {
-  Directive, ElementRef, HostBinding, inject, InjectionToken, Input
+  computed,
+  Directive, ElementRef, inject, InjectionToken, input
 } from "@angular/core";
 import { EFResizeHandleType } from './e-f-resize-handle-type';
 import { IHasHostElement } from '../../i-has-host-element';
@@ -11,24 +12,23 @@ export const F_RESIZE_HANDLE = new InjectionToken<FResizeHandleDirective>('F_RES
   selector: "[fResizeHandle]",
   host: {
     class: `f-resize-handle f-component`,
-    '[attr.data-f-resize-handle-type]': 'type.toUpperCase()',
+    '[attr.data-f-resize-handle-type]': 'type().toUpperCase()',
+    '[class]': 'class()'
   },
   providers: [ { provide: F_RESIZE_HANDLE, useExisting: FResizeHandleDirective } ],
 })
 export class FResizeHandleDirective implements IHasHostElement {
 
-  private _elementReference = inject(ElementRef);
+  private readonly _elementReference = inject(ElementRef);
 
-  @Input({
+  public type = input.required<EFResizeHandleType, unknown>({
     alias: 'fResizeHandleType',
-    transform: (x: unknown) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType)
-  })
-  public type: EFResizeHandleType = EFResizeHandleType.LEFT_TOP;
+    transform: (x) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType)
+  });
 
-  @HostBinding('class')
-  public get typeClass(): string {
-    return `f-resize-handle-${ EFResizeHandleType[ this.type.toUpperCase() as keyof typeof EFResizeHandleType ] }`;
-  }
+  protected class = computed(() => {
+    return `f-resize-handle-${ EFResizeHandleType[ this.type().toUpperCase() as keyof typeof EFResizeHandleType ] }`;
+  })
 
   public get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;

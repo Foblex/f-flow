@@ -3,16 +3,17 @@ import {
 } from "@angular/core";
 import { IHasHostElement } from '../../i-has-host-element';
 
-// export const F_ROTATE_HANDLE: InjectionToken<FRotateHandleDirective> = new InjectionToken<FRotateHandleDirective>('F_ROTATE_HANDLE');
-//
-// @Directive({
-//   selector: "[fRotateHandle]",
-//   host: {
-//     class: `f-rotate-handle f-component`,
-//     '[class.f-rotate-handle-disabled]': 'disabled',
-//   },
-//   providers: [ { provide: F_ROTATE_HANDLE, useExisting: FRotateHandleDirective } ],
-// })
+export const F_ROTATE_HANDLE: InjectionToken<FRotateHandleDirective> = new InjectionToken<FRotateHandleDirective>('F_ROTATE_HANDLE');
+
+@Directive({
+  selector: "[fRotateHandle]",
+  host: {
+    class: `f-rotate-handle f-component`,
+    '[class.f-rotate-handle-disabled]': 'disabled',
+  },
+  standalone: true,
+  providers: [ { provide: F_ROTATE_HANDLE, useExisting: FRotateHandleDirective } ],
+})
 export class FRotateHandleDirective implements IHasHostElement {
 
   private isDisabled: boolean = false;
