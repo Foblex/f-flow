@@ -109,7 +109,9 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   private _drawConnectionForCreate(toConnectorRect: IRoundedRect, fSide: EFConnectableSide): void {
     const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
         this._fOutputWithRect.fRect,
+        this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
         toConnectorRect,
+        0,
         this._fConnection.fBehavior,
         this._fOutputWithRect.fConnector.fConnectableSide,
         fSide
@@ -120,11 +122,17 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._fConnection.redraw();
   }
 
+  private _getNodeRotate(id: string): number {
+    return this._fComponentsStore.fNodes.find((x) => x.fId === id)?.rotate || 0;
+  }
+
   private _drawSnapConnection(fClosestInput: IClosestInput | undefined): void {
     if (fClosestInput) {
       const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
           this._fOutputWithRect.fRect,
+          this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
           fClosestInput.fRect,
+          this._getNodeRotate(fClosestInput.fConnector.fNodeId),
           this._fSnapConnection!.fBehavior,
           this._fOutputWithRect.fConnector.fConnectableSide,
           fClosestInput.fConnector.fConnectableSide

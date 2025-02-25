@@ -18,8 +18,8 @@ import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
 @FExecutionRegister(GetNormalizedElementRectRequest)
 export class GetNormalizedElementRectExecution implements IExecution<GetNormalizedElementRectRequest, IRoundedRect> {
 
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;

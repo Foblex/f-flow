@@ -114,7 +114,9 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _getLineToPointer(difference: IPoint, fSide: EFConnectableSide): ILine {
     return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
         this._fOutputWithRect.fRect,
+        this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
         RoundedRect.fromRect(RectExtensions.initialize(difference.x, difference.y)),
+        0,
         this._fConnection.fBehavior,
         this._fOutputWithRect.fConnector.fConnectableSide,
         fSide
@@ -136,11 +138,17 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _getLineToClosestInput(fClosestInput: IClosestInput): ILine {
     return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       this._fOutputWithRect.fRect,
+      this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
       fClosestInput.fRect,
+      this._getNodeRotate(fClosestInput.fConnector.fNodeId),
       this._fSnapConnection!.fBehavior,
       this._fOutputWithRect.fConnector.fConnectableSide,
       fClosestInput.fConnector.fConnectableSide
     ));
+  }
+
+  private _getNodeRotate(id: string): number {
+    return this._fComponentsStore.fNodes.find((x) => x.fId === id)?.rotate || 0;
   }
 
   private _findClosestInput(difference: IPoint): IClosestInput | undefined {

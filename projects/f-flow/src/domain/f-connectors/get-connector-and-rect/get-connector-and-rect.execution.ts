@@ -10,7 +10,7 @@ import { FConnectorBase } from '../../../f-connectors';
 @FExecutionRegister(GetConnectorAndRectRequest)
 export class GetConnectorAndRectExecution implements IExecution<GetConnectorAndRectRequest, IConnectorAndRect> {
 
-  private _fMediator = inject(FMediator);
+  private readonly _fMediator = inject(FMediator);
 
   public handle(request: GetConnectorAndRectRequest): IConnectorAndRect {
     return {

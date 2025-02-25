@@ -1,15 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { FNodeRotatePreparationRequest } from './f-node-rotate-preparation.request';
-import { ITransformModel, Point } from '@foblex/2d';
+import { IPoint, IRect, ITransformModel, Point, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
+  CalculateInputConnectionsRequest, CalculateOutputConnectionsRequest, GetNormalizedElementRectRequest,
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { FNodeBase, isRotateHandle } from '../../../f-node';
 import { FNodeRotateDragHandler } from '../f-node-rotate.drag-handler';
+import { BaseConnectionDragHandler, SourceConnectionDragHandler, TargetConnectionDragHandler } from '../../f-node-move';
+import { FConnectionBase } from '../../../f-connection';
 
 @Injectable()
 @FExecutionRegister(FNodeRotatePreparationRequest)
@@ -30,7 +33,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   private _fNode: FNodeBase | undefined;
 
   public handle(request: FNodeRotatePreparationRequest): void {
-    if(!this._isValid(request) || !this._isValidTrigger(request)) {
+    if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
 
@@ -41,7 +44,11 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
       .elementTransform(this._fHost).div(this._transform.scale);
 
     this._fDraggableDataContext.draggableItems = [
-      new FNodeRotateDragHandler(this._fNode!)
+      new FNodeRotateDragHandler(
+        this._fNode!,
+        this._calculateOutputConnectionsDragHandlers(),
+        this._calculateInputConnectionsDragHandlers(),
+      )
     ];
   }
 
@@ -71,7 +78,40 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     );
   }
 
-  // private _getHandleType(element: HTMLElement): keyof typeof EFResizeHandleType {
-  //   return getDataAttrValueFromClosestElementWithClass(element, 'fResizeHandleType', '.f-resize-handle');
-  // }
+  private _calculateInputConnectionsDragHandlers(): {
+    connection: BaseConnectionDragHandler,
+    connector: IPoint,
+  }[] {
+    const pivot = this._getOriginalNodeRect().gravityCenter;
+
+    return this._fMediator.execute<FConnectionBase[]>(
+      new CalculateInputConnectionsRequest(this._fNode!)
+    ).map((x: FConnectionBase) => {
+      const connector = this._fComponentsStore.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
+      return {
+        connection: new TargetConnectionDragHandler(x),
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
+      }
+    });
+  }
+
+  private _calculateOutputConnectionsDragHandlers(): {
+    connection: BaseConnectionDragHandler,
+    connector: IPoint,
+  }[] {
+    const pivot = this._getOriginalNodeRect().gravityCenter;
+    return this._fMediator.execute<FConnectionBase[]>(
+      new CalculateOutputConnectionsRequest(this._fNode!)
+    ).map((x: FConnectionBase) => {
+      const connector = this._fComponentsStore.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
+      return {
+        connection: new SourceConnectionDragHandler(x),
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
+      }
+    });
+  }
+
+  private _getOriginalNodeRect(): IRect {
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode!.hostElement, false));
+  }
 }

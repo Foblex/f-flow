@@ -13,8 +13,8 @@ import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 @FExecutionRegister(RedrawConnectionsRequest)
 export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: RedrawConnectionsRequest): void {
     this._resetConnectors();
@@ -34,16 +34,16 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
 
   private _getOutput(id: string): FConnectorBase {
     const result = this._fComponentsStore.fOutputs.find((x) => x.fId === id)!;
-    if(!result) {
-      throw new Error(`Output with id ${id} not found`);
+    if (!result) {
+      throw new Error(`Output with id ${ id } not found`);
     }
     return result;
   }
 
   private _getInput(id: string): FConnectorBase {
     const result = this._fComponentsStore.fInputs.find((x) => x.fId === id)!;
-    if(!result) {
-      throw new Error(`Input with id ${id} not found`);
+    if (!result) {
+      throw new Error(`Input with id ${ id } not found`);
     }
     return result;
   }
@@ -77,10 +77,11 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
       )
     );
   }
-
+  
   private _setMarkers(connection: FConnectionBase): void {
     this._fMediator.execute(
       new CreateConnectionMarkersRequest(connection)
     );
   }
 }
+

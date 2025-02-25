@@ -1,0 +1,25 @@
+@use "../../flow-common";
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+  @include flow-common.connection-marker;
+}
+
+.f-node {
+  opacity: 0.5;
+  @include flow-common.node;
+}
+@include flow-common.connector;
+
+.f-rotate-handle {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -40px);
+  background-color: var(--node-background-color);
+  border: 1px solid var(--node-border-color);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: alias;
+}

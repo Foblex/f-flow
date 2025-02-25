@@ -1,6 +1,10 @@
 import { ILine, IPoint, PointExtensions, RoundedRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { CalculateConnectionLineByBehaviorRequest, GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
+import {
+  CalculateConnectionLineByBehaviorRequest,
+  GetConnectorAndRectRequest,
+  IConnectorAndRect
+} from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { fInject } from '../../f-injector';
@@ -8,14 +12,14 @@ import { FConnectionBase } from '../../../f-connection';
 
 export class BaseConnectionDragHandler {
 
-  private _fMediator = fInject(FMediator);
-  private _fComponentStore = fInject(FComponentsStore);
+  private readonly _fMediator = fInject(FMediator);
+  private readonly _fComponentsStore = fInject(FComponentsStore);
 
   private _fOutputWithRect!: IConnectorAndRect;
   private _fInputWithRect!: IConnectorAndRect;
 
   private get _fOutput(): FConnectorBase {
-    const result = this._fComponentStore.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
+    const result = this._fComponentsStore.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fOutput with id ${ this.fConnection.fOutputId } not found`));
     }
@@ -23,7 +27,7 @@ export class BaseConnectionDragHandler {
   }
 
   private get _fInput(): FConnectorBase {
-    const result = this._fComponentStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
+    const result = this._fComponentsStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fInput with id ${ this.fConnection.fInputId } not found`));
     }
@@ -59,11 +63,17 @@ export class BaseConnectionDragHandler {
   private _recalculateConnection(): ILine {
     return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
+      this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
       RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
+      this._getNodeRotate(this._fInputWithRect.fConnector.fNodeId),
       this.fConnection.fBehavior,
       this._fOutputWithRect.fConnector.fConnectableSide,
       this._fInputWithRect.fConnector.fConnectableSide
     ));
+  }
+
+  private _getNodeRotate(id: string): number {
+    return this._fComponentsStore.fNodes.find((x) => x.fId === id)?.rotate || 0;
   }
 
   private _redrawConnection(line: ILine): void {
