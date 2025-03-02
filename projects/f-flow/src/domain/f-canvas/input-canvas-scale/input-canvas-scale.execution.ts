@@ -10,12 +10,10 @@ export class InputCanvasScaleExecution implements IExecution<InputCanvasScaleReq
   private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: InputCanvasScaleRequest): void {
-    console.log('InputCanvasScaleExecution', request);
     if (!request.scale && request.scale !== 0) {
       return;
     }
     request.transform.scale = request.scale;
-    console.log('InputCanvasScaleExecution', request.scale);
     this._fComponentsStore.fCanvas?.redraw();
   }
 }

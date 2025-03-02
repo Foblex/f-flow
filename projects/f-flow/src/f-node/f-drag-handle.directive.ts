@@ -1,5 +1,5 @@
 import {
-  Directive, InjectionToken
+  Directive
 } from "@angular/core";
 
 @Directive({
