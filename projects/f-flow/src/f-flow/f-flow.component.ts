@@ -40,7 +40,7 @@ let uniqueId: number = 0;
   styleUrls: [ './f-flow.component.scss' ],
   standalone: true,
   host: {
-    '[attr.id]': 'fId',
+    '[attr.id]': 'fId()',
     class: "f-component f-flow",
   },
   providers: [
@@ -56,10 +56,10 @@ let uniqueId: number = 0;
 })
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
 
-  private _destroyRef = inject(DestroyRef);
-  private _fMediator = inject(FMediator);
-  private _browserService = inject(BrowserService);
-  private _elementReference = inject(ElementRef);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _browserService = inject(BrowserService);
+  private readonly _elementReference = inject(ElementRef);
 
   public override fId = input<string>(`f-flow-${ uniqueId++ }`, { alias: 'fFlowId' });
 

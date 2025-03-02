@@ -63,17 +63,11 @@ export class BaseConnectionDragHandler {
   private _recalculateConnection(): ILine {
     return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
-      this._getNodeRotate(this._fOutputWithRect.fConnector.fNodeId),
       RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
-      this._getNodeRotate(this._fInputWithRect.fConnector.fNodeId),
       this.fConnection.fBehavior,
       this._fOutputWithRect.fConnector.fConnectableSide,
       this._fInputWithRect.fConnector.fConnectableSide
     ));
-  }
-
-  private _getNodeRotate(id: string): number {
-    return this._fComponentsStore.fNodes.find((x) => x.fId === id)?.rotate || 0;
   }
 
   private _redrawConnection(line: ILine): void {

@@ -49,7 +49,6 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
   public prepareDragSequence(): void {
     this._fNodeRect = this._getOriginalNodeRect();
-    console.log(this._fNodeRect.gravityCenter);
     this._onDownPoint = this._calculateDownPoint();
     this._initialRotationToX = this._calculateAngleBetweenVectors(this._onDownPoint) - this._startRotation;
   }

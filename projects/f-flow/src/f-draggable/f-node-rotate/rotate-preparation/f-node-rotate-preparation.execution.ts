@@ -82,8 +82,6 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     connection: BaseConnectionDragHandler,
     connector: IPoint,
   }[] {
-    const pivot = this._getOriginalNodeRect().gravityCenter;
-
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateInputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
@@ -99,7 +97,6 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     connection: BaseConnectionDragHandler,
     connector: IPoint,
   }[] {
-    const pivot = this._getOriginalNodeRect().gravityCenter;
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateOutputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
