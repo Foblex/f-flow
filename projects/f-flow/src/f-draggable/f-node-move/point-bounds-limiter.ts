@@ -4,7 +4,7 @@ import { FComponentsStore } from '../../f-storage';
 
 export class PointBoundsLimiter {
 
-  private _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fComponentsStore = fInject(FComponentsStore);
 
   private _vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
   private _hCellSize = this._fComponentsStore.fDraggable!.hCellSize;

@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, computed, effect,
   ElementRef,
   inject,
   Injector,
-  input,
+  input, numberAttribute,
   OnDestroy,
   OnInit,
   output,
@@ -51,8 +51,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   public override fCanvasChange = output<FCanvasChangeEvent>();
 
-  public readonly position = input<IPoint | undefined>();
-  public readonly scale = input<number | undefined>();
+  public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), { transform: PointExtensions.castToPoint });
+  public readonly scale = input<number, unknown>(1, { transform: numberAttribute });
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
@@ -62,22 +62,21 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   public override fNodesContainer = viewChild.required<ElementRef<HTMLElement>>('fNodesContainer');
   public override fConnectionsContainer = viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this._fMediator.execute(new AddCanvasToStoreRequest(this));
-
-    this._positionEffect();
-    this._scaleEffect();
+    this._positionChange();
+    this._scaleChange();
   }
 
-  private _positionEffect(): void {
-    mediatorEffect(() => {
-      return new InputCanvasPositionRequest(this.transform, PointExtensions.castToPoint(this.position()));
+  private _positionChange(): void {
+    effect(() => {
+      this._fMediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
     }, { injector: this._injector });
   }
 
-  private _scaleEffect(): void {
-    mediatorEffect(() => {
-      return new InputCanvasScaleRequest(this.transform, this.scale());
+  private _scaleChange(): void {
+    effect(() => {
+      this._fMediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
     }, { injector: this._injector });
   }
 
@@ -94,15 +93,15 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   public centerGroupOrNode(id: string, animated: boolean = true): void {
-    this._fMediator.execute(new CenterGroupOrNodeRequest(id, animated));
+    setTimeout(() => this._fMediator.execute(new CenterGroupOrNodeRequest(id, animated)));
   }
 
   public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    this._fMediator.execute(new FitToFlowRequest(toCenter, animated));
+    setTimeout(() => this._fMediator.execute(new FitToFlowRequest(toCenter, animated)));
   }
 
   public resetScaleAndCenter(animated: boolean = true): void {
-    this._fMediator.execute(new ResetScaleAndCenterRequest(animated));
+    setTimeout(() => this._fMediator.execute(new ResetScaleAndCenterRequest(animated)));
   }
 
   public getScale(): number {

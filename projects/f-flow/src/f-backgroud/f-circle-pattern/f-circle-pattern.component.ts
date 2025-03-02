@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component, DestroyRef,
-  ElementRef, inject, input, Input, OnChanges, OnDestroy,
+  ElementRef, inject, input, Input, numberAttribute, OnChanges, OnDestroy,
   OnInit, SimpleChanges
 } from "@angular/core";
 import {
@@ -43,7 +43,7 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
 
   public id = input<string>(`f-pattern-${ uniqueId++ }`);
   public color = input<string>('rgba(0,0,0,0.1)');
-  public radius = input<number>(20);
+  public radius = input<number, unknown>(20, { transform: numberAttribute});
 
   private _scaledRadius: number = 20;
 

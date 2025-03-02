@@ -5,9 +5,9 @@ import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
 
 export class FLineAlignmentDragHandler implements IFDragHandler {
 
-  public fEventType = 'line-alignment';
+  public readonly fEventType = 'line-alignment';
 
-  private _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fComponentsStore = fInject(FComponentsStore);
 
   private _debounceTimer: any = null;
 
@@ -55,7 +55,7 @@ export class FLineAlignmentDragHandler implements IFDragHandler {
 
   public findNearestCoordinate(difference: IPoint): ILineAlignmentResult {
     const rect = RectExtensions.addPoint(this._draggedNodeRect, difference);
-    return findClosestAlignment(this._rects, rect, this._fComponentsStore.fLineAlignment!.fAlignThreshold);
+    return findClosestAlignment(this._rects, rect, this._fComponentsStore.fLineAlignment!.fAlignThreshold());
   }
 
   public onPointerUp(): void {

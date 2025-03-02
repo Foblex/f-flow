@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component, DestroyRef,
-  ElementRef, inject, input, OnChanges,
+  ElementRef, inject, input, numberAttribute, OnChanges,
   OnInit, SimpleChanges
 } from "@angular/core";
 import {
-  IPoint, ISize, ITransformModel,
+  ITransformModel,
   PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
@@ -42,8 +42,8 @@ export class FRectPatternComponent implements OnInit, OnChanges, IFBackgroundPat
   public id = input<string>(`f-pattern-${ uniqueId++ }`);
   public vColor = input<string>('rgba(0,0,0,0.1)');
   public hColor = input<string>('rgba(0,0,0,0.1)');
-  public vSize = input<number>(20);
-  public hSize = input<number>(20);
+  public vSize = input<number, unknown>(20, { transform: numberAttribute});
+  public hSize = input<number, unknown>(20, { transform: numberAttribute});
 
   private _transform = TransformModelExtensions.default();
 

@@ -40,6 +40,7 @@ export class RotateHandleComponent {
   } ];
 
   protected onLoaded(): void {
+    console.log(this._fCanvas());
     this._fCanvas().resetScaleAndCenter(false);
   }
 
