@@ -13,11 +13,10 @@ export class CalculateChangedPositionExecution
     return this.change(
       request.originalRect, request.difference,
       RESIZE_DIRECTIONS[ request.fResizeHandleType ], request.changedRect,
-      request.minimumSize
     );
   }
 
-  private change(originalRect: IRect, difference: IPoint, direction: IPoint, changedRect: IRect, minimumSize: ISize): IRect {
+  private change(originalRect: IRect, difference: IPoint, direction: IPoint, changedRect: IRect): IRect {
     return RectExtensions.initialize(
       originalRect.x + (direction.x === -1 ? difference.x : 0) + changedRect.x,
       originalRect.y + (direction.y === -1 ? difference.y : 0) + changedRect.y,

@@ -6,7 +6,6 @@ export class CalculateChangedSizeRequest {
   constructor(
     public originalRect: IRect,
     public difference: IPoint,
-    public minimumSize: ISize,
     public fResizeHandleType: EFResizeHandleType,
   ) {
   }

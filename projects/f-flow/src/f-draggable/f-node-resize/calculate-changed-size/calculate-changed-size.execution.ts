@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CalculateChangedSizeRequest } from './calculate-changed-size.request';
-import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RESIZE_DIRECTIONS } from '../resize-direction';
 
@@ -13,13 +13,12 @@ export class CalculateChangedSizeExecution
     return this.change(
       request.originalRect,
       request.difference,
-      request.minimumSize,
       RESIZE_DIRECTIONS[ request.fResizeHandleType ],
     );
   }
 
   private change(
-    rect: IRect, difference: IPoint, minimumSize: ISize, direction: IPoint
+    rect: IRect, difference: IPoint, direction: IPoint
   ): IRect {
     const result = RectExtensions.initialize(
       0, 0,

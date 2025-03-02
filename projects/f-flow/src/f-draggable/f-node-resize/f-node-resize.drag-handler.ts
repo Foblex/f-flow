@@ -49,25 +49,25 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _calculateChangedRect(difference: IPoint): IRect {
-    const changedSize = this._calculateSize(difference, this._resizeRestrictions.minimumSize);
-    return this._calculatePosition(difference, changedSize, this._resizeRestrictions.minimumSize);
+    const changedSize = this._calculateSize(difference);
+    return this._calculatePosition(difference, changedSize);
   }
 
-  private _calculateSize(difference: IPoint, minimumSize: ISize): IRect {
+  private _calculateSize(difference: IPoint): IRect {
     return this._fMediator.execute<IRect>(
-      new CalculateChangedSizeRequest(this._originalRect, difference, minimumSize, this._fResizeHandleType)
+      new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
     );
   }
 
-  private _calculatePosition(difference: IPoint, changedSize: IRect, minimumSize: ISize): IRect {
+  private _calculatePosition(difference: IPoint, changedSize: IRect): IRect {
     return this._fMediator.execute<IRect>(
-      new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, minimumSize, this._fResizeHandleType)
+      new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, this._fResizeHandleType)
     );
   }
 
   private _applyResizeChanges(changedRect: IRect): void {
     if(this._resizeRestrictions.childrenBounds) {
-      this._applyChildRestrictions(changedRect, this._resizeRestrictions.childrenBounds);
+      this._applyChildRestrictions(changedRect);
     }
 
     this._applyParentRestrictions(changedRect, this._resizeRestrictions.parentBounds);
@@ -80,9 +80,9 @@ export class FNodeResizeDragHandler implements IFDragHandler {
     this._fNode.redraw();
   }
 
-  private _applyChildRestrictions(changedRect: IRect, restrictions: IRect): void {
+  private _applyChildRestrictions(changedRect: IRect): void {
     this._fMediator.execute(
-      new ApplyChildResizeRestrictionsRequest(changedRect, restrictions)
+      new ApplyChildResizeRestrictionsRequest(changedRect, this._resizeRestrictions)
     );
   }
 
