@@ -7,7 +7,7 @@ describe('ResizeHandleComponent', () => {
     cy.get('f-flow').scrollIntoView();
 
     cy.get('div[data-f-node-id=\'f-node-0\']').invoke('css', 'transform')
-      .should('equal', 'matrix(1, 0, 0, 1, 0, 0)');
+      .should('equal', 'matrix(1, 0, 0, 1, -20, -20)');
 
     cy.get('div[data-f-node-id=\'f-node-0\']').invoke('css', 'width')
       .should('equal', '120px');

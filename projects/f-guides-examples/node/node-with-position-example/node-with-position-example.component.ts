@@ -8,7 +8,7 @@ import { FFlowModule } from '@foblex/flow';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
   ]
 })
 export class NodeWithPositionExampleComponent {

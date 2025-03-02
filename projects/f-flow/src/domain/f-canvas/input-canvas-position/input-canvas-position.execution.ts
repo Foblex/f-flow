@@ -8,7 +8,7 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(InputCanvasPositionRequest)
 export class InputCanvasPositionExecution implements IExecution<InputCanvasPositionRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: InputCanvasPositionRequest): void {
     if (!request.position) {
@@ -20,5 +20,6 @@ export class InputCanvasPositionExecution implements IExecution<InputCanvasPosit
       request.transform.scaledPosition = PointExtensions.initialize();
       this._fComponentsStore.fCanvas?.redraw();
     }
+    return void 0;
   }
 }

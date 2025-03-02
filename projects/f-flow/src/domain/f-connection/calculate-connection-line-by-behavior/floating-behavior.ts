@@ -1,5 +1,6 @@
 import { GetIntersections, ILine, IPoint } from '@foblex/2d';
 import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
+import { calculatePositionAfterRotation } from '../../../f-draggable/f-node-rotate/calculate-difference-after-rotation';
 
 export function floatingBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
   return _getIntersectionsLine(

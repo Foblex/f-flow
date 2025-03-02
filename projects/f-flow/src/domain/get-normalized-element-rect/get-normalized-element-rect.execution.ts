@@ -18,8 +18,8 @@ import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
 @FExecutionRegister(GetNormalizedElementRectRequest)
 export class GetNormalizedElementRectExecution implements IExecution<GetNormalizedElementRectRequest, IRoundedRect> {
 
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;
@@ -28,12 +28,11 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
   public handle(request: GetNormalizedElementRectRequest): IRoundedRect {
     const systemRect = this._getElementRoundedRect(request);
     const position = this._normalizePosition(systemRect);
-    const size = this._normalizeSize(systemRect);
+    const unscaledSize = this._unscaleSize(systemRect);
+    const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect)
 
-    return new RoundedRect(
-      position.x, position.y, size.width, size.height,
-      systemRect.radius1, systemRect.radius2, systemRect.radius3, systemRect.radius4
-    );
+    const offsetSize = this._getOffsetSize(request.element, unscaledSize);
+    return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 
   private _getElementRoundedRect(request: GetNormalizedElementRectRequest): IRoundedRect {
@@ -46,7 +45,18 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     return Point.fromPoint(rect).elementTransform(this._fComponentsStore.flowHost).sub(this._transform.scaledPosition).sub(this._transform.position).div(this._transform.scale);
   }
 
-  private _normalizeSize(rect: IRoundedRect): ISize {
+  private _unscaleSize(rect: IRoundedRect): ISize {
     return SizeExtensions.initialize(rect.width / this._transform.scale, rect.height / this._transform.scale);
+  }
+
+  private _getUnscaledRect(position: IPoint, size: ISize, rect: IRoundedRect): IRoundedRect {
+    return new RoundedRect(
+      position.x, position.y, size.width, size.height,
+      rect.radius1, rect.radius2, rect.radius3, rect.radius4
+    )
+  }
+
+  private _getOffsetSize(element: HTMLElement | SVGElement, size: ISize): ISize {
+    return SizeExtensions.offsetFromElement(element) || size
   }
 }

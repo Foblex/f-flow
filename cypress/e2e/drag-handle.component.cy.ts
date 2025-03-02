@@ -17,7 +17,7 @@ describe('DragHandleComponent', () => {
       cy.get('.f-node.f-drag-handle')
         .first().then(($dragHandle2: JQuery<HTMLElement>) => {
         const dragHandleRect2 = $dragHandle2.get(0).getBoundingClientRect();
-        expect(dragHandleRect.x + 150).to.equal(dragHandleRect2.x);
+        expect(Math.round(dragHandleRect.x + 150)).to.equal(Math.round(dragHandleRect2.x));
       })
     });
   });

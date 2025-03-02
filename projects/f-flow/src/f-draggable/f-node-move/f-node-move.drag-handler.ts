@@ -5,7 +5,7 @@ import { BaseConnectionDragHandler } from './connection-drag-handlers';
 
 export class FNodeMoveDragHandler implements IFDragHandler {
 
-  public fEventType = 'move-node';
+  public readonly fEventType = 'move-node';
 
   private readonly _onPointerDownPosition = PointExtensions.initialize();
 

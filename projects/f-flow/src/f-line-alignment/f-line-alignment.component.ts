@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, input, numberAttribute, OnDestroy, OnInit } from '@angular/core';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import {
   RemoveLineAlignmentFromStoreRequest,
@@ -21,11 +21,10 @@ import { FMediator } from '@foblex/mediator';
 export class FLineAlignmentComponent
   extends FLineAlignmentBase implements OnInit, OnDestroy {
 
-  @Input()
-  public override fAlignThreshold: number = 10;
+  public override fAlignThreshold = input<number, unknown>(10, { transform: numberAttribute });
 
-  private _fMediator = inject(FMediator);
-  private _elementReference = inject(ElementRef);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _elementReference = inject(ElementRef);
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;

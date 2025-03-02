@@ -1,81 +1,83 @@
 import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
 import { FNodeBase } from '../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes-and-groups';
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
+import { FCanvasBase } from '../../f-canvas';
 
 @Injectable()
 @FExecutionRegister(UpdateItemAndChildrenLayersRequest)
 export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateItemAndChildrenLayersRequest, void> {
 
-  private get fGroupsContainer(): HTMLElement {
-    return this.fComponentsStore.fCanvas!.fGroupsContainer.nativeElement;
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+
+  private get _fCanvas(): FCanvasBase {
+    return this._fComponentsStore.fCanvas!;
   }
 
-  private get fNodesContainer(): HTMLElement {
-    return this.fComponentsStore.fCanvas!.fNodesContainer.nativeElement;
+  private get _fGroupsContainer(): HTMLElement {
+    return this._fCanvas.fGroupsContainer().nativeElement;
   }
 
-  private get fConnectionsContainer(): HTMLElement {
-    return this.fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement;
+  private get _fNodesContainer(): HTMLElement {
+    return this._fCanvas.fNodesContainer().nativeElement;
   }
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator
-  ) {
+  private get _fConnectionsContainer(): HTMLElement {
+    return this._fCanvas.fConnectionsContainer().nativeElement;
   }
 
   public handle(request: UpdateItemAndChildrenLayersRequest): void {
 
     switch (request.itemContainer) {
-      case this.fGroupsContainer:
-        this.handleGroup(request);
+      case this._fGroupsContainer:
+        this._handleGroup(request);
         break;
-      case this.fNodesContainer:
-        this.handleNode(request);
+      case this._fNodesContainer:
+        this._handleNode(request);
         break;
-      case this.fConnectionsContainer:
-        this.handleConnection(request);
+      case this._fConnectionsContainer:
+        this._handleConnection(request);
         break;
       default:
         throw new Error('Unknown container');
     }
   }
 
-  private handleGroup(request: UpdateItemAndChildrenLayersRequest): void {
-    const childrenNodesAndGroups = this.getChildrenNodesAndGroups(request.item.fId);
-    const childrenGroups = this.getChildrenGroups(childrenNodesAndGroups);
-    this.updateLayers(this.fGroupsContainer, request.item.hostElement as HTMLElement, childrenGroups);
-    const childrenNodes = this.getChildrenNodes(childrenNodesAndGroups);
+  private _handleGroup(request: UpdateItemAndChildrenLayersRequest): void {
+    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId);
+    const childrenGroups = this._getChildrenGroups(childrenNodesAndGroups);
+    this._updateLayers(this._fGroupsContainer, request.item.hostElement as HTMLElement, childrenGroups);
+    const childrenNodes = this._getChildrenNodes(childrenNodesAndGroups);
     if (childrenNodes.length) {
-      this.updateLayers(this.fNodesContainer, childrenNodes[ 0 ], childrenNodes);
+      this._updateLayers(this._fNodesContainer, childrenNodes[ 0 ], childrenNodes);
     }
   }
 
-  private handleNode(request: UpdateItemAndChildrenLayersRequest): void {
-    const childrenNodesAndGroups = this.getChildrenNodesAndGroups(request.item.fId);
-    const childrenNodes = this.getChildrenNodes(childrenNodesAndGroups);
-    this.updateLayers(request.itemContainer, request.item.hostElement as HTMLElement, childrenNodes);
+  private _handleNode(request: UpdateItemAndChildrenLayersRequest): void {
+    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId);
+    const childrenNodes = this._getChildrenNodes(childrenNodesAndGroups);
+    this._updateLayers(request.itemContainer, request.item.hostElement as HTMLElement, childrenNodes);
   }
 
-  private handleConnection(request: UpdateItemAndChildrenLayersRequest): void {
-    this.updateLayers(request.itemContainer, request.item.hostElement as HTMLElement, []);
+  private _handleConnection(request: UpdateItemAndChildrenLayersRequest): void {
+    this._updateLayers(request.itemContainer, request.item.hostElement as HTMLElement, []);
   }
 
-  private updateLayers(itemContainer: HTMLElement, item: HTMLElement, elementsThatShouldBeInFront: HTMLElement[]): void {
+  private _updateLayers(itemContainer: HTMLElement, item: HTMLElement, elementsThatShouldBeInFront: HTMLElement[]): void {
     const allElements = Array.from(itemContainer.children) as HTMLElement[];
     const targetIndex = allElements.findIndex((x) => x === item);
-    if (this.isAnythingNeedToBeMoved(allElements, targetIndex, elementsThatShouldBeInFront)) {
-      this.fMediator.execute(
+    if (this._isAnythingNeedToBeMoved(allElements, targetIndex, elementsThatShouldBeInFront)) {
+      this._fMediator.execute(
         new MoveFrontElementsBeforeTargetElementRequest(itemContainer, allElements, elementsThatShouldBeInFront, targetIndex)
       );
     }
   }
 
-  private isAnythingNeedToBeMoved(allElements: HTMLElement[], targetIndex: number, elementsThatShouldBeInFront: HTMLElement[]): boolean {
+  private _isAnythingNeedToBeMoved(allElements: HTMLElement[], targetIndex: number, elementsThatShouldBeInFront: HTMLElement[]): boolean {
     for (let i = targetIndex + 1; i < allElements.length; i++) {
       if (!elementsThatShouldBeInFront.includes(allElements[ i ])) {
         return true;
@@ -84,19 +86,19 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
     return false;
   }
 
-  private getChildrenGroups(elements: HTMLElement[]): HTMLElement[] {
-    const allElements = Array.from(this.fGroupsContainer.children) as HTMLElement[];
-    return elements.filter((x) => this.fGroupsContainer.contains(x))
+  private _getChildrenGroups(elements: HTMLElement[]): HTMLElement[] {
+    const allElements = Array.from(this._fGroupsContainer.children) as HTMLElement[];
+    return elements.filter((x) => this._fGroupsContainer.contains(x))
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }
 
-  private getChildrenNodes(elements: HTMLElement[]): HTMLElement[] {
-    const allElements = Array.from(this.fNodesContainer.children) as HTMLElement[];
-    return elements.filter((x) => this.fNodesContainer.contains(x))
+  private _getChildrenNodes(elements: HTMLElement[]): HTMLElement[] {
+    const allElements = Array.from(this._fNodesContainer.children) as HTMLElement[];
+    return elements.filter((x) => this._fNodesContainer.contains(x))
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }
 
-  private getChildrenNodesAndGroups(fId: string): HTMLElement[] {
-    return this.fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
+  private _getChildrenNodesAndGroups(fId: string): HTMLElement[] {
+    return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
   }
 }

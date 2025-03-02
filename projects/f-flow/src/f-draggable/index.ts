@@ -12,6 +12,8 @@ export * from './f-node-move';
 
 export * from './f-node-resize';
 
+export * from './f-node-rotate';
+
 export * from './f-single-select';
 
 export * from './f-draggable.directive';

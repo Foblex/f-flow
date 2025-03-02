@@ -12,7 +12,7 @@ import { RectExtensions } from '@foblex/2d';
 export class UpdateNodeWhenStateOrSizeChangedExecution
   implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
 
-  private _fMediator = inject(FMediator);
+  private readonly _fMediator = inject(FMediator);
 
   public handle(request: UpdateNodeWhenStateOrSizeChangedRequest): void {
     const { hostElement, connectors, stateChanges } = request.fComponent;

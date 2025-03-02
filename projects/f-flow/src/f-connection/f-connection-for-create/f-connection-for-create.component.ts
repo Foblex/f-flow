@@ -16,7 +16,7 @@ import {
 import {
   CONNECTION_GRADIENT,
   CONNECTION_PATH, CONNECTION_TEXT,
-  FConnectionDragHandleComponent, FConnectionSelectionComponent, IConnectionGradient,
+  FConnectionDragHandleEndComponent, FConnectionSelectionComponent, IConnectionGradient,
   IConnectionPath, IConnectionText,
 } from '../common';
 import { EFConnectionBehavior } from '../common';
@@ -89,8 +89,8 @@ export class FConnectionForCreateComponent
   @ViewChild(CONNECTION_GRADIENT, { static: true })
   public override fGradient!: IConnectionGradient;
 
-  @ViewChild(FConnectionDragHandleComponent, { static: true })
-  public override fDragHandle!: FConnectionDragHandleComponent;
+  @ViewChild(FConnectionDragHandleEndComponent, { static: true })
+  public override fDragHandle!: FConnectionDragHandleEndComponent;
 
   @ViewChild(FConnectionSelectionComponent, { static: true })
   public override fSelection!: FConnectionSelectionComponent;

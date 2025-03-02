@@ -12,10 +12,10 @@ import { fInject } from '../f-injector';
 
 export class FNodeResizeDragHandler implements IFDragHandler {
 
-  public fEventType = 'node-resize';
-  public fData: any;
+  public readonly fEventType = 'node-resize';
+  public readonly fData: any;
 
-  private _fMediator = fInject(FMediator);
+  private readonly _fMediator = fInject(FMediator);
 
   private _originalRect!: IRect;
   private _resizeRestrictions!: INodeResizeRestrictions;
@@ -49,10 +49,11 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _calculateChangedRect(difference: IPoint): IRect {
-    return this._calculatePosition(difference, this._calculateSize(difference, this._resizeRestrictions.minimumSize));
+    const changedSize = this._calculateSize(difference);
+    return this._calculatePosition(difference, changedSize);
   }
 
-  private _calculateSize(difference: IPoint, minimumSize: ISize): IRect {
+  private _calculateSize(difference: IPoint): IRect {
     return this._fMediator.execute<IRect>(
       new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
     );
@@ -66,7 +67,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
 
   private _applyResizeChanges(changedRect: IRect): void {
     if(this._resizeRestrictions.childrenBounds) {
-      this._applyChildRestrictions(changedRect, this._resizeRestrictions.childrenBounds);
+      this._applyChildRestrictions(changedRect);
     }
 
     this._applyParentRestrictions(changedRect, this._resizeRestrictions.parentBounds);
@@ -79,9 +80,9 @@ export class FNodeResizeDragHandler implements IFDragHandler {
     this._fNode.redraw();
   }
 
-  private _applyChildRestrictions(changedRect: IRect, restrictions: IRect): void {
+  private _applyChildRestrictions(changedRect: IRect): void {
     this._fMediator.execute(
-      new ApplyChildResizeRestrictionsRequest(changedRect, restrictions)
+      new ApplyChildResizeRestrictionsRequest(changedRect, this._resizeRestrictions)
     );
   }
 

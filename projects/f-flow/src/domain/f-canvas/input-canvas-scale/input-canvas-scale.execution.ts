@@ -7,10 +7,10 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(InputCanvasScaleRequest)
 export class InputCanvasScaleExecution implements IExecution<InputCanvasScaleRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: InputCanvasScaleRequest): void {
-    if (!request.scale) {
+    if (!request.scale && request.scale !== 0) {
       return;
     }
     request.transform.scale = request.scale;

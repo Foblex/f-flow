@@ -6,7 +6,6 @@ import { FConnectorBase, FNodeOutletBase, FNodeOutputBase, isNodeOutlet } from '
 import { FCreateConnectionFinalizeRequest } from './f-create-connection-finalize.request';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { OutputNotFound } from '../../../../errors';
 import { GetFirstConnectableOutputRequest } from '../get-first-connectable-output';
 import { FCreateConnectionEvent } from '../f-create-connection.event';
 import { FCreateConnectionDragHandler } from '../f-create-connection.drag-handler';
@@ -45,7 +44,7 @@ export class FCreateConnectionFinalizeExecution
 
   private getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {
     if (!output) {
-      throw OutputNotFound(this._fResult.getData().fOutputId);
+      throw new Error(`Output with fOutputId ${ this._fResult.getData().fOutputId } not found. Make sure there is no f-connection to a non-existent fOutput.`);
     }
     return isNodeOutlet(output.hostElement) ? this._fMediator.execute<FNodeOutputBase>(
       new GetFirstConnectableOutputRequest(output as FNodeOutletBase)

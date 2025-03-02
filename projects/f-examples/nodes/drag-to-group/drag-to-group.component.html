@@ -1,5 +1,5 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fDropToGroup)="onDropToGroup($event)">
-  <f-canvas>
+  <f-canvas fZoom>
     <div fGroup fDragHandle fGroupId="group1"
          [fGroupPosition]="{ x: 0, y: 0 }" [fGroupSize]="{ width: 200, height: 200 }">
       I'm Group
