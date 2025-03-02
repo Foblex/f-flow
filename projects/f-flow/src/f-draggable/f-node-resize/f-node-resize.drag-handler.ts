@@ -12,10 +12,10 @@ import { fInject } from '../f-injector';
 
 export class FNodeResizeDragHandler implements IFDragHandler {
 
-  public fEventType = 'node-resize';
-  public fData: any;
+  public readonly fEventType = 'node-resize';
+  public readonly fData: any;
 
-  private _fMediator = fInject(FMediator);
+  private readonly _fMediator = fInject(FMediator);
 
   private _originalRect!: IRect;
   private _resizeRestrictions!: INodeResizeRestrictions;
@@ -49,18 +49,19 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _calculateChangedRect(difference: IPoint): IRect {
-    return this._calculatePosition(difference, this._calculateSize(difference, this._resizeRestrictions.minimumSize));
+    const changedSize = this._calculateSize(difference, this._resizeRestrictions.minimumSize);
+    return this._calculatePosition(difference, changedSize, this._resizeRestrictions.minimumSize);
   }
 
   private _calculateSize(difference: IPoint, minimumSize: ISize): IRect {
     return this._fMediator.execute<IRect>(
-      new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
+      new CalculateChangedSizeRequest(this._originalRect, difference, minimumSize, this._fResizeHandleType)
     );
   }
 
-  private _calculatePosition(difference: IPoint, changedSize: IRect): IRect {
+  private _calculatePosition(difference: IPoint, changedSize: IRect, minimumSize: ISize): IRect {
     return this._fMediator.execute<IRect>(
-      new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, this._fResizeHandleType)
+      new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, minimumSize, this._fResizeHandleType)
     );
   }
 

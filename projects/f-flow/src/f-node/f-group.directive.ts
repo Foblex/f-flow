@@ -98,8 +98,8 @@ export class FGroupDirective extends FNodeBase
   @Input({ transform: booleanAttribute })
   public override fConnectOnNode: boolean = true;
 
-  private _destroyRef = inject(DestroyRef);
-  private _fMediator = inject(FMediator);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _fMediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

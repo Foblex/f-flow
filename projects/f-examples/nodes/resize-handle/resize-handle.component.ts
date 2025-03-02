@@ -5,6 +5,7 @@ import {
   FFlowModule
 } from '@foblex/flow';
 import { IRect } from '@foblex/2d';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'resize-handle',
@@ -14,6 +15,7 @@ import { IRect } from '@foblex/2d';
   standalone: true,
   imports: [
     FFlowModule,
+    MatIcon,
   ]
 })
 export class ResizeHandleComponent {

@@ -1,10 +1,15 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1" fType="bezier" fBehavior="fixed"></f-connection>
+    <f-connection fOutputId="output1" fInputId="input2" fType="bezier" fBehavior="fixed"></f-connection>
+
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 0, y: 0 }"
+         [fNodePosition]="{ x: -20, y: -20 }"
          [fNodeSize]="{ width: 120, height: 150 }"
          [fIncludePadding]="false"
          (fNodeSizeChange)="onNodeSizeChanged($event)">
+      <div fNodeOutput [isSelfConnectable]="false" fOutputConnectableSide="right" class="right"
+           fOutputId="output1"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
       <div class="node-content">
         Node with Left Top ResizeHandle
@@ -12,34 +17,37 @@
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 300, y: 0 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
+         [fNodePosition]="{ x: 300, y: 0 }" (fNodeSizeChange)="onNodeSizeChanged($event)" class="resize-when-selected">
+      <div fNodeInput fInputConnectableSide="left" class="left" fInputId="input1"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
       <div class="node-content">
-        Node with Right Top ResizeHandle
+        Resize when selected
       </div>
     </div>
 
     <div fNode fDragHandle
          [fNodePosition]="{ x: 0, y: 200 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
-      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
+      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.BOTTOM"></div>
       <div class="node-content">
-        Node with Right Bottom ResizeHandle
+        Node with Bottom ResizeHandle
       </div>
     </div>
 
     <div fNode fDragHandle
          [fNodePosition]="{ x: 300, y: 200 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
-      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+      <mat-icon fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM" class="resize-icon">
+        open_in_full
+      </mat-icon>
       <div class="node-content">
-        Node with Left Bottom ResizeHandle
+        Resize icon
       </div>
     </div>
 
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 150, y: 100 }" (fNodeSizeChange)="onNodeSizeChanged($event)">
+         [fNodePosition]="{ x: 150, y: 100 }" fNodeInput fInputConnectableSide="top" fInputId="input2"
+         (fNodeSizeChange)="onNodeSizeChanged($event)">
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
-      <div fResizeHandle [fResizeHandleType]="eResizeHandleType.TOP"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT"></div>
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>

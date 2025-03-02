@@ -1,16 +1,32 @@
 @use "../../flow-common";
 
-.f-node {
-  position: relative;
-  @include flow-common.node;
-  padding: 0;
+::ng-deep f-flow {
+  @include flow-common.connection;
 }
 
-.node-content {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.f-node {
+  @include flow-common.node;
+  position: relative;
+  padding: 0;
+  border: 1px solid var(--node-border-color);
+
+  &.resize-when-selected {
+    .f-resize-handle {
+      display: none;
+    }
+
+    &.f-selected {
+      .f-resize-handle {
+        display: block;
+      }
+    }
+  }
+
+  &.f-selected {
+    border: 1px solid var(--node-selected-border-color);
+  }
 }
+@include flow-common.connector;
 
 .f-resize-handle {
   position: absolute;
@@ -65,5 +81,10 @@
     bottom: -6px;
     left: -6px;
     cursor: nesw-resize;
+  }
+
+  &.resize-icon {
+    width: 26px;
+    height: 26px;
   }
 }
