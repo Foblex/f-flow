@@ -28,8 +28,8 @@ let uniqueId: number = 0;
 })
 export class FExternalItemDirective<TData> extends FExternalItemBase<TData> implements OnInit, OnDestroy {
 
-  private _elementReference = inject(ElementRef);
-  private _fExternalItemService = inject(FExternalItemService);
+  private readonly _elementReference = inject(ElementRef);
+  private readonly _fExternalItemService = inject(FExternalItemService);
 
   @Input()
   public override fExternalItemId: string = `f-external-item-${ uniqueId++ }`;

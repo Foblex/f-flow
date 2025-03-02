@@ -8,14 +8,20 @@ import {
 } from './calculate-nodes-bounding-box-normalized-position';
 import { GetNodePaddingExecution } from './get-node-padding';
 import { GetParentNodesExecution } from './get-parent-nodes';
+import { CalculateInputConnectionsExecution } from './calculate-input-connections';
+import { CalculateOutputConnectionsExecution } from './calculate-output-connections';
 
 export const F_NODE_FEATURES = [
 
   AddNodeToStoreExecution,
 
+  CalculateInputConnectionsExecution,
+
   CalculateNodesBoundingBoxExecution,
 
   CalculateNodesBoundingBoxNormalizedPositionExecution,
+
+  CalculateOutputConnectionsExecution,
 
   GetNodePaddingExecution,
 

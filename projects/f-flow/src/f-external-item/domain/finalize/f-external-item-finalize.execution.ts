@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemDragHandler } from '../f-external-item.drag-handler';
 import { FCreateNodeEvent } from '../f-create-node.event';
-import { GetNormalizedElementRectRequest, GetNormalizedPointRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FDraggableDataContext, FDragHandlerResult } from '../../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { IFExternalItemDragResult } from '../i-f-external-item-drag-result';
@@ -14,12 +14,12 @@ import { IFExternalItemDragResult } from '../i-f-external-item-drag-result';
 @FExecutionRegister(FExternalItemFinalizeRequest)
 export class FExternalItemFinalizeExecution implements IExecution<FExternalItemFinalizeRequest, void> {
 
-  private _fResult: FDragHandlerResult<IFExternalItemDragResult> = inject(FDragHandlerResult);
+  private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult> = inject(FDragHandlerResult);
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
-  private _fBrowser = inject(BrowserService);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fBrowser = inject(BrowserService);
 
   private get _fHost(): HTMLElement {
     return this._fComponentsStore.fFlow!.hostElement;

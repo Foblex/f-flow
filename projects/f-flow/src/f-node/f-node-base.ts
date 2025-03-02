@@ -10,12 +10,12 @@ import { FChannel } from '../reactivity';
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
 const MIXIN_BASE = mixinChangeSelection(
-    class {
-      constructor(
-        public hostElement: HTMLElement
-      ) {
-      }
-    });
+  class {
+    constructor(
+      public hostElement: HTMLElement
+    ) {
+    }
+  });
 
 export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
 
@@ -31,6 +31,13 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   public abstract position: IPoint;
 
   protected _position: IPoint = PointExtensions.initialize();
+
+
+  public abstract rotateChange: EventEmitter<number>;
+
+  public abstract rotate: number;
+
+  protected _rotate: number = 0;
 
 
   public abstract sizeChange: EventEmitter<IRect>;
@@ -66,11 +73,15 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.setStyle('height', '' + this.size.height + 'px');
     }
 
-    this.setStyle('transform', `translate(${ this.position.x }px,${ this.position.y }px)`);
+    this.setStyle('transform', `translate(${ this.position.x }px,${ this.position.y }px) rotate(${ this.rotate }deg)`);
   }
 
   public updatePosition(position: IPoint): void {
     this._position = position;
+  }
+
+  public updateRotate(rotate: number): void {
+    this._rotate = rotate;
   }
 
   public updateSize(value: ISize): void {

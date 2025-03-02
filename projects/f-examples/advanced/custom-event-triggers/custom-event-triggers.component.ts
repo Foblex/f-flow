@@ -44,8 +44,8 @@ export class CustomEventTriggersComponent implements OnInit, OnDestroy {
   } ];
   protected connections = [ {
     id: '1',
-    source: 'f-node-output-0',
-    target: 'f-node-input-2',
+    source: '1-output-0',
+    target: '2-input-1',
   } ];
 
   protected zoomTrigger = (event: FTriggerEvent) => {

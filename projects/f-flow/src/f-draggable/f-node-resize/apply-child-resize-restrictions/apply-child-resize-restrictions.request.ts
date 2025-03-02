@@ -1,10 +1,11 @@
 import { IRect } from '@foblex/2d';
+import { INodeResizeRestrictions } from '../get-node-resize-restrictions';
 
 export class ApplyChildResizeRestrictionsRequest {
 
   constructor(
     public rect: IRect,
-    public restrictionsRect: IRect
+    public restrictions: INodeResizeRestrictions
   ) {
   }
 }

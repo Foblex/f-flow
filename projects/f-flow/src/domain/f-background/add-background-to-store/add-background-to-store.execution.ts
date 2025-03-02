@@ -7,7 +7,7 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(AddBackgroundToStoreRequest)
 export class AddBackgroundToStoreExecution implements IExecution<AddBackgroundToStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: AddBackgroundToStoreRequest): void {
     this._fComponentsStore.fBackground = request.fBackground;

@@ -9,8 +9,8 @@ import { BrowserService } from '@foblex/platform';
 export class FExternalItemCreatePlaceholderExecution
   implements IExecution<FExternalItemCreatePlaceholderRequest, HTMLElement | SVGElement> {
 
-  private _fBrowser = inject(BrowserService);
-  private _containerRef = inject(ViewContainerRef);
+  private readonly _fBrowser = inject(BrowserService);
+  private readonly _containerRef = inject(ViewContainerRef);
 
   public handle(request: FExternalItemCreatePlaceholderRequest): HTMLElement | SVGElement {
     const { hostElement, fPlaceholder } = request.fExternalItem;

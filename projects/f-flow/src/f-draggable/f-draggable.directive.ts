@@ -52,6 +52,7 @@ import {
   FNodeDropToGroupFinalizeRequest,
   FNodeDropToGroupPreparationRequest
 } from './f-drop-to-group';
+import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 
 @Directive({
   selector: "f-flow[fDraggable]",
@@ -87,6 +88,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   @Input()
   public fNodeResizeTrigger: FEventTrigger = defaultEventTrigger;
+
+  @Input()
+  public fNodeRotateTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input()
   public fNodeMoveTrigger: FEventTrigger = defaultEventTrigger;
@@ -184,6 +188,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
+    this._fMediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
+
     this._fMediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
@@ -213,6 +219,8 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._fMediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FNodeResizeFinalizeRequest(event));
+
+    this._fMediator.execute<void>(new FNodeRotateFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FNodeMoveFinalizeRequest(event));
 

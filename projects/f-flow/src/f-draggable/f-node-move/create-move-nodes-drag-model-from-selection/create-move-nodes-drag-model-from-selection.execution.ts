@@ -3,7 +3,6 @@ import { CreateMoveNodesDragModelFromSelectionRequest } from './create-move-node
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { IFDragHandler } from '../../f-drag-handler/i-f-drag-handler';
 import { FNodeMoveDragHandler } from '../f-node-move.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CalculateNodeMoveLimitsRequest } from './domain/calculate-node-move-limits';
@@ -30,9 +29,9 @@ import { INodeMoveLimits } from './i-node-move-limits';
 export class CreateMoveNodesDragModelFromSelectionExecution
   implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, FSummaryNodeMoveDragHandler> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: CreateMoveNodesDragModelFromSelectionRequest): FSummaryNodeMoveDragHandler {
     const fDraggedNodes = this._getDraggedNodes(request.nodeWithDisabledSelection);

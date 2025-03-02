@@ -15,8 +15,8 @@ import { F_EXTERNAL_ITEM } from './f-external-item-token';
 })
 export class FExternalItemPlaceholderDirective<T = any> implements OnInit, OnDestroy {
 
-  private _fExternalItem = inject(F_EXTERNAL_ITEM);
-  private _templateRef = inject<TemplateRef<T>>(TemplateRef);
+  private readonly _fExternalItem = inject(F_EXTERNAL_ITEM);
+  private readonly _templateRef = inject<TemplateRef<T>>(TemplateRef);
 
   public ngOnInit(): void {
     this._fExternalItem.fPlaceholder = this._templateRef;

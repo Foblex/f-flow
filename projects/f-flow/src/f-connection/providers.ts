@@ -1,5 +1,5 @@
 import {
-  FConnectionDragHandleComponent,
+  FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent,
   FConnectionGradientComponent, FConnectionPathComponent, FConnectionSelectionComponent,
   FConnectionTextComponent,
   FConnectionTextPathDirective
@@ -14,7 +14,8 @@ export const F_CONNECTION_PROVIDERS = [
 
   FConnectionTextComponent,
   FConnectionTextPathDirective,
-  FConnectionDragHandleComponent,
+  FConnectionDragHandleStartComponent,
+  FConnectionDragHandleEndComponent,
   FConnectionGradientComponent,
   FConnectionPathComponent,
   FConnectionSelectionComponent,

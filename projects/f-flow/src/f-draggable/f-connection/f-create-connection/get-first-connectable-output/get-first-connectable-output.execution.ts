@@ -11,7 +11,7 @@ import { FExecutionRegister } from '@foblex/mediator';
 export class GetFirstConnectableOutputExecution
   implements IHandler<GetFirstConnectableOutputRequest, FConnectorBase | undefined> {
 
-  private _fComponentStore = inject(FComponentsStore);
+  private readonly _fComponentStore = inject(FComponentsStore);
 
   private get _fNodes(): FNodeBase[] {
     return this._fComponentStore.fNodes;

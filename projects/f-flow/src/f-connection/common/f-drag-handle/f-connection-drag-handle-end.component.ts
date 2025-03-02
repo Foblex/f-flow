@@ -1,34 +1,28 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef
+  Component, ElementRef, inject
 } from "@angular/core";
 import { IPoint } from '@foblex/2d';
 import { IHasHostElement } from '../../../i-has-host-element';
-
-export const F_CONNECTION_DRAG_HANDLE_CLASS = 'f-connection-drag-handle';
+import { F_CSS_CLASS } from '../../../domain/css-cls';
 
 @Component({
-  selector: "circle[f-connection-drag-handle]",
+  selector: "circle[f-connection-drag-handle-end]",
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'class'
   }
 })
-export class FConnectionDragHandleComponent implements IHasHostElement {
+export class FConnectionDragHandleEndComponent implements IHasHostElement {
+  private readonly _elementReference = inject(ElementRef);
+
+  protected readonly class: string = F_CSS_CLASS.CONNECTION.DRAG_HANDLE;
 
   public point!: IPoint;
-  public radius: number = 8;
-
-  public readonly class: string = F_CONNECTION_DRAG_HANDLE_CLASS;
 
   public get hostElement(): SVGCircleElement {
-    return this.elementReference.nativeElement;
-  }
-
-  constructor(
-    private elementReference: ElementRef<SVGCircleElement>
-  ) {
+    return this._elementReference.nativeElement;
   }
 
   public redraw(penultimatePoint: IPoint, endPoint: IPoint): void {

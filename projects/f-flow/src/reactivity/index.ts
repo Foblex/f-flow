@@ -8,4 +8,6 @@ export * from './types';
 
 export * from './f-channel-hub';
 
+export * from './mediator-effect';
+
 export * from './notify-on-start';

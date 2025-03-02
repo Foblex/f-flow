@@ -9,8 +9,8 @@ import { BrowserService } from '@foblex/platform';
 export class FExternalItemCreatePreviewExecution
   implements IExecution<FExternalItemCreatePreviewRequest, HTMLElement | SVGElement> {
 
-  private _fBrowser = inject(BrowserService);
-  private _containerRef = inject(ViewContainerRef);
+  private readonly _fBrowser = inject(BrowserService);
+  private readonly _containerRef = inject(ViewContainerRef);
 
   public handle(request: FExternalItemCreatePreviewRequest): HTMLElement | SVGElement {
     const { hostElement, fPreview } = request.fExternalItem;

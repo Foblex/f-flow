@@ -107,7 +107,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
 
   private _drawConnection(difference: IPoint, fSide: EFConnectableSide): void {
     const line = this._getLineToPointer(difference, fSide);
-    this._fConnection.setLine(line.point1, this._fOutputWithRect.fConnector.fConnectableSide, line.point2, fSide);
+    this._fConnection.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fSide);
     this._fConnection.redraw();
   }
 
@@ -126,7 +126,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     if (fClosestInput) {
       const line = this._getLineToClosestInput(fClosestInput);
       this._fSnapConnection!.show();
-      this._fSnapConnection!.setLine(line.point1, this._fOutputWithRect.fConnector.fConnectableSide, line.point2, fClosestInput.fConnector.fConnectableSide);
+      this._fSnapConnection!.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fClosestInput.fConnector.fConnectableSide);
       this._fSnapConnection!.redraw();
     } else {
       this._fSnapConnection?.hide();

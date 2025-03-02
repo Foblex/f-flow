@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component, DestroyRef,
-  ElementRef, inject, Input, OnChanges,
+  ElementRef, inject, input, numberAttribute, OnChanges,
   OnInit, SimpleChanges
 } from "@angular/core";
 import {
-  IPoint, ISize, ITransformModel,
+  ITransformModel,
   PointExtensions, SizeExtensions, TransformModelExtensions
 } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
@@ -18,6 +18,7 @@ let uniqueId: number = 0;
 @Component({
   selector: "f-rect-pattern",
   template: ``,
+  standalone: true,
   host: {
     '[attr.id]': 'id'
   },
@@ -28,43 +29,33 @@ let uniqueId: number = 0;
 })
 export class FRectPatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
 
-  private _destroyRef = inject(DestroyRef);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _elementReference = inject(ElementRef);
+  private readonly _fBrowser = inject(BrowserService);
 
-  private _elementReference = inject(ElementRef);
-
-  private _stateChanges = new FChannel();
+  private readonly _stateChanges = new FChannel();
 
   public get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
 
-  @Input()
-  public id: string = `f-pattern-${ uniqueId++ }`;
+  public id = input<string>(`f-pattern-${ uniqueId++ }`);
+  public vColor = input<string>('rgba(0,0,0,0.1)');
+  public hColor = input<string>('rgba(0,0,0,0.1)');
+  public vSize = input<number, unknown>(20, { transform: numberAttribute});
+  public hSize = input<number, unknown>(20, { transform: numberAttribute});
 
-  @Input()
-  public vColor: string = 'rgba(0,0,0,0.1)';
+  private _transform = TransformModelExtensions.default();
 
-  @Input()
-  public hColor: string = 'rgba(0,0,0,0.1)';
+  private _position = PointExtensions.initialize();
 
-  @Input()
-  public vSize: number = 20;
-
-  @Input()
-  public hSize: number = 20;
-
-  private _transform: ITransformModel = TransformModelExtensions.default();
-
-  private _position: IPoint = PointExtensions.initialize();
-
-  private _size: ISize = SizeExtensions.initialize(this.hSize, this.vSize);
+  private _size = SizeExtensions.initialize(this.hSize(), this.vSize());
 
   private _pattern!: SVGPatternElement;
   private _vLine!: SVGLineElement;
   private _hLine!: SVGLineElement;
 
   constructor(
-    private _fBrowser: BrowserService
   ) {
     this._createPattern();
   }
@@ -99,14 +90,14 @@ export class FRectPatternComponent implements OnInit, OnChanges, IFBackgroundPat
     this._calculatePattern();
     this._redrawPattern();
 
-    this.redrawLine(this._vLine, this.vColor, this._size.width, 0, this._size.width, this._size.height);
-    this.redrawLine(this._hLine, this.hColor, 0, this._size.height, this._size.width, this._size.height);
+    this.redrawLine(this._vLine, this.vColor(), this._size.width, 0, this._size.width, this._size.height);
+    this.redrawLine(this._hLine, this.hColor(), 0, this._size.height, this._size.width, this._size.height);
   }
 
   private _calculatePattern(): void {
     this._position.x = this._transform.position.x + this._transform.scaledPosition.x;
     this._position.y = this._transform.position.y + this._transform.scaledPosition.y;
-    this._size = SizeExtensions.initialize(this.hSize * this._transform.scale, this.vSize * this._transform.scale);
+    this._size = SizeExtensions.initialize(this.hSize() * this._transform.scale, this.vSize() * this._transform.scale);
   }
 
   private _redrawPattern(): void {

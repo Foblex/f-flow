@@ -68,7 +68,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _getConnectionsFromPoint(position: IPoint): FConnectionBase[] {
     return this._fConnections.filter((x) => {
-      return this._isPointInsideCircle(position, x.fDragHandle.point) && !x.fDraggingDisabled;
+      return x.fDragHandle?.point && this._isPointInsideCircle(position, x.fDragHandle.point) && !x.fDraggingDisabled;
     });
   }
 
@@ -79,7 +79,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _updateConnectionLayer(): void {
     this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer.nativeElement
+        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer().nativeElement
       )
     );
   }

@@ -7,10 +7,10 @@ import { FNodeMoveDragHandler } from './f-node-move.drag-handler';
 
 export class FSummaryNodeMoveDragHandler implements IFDragHandler {
 
-  public fEventType = 'move-node';
-  public fData: any;
+  public readonly fEventType = 'move-node';
+  public readonly fData: any;
 
-  private _fComponentStore = fInject(FComponentsStore);
+  private readonly _fComponentStore = fInject(FComponentsStore);
 
   private readonly _fBoundsLimiter: PointBoundsLimiter;
 

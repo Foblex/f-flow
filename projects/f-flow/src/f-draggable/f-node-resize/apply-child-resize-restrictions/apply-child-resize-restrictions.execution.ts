@@ -11,7 +11,7 @@ export class ApplyChildResizeRestrictionsExecution
   implements IExecution<ApplyChildResizeRestrictionsRequest, void> {
 
   public handle(request: ApplyChildResizeRestrictionsRequest): void {
-    this._apply(request.rect, request.restrictionsRect);
+    this._apply(request.rect, request.restrictions.childrenBounds!);
   }
 
   private _apply(rect: IRect, restrictionsRect: IRect): void {

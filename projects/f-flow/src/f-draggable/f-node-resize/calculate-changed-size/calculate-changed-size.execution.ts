@@ -17,7 +17,9 @@ export class CalculateChangedSizeExecution
     );
   }
 
-  private change(rect: IRect, difference: IPoint, direction: IPoint): IRect {
+  private change(
+    rect: IRect, difference: IPoint, direction: IPoint
+  ): IRect {
     const result = RectExtensions.initialize(
       0, 0,
       rect.width + direction.x * difference.x,

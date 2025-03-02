@@ -13,11 +13,11 @@ import {
   FCanvasComponent,
   FCreateConnectionEvent,
   FFlowModule,
-  FReassignConnectionEvent, FZoomDirective
+  FReassignConnectionEvent
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
-import { debounceTime } from 'rxjs';
+import { debounceTime, skip, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface INode {
@@ -53,8 +53,8 @@ const STORE: IState = {
   } ],
   connections: [ {
     id: '1',
-    source: 'f-node-output-0',
-    target: 'f-node-input-2',
+    source: '1-output-0',
+    target: '2-input-1',
   } ],
 };
 
@@ -65,8 +65,7 @@ const STORE: IState = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule,
-    FZoomDirective,
+    FFlowModule
   ]
 })
 export class UndoRedoComponent implements OnInit {
@@ -89,6 +88,8 @@ export class UndoRedoComponent implements OnInit {
 
   private _isFirstCanvasChange: boolean = true;
 
+  private _fCanvasChange = new Subject<FCanvasChangeEvent>();
+
   public ngOnInit(): void {
     this._subscribeToCanvasChange();
   }
@@ -97,8 +98,12 @@ export class UndoRedoComponent implements OnInit {
     this.fCanvas.resetScaleAndCenter(false);
   }
 
+  protected onCanvasChange(event: FCanvasChangeEvent): void {
+    this._fCanvasChange.next(event);
+  }
+
   private _subscribeToCanvasChange(): void {
-    this.fCanvas.fCanvasChange.pipe(
+    this._fCanvasChange.pipe(
       takeUntilDestroyed(this._destroyRef), debounceTime(200)
     ).subscribe((event) => {
       if (this._isFirstCanvasChange) {
@@ -107,7 +112,6 @@ export class UndoRedoComponent implements OnInit {
       }
 
       this._stateChanged();
-
       this.viewModel.position = event.position;
       this.viewModel.scale = event.scale;
     });
@@ -117,6 +121,7 @@ export class UndoRedoComponent implements OnInit {
     this._isFirstCanvasChange = false;
     this.viewModel.position = event.position;
     this.viewModel.scale = event.scale;
+    this._changeDetectorRef.markForCheck();
   }
 
   protected onConnectionCreated(event: FCreateConnectionEvent): void {

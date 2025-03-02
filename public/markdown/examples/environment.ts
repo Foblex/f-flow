@@ -49,6 +49,10 @@ function createEnvironment(): IDocsEnvironment {
         component: import('../../../projects/f-examples/nodes/resize-handle/resize-handle.component')
       },
       {
+        tag: 'rotate-handle',
+        component: import('../../../projects/f-examples/nodes/rotate-handle/rotate-handle.component')
+      },
+      {
         tag: 'grouping',
         component: import('../../../projects/f-examples/nodes/grouping/grouping.component')
       },
@@ -280,7 +284,7 @@ function nodesGroup(): INavigationGroup {
         image: './previews/examples/resize-handle.light.png',
         image_dark: './previews/examples/resize-handle.dark.png',
         description: 'Add resize handles to make nodes adjustable in Foblex Flow diagrams for Angular',
-        image_width: 781,
+        image_width: 801,
         image_height: 600,
         image_type: 'image/png',
         badge: {
@@ -288,6 +292,21 @@ function nodesGroup(): INavigationGroup {
           type: 'warning'
         },
         date: new Date('2024-10-02 16:04:08')
+      },
+      {
+        link: 'rotate-handle',
+        text: 'Rotate Handle',
+        image: './previews/examples/rotate-handle.light.png',
+        image_dark: './previews/examples/rotate-handle.dark.png',
+        description: 'Add rotate handles to make nodes adjustable in Foblex Flow diagrams for Angular',
+        image_width: 795,
+        image_height: 600,
+        image_type: 'image/png',
+        badge: {
+          text: 'New',
+          type: 'info'
+        },
+        date: new Date('2025-02-23 20:56:08')
       },
       {
         link: 'grouping',

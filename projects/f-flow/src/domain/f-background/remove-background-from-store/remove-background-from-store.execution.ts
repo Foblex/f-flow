@@ -7,7 +7,7 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(RemoveBackgroundFromStoreRequest)
 export class RemoveBackgroundFromStoreExecution implements IExecution<RemoveBackgroundFromStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: RemoveBackgroundFromStoreRequest): void {
     this._fComponentsStore.fBackground = undefined;

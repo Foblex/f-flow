@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import {
   EFResizeHandleType,
   FCanvasComponent,
   FFlowModule
 } from '@foblex/flow';
 import { IRect } from '@foblex/2d';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'resize-handle',
@@ -14,20 +15,20 @@ import { IRect } from '@foblex/2d';
   standalone: true,
   imports: [
     FFlowModule,
+    MatIcon,
   ]
 })
 export class ResizeHandleComponent {
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
-
-  public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
-  }
+  private _fCanvas = viewChild.required(FCanvasComponent);
 
   protected readonly eResizeHandleType = EFResizeHandleType;
 
+  protected onLoaded(): void {
+    this._fCanvas().resetScaleAndCenter(false);
+  }
 
-  public onNodeSizeChanged(rect: IRect): void {
+  protected onNodeSizeChanged(rect: IRect): void {
+    //process data
   }
 }
