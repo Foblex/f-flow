@@ -4,7 +4,7 @@ import { IPoint } from '@foblex/2d';
 
 export class SourceTargetConnectionDragHandler extends BaseConnectionDragHandler {
 
-  private _callTracker = new Map<string, boolean>();
+  private readonly _callTracker = new Map<string, boolean>();
 
   constructor(fConnection: FConnectionBase) {
     super(fConnection);

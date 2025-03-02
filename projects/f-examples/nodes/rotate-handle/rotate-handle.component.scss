@@ -6,7 +6,6 @@
 }
 
 .f-node {
-  opacity: 0.5;
   @include flow-common.node;
 }
 @include flow-common.connector;
