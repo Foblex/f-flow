@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FNodeRotatePreparationRequest } from './f-node-rotate-preparation.request';
 import { IPoint, IRect, ITransformModel, Point, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -21,6 +21,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
   private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;
@@ -45,6 +46,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
 
     this._fDraggableDataContext.draggableItems = [
       new FNodeRotateDragHandler(
+        this._injector,
         this._fNode!,
         this._calculateOutputConnectionsDragHandlers(),
         this._calculateInputConnectionsDragHandlers(),
@@ -87,7 +89,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     ).map((x: FConnectionBase) => {
       const connector = this._fComponentsStore.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
       return {
-        connection: new TargetConnectionDragHandler(x),
+        connection: new TargetConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
       }
     });
@@ -102,7 +104,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     ).map((x: FConnectionBase) => {
       const connector = this._fComponentsStore.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
       return {
-        connection: new SourceConnectionDragHandler(x),
+        connection: new SourceConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
       }
     });

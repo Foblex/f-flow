@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { PutOutputConnectionHandlersToArrayRequest } from './put-output-connection-handlers-to-array.request';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
@@ -13,7 +13,8 @@ import { SourceConnectionDragHandler } from '../../../connection-drag-handlers/s
 export class PutOutputConnectionHandlersToArrayExecution
   implements IExecution<PutOutputConnectionHandlersToArrayRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _injector = inject(Injector);
 
   private get _fConnections(): FConnectionBase[] {
     return this._fComponentsStore.fConnections;
@@ -52,9 +53,9 @@ export class PutOutputConnectionHandlersToArrayExecution
   private _createConnectionHandler(inputIds: string[], fConnection: FConnectionBase): BaseConnectionDragHandler {
     let result: BaseConnectionDragHandler;
     if (inputIds.includes(fConnection.fInputId)) {
-      result = new SourceTargetConnectionDragHandler(fConnection);
+      result = new SourceTargetConnectionDragHandler(this._injector, fConnection);
     } else {
-      result = new SourceConnectionDragHandler(fConnection)
+      result = new SourceConnectionDragHandler(this._injector, fConnection)
     }
     return result;
   }

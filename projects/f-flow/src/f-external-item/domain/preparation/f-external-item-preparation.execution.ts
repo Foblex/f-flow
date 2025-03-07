@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FExternalItemPreparationRequest } from './f-external-item-preparation.request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
@@ -15,6 +15,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
   private readonly _fExternalItemService = inject(FExternalItemService);
   private readonly _fDraggableDataContext = inject(FDraggableDataContext);
   private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
     return this._fComponentsStore.fFlow!.hostElement;
@@ -28,6 +29,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this._fHost);
     this._fDraggableDataContext.draggableItems = [
       new FExternalItemDragHandler(
+        this._injector,
         this._getExternalItem(request.event.targetElement)!,
       )
     ];

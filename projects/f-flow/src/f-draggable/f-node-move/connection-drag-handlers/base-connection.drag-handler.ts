@@ -7,13 +7,13 @@ import {
 } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
-import { fInject } from '../../f-injector';
 import { FConnectionBase } from '../../../f-connection';
+import { Injector } from '@angular/core';
 
 export class BaseConnectionDragHandler {
 
-  private readonly _fMediator = fInject(FMediator);
-  private readonly _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fMediator: FMediator;
+  private readonly _fComponentsStore: FComponentsStore;
 
   private _fOutputWithRect!: IConnectorAndRect;
   private _fInputWithRect!: IConnectorAndRect;
@@ -38,8 +38,11 @@ export class BaseConnectionDragHandler {
   private _targetDifference = PointExtensions.initialize();
 
   constructor(
+    _injector: Injector,
     public fConnection: FConnectionBase,
   ) {
+    this._fMediator = _injector.get(FMediator);
+    this._fComponentsStore = _injector.get(FComponentsStore);
     this._initialize();
   }
 

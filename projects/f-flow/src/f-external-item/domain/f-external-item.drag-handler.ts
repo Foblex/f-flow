@@ -5,19 +5,19 @@ import {
   FExternalItemCreatePreviewRequest,
   IFExternalItemDragResult
 } from '../../f-external-item';
-import { FDragHandlerResult, fInject, IFDragHandler } from '../../f-draggable';
+import { FDragHandlerResult, IFDragHandler } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { FMediator } from '@foblex/mediator';
+import { Injector } from '@angular/core';
 
 export class FExternalItemDragHandler implements IFDragHandler {
 
   public fEventType = 'external-item';
   public fData: any;
 
-  private _fResult = fInject(FDragHandlerResult<IFExternalItemDragResult>);
-
-  private _fMediator = fInject(FMediator);
-  private _fBrowser = fInject(BrowserService);
+  private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult>;
+  private readonly _fMediator: FMediator;
+  private readonly _fBrowser: BrowserService;
 
   private _preview: HTMLElement | SVGElement | undefined;
   private _placeholder: HTMLElement | SVGElement | undefined;
@@ -28,9 +28,13 @@ export class FExternalItemDragHandler implements IFDragHandler {
   }
 
   constructor(
+    _injector: Injector,
     private _fExternalItem: FExternalItemBase,
   ) {
     this.fData = { fData: _fExternalItem.fData };
+    this._fResult = _injector.get(FDragHandlerResult);
+    this._fMediator = _injector.get(FMediator);
+    this._fBrowser = _injector.get(BrowserService);
   }
 
   public prepareDragSequence(): void {

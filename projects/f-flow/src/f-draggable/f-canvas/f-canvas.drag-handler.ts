@@ -1,14 +1,20 @@
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
-import { fInject } from '../f-injector';
+import { Injector } from '@angular/core';
 
 export class FCanvasDragHandler implements IFDragHandler {
 
   public fEventType = 'canvas-move';
 
-  private _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fComponentsStore: FComponentsStore;
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
+
+  constructor(
+    _injector: Injector,
+  ) {
+    this._fComponentsStore = _injector.get(FComponentsStore);
+  }
 
   public prepareDragSequence(): void {
     this._onPointerDownPosition = this._fComponentsStore.fCanvas!.transform.position;

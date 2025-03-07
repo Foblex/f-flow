@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { CreateMoveNodesDragModelFromSelectionRequest } from './create-move-nodes-drag-model-from-selection.request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -32,6 +32,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
   private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _injector = inject(Injector);
 
   public handle(request: CreateMoveNodesDragModelFromSelectionRequest): FSummaryNodeMoveDragHandler {
     const fDraggedNodes = this._getDraggedNodes(request.nodeWithDisabledSelection);
@@ -47,6 +48,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
     );
 
     return new FSummaryNodeMoveDragHandler(
+      this._injector,
       commonLimits, fDragHandlers, this._getDraggedNodesBoundingRect(fNodesToDrag)
     );
   }

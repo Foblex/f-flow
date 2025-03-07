@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { LineAlignmentPreparationRequest } from './line-alignment-preparation.request';
 import { IMinMaxPoint, IRect, ISize } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -15,11 +15,11 @@ import { BrowserService } from '@foblex/platform';
 @FExecutionRegister(LineAlignmentPreparationRequest)
 export class LineAlignmentPreparationExecution implements IExecution<LineAlignmentPreparationRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
-
-  private _fBrowser = inject(BrowserService);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fBrowser = inject(BrowserService);
+  private readonly _injector = inject(Injector);
 
   private _lineService: LineService | undefined;
 
@@ -30,6 +30,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   private _addLineAlignmentDragHandler(fNodes: FNodeBase[], commonRect: IRect): void {
     this._fDraggableDataContext.draggableItems.push(
       new FLineAlignmentDragHandler(
+        this._injector,
         this._lineService || this._createLineService(),
         this._getFlowHostSize(),
         commonRect,

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FReassignConnectionPreparationRequest } from './f-reassign-connection-preparation.request';
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../../f-storage';
@@ -12,9 +12,10 @@ import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-ha
 @FExecutionRegister(FReassignConnectionPreparationRequest)
 export class FReassignConnectionPreparationExecution implements IExecution<FReassignConnectionPreparationRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _injector = inject(Injector);
 
   private _fConnection: FConnectionBase | undefined;
 
@@ -39,7 +40,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
     this._fDraggableDataContext.draggableItems = [
-      new FReassignConnectionDragHandler(this._fConnection!)
+      new FReassignConnectionDragHandler(this._injector, this._fConnection!)
     ];
 
     setTimeout(() => this._updateConnectionLayer());

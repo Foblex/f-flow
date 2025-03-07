@@ -8,25 +8,27 @@ import { CalculateChangedSizeRequest } from './calculate-changed-size';
 import { CalculateChangedPositionRequest } from './calculate-changed-position';
 import { ApplyParentResizeRestrictionsRequest } from './apply-parent-resize-restrictions';
 import { GetNormalizedElementRectRequest } from '../../domain';
-import { fInject } from '../f-injector';
+import { Injector } from '@angular/core';
 
 export class FNodeResizeDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'node-resize';
   public readonly fData: any;
 
-  private readonly _fMediator = fInject(FMediator);
+  private readonly _fMediator: FMediator;
 
   private _originalRect!: IRect;
   private _resizeRestrictions!: INodeResizeRestrictions;
 
   constructor(
+    _injector: Injector,
     private _fNode: FNodeBase,
     private _fResizeHandleType: EFResizeHandleType,
   ) {
     this.fData = {
       fNodeId: _fNode.fId,
     };
+    this._fMediator = _injector.get(FMediator);
   }
 
   public prepareDragSequence(): void {
@@ -66,7 +68,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _applyResizeChanges(changedRect: IRect): void {
-    if(this._resizeRestrictions.childrenBounds) {
+    if (this._resizeRestrictions.childrenBounds) {
       this._applyChildRestrictions(changedRect);
     }
 

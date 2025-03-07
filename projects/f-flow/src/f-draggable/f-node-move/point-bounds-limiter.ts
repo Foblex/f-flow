@@ -1,24 +1,28 @@
 import { IMinMaxPoint, IPoint } from '@foblex/2d';
-import { fInject } from '../f-injector';
 import { FComponentsStore } from '../../f-storage';
+import { Injector } from '@angular/core';
 
 export class PointBoundsLimiter {
 
-  private readonly _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fComponentsStore: FComponentsStore;
 
-  private _vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
-  private _hCellSize = this._fComponentsStore.fDraggable!.hCellSize;
+  private readonly _vCellSize: number;
+  private readonly _hCellSize: number;
 
   constructor(
+    _injector: Injector,
     private _onPointerDown: IPoint,
     private readonly _limit: IMinMaxPoint
   ) {
+    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
+    this._hCellSize = this._fComponentsStore.fDraggable!.hCellSize;
   }
 
   public limit(difference: IPoint, adjustCellSize: boolean): IPoint {
     const { min, max } = this._limit;
 
-    const { x, y } = this._cellSizeStrategies[+adjustCellSize](difference);
+    const { x, y } = this._cellSizeStrategies[ +adjustCellSize ](difference);
 
     return {
       x: this._clamp(x, min.x, max.x),

@@ -1,16 +1,15 @@
-import { Directive } from '@angular/core';
+import { Directive, Injector } from '@angular/core';
 import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';
-import { fInject } from '../f-injector';
 
 @Directive()
 export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
-  private _fComponentsStore = fInject(FComponentsStore);
-  private _fDraggableDataContext = fInject(FDraggableDataContext);
+  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _fDraggableDataContext: FDraggableDataContext;
 
   public fEventType = 'move-node-to-parent';
 
@@ -26,8 +25,11 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
   public fNodeWithRect: INodeWithRect | null = null;
 
   constructor(
+    _injector: Injector,
     private notDraggedNodesRects: INodeWithRect[],
   ) {
+    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
     this._onPointerDownPosition = this._fDraggableDataContext.onPointerDownPosition;
   }
 

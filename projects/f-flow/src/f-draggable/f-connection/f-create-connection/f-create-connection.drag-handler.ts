@@ -14,18 +14,17 @@ import {
 import { FMediator } from '@foblex/mediator';
 import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { fInject } from '../../f-injector';
 import { IFCreateConnectionDragResult } from './i-f-create-connection-drag-result';
+import { Injector } from '@angular/core';
 
 export class FCreateConnectionDragHandler implements IFDragHandler {
 
   public fEventType = 'create-connection';
   public fData: any;
 
-  private _fResult = fInject(FDragHandlerResult<IFCreateConnectionDragResult>);
-
-  private _fMediator = fInject(FMediator);
-  private _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fResult: FDragHandlerResult<IFCreateConnectionDragResult>;
+  private readonly _fMediator: FMediator;
+  private readonly _fComponentsStore: FComponentsStore;
 
   private readonly _toConnectorRect = new RoundedRect();
 
@@ -42,9 +41,14 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   private _canBeConnectedInputs: IConnectorAndRect[] = [];
 
   constructor(
+    _injector: Injector,
     private _fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
     _onPointerDownPosition: IPoint,
   ) {
+    this._fResult = _injector.get(FDragHandlerResult);
+    this._fMediator = _injector.get(FMediator);
+    this._fComponentsStore = _injector.get(FComponentsStore);
+
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y)
     );

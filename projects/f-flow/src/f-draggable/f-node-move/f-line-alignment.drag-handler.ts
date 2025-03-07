@@ -1,25 +1,28 @@
 import { findClosestAlignment, IMinMaxPoint, IPoint, IRect, ISize, ITransformModel, RectExtensions } from '@foblex/2d';
-import { fInject, IFDragHandler, PointBoundsLimiter } from '../index';
+import { IFDragHandler } from '../index';
 import { FComponentsStore } from '../../f-storage';
 import { ILineAlignmentResult, LineService } from '../../f-line-alignment';
+import { Injector } from '@angular/core';
 
 export class FLineAlignmentDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'line-alignment';
 
-  private readonly _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fComponentsStore: FComponentsStore;
 
   private _debounceTimer: any = null;
 
   private readonly _transform: ITransformModel;
 
   constructor(
+    _injector: Injector,
     private _lineService: LineService,
     private _size: ISize,
     private _draggedNodeRect: IRect,
     private _rects: IRect[],
     private _restrictions: IMinMaxPoint,
   ) {
+    this._fComponentsStore = _injector.get(FComponentsStore);
     this._transform = this._fComponentsStore.fCanvas?.transform!;
   }
 

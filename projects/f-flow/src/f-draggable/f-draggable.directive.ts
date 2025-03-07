@@ -2,7 +2,7 @@ import {
   AfterViewInit, booleanAttribute, ContentChildren,
   Directive,
   ElementRef,
-  EventEmitter, inject, Inject, Injector,
+  EventEmitter, inject, Inject,
   Input,
   NgZone, numberAttribute,
   OnDestroy,
@@ -45,7 +45,6 @@ import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
 import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FInjector } from './f-injector';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
   FDropToGroupEvent,
@@ -66,7 +65,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private _fResult = inject(FDragHandlerResult);
   private _fMediator = inject(FMediator);
   private _fPlatform = inject(PlatformService);
-  private _injector = inject(Injector);
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
@@ -159,8 +157,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
-    FInjector.set(this._injector);
-
     this._fResult.clear();
 
     this._fMediator.execute<void>(new InitializeDragSequenceRequest());
@@ -233,14 +229,10 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._fMediator.execute<void>(new EndDragSequenceRequest());
-
-    FInjector.clear();
   }
 
   protected override finalizeDragSequence(): void {
     this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
-
-    FInjector.clear();
 
     this._fResult.clear();
   }
@@ -248,8 +240,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   public ngOnDestroy(): void {
     this._fMediator.execute<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();
-
-    FInjector.clear();
   }
 }
 

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FNodeResizePreparationRequest } from './f-node-resize-preparation.request';
 import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -16,9 +16,10 @@ import { getDataAttrValueFromClosestElementWithClass, isClosestElementHasClass }
 @FExecutionRegister(FNodeResizePreparationRequest)
 export class FNodeResizePreparationExecution implements IExecution<FNodeResizePreparationRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;
@@ -43,7 +44,10 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
 
     const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
     this._fDraggableDataContext.draggableItems = [
-      new FNodeResizeDragHandler(this._fNode!, resizeHandleType)
+      new FNodeResizeDragHandler(
+        this._injector,
+        this._fNode!, resizeHandleType
+      )
     ];
   }
 

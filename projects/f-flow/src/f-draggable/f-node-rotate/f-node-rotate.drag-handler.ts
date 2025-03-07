@@ -1,7 +1,6 @@
 import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
-import { fInject } from '../f-injector';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';
 import { BaseConnectionDragHandler } from '../f-node-move';
@@ -10,12 +9,13 @@ import {
 } from './calculate-difference-after-rotation';
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { FMediator } from '@foblex/mediator';
+import { Injector } from '@angular/core';
 
 export class FNodeRotateDragHandler implements IFDragHandler {
 
-  private readonly _fComponentsStore = fInject(FComponentsStore);
-  private readonly _fMediator = fInject(FMediator);
-  private readonly _fDraggableDataContext = fInject(FDraggableDataContext);
+  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _fMediator: FMediator;
+  private readonly _fDraggableDataContext: FDraggableDataContext;
 
   public fEventType = 'node-rotate';
   public fData: any;
@@ -31,6 +31,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   }
 
   constructor(
+    _injector: Injector,
     private _fNode: FNodeBase,
     private _fSourceHandlers: {
       connection: BaseConnectionDragHandler,
@@ -45,6 +46,10 @@ export class FNodeRotateDragHandler implements IFDragHandler {
     this.fData = {
       fNodeId: _fNode.fId,
     };
+
+    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._fMediator = _injector.get(FMediator);
+    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
   }
 
   public prepareDragSequence(): void {

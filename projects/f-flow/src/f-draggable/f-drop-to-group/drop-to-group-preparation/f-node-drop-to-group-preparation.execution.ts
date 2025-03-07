@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FNodeDropToGroupPreparationRequest } from './f-node-drop-to-group-preparation.request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -15,9 +15,10 @@ import { FSummaryNodeMoveDragHandler } from '../../f-node-move';
 export class FNodeDropToGroupPreparationExecution
   implements IExecution<FNodeDropToGroupPreparationRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _injector = inject(Injector);
 
   private get _fNodes(): FNodeBase[] {
     return this._fComponentsStore.fNodes;
@@ -43,6 +44,7 @@ export class FNodeDropToGroupPreparationExecution
 
     this._fDraggableDataContext.draggableItems.push(
       new FNodeDropToGroupDragHandler(
+        this._injector,
         this._getNotDraggedNodesRects()
       )
     );

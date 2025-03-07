@@ -8,20 +8,19 @@ import {
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import { EFConnectableSide, FConnectorBase, FNodeOutputDirective } from '../../../f-connectors';
 import { ILine, IPoint, RectExtensions, RoundedRect } from '@foblex/2d';
-import { fInject } from '../../f-injector';
 import { FMediator } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { IFReassignConnectionDragResult } from './i-f-reassign-connection-drag-result';
+import { Injector } from '@angular/core';
 
 export class FReassignConnectionDragHandler implements IFDragHandler {
 
   public fEventType = 'reassign-connection';
   public fData: any;
 
-  private _fResult = fInject(FDragHandlerResult<IFReassignConnectionDragResult>);
-
-  private _fMediator = fInject(FMediator);
-  private _fComponentsStore = fInject(FComponentsStore);
+  private readonly _fResult: FDragHandlerResult<IFReassignConnectionDragResult>;
+  private readonly _fMediator: FMediator;
+  private readonly _fComponentsStore: FComponentsStore;
 
   private readonly _toConnectorRect = new RoundedRect();
 
@@ -51,8 +50,13 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   }
 
   constructor(
+    _injector: Injector,
     private _fConnection: FConnectionBase,
   ) {
+    this._fResult = _injector.get(FDragHandlerResult);
+    this._fMediator = _injector.get(FMediator);
+    this._fComponentsStore = _injector.get(FComponentsStore);
+
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(this._fConnection.line.point2.x, this._fConnection.line.point2.y)
     );

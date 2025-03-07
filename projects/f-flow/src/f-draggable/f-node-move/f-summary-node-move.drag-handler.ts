@@ -1,25 +1,26 @@
 import { IMinMaxPoint, IPoint, IRect } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
-import { fInject } from '../f-injector';
 import { PointBoundsLimiter } from './point-bounds-limiter';
 import { FNodeMoveDragHandler } from './f-node-move.drag-handler';
+import { Injector } from '@angular/core';
 
 export class FSummaryNodeMoveDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'move-node';
   public readonly fData: any;
 
-  private readonly _fComponentStore = fInject(FComponentsStore);
-
+  private readonly _fComponentStore: FComponentsStore;
   private readonly _fBoundsLimiter: PointBoundsLimiter;
 
   constructor(
+    _injector: Injector,
     public limits: IMinMaxPoint,
     public fHandlers: FNodeMoveDragHandler[],
     public commonRect: IRect
   ) {
-    this._fBoundsLimiter = new PointBoundsLimiter(this.commonRect, limits);
+    this._fComponentStore = _injector.get(FComponentsStore);
+    this._fBoundsLimiter = new PointBoundsLimiter(_injector, this.commonRect, limits);
     this.fData = {
       fNodeIds: this.fHandlers.map((x) => x.fNode.fId)
     };

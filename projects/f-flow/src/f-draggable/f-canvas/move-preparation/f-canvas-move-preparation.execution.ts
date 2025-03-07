@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { FCanvasMovePreparationRequest } from './f-canvas-move-preparation.request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
@@ -12,8 +12,9 @@ import { isValidEventTrigger } from '../../../domain';
 @FExecutionRegister(FCanvasMovePreparationRequest)
 export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePreparationRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
     return this._fComponentsStore.fFlow!.hostElement;
@@ -26,7 +27,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
     this._fDraggableDataContext.onPointerDownScale = 1;
     this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost);
-    this._fDraggableDataContext.draggableItems = [ new FCanvasDragHandler() ];
+    this._fDraggableDataContext.draggableItems = [ new FCanvasDragHandler(this._injector) ];
   }
 
   private _isValid(request: FCanvasMovePreparationRequest): boolean {
