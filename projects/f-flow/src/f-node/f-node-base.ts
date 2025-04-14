@@ -47,6 +47,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   protected _size: ISize | undefined;
 
 
+  public abstract fMinimapClass: string[] | string;
+
+
   public abstract fDraggingDisabled: boolean;
 
   public abstract override fSelectionDisabled: boolean;

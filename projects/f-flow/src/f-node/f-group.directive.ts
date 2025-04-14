@@ -35,6 +35,9 @@ let uniqueId: number = 0;
 export class FGroupDirective extends FNodeBase
   implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _fMediator = inject(FMediator);
+
   @Input('fGroupId')
   public override fId: string = `f-group-${ uniqueId++ }`;
 
@@ -98,8 +101,8 @@ export class FGroupDirective extends FNodeBase
   @Input({ transform: booleanAttribute })
   public override fConnectOnNode: boolean = true;
 
-  private readonly _destroyRef = inject(DestroyRef);
-  private readonly _fMediator = inject(FMediator);
+  @Input()
+  public override fMinimapClass: string[] | string = [];
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

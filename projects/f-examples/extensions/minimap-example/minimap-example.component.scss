@@ -3,8 +3,18 @@
 ::ng-deep f-flow {
   @include flow-common.connection;
   @include flow-common.minimap;
+
+  .custom-class-for-minimap {
+    fill: var(--connection-gradient-1) !important;
+
+    &.f-selected {
+      fill: var(--minimap-node-selected-color) !important;
+    }
+  }
 }
 
 .f-node {
   @include flow-common.node;
 }
+
+

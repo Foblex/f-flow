@@ -4,6 +4,8 @@
 
 This guide shows how to create a minimap that shows the entire canvas and allows you to navigate the canvas by dragging the minimap.
 
+You can set custom class for each node and group in the minimap using `fMinimapClass: string | string[];` node property.
+
 ## Example
 
 ::: ng-component <minimap-example></minimap-example> [height]="600"

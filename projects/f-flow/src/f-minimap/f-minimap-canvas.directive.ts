@@ -9,9 +9,8 @@ import { MinimapDrawNodesRequest } from './domain';
 })
 export class FMinimapCanvasDirective {
 
-  private _fMediator = inject(FMediator);
-
-  private _elementReference = inject(ElementRef);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _elementReference = inject(ElementRef);
 
   public get hostElement(): SVGGElement {
     return this._elementReference.nativeElement;
