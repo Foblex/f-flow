@@ -8,7 +8,6 @@ import { FComponentsStore } from '../../../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { FCanvasBase } from '../../../f-canvas';
 import { FFlowBase } from '../../../f-flow';
-import { isArray } from 'node:util';
 
 @Injectable()
 @FExecutionRegister(MinimapDrawNodesRequest)
