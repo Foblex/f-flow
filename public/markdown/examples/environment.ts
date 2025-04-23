@@ -666,7 +666,11 @@ function extensionGroup(): INavigationGroup {
         image_width: 821,
         image_height: 600,
         image_type: 'image/png',
-        date: new Date('2025-04-23 13:00:05')
+        date: new Date('2025-04-23 13:00:05'),
+        badge: {
+          text: 'Updated',
+          type: 'warning'
+        },
       },
       {
         link: 'zoom',
