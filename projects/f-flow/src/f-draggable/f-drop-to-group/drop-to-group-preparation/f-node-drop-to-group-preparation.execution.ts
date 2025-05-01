@@ -62,8 +62,8 @@ export class FNodeDropToGroupPreparationExecution
       return {
         node: x,
         rect: RectExtensions.initialize(
-          rect.x + this._fCanvasPosition.x,
-          rect.y + this._fCanvasPosition.y,
+          rect.x * this._transform.scale + this._fCanvasPosition.x,
+          rect.y * this._transform.scale + this._fCanvasPosition.y,
           rect.width * this._transform.scale,
           rect.height * this._transform.scale
         )
