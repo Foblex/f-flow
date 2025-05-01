@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild, ViewChild } from '@angular/core';
 import {
   FCanvasComponent, FDropToGroupEvent,
   FFlowModule,
@@ -15,19 +15,17 @@ import {
   ]
 })
 export class DragToGroupComponent {
+  protected readonly fCanvas = viewChild(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  protected parentGroup: string | undefined;
 
-  public parentGroup: string | undefined;
+  protected nodeText = 'Drag me to the group';
 
-  public nodeText = 'Drag me to the group';
-
-  public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+  protected onLoaded(): void {
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 
-  public onDropToGroup(event: FDropToGroupEvent): void {
+  protected onDropToGroup(event: FDropToGroupEvent): void {
     if(event.fTargetNode === 'group1') {
       this.parentGroup = 'group1';
       this.nodeText = 'I am in group1';
