@@ -27,6 +27,10 @@ export class FExternalItemDragHandler implements IFDragHandler {
     return this._fExternalItem.hostElement;
   }
 
+  private get _body(): Element {
+    return this._fBrowser.document.fullscreenElement ?? this._fBrowser.document.body;
+  }
+
   constructor(
     _injector: Injector,
     private _fExternalItem: FExternalItemBase,
@@ -54,7 +58,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
       this._matchElementSize(this._preview, this._onPointerDownRect);
     }
     this._preview!.style.transform = setTransform(this._onPointerDownRect);
-    this._fBrowser.document.body.appendChild(this._preview);
+    this._body.appendChild(this._preview);
   }
 
   private _createAndAppendPlaceholder(): void {
@@ -62,7 +66,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
       new FExternalItemCreatePlaceholderRequest(this._fExternalItem)
     );
 
-    this._fBrowser.document.body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
+    this._body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
   }
 
   private _matchElementSize(target: HTMLElement, sourceRect: IRect): void {
@@ -92,7 +96,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    this._fBrowser.document.body.removeChild(this._preview!);
+    this._body.removeChild(this._preview!);
 
     this._placeholder!.parentElement!.replaceChild(this._fItemHost, this._placeholder!);
   }
