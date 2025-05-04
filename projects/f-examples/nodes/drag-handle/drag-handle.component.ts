@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import {
   FCanvasComponent,
   FFlowModule
@@ -15,11 +15,9 @@ import {
   ]
 })
 export class DragHandleComponent {
+  protected readonly fCanvas = viewChild(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
-
-  public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+  protected onLoaded(): void {
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 }

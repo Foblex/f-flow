@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, viewChild } from '@angular/core';
 import {
   FCanvasChangeEvent,
   FCanvasComponent,
@@ -28,24 +28,21 @@ import { BrowserService } from '@foblex/platform';
   ]
 })
 export class CustomNodesComponent implements OnDestroy {
+  protected readonly fCanvas = viewChild(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  private readonly _fBrowser = inject(BrowserService);
 
-  constructor(
-    private fBrowser: BrowserService
-  ) {
+  protected onLoaded(): void {
+    this.fCanvas()?.fitToScreen(PointExtensions.initialize(100, 100), false);
   }
 
-  public onLoaded(): void {
-    this.fCanvas.fitToScreen(PointExtensions.initialize(100, 100), false);
-  }
-
-  public onCanvasChanged(event: FCanvasChangeEvent): void {
-    this.fBrowser.document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
+  protected onCanvasChanged(event: FCanvasChangeEvent): void {
+    // Sets a CSS variable to scale Material Design controls within the canvas
+    this._fBrowser.document.documentElement.style.setProperty('--flow-scale', `${ event.scale }`);
   }
 
   public ngOnDestroy(): void {
-    this.fBrowser.document.documentElement.style.removeProperty('--flow-scale');
+    // Removes the CSS variable to prevent scaling effects outside the canvas context
+    this._fBrowser.document.documentElement.style.removeProperty('--flow-scale');
   }
 }
