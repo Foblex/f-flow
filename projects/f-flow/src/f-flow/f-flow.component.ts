@@ -67,7 +67,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     return this._elementReference.nativeElement;
   }
 
-  public override fLoaded = output<void>();
+  public override fLoaded = output<string>();
 
   private _isLoaded: boolean = false;
 
@@ -104,7 +104,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _emitLoaded(): void {
     if (!this._isLoaded) {
       this._isLoaded = true;
-      this.fLoaded.emit();
+      this.fLoaded.emit(this.fId());
     }
   }
 
