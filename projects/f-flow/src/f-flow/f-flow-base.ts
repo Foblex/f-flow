@@ -9,5 +9,5 @@ export abstract class FFlowBase implements IHasHostElement {
 
   public abstract hostElement: HTMLElement;
 
-  public abstract fLoaded: OutputEmitterRef<void>;
+  public abstract fLoaded: OutputEmitterRef<string>;
 }

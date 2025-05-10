@@ -3,12 +3,20 @@ import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
 import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
 import { F_DOCS_ENVIRONMENT, F_HOME_PAGE_ENVIRONMENT } from '@foblex/m-render';
 import { HOME_ENVIRONMENT } from '../../public/markdown/home';
+import { MEMBERSHIP_ENVIRONMENT } from '../../public/markdown/membership';
 
 export const routes: Routes = [
   {
     path: '',
     providers: [
       { provide: F_HOME_PAGE_ENVIRONMENT, useValue: HOME_ENVIRONMENT }
+    ],
+    loadChildren: () => import('@foblex/m-render').then(m => m.F_HOME_PAGE_ROUTES),
+  },
+  {
+    path: 'membership',
+    providers: [
+      { provide: F_HOME_PAGE_ENVIRONMENT, useValue: MEMBERSHIP_ENVIRONMENT }
     ],
     loadChildren: () => import('@foblex/m-render').then(m => m.F_HOME_PAGE_ROUTES),
   },

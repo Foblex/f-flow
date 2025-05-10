@@ -12,7 +12,6 @@ import {
   OnInit,
   QueryList,
   ViewChild,
-  ViewEncapsulation
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
@@ -82,7 +81,7 @@ export class FConnectionComponent
   public override fRadius: number = 8;
 
   @Input({ transform: numberAttribute })
-  public override fOffset: number = 32;
+  public override fOffset: number = 12;
 
   @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
   public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;

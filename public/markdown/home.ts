@@ -25,6 +25,10 @@ export const HOME_ENVIRONMENT: IHomePageEnvironment = {
   }, {
     text: 'GitHub',
     href: 'https://github.com/Foblex/f-flow',
+  }, {
+    icon: 'heart',
+    text: 'Support Us',
+    routerLink: '/membership',
   }],
   features: [{
     headline: 'Easy to Use',

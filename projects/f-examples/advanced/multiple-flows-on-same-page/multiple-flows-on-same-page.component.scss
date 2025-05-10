@@ -1,0 +1,32 @@
+@use "../../flow-common";
+
+::ng-deep :root {
+  --flow-border-color: rgba(60, 60, 67, 0.36);
+
+  &.dark {
+    --flow-border-color: rgba(235, 235, 245, 0.38);
+  }
+}
+
+:host {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  gap: 16px;
+  padding: 16px;
+}
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+  @include flow-common.connection-marker;
+  height: 370px !important;
+  border-radius: 2px;
+  border: 1px solid var(--flow-border-color);
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+@include flow-common.connector;
+@include flow-common.examples-toolbar;
