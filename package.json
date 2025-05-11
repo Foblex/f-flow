@@ -14,9 +14,10 @@
     "start": "ng serve",
     "start-shared": "ng serve --host 0.0.0.0",
     "build": "ng build",
+    "build-flow": "ng build f-flow && tsc -p projects/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"projects/f-flow/schematics/*/schema.json\" \"projects/f-flow/schematics/*/files/**\" \"projects/f-flow/schematics/collection.json\" dist/f-flow",
     "watch": "ng build --watch --configuration development",
     "test": "ng test f-flow",
-    "publish": "ng build f-flow && cd dist/f-flow && npm publish",
+    "publish": "npm run build-flow && cd dist/f-flow && npm publish",
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
@@ -68,7 +69,7 @@
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
     "@foblex/drag-toolkit": "1.1.0",
-    "@foblex/m-render": "2.5.9",
+    "@foblex/m-render": "2.6.1",
     "@foblex/mediator": "1.1.2",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.1",
@@ -101,6 +102,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^18.1.0",
     "standard-version": "^9.5.0",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "copyfiles": "2.4.1"
   }
 }

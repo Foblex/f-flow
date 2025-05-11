@@ -9,12 +9,12 @@ To install Foblex Flow, run the following command in your Angular project:
 
 ::: code-group
 
-```sh [v12+]
-npm install @foblex/flow@12
+```sh [install]
+ng add @foblex/flow
 ```
 
-```sh [v16+]
-npm install @foblex/flow
+```sh [update]
+ng update @foblex/flow
 ```
 
 :::
