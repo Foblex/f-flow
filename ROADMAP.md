@@ -1,4 +1,3 @@
-
 # Roadmap
 
 ## Introduction  
@@ -8,10 +7,6 @@ This roadmap outlines the key milestones and objectives for the project's develo
 ## Key Milestones
 
 ### Planned Tasks
-- **Add support for fully rotateable nodes**  
-  Allows any node to be rotated freely to any angle.  
-  [Details](https://github.com/Foblex/f-flow/discussions/129)
-
 - **Implement pinch-to-zoom scaling**  
   Enables users to zoom in and out using pinch gestures.  
   [Details](https://github.com/Foblex/f-flow/discussions/127)
@@ -27,14 +22,20 @@ This roadmap outlines the key milestones and objectives for the project's develo
 
 ---
 
+### New Additions:
+- **Added Angular Schematics Support** (Completed on 2025-05-11)  
+Implemented ng-add schematic for automatic dependency installation.  
+Implemented ng-update schematic for seamless package updates.
+
 ### Completed Tasks
+- **Add support for fully rotatable nodes** (Completed on 2025-04-12)  
+Allows any node to be rotated freely to any angle.  
 
-- **Customize triggers for drag and zoom events** (Completed on 2025-02-10)
+- **Customize triggers for drag and zoom events** (Completed on 2025-02-10)  
+Enables users to define their own key combinations for triggering events like drag, zoom, and other interactions.
 
-  Enables users to define their own key combinations for triggering events like drag, zoom, and other interactions.
-
-- **DragStart and DragEnd events with data** (Completed on 2025-02-07)  
-  Implemented events that transmit data when dragging starts and ends.
+- **DragStart and DragEnd events with data** (Completed on 2025-02-07)    
+Implemented events that transmit data when dragging starts and ends.
 
 - **Sorting by newness on the documentation portal** (Completed on 2025-02-07)
 

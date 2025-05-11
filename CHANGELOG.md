@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.5.0](https://github.com/foblex/flow/compare/v17.4.0...v17.5.0) (2025-05-11)
+
+### Features
+* Added Angular schematics support for `ng-add` and `ng-update` commands. ([ea3e8ec](https://github.com/foblex/flow/commit/ea3e8ec7b8960e4f6de9f37a35dbfe3633b3dd39))
+* Added `fMinimapClass` input for custom minimap node styling. ([7c8e13c](https://github.com/foblex/flow/commit/7c8e13c6ba7c408ea6882600f8c42818f8cfe614))
+* Added membership page components and enhanced flow connection properties. ([6170b46](https://github.com/foblex/flow/commit/6170b460790ed401cdc5029f477177ed6bb52089))
+* Enhanced resize handle functionality with minimum size support and improved styling. ([29fbcd4](https://github.com/foblex/flow/commit/29fbcd4940571141cfab14897c632f9a0c68e468))
+* Implemented node rotation functionality. ([b58f982](https://github.com/foblex/flow/commit/b58f982244fce06bd6d0ae9555a20b4a24db627d))
+
+### Bug Fixes
+
+* Adjusted node positioning calculations to account for transformation scale. ([0295846](https://github.com/foblex/flow/commit/0295846f038297e3780741efe3526e02cad76476))
+* Refactored background component executions to use readonly properties and improve dependency injection. ([a18dddd](https://github.com/foblex/flow/commit/a18ddddec255f888e46f060905edaf1417bdcab9))
+* Refactored canvas components to use readonly properties and introduce mediatorEffect for better state management. ([5c3512b](https://github.com/foblex/flow/commit/5c3512be2a35d36aa4ed326f06a5c05ec4ad69e3))
+* Updated `@foblex/m-render` to version 2.5.9 and incremented package version to 17.4.4. ([c51a174](https://github.com/foblex/flow/commit/c51a1744283a670f371cce361a8cedfa4e46e3f0))
+* Fixed drag handler to correctly append and remove elements; added `pointer-events` to connection styles. ([dcc5de3](https://github.com/foblex/flow/commit/dcc5de3524d87189013bab27c6ecc08c2638bf11))
+* Fixed `f-background` component to use `ContentChild` decorator and improve pattern handling. ([9fb09ba](https://github.com/foblex/flow/commit/9fb09ba6a073d106a6f2feb7010e96a0d718ddcc))
+* Updated node input/output IDs to include index for better connection management. ([95c7691](https://github.com/foblex/flow/commit/95c7691864f0b79ae4551c4c5406ce3f311ada18))
+
+### Documentation
+
+* Added Rotate Handle example. ([1f51f4f](https://github.com/foblex/flow/commit/1f51f4ff8c1e54679dd6cc67138ae574bbc2eb83))
+
 ## [17.4.0](https://github.com/foblex/flow/compare/v17.2.1...v17.4.0) (2025-02-10)
 
 ### Features
