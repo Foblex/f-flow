@@ -19,7 +19,7 @@ describe('DragToReassignComponent', () => {
         .trigger('mousemove', { clientY: 0, force: true })
         .get('div[data-f-input-id=\'input-2\']')
         .trigger('mousemove', { clientY: endY, force: true })
-        .trigger('mouseup', { force: true });
+        .trigger('pointerup', { force: true });
 
       cy.get('#connection_f-connection-01input-1').should('not.exist');
       cy.get('#connection_for_selection_f-connection-11input-2').should('exist');
