@@ -15,7 +15,7 @@ describe('DragToConnectComponent', () => {
       .get('.f-connection-for-create').should('exist')
       .invoke('css', 'display').should('equal', 'block')
       .get('.f-node-output')
-      .trigger('mouseup');
+      .trigger('pointerup');
 
     cy.get('.f-connection-for-create').should('exist')
       .invoke('css', 'display').should('equal', 'none');
@@ -32,7 +32,7 @@ describe('DragToConnectComponent', () => {
       .trigger('mousemove', { clientX: 140, clientY: 10 })
       .get('.f-node-input')
       .trigger('mousemove', { clientX: 140, clientY: 10 })
-      .trigger('mouseup');
+      .trigger('pointerup');
 
     cy.get('#f-connection-0').should('exist');
   });

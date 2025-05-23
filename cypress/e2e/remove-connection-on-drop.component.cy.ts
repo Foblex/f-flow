@@ -13,7 +13,7 @@ describe('RemoveConnectionOnDropComponent', () => {
       .trigger('mousedown', { button: 0, force: true })
       .trigger('mousemove', { clientY: 0, force: true })
       .trigger('mousemove', { clientY: 200, clientX: 0, force: true })
-      .trigger('mouseup', { force: true });
+      .trigger('pointerup', { force: true });
 
 
     cy.get('#connection_f-connection-012').should('not.exist');

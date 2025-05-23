@@ -12,7 +12,7 @@ describe('DragHandleComponent', () => {
         .first()
         .trigger('mousedown', { button: 0, force: true })
         .trigger('mousemove', { clientX: -150, clientY: 0 })
-        .trigger('mouseup', { clientX: 0, clientY: 0 });
+        .trigger('pointerup', { clientX: 0, clientY: 0 });
 
       cy.get('.f-node.f-drag-handle')
         .first().then(($dragHandle2: JQuery<HTMLElement>) => {

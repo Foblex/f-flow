@@ -12,7 +12,7 @@ describe('CreateNodeOnConnectionDropComponent', () => {
       .trigger('mousemove', { clientX: 0, clientY: 0 })
       .trigger('mousemove', { clientX: 140, clientY: 10 })
       .trigger('mousemove', { clientX: 100, clientY: 10 })
-      .trigger('mouseup');
+      .trigger('pointerup');
 
     cy.get('#f-connection-0').should('exist');
     cy.get('.f-node').should('have.length', 2);

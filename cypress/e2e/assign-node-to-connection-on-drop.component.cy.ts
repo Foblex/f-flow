@@ -19,7 +19,7 @@ describe('AssignNodeToConnectionOnDropComponent', () => {
       cy.get('div[data-f-node-id="3"]')
         .trigger('mousedown', { button: 0, clientY: endY, force: true })
         .trigger('mousemove', { button: 0, clientY: endY + 140, force: true })
-        .trigger('mouseup', { force: true });
+        .trigger('pointerup', { force: true });
 
       cy.get('#connection_232').should('exist');
       cy.get('#connection_113').should('exist');
