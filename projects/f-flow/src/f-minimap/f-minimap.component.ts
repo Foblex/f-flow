@@ -50,8 +50,10 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
 
   private _listenTransformChanges(): void {
     this._fMediator.execute<FChannelHub>(new ListenTransformChangesRequest()).pipe(
-      notifyOnStart(), debounceTime(5)
-    ).listen(this._destroyRef, () => this._redraw());
+      notifyOnStart(), debounceTime(2)
+    ).listen(this._destroyRef, () => {
+      this._redraw()
+    });
   }
 
   private _redraw(): void {

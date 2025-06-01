@@ -1,11 +1,7 @@
 @use "../flow-common";
 
-::ng-deep simple-flow {
+::ng-deep f-flow {
   @include flow-common.connection;
-}
-
-f-flow {
-  height: 300px;
 }
 
 .f-node {

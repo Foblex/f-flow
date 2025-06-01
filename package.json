@@ -69,7 +69,7 @@
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
     "@foblex/drag-toolkit": "1.1.1",
-    "@foblex/m-render": "2.6.1",
+    "@foblex/m-render": "^2.6.5",
     "@foblex/mediator": "1.1.2",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.1",
@@ -79,10 +79,7 @@
     "html2canvas": "^1.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3",
-    "markdown-it": ">=14.1.0",
-    "markdown-it-container": ">=4.0.0",
-    "prismjs": ">=1.29.0"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.0",
@@ -93,6 +90,7 @@
     "@types/html2canvas": "^1.0.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "copyfiles": "2.4.1",
     "cypress": "^13.15.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -102,7 +100,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^18.1.0",
     "standard-version": "^9.5.0",
-    "typescript": "~5.5.2",
-    "copyfiles": "2.4.1"
+    "typescript": "~5.5.2"
   }
 }

@@ -1,38 +1,43 @@
-import { Routes } from '@angular/router';
-import { GUIDES_ENVIRONMENT } from '../../public/markdown/guides/environment';
-import { EXAMPLES_ENVIRONMENT } from '../../public/markdown/examples/environment';
-import { F_DOCS_ENVIRONMENT, F_HOME_PAGE_ENVIRONMENT } from '@foblex/m-render';
-import { HOME_ENVIRONMENT } from '../../public/markdown/home';
-import { MEMBERSHIP_ENVIRONMENT } from '../../public/markdown/membership';
+import {Routes} from '@angular/router';
+import {provideDocumentation, provideHomePage} from "@foblex/m-render";
+import {HOME_CONFIGURATION} from "./home.config";
+import {DOCUMENTATION_CONFIGURATION} from "./documentation.config";
+import {EXAMPLES_CONFIGURATION} from "./examples.config";
 
 export const routes: Routes = [
   {
     path: '',
-    providers: [
-      { provide: F_HOME_PAGE_ENVIRONMENT, useValue: HOME_ENVIRONMENT }
-    ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_HOME_PAGE_ROUTES),
-  },
-  {
-    path: 'membership',
-    providers: [
-      { provide: F_HOME_PAGE_ENVIRONMENT, useValue: MEMBERSHIP_ENVIRONMENT }
-    ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_HOME_PAGE_ROUTES),
+    loadChildren: () =>
+      import('@foblex/m-render').then((m) => m.HOME_ROUTES.map((route) => ({
+        ...route,
+        providers: [
+          provideHomePage(
+            HOME_CONFIGURATION,
+          ),
+        ],
+      }))),
   },
   {
     path: 'docs',
-    providers: [
-      { provide: F_DOCS_ENVIRONMENT, useValue: GUIDES_ENVIRONMENT }
-    ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCS_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then((m) => m.DOCUMENTATION_ROUTES.map((route) => ({
+      ...route,
+      providers: [
+        provideDocumentation(
+          DOCUMENTATION_CONFIGURATION,
+        ),
+      ],
+    }))),
   },
   {
     path: 'examples',
-    providers: [
-      { provide: F_DOCS_ENVIRONMENT, useValue: EXAMPLES_ENVIRONMENT }
-    ],
-    loadChildren: () => import('@foblex/m-render').then(m => m.F_DOCS_ROUTES)
+    loadChildren: () => import('@foblex/m-render').then((m) => m.DOCUMENTATION_ROUTES.map((route) => ({
+      ...route,
+      providers: [
+        provideDocumentation(
+          EXAMPLES_CONFIGURATION,
+        ),
+      ],
+    }))),
   },
   {
     path: '**',
