@@ -1,5 +1,5 @@
 import {
-  ApplicationConfig,
+  ApplicationConfig, ErrorHandler, Injectable,
   provideZoneChangeDetection
 } from '@angular/core';
 import {
@@ -10,6 +10,13 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 
+@Injectable()
+export class ClientErrorHandler implements ErrorHandler {
+  handleError(error: any): void {
+    console.error('[ClientErrorHandler]', error);
+  }
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -17,5 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),
+    { provide: ErrorHandler, useClass: ClientErrorHandler }
   ]
 };
+

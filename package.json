@@ -21,7 +21,7 @@
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
-    "serve:ssr:f-flow-portal": "node dist/f-flow-portal/server/server.mjs",
+    "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run"
   },
   "standard-version": {
@@ -69,7 +69,7 @@
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
     "@foblex/drag-toolkit": "1.1.1",
-    "@foblex/m-render": "^2.6.5",
+    "@foblex/m-render": "^2.6.9",
     "@foblex/mediator": "1.1.2",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.1",
