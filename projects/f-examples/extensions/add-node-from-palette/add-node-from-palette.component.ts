@@ -1,18 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, viewChild} from '@angular/core';
 import {
   FCanvasComponent,
   FCreateNodeEvent,
   FExternalItemDirective,
-  FExternalItemPlaceholderDirective, FExternalItemPreviewDirective,
+  FExternalItemPlaceholderDirective,
+  FExternalItemPreviewDirective,
   FFlowModule
 } from '@foblex/flow';
-import { IPoint } from '@foblex/2d';
-import { generateGuid } from '@foblex/utils';
-import { FCheckboxComponent } from '@foblex/m-render';
+import {generateGuid} from '@foblex/utils';
+import {FCheckboxComponent} from '@foblex/m-render';
 
 @Component({
   selector: 'add-node-from-palette',
-  styleUrls: [ './add-node-from-palette.component.scss' ],
+  styleUrls: ['./add-node-from-palette.component.scss'],
   templateUrl: './add-node-from-palette.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -26,37 +26,39 @@ import { FCheckboxComponent } from '@foblex/m-render';
 })
 export class AddNodeFromPaletteComponent {
 
-  private _changeDetectorRef = inject(ChangeDetectorRef);
-
-  protected nodes: { id: string, text: string, position: IPoint }[] = [{
+  protected nodes = signal([{
     id: generateGuid(),
     text: 'node 1',
-    position: { x: 0, y: 0 }
-  },{
+    position: {x: 0, y: 0}
+  }, {
     id: generateGuid(),
     text: 'node 2',
-    position: { x: 200, y: 0 }
-  }];
+    position: {x: 200, y: 0}
+  }]);
 
-  protected isMatchSize: boolean = false;
+  protected isMatchSize = signal(false)
 
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvas!: FCanvasComponent;
+  protected adjustCellSizeWhileDragging = signal(false);
+
+  protected fCanvas = viewChild(FCanvasComponent);
 
   protected onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 
   protected onCreateNode(event: FCreateNodeEvent): void {
-    this.nodes.push({
+    this.nodes.set([...this.nodes(), {
       id: generateGuid(),
       text: event.data || 'node ' + (this.nodes.length + 1),
       position: event.rect
-    });
-    this._changeDetectorRef.markForCheck();
+    }]);
   }
 
   protected onPreviewMatchSizeChange(checked: boolean): void {
-    this.isMatchSize = checked;
+    this.isMatchSize.set(checked);
+  }
+
+  protected onAdjustCellSizeWhileDraggingChange(event: boolean): void {
+    this.adjustCellSizeWhileDragging.set(event);
   }
 }

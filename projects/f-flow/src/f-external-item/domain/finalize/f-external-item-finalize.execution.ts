@@ -53,7 +53,8 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
 
   private _getElementsFromPoint(position: IPoint): HTMLElement[] {
     return this._fBrowser.document.elementsFromPoint(position.x, position.y)
-      .filter(x => !x.closest('.f-external-item') && !x.closest('.f-external-item-preview')) as HTMLElement[];
+      .filter(x => !x.closest('.f-external-item')
+        && !x.closest('.f-external-item-preview')) as HTMLElement[];
   }
 
   private _emitEvent(elements: HTMLElement[]): void {
@@ -69,8 +70,6 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
   }
 
   private _getPreviewRect(): IRect {
-    return this._fMediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(this._fResult.getData().preview, false)
-    );
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fResult.getData().preview));
   }
 }

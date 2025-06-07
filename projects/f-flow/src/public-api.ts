@@ -30,6 +30,8 @@ export * from './mixins';
 
 export * from './reactivity';
 
+export * from './utils';
+
 export * from './f-flow.module';
 
 export * from './i-has-host-element';

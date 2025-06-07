@@ -1,14 +1,14 @@
-import { inject, Injectable, Injector } from '@angular/core';
-import { FNodeDropToGroupPreparationRequest } from './f-node-drop-to-group-preparation.request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FComponentsStore } from '../../../f-storage';
-import { INodeWithRect } from '../../domain';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { GetNormalizedElementRectRequest, GetParentNodesRequest } from '../../../domain';
-import { FNodeBase } from '../../../f-node';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
-import { FSummaryNodeMoveDragHandler } from '../../f-node-move';
+import {inject, Injectable, Injector} from '@angular/core';
+import {FNodeDropToGroupPreparationRequest} from './f-node-drop-to-group-preparation.request';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {FComponentsStore} from '../../../f-storage';
+import {INodeWithRect} from '../../domain';
+import {IPoint, IRect, ITransformModel, PointExtensions, RectExtensions} from '@foblex/2d';
+import {GetNormalizedElementRectRequest, GetParentNodesRequest} from '../../../domain';
+import {FNodeBase} from '../../../f-node';
+import {FDraggableDataContext} from '../../f-draggable-data-context';
+import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
+import {FSummaryNodeMoveDragHandler} from '../../f-node-move';
 
 @Injectable()
 @FExecutionRegister(FNodeDropToGroupPreparationRequest)
@@ -33,7 +33,7 @@ export class FNodeDropToGroupPreparationExecution
   }
 
   public handle(request: FNodeDropToGroupPreparationRequest): void {
-    if(!this._isValid()) {
+    if (!this._isValid()) {
       return;
     }
     const fNode = this._fComponentsStore
@@ -58,7 +58,7 @@ export class FNodeDropToGroupPreparationExecution
   private _getNotDraggedNodesRects(): INodeWithRect[] {
     const draggedNodes = this._addParentNodes(this._getNodesBeingDragged());
     return this._getNotDraggedNodes(draggedNodes).map((x) => {
-      const rect = this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+      const rect = this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
       return {
         node: x,
         rect: RectExtensions.initialize(
