@@ -4,13 +4,13 @@ import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { IPointerEvent } from '@foblex/drag-toolkit';
+import {IPointerEvent} from "../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(OnPointerMoveRequest)
 export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   private get _hostElement(): HTMLElement {
     return this._fComponentsStore.fDraggable!.hostElement;

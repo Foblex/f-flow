@@ -1,5 +1,5 @@
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FEventTrigger } from '../../../../domain';
+import {IPointerEvent} from "../../../../drag-toolkit";
 
 export class FReassignConnectionPreparationRequest {
 

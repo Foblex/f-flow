@@ -4,9 +4,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
 import { FComponentsStore } from '../../../f-storage';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FSummaryNodeMoveDragHandler } from '../../f-node-move';
 import { FDropToGroupEvent } from '../f-drop-to-group.event';
+import {IPointerEvent} from "../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FNodeDropToGroupFinalizeRequest)

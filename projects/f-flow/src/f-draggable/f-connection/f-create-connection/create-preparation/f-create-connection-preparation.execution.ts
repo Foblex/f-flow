@@ -1,5 +1,4 @@
 import { IHandler } from '@foblex/mediator';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
@@ -11,6 +10,7 @@ import { FCreateConnectionFromOutputPreparationRequest } from './from-output-pre
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FReassignConnectionPreparationRequest } from '../../f-reassign-connection';
 import { isValidEventTrigger } from '../../../../domain';
+import {IPointerEvent} from "../../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionPreparationRequest)

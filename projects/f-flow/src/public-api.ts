@@ -4,6 +4,8 @@ export * from './f-canvas';
 
 export * from './domain';
 
+export * from './drag-toolkit';
+
 export * from './f-connection';
 
 export * from './f-connectors';

@@ -43,7 +43,6 @@ import { FSingleSelectRequest } from './f-single-select';
 import { FNodeResizeFinalizeRequest, FNodeResizePreparationRequest } from './f-node-resize';
 import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
-import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
@@ -52,6 +51,7 @@ import {
   FNodeDropToGroupPreparationRequest
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
+import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
 
 @Directive({
   selector: "f-flow[fDraggable]",

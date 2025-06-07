@@ -2,12 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FSingleSelectRequest } from './f-single-select.request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectionBase } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
+import {IPointerEvent} from "../../drag-toolkit";
 
 /**
  * Implements the functionality for selecting elements in a graphical interface.

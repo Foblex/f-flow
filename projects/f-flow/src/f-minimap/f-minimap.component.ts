@@ -6,12 +6,12 @@ import { FMediator } from '@foblex/mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
 import { ListenTransformChangesRequest } from '../f-storage';
 import { debounceTime, FChannelHub, notifyOnStart } from '../reactivity';
 import { BrowserService } from '@foblex/platform';
+import {IPointerEvent} from "../drag-toolkit";
 
 @Component({
   selector: 'f-minimap',

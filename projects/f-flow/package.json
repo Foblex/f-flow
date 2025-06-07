@@ -42,7 +42,6 @@
     "@foblex/platform": "1.0.4",
     "@foblex/mediator": "1.1.2",
     "@foblex/2d": "1.2.1",
-    "@foblex/drag-toolkit": "1.1.1",
     "@foblex/utils": "1.1.1"
   },
   "dependencies": {

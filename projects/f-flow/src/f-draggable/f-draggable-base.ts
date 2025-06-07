@@ -2,9 +2,9 @@ import { Directive, EventEmitter, } from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
-import { DragAndDropBase, ICanRunOutsideAngular } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './f-drop-to-group';
+import {DragAndDropBase, ICanRunOutsideAngular} from "../drag-toolkit";
 
 @Directive()
 export abstract class FDraggableBase extends DragAndDropBase  {
