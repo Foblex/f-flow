@@ -55,7 +55,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _getStaticNodeRects(fNodes: FNodeBase[]): IRect[] {
     return this._getStaticNodes(fNodes).map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     })
   }
 
