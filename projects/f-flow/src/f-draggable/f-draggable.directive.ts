@@ -52,7 +52,57 @@ import {
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
-
+// ┌──────────────────────────────┐
+// │        Angular Realm         │
+// │                              │
+// │  ┌────────────────────────┐  │
+// │  │  FDraggableDirective   │  │
+// │  └──────────┬─────────────┘  │
+// │             │ extends        │
+// │  ┌──────────▼─────────────┐  │
+// │  │     FDraggableBase     │  │
+// │  └──────────┬─────────────┘  │
+// │             │                │
+// │             │ overrides      │
+// │  ┌──────────▼─────────────┐  │
+// │  │   DragAndDropBase      │  │
+// │  └──────────┬─────────────┘  │
+// │             │                │
+// │      subscribes to           │
+// │             │                │
+// │        ┌────▼────┐           │
+// │        │ Document│           │
+// │        └─────────┘           │
+// │                              │
+// │  ┌────────────────────────┐  │
+// │  │       FMediator        │◄─┬────┐
+// │  └─────┬────────┬─────────┘  │    │
+// │        │        │            │    │
+// │   executes   executes        │    │
+// │   F*Request   F*Event        │    │
+// │        │        │            │    │
+// └────────┴────────┴────────────┴────┘
+//
+//
+// ┌──────────────────────────────────────┐
+// │       Drag & Drop Runtime Layer      │
+// │                                      │
+// │  Events from DOM:                    │
+// │    - mousedown / touchstart          │
+// │    - mousemove / touchmove           │
+// │    - pointerup                       │
+// │                                      │
+// │  ↓ Routed to                         │
+// │                                      │
+// │  ┌──────────────────────────────┐    │
+// │  │     DragAndDropBase          │    │
+// │  └──────────────────────────────┘    │
+// │        ▲             ▲               │
+// │        │             │               │
+// │   checkDrag     onPointerMove        │
+// │   Sequence      + Finalization       │
+// │   To Start                           │
+// └──────────────────────────────────────┘
 @Directive({
   selector: "f-flow[fDraggable]",
   exportAs: 'fDraggable',

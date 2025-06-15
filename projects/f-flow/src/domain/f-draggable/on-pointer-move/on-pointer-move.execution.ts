@@ -16,7 +16,7 @@ export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, 
     return this._fComponentsStore.fDraggable!.hostElement;
   }
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: OnPointerMoveRequest): void {
     this._setDifferenceToDraggableItems(

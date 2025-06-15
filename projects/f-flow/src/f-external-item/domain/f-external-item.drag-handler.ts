@@ -1,4 +1,4 @@
-import {IMinMaxPoint, IPoint, IRect, Point, RectExtensions} from '@foblex/2d';
+import {IPoint, IRect, Point, RectExtensions} from '@foblex/2d';
 import {
   FExternalItemBase,
   FExternalItemCreatePlaceholderRequest,
@@ -45,7 +45,6 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._fResult = _injector.get(FDragHandlerResult);
     this._fMediator = _injector.get(FMediator);
     this._fBrowser = _injector.get(BrowserService);
-
     this._fComponentStore = _injector.get(FComponentsStore);
 
     this._fBoundsLimiter = new PointBoundsLimiter(

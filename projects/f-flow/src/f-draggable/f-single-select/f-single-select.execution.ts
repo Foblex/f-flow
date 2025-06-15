@@ -51,9 +51,9 @@ import {IPointerEvent} from "../../drag-toolkit";
 @FExecutionRegister(FSingleSelectRequest)
 export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: FSingleSelectRequest): void {
     if (!this._isValid(request)) {
