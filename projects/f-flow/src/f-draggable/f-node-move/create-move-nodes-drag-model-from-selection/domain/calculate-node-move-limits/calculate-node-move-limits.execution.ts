@@ -1,11 +1,12 @@
-import { inject, Injectable } from '@angular/core';
-import { CalculateNodeMoveLimitsRequest } from './calculate-node-move-limits.request';
-import { IPoint, IRect, PointExtensions } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { GetNormalizedParentNodeRectRequest } from '../../../../domain';
-import { FNodeBase } from '../../../../../f-node';
-import { GetNormalizedElementRectRequest } from '../../../../../domain';
-import { INodeMoveLimits } from '../../i-node-move-limits';
+import {inject, Injectable} from '@angular/core';
+import {CalculateNodeMoveLimitsRequest} from './calculate-node-move-limits.request';
+import {IPoint, IRect, PointExtensions} from '@foblex/2d';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {GetNormalizedParentNodeRectRequest} from '../../../../domain';
+import {FNodeBase} from '../../../../../f-node';
+import {GetNormalizedElementRectRequest} from '../../../../../domain';
+import {INodeMoveLimits} from '../../i-node-move-limits';
+import {infinityMinMax} from "../../../../../utils";
 
 @Injectable()
 @FExecutionRegister(CalculateNodeMoveLimitsRequest)
@@ -15,8 +16,8 @@ export class CalculateNodeMoveLimitsExecution
   private _fMediator = inject(FMediator);
 
   public handle(request: CalculateNodeMoveLimitsRequest): INodeMoveLimits {
-    if(!request.fNode.fParentId || request.hasParentNodeInSelected) {
-      return { ...DEFAULT_LIMITS };
+    if (!request.fNode.fParentId || request.hasParentNodeInSelected) {
+      return {...infinityMinMax()};
     }
 
     return this._calculateDifference(
@@ -25,7 +26,7 @@ export class CalculateNodeMoveLimitsExecution
   }
 
   private _fNodeRect(fNode: FNodeBase): IRect {
-    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
   }
 
   private _fParentRect(fNode: FNodeBase): IRect {
@@ -50,8 +51,3 @@ export class CalculateNodeMoveLimitsExecution
     );
   }
 }
-
-const DEFAULT_LIMITS: INodeMoveLimits = {
-  min: PointExtensions.initialize(-Infinity, -Infinity),
-  max: PointExtensions.initialize(Infinity, Infinity)
-};

@@ -6,11 +6,11 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-handler';
 import { FDraggableBase } from '../../../f-draggable-base';
 import { FReassignConnectionEvent } from '../f-reassign-connection.event';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectorBase } from '../../../../f-connectors';
 import { FindInputAtPositionRequest } from '../../../../domain';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { IFReassignConnectionDragResult } from '../i-f-reassign-connection-drag-result';
+import {IPointerEvent} from "../../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FReassignConnectionFinalizeRequest)

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { GetNormalizedParentNodeRectRequest } from './get-normalized-parent-node-rect.request';
 import { IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -12,28 +12,46 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 export class GetNormalizedParentNodeRectExecution
   implements IExecution<GetNormalizedParentNodeRectRequest, IRect> {
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator
-  ) {
-  }
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
 
   public handle(request: GetNormalizedParentNodeRectRequest): IRect {
     let result = RectExtensions.initialize(-Infinity, -Infinity, Infinity, Infinity);
-    const parentNode = this.getNode(request.fNode.fParentId);
+    const parentNode = this._getNode(request.fNode.fParentId);
     if (parentNode) {
-      result = this.getParentRect(parentNode);
+      result = this._getParentRect(parentNode);
     }
     return result;
   }
 
-  private getNode(fId?: string | null): FNodeBase | undefined {
-    return this.fComponentsStore.fNodes.find((x) => x.fId === fId);
+  private _getNode(fId?: string | null): FNodeBase | undefined {
+    return this._fComponentsStore.fNodes.find((x) => x.fId === fId);
   }
-
-  private getParentRect(node: FNodeBase): IRect {
+  //   Parent Node
+  // +----------------------------------------+
+  // |  padding-top                           |
+  // |  +----------------------------------+  |
+  // |  |                                  |  |
+  // |  |   Available area for             |  |
+  // |p |   child nodes                    |p |
+  // |a |                                  |a |
+  // |d |   (width - padLeft - padRight)   |d |
+  // |  |                                  |d |
+  // |l |   (height - padTop - padBottom)  |i |
+  // |e |                                  |n |
+  // |f |                                  |g |
+  // |t |                                  |  |
+  // |  |                                  |r |
+  // |  |                                  |i |
+  // |  |                                  |g |
+  // |  |                                  |h |
+  // |  |                                  |t |
+  // |  +----------------------------------+  |
+  // |  padding-bottom                        |
+  // +----------------------------------------+
+  private _getParentRect(node: FNodeBase): IRect {
     const rect = this._getNodeRect(node);
-    const padding = this.getNodePadding(node, rect);
+    const padding = this._getNodePadding(node, rect);
     return RectExtensions.initialize(
       rect.x + padding[ 0 ],
       rect.y + padding[ 1 ],
@@ -43,10 +61,10 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNodeRect(fNode: FNodeBase): IRect {
-    return this.fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement, false));
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
   }
 
-  private getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this.fMediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+  private _getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
+    return this._fMediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
   }
 }

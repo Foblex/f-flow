@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, Input, OnInit } from '@angular/core';
 import { FSelectionAreaBase } from './f-selection-area-base';
 import { F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './domain';
 import { FEventTrigger, FTriggerEvent } from '../domain';
+import {IPointerEvent} from "../drag-toolkit";
 
 @Component({
   selector: "f-selection-area",

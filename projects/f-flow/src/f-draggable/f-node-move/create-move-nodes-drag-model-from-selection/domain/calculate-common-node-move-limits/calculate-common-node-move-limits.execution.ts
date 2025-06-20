@@ -11,7 +11,7 @@ import { INodeMoveLimits } from '../../i-node-move-limits';
 export class CalculateCommonNodeMoveLimitsExecution
   implements IExecution<CalculateCommonNodeMoveLimitsRequest, INodeMoveLimits> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   private get _vCellSize(): number {
     return this._fComponentsStore.fDraggable!.vCellSize;
