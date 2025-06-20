@@ -9,6 +9,7 @@ import {FNodeBase} from '../../../f-node';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
 import {FSummaryNodeMoveDragHandler} from '../../f-node-move';
+import {FExternalItemDragHandler} from "../../../f-external-item";
 
 @Injectable()
 @FExecutionRegister(FNodeDropToGroupPreparationRequest)
@@ -38,7 +39,7 @@ export class FNodeDropToGroupPreparationExecution
     }
     const fNode = this._fComponentsStore
       .fNodes.find(n => n.isContains(request.event.targetElement));
-    if (!fNode) {
+    if (!fNode && !this._isExternalItemDragHandler()) {
       throw new Error('Node not found');
     }
 
@@ -51,8 +52,17 @@ export class FNodeDropToGroupPreparationExecution
   }
 
   private _isValid(): boolean {
+    return this._isNodeDragHandler() || this._isExternalItemDragHandler();
+  }
+
+  private _isNodeDragHandler(): boolean {
     return this._fDraggableDataContext.draggableItems
       .some((x) => x instanceof FSummaryNodeMoveDragHandler);
+  }
+
+  private _isExternalItemDragHandler(): boolean {
+    return this._fDraggableDataContext.draggableItems
+      .some((x) => x instanceof FExternalItemDragHandler);
   }
 
   private _getNotDraggedNodesRects(): INodeWithRect[] {
@@ -73,8 +83,8 @@ export class FNodeDropToGroupPreparationExecution
 
   private _getNodesBeingDragged(): FNodeBase[] {
     return this._fDraggableDataContext.draggableItems
-      .find((x) => x instanceof FSummaryNodeMoveDragHandler)!
-      .fHandlers.map((x) => x.fNode);
+      .find((x) => x instanceof FSummaryNodeMoveDragHandler)
+      ?.fHandlers.map((x) => x.fNode) || [];
   }
 
   private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {

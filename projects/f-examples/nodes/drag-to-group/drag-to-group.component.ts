@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, viewChild, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import {
   FCanvasComponent, FDropToGroupEvent,
   FFlowModule,

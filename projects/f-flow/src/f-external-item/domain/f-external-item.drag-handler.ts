@@ -1,4 +1,4 @@
-import {IPoint, IRect, Point, RectExtensions} from '@foblex/2d';
+import {IPoint, IRect, ITransformModel, Point, RectExtensions} from '@foblex/2d';
 import {
   FExternalItemBase,
   FExternalItemCreatePlaceholderRequest,
@@ -28,7 +28,6 @@ export class FExternalItemDragHandler implements IFDragHandler {
   private _onPointerDownRect: IRect = RectExtensions.initialize();
   private readonly _fBoundsLimiter: PointBoundsLimiter;
 
-
   private get _fItemHost(): HTMLElement | SVGElement {
     return this._fExternalItem.hostElement;
   }
@@ -36,6 +35,12 @@ export class FExternalItemDragHandler implements IFDragHandler {
   private get _body(): Element {
     return this._fBrowser.document.fullscreenElement ?? this._fBrowser.document.body;
   }
+
+  private get _transform(): ITransformModel {
+    return this._fComponentStore.fCanvas!.transform;
+  }
+
+  private readonly _fItemHostDisplay: string | undefined;
 
   constructor(
     _injector: Injector,
@@ -50,6 +55,8 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._fBoundsLimiter = new PointBoundsLimiter(
       _injector, this._getStartPoint(), infinityMinMax()
     );
+
+    this._fItemHostDisplay = this._fItemHost.style.display;
   }
 
   private _getStartPoint(): IPoint {
@@ -82,8 +89,8 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._placeholder = this._fMediator.execute<HTMLElement>(
       new FExternalItemCreatePlaceholderRequest(this._fExternalItem)
     );
-
     this._body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
+    this._fItemHost.style.display = 'none';
   }
 
   private _matchElementSize(target: HTMLElement, sourceRect: IRect): void {
@@ -109,7 +116,8 @@ export class FExternalItemDragHandler implements IFDragHandler {
 
   public onPointerMove(difference: IPoint): void {
     const adjustCellSize = this._fComponentStore.fDraggable?.fCellSizeWhileDragging ?? false;
-    const differenceWithRestrictions = this._fBoundsLimiter.limit(difference, adjustCellSize);
+    const differenceWithRestrictions = Point.fromPoint(this._fBoundsLimiter.limit(difference, adjustCellSize))
+      .mult(this._transform.scale);
 
     const position = Point.fromPoint(this._onPointerDownRect).add(differenceWithRestrictions);
     this._preview!.style.transform = setTransform(position);
@@ -119,6 +127,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._body.removeChild(this._preview!);
 
     this._placeholder!.parentElement!.replaceChild(this._fItemHost, this._placeholder!);
+    this._fItemHost.style.display = this._fItemHostDisplay ?? 'block';
   }
 }
 

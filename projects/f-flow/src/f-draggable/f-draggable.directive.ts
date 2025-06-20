@@ -238,11 +238,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
 
+    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
+
     this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
-
-    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
     this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
 
@@ -270,11 +270,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeMoveFinalizeRequest(event));
 
+    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
+
     this._fMediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
-
-    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
