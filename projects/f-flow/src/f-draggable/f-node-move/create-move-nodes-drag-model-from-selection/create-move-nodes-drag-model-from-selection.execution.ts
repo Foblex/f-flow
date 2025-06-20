@@ -140,7 +140,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
   private _getDraggedNodesBoundingRect(fNodes: FNodeBase[]): IRect {
     return RectExtensions.union(fNodes.map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement, false));
+      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     })) || RectExtensions.initialize();
   }
 }

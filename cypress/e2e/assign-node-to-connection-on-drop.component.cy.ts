@@ -1,6 +1,7 @@
 describe('AssignNodeToConnectionOnDropComponent', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/examples/assign-node-to-connection-on-drop')
+    cy.visit('http://localhost:4200/examples/assign-node-to-connection-on-drop');
+    cy.get('f-flow').scrollIntoView();
   })
 
   it('should drag node to connection and connect it', function () {

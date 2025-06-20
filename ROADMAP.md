@@ -1,72 +1,54 @@
-# Roadmap
+# 🛣 Foblex Flow Roadmap
 
-## Introduction  
-Foblex Flow is an Angular library designed to simplify the creation and manipulation of dynamic flows.  
-This roadmap outlines the key milestones and objectives for the project's development.
+Welcome to the official development roadmap for **Foblex Flow** — an Angular-native library for building powerful, customizable visual flow editors and diagram systems.
 
-## Key Milestones
-
-### Planned Tasks
-- **Implement pinch-to-zoom scaling**  
-  Enables users to zoom in and out using pinch gestures.  
-  [Details](https://github.com/Foblex/f-flow/discussions/127)
-
-- **Make Resize Handle compatible with grid system**  
-  Provides snapping behavior for the resize handle to align with a grid.  
-  [Details](https://github.com/Foblex/f-flow/discussions/130)
-
-### In Progress
-- **Create connections without defining node inputs and outputs** *(In Progress)*  
-  Removes the strict input/output designation for nodes, allowing connections to be created and attached in any direction.  
-  [Details](https://github.com/Foblex/f-flow/discussions/88)
+This roadmap outlines the core features planned, currently in progress, and already completed.  
+Stay up to date and help shape the future by joining [GitHub Discussions](https://github.com/Foblex/f-flow/discussions).
 
 ---
 
-### New Additions:
-- **Added Angular Schematics Support** (Completed on 2025-05-11)  
-Implemented ng-add schematic for automatic dependency installation.  
-Implemented ng-update schematic for seamless package updates.
+## 🚧 Planned
 
-### Completed Tasks
-- **Add support for fully rotatable nodes** (Completed on 2025-04-12)  
-Allows any node to be rotated freely to any angle.  
-
-- **Customize triggers for drag and zoom events** (Completed on 2025-02-10)  
-Enables users to define their own key combinations for triggering events like drag, zoom, and other interactions.
-
-- **DragStart and DragEnd events with data** (Completed on 2025-02-07)    
-Implemented events that transmit data when dragging starts and ends.
-
-- **Sorting by newness on the documentation portal** (Completed on 2025-02-07)
-
-- **Add top, left, bottom, and right resize handles** (Completed on 2025-01-29)
-
-- **Snap to guides or grid during movement** (Completed on 2025-01-13)  
-  [Details](https://github.com/orgs/Foblex/projects/5/views/1?pane=issue&itemId=91725058&issue=Foblex%7Cf-flow%7C84)
-
-- **Rotate connection to align with connector** (Completed on 2025-01-13)  
-  [Details](https://github.com/orgs/Foblex/projects/5/views/1?pane=issue&itemId=94053839&issue=Foblex%7Cf-flow%7C109)
-
-- **Automatically attach node to connection on drop** (Completed on 2024-12-30)  
-  [Details](https://github.com/orgs/Foblex/projects/5/views/1?pane=issue&itemId=91724839&issue=Foblex%7Cf-flow%7C81)
-
-- **Change zoom level and highlight call initiators** (Completed on 2024-10-30)
-
-- **Snap connections to anchor points** (Completed on 2024-09-20)
-
-- **Group items on drop** (Completed on 2024-09-16)
-
-- **Add node grouping support** (Completed on 2024-09-16)
-
-- **Add a minimap for visual navigation** (Completed on 2024-08-12)
-
-- **Rounded connectors** (Completed on 2024-07-12)
-
-- **Custom connections support** (Completed on 2024-04-14)
+| Feature                                      | Description                                                                                     |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------|
+| 🔍 **Pinch-to-Zoom Support**                | Zoom in/out via pinch gestures for enhanced mobile and touch device usability. [↗](https://github.com/Foblex/f-flow/discussions/127) |
+| 📐 **Grid-Aware Resize Handles**            | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130) |
 
 ---
 
-## Voting Section  
-We value community feedback and suggestions. You can participate in the voting process for upcoming features and improvements by adding your reactions to the issues in the [Discussions](https://github.com/Foblex/f-flow/discussions) or [Issues](https://github.com/Foblex/f-flow/issues) section of this repository.
+## 🚧 In Progress
+
+| Feature                                      | Description                                                                                     |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------|
+| 🔄 **Freeform Connections**                 | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88) |
+
+---
+
+## ✅ Recently Completed
+
+### 🔧 Infrastructure & Tooling
+- 🛠 **Angular Schematics Support** — `ng add` / `ng update` commands for easier setup (2025-05-11)
+
+### 🧱 UX & Interaction
+- 🔄 **Fully Rotatable Nodes** — rotate any node freely (2025-04-12)
+- ⌨️ **Custom Drag/Zoom Triggers** — define hotkeys and behaviors (2025-02-10)
+- 📤 **DragStart / DragEnd Events** — now emit contextual data (2025-02-07)
+
+### 🗂 Editor Features
+- 🧭 **Minimap Navigation** — overview and quick navigation (2024-08-12)
+- 🧲 **Snap to Grid & Guides** — align elements during movement (2025-01-13)
+- 🎯 **Auto-Attach on Drop** — nodes snap to open connections (2024-12-30)
+- 📦 **Node Grouping** — drag-to-group and nested groups (2024-09-16)
+- 🔄 **Rounded & Custom Connectors** — shape your own connector logic (2024-04-14)
+- 🔍 **Highlight Call Initiators + Zoom Control** (2024-10-30)
+
+---
+
+## 📊 Feature Voting
+
+Help us decide what to build next!  
+Visit the [Discussions](https://github.com/Foblex/f-flow/discussions) or [Issues](https://github.com/Foblex/f-flow/issues) and react with 👍 to the features you'd love to see implemented.
+
+We value your feedback and build Foblex Flow **with the community**.
 
 ---

@@ -1,5 +1,5 @@
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FNodeBase } from '../../../../../f-node';
+import {IPointerEvent} from "../../../../../drag-toolkit";
 
 export class FCreateConnectionFromOutletPreparationRequest {
 

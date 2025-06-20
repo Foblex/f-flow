@@ -1,5 +1,5 @@
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FMinimapData } from '../f-minimap-data';
+import {IPointerEvent} from "../../../drag-toolkit";
 
 export class MinimapDragPreparationRequest {
 

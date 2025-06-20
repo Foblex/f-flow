@@ -15,9 +15,9 @@ import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler
 @FExecutionRegister(FNodeMovePreparationRequest)
 export class FNodeMovePreparationExecution implements IExecution<FNodeMovePreparationRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;

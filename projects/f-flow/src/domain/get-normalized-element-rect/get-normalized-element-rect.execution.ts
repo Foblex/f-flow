@@ -7,16 +7,15 @@ import {
   RoundedRect,
   IPoint,
   ISize,
-  Point,
   SizeExtensions,
   ITransformModel,
-  RectExtensions
+  RectExtensions, IRect
 } from '@foblex/2d';
-import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
+import {GetNormalizedPointRequest} from "../get-normalized-point";
 
 @Injectable()
 @FExecutionRegister(GetNormalizedElementRectRequest)
-export class GetNormalizedElementRectExecution implements IExecution<GetNormalizedElementRectRequest, IRoundedRect> {
+export class GetNormalizedElementRectExecution implements IExecution<GetNormalizedElementRectRequest, IRect> {
 
   private readonly _fComponentsStore = inject(FComponentsStore);
   private readonly _fMediator = inject(FMediator);
@@ -25,7 +24,7 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     return this._fComponentsStore.fCanvas!.transform;
   }
 
-  public handle(request: GetNormalizedElementRectRequest): IRoundedRect {
+  public handle(request: GetNormalizedElementRectRequest): IRect {
     const systemRect = this._getElementRoundedRect(request);
     const position = this._normalizePosition(systemRect);
     const unscaledSize = this._unscaleSize(systemRect);
@@ -35,14 +34,24 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 
+  // BrowserWindow
+  // +--------------------------------+
+  // |                                |
+  // |     Element                    |
+  // |     (x: 100, y: 50)            |
+  // |     +--------+                 |
+  // |     |        |                 |
+  // |     |        |                 |
+  // |     +--------+                 |
+  // |                                |
+  // +--------------------------------+
+  // This data of the element is relative to the browser window, not the canvas, with all transformations applied.
   private _getElementRoundedRect(request: GetNormalizedElementRectRequest): IRoundedRect {
-    return request.isRoundedRect ? this._fMediator.execute<IRoundedRect>(
-      new GetElementRoundedRectRequest(request.element)
-    ) : RoundedRect.fromRect(RectExtensions.fromElement(request.element));
+    return RoundedRect.fromRect(RectExtensions.fromElement(request.element));
   }
 
   private _normalizePosition(rect: IRoundedRect): IPoint {
-    return Point.fromPoint(rect).elementTransform(this._fComponentsStore.flowHost).sub(this._transform.scaledPosition).sub(this._transform.position).div(this._transform.scale);
+    return this._fMediator.execute(new GetNormalizedPointRequest(rect));
   }
 
   private _unscaleSize(rect: IRoundedRect): ISize {

@@ -90,7 +90,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
       const connector = this._fComponentsStore.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
       return {
         connection: new TargetConnectionDragHandler(this._injector, x),
-        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
       }
     });
   }
@@ -105,12 +105,8 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
       const connector = this._fComponentsStore.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
       return {
         connection: new SourceConnectionDragHandler(this._injector, x),
-        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector, false)).gravityCenter
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
       }
     });
-  }
-
-  private _getOriginalNodeRect(): IRect {
-    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode!.hostElement, false));
   }
 }

@@ -2,12 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FSingleSelectRequest } from './f-single-select.request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { FConnectionBase } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
+import {IPointerEvent} from "../../drag-toolkit";
 
 /**
  * Implements the functionality for selecting elements in a graphical interface.
@@ -51,9 +51,9 @@ import { FNodeBase } from '../../f-node';
 @FExecutionRegister(FSingleSelectRequest)
 export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: FSingleSelectRequest): void {
     if (!this._isValid(request)) {

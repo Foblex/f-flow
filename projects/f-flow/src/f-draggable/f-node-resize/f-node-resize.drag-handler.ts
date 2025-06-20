@@ -37,7 +37,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _getOriginalNodeRect(): IRect {
-    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode.hostElement, false));
+    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode.hostElement));
   }
 
   private _getNodeResizeRestrictions(): INodeResizeRestrictions {

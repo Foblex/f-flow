@@ -4,6 +4,8 @@ export * from './f-canvas';
 
 export * from './domain';
 
+export * from './drag-toolkit';
+
 export * from './f-connection';
 
 export * from './f-connectors';
@@ -29,6 +31,8 @@ export * from './f-zoom';
 export * from './mixins';
 
 export * from './reactivity';
+
+export * from './utils';
 
 export * from './f-flow.module';
 

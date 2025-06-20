@@ -1,6 +1,6 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { FExternalItemPreparationRequest } from './f-external-item-preparation.request';
-import { Point } from '@foblex/2d';
+import {ITransformModel, Point} from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
@@ -21,12 +21,17 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
     return this._fComponentsStore.fFlow!.hostElement;
   }
 
+  private get _transform(): ITransformModel {
+    return this._fComponentsStore.fCanvas!.transform;
+  }
+
   public handle(request: FExternalItemPreparationRequest): void {
     if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
-    this._fDraggableDataContext.onPointerDownScale = 1;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition()).elementTransform(this._fHost);
+    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
+    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+      .elementTransform(this._fHost).div(this._transform.scale);
     this._fDraggableDataContext.draggableItems = [
       new FExternalItemDragHandler(
         this._injector,

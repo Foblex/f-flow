@@ -31,7 +31,6 @@
             ],
             "styles": [
               "src/styles/styles.scss"
-//              "projects/m-render/src/assets/styles/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

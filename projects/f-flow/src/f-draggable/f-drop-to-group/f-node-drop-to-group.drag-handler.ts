@@ -13,7 +13,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
   public fEventType = 'move-node-to-parent';
 
-  private _DEBOUNCE_TIME = 15;
+  private _DEBOUNCE_TIME = 1;
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;

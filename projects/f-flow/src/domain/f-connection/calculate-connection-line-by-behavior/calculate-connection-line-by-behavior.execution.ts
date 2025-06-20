@@ -9,7 +9,8 @@ import { fixedOutboundBehavior } from './fixed-outbound-behavior';
 
 @Injectable()
 @FExecutionRegister(CalculateConnectionLineByBehaviorRequest)
-export class CalculateConnectionLineByBehaviorExecution implements IExecution<CalculateConnectionLineByBehaviorRequest, ILine> {
+export class CalculateConnectionLineByBehaviorExecution
+  implements IExecution<CalculateConnectionLineByBehaviorRequest, ILine> {
 
   private _handlers = {
 
