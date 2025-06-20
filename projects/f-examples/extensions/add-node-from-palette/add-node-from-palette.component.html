@@ -1,10 +1,7 @@
 <f-flow fDraggable
         (fLoaded)="onLoaded()"
-        (fCreateNode)="onCreateNode($event)"
-        [vCellSize]="32"
-        [hCellSize]="32"
-        [fCellSizeWhileDragging]="adjustCellSizeWhileDragging()">
-  <f-canvas>
+        (fCreateNode)="onCreateNode($event)">
+  <f-canvas fZoom>
     @for (node of nodes(); track node.id) {
       <div fNode [fNodePosition]="node.position" fDragHandle>{{ node.text }}</div>
     }
@@ -12,10 +9,6 @@
 </f-flow>
 <div class="examples-toolbar">
   <f-checkbox [checked]="isMatchSize()" (change)="onPreviewMatchSizeChange($event)">Is preview match size</f-checkbox>
-  <f-checkbox [checked]="adjustCellSizeWhileDragging()"
-              (change)="onAdjustCellSizeWhileDraggingChange($event)">
-    Adjust cell size while dragging
-  </f-checkbox>
 </div>
 
 <div class="external-panel">
