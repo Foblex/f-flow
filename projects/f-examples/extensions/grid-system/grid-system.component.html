@@ -1,7 +1,7 @@
 <f-flow fDraggable
         [vCellSize]="32"
         [hCellSize]="32"
-        [fCellSizeWhileDragging]="adjustCellSizeWhileDragging"
+        [fCellSizeWhileDragging]="adjustCellSizeWhileDragging()"
         (fLoaded)="onLoaded()">
   <f-background>
     <f-rect-pattern [vSize]="32" [hSize]="32"></f-rect-pattern>
@@ -13,7 +13,7 @@
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <f-checkbox [checked]="adjustCellSizeWhileDragging"
+  <f-checkbox [checked]="adjustCellSizeWhileDragging()"
               (change)="onAdjustCellSizeWhileDraggingChange($event)">
     Adjust cell size while dragging
   </f-checkbox>
