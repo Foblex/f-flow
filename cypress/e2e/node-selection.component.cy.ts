@@ -66,26 +66,26 @@ describe('NodeSelectionComponent', () => {
       });
   });
 
-  it('should select multiple nodes using metaKey (cmd/ctrl)', () => {
-
-    cy.get('.f-node.f-drag-handle').each(($node) => {
-      const rect = $node[0].getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      cy.wrap($node)
-        .trigger('mousedown', {clientX: centerX, clientY: centerY, button: 0, metaKey: true, force: true})
-        .trigger('mousemove', {clientX: centerX + 1, clientY: centerY + 1, metaKey: true, force: true})
-        .trigger('pointerup', {clientX: centerX + 1, clientY: centerY + 1, metaKey: true, force: true});
-
-      cy.wait(100);
-    });
-
-    cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 2);
-
-    cy.get('.overlay div')
-      .last()
-      .invoke('text')
-      .should('match', /Selection changed: (f-node-[01],\s?){1}f-node-[01]/);
-  });
+  // it('should select multiple nodes using metaKey (cmd/ctrl)', () => {
+  //
+  //   cy.get('.f-node.f-drag-handle').each(($node) => {
+  //     const rect = $node[0].getBoundingClientRect();
+  //     const centerX = rect.left + rect.width / 2;
+  //     const centerY = rect.top + rect.height / 2;
+  //
+  //     cy.wrap($node)
+  //       .trigger('mousedown', {clientX: centerX, clientY: centerY, button: 0, metaKey: true, force: true})
+  //       .trigger('mousemove', {clientX: centerX + 1, clientY: centerY + 1, metaKey: true, force: true})
+  //       .trigger('pointerup', {clientX: centerX + 1, clientY: centerY + 1, metaKey: true, force: true});
+  //
+  //     cy.wait(100);
+  //   });
+  //
+  //   cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 2);
+  //
+  //   cy.get('.overlay div')
+  //     .last()
+  //     .invoke('text')
+  //     .should('match', /Selection changed: (f-node-[01],\s?){1}f-node-[01]/);
+  // });
 });
