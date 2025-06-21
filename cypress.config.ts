@@ -8,4 +8,12 @@ export default defineConfig({
   },
   video: true,
   screenshotOnRunFailure: true,
+
+  component: {
+    devServer: {
+      framework: "angular",
+      bundler: "webpack",
+    },
+    specPattern: "**/*.cy.ts",
+  },
 });

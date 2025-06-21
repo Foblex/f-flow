@@ -4,7 +4,6 @@ labels:
   - enhancement
 assignees:
   - siarheihuzarevich
-  - markwojno
 body:
   - type: textarea
     id: description

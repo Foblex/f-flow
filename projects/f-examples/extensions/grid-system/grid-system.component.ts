@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, viewChild, ViewChild} from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
 
@@ -16,16 +16,15 @@ import { FCheckboxComponent } from '@foblex/m-render';
 })
 export class GridSystemComponent {
 
-  protected adjustCellSizeWhileDragging: boolean = false;
+  protected adjustCellSizeWhileDragging = signal(false)
 
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvas!: FCanvasComponent;
+  protected readonly fCanvas = viewChild(FCanvasComponent);
 
   protected onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 
   protected onAdjustCellSizeWhileDraggingChange(event: boolean): void {
-    this.adjustCellSizeWhileDragging = event;
+    this.adjustCellSizeWhileDragging.set(event);
   }
 }

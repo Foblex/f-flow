@@ -5,7 +5,6 @@ labels:
   - bug
 assignees:
   - siarheihuzarevich
-  - markwojno
 body:
   - type: textarea
     id: description

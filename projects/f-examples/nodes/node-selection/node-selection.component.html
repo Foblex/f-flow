@@ -20,7 +20,7 @@
 </f-flow>
 <div class="overlay">
   Events:
-  @for (item of selection; track item) {
+  @for (item of events(); track item) {
     <div>Selection changed: {{ item }}</div>
   }
 </div>

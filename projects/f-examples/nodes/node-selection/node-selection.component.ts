@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, viewChild, ViewChild} from '@angular/core';
 import {
   FCanvasComponent,
   FFlowModule, FSelectionChangeEvent
@@ -6,7 +6,7 @@ import {
 
 @Component({
   selector: 'node-selection',
-  styleUrls: [ './node-selection.component.scss' ],
+  styleUrls: ['./node-selection.component.scss'],
   templateUrl: './node-selection.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -15,17 +15,20 @@ import {
   ]
 })
 export class NodeSelectionComponent {
+  protected readonly fCanvas = viewChild(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  protected events = signal<string[][]>([]);
 
-  public selection: string[][] = [];
-
-  public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+  protected onLoaded(): void {
+    this.fCanvas()?.resetScaleAndCenter(false);
   }
 
-  public onSelectionChange(event: FSelectionChangeEvent): void {
-    this.selection.push(event.fNodeIds);
+  protected onSelectionChange(event: FSelectionChangeEvent): void {
+    this.events.update((x) => {
+      return [
+        ...x,
+        event.fNodeIds
+      ];
+    });
   }
 }
