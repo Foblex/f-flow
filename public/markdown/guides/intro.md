@@ -1,67 +1,53 @@
-# Building Visual Interfaces in Angular — Introducing Foblex Flow
-A library for Angular that enables interactive flow-based UIs with nodes, connections, and full customization flexibility.
+# Introducing Foblex Flow
 
-## ✍ Introduction
+A powerful Angular library for building interactive, node-based UIs with full customization and smooth connection handling.
 
-Modern web applications increasingly require visual logic and process editors — from call flow builders to no-code tools or internal dashboards.
+## ✍ Overview
 
-If you work with Angular, you know how difficult it is to find a truly native solution for creating such flow interfaces.
+Modern applications increasingly rely on visual logic and flow editors — from internal tools to low-code platforms and AI pipelines.
 
-That’s why I created **Foblex Flow** — a library designed specifically for Angular to build flexible and dynamic node-based UIs.
+But if you’re using Angular, finding a truly native solution for creating node-based interfaces has been surprisingly difficult.
+
+**Foblex Flow** bridges that gap. It’s a dedicated Angular library designed to create interactive, dynamic flows with custom nodes and connections.
 
 ## 🔧 What is Foblex Flow?
 
-**Foblex Flow** is an Angular library for building interactive node-and-connection-based interfaces — fully written in Angular.
+**Foblex Flow** is a fully Angular-native library that enables you to:
 
-With it, you can:
-- Render and connect nodes dynamically
-- Customize node templates freely
-- Use drag’n’drop, zooming, snapping, and grouping
-- Integrate with SSR, standalone components, Angular Signals, and zoneless Angular
-- Build complete editors with state saving and custom logic
+-	Dynamically render and connect nodes
+-	Freely customize node content and layout
+-	Support drag & drop, zooming, snapping, grouping, and alignment
+-	Integrate with Angular Signals, SSR, and standalone components
+-	Build real-world editors with full state management and interaction logic
 
-## 🤩 Where You Might Use It
+## 🤩 Use Cases
 
-- Workflow editors
-- Logic configurators (low-code / no-code)
-- Call routing editors
-- Visual back-office or CRM tools
-- Visual programming UIs (block logic, AI chains)
+**Foblex Flow** is ideal for:
 
-## 🔍 What You’ll Learn in This Series
+-	Workflow and automation builders
+-	Logic designers in no-code/low-code platforms
+-	Call routing and communication flows
+-	Back-office and CRM visual tools
+- Visual programming environments (e.g., AI pipelines, condition blocks)
 
-In this series of tutorials, we’ll cover:
-1. How to install and render a basic flow
-2. How to use custom components as nodes
-3. How to configure and customize connections
-4. How to enable snapping, resize, and rotate
-5. How to save and restore flow state
-6. How to build a real-world editor with the library
+## 📚 Interactive Examples
 
-## 📚 Live Examples
+Explore live demos built with **Foblex Flow**:
 
-Here are a few interactive examples built with Foblex Flow:
-- 📞 Call Flow Editor
-- 🧱 Logic Configuration Tool
-- 🗄 Database Flow Manager
+- 📞 [Call Flow Editor](https://github.com/Foblex/f-flow-example)
+- 🧱 [Logic Configuration Tool](https://flow.foblex.com/examples/f-visual-programming-flow)
+- 🗄 [Database Flow Manager](https://flow.foblex.com/examples/f-db-management-flow)
 
-## 🚀 Features
+## 🚀 Key Features
 
-- 🔌 **Dynamic node and connection management**
-- 🧠 **Event-driven architecture for nodes and links**
-- ✏️ **Full customization of templates and visuals**
-- 🔍 **Zooming, panning, snapping, and guide support**
-- 🧱 **Grouping and alignment with grid snapping**
-- 📦 **Compatible with SSR, standalone components, Angular Signals, and zoneless Angular**
+- 🔌 Dynamic management of nodes and connections
+- 🧠 Event-driven architecture for interaction and state
+- ✏️ Fully customizable visuals and behavior
+- 🔍 Built-in zooming, panning, snapping, and guides
+- 🧱 Grouping, alignment, and grid snapping
+- 📦 SSR-ready, compatible with standalone components, Angular Signals, and zoneless Angular
 
-## 🚀 Ready to Start?
+## 🙌 Get Involved
 
-#### Jump to Part 2:  
-**Getting Started: Installing the Library and Rendering Your First Flow** _(Coming soon)_
-
-In the meantime, check out the [official documentation](get-started) or explore the examples.
-
-## 🙌 Thanks for Your Interest
-
-If you like the project — leave a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the discussions, and share your feedback!
+If you find **Foblex Flow** useful — drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
 

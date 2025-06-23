@@ -1,11 +1,10 @@
-﻿# Getting Started with Foblex Flow
+﻿# Installing the Library and Rendering Your First Flow
 
-Foblex Flow is a flexible and powerful library for Angular, designed specifically for creating interactive graphs and diagrams. 
-This guide will walk you through the integration of Foblex Flow into your project, enabling you to fully utilize its features.
+In this guide, you’ll learn how to set up **Foblex Flow** in your Angular project and render your first interactive flow — complete with draggable nodes and dynamic connections. **Foblex Flow** is a lightweight, flexible library for building flow-based UIs natively in Angular.
 
-## Installation
+## 🚀 Installation
 
-To install Foblex Flow, run the following command in your Angular project:
+**Foblex Flow** provides a schematic for quick setup. Just run the following command in your Angular project to install and configure everything automatically:
 
 ::: code-group
 
@@ -19,43 +18,143 @@ ng update @foblex/flow
 
 :::
 
-This command will add Foblex Flow to your package.json.
+## 🔧 Basic Flow Example
 
-## Using Components
+Here’s the most minimal working example — a canvas with two nodes and one connection between them:
 
-Add the [f-flow](f-flow-component) component to your HTML template to get started:
+```html
+<f-flow fDraggable>
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
 
+    <div
+      fNode
+      fDragHandle
+      fNodeOutput
+      [fNodePosition]="{ x: 32, y: 32 }"
+      fOutputId="output1"
+      fOutputConnectableSide="right"
+    >
+      Node 1
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      fNodeInput
+      [fNodePosition]="{ x: 240, y: 32 }"
+      fInputId="input1"
+      fInputConnectableSide="left"
+    >
+      Node 2
+    </div>
+  </f-canvas>
+</f-flow>
+```
+
+## 🎨 Styling Basics
+
+**Foblex Flow** doesn’t enforce any styling, giving you full design control. Here’s a sample style sheet to help you get started:
+
+```scss
+.f-flow {
+  height: 400px;
+}
+
+.f-node {
+  padding: 24px;
+  color: rgba(60, 60, 67);
+  text-align: center;
+  background: #ffffff;
+  border-radius: 2px;
+  border: 0.2px solid rgba(60, 60, 67);
+
+  &.f-selected {
+    border-color: #3451b2;
+    // Highlights the border when the node is selected
+    // The f-selected class is automatically added by the library when a node or connection is selected.
+  }
+}
+
+.f-drag-handle {
+  cursor: move;
+}
+
+::ng-deep {
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+      // By default, this element has a black fill and is used to detect the start of dragging (e.g., onmousedown).
+      // We make it transparent to avoid visual clutter, while keeping it functional.
+    }
+
+    .f-connection-selection {
+      stroke-width: 10;
+      // This is a pseudo-connection (a copy of the main path) used to make it easier to select the connection.
+      // It's slightly thicker than the actual path (which is often only 1px), making it easier to interact with.
+      // It remains invisible to avoid affecting visual clarity but stays active for user interaction.
+    }
+
+    .f-connection-path {
+      stroke: rgba(60, 60, 67);
+      stroke-width: 2;
+    }
+
+    &.f-selected {
+      .f-connection-path {
+        stroke: #3451b2;
+      }
+    }
+  }
+}
+```
+---
 ::: ng-component <draggable-flow></draggable-flow> [height]="300"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
 :::
+## 🔍 Explanation
 
-- [f-flow](f-flow-component) component acts as the primary container, managing the layout and interactions of all child visualization components within the flow.
+- [`<f-flow>`](f-flow-component) — the root component that manages the flow state.
+- [`<f-canvas>`](f-canvas-component) — the layer where nodes and connections are placed.
+- [`fNode`](f-node-directive) — directive representing a node.
+- [`fNodeOutput`](f-node-output-directive) / [`fNodeInput`](f-node-input-directive) — connectors for connections. fNodeOutput is the source, and fNodeInput is the target.
+- [`<f-connection>`](f-connection-component) — the component that renders a connection between two connectors by their fOutputId and fInputId.
 
-- [f-canvas](f-canvas-component) component within [f-flow](f-flow-component) component provides the foundation for placing other components such as nodes and connections.
+⚠️ **Note**: `fOutputId` and `fInputId` may technically match, since they belong to different connector collections. However, this is not recommended, as future versions may unify these into a single fConnector directive where matching IDs would cause conflicts.
 
-- [f-connection](f-connection-component) component creates a visual link between [fNodeOutput](f-node-output-directive) and [fNodeInput](f-node-input-directive) directives. In this case, it connects a output with `fOutputId="1"` to an input with `fInputId="2"`.
+## 🧪 Try It Yourself
 
-- [fNode](f-node-directive) directive represents a node in the flow and can be configured using properties like fNodePosition to define its position.
+Enhance your flow with the following:
 
-- The [fNodeOutput](f-node-output-directive) and [fNodeInput](f-node-input-directive) directives inside the nodes define connection points (outputs and inputs respectively) for establishing connections.
+- Change the `[fNodePosition]` coordinates
+- Add more `fNode` and `f-connection` elements
+- Experiment with connection sides: `fOutputConnectableSide`, `fInputConnectableSide`
+- Modify the connection type or behavior using the `fType` and `fBehaviour` inputs.
+- `fType`: defines the visual style of the connection. Acceptable values from the `EFConnectionType` enum include: `straight`, `bezier`, `segment`. You can also pass a string for a custom connection type.
 
-## Pro Examples
+To create a custom connection type, see [documentation here](./examples/custom-connection-type).
 
-Explore practical use cases to see Foblex Flow in action:
+- `fBehavior`: defines the connection behavior, including positioning and flexibility. Acceptable values from `EFConnectionBehavior` include: `fixed`, `fixed_center`, `floating`. Default: `EFConnectionBehavior.FIXED`.
 
-- [Call Center](https://github.com/Foblex/f-flow-example) - A streamlined flow example simulating a call flow.
+## ⚙️ Customization Notes
 
-- [Scheme Editor](https://github.com/Foblex/f-scheme-editor) - A more advanced example of a fully interactive scheme editor.
+- Total freedom in node visuals — use any Angular component, not just `<div>`.
+- Fully SSR-compatible, and works with Angular Signals and standalone components.
+- You define the UI, the flow engine handles interactions.
 
-- [Visual Programming](./examples/f-visual-programming-flow/) - An example of a visual programming flow.
+## 🐞 Common Mistakes
 
-- [DB Management](./examples/f-db-management-flow/) - An example of a database management flow.
+- ❌ Forgot `[fNodePosition] → nodes will not render.
+- ❌ `fOutputId` or `fInputId don’t match the ones set in connectors — connections won’t render.
+- ❌ Placing elements outside [`<f-canvas>`](f-canvas-component) — [`fNode`](f-node-directive) and [`<f-connection>`](f-connection-component) must be within it.
 
-<br>
+## 🔍 Internals: How It Works
 
-::: tip Conclusion
-Foblex Flow is a powerful tool for creating complex graphical interfaces in Angular. For more information on the capabilities and components of the library, refer to the Foblex Flow documentation.
-:::
+1. Each node is registered with its coordinates and metadata.
+2. Connections reference nodes by their fOutputId and fInputId.
+3. SVG lines are calculated between node anchors and rendered live.
+4. On drag/move, connections automatically reflow and update visually.
+
+## 🙌 Get Involved
+
+If you find **Foblex Flow** useful — drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
+

@@ -1,6 +1,7 @@
 @use "../flow-common";
 
 ::ng-deep f-flow {
+  height: 300px;
   @include flow-common.connection;
 }
 

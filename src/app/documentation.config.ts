@@ -25,7 +25,6 @@ export const DOCUMENTATION_CONFIGURATION = {
     provideTitle('Foblex Flow'),
     provideNavigation(
       introductionGroup(),
-      introArticlesGroup(),
       containerGroup(),
       nodeGroup(),
       connectorGroup(),
@@ -99,17 +98,13 @@ export const DOCUMENTATION_CONFIGURATION = {
 
 function introductionGroup(): INavigationGroup {
   return defineNavigationGroup('Introduction', [{
-    link: 'get-started',
-    text: 'Getting Started',
-    description: "Learn how to install and integrate Foblex Flow in your Angular project to create dynamic flowcharts, graphs, and node-based UIs using JavaScript and TypeScript."
-  }])
-}
-
-function introArticlesGroup(): INavigationGroup {
-  return defineNavigationGroup('Tutorials', [{
     link: 'intro',
-    text: 'Intro',
-    description: "Articles that will help you to get started with Foblex Flow. Article 1 — Introduction to Foblex Flow.",
+    text: 'Introducing Foblex Flow',
+    description: "Article that will help you to understand what Foblex Flow is and how it can help you to create flow-based UIs in Angular applications.",
+  }, {
+    link: 'get-started',
+    text: 'Installation and Rendering',
+    description: "Learn how to install Foblex Flow and render it in your Angular application.",
   }])
 }
 
