@@ -1,9 +1,8 @@
 <f-flow fDraggable
         (fLoaded)="onInitialized()">
   <f-canvas fZoom>
-
     @for (item of viewModel; track item.id) {
-      <f-connection [fReassignDisabled]="true"
+      <f-connection *ngIf="item.nextMatchId" [fReassignDisabled]="true"
                     [fSelectionDisabled]="true"
                     fBehavior="fixed_center"
                     fType="segment"
