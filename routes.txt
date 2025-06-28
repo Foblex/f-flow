@@ -1,4 +1,6 @@
 /
+/membership
+/docs/intro
 /docs/get-started
 /docs/f-flow-component
 /docs/f-canvas-component
@@ -22,33 +24,46 @@
 /examples/drag-handle
 /examples/node-selection
 /examples/resize-handle
+/examples/rotate-handle
 /examples/grouping
+/examples/drag-to-group
+/examples/stress-test
+/examples/stress-test-with-connections
 
 /examples/node-as-connector
 /examples/connector-inside-node
 /examples/connector-outlet
 /examples/limiting-connections
+/examples/connectability-check
 /examples/connectable-side
 
 /examples/drag-to-connect
 /examples/drag-to-reassign
 /examples/create-node-on-connection-drop
+/examples/assign-node-to-connection-on-drop
 /examples/remove-connection-on-drop
 /examples/auto-snap
 /examples/connection-types
 /examples/custom-connection-type
 /examples/connection-behaviours
 /examples/connection-markers
+/examples/connection-text
+/examples/connection-center
 /examples/custom-connections
 
-/examples/dagre-layout
-/examples/elkjs-layout
-
+/examples/add-node-from-palette
 /examples/selection-area
 /examples/help-in-positioning
+/examples/grid-system
 /examples/minimap
 /examples/zoom
 /examples/background
+
+/examples/undo-redo
+/examples/dagre-layout
+/examples/elkjs-layout
+/examples/drag-start-end-events
+/examples/custom-event-triggers
 
 /examples/f-visual-programming-flow
 /examples/f-db-management-flow

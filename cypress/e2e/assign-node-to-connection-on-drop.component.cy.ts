@@ -1,6 +1,7 @@
 describe('AssignNodeToConnectionOnDropComponent', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/examples/assign-node-to-connection-on-drop')
+    cy.visit('http://localhost:4200/examples/assign-node-to-connection-on-drop');
+    cy.get('f-flow').scrollIntoView();
   })
 
   it('should drag node to connection and connect it', function () {
@@ -19,7 +20,7 @@ describe('AssignNodeToConnectionOnDropComponent', () => {
       cy.get('div[data-f-node-id="3"]')
         .trigger('mousedown', { button: 0, clientY: endY, force: true })
         .trigger('mousemove', { button: 0, clientY: endY + 140, force: true })
-        .trigger('mouseup', { force: true });
+        .trigger('pointerup', { force: true });
 
       cy.get('#connection_232').should('exist');
       cy.get('#connection_113').should('exist');

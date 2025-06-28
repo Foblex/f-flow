@@ -13,8 +13,8 @@ import { FFlowBase } from '../../../f-flow';
 @FExecutionRegister(MinimapDrawNodesRequest)
 export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesRequest, SVGRectElement[]> {
 
-  private _fBrowser = inject(BrowserService);
-  private _fComponentStore = inject(FComponentsStore);
+  private readonly _fBrowser = inject(BrowserService);
+  private readonly _fComponentStore = inject(FComponentsStore);
 
   private get _fFlow(): FFlowBase | undefined {
     return this._fComponentStore.fFlow;
@@ -55,8 +55,17 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
 
   private _applyClassList(element: SVGRectElement, node: FNodeBase, isNode: boolean): void {
     element.classList.add('f-component', isNode ? 'f-minimap-node' : 'f-minimap-group');
+    element.classList.add(...this._getClassList(node));
     if (node.isSelected()) {
       element.classList.add('f-selected');
+    }
+  }
+
+  private _getClassList(node: FNodeBase): string[] {
+    if (Array.isArray(node.fMinimapClass)) {
+      return node.fMinimapClass;
+    } else {
+      return [node.fMinimapClass];
     }
   }
 }

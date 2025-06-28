@@ -14,7 +14,6 @@ export class FMinimapFlowDirective {
   public fMinSize: number = 1000;
 
   private _fMediator = inject(FMediator);
-
   private _elementReference = inject(ElementRef);
 
   public get hostElement(): SVGSVGElement {

@@ -21,14 +21,14 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
-  FitToFlowRequest,
+  FitToFlowRequest, GetFlowRequest,
   InputCanvasPositionRequest,
   InputCanvasScaleRequest, isMobile, RemoveCanvasFromStoreRequest,
   ResetScaleAndCenterRequest, ResetScaleRequest, SetBackgroundTransformRequest, transitionEnd, UpdateScaleRequest,
 } from '../domain';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { Deprecated } from '../domain';
-import { mediatorEffect } from '../reactivity';
+import { FFlowBase } from '../f-flow';
 
 @Component({
   selector: 'f-canvas',
@@ -49,6 +49,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private readonly _elementReference = inject(ElementRef);
   private readonly _injector = inject(Injector);
 
+  private _flowId: string | undefined;
+
   public override fCanvasChange = output<FCanvasChangeEvent>();
 
   public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), { transform: PointExtensions.castToPoint });
@@ -62,7 +64,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   public override fNodesContainer = viewChild.required<ElementRef<HTMLElement>>('fNodesContainer');
   public override fConnectionsContainer = viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
 
+  public get flowId(): string {
+    return this._flowId!;
+  }
+
   public ngOnInit(): void {
+    this._flowId = this._fMediator.execute<FFlowBase>(new GetFlowRequest()).fId();
     this._fMediator.execute(new AddCanvasToStoreRequest(this));
     this._positionChange();
     this._scaleChange();

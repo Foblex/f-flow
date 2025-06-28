@@ -6,4 +6,14 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  video: true,
+  screenshotOnRunFailure: true,
+
+  component: {
+    devServer: {
+      framework: "angular",
+      bundler: "webpack",
+    },
+    specPattern: "**/*.cy.ts",
+  },
 });

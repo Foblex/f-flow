@@ -1,4 +1,4 @@
-import { IPointerEvent } from '@foblex/drag-toolkit';
+import {IPointerEvent} from "../../../../drag-toolkit";
 
 export class FCreateConnectionFinalizeRequest {
 

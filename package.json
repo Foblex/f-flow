@@ -1,5 +1,5 @@
 {
-  "version": "17.4.0",
+  "version": "17.5.0",
   "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
@@ -14,13 +14,14 @@
     "start": "ng serve",
     "start-shared": "ng serve --host 0.0.0.0",
     "build": "ng build",
+    "build-flow": "ng build f-flow && tsc -p projects/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"projects/f-flow/schematics/*/schema.json\" \"projects/f-flow/schematics/*/files/**\" \"projects/f-flow/schematics/collection.json\" dist/f-flow",
     "watch": "ng build --watch --configuration development",
     "test": "ng test f-flow",
-    "publish": "ng build f-flow && cd dist/f-flow && npm publish",
+    "publish": "npm run build-flow && cd dist/f-flow && npm publish",
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
-    "serve:ssr:f-flow-portal": "node dist/f-flow-portal/server/server.mjs",
+    "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run"
   },
   "standard-version": {
@@ -67,8 +68,7 @@
     "@angular/ssr": "^18.2.3",
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
-    "@foblex/drag-toolkit": "1.1.0",
-    "@foblex/m-render": "2.5.5",
+    "@foblex/m-render": "^2.7.4",
     "@foblex/mediator": "1.1.2",
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.1",
@@ -78,10 +78,7 @@
     "html2canvas": "^1.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3",
-    "markdown-it": ">=14.1.0",
-    "markdown-it-container": ">=4.0.0",
-    "prismjs": ">=1.29.0"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.0",
@@ -92,6 +89,7 @@
     "@types/html2canvas": "^1.0.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "copyfiles": "2.4.1",
     "cypress": "^13.15.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

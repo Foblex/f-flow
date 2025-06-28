@@ -1,0 +1,33 @@
+<f-flow fDraggable (fLoaded)="onLoaded($event)">
+  <f-canvas fZoom>
+    <f-connection [fReassignDisabled]="true" fOutputId="fOutput1" fInputId="fInput2" fType="bezier"></f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }"
+         fNodeInput fInputId="fInput1"
+         fNodeOutput fOutputId="fOutput1" fOutputConnectableSide="right">
+      Node 1
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 0 }"
+         fNodeInput fInputId="fInput2" fInputConnectableSide="bottom"
+         fNodeOutput fOutputId="fOutput2">
+      Node 2
+    </div>
+  </f-canvas>
+</f-flow>
+<f-flow fDraggable (fLoaded)="onLoaded($event)">
+  <f-canvas fZoom>
+    <f-connection [fReassignDisabled]="true" fOutputId="fOutput1" fInputId="fInput2" fType="bezier"></f-connection>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }"
+         fNodeInput fInputId="fInput1"
+         fNodeOutput fOutputId="fOutput1" fOutputConnectableSide="top">
+      Node 1
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 0 }"
+         fNodeInput fInputId="fInput2" fInputConnectableSide="top"
+         fNodeOutput fOutputId="fOutput2" fOutputConnectableSide="right">
+      Node 2
+    </div>
+  </f-canvas>
+</f-flow>

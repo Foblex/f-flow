@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
+
 @Component({
   selector: 'draggable-flow',
   styleUrls: [ './draggable-flow.component.scss' ],

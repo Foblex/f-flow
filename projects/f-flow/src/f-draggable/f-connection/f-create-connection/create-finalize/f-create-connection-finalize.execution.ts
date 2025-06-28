@@ -1,5 +1,4 @@
 import { IHandler } from '@foblex/mediator';
-import { IPointerEvent } from '@foblex/drag-toolkit';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, FNodeOutletBase, FNodeOutputBase, isNodeOutlet } from '../../../../f-connectors';
@@ -12,6 +11,7 @@ import { FCreateConnectionDragHandler } from '../f-create-connection.drag-handle
 import { FindInputAtPositionRequest } from '../../../../domain';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { IFCreateConnectionDragResult } from '../i-f-create-connection-drag-result';
+import {IPointerEvent} from "../../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionFinalizeRequest)

@@ -34,6 +34,9 @@ let uniqueId: number = 0;
 })
 export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _fMediator = inject(FMediator);
+
   @Input('fNodeId')
   public override fId: string = `f-node-${ uniqueId++ }`;
 
@@ -101,8 +104,8 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   @Input({ transform: booleanAttribute })
   public override fConnectOnNode: boolean = true;
 
-  private readonly _destroyRef = inject(DestroyRef);
-  private readonly _fMediator = inject(FMediator);
+  @Input()
+  public override fMinimapClass: string[] | string = [];
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

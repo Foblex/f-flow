@@ -1,36 +1,40 @@
-### Our Commitment
+# Code of Conduct
 
-We are dedicated to creating an open and welcoming environment for all participants in our project and community. Our goal is to ensure that everyone has a harassment-free experience, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, experience level, education, socio-economic status, nationality, personal appearance, race, religion, or sexual orientation.
+## Our Commitment
 
-### Our Standards
+We aim to build an inclusive, respectful, and open community around Foblex Flow.  
+Everyone — regardless of background, experience, or identity — should feel welcome and safe when contributing.
 
-To maintain a positive atmosphere, we encourage the following behaviors:
+## Our Standards
 
- - 🌟 **Using welcoming and inclusive language**
- - 🤝 **Respecting differing viewpoints and experiences**
- - 💬 **Gracefully accepting constructive criticism**
- - 🌍 **Prioritizing the well-being of the community**
- - ❤️ **Showing empathy towards other community members**
+We expect all participants to:
 
-We consider the following behaviors unacceptable:
+- 🤝 Use respectful and inclusive language
+- 💬 Accept constructive feedback gracefully
+- 🌍 Prioritize community health and well-being
+- ❤️ Show empathy to others
 
- - 🚫 **The use of sexualized language or imagery and unwelcome sexual attention or advances**
- - ❌ **Trolling, insulting or derogatory comments, and personal or political attacks**
- - 🛑 **Public or private harassment**
- - 🔒 **Publishing others’ private information without explicit permission**
+The following behavior will not be tolerated:
 
-### Our Responsibilities
+- 🚫 Harassment, threats, or personal attacks
+- ❌ Discriminatory or offensive comments
+- 🛑 Sharing private info without consent
+- 🔞 Sexualized language or unwanted advances
 
-Project maintainers are responsible for defining and enforcing standards of acceptable behavior. They will take appropriate and fair corrective actions in response to any instances of unacceptable behavior. This includes the right to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that do not adhere to this Code of Conduct. Additionally, maintainers may ban any contributor whose behavior is deemed inappropriate, threatening, offensive, or harmful.
+## Responsibilities
 
-Where appropriate, and with consent from all parties, project maintainers will strive to facilitate restorative justice over punitive actions.
+Maintainers are responsible for enforcing this Code of Conduct and may moderate content, remove contributions, or ban contributors if needed.
 
-### Scope
+We prefer **restorative solutions** over punitive ones, when possible and appropriate.
 
-This Code of Conduct applies within all project spaces and in public spaces when an individual is representing the project or its community. Representation can include using an official project email address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Project maintainers may further define and clarify representation.
+## Scope
 
-We ask all community members to uphold these standards to ensure a safe and welcoming space for everyone.
+This Code applies to all official project spaces — including GitHub discussions, issues, PRs, and any space where community members represent the project.
 
-### Attribution
+## Reporting
 
-This Code of Conduct is based on the [Gleam Code of Conduct](https://github.com/gleam-lang/gleam/blob/f793b5d28a3102276a8b861c7e16a19c5231426e/CODE_OF_CONDUCT.md), which is derived from the [Contributor Covenant (v1.4)](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html).
+If you experience or witness unacceptable behavior, please report it via [GitHub Discussions](https://github.com/Foblex/f-flow/discussions) or email us at [support@foblex.com](mailto:support@foblex.com).
+
+## Attribution
+
+Based on the [Contributor Covenant v1.4](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html), with inspiration from the [Gleam Code of Conduct](https://github.com/gleam-lang/gleam).

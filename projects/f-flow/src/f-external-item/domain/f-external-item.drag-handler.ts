@@ -1,14 +1,17 @@
-import { IPoint, IRect, Point, RectExtensions } from '@foblex/2d';
+import {IPoint, IRect, ITransformModel, Point, RectExtensions} from '@foblex/2d';
 import {
   FExternalItemBase,
   FExternalItemCreatePlaceholderRequest,
   FExternalItemCreatePreviewRequest,
   IFExternalItemDragResult
 } from '../../f-external-item';
-import { FDragHandlerResult, IFDragHandler } from '../../f-draggable';
-import { BrowserService } from '@foblex/platform';
-import { FMediator } from '@foblex/mediator';
-import { Injector } from '@angular/core';
+import {FDragHandlerResult, IFDragHandler, PointBoundsLimiter} from '../../f-draggable';
+import {BrowserService} from '@foblex/platform';
+import {FMediator} from '@foblex/mediator';
+import {Injector} from '@angular/core';
+import {FComponentsStore} from "../../f-storage";
+import {GetNormalizedElementRectRequest} from "../../domain";
+import {infinityMinMax} from "../../utils";
 
 export class FExternalItemDragHandler implements IFDragHandler {
 
@@ -18,23 +21,48 @@ export class FExternalItemDragHandler implements IFDragHandler {
   private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult>;
   private readonly _fMediator: FMediator;
   private readonly _fBrowser: BrowserService;
+  private readonly _fComponentStore: FComponentsStore;
 
   private _preview: HTMLElement | SVGElement | undefined;
   private _placeholder: HTMLElement | SVGElement | undefined;
   private _onPointerDownRect: IRect = RectExtensions.initialize();
+  private readonly _fBoundsLimiter: PointBoundsLimiter;
 
   private get _fItemHost(): HTMLElement | SVGElement {
     return this._fExternalItem.hostElement;
   }
 
+  private get _body(): Element {
+    return this._fBrowser.document.fullscreenElement ?? this._fBrowser.document.body;
+  }
+
+  private get _transform(): ITransformModel {
+    return this._fComponentStore.fCanvas!.transform;
+  }
+
+  private readonly _fItemHostDisplay: string | undefined;
+
   constructor(
     _injector: Injector,
     private _fExternalItem: FExternalItemBase,
   ) {
-    this.fData = { fData: _fExternalItem.fData };
+    this.fData = {fData: _fExternalItem.fData};
     this._fResult = _injector.get(FDragHandlerResult);
     this._fMediator = _injector.get(FMediator);
     this._fBrowser = _injector.get(BrowserService);
+    this._fComponentStore = _injector.get(FComponentsStore);
+
+    this._fBoundsLimiter = new PointBoundsLimiter(
+      _injector, this._getStartPoint(), infinityMinMax()
+    );
+
+    this._fItemHostDisplay = this._fItemHost.style.display;
+  }
+
+  private _getStartPoint(): IPoint {
+    return this._fMediator.execute<IRect>(
+      new GetNormalizedElementRectRequest(this._fExternalItem.hostElement)
+    );
   }
 
   public prepareDragSequence(): void {
@@ -54,20 +82,20 @@ export class FExternalItemDragHandler implements IFDragHandler {
       this._matchElementSize(this._preview, this._onPointerDownRect);
     }
     this._preview!.style.transform = setTransform(this._onPointerDownRect);
-    this._fBrowser.document.body.appendChild(this._preview);
+    this._body.appendChild(this._preview);
   }
 
   private _createAndAppendPlaceholder(): void {
     this._placeholder = this._fMediator.execute<HTMLElement>(
       new FExternalItemCreatePlaceholderRequest(this._fExternalItem)
     );
-
-    this._fBrowser.document.body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
+    this._body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
+    this._fItemHost.style.display = 'none';
   }
 
   private _matchElementSize(target: HTMLElement, sourceRect: IRect): void {
-    target.style.width = `${ sourceRect.width }px`;
-    target.style.height = `${ sourceRect.height }px`;
+    target.style.width = `${sourceRect.width}px`;
+    target.style.height = `${sourceRect.height}px`;
   }
 
   private _setFResultData(): void {
@@ -87,18 +115,23 @@ export class FExternalItemDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    const position = Point.fromPoint(this._onPointerDownRect).add(difference);
+    const adjustCellSize = this._fComponentStore.fDraggable?.fCellSizeWhileDragging ?? false;
+    const differenceWithRestrictions = Point.fromPoint(this._fBoundsLimiter.limit(difference, adjustCellSize))
+      .mult(this._transform.scale);
+
+    const position = Point.fromPoint(this._onPointerDownRect).add(differenceWithRestrictions);
     this._preview!.style.transform = setTransform(position);
   }
 
   public onPointerUp(): void {
-    this._fBrowser.document.body.removeChild(this._preview!);
+    this._body.removeChild(this._preview!);
 
     this._placeholder!.parentElement!.replaceChild(this._fItemHost, this._placeholder!);
+    this._fItemHost.style.display = this._fItemHostDisplay ?? 'block';
   }
 }
 
-function setTransform({ x, y }: IPoint): string {
-  return `translate3d(${ Math.round(x) }px, ${ Math.round(y) }px, 0)`;
+function setTransform({x, y}: IPoint): string {
+  return `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
 }
 

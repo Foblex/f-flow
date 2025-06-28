@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NgAdd",
+  "title": "Foblex Flow ng-add",
+  "type": "object",
+  "properties": {}
+}

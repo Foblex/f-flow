@@ -43,7 +43,6 @@ import { FSingleSelectRequest } from './f-single-select';
 import { FNodeResizeFinalizeRequest, FNodeResizePreparationRequest } from './f-node-resize';
 import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
 import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
-import { ICanRunOutsideAngular, IPointerEvent } from '@foblex/drag-toolkit';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
@@ -52,7 +51,58 @@ import {
   FNodeDropToGroupPreparationRequest
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
-
+import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
+// ┌──────────────────────────────┐
+// │        Angular Realm         │
+// │                              │
+// │  ┌────────────────────────┐  │
+// │  │  FDraggableDirective   │  │
+// │  └──────────┬─────────────┘  │
+// │             │ extends        │
+// │  ┌──────────▼─────────────┐  │
+// │  │     FDraggableBase     │  │
+// │  └──────────┬─────────────┘  │
+// │             │                │
+// │             │ overrides      │
+// │  ┌──────────▼─────────────┐  │
+// │  │   DragAndDropBase      │  │
+// │  └──────────┬─────────────┘  │
+// │             │                │
+// │      subscribes to           │
+// │             │                │
+// │        ┌────▼────┐           │
+// │        │ Document│           │
+// │        └─────────┘           │
+// │                              │
+// │  ┌────────────────────────┐  │
+// │  │       FMediator        │◄─┬────┐
+// │  └─────┬────────┬─────────┘  │    │
+// │        │        │            │    │
+// │   executes   executes        │    │
+// │   F*Request   F*Event        │    │
+// │        │        │            │    │
+// └────────┴────────┴────────────┴────┘
+//
+//
+// ┌──────────────────────────────────────┐
+// │       Drag & Drop Runtime Layer      │
+// │                                      │
+// │  Events from DOM:                    │
+// │    - mousedown / touchstart          │
+// │    - mousemove / touchmove           │
+// │    - pointerup                       │
+// │                                      │
+// │  ↓ Routed to                         │
+// │                                      │
+// │  ┌──────────────────────────────┐    │
+// │  │     DragAndDropBase          │    │
+// │  └──────────────────────────────┘    │
+// │        ▲             ▲               │
+// │        │             │               │
+// │   checkDrag     onPointerMove        │
+// │   Sequence      + Finalization       │
+// │   To Start                           │
+// └──────────────────────────────────────┘
 @Directive({
   selector: "f-flow[fDraggable]",
   exportAs: 'fDraggable',
@@ -188,11 +238,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
 
+    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
+
     this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
-
-    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
     this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
 
@@ -220,11 +270,11 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fMediator.execute<void>(new FNodeMoveFinalizeRequest(event));
 
+    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
+
     this._fMediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
 
     this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
-
-    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 

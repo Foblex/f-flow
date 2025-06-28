@@ -11,6 +11,4 @@ import { FFlowModule } from '@foblex/flow';
     FFlowModule
   ]
 })
-export class SimpleFlowComponent {
-
-}
+export class SimpleFlowComponent {}
