@@ -28,6 +28,10 @@ The **FConnectionComponent** is a component that represents a connection between
 
   - `fTextStartOffset: number;` The offset of the text from the start of the connection. Default: `50%`
 
+  - `fOffset: number;` Minimum length of the connection before a curve can occur. Default: `12`
+
+  - `fRadius: number;` Radius used for curves. Default: `8`
+
 ## Styles
   - `.f-component` A general class applied to all F components for shared styling.
 

@@ -48,7 +48,7 @@ Check out real-world use cases built with Foblex Flow:
 
 - 🗄 [DB Management](https://flow.foblex.com/examples/f-db-management-flow/) - An example of a database management flow.
 
-🔗 [Explore all examples](https://flow.foblex.com/examples)
+🔗 [Explore all examples](https://flow.foblex.com/examples/overview)
 ---
 
 ### ⚙️ Quick Start
