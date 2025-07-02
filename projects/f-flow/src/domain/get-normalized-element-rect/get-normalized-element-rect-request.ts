@@ -1,5 +1,7 @@
 export class GetNormalizedElementRectRequest {
-    constructor(
+  static readonly fToken = Symbol('GetNormalizedElementRectRequest');
+
+  constructor(
         public element: HTMLElement | SVGElement
     ) {
     }

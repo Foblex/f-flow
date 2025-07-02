@@ -3,6 +3,7 @@ import { FEventTrigger } from '../../../domain';
 import {IPointerEvent} from "../../../drag-toolkit";
 
 export class SelectionAreaPreparationRequest {
+  static readonly fToken = Symbol('SelectionAreaPreparationRequest');
 
   constructor(
     public event: IPointerEvent,

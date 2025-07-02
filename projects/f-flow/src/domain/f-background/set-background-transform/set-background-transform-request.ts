@@ -1,9 +1,10 @@
-import { ITransformModel } from '@foblex/2d';
+import {ITransformModel} from '@foblex/2d';
 
 export class SetBackgroundTransformRequest {
+  static readonly fToken = Symbol('SetBackgroundTransformRequest');
 
-    constructor(
-        public fTransform: ITransformModel
-    ) {
-    }
+  constructor(
+    public fTransform: ITransformModel
+  ) {
+  }
 }

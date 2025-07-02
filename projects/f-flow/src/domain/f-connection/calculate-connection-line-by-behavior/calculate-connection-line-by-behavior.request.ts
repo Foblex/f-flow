@@ -3,6 +3,7 @@ import { EFConnectableSide } from '../../../f-connectors';
 import { IRoundedRect } from '@foblex/2d';
 
 export class CalculateConnectionLineByBehaviorRequest {
+  static readonly fToken = Symbol('CalculateConnectionLineByBehaviorRequest');
 
   constructor(
     public outputRect: IRoundedRect,
