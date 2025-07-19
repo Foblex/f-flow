@@ -136,8 +136,20 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._fMediator.execute<void>(new SelectAllRequest());
   }
 
-  public select(nodes: string[], connections: string[]): void {
-    this._fMediator.execute<void>(new SelectRequest(nodes, connections));
+  /**
+   * Programmatically selects nodes and connections by their IDs.
+   *
+   * This method allows external components to control the selection state of the canvas.
+   * Selected elements will appear visually highlighted. If `isSelectedChanged` is true,
+   * the next user interaction (e.g., clicking the canvas) will emit a selection change event.
+   *
+   * @param nodes - An array of node IDs to select.
+   * @param connections - An array of connection IDs to select.
+   * @param isSelectedChanged - Optional. If true (default), marks the selection state as changed,
+   * triggering a `fSelectionChange` event on the next user interaction.
+   */
+  public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
+    this._fMediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
   }
 
   public clearSelection(): void {

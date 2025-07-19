@@ -28,3 +28,10 @@
 .overlay {
   @include flow-common.overlay;
 }
+
+@include flow-common.examples-toolbar;
+
+.examples-toolbar {
+  left: 16px;
+  right: unset;
+}

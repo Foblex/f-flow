@@ -18,6 +18,11 @@
     </div>
   </f-canvas>
 </f-flow>
+<div class="examples-toolbar" fDragBlocker>
+  <button class="f-button" (click)="selectNode()">Select Node</button>
+  <button class="f-button" (click)="selectConnection()">Select Connection</button>
+</div>
+
 <div class="overlay">
   Events:
   @for (item of events(); track item) {

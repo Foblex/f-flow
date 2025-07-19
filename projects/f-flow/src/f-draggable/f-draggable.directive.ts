@@ -8,13 +8,13 @@ import {
   OnDestroy,
   OnInit, Optional, Output, QueryList
 } from "@angular/core";
-import { FDraggableBase } from './f-draggable-base';
+import {FDraggableBase} from './f-draggable-base';
 import {
   FMoveNodesEvent,
   FNodeMoveFinalizeRequest,
   FNodeMovePreparationRequest
 } from './f-node-move';
-import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
+import {FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest} from './f-canvas';
 import {
   FCreateConnectionEvent,
   FReassignConnectionEvent,
@@ -23,8 +23,8 @@ import {
   FCreateConnectionPreparationRequest,
   FCreateConnectionFinalizeRequest
 } from './f-connection';
-import { FSelectionChangeEvent } from './f-selection-change-event';
-import { FMediator } from '@foblex/mediator';
+import {FSelectionChangeEvent} from './f-selection-change-event';
+import {FMediator} from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   EmitSelectionChangeEventRequest,
@@ -40,19 +40,20 @@ import {
   FCreateNodeEvent,
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
-import { FSingleSelectRequest } from './f-single-select';
-import { FNodeResizeFinalizeRequest, FNodeResizePreparationRequest } from './f-node-resize';
-import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
-import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
-import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDragHandlerResult } from './f-drag-handler';
+import {FSingleSelectRequest} from './f-single-select';
+import {FNodeResizeFinalizeRequest, FNodeResizePreparationRequest} from './f-node-resize';
+import {F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin} from './i-f-drag-and-drop-plugin';
+import {BrowserService, EOperationSystem, PlatformService} from '@foblex/platform';
+import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
+import {FDragHandlerResult} from './f-drag-handler';
 import {
   FDropToGroupEvent,
   FNodeDropToGroupFinalizeRequest,
   FNodeDropToGroupPreparationRequest
 } from './f-drop-to-group';
-import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
+import {FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest} from './f-node-rotate';
 import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
+import {isDragBlocker} from "./is-drag-blocker";
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
 // │                              │
@@ -107,7 +108,7 @@ import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
 @Directive({
   selector: "f-flow[fDraggable]",
   exportAs: 'fDraggable',
-  providers: [ FDragHandlerResult ]
+  providers: [FDragHandlerResult]
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 
@@ -117,7 +118,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private _fMediator = inject(FMediator);
   private _fPlatform = inject(PlatformService);
 
-  @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
+  @Input({transform: booleanAttribute, alias: 'fDraggableDisabled'})
   public override disabled: boolean = false;
 
   public override get hostElement(): HTMLElement {
@@ -156,7 +157,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fNodeIntersectedWithConnections = new EventEmitter<FNodeIntersectedWithConnections>();
 
-  @Input({ transform: booleanAttribute })
+  @Input({transform: booleanAttribute})
   public override fEmitOnNodeIntersect: boolean = false;
 
   @Output()
@@ -174,13 +175,13 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override vCellSize = 1;
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override hCellSize = 1;
 
-  @Input({ transform: booleanAttribute })
+  @Input({transform: booleanAttribute})
   public override fCellSizeWhileDragging: boolean = false;
 
   @Output()
@@ -189,10 +190,10 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDragEnded = new EventEmitter<void>();
 
-  @ContentChildren(F_BEFORE_MAIN_PLUGIN, { descendants: true })
+  @ContentChildren(F_BEFORE_MAIN_PLUGIN, {descendants: true})
   private _beforePlugins!: QueryList<IFDragAndDropPlugin>;
 
-  @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
+  @ContentChildren(F_AFTER_MAIN_PLUGIN, {descendants: true})
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
   constructor(
@@ -211,6 +212,10 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
+    if (isDragBlocker(event.targetElement)) {
+      return false;
+    }
+
     this._fResult.clear();
 
     this._fMediator.execute<void>(new InitializeDragSequenceRequest());

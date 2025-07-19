@@ -4,7 +4,7 @@ import { F_CONNECTION_PROVIDERS, } from './f-connection';
 import { F_NODE_PROVIDERS } from './f-node';
 import { F_BACKGROUND_PROVIDERS } from './f-backgroud';
 import { F_CONNECTORS_PROVIDERS } from './f-connectors';
-import { FDraggableDirective } from './f-draggable';
+import {FDragBlockerDirective, FDraggableDirective} from './f-draggable';
 import { F_SELECTION_AREA_PROVIDERS } from './f-selection-area';
 import { F_LINE_ALIGNMENT_PROVIDERS } from './f-line-alignment';
 import { F_MINIMAP_PROVIDERS } from './f-minimap';
@@ -22,6 +22,7 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_NODE_PROVIDERS,
     ...F_SELECTION_AREA_PROVIDERS,
 
+    FDragBlockerDirective,
     FDraggableDirective,
   ],
   imports: [
@@ -40,7 +41,6 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
 
-
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
     ...F_LINE_ALIGNMENT_PROVIDERS,
@@ -48,6 +48,7 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_NODE_PROVIDERS,
     ...F_SELECTION_AREA_PROVIDERS,
 
+    FDragBlockerDirective,
     FDraggableDirective,
   ]
 })
