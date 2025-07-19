@@ -1,18 +1,19 @@
-import { inject, Injectable } from '@angular/core';
-import { FNodeMoveFinalizeRequest } from './f-node-move-finalize.request';
-import { IPoint, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
+import {inject, Injectable} from '@angular/core';
+import {FNodeMoveFinalizeRequest} from './f-node-move-finalize.request';
+import {IPoint, Point} from '@foblex/2d';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {FComponentsStore} from '../../../f-storage';
+import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
-import { IFDragHandler } from '../../f-drag-handler';
-import { FNodeDropToGroupDragHandler } from '../../f-drop-to-group';
-import { ILineAlignmentResult, INearestCoordinateResult } from '../../../f-line-alignment';
-import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
-import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
-import { FNodeBase } from '../../../f-node';
+import {IFDragHandler} from '../../f-drag-handler';
+import {FNodeDropToGroupDragHandler} from '../../f-drop-to-group';
+import {ILineAlignmentResult, INearestCoordinateResult} from '../../../f-line-alignment';
+import {FLineAlignmentDragHandler} from '../f-line-alignment.drag-handler';
+import {FSummaryNodeMoveDragHandler} from '../f-summary-node-move.drag-handler';
+import {FNodeBase} from '../../../f-node';
+import {FMoveNodesEvent} from "../f-move-nodes.event";
 
 @Injectable()
 @FExecutionRegister(FNodeMoveFinalizeRequest)
@@ -48,9 +49,19 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
 
   private _finalizeMove(difference: IPoint): void {
     this._getItems().forEach((x) => {
-      x.onPointerMove({ ...difference });
+      x.onPointerMove({...difference});
       x.onPointerUp?.();
     });
+
+    if (this._getItems().length) {
+      const event = this._getItems()[0].fData.fNodeIds.map((id: string) => {
+        return {
+          id,
+          position: this._fComponentsStore.fNodes.find(x => x.fId === id)!.position,
+        }
+      });
+      this._fComponentsStore.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(event));
+    }
   }
 
   private _getItems(): IFDragHandler[] {
@@ -99,10 +110,10 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _isDraggedJustOneNode(): boolean {
-    return (this._fDraggableDataContext.draggableItems[ 0 ] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
+    return (this._fDraggableDataContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
   }
 
   private _getFirstNodeOrGroup(): FNodeBase {
-    return (this._fDraggableDataContext.draggableItems[ 0 ] as FSummaryNodeMoveDragHandler).fHandlers[ 0 ].fNode;
+    return (this._fDraggableDataContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers[0].fNode;
   }
 }

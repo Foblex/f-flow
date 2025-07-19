@@ -1,18 +1,18 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fDraggable (fLoaded)="onLoaded()" (fMoveNodes)="onMoveNodes($event)">
   <f-canvas>
     <div fNode fDragHandle
-         [fNodePosition]="{ x: 0, y: 0 }">
+         [fNodePosition]="{ x: 0, y: 0 }" (fNodePositionChange)="onNodePositionChange($event)">
       Node is the drag handle
     </div>
 
     <div fNode
-         [fNodePosition]="{ x: 120, y: 100 }" class="drag-handle-inside">
+         [fNodePosition]="{ x: 120, y: 100 }" class="drag-handle-inside" (fNodePositionChange)="onNodePositionChange($event)">
       <span fDragHandle class="f-icon f-drag-handle-icon"></span>
       Only the icon is the drag handle
     </div>
 
     <div fNode
-         [fNodePosition]="{ x: 350, y: 0 }" class="drag-handle-outside">
+         [fNodePosition]="{ x: 350, y: 0 }" class="drag-handle-outside" (fNodePositionChange)="onNodePositionChange($event)">
       <div fDragHandle>
         <span class="f-icon f-drag-handle-icon"></span>
       </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div fNode
-         [fNodePosition]="{ x: 130, y: 200 }">
+         [fNodePosition]="{ x: 130, y: 200 }" (fNodePositionChange)="onNodePositionChange($event)">
       Only the image is the drag handle
       <div fDragHandle>
         <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
