@@ -4,7 +4,7 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnInit,
+  OnInit, viewChild,
   ViewChild
 } from '@angular/core';
 import {
@@ -12,13 +12,13 @@ import {
   FCanvasChangeEvent,
   FCanvasComponent,
   FCreateConnectionEvent,
-  FFlowModule,
+  FFlowModule, FMoveNodesEvent,
   FReassignConnectionEvent
 } from '@foblex/flow';
-import { IPoint } from '@foblex/2d';
-import { generateGuid } from '@foblex/utils';
-import { debounceTime, Subject } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {IPoint} from '@foblex/2d';
+import {generateGuid} from '@foblex/utils';
+import {debounceTime, Subject} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 interface INode {
   id: string;
@@ -41,26 +41,26 @@ interface IState {
 
 const STORE: IState = {
   scale: 1,
-  position: { x: 0, y: 0 },
-  nodes: [ {
+  position: {x: 0, y: 0},
+  nodes: [{
     id: '1',
-    position: { x: 0, y: 200 },
+    position: {x: 0, y: 200},
     text: 'Node 1',
   }, {
     id: '2',
-    position: { x: 200, y: 200 },
+    position: {x: 200, y: 200},
     text: 'Node 2',
-  } ],
-  connections: [ {
+  }],
+  connections: [{
     id: '1',
     source: '1-output-0',
     target: '2-input-1',
-  } ],
+  }],
 };
 
 @Component({
   selector: 'undo-redo',
-  styleUrls: [ './undo-redo.component.scss' ],
+  styleUrls: ['./undo-redo.component.scss'],
   templateUrl: './undo-redo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -70,17 +70,15 @@ const STORE: IState = {
 })
 export class UndoRedoComponent implements OnInit {
 
-  private _destroyRef = inject(DestroyRef);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
   private _undoStates: IState[] = [];
   private _redoStates: IState[] = [];
 
   protected isRedoEnabled: boolean = false;
   protected isUndoEnabled: boolean = false;
-
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvas!: FCanvasComponent;
 
   protected viewModel: IState = STORE;
 
@@ -95,7 +93,7 @@ export class UndoRedoComponent implements OnInit {
   }
 
   protected onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   protected onCanvasChange(event: FCanvasChangeEvent): void {
@@ -139,12 +137,14 @@ export class UndoRedoComponent implements OnInit {
     }
   }
 
-  protected onNodeChanged(nodeId: string, position: IPoint): void {
+  protected onMoveNodes(event: FMoveNodesEvent): void {
     this._stateChanged();
-    const node = this.viewModel.nodes.find((x) => x.id === nodeId);
-    if (node) {
-      node.position = position;
-    }
+    event.fNodes.forEach((change) => {
+      const node = this.viewModel.nodes.find((x) => x.id === change.id);
+      if (node) {
+        node.position = change.position;
+      }
+    });
   }
 
   private _removeConnection(connectionId: string): void {
@@ -153,7 +153,7 @@ export class UndoRedoComponent implements OnInit {
   }
 
   private _createConnection(source: string, target: string): void {
-    this.viewModel.connections.push({ id: generateGuid(), source, target });
+    this.viewModel.connections.push({id: generateGuid(), source, target});
   }
 
   private _stateChanged(): void {

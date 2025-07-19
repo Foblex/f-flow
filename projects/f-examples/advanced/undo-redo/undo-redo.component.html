@@ -1,6 +1,8 @@
-<f-flow fDraggable (fLoaded)="onLoaded()"
+<f-flow fDraggable
+        (fLoaded)="onLoaded()"
         (fCreateConnection)="onConnectionCreated($event)"
-        (fReassignConnection)="onConnectionReassigned($event)">
+        (fReassignConnection)="onConnectionReassigned($event)"
+        (fMoveNodes)="onMoveNodes($event)">
   <f-canvas fZoom [scale]="viewModel.scale" [position]="viewModel.position" (fCanvasChange)="onCanvasChange($event)">
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.START" class="connection-marker"
@@ -46,11 +48,15 @@
     }
     @for (node of viewModel.nodes; track node.id; let index = $index) {
       <div fNode [fNodePosition]="node.position"
-           fDragHandle (fNodePositionChange)="onNodeChanged(node.id, $event)">{{ node.text }}
+           [fNodeId]="node.id"
+           fDragHandle>{{ node.text }}
         <div fNodeInput fInputId="{{node.id}}-input-{{index}}" fInputConnectableSide="left" class="left"></div>
-        <div fNodeOutput fOutputId="{{node.id}}-output-{{index}}" [isSelfConnectable]="false" fOutputConnectableSide="top" class="top"></div>
+        <div fNodeOutput fOutputId="{{node.id}}-output-{{index}}" [isSelfConnectable]="false"
+             fOutputConnectableSide="top"
+             class="top"></div>
         <div fNodeInput fInputId="{{node.id}}-input-{{index+1}}" fInputConnectableSide="right" class="right"></div>
-        <div fNodeOutput fOutputId="{{node.id}}-output-{{index+1}}" [isSelfConnectable]="false" fOutputConnectableSide="bottom" class="bottom"></div>
+        <div fNodeOutput fOutputId="{{node.id}}-output-{{index+1}}" [isSelfConnectable]="false"
+             fOutputConnectableSide="bottom" class="bottom"></div>
       </div>
     }
   </f-canvas>
