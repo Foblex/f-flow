@@ -154,7 +154,7 @@ function nodesGroup() {
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
-    date: new Date('2025-19-07 13:00:22'),
+    date: new Date('2025-07-19 13:00:22'),
     badge: {
       text: 'Updated',
       type: 'warning'
@@ -168,7 +168,11 @@ function nodesGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    date: new Date('2025-01-31 17:16:33')
+    date: new Date('2025-07-19 17:23:21'),
+    badge: {
+      text: 'Updated',
+      type: 'warning'
+    },
   }, {
     link: 'resize-handle',
     text: 'Resize Handle',
@@ -178,10 +182,6 @@ function nodesGroup() {
     image_width: 801,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2024-10-02 16:04:08')
   }, {
     link: 'rotate-handle',
@@ -192,10 +192,6 @@ function nodesGroup() {
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-02-23 20:56:08')
   }, {
     link: 'grouping',
@@ -559,10 +555,10 @@ function advancedGroup() {
     image_height: 600,
     image_type: 'image/png',
     badge: {
-      text: 'New',
-      type: 'info'
+      text: 'Updated',
+      type: 'warning'
     },
-    date: new Date('2025-01-31 14:33:57')
+    date: new Date('2025-07-19 17:23:57')
   }, {
     link: 'dagre-layout',
     text: 'Dagre Layout',
