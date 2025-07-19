@@ -5,6 +5,7 @@ import { FCreateNodeEvent } from '../f-external-item';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './f-drop-to-group';
 import {DragAndDropBase, ICanRunOutsideAngular} from "../drag-toolkit";
+import {FMoveNodesEvent} from "./f-node-move";
 
 @Directive()
 export abstract class FDraggableBase extends DragAndDropBase  {
@@ -16,6 +17,8 @@ export abstract class FDraggableBase extends DragAndDropBase  {
   public abstract fEmitOnNodeIntersect: boolean;
 
   public abstract fCreateNode: EventEmitter<FCreateNodeEvent>;
+
+  public abstract fMoveNodes: EventEmitter<FMoveNodesEvent>;
 
   public abstract fReassignConnection: EventEmitter<FReassignConnectionEvent>;
 

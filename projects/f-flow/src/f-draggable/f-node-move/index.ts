@@ -10,6 +10,8 @@ export * from './move-finalize';
 
 export * from './f-line-alignment.drag-handler';
 
+export * from './f-move-nodes.event';
+
 export * from './f-node-move.drag-handler';
 
 export * from './point-bounds-limiter';

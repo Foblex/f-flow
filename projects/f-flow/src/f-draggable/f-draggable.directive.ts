@@ -10,6 +10,7 @@ import {
 } from "@angular/core";
 import { FDraggableBase } from './f-draggable-base';
 import {
+  FMoveNodesEvent,
   FNodeMoveFinalizeRequest,
   FNodeMovePreparationRequest
 } from './f-node-move';
@@ -160,6 +161,9 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   @Output()
   public override fCreateNode = new EventEmitter<FCreateNodeEvent>();
+
+  @Output()
+  public override fMoveNodes = new EventEmitter<FMoveNodesEvent>();
 
   @Output()
   public override fReassignConnection = new EventEmitter<FReassignConnectionEvent>();
