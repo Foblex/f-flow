@@ -33,6 +33,6 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
       }
     });
 
-    this._fDraggableDataContext.isSelectedChanged = true;
+    this._fDraggableDataContext.isSelectedChanged = request.isSelectedChanged;
   }
 }

@@ -136,8 +136,8 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._fMediator.execute<void>(new SelectAllRequest());
   }
 
-  public select(nodes: string[], connections: string[]): void {
-    this._fMediator.execute<void>(new SelectRequest(nodes, connections));
+  public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
+    this._fMediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
   }
 
   public clearSelection(): void {
