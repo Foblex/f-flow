@@ -6,7 +6,7 @@ export class EventExtensions {
 
     if (EventExtensions.isSupported == null && typeof window !== 'undefined') {
       try {
-        window.addEventListener('test', EventExtensions.emptyListener, { passive: true });
+        window.addEventListener('test', EventExtensions.emptyListener, {passive: true});
         EventExtensions.isSupported = true;
       } catch (e) {
         EventExtensions.isSupported = false;
@@ -21,11 +21,15 @@ export class EventExtensions {
   }
 
   public static activeListener(): boolean | AddEventListenerOptions {
-    return EventExtensions.passiveEventListener({ passive: false });
+    return EventExtensions.passiveEventListener({passive: false});
   }
 
   public static passiveListener(): boolean | AddEventListenerOptions {
-    return EventExtensions.passiveEventListener({ passive: true });
+    return EventExtensions.passiveEventListener({passive: true});
+  }
+
+  public static activeCaptureListener(): boolean | AddEventListenerOptions {
+    return EventExtensions.passiveEventListener({passive: false, capture: true});
   }
 
   public static emptyListener(): Function {
