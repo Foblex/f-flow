@@ -3,7 +3,10 @@
         (fCreateConnection)="onConnectionCreated($event)"
         (fReassignConnection)="onConnectionReassigned($event)"
         (fMoveNodes)="onMoveNodes($event)">
-  <f-canvas fZoom [scale]="viewModel.scale" [position]="viewModel.position" (fCanvasChange)="onCanvasChange($event)">
+  <f-canvas fZoom [scale]="viewModel.scale"
+            [position]="viewModel.position"
+            [debounceTime]="fCanvasChangeEventDebounce"
+            (fCanvasChange)="onCanvasChange($event)">
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.START" class="connection-marker"
            [height]="5" [width]="5"
