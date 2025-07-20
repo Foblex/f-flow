@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  DestroyRef,
   inject,
-  OnInit, viewChild,
-  ViewChild
+  viewChild,
 } from '@angular/core';
 import {
   EFMarkerType,
@@ -17,8 +15,6 @@ import {
 } from '@foblex/flow';
 import {IPoint} from '@foblex/2d';
 import {generateGuid} from '@foblex/utils';
-import {debounceTime, Subject} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 interface INode {
   id: string;
@@ -68,17 +64,16 @@ const STORE: IState = {
     FFlowModule
   ]
 })
-export class UndoRedoComponent implements OnInit {
+export class UndoRedoComponent {
 
-  private readonly _destroyRef = inject(DestroyRef);
   private readonly _changeDetectorRef = inject(ChangeDetectorRef);
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
   private _undoStates: IState[] = [];
   private _redoStates: IState[] = [];
 
-  protected isRedoEnabled: boolean = false;
-  protected isUndoEnabled: boolean = false;
+  protected isRedoEnabled = false;
+  protected isUndoEnabled = false;
 
   protected viewModel: IState = STORE;
 
@@ -86,33 +81,22 @@ export class UndoRedoComponent implements OnInit {
 
   private _isFirstCanvasChange: boolean = true;
 
-  private _fCanvasChange = new Subject<FCanvasChangeEvent>();
-
-  public ngOnInit(): void {
-    this._subscribeToCanvasChange();
-  }
+  // Debounce time for canvas change events. It helps to prevent excessive updates when zooming;
+  protected fCanvasChangeEventDebounce = 200; // milliseconds
 
   protected onLoaded(): void {
     this._canvas()?.resetScaleAndCenter(false);
   }
 
   protected onCanvasChange(event: FCanvasChangeEvent): void {
-    this._fCanvasChange.next(event);
-  }
+    if (this._isFirstCanvasChange) {
+      this._setCenteredFlowAsDefault(event);
+      return;
+    }
 
-  private _subscribeToCanvasChange(): void {
-    this._fCanvasChange.pipe(
-      takeUntilDestroyed(this._destroyRef), debounceTime(200)
-    ).subscribe((event) => {
-      if (this._isFirstCanvasChange) {
-        this._setCenteredFlowAsDefault(event);
-        return;
-      }
-
-      this._stateChanged();
-      this.viewModel.position = event.position;
-      this.viewModel.scale = event.scale;
-    });
+    this._stateChanged();
+    this.viewModel.position = event.position;
+    this.viewModel.scale = event.scale;
   }
 
   private _setCenteredFlowAsDefault(event: FCanvasChangeEvent): void {

@@ -55,6 +55,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), { transform: PointExtensions.castToPoint });
   public readonly scale = input<number, unknown>(1, { transform: numberAttribute });
+  public readonly debounceTime = input<number, unknown>(0, { transform: numberAttribute });
+  public override debounce = computed(() => this.debounceTime() < 0 ? 0 : this.debounceTime());
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
@@ -73,6 +75,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     this._fMediator.execute(new AddCanvasToStoreRequest(this));
     this._positionChange();
     this._scaleChange();
+    super.subscribeOnCanvasChange();
   }
 
   private _positionChange(): void {
