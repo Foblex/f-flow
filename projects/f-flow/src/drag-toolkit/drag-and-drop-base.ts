@@ -1,4 +1,4 @@
-import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
+import {ICanRunOutsideAngular} from './i-can-run-outside-angular';
 import {
   IMouseEvent,
   IPointerEvent,
@@ -6,7 +6,7 @@ import {
   ITouchDownEvent,
   ITouchMoveEvent,
 } from './pointer-events';
-import { EventExtensions } from './event.extensions';
+import {EventExtensions} from './event.extensions';
 
 export const MOUSE_EVENT_IGNORE_TIME = 800;
 
@@ -33,7 +33,7 @@ export abstract class DragAndDropBase {
   private dragStartDelay: number = 0;
 
   private dragStartTime: number = 0;
-  private dragStartPosition: { x: number, y: number } = { x: 0, y: 0 };
+  private dragStartPosition: { x: number, y: number } = {x: 0, y: 0};
 
   public abstract disabled: boolean;
 
@@ -50,11 +50,11 @@ export abstract class DragAndDropBase {
     const isSyntheticEvent = this.isSyntheticEvent(event);
     const isFakeEvent = isFakeMousedownFromScreenReader(event);
     const mouseEvent = new IMouseEvent(event);
-    this.pointerDownElement = mouseEvent.targetElement;
 
-    if (isSyntheticEvent || isFakeEvent || this.disabled) {
+    if (isSyntheticEvent || isFakeEvent || this.disabled || this.isDragStarted) {
       return;
     }
+    this.pointerDownElement = mouseEvent.targetElement;
     let result = this.onPointerDown(mouseEvent);
     if (result) {
 
@@ -65,12 +65,16 @@ export abstract class DragAndDropBase {
         this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.addEventListener('mousemove', this.onMouseMove);
         this.document?.addEventListener('pointerup', this.onPointerUpEvent);
+        this.document?.addEventListener('pointercancel', this.onPointerUpEvent, EventExtensions.activeCaptureListener());
+        this.document?.addEventListener('contextmenu', this.onContextMenuDuringDrag, EventExtensions.activeCaptureListener());
       });
 
       this.mouseListeners = () => {
         this.document?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.removeEventListener('mousemove', this.onMouseMove);
         this.document?.removeEventListener('pointerup', this.onPointerUpEvent);
+        this.document?.removeEventListener('pointercancel', this.onPointerUpEvent, EventExtensions.activeCaptureListener());
+        this.document?.removeEventListener('contextmenu', this.onContextMenuDuringDrag, EventExtensions.activeCaptureListener());
       };
     }
   }
@@ -78,11 +82,11 @@ export abstract class DragAndDropBase {
   private onTouchDown = (event: TouchEvent) => {
     const isFakeEvent = isFakeTouchstartFromScreenReader(event as TouchEvent)
     const touchEvent = new ITouchDownEvent(event);
-    this.pointerDownElement = touchEvent.targetElement;
 
-    if (isFakeEvent || this.disabled) {
+    if (isFakeEvent || this.disabled || this.isDragStarted) {
       return;
     }
+    this.pointerDownElement = touchEvent.targetElement;
     let result = this.onPointerDown(touchEvent);
     if (result) {
 
@@ -93,12 +97,16 @@ export abstract class DragAndDropBase {
         this.document?.addEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.addEventListener('touchmove', this.onTouchMove);
         this.document?.addEventListener('pointerup', this.onPointerUpEvent);
+        this.document?.addEventListener('pointercancel', this.onPointerUpEvent, EventExtensions.activeCaptureListener());
+        this.document?.addEventListener('contextmenu', this.onContextMenuDuringDrag, EventExtensions.activeCaptureListener());
       });
 
       this.touchListeners = () => {
         this.document?.removeEventListener('selectstart', this.onSelectStart, EventExtensions.activeListener());
         this.document?.removeEventListener('touchmove', this.onTouchMove);
         this.document?.removeEventListener('pointerup', this.onPointerUpEvent);
+        this.document?.removeEventListener('pointercancel', this.onPointerUpEvent, EventExtensions.activeCaptureListener());
+        this.document?.removeEventListener('contextmenu', this.onContextMenuDuringDrag, EventExtensions.activeCaptureListener());
       };
     }
   }
@@ -200,10 +208,16 @@ export abstract class DragAndDropBase {
     this.mouseListeners();
     this.mouseListeners = EventExtensions.emptyListener();
   }
+
+  private onContextMenuDuringDrag = (e: Event) => {
+    if (this.isDragStarted) {
+      e.preventDefault();
+    }
+  };
 }
 
 function isTouchEvent(event: MouseEvent | TouchEvent): event is TouchEvent {
-  return event.type[ 0 ] === 't';
+  return event.type[0] === 't';
 }
 
 function isFakeMousedownFromScreenReader(event: MouseEvent): boolean {
@@ -212,7 +226,7 @@ function isFakeMousedownFromScreenReader(event: MouseEvent): boolean {
 
 function isFakeTouchstartFromScreenReader(event: TouchEvent): boolean {
   const touch: Touch | undefined =
-    (event.touches && event.touches[ 0 ]) || (event.changedTouches && event.changedTouches[ 0 ]);
+    (event.touches && event.touches[0]) || (event.changedTouches && event.changedTouches[0]);
   return (
     !!touch &&
     touch.identifier === -1 &&
