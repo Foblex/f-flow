@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component, DestroyRef, ElementRef, inject, input, OnDestroy, OnInit, output
 } from '@angular/core';
-import { F_FLOW, FFlowBase } from './f-flow-base';
+import {F_FLOW, FFlowBase} from './f-flow-base';
 import {
   ClearSelectionRequest,
   CalculateNodesBoundingBoxNormalizedPositionRequest,
@@ -15,29 +15,29 @@ import {
   IFFlowState,
   GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest, ICurrentSelection
 } from '../domain';
-import { IPoint, IRect } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import {IPoint, IRect} from '@foblex/2d';
+import {FMediator} from '@foblex/mediator';
 import {
   FDraggableDataContext
 } from '../f-draggable';
-import { FConnectionFactory } from '../f-connection';
+import {FConnectionFactory} from '../f-connection';
 import {
   NotifyDataChangedRequest,
   F_STORAGE_PROVIDERS,
   ListenCountChangesRequest,
   ListenDataChangesRequest
 } from '../f-storage';
-import { BrowserService } from '@foblex/platform';
-import { COMMON_PROVIDERS } from '../domain';
-import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
-import { FChannelHub } from '../reactivity';
+import {BrowserService} from '@foblex/platform';
+import {COMMON_PROVIDERS} from '../domain';
+import {F_DRAGGABLE_PROVIDERS} from '../f-draggable';
+import {FChannelHub} from '../reactivity';
 
 let uniqueId: number = 0;
 
 @Component({
   selector: 'f-flow',
   templateUrl: './f-flow.component.html',
-  styleUrls: [ './f-flow.component.scss' ],
+  styleUrls: ['./f-flow.component.scss'],
   standalone: true,
   host: {
     '[attr.id]': 'fId()',
@@ -50,7 +50,7 @@ let uniqueId: number = 0;
     FConnectionFactory,
     ...COMMON_PROVIDERS,
     ...F_DRAGGABLE_PROVIDERS,
-    { provide: F_FLOW, useExisting: FFlowComponent },
+    {provide: F_FLOW, useExisting: FFlowComponent},
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,7 +61,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _browserService = inject(BrowserService);
   private readonly _elementReference = inject(ElementRef);
 
-  public override fId = input<string>(`f-flow-${ uniqueId++ }`, { alias: 'fFlowId' });
+  public override fId = input<string>(`f-flow-${uniqueId++}`, {alias: 'fFlowId'});
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
@@ -133,7 +133,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public selectAll(): void {
-    this._fMediator.execute<void>(new SelectAllRequest());
+    setTimeout(() => {
+      this._fMediator.execute<void>(new SelectAllRequest());
+    });
   }
 
   /**
@@ -149,7 +151,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
    * triggering a `fSelectionChange` event on the next user interaction.
    */
   public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
-    this._fMediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
+    setTimeout(() => {
+      this._fMediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
+    });
   }
 
   public clearSelection(): void {

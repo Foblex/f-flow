@@ -10,13 +10,13 @@ import { RedrawCanvasWithAnimationRequest } from '../../../domain';
 @FExecutionRegister(CenterGroupOrNodeRequest)
 export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
 
   private get transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;
   }
 
-  private _fMediator = inject(FMediator);
 
   public handle(request: CenterGroupOrNodeRequest): void {
     const fNode = this.getNode(request.id);

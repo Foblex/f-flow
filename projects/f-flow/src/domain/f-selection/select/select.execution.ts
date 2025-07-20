@@ -8,8 +8,8 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(SelectRequest)
 export class SelectExecution implements IExecution<SelectRequest, void> {
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: SelectRequest): void {
     this._fDraggableDataContext.selectedItems.forEach((x) => {
