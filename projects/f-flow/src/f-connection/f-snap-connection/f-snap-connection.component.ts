@@ -83,8 +83,7 @@ export class FSnapConnectionComponent
 
   public override fSelectionDisabled: boolean = false;
 
-  @ViewChild('defs', {static: true})
-  public override fDefs!: ElementRef<SVGDefsElement>;
+  public override fDefs = viewChild.required<ElementRef<SVGDefsElement>>('defs');
 
   public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 
@@ -95,8 +94,7 @@ export class FSnapConnectionComponent
 
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 
-  @ViewChild(CONNECTION_TEXT, {static: true})
-  public override fTextComponent!: IConnectionText;
+  public override fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
 
   @ViewChild('fConnectionCenter', {static: false})
   public override fConnectionCenter!: ElementRef<HTMLDivElement>;

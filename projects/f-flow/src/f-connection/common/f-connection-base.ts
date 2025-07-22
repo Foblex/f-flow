@@ -62,7 +62,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fType: EFConnectionType | string;
 
-  public abstract fDefs: ElementRef<SVGDefsElement>;
+  public abstract fDefs: Signal<ElementRef<SVGDefsElement>>;
 
   public abstract fPath: Signal<IConnectionPath>;
 
@@ -73,7 +73,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fSelection: Signal<FConnectionSelectionComponent>;
 
-  public abstract fTextComponent: IConnectionText;
+  public abstract fTextComponent: Signal<IConnectionText>;
 
   public abstract fText: string;
 
@@ -139,6 +139,6 @@ export abstract class FConnectionBase extends MIXIN_BASE
     this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this.penultimatePoint, this.line.point2);
     this.fDragHandleStart().redraw(this.secondPoint, this.line.point1);
-    this.fTextComponent.redraw(this.line);
+    this.fTextComponent().redraw(this.line);
   }
 }

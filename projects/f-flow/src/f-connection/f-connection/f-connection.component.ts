@@ -25,17 +25,17 @@ import {
   IConnectionPath,
   IConnectionText,
 } from '../common';
-import { NotifyDataChangedRequest } from '../../f-storage';
-import { FConnectionCenterDirective } from '../f-connection-center';
-import { FConnectionFactory } from '../f-connection-builder';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
+import {NotifyDataChangedRequest} from '../../f-storage';
+import {FConnectionCenterDirective} from '../f-connection-center';
+import {FConnectionFactory} from '../f-connection-builder';
+import {F_CONNECTION} from '../common/f-connection.injection-token';
 //TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
 // TypeError: Class extends value undefined is not a constructor or null
 // at f-connection-for-create.component.ts:34:11
-import { FConnectionBase } from '../common/f-connection-base';
-import { castToEnum } from '@foblex/utils';
-import { FMediator } from '@foblex/mediator';
-import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
+import {FConnectionBase} from '../common/f-connection-base';
+import {castToEnum} from '@foblex/utils';
+import {FMediator} from '@foblex/mediator';
+import {AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest} from '../../domain';
 
 let uniqueId: number = 0;
 
@@ -43,7 +43,7 @@ let uniqueId: number = 0;
   selector: "f-connection",
   exportAs: 'fComponent',
   templateUrl: "./f-connection.component.html",
-  styleUrls: [ "./f-connection.component.scss" ],
+  styleUrls: ["./f-connection.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.id]': 'fId()',
@@ -51,12 +51,12 @@ let uniqueId: number = 0;
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled',
   },
-  providers: [ { provide: F_CONNECTION, useExisting: FConnectionComponent } ],
+  providers: [{provide: F_CONNECTION, useExisting: FConnectionComponent}],
 })
 export class FConnectionComponent
   extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
 
-  public override fId  = input<string>(`f-connection-${ uniqueId++ }`, { alias: 'fConnectionId' });
+  public override fId = input<string>(`f-connection-${uniqueId++}`, {alias: 'fConnectionId'});
 
   @Input()
   public override fText: string = '';
@@ -66,7 +66,7 @@ export class FConnectionComponent
 
   public override fStartColor = input<string>('black');
 
-  public override fEndColor  = input<string>('black');
+  public override fEndColor = input<string>('black');
 
   @Input()
   public override fOutputId: any = '';
@@ -74,28 +74,27 @@ export class FConnectionComponent
   @Input()
   public override fInputId: any = '';
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override fRadius: number = 8;
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override fOffset: number = 12;
 
-  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
+  @Input({transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior)})
   public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  @Input({ alias: 'fReassignDisabled', transform: booleanAttribute })
+  @Input({alias: 'fReassignDisabled', transform: booleanAttribute})
   public override fDraggingDisabled: boolean = false;
 
-  @Input({ transform: booleanAttribute })
+  @Input({transform: booleanAttribute})
   public override fSelectionDisabled: boolean = false;
 
-  @ViewChild('defs', { static: true })
-  public override fDefs!: ElementRef<SVGDefsElement>;
+  public override fDefs  = viewChild.required<ElementRef<SVGDefsElement>>('defs');
 
-  public override fPath  = viewChild.required<IConnectionPath>(CONNECTION_PATH);
+  public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
@@ -104,13 +103,12 @@ export class FConnectionComponent
 
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 
-  @ViewChild(CONNECTION_TEXT, { static: true })
-  public override fTextComponent!: IConnectionText;
+  public override fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
 
-  @ViewChild('fConnectionCenter', { static: false })
+  @ViewChild('fConnectionCenter', {static: false})
   public override fConnectionCenter!: ElementRef<HTMLDivElement>;
 
-  @ContentChildren(FConnectionCenterDirective, { descendants: true })
+  @ContentChildren(FConnectionCenterDirective, {descendants: true})
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
 
   public override get boundingElement(): HTMLElement | SVGElement {
