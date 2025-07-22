@@ -1,10 +1,10 @@
 import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
 import {
-  CalculateClosestInputRequest,
+  FindClosestConnectorRequest,
   GetAllCanBeConnectedInputsAndRectsRequest,
   CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
-  IConnectorAndRect, IClosestInput, MarkAllCanBeConnectedInputsRequest, UnmarkAllCanBeConnectedInputsRequest
+  IConnectorAndRect, IClosestConnector, MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import {
@@ -80,7 +80,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     );
 
     this._fMediator.execute(
-      new MarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new MarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
     );
   }
 
@@ -124,7 +124,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._fConnection.redraw();
   }
 
-  private _drawSnapConnection(fClosestInput: IClosestInput | undefined): void {
+  private _drawSnapConnection(fClosestInput: IClosestConnector | undefined): void {
     if (fClosestInput) {
       const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
           this._fOutputWithRect.fRect,
@@ -142,16 +142,16 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     }
   }
 
-  private _findClosestInput(difference: IPoint): IClosestInput | undefined {
-    return this._fMediator.execute<IClosestInput | undefined>(
-      new CalculateClosestInputRequest(
+  private _findClosestInput(difference: IPoint): IClosestConnector | undefined {
+    return this._fMediator.execute<IClosestConnector | undefined>(
+      new FindClosestConnectorRequest(
         this._toConnectorRect.addPoint(difference),
         this._canBeConnectedInputs,
       )
     );
   }
 
-  private _getClosestInputForSnapConnection(fClosestInput: IClosestInput | undefined): IClosestInput | undefined {
+  private _getClosestInputForSnapConnection(fClosestInput: IClosestConnector | undefined): IClosestConnector | undefined {
     return fClosestInput && fClosestInput.distance < this._fSnapConnection!.fSnapThreshold ? fClosestInput : undefined;
   }
 
@@ -161,7 +161,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._fSnapConnection?.hide();
 
     this._fMediator.execute(
-      new UnmarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new UnmarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
     );
   }
 }

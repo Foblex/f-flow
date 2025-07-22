@@ -28,7 +28,12 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
 
   private _getCanBeConnectedSourceConnectors(fTargetConnector: FNodeInputBase): FConnectorBase[] {
     return this._fSourceConnectors.filter((x) => {
-      return x.canBeConnected && x.canBeConnectedInputs?.includes(fTargetConnector.fId);
+      let result = x.canBeConnected;
+      if (result && x.canBeConnectedInputs?.length) {
+        result = x.canBeConnectedInputs?.includes(fTargetConnector.fId);
+      }
+
+      return result;
     });
   }
 }

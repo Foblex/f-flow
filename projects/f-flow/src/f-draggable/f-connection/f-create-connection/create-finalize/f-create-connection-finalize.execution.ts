@@ -8,10 +8,10 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { GetFirstConnectableOutputRequest } from '../get-first-connectable-output';
 import { FCreateConnectionEvent } from '../f-create-connection.event';
 import { FCreateConnectionDragHandler } from '../f-create-connection.drag-handler';
-import { FindInputAtPositionRequest } from '../../../../domain';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { IFCreateConnectionDragResult } from '../i-f-create-connection-drag-result';
 import {IPointerEvent} from "../../../../drag-toolkit";
+import {FindConnectableConnectorUsingPriorityAndPositionRequest} from "../../../../domain";
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionFinalizeRequest)
@@ -71,9 +71,8 @@ export class FCreateConnectionFinalizeExecution
 
   private _getInputUnderPointer(event: IPointerEvent): FConnectorBase | undefined {
     return this._fMediator.execute<FConnectorBase | undefined>(
-      new FindInputAtPositionRequest(
+      new FindConnectableConnectorUsingPriorityAndPositionRequest(
         event.getPosition(),
-        this._fResult.getData().toConnectorRect,
         this._fResult.getData().canBeConnectedInputs
       )
     );

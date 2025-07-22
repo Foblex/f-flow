@@ -4,12 +4,17 @@ import { AddOutputToStoreExecution } from './add-output-to-store';
 import { RemoveInputFromStoreExecution } from './remove-input-from-store';
 import { RemoveOutletFromStoreExecution } from './remove-outlet-from-store';
 import { RemoveOutputFromStoreExecution } from './remove-output-from-store';
-import { MarkAllCanBeConnectedInputsExecution } from './mark-all-can-be-connected-inputs';
-import { UnmarkAllCanBeConnectedInputsExecution } from './unmark-all-can-be-connected-inputs';
+import { MarkConnectableConnectorsExecution } from './mark-connectable-connectors';
+import { UnmarkConnectableConnectorsExecution } from './unmark-connectable-connectors';
 import { GetAllCanBeConnectedInputsAndRectsExecution } from './get-all-can-be-connected-inputs-and-rects';
 import { GetConnectorAndRectExecution } from './get-connector-and-rect';
-import { CalculateClosestInputExecution } from './calculate-closest-input';
-import { FindInputAtPositionExecution } from './find-input-at-position';
+import { FindClosestConnectorExecution } from './find-closest-connector';
+import {
+  GetAllCanBeConnectedSourceConnectorsAndRectsExecution
+} from "./get-all-can-be-connected-source-connectors-and-rects";
+import {
+  FindConnectableConnectorUsingPriorityAndPositionExecution
+} from "./find-connectable-connector-using-priority-and-position";
 
 export const F_CONNECTORS_FEATURES = [
 
@@ -19,15 +24,17 @@ export const F_CONNECTORS_FEATURES = [
 
   AddOutputToStoreExecution,
 
-  CalculateClosestInputExecution,
+  FindClosestConnectorExecution,
 
-  FindInputAtPositionExecution,
+  FindConnectableConnectorUsingPriorityAndPositionExecution,
+
+  GetAllCanBeConnectedSourceConnectorsAndRectsExecution,
 
   GetAllCanBeConnectedInputsAndRectsExecution,
 
   GetConnectorAndRectExecution,
 
-  MarkAllCanBeConnectedInputsExecution,
+  MarkConnectableConnectorsExecution,
 
   RemoveInputFromStoreExecution,
 
@@ -35,5 +42,5 @@ export const F_CONNECTORS_FEATURES = [
 
   RemoveOutputFromStoreExecution,
 
-  UnmarkAllCanBeConnectedInputsExecution
+  UnmarkConnectableConnectorsExecution
 ];

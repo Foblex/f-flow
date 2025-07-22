@@ -134,10 +134,10 @@ export class DbManagementFlowComponent implements OnInit {
   }
 
   public reassignConnection(event: FReassignConnectionEvent): void {
-    if(!event.newFInputId) {
+    if(!event.newTargetId) {
       return;
     }
-    this.apiService.reassignConnection(event.fConnectionId, event.newFInputId);
+    this.apiService.reassignConnection(event.connectionId, event.newTargetId);
     this.getData();
   }
 

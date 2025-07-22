@@ -84,7 +84,7 @@ export class FConnectionComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  public override fReassignableStart = input<boolean>(false);
+  public override fReassignableStart = input<boolean>(true);
 
   @Input({alias: 'fReassignDisabled', transform: booleanAttribute})
   public override fDraggingDisabled: boolean = false;
