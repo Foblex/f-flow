@@ -94,8 +94,7 @@ export class FConnectionForCreateComponent
   public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
   public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
-  @ViewChild(FConnectionSelectionComponent, {static: true})
-  public override fSelection!: FConnectionSelectionComponent;
+  public override fSelection = viewChild.required(FConnectionSelectionComponent);
 
   @ViewChild(CONNECTION_TEXT, {static: true})
   public override fTextComponent!: IConnectionText;

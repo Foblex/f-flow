@@ -71,7 +71,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
   public abstract fDragHandleEnd: Signal<FConnectionDragHandleEndComponent>;
   public abstract fDragHandleStart: Signal<FConnectionDragHandleStartComponent>;
 
-  public abstract fSelection: FConnectionSelectionComponent;
+  public abstract fSelection: Signal<FConnectionSelectionComponent>;
 
   public abstract fTextComponent: IConnectionText;
 
@@ -135,7 +135,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public redraw(): void {
     this.fPath.setPath(this.path);
-    this.fSelection.setPath(this.path);
+    this.fSelection().setPath(this.path);
     this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this.penultimatePoint, this.line.point2);
     this.fDragHandleStart().redraw(this.secondPoint, this.line.point1);
