@@ -95,15 +95,13 @@ export class FConnectionComponent
   @ViewChild('defs', { static: true })
   public override fDefs!: ElementRef<SVGDefsElement>;
 
-  @ViewChild(CONNECTION_PATH, { static: true })
-  public override fPath!: IConnectionPath;
+  public override fPath  = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
   public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
   public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
-  // @ViewChild(FConnectionSelectionComponent, { static: true })
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 
   @ViewChild(CONNECTION_TEXT, { static: true })
@@ -116,7 +114,7 @@ export class FConnectionComponent
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
 
   public override get boundingElement(): HTMLElement | SVGElement {
-    return this.fPath.hostElement;
+    return this.fPath().hostElement;
   }
 
   private readonly _fMediator = inject(FMediator);

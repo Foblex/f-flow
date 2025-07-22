@@ -64,7 +64,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fDefs: ElementRef<SVGDefsElement>;
 
-  public abstract fPath: IConnectionPath;
+  public abstract fPath: Signal<IConnectionPath>;
 
   public abstract fGradient: Signal<IConnectionGradient>;
 
@@ -92,7 +92,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
   }
 
   public initialize(): void {
-    this.fPath.initialize();
+    this.fPath().initialize();
     this.fGradient().initialize();
     this.redraw();
   }
@@ -126,15 +126,15 @@ export abstract class FConnectionBase extends MIXIN_BASE
   }
 
   public override markChildrenAsSelected(): void {
-    this.fPath.select();
+    this.fPath().select();
   }
 
   public override unmarkChildrenAsSelected(): void {
-    this.fPath.deselect();
+    this.fPath().deselect();
   }
 
   public redraw(): void {
-    this.fPath.setPath(this.path);
+    this.fPath().setPath(this.path);
     this.fSelection().setPath(this.path);
     this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this.penultimatePoint, this.line.point2);

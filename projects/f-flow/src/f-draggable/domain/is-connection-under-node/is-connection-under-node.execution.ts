@@ -75,7 +75,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _isConnectionHasIntersectionsWithNode(fConnection: FConnectionBase, fNodeRect: IRoundedRect): boolean {
-    return GetIntersections.getRoundedRectIntersectionsWithSVGPath(fConnection.fPath.hostElement, fNodeRect).length > 0;
+    return GetIntersections.getRoundedRectIntersectionsWithSVGPath(fConnection.fPath().hostElement, fNodeRect).length > 0;
   }
 
   private _emitNodeIntersectedWithConnections(fNode: FNodeBase, fConnections: FConnectionBase[]): void {

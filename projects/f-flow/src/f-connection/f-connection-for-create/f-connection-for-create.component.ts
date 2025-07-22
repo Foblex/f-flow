@@ -86,8 +86,7 @@ export class FConnectionForCreateComponent
   @ViewChild('defs', {static: true})
   public override fDefs!: ElementRef<SVGDefsElement>;
 
-  @ViewChild(CONNECTION_PATH, {static: true})
-  public override fPath!: IConnectionPath;
+  public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
@@ -106,10 +105,10 @@ export class FConnectionForCreateComponent
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
 
   public override get boundingElement(): HTMLElement | SVGElement {
-    return this.fPath.hostElement;
+    return this.fPath().hostElement;
   }
 
-  private _fMediator = inject(FMediator);
+  private readonly _fMediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

@@ -24,28 +24,28 @@ import {
   IConnectionPath,
   IConnectionText,
 } from '../common';
-import { EFConnectionBehavior } from '../common';
-import { EFConnectionType } from '../common';
-import { FConnectionCenterDirective } from '../f-connection-center';
-import { FConnectionFactory } from '../f-connection-builder';
-import { NotifyDataChangedRequest } from '../../f-storage';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
-import { FConnectionBase } from '../common/f-connection-base';
-import { castToEnum } from '@foblex/utils';
-import { FMediator } from '@foblex/mediator';
-import { AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest } from '../../domain';
+import {EFConnectionBehavior} from '../common';
+import {EFConnectionType} from '../common';
+import {FConnectionCenterDirective} from '../f-connection-center';
+import {FConnectionFactory} from '../f-connection-builder';
+import {NotifyDataChangedRequest} from '../../f-storage';
+import {F_CONNECTION} from '../common/f-connection.injection-token';
+import {FConnectionBase} from '../common/f-connection-base';
+import {castToEnum} from '@foblex/utils';
+import {FMediator} from '@foblex/mediator';
+import {AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest} from '../../domain';
 
 let uniqueId: number = 0;
 
 @Component({
   selector: "f-snap-connection",
   templateUrl: "./f-snap-connection.component.html",
-  styleUrls: [ "./f-snap-connection.component.scss" ],
+  styleUrls: ["./f-snap-connection.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: "f-component f-connection f-snap-connection"
   },
-  providers: [ { provide: F_CONNECTION, useExisting: FSnapConnectionComponent } ],
+  providers: [{provide: F_CONNECTION, useExisting: FSnapConnectionComponent}],
 })
 export class FSnapConnectionComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -58,22 +58,22 @@ export class FSnapConnectionComponent
 
   public override fStartColor = input<string>('black');
 
-  public override fEndColor  = input<string>('black');
+  public override fEndColor = input<string>('black');
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public fSnapThreshold: number = 20;
 
   public override fOutputId!: string;
 
   public override fInputId!: string;
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override fRadius: number = 8;
 
-  @Input({ transform: numberAttribute })
+  @Input({transform: numberAttribute})
   public override fOffset: number = 12;
 
-  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
+  @Input({transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior)})
   public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
   @Input()
@@ -83,11 +83,10 @@ export class FSnapConnectionComponent
 
   public override fSelectionDisabled: boolean = false;
 
-  @ViewChild('defs', { static: true })
+  @ViewChild('defs', {static: true})
   public override fDefs!: ElementRef<SVGDefsElement>;
 
-  @ViewChild(CONNECTION_PATH, { static: true })
-  public override fPath!: IConnectionPath;
+  public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
@@ -96,20 +95,20 @@ export class FSnapConnectionComponent
 
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 
-  @ViewChild(CONNECTION_TEXT, { static: true })
+  @ViewChild(CONNECTION_TEXT, {static: true})
   public override fTextComponent!: IConnectionText;
 
-  @ViewChild('fConnectionCenter', { static: false })
+  @ViewChild('fConnectionCenter', {static: false})
   public override fConnectionCenter!: ElementRef<HTMLDivElement>;
 
-  @ContentChildren(FConnectionCenterDirective, { descendants: true })
+  @ContentChildren(FConnectionCenterDirective, {descendants: true})
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
 
   public override get boundingElement(): HTMLElement | SVGElement {
-    return this.fPath.hostElement;
+    return this.fPath().hostElement;
   }
 
-  private _fMediator = inject(FMediator);
+  private readonly _fMediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

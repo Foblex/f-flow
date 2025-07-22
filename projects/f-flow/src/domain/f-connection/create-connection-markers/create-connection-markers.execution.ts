@@ -45,7 +45,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
 
   // Safari does not support markers on path elements if markers are defined after the path element
   private makeSafariCompatible(fConnection: FConnectionBase): void {
-    fConnection.fPath.hostElement.replaceWith(fConnection.fPath.hostElement);
+    fConnection.fPath().hostElement.replaceWith(fConnection.fPath().hostElement);
   }
 
   private createMarkerElement(marker: FMarkerBase, fConnectionId: string): SVGElement {
