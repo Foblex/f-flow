@@ -1,8 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
+  Component, contentChildren,
   ElementRef,
   inject, input,
   Input,
@@ -10,8 +9,8 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  QueryList, signal, viewChild,
-  ViewChild
+  signal,
+  viewChild,
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
@@ -98,8 +97,7 @@ export class FSnapConnectionComponent
 
   public override fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
 
-  @ContentChildren(FConnectionCenterDirective, {descendants: true})
-  public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
+  public fConnectionCenters = contentChildren(FConnectionCenterDirective, {descendants: true});
 
   public override get boundingElement(): HTMLElement | SVGElement {
     return this.fPath().hostElement;
