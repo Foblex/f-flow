@@ -22,7 +22,8 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private readonly _fMediator: FMediator;
   private readonly _fComponentsStore: FComponentsStore;
 
-  private readonly _toConnectorRect = new RoundedRect();
+  private readonly _sourceConnectorRect = new RoundedRect();
+  private readonly _targetConnectorRect = new RoundedRect();
 
   private get _fSnapConnection(): FSnapConnectionComponent | undefined {
     return this._fComponentsStore.fSnapConnection as FSnapConnectionComponent;
@@ -31,7 +32,8 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _fOutputWithRect!: IConnectorAndRect;
   private _fInputWithRect!: IConnectorAndRect;
 
-  private _canBeConnectedInputs: IConnectorAndRect[] = [];
+  private _canConnectableSourceConnectors: IConnectorAndRect[] = [];
+  private _canConnectableTargetConnectors: IConnectorAndRect[] = [];
 
   private get _fOutput(): FConnectorBase {
     const result = this._fComponentsStore.fOutputs.find((x) => x.fId === this._fConnection.fOutputId);
@@ -52,12 +54,16 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   constructor(
     _injector: Injector,
     private _fConnection: FConnectionBase,
+    private _isDragHandleEnd: boolean
   ) {
     this._fResult = _injector.get(FDragHandlerResult);
     this._fMediator = _injector.get(FMediator);
     this._fComponentsStore = _injector.get(FComponentsStore);
 
-    this._toConnectorRect = RoundedRect.fromRect(
+    this._sourceConnectorRect = RoundedRect.fromRect(
+      RectExtensions.initialize(this._fConnection.line.point1.x, this._fConnection.line.point1.y)
+    );
+    this._targetConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(this._fConnection.line.point2.x, this._fConnection.line.point2.y)
     );
     this.fData = {
@@ -73,19 +79,30 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     this._fInputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fInput));
 
     this._fResult.setData({
-      toConnectorRect: this._toConnectorRect,
-      canBeConnectedInputs: this._canBeConnectedInputs,
+      sourceConnectorRect: this._sourceConnectorRect,
+      targetConnectorRect: this._targetConnectorRect,
+      canBeConnectedInputs: this._canConnectableTargetConnectors,
       fConnection: this._fConnection
     });
   }
 
   private _getAndMarkCanBeConnectedInputs(): void {
-    this._canBeConnectedInputs = this._fMediator.execute<IConnectorAndRect[]>(
+    this._canConnectableTargetConnectors = this._fMediator.execute<IConnectorAndRect[]>(
       new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutput as FNodeOutputDirective)
     );
 
     this._fMediator.execute(
-      new MarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new MarkAllCanBeConnectedInputsRequest(this._canConnectableTargetConnectors.map((x) => x.fConnector))
+    );
+  }
+
+  private _getAndMarkCanBeConnectedSources(): void {
+    this._canConnectableTargetConnectors = this._fMediator.execute<IConnectorAndRect[]>(
+      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutput as FNodeOutputDirective)
+    );
+
+    this._fMediator.execute(
+      new MarkAllCanBeConnectedInputsRequest(this._canConnectableTargetConnectors.map((x) => x.fConnector))
     );
   }
 
@@ -101,7 +118,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     const fClosestInput = this._findClosestInput(difference);
 
     this._drawConnection(
-      this._toConnectorRect.addPoint(difference),
+      this._targetConnectorRect.addPoint(difference),
       fClosestInput?.fConnector.fConnectableSide || this._fInputWithRect.fConnector.fConnectableSide
     );
     if (this._fSnapConnection) {
@@ -150,8 +167,8 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _findClosestInput(difference: IPoint): IClosestInput | undefined {
     return this._fMediator.execute<IClosestInput | undefined>(
       new CalculateClosestInputRequest(
-        this._toConnectorRect.addPoint(difference),
-        this._canBeConnectedInputs,
+        this._targetConnectorRect.addPoint(difference),
+        this._canConnectableTargetConnectors,
       )
     );
   }
@@ -161,11 +178,11 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    this._drawConnection(this._toConnectorRect, this._fInputWithRect.fConnector.fConnectableSide);
+    this._drawConnection(this._targetConnectorRect, this._fInputWithRect.fConnector.fConnectableSide);
     this._fSnapConnection?.hide();
 
     this._fMediator.execute(
-      new UnmarkAllCanBeConnectedInputsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new UnmarkAllCanBeConnectedInputsRequest(this._canConnectableTargetConnectors.map((x) => x.fConnector))
     );
   }
 }

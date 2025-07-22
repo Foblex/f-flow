@@ -1,4 +1,4 @@
-import {Directive, ElementRef, InputSignal, Signal} from '@angular/core';
+import {Directive, ElementRef, InputSignal, signal, Signal} from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
@@ -61,6 +61,8 @@ export abstract class FConnectionBase extends MIXIN_BASE
   public abstract fBehavior: EFConnectionBehavior;
 
   public abstract fType: EFConnectionType | string;
+
+  public fReassignableStart: Signal<boolean> = signal(false);
 
   public abstract fDefs: Signal<ElementRef<SVGDefsElement>>;
 

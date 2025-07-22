@@ -59,7 +59,7 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
     return this._fMediator.execute<FConnectorBase | undefined>(
       new FindInputAtPositionRequest(
         event.getPosition(),
-        this._fResult.getData().toConnectorRect,
+        this._fResult.getData().targetConnectorRect,
         this._fResult.getData().canBeConnectedInputs
       )
     );

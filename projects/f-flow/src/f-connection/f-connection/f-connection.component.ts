@@ -84,13 +84,15 @@ export class FConnectionComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
+  public override fReassignableStart = input<boolean>(false);
+
   @Input({alias: 'fReassignDisabled', transform: booleanAttribute})
   public override fDraggingDisabled: boolean = false;
 
   @Input({transform: booleanAttribute})
   public override fSelectionDisabled: boolean = false;
 
-  public override fDefs  = viewChild.required<ElementRef<SVGDefsElement>>('defs');
+  public override fDefs = viewChild.required<ElementRef<SVGDefsElement>>('defs');
 
   public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
 

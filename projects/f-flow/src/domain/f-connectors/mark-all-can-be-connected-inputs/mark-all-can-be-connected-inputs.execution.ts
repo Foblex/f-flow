@@ -10,14 +10,14 @@ import { FComponentsStore } from '../../../f-storage';
 export class MarkAllCanBeConnectedInputsExecution
   implements IExecution<MarkAllCanBeConnectedInputsRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(payload: MarkAllCanBeConnectedInputsRequest): void {
-    this._fComponentsStore.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.CONNECTIONS_DRAGGING);
-    payload.fInputs.forEach((fInput) => this._markCanBeConnectedTo(fInput));
+    this._store.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.CONNECTIONS_DRAGGING);
+    payload.fConnectors.forEach((fConnector) => this._markCanBeConnectedTo(fConnector));
   }
 
-  private _markCanBeConnectedTo(fInput: FConnectorBase): void {
-    fInput.hostElement.classList.add(F_CSS_CLASS.CONNECTOR.INPUT_CAN_BE_CONNECTED_TO);
+  private _markCanBeConnectedTo(fConnector: FConnectorBase): void {
+    fConnector.hostElement.classList.add(F_CSS_CLASS.CONNECTOR.CONNECTABLE);
   }
 }

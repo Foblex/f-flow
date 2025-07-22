@@ -10,6 +10,8 @@ export * from './find-input-at-position';
 
 export * from './get-all-can-be-connected-inputs-and-rects';
 
+export * from './get-all-can-be-connected-source-connectors-and-rects';
+
 export * from './get-connector-and-rect';
 
 export * from './mark-all-can-be-connected-inputs';

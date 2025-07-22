@@ -17,12 +17,11 @@ export const F_CSS_CLASS = {
 
     INPUT_NOT_CONNECTABLE: 'f-node-input-not-connectable',
 
-    INPUT_CAN_BE_CONNECTED_TO: 'f-node-input-can-be-connected-to',
+    CONNECTABLE: 'f-connector-connectable',
   },
 
   CONNECTION: {
 
     DRAG_HANDLE: 'f-connection-drag-handle',
-
   }
 }

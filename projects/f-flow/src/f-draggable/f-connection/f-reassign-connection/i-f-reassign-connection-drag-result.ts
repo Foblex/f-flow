@@ -4,7 +4,9 @@ import { IConnectorAndRect } from '../../../domain';
 
 export interface IFReassignConnectionDragResult {
 
-  toConnectorRect: RoundedRect;
+  sourceConnectorRect: RoundedRect;
+
+  targetConnectorRect: RoundedRect;
 
   fConnection: FConnectionBase;
 

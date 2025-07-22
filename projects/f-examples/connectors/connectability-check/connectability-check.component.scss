@@ -13,7 +13,7 @@
 
 .f-connections-dragging {
   .f-node-input {
-    &:not(.f-node-input-can-be-connected-to) {
+    &:not(.f-connector-connectable) { //.f-node-input-can-be-connected-to changed to .f-connector-connectable
       background-color: var(--disabled-color);
     }
   }

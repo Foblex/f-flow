@@ -1,9 +1,10 @@
-import { FConnectorBase } from '../../../f-connectors';
+import {FConnectorBase} from '../../../f-connectors';
 
 export class UnmarkAllCanBeConnectedInputsRequest {
   static readonly fToken = Symbol('UnmarkAllCanBeConnectedInputsRequest');
+
   constructor(
-    public fInputs: FConnectorBase[],
+    public fConnectors: FConnectorBase[],
   ) {
   }
 }
