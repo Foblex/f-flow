@@ -44,7 +44,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   ) {
     this._startRotation = this._fNode.rotate;
     this.fData = {
-      fNodeId: _fNode.fId,
+      fNodeId: _fNode.fId(),
     };
 
     this._fComponentsStore = _injector.get(FComponentsStore);

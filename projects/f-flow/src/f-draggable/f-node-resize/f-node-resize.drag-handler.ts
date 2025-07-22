@@ -26,7 +26,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
     private _fResizeHandleType: EFResizeHandleType,
   ) {
     this.fData = {
-      fNodeId: _fNode.fId,
+      fNodeId: _fNode.fId(),
     };
     this._fMediator = _injector.get(FMediator);
   }

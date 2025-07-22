@@ -48,7 +48,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
   }
 
   private _handleGroup(request: UpdateItemAndChildrenLayersRequest): void {
-    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId);
+    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId());
     const childrenGroups = this._getChildrenGroups(childrenNodesAndGroups);
     this._updateLayers(this._fGroupsContainer, request.item.hostElement as HTMLElement, childrenGroups);
     const childrenNodes = this._getChildrenNodes(childrenNodesAndGroups);
@@ -58,7 +58,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
   }
 
   private _handleNode(request: UpdateItemAndChildrenLayersRequest): void {
-    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId);
+    const childrenNodesAndGroups = this._getChildrenNodesAndGroups(request.item.fId());
     const childrenNodes = this._getChildrenNodes(childrenNodesAndGroups);
     this._updateLayers(request.itemContainer, request.item.hostElement as HTMLElement, childrenNodes);
   }

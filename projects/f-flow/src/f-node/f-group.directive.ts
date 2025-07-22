@@ -2,7 +2,7 @@ import {
   AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter, inject,
+  EventEmitter, inject, input,
   Input,
   OnDestroy,
   OnInit,
@@ -23,7 +23,7 @@ let uniqueId: number = 0;
   selector: "[fGroup]",
   exportAs: "fComponent",
   host: {
-    '[attr.data-f-group-id]': 'fId',
+    '[attr.data-f-group-id]': 'fId()',
     class: "f-group f-component",
     '[class.f-group-dragging-disabled]': 'fDraggingDisabled',
     '[class.f-group-selection-disabled]': 'fSelectionDisabled',
@@ -38,8 +38,7 @@ export class FGroupDirective extends FNodeBase
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _fMediator = inject(FMediator);
 
-  @Input('fGroupId')
-  public override fId: string = `f-group-${ uniqueId++ }`;
+  public override fId = input<string>(`f-group-${ uniqueId++ }`, { alias: 'fGroupId' });
 
   @Input('fGroupParentId')
   public override fParentId: string | null | undefined = null;

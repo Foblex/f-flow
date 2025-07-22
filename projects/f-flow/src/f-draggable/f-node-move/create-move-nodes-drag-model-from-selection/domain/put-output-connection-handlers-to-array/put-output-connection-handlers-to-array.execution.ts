@@ -47,7 +47,7 @@ export class PutOutputConnectionHandlersToArrayExecution
   }
 
   private _getExistingConnectionHandler(fHandlers: BaseConnectionDragHandler[], fConnection: FConnectionBase): BaseConnectionDragHandler | undefined {
-    return fHandlers.find((x) => x.fConnection.fId === fConnection.fId);
+    return fHandlers.find((x) => x.fConnection.fId() === fConnection.fId());
   }
 
   private _createConnectionHandler(inputIds: string[], fConnection: FConnectionBase): BaseConnectionDragHandler {

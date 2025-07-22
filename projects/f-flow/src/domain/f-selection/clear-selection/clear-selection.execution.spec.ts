@@ -5,9 +5,10 @@ import { ClearSelectionExecution } from './clear-selection.execution';
 import { setupTestModule } from '../../test-setup';
 import { ISelectable } from '../../../mixins';
 import { FDraggableDataContext } from '../../../f-draggable';
+import {signal} from "@angular/core";
 
 export const MOCK_SELECTABLE_ITEM: ISelectable = {
-  fId: '1',
+  fId: signal('1'),
   fSelectionDisabled: false,
   hostElement: document.createElement('svg'),
   markAsSelected: jasmine.createSpy('markAsSelected'),

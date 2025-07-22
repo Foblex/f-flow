@@ -13,8 +13,8 @@ import {GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest} from
 @FExecutionRegister(IsConnectionUnderNodeRequest)
 export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUnderNodeRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fMediator = inject(FMediator);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: IsConnectionUnderNodeRequest): void {
 
@@ -29,7 +29,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     const fInputConnections = this._getInputConnectionsId(fInputConnectors);
 
     const fConnectionsUnderNode = this._calculateConnectionsUnderNode(request.fNode).filter((x) => {
-      return !fOutputConnections.includes(x.fId) && !fInputConnections.includes(x.fId);
+      return !fOutputConnections.includes(x.fId()) && !fInputConnections.includes(x.fId());
     });
 
     if (!fConnectionsUnderNode.length) {
@@ -55,14 +55,14 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     const connectorsId = this._getConnectorsId(connectors);
     return this._fComponentsStore.fConnections
       .filter((x) => connectorsId.includes(x.fOutputId))
-      .map((x) => x.fId);
+      .map((x) => x.fId());
   }
 
   private _getInputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
     return this._fComponentsStore.fConnections
       .filter((x) => connectorsId.includes(x.fInputId))
-      .map((x) => x.fId);
+      .map((x) => x.fId());
   }
 
   private _getConnectorsId(connectors: FConnectorBase[]): string[] {
@@ -81,8 +81,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   private _emitNodeIntersectedWithConnections(fNode: FNodeBase, fConnections: FConnectionBase[]): void {
     this._fComponentsStore.fDraggable?.fNodeIntersectedWithConnections.emit(
       new FNodeIntersectedWithConnections(
-        fNode.fId,
-        fConnections.map((x) => x.fId)
+        fNode.fId(),
+        fConnections.map((x) => x.fId())
       )
     );
   }

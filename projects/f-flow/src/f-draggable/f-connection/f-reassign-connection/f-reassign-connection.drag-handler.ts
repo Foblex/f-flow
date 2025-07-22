@@ -61,7 +61,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
       RectExtensions.initialize(this._fConnection.line.point2.x, this._fConnection.line.point2.y)
     );
     this.fData = {
-      fConnectionId: this._fConnection.fId
+      fConnectionId: this._fConnection.fId()
     };
   }
 

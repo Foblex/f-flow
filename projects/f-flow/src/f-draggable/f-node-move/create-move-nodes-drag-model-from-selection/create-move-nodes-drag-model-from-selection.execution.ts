@@ -75,7 +75,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   private _getNodesToDragWithCommonLimits(fDraggedNodes: FNodeBase[]): FNodeBase[] {
     return fDraggedNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x);
-      return result.concat(this._getChildrenNodes(x.fId));
+      return result.concat(this._getChildrenNodes(x.fId()));
     }, []);
   }
 
@@ -111,7 +111,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _getNodeOutputIds(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fOutputs.filter((x) => fNode.fId === x.fNodeId)
+    return this._fComponentsStore.fOutputs.filter((x) => fNode.fId() === x.fNodeId)
       .map((x) => x.fId);
   }
 
@@ -120,7 +120,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _getNodeInputIds(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fInputs.filter((x) => fNode.fId === x.fNodeId)
+    return this._fComponentsStore.fInputs.filter((x) => fNode.fId() === x.fNodeId)
       .map((x) => x.fId);
   }
 

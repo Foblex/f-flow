@@ -46,7 +46,7 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
     parent: FNodeBase,
   ): HTMLElement[] {
     const allElements = this._fNodeElements;
-    return this._getChildrenNodes(parent.fId)
+    return this._getChildrenNodes(parent.fId())
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }
 

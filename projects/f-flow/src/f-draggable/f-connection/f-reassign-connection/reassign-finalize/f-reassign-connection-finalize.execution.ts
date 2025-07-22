@@ -77,7 +77,7 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
     const fConnection = this._fResult.getData().fConnection;
 
     return new FReassignConnectionEvent(
-      fConnection.fId,
+      fConnection.fId(),
       fConnection.fOutputId,
       fConnection.fInputId,
       fInput?.fId, event.getPosition()

@@ -69,7 +69,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _getConnectionsFromPoint(position: IPoint): FConnectionBase[] {
     return this._fConnections.filter((x) => {
-      return x.fDragHandle?.point && this._isPointInsideCircle(position, x.fDragHandle.point) && !x.fDraggingDisabled;
+      return x.fDragHandleEnd()?.point && this._isPointInsideCircle(position, x.fDragHandleEnd().point) && !x.fDraggingDisabled;
     });
   }
 

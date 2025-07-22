@@ -1,6 +1,7 @@
 import { AbstractConstructor, Constructor } from '../constructor';
 import { IHasHostElement } from '../../i-has-host-element';
 import { ISelectable } from './i-selectable';
+import {signal} from "@angular/core";
 
 export const F_SELECTED_CLASS = 'f-selected';
 
@@ -10,7 +11,7 @@ export function mixinChangeSelection<T extends AbstractConstructor<IHasHostEleme
 export function mixinChangeSelection<T extends Constructor<IHasHostElement>>(base: T): CanChangeSelectionConstructor & T {
   return class extends base {
 
-    public fId: string = '';
+    public fId = signal('');
 
     public fSelectionDisabled: boolean = false;
 

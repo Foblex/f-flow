@@ -107,6 +107,6 @@ export class FindInputAtPositionExecution
   }
 
   private _findFirstConnectableInputOfNode(connectableInputs: IConnectorAndRect[], fNode: FNodeBase): FConnectorBase | undefined {
-    return connectableInputs.find((x) => x.fConnector.fNodeId === fNode.fId)?.fConnector
+    return connectableInputs.find((x) => x.fConnector.fNodeId === fNode.fId())?.fConnector
   }
 }

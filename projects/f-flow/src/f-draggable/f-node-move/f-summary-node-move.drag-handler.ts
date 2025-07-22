@@ -22,7 +22,7 @@ export class FSummaryNodeMoveDragHandler implements IFDragHandler {
     this._fComponentStore = _injector.get(FComponentsStore);
     this._fBoundsLimiter = new PointBoundsLimiter(_injector, this.commonRect, limits);
     this.fData = {
-      fNodeIds: this.fHandlers.map((x) => x.fNode.fId)
+      fNodeIds: this.fHandlers.map((x) => x.fNode.fId())
     };
   }
 

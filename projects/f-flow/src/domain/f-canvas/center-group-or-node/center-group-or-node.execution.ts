@@ -38,7 +38,7 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   }
 
   private getNode(id: string): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => x.fId === id);
+    return this._fComponentsStore.fNodes.find((x) => x.fId() === id);
   }
 
   private getNodeRect(fNode: FNodeBase): IRect {

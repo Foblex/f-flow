@@ -51,7 +51,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
   public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
   public override get fNodeId(): string {
-    return this._fNode.fId;
+    return this._fNode.fId();
   }
 
   public get hostElement(): HTMLElement | SVGElement {

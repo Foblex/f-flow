@@ -1,4 +1,4 @@
-import { EventEmitter, InjectionToken } from '@angular/core';
+import {EventEmitter, InjectionToken, Signal} from '@angular/core';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import {
   FConnectorBase
@@ -19,7 +19,7 @@ const MIXIN_BASE = mixinChangeSelection(
 
 export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
 
-  public abstract override fId: string;
+  public abstract override fId: Signal<string>;
 
   public abstract fParentId: string | null | undefined;
 

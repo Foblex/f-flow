@@ -13,11 +13,11 @@ export class IsArrayHasParentNodeExecution
   }
 
   private _getParentNodeIds(fParentNodes: FNodeBase[]): string[] {
-    return fParentNodes.map((x) => x.fId);
+    return fParentNodes.map((x) => x.fId());
   }
 
   private _isParentNodeInArray(parentNodeIds: string[], fDraggedNodes: FNodeBase[]): boolean {
-    return fDraggedNodes.some((x) => parentNodeIds.includes(x.fId));
+    return fDraggedNodes.some((x) => parentNodeIds.includes(x.fId()));
   }
 }
 

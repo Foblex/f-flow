@@ -21,7 +21,7 @@ export class FConnectionSelectionComponent implements IHasHostElement {
 
   public get connectionForSelectionId(): string {
     return F_CONNECTION_IDENTIFIERS.connectionForSelectionId(
-      this.base.fId + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId
     );
   }
 

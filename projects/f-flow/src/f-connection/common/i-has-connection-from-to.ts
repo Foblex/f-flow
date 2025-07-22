@@ -1,6 +1,8 @@
+import {Signal} from "@angular/core";
+
 export interface IHasConnectionFromTo {
 
-  fId: string;
+  fId: Signal<string>
 
   fOutputId: string;
 

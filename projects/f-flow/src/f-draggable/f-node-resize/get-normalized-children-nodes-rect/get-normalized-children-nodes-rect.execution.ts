@@ -17,7 +17,7 @@ export class GetNormalizedChildrenNodesRectExecution
 
   public handle(request: GetNormalizedChildrenNodesRectRequest): IRect | null {
     const childNodeRect = RectExtensions.union(
-      this.getChildrenNodes(request.fNode.fId).map((x) => this.normalizeRect(x))
+      this.getChildrenNodes(request.fNode.fId()).map((x) => this.normalizeRect(x))
     );
     return childNodeRect ?
       this.concatRectWithParentPadding(childNodeRect, request.paddings) : null;

@@ -4,13 +4,13 @@ import {
   Component,
   ContentChildren,
   ElementRef,
-  inject,
+  inject, input,
   Input,
   numberAttribute,
   OnChanges,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, viewChild,
   ViewChild,
 } from "@angular/core";
 import {
@@ -19,7 +19,7 @@ import {
   CONNECTION_TEXT,
   EFConnectionBehavior,
   EFConnectionType,
-  FConnectionDragHandleEndComponent,
+  FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent,
   FConnectionSelectionComponent,
   IConnectionGradient,
   IConnectionPath,
@@ -46,7 +46,7 @@ let uniqueId: number = 0;
   styleUrls: [ "./f-connection.component.scss" ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.id]': 'fId',
+    '[attr.id]': 'fId()',
     class: "f-component f-connection",
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled',
@@ -56,8 +56,7 @@ let uniqueId: number = 0;
 export class FConnectionComponent
   extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
 
-  @Input('fConnectionId')
-  public override fId: string = `f-connection-${ uniqueId++ }`;
+  public override fId  = input<string>(`f-connection-${ uniqueId++ }`, { alias: 'fConnectionId' });
 
   @Input()
   public override fText: string = '';
@@ -65,11 +64,9 @@ export class FConnectionComponent
   @Input()
   public override fTextStartOffset: string = '';
 
-  @Input()
-  public override fStartColor: string = 'black';
+  public override fStartColor = input<string>('black');
 
-  @Input()
-  public override fEndColor: string = 'black';
+  public override fEndColor  = input<string>('black');
 
   @Input()
   public override fOutputId: any = '';
@@ -101,11 +98,10 @@ export class FConnectionComponent
   @ViewChild(CONNECTION_PATH, { static: true })
   public override fPath!: IConnectionPath;
 
-  @ViewChild(CONNECTION_GRADIENT, { static: true })
-  public override fGradient!: IConnectionGradient;
+  public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
-  @ViewChild(FConnectionDragHandleEndComponent, { static: true })
-  public override fDragHandle!: FConnectionDragHandleEndComponent;
+  public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
+  public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
   @ViewChild(FConnectionSelectionComponent, { static: true })
   public override fSelection!: FConnectionSelectionComponent;
@@ -123,7 +119,7 @@ export class FConnectionComponent
     return this.fPath.hostElement;
   }
 
-  private _fMediator = inject(FMediator);
+  private readonly _fMediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,

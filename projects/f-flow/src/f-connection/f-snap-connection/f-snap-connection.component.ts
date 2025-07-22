@@ -4,20 +4,25 @@ import {
   Component,
   ContentChildren,
   ElementRef,
-  inject,
+  inject, input,
   Input,
   numberAttribute,
   OnChanges,
   OnDestroy,
   OnInit,
-  QueryList,
+  QueryList, signal, viewChild,
   ViewChild
 } from "@angular/core";
 import {
   CONNECTION_GRADIENT,
-  CONNECTION_PATH, CONNECTION_TEXT,
-  FConnectionDragHandleEndComponent, FConnectionSelectionComponent, IConnectionGradient,
-  IConnectionPath, IConnectionText,
+  CONNECTION_PATH,
+  CONNECTION_TEXT,
+  FConnectionDragHandleEndComponent,
+  FConnectionDragHandleStartComponent,
+  FConnectionSelectionComponent,
+  IConnectionGradient,
+  IConnectionPath,
+  IConnectionText,
 } from '../common';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
@@ -45,17 +50,15 @@ let uniqueId: number = 0;
 export class FSnapConnectionComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
-  public override fId: string = `f-snap-connection-${ uniqueId++ }`;
+  public override fId = signal<string>(`f-snap-connection-${uniqueId++}`);
 
   public override fText: string = '';
 
   public override fTextStartOffset: string = '';
 
-  @Input()
-  public override fStartColor: string = 'black';
+  public override fStartColor = input<string>('black');
 
-  @Input()
-  public override fEndColor: string = 'black';
+  public override fEndColor  = input<string>('black');
 
   @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
@@ -86,11 +89,10 @@ export class FSnapConnectionComponent
   @ViewChild(CONNECTION_PATH, { static: true })
   public override fPath!: IConnectionPath;
 
-  @ViewChild(CONNECTION_GRADIENT, { static: true })
-  public override fGradient!: IConnectionGradient;
+  public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
-  @ViewChild(FConnectionDragHandleEndComponent, { static: true })
-  public override fDragHandle!: FConnectionDragHandleEndComponent;
+  public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
+  public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
   @ViewChild(FConnectionSelectionComponent, { static: true })
   public override fSelection!: FConnectionSelectionComponent;

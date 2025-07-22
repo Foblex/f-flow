@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from '@angular/core';
+import {Directive, ElementRef, InputSignal, Signal} from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
@@ -7,7 +7,7 @@ import { IHasConnectionFromTo } from './i-has-connection-from-to';
 import { IHasConnectionText } from './i-has-connection-text';
 import { IConnectionPath } from './f-path';
 import { IConnectionGradient } from './f-gradient';
-import { FConnectionDragHandleEndComponent } from './f-drag-handle';
+import {FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent} from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
 import { IConnectionText } from './f-connection-text';
 import { EFConnectableSide } from '../../f-connectors';
@@ -34,11 +34,11 @@ export abstract class FConnectionBase extends MIXIN_BASE
              IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
 
-  public abstract override fId: string;
+  public abstract override fId: Signal<string>;
 
-  public abstract fStartColor: string;
+  public abstract fStartColor: InputSignal<string>;
 
-  public abstract fEndColor: string;
+  public abstract fEndColor: InputSignal<string>;
 
   public abstract fOutputId: string;
 
@@ -66,9 +66,10 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fPath: IConnectionPath;
 
-  public abstract fGradient: IConnectionGradient;
+  public abstract fGradient: Signal<IConnectionGradient>;
 
-  public abstract fDragHandle: FConnectionDragHandleEndComponent;
+  public abstract fDragHandleEnd: Signal<FConnectionDragHandleEndComponent>;
+  public abstract fDragHandleStart: Signal<FConnectionDragHandleStartComponent>;
 
   public abstract fSelection: FConnectionSelectionComponent;
 
@@ -81,6 +82,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
   public abstract fConnectionCenter: ElementRef<HTMLDivElement>;
 
   private penultimatePoint: IPoint = PointExtensions.initialize();
+  private secondPoint: IPoint = PointExtensions.initialize();
 
   protected constructor(
     elementReference: ElementRef<HTMLElement>,
@@ -91,7 +93,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public initialize(): void {
     this.fPath.initialize();
-    this.fGradient.initialize();
+    this.fGradient().initialize();
     this.redraw();
   }
 
@@ -104,6 +106,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     const pathResult = this.getPathResult(point1, sourceSide, point2, targetSide);
     this.path = pathResult.path;
     this.penultimatePoint = pathResult.penultimatePoint || point1;
+    this.secondPoint = pathResult.secondPoint || point2;
     this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
   }
 
@@ -133,8 +136,9 @@ export abstract class FConnectionBase extends MIXIN_BASE
   public redraw(): void {
     this.fPath.setPath(this.path);
     this.fSelection.setPath(this.path);
-    this.fGradient.redraw(this.line);
-    this.fDragHandle.redraw(this.penultimatePoint, this.line.point2);
+    this.fGradient().redraw(this.line);
+    this.fDragHandleEnd().redraw(this.penultimatePoint, this.line.point2);
+    this.fDragHandleStart().redraw(this.secondPoint, this.line.point1);
     this.fTextComponent.redraw(this.line);
   }
 }
