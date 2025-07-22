@@ -79,7 +79,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fTextStartOffset: string;
 
-  public abstract fConnectionCenter: ElementRef<HTMLDivElement>;
+  public abstract fConnectionCenter: Signal<ElementRef<HTMLDivElement> | undefined>;
 
   private penultimatePoint: IPoint = PointExtensions.initialize();
   private secondPoint: IPoint = PointExtensions.initialize();
@@ -107,7 +107,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     this.path = pathResult.path;
     this.penultimatePoint = pathResult.penultimatePoint || point1;
     this.secondPoint = pathResult.secondPoint || point2;
-    this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
+    this.fConnectionCenter()?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
   }
 
   private getPathResult(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): any {

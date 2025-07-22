@@ -96,8 +96,7 @@ export class FSnapConnectionComponent
 
   public override fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
 
-  @ViewChild('fConnectionCenter', {static: false})
-  public override fConnectionCenter!: ElementRef<HTMLDivElement>;
+  public override fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
 
   @ContentChildren(FConnectionCenterDirective, {descendants: true})
   public fConnectionCenters!: QueryList<FConnectionCenterDirective>;
