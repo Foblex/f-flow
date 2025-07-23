@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, viewChild} from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'minimap-example',
@@ -8,15 +9,23 @@ import { FCanvasComponent, FFlowModule } from '@foblex/flow';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    MatIcon
   ]
 })
 export class MinimapExampleComponent {
 
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvas!: FCanvasComponent;
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
   protected onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this._canvas().resetScaleAndCenter(false);
+  }
+
+  public onFitToScreen(): void {
+    this._canvas().fitToScreen();
+  }
+
+  public onOneToOne(): void {
+    this._canvas().resetScaleAndCenter();
   }
 }

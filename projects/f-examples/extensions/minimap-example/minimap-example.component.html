@@ -5,6 +5,9 @@
     <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
     <div [fMinimapClass]="['custom-class-for-minimap']" fNode [fNodePosition]="{ x: 244, y: 164 }"  fDragHandle>I'm a node</div>
   </f-canvas>
-  <f-minimap [fMinSize]="2000"></f-minimap>
+  <div class="any-container-or-without-container">
+    <f-minimap [fMinSize]="2000"></f-minimap>
+  </div>
+
 </f-flow>
 
