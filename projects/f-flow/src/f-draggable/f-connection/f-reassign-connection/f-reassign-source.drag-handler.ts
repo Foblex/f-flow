@@ -44,6 +44,10 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     this._connectableConnectors = this._mediator.execute<IConnectorAndRect[]>(
       new GetAllCanBeConnectedSourceConnectorsAndRectsRequest(this._targetConnector)
     );
+    const isExistCurrentSourceConnector = this._connectableConnectors.some((x) => x.fConnector.fId === this._sourceConnector.fId);
+    if (!isExistCurrentSourceConnector) {
+      this._connectableConnectors.push(this._sourceConnectorAndRect);
+    }
 
     this._mediator.execute(
       new MarkConnectableConnectorsRequest(this._connectableConnectors.map((x) => x.fConnector))
