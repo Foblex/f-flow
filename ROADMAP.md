@@ -27,14 +27,19 @@ Stay up to date and help shape the future by joining [GitHub Discussions](https:
 ## ✅ Recently Completed
 
 ### 🔧 Infrastructure & Tooling
+- ⏱ **Debounced `fCanvasChange` Event** — reduce noise by configuring `debounceTime` (2025-07-23)
 - 🛠 **Angular Schematics Support** — `ng add` / `ng update` commands for easier setup (2025-05-11)
 
 ### 🧱 UX & Interaction
+- ✋ **`fDragBlocker` Directive** — block drag interaction in specific UI areas (2025-07-23)
 - 🔄 **Fully Rotatable Nodes** — rotate any node freely (2025-04-12)
 - ⌨️ **Custom Drag/Zoom Triggers** — define hotkeys and behaviors (2025-02-10)
 - 📤 **DragStart / DragEnd Events** — now emit contextual data (2025-02-07)
 
 ### 🗂 Editor Features
+- 🔁 **Connection Reassignment Refactor** — support reassigning both source and target points (2025-07-23)
+- 📬 **`FReassignConnectionEvent` Redesign** — includes both source/target change tracking (2025-07-23)
+- 🧭 **Minimap Refactor** — restructured for flexibility, signal support and better input handling (2025-07-23)
 - 🧭 **Minimap Navigation** — overview and quick navigation (2024-08-12)
 - 🧲 **Snap to Grid & Guides** — align elements during movement (2025-01-13)
 - 🎯 **Auto-Attach on Drop** — nodes snap to open connections (2024-12-30)
