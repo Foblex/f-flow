@@ -4,7 +4,7 @@
     <f-snap-connection [fSnapThreshold]="50" fType="segment"></f-snap-connection>
 
     @for (connection of connections; track connection.inputId)  {
-      <f-connection [fReassignDisabled]="false" fType="segment"
+      <f-connection [fReassignDisabled]="true" fType="segment"
                     [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
       </f-connection>
     }
