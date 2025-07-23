@@ -1,4 +1,4 @@
-describe('LockDraggingComponent', () => {
+describe('NodeSelectionComponent', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/examples/node-selection');
     cy.get('f-flow').scrollIntoView();
