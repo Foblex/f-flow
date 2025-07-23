@@ -22,7 +22,7 @@ export class FNodeDropToGroupFinalizeExecution
     }
     const item = this._getDragHandleItem();
     if(item.fNodeWithRect) {
-      this._emitDroppedChildrenEvent(item.fNodeWithRect.node.fId, request.event);
+      this._emitDroppedChildrenEvent(item.fNodeWithRect.node.fId(), request.event);
     }
     item.onPointerUp?.();
   }
@@ -54,6 +54,6 @@ export class FNodeDropToGroupFinalizeExecution
   private _getDraggedNodeIds(): string[] {
     return this._fDraggableDataContext.draggableItems
       .find((x) => x instanceof FSummaryNodeMoveDragHandler)?.fHandlers
-      .map((x) => x.fNode.fId) || [];
+      .map((x) => x.fNode.fId()) || [];
   }
 }

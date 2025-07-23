@@ -18,7 +18,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     this._fDraggableDataContext.selectedItems = [];
 
     request.nodes.forEach((key) => {
-      const node = this._fComponentsStore.fNodes.find((x) => x.fId === key);
+      const node = this._fComponentsStore.fNodes.find((x) => x.fId() === key);
       if(node) {
         node.markAsSelected();
         this._fDraggableDataContext.selectedItems.push(node);
@@ -26,7 +26,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     });
 
     request.connections.forEach((key) => {
-      const connection = this._fComponentsStore.fConnections.find((x) => x.fId === key);
+      const connection = this._fComponentsStore.fConnections.find((x) => x.fId() === key);
       if(connection) {
         connection.markAsSelected();
         this._fDraggableDataContext.selectedItems.push(connection);

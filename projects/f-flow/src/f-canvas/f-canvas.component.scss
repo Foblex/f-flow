@@ -7,8 +7,4 @@
   top: 0;
   transform-origin: 0 0;
   pointer-events: none;
-
-  &.f-scaled-animate { // to prevent jerking when moving the canvas through the minimap
-    transition: transform 0.09s;
-  }
 }

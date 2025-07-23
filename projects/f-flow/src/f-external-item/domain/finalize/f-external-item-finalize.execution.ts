@@ -61,7 +61,7 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
 
   private _getDestinationNodeOrGroupId(): string | undefined {
     const dropToGroupHandler = this._getDropToGroupHandler();
-    let result = dropToGroupHandler.fNodeWithRect?.node.fId;
+    let result = dropToGroupHandler.fNodeWithRect?.node.fId();
     dropToGroupHandler.onPointerUp?.();
     return result;
   }

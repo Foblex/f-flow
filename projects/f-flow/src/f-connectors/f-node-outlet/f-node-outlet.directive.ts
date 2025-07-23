@@ -42,7 +42,7 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   public override canBeConnectedInputs: string[] = [];
 
   public override get fNodeId(): string {
-    return this._fNode.fId;
+    return this._fNode.fId();
   }
 
   public get hostElement(): HTMLElement | SVGElement {

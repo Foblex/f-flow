@@ -16,12 +16,12 @@ export class GetParentNodesExecution
   }
 
   private _getParentNodes(fNode: FNodeBase, visited: Set<string>, result: FNodeBase[]): FNodeBase[] {
-    if (visited.has(fNode.fId)) {
-      throw new Error('Circular reference detected in the node hierarchy. Node id: ' + fNode.fId);
+    if (visited.has(fNode.fId())) {
+      throw new Error('Circular reference detected in the node hierarchy. Node id: ' + fNode.fId());
     }
-    visited.add(fNode.fId);
+    visited.add(fNode.fId());
 
-    const parent = this._fComponentsStore.fNodes.find((x) => x.fId === fNode.fParentId);
+    const parent = this._fComponentsStore.fNodes.find((x) => x.fId() === fNode.fParentId);
     if (!parent) {
       return result;
     }

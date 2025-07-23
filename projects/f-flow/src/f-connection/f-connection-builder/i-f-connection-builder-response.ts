@@ -7,4 +7,6 @@ export interface IFConnectionBuilderResponse {
   connectionCenter: IPoint;
 
   penultimatePoint: IPoint;
+
+  secondPoint: IPoint;
 }

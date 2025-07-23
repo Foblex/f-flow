@@ -5,17 +5,17 @@ describe('DragToReassignComponent', () => {
   })
 
   it('should drag from input to another input and reassign the connection', function () {
-    cy.get('#connection_f-connection-01input-1').should('exist');
+    cy.get('#connection_113').should('exist');
 
-    cy.get('div[data-f-input-id="input-1"]').should('exist');
-    cy.get('div[data-f-input-id="input-2"]').should('exist');
+    cy.get('div[data-f-input-id="3"]').should('exist');
+    cy.get('div[data-f-input-id="4"]').should('exist');
 
     cy.get('.f-connection-drag-handle').first().then(($handle) => {
       const handleRect = $handle[0].getBoundingClientRect();
       const startY = handleRect.top + handleRect.height / 2;
       const startX = handleRect.left + handleRect.width / 2;
 
-      cy.get('div[data-f-input-id="input-2"]').first().then(($input2) => {
+      cy.get('div[data-f-input-id="4"]').first().then(($input2) => {
         const input2Rect = $input2[ 0 ].getBoundingClientRect();
         const endY = input2Rect.top + input2Rect.height / 2;
         const endX = input2Rect.left + input2Rect.width / 2;
@@ -25,8 +25,8 @@ describe('DragToReassignComponent', () => {
           .trigger('mousemove', { clientY: endY, clientX: endX, force: true })
           .trigger('pointerup', { clientY: endY, clientX: endX, force: true });
 
-        cy.get('#connection_f-connection-01input-1').should('not.exist');
-        cy.get('#connection_for_selection_f-connection-11input-2').should('exist');
+        cy.get('#connection_113').should('not.exist');
+        cy.get('#connection_114').should('exist');
       });
     });
   });

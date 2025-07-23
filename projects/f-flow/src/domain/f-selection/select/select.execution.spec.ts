@@ -5,6 +5,7 @@ import { SelectExecution } from './select.execution';
 import { setupTestModule } from '../../test-setup';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { FComponentsStore } from '../../../f-storage';
+import {signal} from "@angular/core";
 
 describe('SelectExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
@@ -35,8 +36,8 @@ describe('SelectExecution', () => {
   });
 
   it('should select nodes and connections based on request', () => {
-    const mockNode = { fId: 'node1', markAsSelected: jasmine.createSpy('markAsSelected') };
-    const mockConnection = { fId: 'conn1', markAsSelected: jasmine.createSpy('markAsSelected') };
+    const mockNode = { fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') };
+    const mockConnection = { fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') };
 
     fComponentsStore.fNodes = [mockNode] as any;
     fComponentsStore.fConnections = [mockConnection] as any;

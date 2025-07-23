@@ -7,12 +7,15 @@
       <path f-connection-path
             [attr.d]="path">
       </path>
-      <circle f-connection-drag-handle-end></circle>
+      <circle f-connection-drag-handle-start r="8"></circle>
+      <circle f-connection-drag-handle-end r="8"></circle>
     </g>
     <text f-connection-text></text>
   </g>
   <ng-content></ng-content>
 </svg>
-<div #fConnectionCenter class="f-connection-center" *ngIf="fConnectionCenters.length">
-  <ng-content select="[fConnectionCenter]"></ng-content>
-</div>
+@if (fConnectionCenters().length) {
+  <div #fConnectionCenter class="f-connection-center">
+    <ng-content select="[fConnectionCenter]"></ng-content>
+  </div>
+}

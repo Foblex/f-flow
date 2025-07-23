@@ -25,7 +25,7 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNode(fId?: string | null): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => x.fId === fId);
+    return this._fComponentsStore.fNodes.find((x) => x.fId() === fId);
   }
   //   Parent Node
   // +----------------------------------------+

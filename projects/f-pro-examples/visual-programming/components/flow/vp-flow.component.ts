@@ -78,10 +78,10 @@ export class VpFlowComponent implements OnInit {
   }
 
   public onReassignConnection(event: FReassignConnectionEvent): void {
-    if (!event.newFInputId) {
+    if (!event.newTargetId) {
       return;
     }
-    this.apiService.reassignConnection(event.fOutputId, event.oldFInputId, event.newFInputId);
+    this.apiService.reassignConnection(event.oldSourceId, event.oldTargetId, event.newTargetId);
     this.getData();
   }
 

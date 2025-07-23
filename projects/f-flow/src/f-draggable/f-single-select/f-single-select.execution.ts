@@ -85,7 +85,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
 
   private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {
     return this._fComponentsStore.fConnections
-      .find(c => c.isContains(element) || c.fConnectionCenter?.nativeElement?.contains(element));
+      .find(c => c.isContains(element) || c.fConnectionCenter()?.nativeElement?.contains(element));
   }
 
   private _updateItemAndChildrenLayers(fItem?: ISelectable): void {

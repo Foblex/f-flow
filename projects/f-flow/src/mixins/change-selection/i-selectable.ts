@@ -1,6 +1,8 @@
+import {Signal} from "@angular/core";
+
 export interface ISelectable {
 
-  fId: string;
+  fId: Signal<string>;
 
   fSelectionDisabled: boolean;
 

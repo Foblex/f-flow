@@ -2,9 +2,82 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.6.0](https://github.com/foblex/flow/compare/v17.5.5...v17.6.0) (2025-07-23)
+
+### Features
+
+- **Improved Connection Reassignment**
+  - Enhanced the logic and UX for reassigning connections, allowing both source and target to be dynamically changed.
+  - Updated class names for clarity and improved drag handle behavior and styling.  
+    ([7aef9f3](https://github.com/foblex/flow/commit/7aef9f3eacc134d1e1c81f66516f4238ae98855d), [bbb6d56](https://github.com/foblex/flow/commit/bbb6d56d35c2b95f8d07f414910a45bd15126a8a), [d8de100](https://github.com/foblex/flow/commit/d8de100cbebfe1c540ad927e0c20b654fedcc0f7))
+
+- **Signal-based Refactors for Reactivity**
+  - Refactored the following to use Angular Signals for more efficient change detection and reactivity:
+    - `fConnectionCenter`  
+      ([421b0ef](https://github.com/foblex/flow/commit/421b0efae24a19c117fd314cbb9cec144384f681), [439760c](https://github.com/foblex/flow/commit/439760c5c1302e16dba7fc0790530225a9e99c63))
+    - `fDefs`, `fTextComponent`  
+      ([06e9457](https://github.com/foblex/flow/commit/06e94574d154f695174083e2f8d39b4141b20b9d))
+    - `fId` across multiple interfaces and components  
+      ([3034d5d](https://github.com/foblex/flow/commit/3034d5d19997020745d870bba61be82a0933a914))
+    - `fPath` logic  
+      ([a1b1314](https://github.com/foblex/flow/commit/a1b131446bc2cb486fcf940458105af1200ae768))
+    - `fSelection` initialization and management  
+      ([31b6af1](https://github.com/foblex/flow/commit/31b6af1bf68623a0942f5084ad7c41b70f34347e))
+
+- **Minimap Improvements**
+  - Restructured the minimap component.
+  - Enhanced input handling and upgraded it to support new Angular features.  
+    ([c7a3be9](https://github.com/foblex/flow/commit/c7a3be936eecaaa10b4da49c3b77a4ff496dae75))
+
+- **Debounced `fCanvasChange` Event**
+  - Added optional debounce to the `fCanvasChange` event in `FCanvasComponent` to reduce event noise during rapid updates.
+  - Configurable via debounceTime input
+  
+- **New `fDragBlocker` Directive**
+  - Introduced fDragBlocker directive to block drag-and-drop interactions within specific areas of the canvas.
+  - Useful for excluding certain zones (like panels or overlays) from initiating node movement or connection creation.
+
+### 🐞 Bug Fixes
+
+- **Drag-and-Drop on macOS**
+  - Fixed issues with drag-and-drop interactions on macOS by improving event handling.  
+    ([#187](https://github.com/foblex/flow/issues/187), [142745c](https://github.com/foblex/flow/commit/142745c277736b0c43085dde5c6590eb90ca87f1))
+
+### ⚠️ Breaking Changes
+
+- **Updated `FReassignConnectionEvent` structure**
+  - The event model was redesigned to support both source and target reassignment with more detailed context.
+
+  **Before:**
+  ```ts
+  new FReassignConnectionEvent(
+    fConnectionId: string,
+    fOutputId: string,
+    oldFInputId: string,
+    newFInputId: string | undefined,
+    fDropPosition: IPoint
+  )
+  ```
+  **After:**
+  ```ts
+  new FReassignConnectionEvent(
+    connectionId: string,
+    isSourceReassign: boolean,
+    isTargetReassign: boolean,
+    oldSourceId: string,
+    newSourceId: string | undefined,
+    oldTargetId: string,
+    newTargetId: string | undefined,
+    dropPoint: IPoint
+  )
+  ```
+  This change improves the accuracy of reassignment tracking and enables more flexible behavior in advanced flow editors.
+
+
 ## [17.5.0](https://github.com/foblex/flow/compare/v17.4.0...v17.5.0) (2025-05-11)
 
 ### Features
+
 * Added Angular schematics support for `ng-add` and `ng-update` commands. ([ea3e8ec](https://github.com/foblex/flow/commit/ea3e8ec7b8960e4f6de9f37a35dbfe3633b3dd39))
 * Added `fMinimapClass` input for custom minimap node styling. ([7c8e13c](https://github.com/foblex/flow/commit/7c8e13c6ba7c408ea6882600f8c42818f8cfe614))
 * Added membership page components and enhanced flow connection properties. ([6170b46](https://github.com/foblex/flow/commit/6170b460790ed401cdc5029f477177ed6bb52089))
@@ -90,7 +163,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [16.0.0](https://github.com/foblex/flow/compare/v12.6.0...v16.0.0) (2024-09-24)
 
-
 ### Features
 
 * Added centerNodeOrGroup functionality https://github.com/Foblex/f-flow/discussions/44 ([131ae19](https://github.com/foblex/flow/commit/131ae196ab84206c7ae7884b0b288a23b23f5edd))
@@ -104,7 +176,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Cleanup after delete @foblex/core ([9aa5717](https://github.com/foblex/flow/commit/9aa5717434849c1a9b612e503d67c1a893b6b6e3))
 * Updated f-canvas user api ([978d764](https://github.com/foblex/flow/commit/978d76486d51c6d2cb75f617e15cc2b3dc75e43d))
 
-
 ### Bug Fixes
 
 * Fixed After adding a Node, all the connections disappear https://github.com/Foblex/f-flow/issues/51 ([c47621d](https://github.com/foblex/flow/commit/c47621d336b69ddeedb38ee6bb5083b399962eee))
@@ -114,11 +185,9 @@ All notable changes to this project will be documented in this file. See [standa
 * Fixed tests after removing @foblex/core ([60a4e92](https://github.com/foblex/flow/commit/60a4e92fccc4d1ef0dafcc9d72bf47d6ab64f1f4))
 * Fixed undefined snap connection ([739f414](https://github.com/foblex/flow/commit/739f4144e5c2df608410b87924be12fac5ae793e))
 
-
 ### Tests
 
 * Added FindClosestInputUsingSnapThresholdExecution tests ([bcf1bda](https://github.com/foblex/flow/commit/bcf1bda003e67483b96b5de87c7cdf8bbe328a34))
-
 
 ### Documentation
 
@@ -131,7 +200,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Added snap-connection documentation and example ([dd4895f](https://github.com/foblex/flow/commit/dd4895fb50d5385e506579c1ee03167259141f19))
 
 ## [12.6.0](https://github.com/foblex/flow/compare/v12.5.0...v12.6.0) (2024-09-07)
-
 
 ### Features
 
@@ -146,13 +214,11 @@ All notable changes to this project will be documented in this file. See [standa
 * Moved selection area drag and drop functionality to component directory ([121a63e](https://github.com/foblex/flow/commit/121a63e1fdc8d5bdb7be9127c0008ba9f2de14e0))
 * Updated to m-render v1.2.2 ([bdaa267](https://github.com/foblex/flow/commit/bdaa267a705b701cbd5bb0886940f925412a79bd))
 
-
 ### Bug Fixes
 
 * Fixed dagre layout trackby unique key ([102a771](https://github.com/foblex/flow/commit/102a771474654b07a3fe8f12c34ef07d900d2364))
 * Foblex Core is unable to slide the schema [#37](https://github.com/foblex/flow/issues/37) ([55a4070](https://github.com/foblex/flow/commit/55a407095c39d2428ce3b84d8cd448558dffb993))
 * Prevent selection when drag fExternalItem ([036e192](https://github.com/foblex/flow/commit/036e1921bd3f539dd93a03f724f0c5331f8a636d))
-
 
 ### Documentation
 
@@ -162,7 +228,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Added group example ([dfd428b](https://github.com/foblex/flow/commit/dfd428b84808df863714920dd9dc60a525bdc0e7))
 * Added node with connectors example ([fb3bcb7](https://github.com/foblex/flow/commit/fb3bcb79ccf914b87c2e12888cdb25b993c42a83))
 * Updated Output and Input Documentation ([d942f88](https://github.com/foblex/flow/commit/d942f889a3906c287b1e7f783f40e5034c5fb716))
-
 
 ### Tests
 
@@ -177,7 +242,6 @@ All notable changes to this project will be documented in this file. See [standa
 * Added Zoneless support ([a8c5812](https://github.com/foblex/flow/commit/a8c581285d8c9e6f246cbd2f2a07c346ce1ba131))
 * Update to m-render v1.2.1 ([8067764](https://github.com/foblex/flow/commit/80677640c5d917b564964987b575d9fb28e28ce5))
 
-
 ### Documentation
 
 * Added minimap documentation ([ccbdb99](https://github.com/foblex/flow/commit/ccbdb990935d0d9ae04d92de47752b50a6b11190))
@@ -187,85 +251,101 @@ All notable changes to this project will be documented in this file. See [standa
 ## [12.4.0] - 2024-08-05
 
 ### Bug Fixes
+
 - Incorrect canvas position when using canvas.fitToScreen ([#28](https://github.com/Foblex/f-flow/issues/28))
 - Items outside the flow are selected when dragging fExternalItem ([#27](https://github.com/Foblex/f-flow/issues/27))
 - Fixed incorrect rendering of connection lines in complex layouts.
 
 ### Features
+
 - Describe documentation on how to add a custom background ([#9](https://github.com/Foblex/f-flow/issues/9))
 - Added support for multi-layered canvas backgrounds.
 
 ## [12.3.0] - 2024-07-20
 
 ### Bug Fixes
+
 - Resolved issues with node animations causing performance drops.
 - Fixed bug where context menu would not appear in certain conditions.
 
 ## [12.2.2] - 2024-06-13
 
 ### Bug Fixes
+
 - Move selected items without pressing ctrl ([#10](https://github.com/Foblex/f-flow/issues/10))
 - Fixed issue with node snapping to grid not working properly.
 - Resolved performance issues when handling large numbers of nodes.
 
 ### Features
+
 - Create connection with undefined fInput when user drops connection on the canvas.
 - Added option to customize node colors dynamically.
 
 ## [12.2.1] - 2024-05-30
 
 ### Bug Fixes
+
 - Corrected display problems with mat-tooltips on smaller screens.
 
 ### Features
+
 - Added new layout options for better node organization.
 
 ## [12.2.0] - 2024-04-25
 
 ### Features
+
 - Custom connection types ([#6](https://github.com/Foblex/f-flow/issues/6))
 - Introduced new node resizing handles for better UX.
 
 ## [12.1.5] - 2024-04-10
 
 ### Bug Fixes
+
 - Fixed issue with nodes overlapping when auto-arrange is used.
 - Improved stability of the canvas rendering engine.
 
 ### Features
+
 - Added support for custom node shapes.
 
 ## [12.1.0] - 2024-03-28
 
 ### Bug Fixes
+
 - Resolved issues with drag-and-drop functionality in nested containers.
 - Fixed alignment issues with text labels on nodes.
 
 ## [12.0.7] - 2024-03-26
 
 ### Bug Fixes
+
 - fOutlet directive to allow multiple connections.
 - Corrected alignment issues with the connection labels.
 
 ## [12.0.1] - 2024-03-20
 
 ### Bug Fixes
+
 - fitToParent mixin toCenter parameter in scaled context.
 - Fixed bugs related to zooming and panning in the canvas.
 
 ## [1.5.2] - 2024-03-14
 
 ### Bug Fixes
+
 - Change id attributes for connectors to data attributes.
 - Improved error handling for connection failures.
 
 ## [1.5.1] - 2024-03-12
 
 ### Bug Fixes
+
 - Change id attributes to fId.
 - Resolved issues with duplicate node IDs causing conflicts.
 
 ### Features
+
 - Segment connection type.
 - Bezier connection type.
 - FConnectionCenterComponent.
@@ -274,16 +354,19 @@ All notable changes to this project will be documented in this file. See [standa
 ## [1.4.0] - 2024-02-28
 
 ### Bug Fixes
+
 - Fixed issues with the selection area being inaccurate.
 - Corrected mat-tooltips not displaying for all node types.
 
 ### Features
+
 - Added batch node editing capabilities.
 - Introduced dark mode for the entire interface.
 
 ## [1.3.4] - 2024-02-23
 
 ### Bug Fixes
+
 - Issue with the selection area not being removed after dragging.
 - FNodeDirective instead of FNodeComponent.
 - Fixed minor UI glitches in the node editor.
@@ -291,45 +374,54 @@ All notable changes to this project will be documented in this file. See [standa
 ## [1.3.0] - 2024-01-10
 
 ### Features
+
 - Selection Area functionality.
 - Added keyboard shortcuts for faster node manipulation.
 
 ### Bug Fixes
+
 - Single selection issue after dragging.
 - Fixed inconsistencies in node alignment after dragging.
 
 ## [1.2.2] - 2023-10-12
 
 ### Bug Fixes
+
 - fitToParent mixin in scaled context.
 - oneToOne mixin in scaled context.
 - Fixed issue with connection points not aligning correctly.
 
 ### Features
+
 - Line Alignment component.
 - Added support for snapping nodes to guidelines.
 
 ## [1.2.0] - 2023-08-30
 
 ### Bug Fixes
+
 - Fixed rendering issues with high DPI screens.
 - Corrected problem with nodes not saving their state properly.
 
 ### Features
+
 - Introduced node grouping functionality.
 - Added ability to lock nodes in place.
 
 ## [1.1.0] - 2023-06-15
 
 ### Bug Fixes
+
 - Resolved conflicts when merging nodes with similar attributes.
 
 ### Features
+
 - New theme options for customizing the look and feel of the canvas.
 - Added real-time collaboration indicators.
 
 ## [1.0.2] - 2023-02-02
 
 ### Features
+
 - Reassign connection functionality.
 - Introduced basic node editing capabilities.

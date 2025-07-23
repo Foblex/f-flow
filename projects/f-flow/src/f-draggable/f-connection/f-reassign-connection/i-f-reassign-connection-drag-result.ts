@@ -4,9 +4,13 @@ import { IConnectorAndRect } from '../../../domain';
 
 export interface IFReassignConnectionDragResult {
 
-  toConnectorRect: RoundedRect;
+  isTargetDragHandle: boolean;
+
+  sourceConnectorRect: RoundedRect;
+
+  targetConnectorRect: RoundedRect;
 
   fConnection: FConnectionBase;
 
-  canBeConnectedInputs: IConnectorAndRect[];
+  connectableConnectors: IConnectorAndRect[];
 }

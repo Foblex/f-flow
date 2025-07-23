@@ -2,33 +2,33 @@ import { TestBed } from '@angular/core/testing';
 import { FMediator } from '@foblex/mediator';
 import { RectExtensions, RoundedRect } from '@foblex/2d';
 import { setupTestModule } from '../../test-setup';
-import { FDraggableDataContext } from '../../../f-draggable';
-import { CalculateClosestInputExecution } from './calculate-closest-input.execution';
-import { CalculateClosestInputRequest } from './calculate-closest-input.request';
-import { FConnectorBase } from '../../../f-connectors';
-import { IClosestInput } from '@foblex/flow';
+import { FDraggableDataContext } from '@foblex/flow';
+import { FindClosestConnectorExecution } from '@foblex/flow';
+import { FindClosestConnectorRequest } from '@foblex/flow';
+import { FConnectorBase } from '@foblex/flow';
+import { IClosestConnector } from '@foblex/flow';
 
-describe('CalculateClosestInputExecution', () => {
+describe('FindClosestConnectorExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
   let fMediator: FMediator;
 
   beforeEach(() => {
-    setupTestModule([ CalculateClosestInputExecution ]);
+    setupTestModule([ FindClosestConnectorExecution ]);
     fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
     fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
   });
 
-  it('should return undefined when canBeConnectedInputs is empty', () => {
+  it('should return undefined when connectors is empty', () => {
     const result = fMediator.execute(
-      new CalculateClosestInputRequest({ x: 50, y: 50 }, [])
+      new FindClosestConnectorRequest({ x: 50, y: 50 }, [])
     );
     expect(result).toBeUndefined();
   });
 
   it('should return the only element if its distance is less than snapThreshold', () => {
 
-    const result = fMediator.execute<IClosestInput>(
-      new CalculateClosestInputRequest({ x: 10, y: 10 }, [ {
+    const result = fMediator.execute<IClosestConnector>(
+      new FindClosestConnectorRequest({ x: 10, y: 10 }, [ {
         fConnector: {
           fId: 'input1'
         } as FConnectorBase,
@@ -45,8 +45,8 @@ describe('CalculateClosestInputExecution', () => {
   });
 
   it('should return 10 if the only element is exactly at snapThreshold distance', () => {
-    const result = fMediator.execute<IClosestInput>(
-      new CalculateClosestInputRequest({ x: 0, y: 0 }, [ {
+    const result = fMediator.execute<IClosestConnector>(
+      new FindClosestConnectorRequest({ x: 0, y: 0 }, [ {
         fConnector: {
           fId: 'input1'
         } as FConnectorBase,

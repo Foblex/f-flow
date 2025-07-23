@@ -1,20 +1,20 @@
-import { CalculateClosestInputRequest } from './calculate-closest-input.request';
+import { FindClosestConnectorRequest } from './find-closest-connector.request';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IPoint } from '@foblex/2d';
-import { IClosestInput } from '../i-closest-input';
+import { IClosestConnector } from '../i-closest-connector';
 import { IConnectorAndRect } from '../index';
 
 @Injectable()
-@FExecutionRegister(CalculateClosestInputRequest)
-export class CalculateClosestInputExecution
-  implements IExecution<CalculateClosestInputRequest, IClosestInput | undefined> {
+@FExecutionRegister(FindClosestConnectorRequest)
+export class FindClosestConnectorExecution
+  implements IExecution<FindClosestConnectorRequest, IClosestConnector | undefined> {
 
-  public handle(payload: CalculateClosestInputRequest): IClosestInput | undefined {
+  public handle(payload: FindClosestConnectorRequest): IClosestConnector | undefined {
     let result: IConnectorAndRect | undefined;
     let minDistance = Infinity;
 
-    for (const element of payload.canBeConnectedInputs) {
+    for (const element of payload.connectors) {
       const distance = this._distanceToRectangle(payload.position, element);
 
       if (distance < minDistance) {

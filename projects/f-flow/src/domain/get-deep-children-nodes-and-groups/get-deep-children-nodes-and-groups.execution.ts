@@ -23,7 +23,7 @@ export class GetDeepChildrenNodesAndGroupsExecution
 
     const directChildren = this._fComponentsStore.fNodes.filter((x) => x.fParentId === fId);
     return directChildren.reduce((result, x) => {
-      return result.concat(this._getChildrenNodes(x.fId, visited));
+      return result.concat(this._getChildrenNodes(x.fId(), visited));
     }, directChildren);
   }
 }

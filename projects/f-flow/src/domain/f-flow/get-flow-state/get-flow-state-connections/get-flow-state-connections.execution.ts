@@ -17,7 +17,7 @@ export class GetFlowStateConnectionsExecution implements IExecution<GetFlowState
 
   private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {
     return {
-      id: x.fId,
+      id: x.fId(),
       fOutputId: x.fOutputId,
       fInputId: x.fInputId,
       fType: x.fType,

@@ -2,7 +2,7 @@ import {
   AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter, inject,
+  EventEmitter, inject, input,
   Input,
   OnDestroy,
   OnInit,
@@ -23,7 +23,7 @@ let uniqueId: number = 0;
   selector: "[fNode]",
   exportAs: "fComponent",
   host: {
-    '[attr.data-f-node-id]': 'fId',
+    '[attr.data-f-node-id]': 'fId()',
     class: "f-node f-component",
     '[class.f-node-dragging-disabled]': 'fDraggingDisabled',
     '[class.f-node-selection-disabled]': 'fSelectionDisabled',
@@ -37,8 +37,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _fMediator = inject(FMediator);
 
-  @Input('fNodeId')
-  public override fId: string = `f-node-${ uniqueId++ }`;
+  public override fId = input<string>(`f-node-${ uniqueId++ }`, { alias: 'fNodeId' });
 
   @Input('fNodeParentId')
   public override fParentId: string | null | undefined = null;

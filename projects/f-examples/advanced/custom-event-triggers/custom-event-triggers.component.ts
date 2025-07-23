@@ -87,9 +87,9 @@ export class CustomEventTriggersComponent implements OnInit, OnDestroy {
   }
 
   protected onConnectionReassigned(event: FReassignConnectionEvent): void {
-    if (event.newFInputId) {
-      this._removeConnection(event.fConnectionId);
-      this._createConnection(event.fOutputId, event.newFInputId);
+    if (event.newTargetId) {
+      this._removeConnection(event.connectionId);
+      this._createConnection(event.oldSourceId, event.newTargetId);
     }
   }
 

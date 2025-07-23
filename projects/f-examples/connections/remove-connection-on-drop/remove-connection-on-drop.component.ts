@@ -45,7 +45,7 @@ export class RemoveConnectionOnDropComponent {
   ];
 
   public onConnectionDropped(event: FReassignConnectionEvent): void {
-    if (!event.newFInputId) {
+    if (!event.newTargetId) {
       this.removeConnection(event);
     } else {
       this.reassignConnection(event);
@@ -54,7 +54,7 @@ export class RemoveConnectionOnDropComponent {
   }
 
   private removeConnection(event: FReassignConnectionEvent): void {
-    const connectionIndex = this.findConnectionIndex(event.fOutputId, event.oldFInputId);
+    const connectionIndex = this.findConnectionIndex(event.oldSourceId, event.oldTargetId);
     if (connectionIndex === -1) {
       throw new Error('Connection not found');
     }
@@ -67,7 +67,7 @@ export class RemoveConnectionOnDropComponent {
 
   private reassignConnection(event: FReassignConnectionEvent): void {
     this.removeConnection(event);
-    this.connections.push({ outputId: event.fOutputId, inputId: event.newFInputId! });
+    this.connections.push({ outputId: event.oldSourceId, inputId: event.newTargetId! });
   }
 
   public onLoaded(): void {

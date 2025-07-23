@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from '@angular/core';
+import {Directive, ElementRef, InputSignal, signal, Signal} from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
 import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
@@ -7,7 +7,7 @@ import { IHasConnectionFromTo } from './i-has-connection-from-to';
 import { IHasConnectionText } from './i-has-connection-text';
 import { IConnectionPath } from './f-path';
 import { IConnectionGradient } from './f-gradient';
-import { FConnectionDragHandleEndComponent } from './f-drag-handle';
+import {FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent} from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
 import { IConnectionText } from './f-connection-text';
 import { EFConnectableSide } from '../../f-connectors';
@@ -34,11 +34,11 @@ export abstract class FConnectionBase extends MIXIN_BASE
              IHasConnectionColor,
              IHasConnectionFromTo, IHasConnectionText {
 
-  public abstract override fId: string;
+  public abstract override fId: Signal<string>;
 
-  public abstract fStartColor: string;
+  public abstract fStartColor: InputSignal<string>;
 
-  public abstract fEndColor: string;
+  public abstract fEndColor: InputSignal<string>;
 
   public abstract fOutputId: string;
 
@@ -62,25 +62,29 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public abstract fType: EFConnectionType | string;
 
-  public abstract fDefs: ElementRef<SVGDefsElement>;
+  public fReassignableStart: Signal<boolean> = signal(false);
 
-  public abstract fPath: IConnectionPath;
+  public abstract fDefs: Signal<ElementRef<SVGDefsElement>>;
 
-  public abstract fGradient: IConnectionGradient;
+  public abstract fPath: Signal<IConnectionPath>;
 
-  public abstract fDragHandle: FConnectionDragHandleEndComponent;
+  public abstract fGradient: Signal<IConnectionGradient>;
 
-  public abstract fSelection: FConnectionSelectionComponent;
+  public abstract fDragHandleStart: Signal<FConnectionDragHandleStartComponent | undefined>;
+  public abstract fDragHandleEnd: Signal<FConnectionDragHandleEndComponent>;
 
-  public abstract fTextComponent: IConnectionText;
+  public abstract fSelection: Signal<FConnectionSelectionComponent>;
+
+  public abstract fTextComponent: Signal<IConnectionText>;
 
   public abstract fText: string;
 
   public abstract fTextStartOffset: string;
 
-  public abstract fConnectionCenter: ElementRef<HTMLDivElement>;
+  public abstract fConnectionCenter: Signal<ElementRef<HTMLDivElement> | undefined>;
 
   private penultimatePoint: IPoint = PointExtensions.initialize();
+  private secondPoint: IPoint = PointExtensions.initialize();
 
   protected constructor(
     elementReference: ElementRef<HTMLElement>,
@@ -90,8 +94,8 @@ export abstract class FConnectionBase extends MIXIN_BASE
   }
 
   public initialize(): void {
-    this.fPath.initialize();
-    this.fGradient.initialize();
+    this.fPath().initialize();
+    this.fGradient().initialize();
     this.redraw();
   }
 
@@ -104,7 +108,8 @@ export abstract class FConnectionBase extends MIXIN_BASE
     const pathResult = this.getPathResult(point1, sourceSide, point2, targetSide);
     this.path = pathResult.path;
     this.penultimatePoint = pathResult.penultimatePoint || point1;
-    this.fConnectionCenter?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
+    this.secondPoint = pathResult.secondPoint || point2;
+    this.fConnectionCenter()?.nativeElement?.setAttribute('style', this.getTransform(pathResult.connectionCenter));
   }
 
   private getPathResult(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): any {
@@ -123,18 +128,19 @@ export abstract class FConnectionBase extends MIXIN_BASE
   }
 
   public override markChildrenAsSelected(): void {
-    this.fPath.select();
+    this.fPath().select();
   }
 
   public override unmarkChildrenAsSelected(): void {
-    this.fPath.deselect();
+    this.fPath().deselect();
   }
 
   public redraw(): void {
-    this.fPath.setPath(this.path);
-    this.fSelection.setPath(this.path);
-    this.fGradient.redraw(this.line);
-    this.fDragHandle.redraw(this.penultimatePoint, this.line.point2);
-    this.fTextComponent.redraw(this.line);
+    this.fPath().setPath(this.path);
+    this.fSelection().setPath(this.path);
+    this.fGradient().redraw(this.line);
+    this.fDragHandleEnd().redraw(this.penultimatePoint, this.line.point2);
+    this.fDragHandleStart()?.redraw(this.secondPoint, this.line.point1);
+    this.fTextComponent().redraw(this.line);
   }
 }

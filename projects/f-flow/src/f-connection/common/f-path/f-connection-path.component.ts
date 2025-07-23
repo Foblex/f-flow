@@ -27,18 +27,18 @@ import {
 export class FConnectionPathComponent implements IConnectionPath {
 
   public get fPathId(): string {
-    return this.base.fId;
+    return this.base.fId();
   }
 
   public get linkToGradient(): string {
     return F_CONNECTION_IDENTIFIERS.linkToGradient(
-      this.base.fId + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId
     );
   }
 
   public get attrConnectionId(): string {
     return F_CONNECTION_IDENTIFIERS.connectionId(
-      this.base.fId + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId
     );
   }
 
@@ -61,12 +61,12 @@ export class FConnectionPathComponent implements IConnectionPath {
   }
 
   public select(): void {
-    this.hostElement.setAttribute('marker-start', `url(#${ getMarkerSelectedStartId(this.base.fId) })`);
-    this.hostElement.setAttribute('marker-end', `url(#${ getMarkerSelectedEndId(this.base.fId) })`);
+    this.hostElement.setAttribute('marker-start', `url(#${ getMarkerSelectedStartId(this.base.fId()) })`);
+    this.hostElement.setAttribute('marker-end', `url(#${ getMarkerSelectedEndId(this.base.fId()) })`);
   }
 
   public deselect(): void {
-    this.hostElement.setAttribute('marker-start', `url(#${ getMarkerStartId(this.base.fId) })`);
-    this.hostElement.setAttribute('marker-end', `url(#${ getMarkerEndId(this.base.fId) })`);
+    this.hostElement.setAttribute('marker-start', `url(#${ getMarkerStartId(this.base.fId()) })`);
+    this.hostElement.setAttribute('marker-end', `url(#${ getMarkerEndId(this.base.fId()) })`);
   }
 }

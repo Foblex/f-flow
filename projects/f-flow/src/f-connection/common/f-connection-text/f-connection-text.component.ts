@@ -24,7 +24,7 @@ export class FConnectionTextComponent implements IConnectionText {
 
   public get textId(): string {
     return F_CONNECTION_IDENTIFIERS.textId(
-      this.base.fId + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId
     );
   }
 

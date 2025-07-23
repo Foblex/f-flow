@@ -20,7 +20,7 @@ export class FConnectionGradientComponent implements IConnectionGradient {
 
   public get gradientId(): string {
     return F_CONNECTION_IDENTIFIERS.gradientId(
-      this.base.fId + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId
     );
   }
 
@@ -48,8 +48,8 @@ export class FConnectionGradientComponent implements IConnectionGradient {
   }
 
   private updateGradient(): void {
-    this.setFromColor(this.base.fStartColor);
-    this.setToColor(this.base.fEndColor);
+    this.setFromColor(this.base.fStartColor());
+    this.setToColor(this.base.fEndColor());
   }
 
   private setFromColor(color: string | undefined): void {
