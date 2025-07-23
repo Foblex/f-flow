@@ -84,7 +84,7 @@ export class FConnectionComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  public override fReassignableStart = input<boolean>(true);
+  public override fReassignableStart = input<boolean>(false);
 
   @Input({alias: 'fReassignDisabled', transform: booleanAttribute})
   public override fDraggingDisabled: boolean = false;
@@ -98,8 +98,8 @@ export class FConnectionComponent
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
+  public override fDragHandleStart = viewChild(FConnectionDragHandleStartComponent);
   public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
-  public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 

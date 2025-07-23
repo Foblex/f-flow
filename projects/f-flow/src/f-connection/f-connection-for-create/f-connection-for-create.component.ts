@@ -87,8 +87,8 @@ export class FConnectionForCreateComponent
 
   public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
 
+  public override fDragHandleStart = viewChild(FConnectionDragHandleStartComponent);
   public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
-  public override fDragHandleStart = viewChild.required(FConnectionDragHandleStartComponent);
 
   public override fSelection = viewChild.required(FConnectionSelectionComponent);
 

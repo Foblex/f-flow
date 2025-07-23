@@ -12,8 +12,8 @@ export function isDragHandleEnd(connection: FConnectionBase, position: IPoint): 
 }
 
 export function isDragHandleStart(connection: FConnectionBase, position: IPoint): boolean {
-  return connection.fDragHandleStart()?.point
-    && _isPointInsideCircle(position, connection.fDragHandleStart().point)
+  return !!connection.fDragHandleStart()?.point
+    && _isPointInsideCircle(position, connection.fDragHandleStart()!.point)
     && !connection.fDraggingDisabled && connection.fReassignableStart();
 }
 
