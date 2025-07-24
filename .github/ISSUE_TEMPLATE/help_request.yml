@@ -1,0 +1,25 @@
+name: Help Request
+description: Ask for help with using Foblex Flow
+title: "[Help]: "
+labels: [help]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help using Foblex Flow? We're happy to help!
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      placeholder: Ask your question in detail
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      placeholder: What are you trying to do? What's blocking you?
+    validations:
+      required: false

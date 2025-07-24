@@ -1,70 +1,59 @@
-name: "Bug report"
-description: "Report a bug or issue with Foblex Flow"
-title: "Bug: [Short Description]"
-labels:
-  - bug
-assignees:
-  - siarheihuzarevich
+name: Bug Report
+description: Report a bug in the Foblex Flow library
+title: "[Bug]: "
+labels: [bug, needs investigation]
 body:
-  - type: textarea
-    id: description
+  - type: markdown
     attributes:
-      label: "Description"
-      description: "Please provide a clear and concise description of the bug."
-      placeholder: "Enter the bug description here"
-    validations:
-      required: true
+      value: |
+        Thank you for reporting a bug! Please provide as much information as possible.
 
-  - type: textarea
-    id: steps_to_reproduce
+  - type: input
+    id: reproduction_url
     attributes:
-      label: "Steps to Reproduce"
-      description: "Describe the steps to reproduce the bug."
-      placeholder: "1. Go to ... \n2. Click on ... \n3. Scroll down to ... \n4. See error"
-    validations:
-      required: true
-
-  - type: textarea
-    id: expected_result
-    attributes:
-      label: "Expected Result"
-      description: "Describe what you expected to happen."
-      placeholder: "Enter the expected result here"
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual_result
-    attributes:
-      label: "Actual Result"
-      description: "Describe what actually happened."
-      placeholder: "Enter the actual result here"
-    validations:
-      required: true
-
-  - type: textarea
-    id: environment
-    attributes:
-      label: "Environment Details"
-      description: "Specify the browser, library version, Angular version, and any other relevant details."
-      placeholder: "Browser: \nLibrary Version: \nAngular Version: \nOther details: "
-    validations:
-      required: true
-
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: "Screenshots or Videos"
-      description: "Add any screenshots that might help explain the problem."
-      placeholder: "Enter any additional context here"
+      label: Reproduction URL (StackBlitz, GitHub, etc.)
+      placeholder: "https://stackblitz.com/edit/foblex-flow-repro"
     validations:
       required: false
 
   - type: textarea
-    id: additional_context
+    id: steps
     attributes:
-      label: "Additional Context"
-      description: "Add any other context about the problem here."
-      placeholder: "Enter any additional context here"
+      label: Steps to Reproduce
+      description: Describe the exact steps to trigger the bug
+      placeholder: |
+        1. Open Canvas
+        2. Drag a node
+        3. Try to connect inputs
+        4. Error occurs
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      placeholder: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      placeholder: What actually happened?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
     validations:
       required: false

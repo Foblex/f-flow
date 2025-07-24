@@ -1,22 +1,33 @@
-name: Feature request
-description: Suggest an idea for Foblex Flow
-labels:
-  - enhancement
-assignees:
-  - siarheihuzarevich
+name: Feature Request
+description: Suggest a new feature for Foblex Flow
+title: "[Feature]: "
+labels: [feature request]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a feature!
+
   - type: textarea
     id: description
     attributes:
-      label: Description
-      description: Please provide a clear and concise description of the feature you want to propose.
+      label: Describe the Feature
+      placeholder: A clear and concise description of the feature.
     validations:
       required: true
 
   - type: textarea
-    id: additional_context
+    id: usecase
     attributes:
-      label: Additional Context
-      description: Add any other context or screenshots about the feature request here.
+      label: What problem does it solve?
+      placeholder: Describe the problem or use case.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Have you considered any alternatives?
+      placeholder: Describe any workarounds you've tried.
     validations:
       required: false
