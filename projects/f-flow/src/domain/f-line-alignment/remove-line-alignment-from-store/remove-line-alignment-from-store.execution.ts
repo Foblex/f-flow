@@ -3,13 +3,16 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RemoveLineAlignmentFromStoreRequest } from './remove-line-alignment-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that removes a line alignment from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(RemoveLineAlignmentFromStoreRequest)
 export class RemoveLineAlignmentFromStoreExecution implements IExecution<RemoveLineAlignmentFromStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: RemoveLineAlignmentFromStoreRequest): void {
-    this._fComponentsStore.fLineAlignment = undefined;
+    this._store.fLineAlignment = undefined;
   }
 }

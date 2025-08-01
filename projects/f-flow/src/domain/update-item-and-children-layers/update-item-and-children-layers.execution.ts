@@ -7,15 +7,19 @@ import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
 import { FCanvasBase } from '../../f-canvas';
 
+/**
+ * Execution that updates the layers of an item and its children in the FCanvas.
+ * It handles different item containers (groups, nodes, connections) and updates their layers accordingly.
+ */
 @Injectable()
 @FExecutionRegister(UpdateItemAndChildrenLayersRequest)
 export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateItemAndChildrenLayersRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
 
   private get _fCanvas(): FCanvasBase {
-    return this._fComponentsStore.fCanvas!;
+    return this._store.fCanvas!;
   }
 
   private get _fGroupsContainer(): HTMLElement {
@@ -71,7 +75,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
     const allElements = Array.from(itemContainer.children) as HTMLElement[];
     const targetIndex = allElements.findIndex((x) => x === item);
     if (this._isAnythingNeedToBeMoved(allElements, targetIndex, elementsThatShouldBeInFront)) {
-      this._fMediator.execute(
+      this._mediator.execute(
         new MoveFrontElementsBeforeTargetElementRequest(itemContainer, allElements, elementsThatShouldBeInFront, targetIndex)
       );
     }
@@ -99,6 +103,6 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
   }
 
   private _getChildrenNodesAndGroups(fId: string): HTMLElement[] {
-    return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
+    return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId)).map((x) => x.hostElement);
   }
 }

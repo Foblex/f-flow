@@ -4,6 +4,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { ICurrentSelection } from './i-current-selection';
 
+/**
+ * Execution that retrieves the current selection of items in the FDraggableDataContext.
+ */
 @Injectable()
 @FExecutionRegister(GetCurrentSelectionRequest)
 export class GetCurrentSelectionExecution implements IExecution<GetCurrentSelectionRequest, ICurrentSelection> {

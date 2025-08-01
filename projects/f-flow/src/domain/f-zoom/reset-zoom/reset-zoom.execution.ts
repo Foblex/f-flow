@@ -4,14 +4,17 @@ import { ResetZoomRequest } from './reset-zoom-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';
 
+/**
+ * Execution that resets the zoom level of the FCanvas.
+ */
 @Injectable()
 @FExecutionRegister(ResetZoomRequest)
 export class ResetZoomExecution implements IExecution<ResetZoomRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fCanvas(): FCanvasBase {
-    return this._fComponentsStore.fCanvas!;
+    return this._store.fCanvas!;
   }
 
   public handle(request: ResetZoomRequest): void {

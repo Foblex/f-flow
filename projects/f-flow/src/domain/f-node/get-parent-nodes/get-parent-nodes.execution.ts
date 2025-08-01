@@ -4,12 +4,15 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that retrieves all parent nodes of a given node from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(GetParentNodesRequest)
 export class GetParentNodesExecution
   implements IExecution<GetParentNodesRequest, FNodeBase[]> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: GetParentNodesRequest): FNodeBase[] {
     return this._getParentNodes(request.fNode, new Set<string>(), []);
@@ -21,7 +24,7 @@ export class GetParentNodesExecution
     }
     visited.add(fNode.fId());
 
-    const parent = this._fComponentsStore.fNodes.find((x) => x.fId() === fNode.fParentId);
+    const parent = this._store.fNodes.find((x) => x.fId() === fNode.fParentId);
     if (!parent) {
       return result;
     }

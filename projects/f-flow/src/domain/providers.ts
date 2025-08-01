@@ -19,6 +19,12 @@ import {F_LINE_ALIGNMENT_FEATURES} from './f-line-alignment';
 import {F_ZOOM_FEATURES} from './f-zoom';
 import {GetNormalizedConnectorRectExecution} from "./get-normalized-connector-rect";
 
+/**
+ * This module provides a collection of common providers for the FFlow domain.
+ * It includes features related to canvas, connections, background, connectors,
+ * draggable elements, flow, line alignment, nodes, selection, zoom,
+ * and various utility executions.
+ */
 export const COMMON_PROVIDERS = [
 
   ...F_CANVAS_FEATURES,

@@ -10,6 +10,11 @@ import {EventExtensions} from './event.extensions';
 
 export const MOUSE_EVENT_IGNORE_TIME = 800;
 
+/**
+ * Base class for implementing drag and drop functionality.
+ * It handles mouse and touch events, manages the drag start sequence,
+ * and provides abstract methods for derived classes to implement specific behaviors.
+ */
 export abstract class DragAndDropBase {
 
   public abstract hostElement: HTMLElement;
@@ -46,6 +51,12 @@ export abstract class DragAndDropBase {
   ) {
   }
 
+  /**
+   * Handles the mouse down event to initiate the drag sequence.
+   * It checks if the event is synthetic or fake, and if the drag is already started.
+   * If not, it sets up the drag start sequence by adding necessary event listeners.
+   * @param event - The mouse event that triggered the drag.
+   */
   private onMouseDown = (event: MouseEvent) => {
     const isSyntheticEvent = this.isSyntheticEvent(event);
     const isFakeEvent = isFakeMousedownFromScreenReader(event);
@@ -79,6 +90,12 @@ export abstract class DragAndDropBase {
     }
   }
 
+  /**
+   * Handles the touch down event to initiate the drag sequence.
+   * It checks if the event is synthetic or fake, and if the drag is already started.
+   * If not, it sets up the drag start sequence by adding necessary event listeners.
+   * @param event - The touch event that triggered the drag.
+   */
   private onTouchDown = (event: TouchEvent) => {
     const isFakeEvent = isFakeTouchstartFromScreenReader(event as TouchEvent)
     const touchEvent = new ITouchDownEvent(event);
@@ -111,18 +128,42 @@ export abstract class DragAndDropBase {
     }
   }
 
+  /**
+   * Handles the select start event.
+   * This method is called when the user starts selecting text or elements.
+   * It prevents the default behavior and calls the onSelect method to handle the selection.
+   * @param event - The event that triggered the select start.
+   */
   private onSelectStart = (event: Event) => {
     this.onSelect(event);
   }
 
+  /**
+   * Handles the mouse move event during the drag sequence.
+   * It checks if the drag sequence should start and calls the move handler accordingly.
+   * @param event - The mouse event that triggered the move.
+   */
   private onMouseMove = (event: MouseEvent) => {
     this.moveHandler(new IMouseEvent(event));
   }
 
+  /**
+   * Handles the touch move event during the drag sequence.
+   * It checks if the drag sequence should start and calls the move handler accordingly.
+   * @param event - The touch event that triggered the move.
+   */
   private onTouchMove = (event: TouchEvent) => {
     this.moveHandler(new ITouchMoveEvent(event));
   }
 
+  /**
+   * Checks if the drag sequence should start based on the pointer position.
+   * It compares the current pointer position with the initial drag start position
+   * and checks if the distance exceeds the drag start threshold.
+   * If the threshold is exceeded and the delay has passed,
+   * it prepares the drag sequence and sets the move handler to onPointerMove.
+   * @param event - The pointer event that triggered the check.
+   */
   private checkDragSequenceToStart(event: IPointerEvent): void {
     const pointerPosition = event.getPosition();
 
@@ -151,8 +192,21 @@ export abstract class DragAndDropBase {
     }
   }
 
+  /**
+   * Prepares the drag sequence by setting up necessary event listeners
+   * and initializing any required state for the drag operation.
+   * This method should be implemented by derived classes to define specific drag behavior.
+   * @param event - The pointer event that triggered the preparation.
+   */
   protected abstract prepareDragSequence(event: IPointerEvent): void;
 
+  /**
+   * Handles the pointer up event at the end of the drag sequence.
+   * It checks if the drag has started and calls the onPointerUp method.
+   * It also ends the drag sequence by resetting the state and removing event listeners.
+   * This method is called when the user releases the mouse button or lifts their finger from the touch screen.
+   * @param event - The pointer event that triggered the up action.
+   */
   private onPointerUpEvent = (event: PointerEvent) => {
     if (this.isDragStarted) {
       this.onPointerUp(new IPointerUpEvent(event));
@@ -160,6 +214,12 @@ export abstract class DragAndDropBase {
     this.endDragSequence();
   }
 
+  /**
+   * Ends the drag sequence by resetting the state and removing event listeners.
+   * It sets the isDragStarted flag to false, clears the pointerDownElement,
+   * and resets the moveHandler to checkDragSequenceToStart.
+   * It also removes all mouse and touch event listeners that were added during the drag sequence.
+   */
   private endDragSequence(): void {
     this.isDragStarted = false;
     this.pointerDownElement = null;

@@ -6,13 +6,18 @@ import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
 import { BrowserService } from '@foblex/platform';
 
+/**
+ * Execution that sorts items by their parent nodes in the FItemsContainer.
+ * It retrieves all items within the container, sorts their children based on their current order,
+ * and moves them to maintain the correct hierarchy.
+ */
 @Injectable()
 @FExecutionRegister(SortItemsByParentRequest)
 export class SortItemsByParentExecution implements IExecution<SortItemsByParentRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fBrowser = inject(BrowserService);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _browser = inject(BrowserService);
 
   private _fItemsContainer!: HTMLElement;
 
@@ -28,7 +33,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getItemsOfContainer(): FNodeBase[] {
-    return this._fComponentsStore.fNodes
+    return this._store.fNodes
       .filter((x) => this._fItemsContainer.contains(x.hostElement));
   }
 
@@ -42,7 +47,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getChildrenItems(fId: string): HTMLElement[] {
-    return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+    return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .filter((x) => this._fItemsContainer.contains(x.hostElement)).map((x) => x.hostElement);
   }
 
@@ -52,7 +57,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   ): void {
     let nextSibling = parent.hostElement.nextElementSibling;
 
-    const fragment = this._fBrowser.document.createDocumentFragment();
+    const fragment = this._browser.document.createDocumentFragment();
 
     sortedChildrenItems.forEach((child: HTMLElement) => {
       fragment.appendChild(child); // Append automatically removes the element from its current position

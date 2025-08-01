@@ -1,33 +1,36 @@
 import { IHandler } from '@foblex/mediator';
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer.request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { UpdateItemAndChildrenLayersRequest } from '../../update-item-and-children-layers';
 import { FNodeBase } from '../../../f-node';
 
+/**
+ * Execution that selects a node and updates its layer along with its children.
+ * It checks if the node is already selected, and if not, it marks it as selected
+ * and updates the layers of the node and its children.
+ */
 @Injectable()
 @FExecutionRegister(SelectAndUpdateNodeLayerRequest)
 export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpdateNodeLayerRequest, void> {
 
-  constructor(
-    private fDraggableDataContext: FDraggableDataContext,
-    private fMediator: FMediator
-  ) {
-  }
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _mediator = inject(FMediator);
+
   public handle(request: SelectAndUpdateNodeLayerRequest): void {
     this.selectNodeIfNotSelected(request.fNode);
 
-    this.fMediator.execute<void>(
+    this._mediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(request.fNode, request.fNode.hostElement.parentElement as HTMLElement)
     );
   }
 
   private selectNodeIfNotSelected(fNode: FNodeBase) {
-    if (!this.fDraggableDataContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled) {
-      this.fDraggableDataContext.selectedItems.push(fNode);
+    if (!this._fDraggableDataContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled) {
+      this._fDraggableDataContext.selectedItems.push(fNode);
       fNode.markAsSelected();
-      this.fDraggableDataContext.isSelectedChanged = true;
+      this._fDraggableDataContext.isSelectedChanged = true;
     }
   }
 }

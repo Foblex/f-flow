@@ -4,18 +4,22 @@ import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
+/**
+ * Execution that calculates the bounding box of all nodes in the FComponentsStore.
+ * It retrieves the rectangles of each node's host element and computes their union.
+ */
 @Injectable()
 @FExecutionRegister(CalculateNodesBoundingBoxRequest)
 export class CalculateNodesBoundingBoxExecution implements IExecution<CalculateNodesBoundingBoxRequest, IRect | null> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateNodesBoundingBoxRequest): IRect | null {
     return RectExtensions.union(this._getNodesRects());
   }
 
   private _getNodesRects(): IRect[] {
-    return this._fComponentsStore.fNodes.map((x) => {
+    return this._store.fNodes.map((x) => {
       return this._getElementRect(x.hostElement);
     });
   }

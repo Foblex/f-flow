@@ -4,23 +4,27 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 
+/**
+ * Execution that selects all components in the FComponentsStore.
+ * It marks all nodes and connections as selected and updates the selected items in the FDraggableDataContext.
+ */
 @Injectable()
 @FExecutionRegister(SelectAllRequest)
 export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
 
   private _fDraggableDataContext = inject(FDraggableDataContext);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: SelectAllRequest): void {
     this._fDraggableDataContext.selectedItems.forEach((x) => {
       x.unmarkAsSelected();
     });
     this._fDraggableDataContext.selectedItems = [];
-    this._fComponentsStore.fNodes.forEach((x) => {
+    this._store.fNodes.forEach((x) => {
       x.markAsSelected();
       this._fDraggableDataContext.selectedItems.push(x);
     });
-    this._fComponentsStore.fConnections.forEach((x) => {
+    this._store.fConnections.forEach((x) => {
       x.markAsSelected();
       this._fDraggableDataContext.selectedItems.push(x);
     });

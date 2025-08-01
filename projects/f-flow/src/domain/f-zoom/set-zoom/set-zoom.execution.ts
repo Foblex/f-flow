@@ -8,27 +8,31 @@ import { FCanvasBase } from '../../../f-canvas';
 import { FZoomBase } from '../../../f-zoom';
 import { IsDragStartedRequest } from '../../f-draggable';
 
+/**
+ * Execution that sets the zoom level of the FCanvas based on the provided request.
+ * It adjusts the zoom level by a specified step and direction, ensuring it stays within defined limits.
+ */
 @Injectable()
 @FExecutionRegister(SetZoomRequest)
 export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow?.hostElement!;
+    return this._store.fFlow?.hostElement!;
   }
 
   private get _fCanvas(): FCanvasBase {
-    return this._fComponentsStore.fCanvas!;
+    return this._store.fCanvas!;
   }
 
   private get _fZoomComponent(): FZoomBase {
-    return this._fComponentsStore.fComponents[F_ZOOM_TAG]!;
+    return this._store.fComponents[F_ZOOM_TAG]!;
   }
 
   private get _isDragStarted(): boolean {
-    return this._fMediator.execute<boolean>(new IsDragStartedRequest());
+    return this._mediator.execute<boolean>(new IsDragStartedRequest());
   }
 
   public handle(request: SetZoomRequest): void {

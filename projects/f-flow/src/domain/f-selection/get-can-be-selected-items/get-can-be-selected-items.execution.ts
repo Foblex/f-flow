@@ -9,24 +9,28 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 
+/**
+ * Execution that retrieves elements that can be selected in the Flow, along with their bounding rectangles.
+ * It filters out elements that are already selected in the FDraggableDataContext.
+ */
 @Injectable()
 @FExecutionRegister(GetCanBeSelectedItemsRequest)
 export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSelectedElementAndRect[]> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
   private get fNodes(): FNodeBase[] {
-    return this._fComponentsStore.fNodes;
+    return this._store.fNodes;
   }
 
   private get fConnections(): FConnectionBase[] {
-    return this._fComponentsStore.fConnections;
+    return this._store.fConnections;
   }
 
   private get transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(): ICanBeSelectedElementAndRect[] {
@@ -35,24 +39,32 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
     });
   }
 
+  /**
+   * Retrieves nodes with their bounding rectangles that can be selected.
+   * @private
+   */
   private getNodesWithRects(): ICanBeSelectedElementAndRect[] {
     return this.fNodes.filter((x) => !x.fSelectionDisabled).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(
-          this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+          this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
           this.transform.scale
         )
       };
     });
   }
 
+  /**
+   * Retrieves connections with their bounding rectangles that can be selected.
+   * @private
+   */
   private getConnectionsWithRects(): ICanBeSelectedElementAndRect[] {
     return this.fConnections.filter((x) => !x.fSelectionDisabled).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(
-          this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.boundingElement)),
+          this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.boundingElement)),
           this.transform.scale
         )
       };

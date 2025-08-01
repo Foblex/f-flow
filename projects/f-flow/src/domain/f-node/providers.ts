@@ -11,6 +11,9 @@ import { GetParentNodesExecution } from './get-parent-nodes';
 import { CalculateInputConnectionsExecution } from './calculate-input-connections';
 import { CalculateOutputConnectionsExecution } from './calculate-output-connections';
 
+/**
+ * This file exports all the node-related executions that can be used in the F-Flow domain.
+ */
 export const F_NODE_FEATURES = [
 
   AddNodeToStoreExecution,

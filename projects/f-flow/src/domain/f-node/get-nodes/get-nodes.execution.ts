@@ -4,13 +4,16 @@ import { GetNodesRequest } from './get-nodes-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 
+/**
+ * Execution that retrieves all nodes from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(GetNodesRequest)
 export class GetNodesExecution implements IExecution<GetNodesRequest, FNodeBase[]> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: GetNodesRequest): FNodeBase[] {
-    return this._fComponentsStore.fNodes;
+    return this._store.fNodes;
   }
 }

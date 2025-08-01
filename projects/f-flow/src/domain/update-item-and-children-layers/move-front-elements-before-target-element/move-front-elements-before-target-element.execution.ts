@@ -2,6 +2,10 @@ import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elemen
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
+/**
+ * Execution that moves elements in the FItemsContainer before a target element.
+ * It removes elements that should not be in front and inserts them before the target element.
+ */
 @Injectable()
 @FExecutionRegister(MoveFrontElementsBeforeTargetElementRequest)
 export class MoveFrontElementsBeforeTargetElementExecution implements IExecution<MoveFrontElementsBeforeTargetElementRequest, void> {

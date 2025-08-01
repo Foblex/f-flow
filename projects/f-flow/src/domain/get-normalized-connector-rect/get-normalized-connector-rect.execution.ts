@@ -13,15 +13,20 @@ import {
 import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
 import {GetNormalizedPointRequest} from "../get-normalized-point";
 
+/**
+ * Execution that retrieves the normalized rectangle of a connector.
+ * It calculates the rectangle based on the element's position and size,
+ * adjusting for the canvas transformation and element offsets.
+ */
 @Injectable()
 @FExecutionRegister(GetNormalizedConnectorRectRequest)
 export class GetNormalizedConnectorRectExecution implements IExecution<GetNormalizedConnectorRectRequest, IRoundedRect> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fMediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(request: GetNormalizedConnectorRectRequest): IRoundedRect {
@@ -35,13 +40,13 @@ export class GetNormalizedConnectorRectExecution implements IExecution<GetNormal
   }
 
   private _getElementRoundedRect(request: GetNormalizedConnectorRectRequest): IRoundedRect {
-    return this._fMediator.execute<IRoundedRect>(
+    return this._mediator.execute<IRoundedRect>(
       new GetElementRoundedRectRequest(request.element)
     );
   }
 
   private _normalizePosition(rect: IRoundedRect): IPoint {
-    return this._fMediator.execute(new GetNormalizedPointRequest(rect));
+    return this._mediator.execute(new GetNormalizedPointRequest(rect));
   }
 
   private _unscaleSize(rect: IRoundedRect): ISize {

@@ -5,6 +5,10 @@ import { FNodeBase } from '../../../f-node';
 import { IRect } from '@foblex/2d';
 import { BrowserService } from '@foblex/platform';
 
+/**
+ * Execution that retrieves the padding data of a Node.
+ * If the Node does not include padding, it returns [0, 0, 0, 0].
+ */
 @Injectable()
 @FExecutionRegister(GetNodePaddingRequest)
 export class GetNodePaddingExecution

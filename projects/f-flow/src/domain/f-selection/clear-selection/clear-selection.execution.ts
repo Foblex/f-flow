@@ -3,6 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 
+/**
+ * Execution that clears the selection of items in the FDraggableDataContext.
+ */
 @Injectable()
 @FExecutionRegister(ClearSelectionRequest)
 export class ClearSelectionExecution implements IExecution<ClearSelectionRequest, void> {

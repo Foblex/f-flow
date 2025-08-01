@@ -6,23 +6,30 @@ import { SortItemsByParentRequest } from './sort-items-by-parent';
 import { FComponentsStore } from '../../f-storage';
 import { FCanvasBase } from '../../f-canvas';
 
+/**
+ * Execution that sorts item layers in the FCanvas by their parent nodes.
+ * This execution is registered to handle SortItemLayersRequest and
+ * ensures that items are sorted correctly within their parent nodes.
+ * It first sorts items by their parent nodes in the groups container,
+ * then sorts the node layers, and finally sorts items by their parent nodes in the nodes container.
+ */
 @Injectable()
 @FExecutionRegister(SortItemLayersRequest)
 export class SortItemLayersExecution implements IExecution<SortItemLayersRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
 
   private get _fCanvas(): FCanvasBase {
-    return this._fComponentsStore.fCanvas!;
+    return this._store.fCanvas!;
   }
 
   public handle(request: SortItemLayersRequest): void {
-    if(!this._fComponentsStore.fCanvas) {
+    if(!this._store.fCanvas) {
       return;
     }
-    this._fMediator.execute(new SortItemsByParentRequest(this._fCanvas.fGroupsContainer().nativeElement));
-    this._fMediator.execute(new SortNodeLayersRequest());
-    this._fMediator.execute(new SortItemsByParentRequest(this._fCanvas.fNodesContainer().nativeElement));
+    this._mediator.execute(new SortItemsByParentRequest(this._fCanvas.fGroupsContainer().nativeElement));
+    this._mediator.execute(new SortNodeLayersRequest());
+    this._mediator.execute(new SortItemsByParentRequest(this._fCanvas.fNodesContainer().nativeElement));
   }
 }

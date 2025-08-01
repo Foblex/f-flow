@@ -3,13 +3,17 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RemoveNodeFromStoreRequest } from './remove-node-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that removes a node from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(RemoveNodeFromStoreRequest)
-export class RemoveNodeFromStoreExecution implements IExecution<RemoveNodeFromStoreRequest, void> {
+export class RemoveNodeFromStoreExecution
+  implements IExecution<RemoveNodeFromStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: RemoveNodeFromStoreRequest): void {
-    this._fComponentsStore.removeComponent(this._fComponentsStore.fNodes, request.fComponent);
+    this._store.removeComponent(this._store.fNodes, request.fComponent);
   }
 }

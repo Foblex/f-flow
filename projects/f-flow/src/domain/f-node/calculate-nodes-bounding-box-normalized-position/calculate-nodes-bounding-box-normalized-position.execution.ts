@@ -5,14 +5,20 @@ import { FComponentsStore } from '../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 
+/**
+ * Execution that calculates the bounding box of all nodes in the FComponentsStore
+ * and returns their normalized positions.
+ * It retrieves the rectangles of each node's host element and computes their union.
+ */
 @Injectable()
 @FExecutionRegister(CalculateNodesBoundingBoxNormalizedPositionRequest)
-export class CalculateNodesBoundingBoxNormalizedPositionExecution implements IExecution<CalculateNodesBoundingBoxNormalizedPositionRequest, IRect | null> {
+export class CalculateNodesBoundingBoxNormalizedPositionExecution
+  implements IExecution<CalculateNodesBoundingBoxNormalizedPositionRequest, IRect | null> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateNodesBoundingBoxNormalizedPositionRequest): IRect | null {
-    return RectExtensions.union(this._getNodesRects(request.fNodes || this._fComponentsStore.fNodes));
+    return RectExtensions.union(this._getNodesRects(request.fNodes || this._store.fNodes));
   }
 
   private _getNodesRects(fNodes: FNodeBase[]): IRect[] {

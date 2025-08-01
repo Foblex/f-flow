@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { FMediator } from '@foblex/mediator';
 import { ElementRef, Injector } from '@angular/core';
 import { FComponentsStore } from '../f-storage';
-import { FDraggableDataContext } from '../f-draggable';
+import { FDraggableDataContext } from '@foblex/flow';
 
 export class MockElementRef extends ElementRef<HTMLElement> {
   constructor() {

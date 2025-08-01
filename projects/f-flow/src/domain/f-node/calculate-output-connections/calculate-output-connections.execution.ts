@@ -5,11 +5,15 @@ import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { FConnectionBase } from '../../../f-connection';
 
+/**
+ * Execution that calculates output connections for a given FNode.
+ */
 @Injectable()
 @FExecutionRegister(CalculateOutputConnectionsRequest)
-export class CalculateOutputConnectionsExecution implements IExecution<CalculateOutputConnectionsRequest, FConnectionBase[]> {
+export class CalculateOutputConnectionsExecution
+  implements IExecution<CalculateOutputConnectionsRequest, FConnectionBase[]> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateOutputConnectionsRequest): FConnectionBase[] {
     return this._calculateConnections(
@@ -18,13 +22,13 @@ export class CalculateOutputConnectionsExecution implements IExecution<Calculate
   }
 
   private _calculateConnectors(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fOutputs
+    return this._store.fOutputs
       .filter((x) => fNode.isContains(x.hostElement))
       .map((x) => x.fId);
   }
 
   private _calculateConnections(ids: Set<string>): FConnectionBase[] {
-    return this._fComponentsStore.fConnections
+    return this._store.fConnections
       .filter((x) => ids.has(x.fOutputId));
   }
 }

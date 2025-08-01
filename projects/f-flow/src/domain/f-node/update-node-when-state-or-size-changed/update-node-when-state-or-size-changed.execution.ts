@@ -7,13 +7,21 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 import { FResizeChannel } from '../../../reactivity';
 import { RectExtensions } from '@foblex/2d';
 
+/**
+ * Execution that updates a node's connectors when its state or size changes.
+ */
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
 export class UpdateNodeWhenStateOrSizeChangedExecution
   implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
+  /**
+   * Handles the request to update the node's connectors based on state or size changes.
+   * It listens for resize events and recalculates the connectable sides of the connectors.
+   * @param request
+   */
   public handle(request: UpdateNodeWhenStateOrSizeChangedRequest): void {
     const { hostElement, connectors, stateChanges } = request.fComponent;
 
@@ -22,16 +30,29 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
       stateChanges
     ).pipe(notifyOnStart(), debounceTime(10)).listen(request.destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
-      this._fMediator.execute<void>(new NotifyDataChangedRequest());
+      this._mediator.execute<void>(new NotifyDataChangedRequest());
     });
   }
 
+  /**
+   * Calculates the connectable side for each connector based on its position relative to the node host.
+   * @param fConnectors
+   * @param fNodeHost
+   * @private
+   */
   private _calculateConnectorsConnectableSide(fConnectors: FConnectorBase[], fNodeHost: HTMLElement | SVGElement): void {
     fConnectors.forEach((x: FConnectorBase) => {
       x.fConnectableSide = this._calculateConnectorConnectableSide(x, fNodeHost);
     });
   }
 
+  /**
+   * Calculates the connectable side of a connector based on its user-defined side or its position relative to the node host.
+   * @param fConnector
+   * @param fNodeHost
+   * @returns {EFConnectableSide}
+   * @private
+   */
   private _calculateConnectorConnectableSide(fConnector: FConnectorBase, fNodeHost: HTMLElement | SVGElement): EFConnectableSide {
     let result: EFConnectableSide | undefined;
 
@@ -43,6 +64,12 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
     return result;
   }
 
+  /**
+   * Determines the side of the connector relative to the node host based on the minimum distance.
+   * @param fConnectorHost
+   * @param fNodeHost
+   * @private
+   */
   private _getSideByDelta(fConnectorHost: HTMLElement | SVGElement, fNodeHost: HTMLElement | SVGElement): EFConnectableSide {
     let result: EFConnectableSide | undefined;
 
