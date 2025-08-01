@@ -5,14 +5,17 @@ import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnection } from '../i-f-flow-state-connection';
 import { FConnectionBase } from '../../../../f-connection';
 
+/**
+ * Execution that retrieves the current Flow state connections from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(GetFlowStateConnectionsRequest)
 export class GetFlowStateConnectionsExecution implements IExecution<GetFlowStateConnectionsRequest, IFFlowStateConnection[]> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: GetFlowStateConnectionsRequest): IFFlowStateConnection[] {
-    return this._fComponentsStore.fConnections.map(this._mapToConnectionState);
+    return this._store.fConnections.map(this._mapToConnectionState);
   }
 
   private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {

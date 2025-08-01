@@ -4,18 +4,21 @@ import { PrepareDragSequenceRequest } from './prepare-drag-sequence-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { StartDragSequenceRequest } from '../start-drag-sequence';
 
+/**
+ * Execution that prepares the drag sequence by invoking the prepareDragSequence method on each draggable item.
+ */
 @Injectable()
 @FExecutionRegister(PrepareDragSequenceRequest)
 export class PrepareDragSequenceExecution implements IExecution<PrepareDragSequenceRequest, void> {
 
-  private _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
   private _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: PrepareDragSequenceRequest): void {
     this._callPrepareDragSequence();
 
-    this._fMediator.execute<void>(new StartDragSequenceRequest());
+    this._mediator.execute<void>(new StartDragSequenceRequest());
   }
 
   private _callPrepareDragSequence(): void {

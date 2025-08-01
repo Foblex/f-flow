@@ -8,6 +8,9 @@ import { OnPointerMoveExecution } from './on-pointer-move';
 import { IsDragStartedExecution } from './is-drag-started';
 import { StartDragSequenceExecution } from './start-drag-sequence';
 
+/**
+ * Collection of all FDraggable feature executions.
+ */
 export const F_DRAGGABLE_FEATURES = [
 
   AddDndToStoreExecution,

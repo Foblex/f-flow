@@ -6,14 +6,19 @@ import { IPoint, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import {IPointerEvent} from "../../../drag-toolkit";
 
+/**
+ * Execution that handles pointer move events during a drag operation.
+ * It calculates the difference between the current pointer position and the position
+ * when the drag started, and updates the draggable items accordingly.
+ */
 @Injectable()
 @FExecutionRegister(OnPointerMoveRequest)
 export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _hostElement(): HTMLElement {
-    return this._fComponentsStore.fDraggable!.hostElement;
+    return this._store.fDraggable!.hostElement;
   }
 
   private readonly _fDraggableDataContext = inject(FDraggableDataContext);

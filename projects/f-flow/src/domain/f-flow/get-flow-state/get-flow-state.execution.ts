@@ -8,20 +8,23 @@ import { IPoint, ITransformModel, PointExtensions } from '@foblex/2d';
 import { GetFlowStateNodesRequest } from './get-flow-state-nodes';
 import { GetFlowStateConnectionsRequest } from './get-flow-state-connections';
 
+/**
+ * Execution that retrieves the current state of the Flow, including its position, scale, nodes, groups, and connections.
+ */
 @Injectable()
 @FExecutionRegister(GetFlowStateRequest)
 export class GetFlowStateExecution implements IExecution<GetFlowStateRequest, IFFlowState> {
 
-  private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(payload: GetFlowStateRequest): IFFlowState {
     return {
-      position: this._getCanvasPosition(this._fComponentsStore.fCanvas!.transform),
-      scale: this._fComponentsStore.fCanvas!.transform.scale,
-      nodes: this._fMediator.execute(new GetFlowStateNodesRequest(FNodeDirective)),
-      groups: this._fMediator.execute(new GetFlowStateNodesRequest(FGroupDirective)),
-      connections: this._fMediator.execute(new GetFlowStateConnectionsRequest())
+      position: this._getCanvasPosition(this._store.fCanvas!.transform),
+      scale: this._store.fCanvas!.transform.scale,
+      nodes: this._mediator.execute(new GetFlowStateNodesRequest(FNodeDirective)),
+      groups: this._mediator.execute(new GetFlowStateNodesRequest(FGroupDirective)),
+      connections: this._mediator.execute(new GetFlowStateConnectionsRequest())
     }
   }
 
