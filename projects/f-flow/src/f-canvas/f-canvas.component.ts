@@ -105,12 +105,20 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     }, {injector: this._injector});
   }
 
+  /**
+   * Redraws the canvas by applying the current transformation.
+   */
   public override redraw(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transform: ${TransformModelExtensions.toString(this.transform)}`);
     this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
+  /**
+   * Redraws the canvas with an animation effect.
+   * This method applies a CSS transition to the canvas element,
+   * allowing for a smooth visual update of the canvas's transformation.
+   */
   public override redrawWithAnimation(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
     this.hostElement.setAttribute("style", `transition: transform ${isMobile() ? 80 : 150}ms ease-in-out; transform: ${TransformModelExtensions.toString(this.transform)}`);
