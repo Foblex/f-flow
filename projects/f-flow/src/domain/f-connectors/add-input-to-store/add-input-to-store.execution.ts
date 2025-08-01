@@ -3,13 +3,16 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { AddInputToStoreRequest } from './add-input-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that adds an InputConnector to the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(AddInputToStoreRequest)
 export class AddInputToStoreExecution implements IExecution<AddInputToStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: AddInputToStoreRequest): void {
-    this._fComponentsStore.addComponent(this._fComponentsStore.fInputs, request.fComponent);
+    this._store.addComponent(this._store.fInputs, request.fComponent);
   }
 }

@@ -5,6 +5,9 @@ import { FConnectorBase } from '../../../f-connectors';
 import { F_CSS_CLASS } from '../../css-cls';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that marks connectors as connectable.
+ */
 @Injectable()
 @FExecutionRegister(MarkConnectableConnectorsRequest)
 export class MarkConnectableConnectorsExecution

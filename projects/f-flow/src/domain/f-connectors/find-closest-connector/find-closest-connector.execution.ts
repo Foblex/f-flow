@@ -5,6 +5,11 @@ import { IPoint } from '@foblex/2d';
 import { IClosestConnector } from '../i-closest-connector';
 import { IConnectorAndRect } from '../index';
 
+/**
+ * Execution that finds the closest connector to a given point.
+ * It calculates the distance from the point to each connector's rectangle
+ * and returns the closest one along with its distance.
+ */
 @Injectable()
 @FExecutionRegister(FindClosestConnectorRequest)
 export class FindClosestConnectorExecution

@@ -8,12 +8,17 @@ import {FComponentsStore} from '../../../f-storage';
 import {IConnectorAndRect} from '../i-connector-and-rect';
 import {GetConnectorAndRectRequest} from '../get-connector-and-rect';
 
+/**
+ * Execution that retrieves all source connectors that can be connected to a given target connector,
+ * along with their rectangles.
+ * Source - Output or Outlet connectors.
+ */
 @Injectable()
 @FExecutionRegister(GetAllCanBeConnectedSourceConnectorsAndRectsRequest)
 export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
   implements IExecution<GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IConnectorAndRect[]> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
 
   private get _fSourceConnectors(): FNodeOutputBase[] {
@@ -22,7 +27,7 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
 
   public handle(payload: GetAllCanBeConnectedSourceConnectorsAndRectsRequest): IConnectorAndRect[] {
     return this._getCanBeConnectedSourceConnectors(payload.fTargetConnector).map((x) => {
-      return this._fMediator.execute(new GetConnectorAndRectRequest(x));
+      return this._mediator.execute(new GetConnectorAndRectRequest(x));
     });
   }
 

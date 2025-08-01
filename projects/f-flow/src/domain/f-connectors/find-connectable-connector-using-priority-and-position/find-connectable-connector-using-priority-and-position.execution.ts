@@ -11,6 +11,11 @@ import { FindClosestConnectorRequest } from '../find-closest-connector';
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 
+/**
+ * Execution that finds a connectable connector at a given position with priority.
+ * It checks for connectors at the position, the closest connector if snap connection is enabled,
+ * and the first connectable connector of the node at that position.
+ */
 @Injectable()
 @FExecutionRegister(FindConnectableConnectorUsingPriorityAndPositionRequest)
 export class FindConnectableConnectorUsingPriorityAndPositionExecution

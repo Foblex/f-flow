@@ -3,6 +3,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { AddOutletToStoreRequest } from './add-outlet-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that adds an OutletConnector to the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(AddOutletToStoreRequest)
 export class AddOutletToStoreExecution implements IExecution<AddOutletToStoreRequest, void> {

@@ -15,7 +15,9 @@ import {
 import {
   FindConnectableConnectorUsingPriorityAndPositionExecution
 } from "./find-connectable-connector-using-priority-and-position";
-
+/*
+  * This file exports all the connector-related executions that can be used in the FFlow domain.
+ */
 export const F_CONNECTORS_FEATURES = [
 
   AddInputToStoreExecution,

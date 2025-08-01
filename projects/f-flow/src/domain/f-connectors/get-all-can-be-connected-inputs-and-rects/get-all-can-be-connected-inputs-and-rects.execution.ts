@@ -6,12 +6,15 @@ import { FComponentsStore } from '../../../f-storage';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
 
+/**
+ * Execution that retrieves all input connectors that can be connected to a given output or outlet connector,
+ */
 @Injectable()
 @FExecutionRegister(GetAllCanBeConnectedInputsAndRectsRequest)
 export class GetAllCanBeConnectedInputsAndRectsExecution
   implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]> {
 
-  private _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
 
   private get _fInputs(): FConnectorBase[] {
@@ -20,7 +23,7 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
 
   public handle(payload: GetAllCanBeConnectedInputsAndRectsRequest): IConnectorAndRect[] {
     return this._getCanBeConnectedInputs(payload.fOutputOrOutlet).map((x) => {
-      return this._fMediator.execute(new GetConnectorAndRectRequest(x));
+      return this._mediator.execute(new GetConnectorAndRectRequest(x));
     });
   }
 
