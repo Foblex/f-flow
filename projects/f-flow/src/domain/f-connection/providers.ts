@@ -10,6 +10,9 @@ import { RemoveConnectionMarkerFromStoreExecution } from './remove-connection-ma
 import { RedrawConnectionsExecution } from './redraw-connections';
 import { CalculateConnectionLineByBehaviorExecution } from './calculate-connection-line-by-behavior';
 
+/**
+ * This file exports all the connection-related features for the F-Flow domain.
+ */
 export const F_CONNECTION_FEATURES = [
 
   AddConnectionForCreateToStoreExecution,

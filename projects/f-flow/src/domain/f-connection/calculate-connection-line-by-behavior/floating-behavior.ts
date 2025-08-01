@@ -1,6 +1,11 @@
 import { GetIntersections, ILine, IPoint } from '@foblex/2d';
 import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
 
+/**
+ * Floating behavior calculates the connection line
+ * It constructs a line between the intersections of the connectors rectangles and line from the centers of the connector rectangles
+ * @param payload
+ */
 export function floatingBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
   return _getIntersectionsLine(
     _fromRoundedRectIntersections(payload),

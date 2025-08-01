@@ -10,6 +10,9 @@ import { RemoveCanvasFromStoreExecution } from './remove-canvas-from-store';
 import { GetCanvasExecution } from './get-canvas';
 import { RedrawCanvasWithAnimationExecution } from './redraw-canvas-with-animation';
 
+/**
+ * This file exports all the canvas-related executions that can be used in the FCanvas feature.
+ */
 export const F_CANVAS_FEATURES = [
 
   AddCanvasToStoreExecution,

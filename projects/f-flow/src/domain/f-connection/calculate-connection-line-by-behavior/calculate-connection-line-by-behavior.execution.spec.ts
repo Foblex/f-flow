@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { CalculateConnectionLineByBehaviorExecution } from './calculate-connection-line-by-behavior.execution';
-import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
-import { EFConnectionBehavior } from '../../../f-connection';
-import { EFConnectableSide } from '../../../f-connectors';
+import { CalculateConnectionLineByBehaviorExecution } from '@foblex/flow';
+import { CalculateConnectionLineByBehaviorRequest } from '@foblex/flow';
+import { EFConnectionBehavior } from '@foblex/flow';
+import { EFConnectableSide } from '@foblex/flow';
 import { setupTestModule } from '../../test-setup';
 import { FMediator } from '@foblex/mediator';
 import { RoundedRect, ILine, PointExtensions } from '@foblex/2d';
