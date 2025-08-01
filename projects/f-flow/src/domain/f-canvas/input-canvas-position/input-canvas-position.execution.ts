@@ -4,6 +4,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * It updates the canvas position and redraws the canvas when the user set a new position using the input.
+ */
 @Injectable()
 @FExecutionRegister(InputCanvasPositionRequest)
 export class InputCanvasPositionExecution implements IExecution<InputCanvasPositionRequest, void> {

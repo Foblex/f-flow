@@ -9,6 +9,9 @@ import { FBackgroundBase } from '../../../f-backgroud';
 
 let uniqueId: number = 0;
 
+/**
+ * Execution that adds a pattern to the background in the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(AddPatternToBackgroundRequest)
 export class AddPatternToBackgroundExecution implements IExecution<AddPatternToBackgroundRequest, void> {

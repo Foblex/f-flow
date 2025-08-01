@@ -4,11 +4,14 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { ITransformModel, PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that resets the scale of the canvas in the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(ResetScaleRequest)
 export class ResetScaleExecution implements IExecution<ResetScaleRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   private get transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;

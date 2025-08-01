@@ -5,6 +5,9 @@ import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from 
 import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that resets the scale of the canvas and centers the nodes and groups inside the flow.
+ */
 @Injectable()
 @FExecutionRegister(ResetScaleAndCenterRequest)
 export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCenterRequest, void> {

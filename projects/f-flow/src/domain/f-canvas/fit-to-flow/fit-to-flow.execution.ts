@@ -5,11 +5,14 @@ import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from 
 import { FComponentsStore } from '../../../f-storage';
 import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
 
+/**
+ * Fits all nodes and groups to the flow by scaling and positioning them
+ */
 @Injectable()
 @FExecutionRegister(FitToFlowRequest)
 export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   private get transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;

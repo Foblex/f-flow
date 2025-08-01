@@ -6,6 +6,9 @@ import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { RedrawCanvasWithAnimationRequest } from '../../../domain';
 
+/**
+ * Execution that centers a group or a node inside the flow.
+ */
 @Injectable()
 @FExecutionRegister(CenterGroupOrNodeRequest)
 export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeRequest, void> {

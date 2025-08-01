@@ -4,11 +4,14 @@ import { GetCanvasRequest } from './get-canvas-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';
 
+/**
+ * Execution that retrieves the canvas from the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(GetCanvasRequest)
 export class GetCanvasExecution implements IExecution<GetCanvasRequest, FCanvasBase> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: GetCanvasRequest): FCanvasBase {
     const result = this._fComponentsStore.fCanvas;

@@ -3,6 +3,9 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { SetBackgroundTransformRequest } from './set-background-transform-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that sets the transform for the background when canvas is transformed.
+ */
 @Injectable()
 @FExecutionRegister(SetBackgroundTransformRequest)
 export class SetBackgroundTransformExecution implements IExecution<SetBackgroundTransformRequest, void> {
