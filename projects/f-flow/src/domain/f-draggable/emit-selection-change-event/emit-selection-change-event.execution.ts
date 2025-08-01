@@ -6,19 +6,22 @@ import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggab
 import { GetCurrentSelectionRequest, ICurrentSelection } from '../../f-selection';
 import { NotifyTransformChangedRequest } from '../../../f-storage';
 
+/**
+ * Execution that emits a selection change event when the selection changes.
+ * It retrieves the current selection and emits it through the FSelectionChangeEvent.
+ */
 @Injectable()
 @FExecutionRegister(EmitSelectionChangeEventRequest)
 export class EmitSelectionChangeEventExecution implements IExecution<EmitSelectionChangeEventRequest, void> {
 
-  private _fMediator = inject(FMediator);
-
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fSelectionChange(): EventEmitter<FSelectionChangeEvent> {
-    return this._fComponentsStore.fDraggable!.fSelectionChange;
+    return this._store.fDraggable!.fSelectionChange;
   }
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
 
   public handle(request: EmitSelectionChangeEventRequest): void {
     if (
@@ -29,11 +32,11 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
 
     this._emitSelectionChange(this._getSelection());
     this._fDraggableDataContext.isSelectedChanged = false;
-    this._fMediator.execute<void>(new NotifyTransformChangedRequest());
+    this._mediator.execute<void>(new NotifyTransformChangedRequest());
   }
 
   private _getSelection(): ICurrentSelection {
-    return this._fMediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
   private _emitSelectionChange(selection: ICurrentSelection): void {

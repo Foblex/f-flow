@@ -3,13 +3,16 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { AddDndToStoreRequest } from './add-dnd-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
+/**
+ * Execution that adds a drag and drop directive to the FComponentsStore.
+ */
 @Injectable()
 @FExecutionRegister(AddDndToStoreRequest)
 export class AddDndToStoreExecution implements IExecution<AddDndToStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: AddDndToStoreRequest): void {
-    this._fComponentsStore.fDraggable = request.fComponent;
+    this._store.fDraggable = request.fComponent;
   }
 }
