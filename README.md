@@ -23,6 +23,10 @@ It provides a robust, fully Angular-native foundation to create, customize, and 
 
 🔧 Ideal for internal tools, low-code platforms, process editors, call flows, and custom visual builders.
 
+> ⭐️ If you find this library useful, please consider [starring it on GitHub](https://github.com/foblex/flow) — it helps the project grow and shows your support!
+
+[![GitHub Stars](https://img.shields.io/github/stars/foblex/flow?style=social)](https://github.com/foblex/flow)
+
 ---
 
 ### 🚀 Features at a Glance
