@@ -23,10 +23,6 @@ It provides a robust, fully Angular-native foundation to create, customize, and 
 
 🔧 Ideal for internal tools, low-code platforms, process editors, call flows, and custom visual builders.
 
-> ⭐️ If you find this library useful, please consider [starring it on GitHub](https://github.com/foblex/flow) — it helps the project grow and shows your support!
-
-[![GitHub Stars](https://img.shields.io/github/stars/foblex/flow?style=social)](https://github.com/foblex/flow)
-
 ---
 
 ### 🚀 Features at a Glance
@@ -92,4 +88,11 @@ Questions, suggestions or bugs? Contact support@foblex.com
 ### 📄 License
 
 Foblex Flow is MIT licensed — free to use and open for contribution.
+
+## 💬 Support the Project
+
+If Foblex Flow has helped you build something awesome — consider giving it a ⭐️ on GitHub:  
+[https://github.com/foblex/flow](https://github.com/foblex/flow)
+
+It helps the project reach more people, keeps development going, and motivates future improvements.
 
