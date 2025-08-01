@@ -38,9 +38,9 @@ jobs:
                   owner,
                   repo,
                   issue_number,
-                  body: `👋 Hey @${username}, glad you're using Foblex Flow!  
-If the library has helped you — consider supporting the project with a star on GitHub. It really helps with visibility and further development 🌟  
-👉 https://github.com/${owner}/${repo}`
+                  body: `👋 Hey @${username}, glad you're using Foblex Flow!
+                          If the library has helped you — consider supporting the project with a star on GitHub. It really helps with visibility and further development 🌟
+                          👉 https://github.com/${owner}/${repo}`
                 });
               } else {
                 throw error;
