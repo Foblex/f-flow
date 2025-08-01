@@ -6,12 +6,15 @@ import {BrowserService} from '@foblex/platform';
 import {normalizeDomElementId} from '@foblex/utils';
 import {FComponentsStore} from '../../../f-storage';
 
+/**
+ * Execution that creates connection markers for a given connection.
+ */
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
 export class CreateConnectionMarkersExecution implements IExecution<CreateConnectionMarkersRequest, void> {
 
   private readonly _browser = inject(BrowserService);
-  private readonly _componentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: CreateConnectionMarkersRequest): void {
     const element: SVGDefsElement = createSVGElement('defs', this._browser);
@@ -39,7 +42,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
   }
 
   public getMarkers(fConnection: FConnectionBase): FMarkerBase[] {
-    return this._componentsStore.fMarkers.filter((x) => fConnection.hostElement.contains(x.hostElement));
+    return this._store.fMarkers.filter((x) => fConnection.hostElement.contains(x.hostElement));
   }
 
   // Safari does not support markers on path elements if markers are defined after the path element

@@ -10,9 +10,9 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(RemoveCanvasFromStoreRequest)
 export class RemoveCanvasFromStoreExecution implements IExecution<RemoveCanvasFromStoreRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: RemoveCanvasFromStoreRequest): void {
-    this._fComponentsStore.fCanvas = undefined;
+    this._store.fCanvas = undefined;
   }
 }

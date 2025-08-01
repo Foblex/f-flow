@@ -11,10 +11,10 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(ResetScaleRequest)
 export class ResetScaleExecution implements IExecution<ResetScaleRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(request: ResetScaleRequest): void {

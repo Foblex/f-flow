@@ -13,10 +13,10 @@ import { FComponentsStore } from '../../../f-storage';
 export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCenterRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(request: ResetScaleAndCenterRequest): void {
@@ -26,8 +26,8 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
     }
     this._oneToOneCentering(
       fNodesRect,
-      RectExtensions.fromElement(this._fComponentsStore.fFlow!.hostElement),
-      this._fComponentsStore.fNodes.map((x) => x.position)
+      RectExtensions.fromElement(this._store.fFlow!.hostElement),
+      this._store.fNodes.map((x) => x.position)
     );
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));

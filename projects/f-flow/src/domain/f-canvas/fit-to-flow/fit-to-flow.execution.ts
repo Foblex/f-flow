@@ -12,10 +12,10 @@ import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } fr
 @FExecutionRegister(FitToFlowRequest)
 export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private _fMediator = inject(FMediator);
@@ -28,8 +28,8 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
 
     this.fitToParent(
       fNodesRect,
-      RectExtensions.fromElement(this._fComponentsStore.fFlow!.hostElement),
-      this._fComponentsStore.fNodes.map((x) => x.position),
+      RectExtensions.fromElement(this._store.fFlow!.hostElement),
+      this._store.fNodes.map((x) => x.position),
       request.toCenter
     );
 

@@ -7,6 +7,9 @@ import { floatingBehavior } from './floating-behavior';
 import { fixedCenterBehavior } from './fixed-center-behavior';
 import { fixedOutboundBehavior } from './fixed-outbound-behavior';
 
+/**
+ * Execution that calculates the connection line based on the behavior.
+ */
 @Injectable()
 @FExecutionRegister(CalculateConnectionLineByBehaviorRequest)
 export class CalculateConnectionLineByBehaviorExecution

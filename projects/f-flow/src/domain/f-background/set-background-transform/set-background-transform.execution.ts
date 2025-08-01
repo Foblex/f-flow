@@ -10,9 +10,9 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(SetBackgroundTransformRequest)
 export class SetBackgroundTransformExecution implements IExecution<SetBackgroundTransformRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: SetBackgroundTransformRequest): void {
-    this._fComponentsStore.fBackground?.setTransform(request.fTransform);
+    this._store.fBackground?.setTransform(request.fTransform);
   }
 }

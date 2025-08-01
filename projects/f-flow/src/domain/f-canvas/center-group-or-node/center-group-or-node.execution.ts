@@ -13,11 +13,11 @@ import { RedrawCanvasWithAnimationRequest } from '../../../domain';
 @FExecutionRegister(CenterGroupOrNodeRequest)
 export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _fMediator = inject(FMediator);
 
   private get transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
 
@@ -41,7 +41,7 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   }
 
   private getNode(id: string): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => x.fId() === id);
+    return this._store.fNodes.find((x) => x.fId() === id);
   }
 
   private getNodeRect(fNode: FNodeBase): IRect {
@@ -49,6 +49,6 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   }
 
   private getFlowRect(): IRect {
-    return RectExtensions.fromElement(this._fComponentsStore.fFlow!.hostElement);
+    return RectExtensions.fromElement(this._store.fFlow!.hostElement);
   }
 }

@@ -10,9 +10,9 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(AddCanvasToStoreRequest)
 export class AddCanvasToStoreExecution implements IExecution<AddCanvasToStoreRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: AddCanvasToStoreRequest): void {
-    this._fComponentsStore.fCanvas = request.fCanvas;
+    this._store.fCanvas = request.fCanvas;
   }
 }

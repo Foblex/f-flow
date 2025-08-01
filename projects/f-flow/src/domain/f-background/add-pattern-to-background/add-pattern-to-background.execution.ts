@@ -16,11 +16,11 @@ let uniqueId: number = 0;
 @FExecutionRegister(AddPatternToBackgroundRequest)
 export class AddPatternToBackgroundExecution implements IExecution<AddPatternToBackgroundRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _fBrowser = inject(BrowserService);
 
   private get _fBackground(): FBackgroundBase {
-    return this._fComponentsStore.fBackground!;
+    return this._store.fBackground!;
   }
 
   public handle(request: AddPatternToBackgroundRequest): void {
@@ -37,7 +37,7 @@ export class AddPatternToBackgroundExecution implements IExecution<AddPatternToB
       rect.setAttribute('width', '100%');
       rect.setAttribute('height', '100%');
       this._fBackground.hostElement.firstChild?.appendChild(rect);
-      const transform = this._fComponentsStore.fCanvas?.transform || TransformModelExtensions.default();
+      const transform = this._store.fCanvas?.transform || TransformModelExtensions.default();
       request.fPattern?.setTransform(transform);
     }
   }

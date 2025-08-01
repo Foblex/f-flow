@@ -13,24 +13,24 @@ import { transitionEnd } from '../../transition-end';
 @FExecutionRegister(RedrawCanvasWithAnimationRequest)
 export class RedrawCanvasWithAnimationExecution implements IExecution<RedrawCanvasWithAnimationRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fCanvasElement(): HTMLElement {
-    return this._fComponentsStore.fCanvas!.hostElement;
+    return this._store.fCanvas!.hostElement;
   }
 
   public handle(request: RedrawCanvasWithAnimationRequest): void {
     request.animated ? this._redrawWithAnimation() : this._redraw();
-    this._fComponentsStore.fCanvas!.emitCanvasChangeEvent();
+    this._store.fCanvas!.emitCanvasChangeEvent();
   }
 
   private _redrawWithAnimation(): void {
-    this._fComponentsStore.fCanvas!.redrawWithAnimation();
-    transitionEnd(this._fCanvasElement, () => this._fComponentsStore.dataChanged());
+    this._store.fCanvas!.redrawWithAnimation();
+    transitionEnd(this._fCanvasElement, () => this._store.dataChanged());
   }
 
   private _redraw(): void {
-    this._fComponentsStore.fCanvas!.redraw();
-    this._fComponentsStore.dataChanged();
+    this._store.fCanvas!.redraw();
+    this._store.dataChanged();
   }
 }
