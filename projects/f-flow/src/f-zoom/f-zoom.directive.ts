@@ -112,10 +112,19 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
+    const step = this._normalizeWheelStep(event.deltaY);
     this.setZoom(
       PointExtensions.initialize(event.clientX, event.clientY),
-      this.step, this._calculateDirection(event.deltaY), false
+      step,
+      this._calculateDirection(event.deltaY),
+      false
     );
+  }
+
+  private _normalizeWheelStep(deltaY: number): number {
+    const intensity = Math.abs(deltaY) / 100;
+    const normalized = Math.max(0.1, Math.min(intensity, 1));
+    return this.step * normalized;
   }
 
   private _calculateDirection(deltaY: number): number {
