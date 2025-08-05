@@ -1,0 +1,82 @@
+.assistant-close {
+  appearance: none;
+  border-radius: 4px;
+  color: #67676c;
+  cursor: pointer;
+  stroke-width: 1.4;
+  background: 0 0;
+  border: none;
+  padding: 2px;
+  transition: all .1s ease-in-out;
+  display: flex;
+
+  &:hover {
+    background: #646cff24;
+    color: #3451b2;
+  }
+}
+
+.f-button {
+  border: none;
+  font-weight: 500;
+}
+
+.assistant-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  height: 56px;
+  padding: 12px 16px;
+  border-radius: 4px 4px 0 0;
+  margin: 0;
+
+  .f-icon {
+    color: var(--indigo-1);
+    justify-content: center;
+    align-items: center;
+    display: flex
+  }
+
+  input {
+    padding: 0 0 0 8px;
+    appearance: none;
+    color: var(--primary-text);
+    font: inherit;
+    background: 0 0;
+    border: 0;
+    outline: none;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    font-size: 19px;
+    font-weight: 300;
+
+    &::placeholder {
+      color: var(--tertiary-text);
+    }
+  }
+
+  &.not-empty {
+    border-bottom: 1px solid var(--divider-color);
+  }
+}
+
+.assistant-body {
+  padding: 16px 48px;
+}
+
+//.signin-btn {
+//  font-size: 13px;
+//  padding: 6px 12px;
+//  background: var(--button-primary-bg);
+//  color: var(--button-primary-text);
+//  border: none;
+//  border-radius: var(--border-radius);
+//  cursor: pointer;
+//  transition: background-color 0.2s;
+//}
+//
+//.signin-btn:hover {
+//  background: var(--button-primary-hover-bg);
+//}

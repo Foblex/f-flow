@@ -1,0 +1,13 @@
+<header class="assistant-header" [class.not-empty]="answer()">
+  <span class="f-icon search"></span>
+  <input matInput placeholder="Ask AI a question" [disabled]="!user()" [(ngModel)]="question"/>
+  @if (!user()) {
+    <button class="f-button primary">Sign in with GitHub</button>
+  } @else if(question()) {
+    <button class="f-button primary">Ask</button>
+  }
+</header>
+@if (answer()) {
+  <div class="assistant-body m-render" [innerHTML]="answer()"></div>
+}
+

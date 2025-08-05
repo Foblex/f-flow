@@ -1,0 +1,19 @@
+.mat-mdc-dialog-container {
+  max-height: 80% !important;
+
+  .mat-mdc-dialog-inner-container {
+    .mat-mdc-dialog-surface {
+      background: var(--soft-background);
+      box-shadow: none;
+      border-radius: var(--border-radius);
+
+      .mat-mdc-dialog-component-host {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+
