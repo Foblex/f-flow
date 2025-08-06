@@ -19,30 +19,41 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            // Skip if author is the repo owner
+            // Пропускаем владельца репозитория
             if (username === owner) return;
 
-            try {
-              // Check if user has starred the repo
-              await github.rest.activity.checkRepoIsStarredByUser({
-                username,
-                owner,
-                repo
-              });
-              console.log(`${username} has already starred the repo.`);
-            } catch (error) {
-              if (error.status === 404) {
-                const issue_number = context.payload.issue?.number || context.payload.comment?.issue_url.split('/').pop();
-
-                await github.rest.issues.createComment({
-                  owner,
-                  repo,
-                  issue_number,
-                  body: `👋 Hey @${username}, glad you're using Foblex Flow!
-                          If the library has helped you — consider supporting the project with a star on GitHub. It really helps with visibility and further development 🌟
-                          👉 https://github.com/${owner}/${repo}`
-                });
-              } else {
-                throw error;
+            // GraphQL-запрос на получение 100 последних звёзд
+            const query = `
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  stargazers(first: 100, orderBy: {field: STARRED_AT, direction: DESC}) {
+                    nodes {
+                      login
+                    }
+                  }
+                }
               }
+            `;
+
+            const result = await github.graphql(query, { owner, repo });
+
+            const hasStarred = result.repository.stargazers.nodes.some(
+              user => user.login.toLowerCase() === username.toLowerCase()
+            );
+
+            if (!hasStarred) {
+              const issue_number = context.payload.issue?.number
+                || context.payload.comment?.issue_url.split('/').pop();
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body: `👋 Hey @${username}, glad you're using **${repo}**!
+                      If the library has helped you — consider supporting the project with a ⭐ on GitHub. It helps with visibility and further development!
+
+                      👉 https://github.com/${owner}/${repo}`
+            });
+            } else {
+            console.log(`${username} has already starred the repo.`);
             }
