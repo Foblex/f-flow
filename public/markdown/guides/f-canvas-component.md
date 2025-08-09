@@ -17,7 +17,6 @@ The **FCanvasComponent** is an Angular component that serves as a container for 
 ## Methods
 
 - `fitToScreen(padding: IPoint = { x: 0, y: 0 }, animated: boolean = true): void;` The fitToScreen method automatically adjusts all nodes inside the canvas to fit perfectly within its boundaries, scaling and positioning them to be fully visible and centered. You can specify custom padding to add extra space around the nodes horizontally (x) and vertically (y). This ensures that the nodes are not directly touching the edges of the canvas after resizing. The adjustment can be animated or instant, based on the parameters provided.
-  - `fitToScreen(PointExtensions.initialize(50, 50), true)` Add some padding to the canvas when fitting to screen (*`PointExtensions` requires `@foblex/2d` package*).
 
 - `resetScaleAndCenter(animated: boolean = true): void;` Sets the canvas scale to 1:1, ensuring elements are displayed at actual size and centers the canvas, optionally using animation.
 

@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, viewChild, ViewChild} from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
 
+//This example demonstrates how to create a new node in position where a connection was dropped.
 @Component({
   selector: 'create-node-on-connection-drop',
   styleUrls: [ './create-node-on-connection-drop.component.scss' ],
@@ -15,11 +16,8 @@ import { generateGuid } from '@foblex/utils';
 })
 export class CreateNodeOnConnectionDropComponent {
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
-
-  @ViewChild(FFlowComponent, { static: true })
-  public fFlowComponent!: FFlowComponent;
+  private readonly _canvas = viewChild.required(FCanvasComponent);
+  private readonly _flow = viewChild.required(FFlowComponent);
 
   public connections: { outputId: string, inputId: string }[] = [];
 
@@ -40,7 +38,7 @@ export class CreateNodeOnConnectionDropComponent {
   }
 
   private createNode(outputId: string, position: IPoint): void {
-    this.nodes.push({ id: generateGuid(), position: this.fFlowComponent.getPositionInFlow(position) });
+    this.nodes.push({ id: generateGuid(), position: this._flow().getPositionInFlow(position) });
     this.createConnection(outputId, this.nodes[this.nodes.length - 1].id);
   }
 
@@ -54,6 +52,6 @@ export class CreateNodeOnConnectionDropComponent {
   }
 
   public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
+    this._canvas().resetScaleAndCenter(false);
   }
 }
