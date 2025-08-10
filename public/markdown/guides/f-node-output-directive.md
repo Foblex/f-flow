@@ -6,19 +6,15 @@ The **FNodeOutputDirective** is a directive that marks an element as an output w
 
 ## Inputs
 
-  - `fOutputId: string;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-output-${uniqueId++}`
+  - `fOutputId: InputSignal<string>;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-output-${uniqueId++}`
 
-  - `fOutputMultiple: boolean;` Specifies whether the output can have multiple connections. Default: `false`
+  - `fOutputMultiple: InputSignal<boolean>;` Controls how many connections can originate from this **output connector** when using the library’s built‑in **create or reassign connection** features. Default: `false`
 
-  - `fOutputDisabled: boolean;` Indicates whether the output is disabled. A disabled output may have a different visual representation and interaction behaviour. Default: `false`
+  - `fOutputDisabled: InputSignal<boolean>;` Indicates whether the output is disabled. A disabled output may have a different visual representation and interaction behaviour. Default: `false`
 
-  - `fOutputConnectableSide: EFConnectableSide;`  Indicates the side of the output where the connection can be created. Accepts a value from [EFConnectableSide](e-f-connectable-side) enum. Default: `EFConnectableSide.AUTO`
+  - `fOutputConnectableSide: InputSignal<EFConnectableSide>;`  Specifies the **direction in which the connection line will leave** this output connector (`fNodeOutput`). This controls how the path is drawn relative to the node: top, right, bottom, left, or automatically. Default: `EFConnectableSide.AUTO`
 
-  - `isSelfConnectable: boolean;` Indicates whether the output can be connected to inputs within the same node. Default: `true`
-
-## Properties
-
- - `isConnected: boolean;` Indicates whether the output is connected.
+  - `isSelfConnectable: InputSignal<boolean>;` Indicates whether the output can be connected to inputs within the same node. Default: `true`
 
 ## Styles
 
