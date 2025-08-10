@@ -6,11 +6,11 @@ The **FNodeOutletDirective** is a directive that marks an element as an output w
 
 ## Inputs
 
-  - `fOutletId: string;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-outlet-${uniqueId++}
+  - `fOutletId: InputSignal<string>;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-outlet-${uniqueId++}`
 
-  - `fOutletDisabled: boolean;` Indicates whether the outlet is disabled. A disabled outlet may have a different visual representation and interaction behavior. Default: `false
+  - `fOutletDisabled: InputSignal<boolean>;` Indicates whether the outlet is disabled. A disabled outlet may have a different visual representation and interaction behavior. Default: `false`
 
-  - `isConnectionFromOutlet: boolean;` This input determines the visual origin of the connection process. When set to true, connections are visually drawn from the outlet itself, providing a centralized point for initiating connections. If set to false, even though the outlet is used for creating connections, the visual representation shows the connection being drawn directly from the individual output. Default: `false`
+  - `isConnectionFromOutlet: InputSignal<boolean>;` This input determines the visual origin of the connection process. When set to true, connections are visually drawn from the outlet itself, providing a centralized point for initiating connections. If set to false, even though the outlet is used for creating connections, the visual representation shows the connection being drawn directly from the individual output. Default: `false`
 
 ## Styles
 
