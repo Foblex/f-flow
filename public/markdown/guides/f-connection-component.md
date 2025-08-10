@@ -12,9 +12,9 @@ The **FConnectionComponent** is a component that represents a connection between
 
   - `fSelectionDisabled: InputSignal<boolean>;` Indicates whether the connection cannot be selected. Default: `false`.
 
-  - `fStartColor: InputSignal<string>;` The color at the start of the connection. Default: `black`.
+  - `fStartColor: InputSignal<string>;` Sets the color at the start of the connection line. Combined with fEndColor, this produces a gradient from start to end. Default: `black`.
 
-  - `fEndColor: InputSignal<string>;` The color at the end of the connection. Default: `black`.
+  - `fEndColor: InputSignal<string>;` Sets the color at the end of the connection line. Use this together with fStartColor to create a two-stop gradient along the connection. Default: `black`.
 
   - `fOutputId: InputSignal<string>;` The identifier of the [FNodeOutputDirective](f-node-output-directive) where the connection starts.
 
