@@ -127,20 +127,20 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   /**
    * Centers the specified group or node on the canvas.
-   * @param id - The ID of the group or node to center.
+   * @param groupOrNodeId - The ID of the group or node to center.
    * @param animated - If true, the centering will be animated; otherwise, it will be instantaneous.
    */
-  public centerGroupOrNode(id: string, animated: boolean = true): void {
-    setTimeout(() => this._mediator.execute(new CenterGroupOrNodeRequest(id, animated)));
+  public centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void {
+    setTimeout(() => this._mediator.execute(new CenterGroupOrNodeRequest(groupOrNodeId, animated)));
   }
 
   /**
    * Fits the canvas to the screen by adjusting the scale and position.
-   * @param toCenter - paddings from the bounds of the canvas
+   * @param padding - paddings from the bounds of the canvas
    * @param animated - If true, the fit will be animated; otherwise, it will be instantaneous.
    */
-  public fitToScreen(toCenter: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
-    setTimeout(() => this._mediator.execute(new FitToFlowRequest(toCenter, animated)));
+  public fitToScreen(padding: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
+    setTimeout(() => this._mediator.execute(new FitToFlowRequest(padding, animated)));
   }
 
   /**

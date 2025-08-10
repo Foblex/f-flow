@@ -6,15 +6,15 @@ The **FFlowComponent** manages the flow of draggable and connectable elements wi
 
 ## Inputs
 
-  - `fFlowId: string;` The unique identifier for the component instance. Automatically generated. Default: `f-flow-${uniqueId++}`  
+  - `fFlowId: InputSignal<string>;` The unique identifier for the component instance. Automatically generated. Default: `f-flow-${uniqueId++}`  
 
 ## Outputs
 
- - `fLoaded: EventEmitter<void>;` Emits an event when the flow has fully loaded and initialized. 
+ - `fLoaded: OutputEmitterRef<void>;` Emits an event when the flow has fully loaded and initialized. 
 
 ## Methods
 
- - `getAllNodesRect(): IRect | null;` Returns the bounding rectangle of all nodes in the flow.
+ - `getNodesBoundingBox(): IRect | null;` Returns the bounding rectangle (`IRect`) that covers **all nodes and groups** on the current canvas.
  
  - `getSelection(): FSelectionChangeEvent;` Returns the current selection state of the flow.
  
@@ -28,7 +28,7 @@ The **FFlowComponent** manages the flow of draggable and connectable elements wi
  
  - `getPositionInFlow(position: IPoint): void;` Returns the position of the point relative to the flow.
 
- - `getFlowState(): IFlowState;` Returns all nodes, groups and connections in the flow, including their positions and properties.
+ - `getFlowState(): IFFlowState;` Returns all nodes, groups and connections in the flow, including their positions and properties.
 
 ## Styles
 

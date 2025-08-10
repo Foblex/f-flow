@@ -12,7 +12,7 @@ The **FCanvasComponent** is an Angular component that serves as a container for 
 
 ## Outputs
 
-- `fCanvasChange: EventEmitter<FCanvasChangeEvent>;` Emits an event when there are changes in the canvas state, like position or scale updates.
+- `fCanvasChange: OutputEmitterRef<FCanvasChangeEvent>;` Emits an event when there are changes in the canvas state, like position or scale updates.
 
 ## Methods
 
