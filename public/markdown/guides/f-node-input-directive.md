@@ -6,17 +6,13 @@ The **FNodeOutputDirective** is a directive that marks an element as an input wi
 
 ## Inputs
 
-  - `fInputId: string;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-input-${uniqueId++}`
-    
-  - `fInputMultiple: boolean;`  Determines whether the input allows multiple connectionsDefault: Default: `true`
+  - `fInputId: InputSignal<string>;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-input-${uniqueId++}`
 
-  - `fInputDisabled: boolean;` Indicates whether the input is disabled. A disabled input may have a different visual representation and interaction behavior. Default: `false`
+  - `fInputMultiple: InputSignal<boolean>` Controls how many connections can be attached to this input connector when using the library’s create or reassign connection features. When true, the input can accept multiple simultaneous incoming connections. When false, the built-in logic will only allow one connection at a time — attempting to add another will either replace or block the existing one, depending on the configured behavior. Default: `true`
 
-  - `fInputConnectableSide: EFConnectableSide;` Indicates the side of the output where the connection can be created. Accepts a value from [EFConnectableSide](e-f-connectable-side) enum. Default: `EFConnectableSide.AUTO`
+  - `fInputDisabled: InputSignal<boolean>` When true, the input connector is disabled: it cannot accept new incoming connections and is treated as a non-interactive drop target. The UI may render it in a disabled style to reflect its state. Default: `false`
 
-## Properties
-
- - `isConnected: boolean;` Indicates whether the input is connected.
+  - `fInputConnectableSide: InputSignal<EFConnectableSide>;` Defines from which side a connection line will enter the input connector (fNodeInput) within a node. This setting controls the exact point on the connector where the connection line attaches, not the node as a whole. Default: `EFConnectableSide.AUTO`
 
 ## Styles
 
