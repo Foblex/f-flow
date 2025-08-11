@@ -8,13 +8,13 @@ import {
   OnInit, output,
   Renderer2,
 } from "@angular/core";
-import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
-import { F_NODE, FNodeBase } from './f-node-base';
-import { NotifyTransformChangedRequest } from '../f-storage';
-import { FMediator } from '@foblex/mediator';
-import { BrowserService } from '@foblex/platform';
-import { IHasHostElement } from '../i-has-host-element';
-import { AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest } from '../domain';
+import {IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
+import {F_NODE, FNodeBase} from './f-node-base';
+import {NotifyTransformChangedRequest} from '../f-storage';
+import {FMediator} from '@foblex/mediator';
+import {BrowserService} from '@foblex/platform';
+import {IHasHostElement} from '../i-has-host-element';
+import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
 
 let uniqueId: number = 0;
 
@@ -28,7 +28,7 @@ let uniqueId: number = 0;
     '[class.f-group-selection-disabled]': 'fSelectionDisabled()',
   },
   providers: [
-    { provide: F_NODE, useExisting: FGroupDirective }
+    {provide: F_NODE, useExisting: FGroupDirective}
   ],
 })
 export class FGroupDirective extends FNodeBase
@@ -37,57 +37,45 @@ export class FGroupDirective extends FNodeBase
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override fId = input<string>(`f-group-${ uniqueId++ }`, { alias: 'fGroupId' });
+  public override readonly fId = input<string>(`f-group-${uniqueId++}`, {alias: 'fGroupId'});
 
-  public readonly fParentId = input<string | null | undefined>(null, {
+  public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fGroupParentId',
   });
 
-  public override position = model({ x: 0, y: 0}, {
+  public override readonly position = model(PointExtensions.initialize(), {
     alias: 'fGroupPosition',
   });
 
-  // @Input('fGroupPosition')
-  // public override set position(value: IPoint) {
-  //   if(!PointExtensions.isEqual(this._position, value)) {
-  //     this._position = value;
-  //     this.redraw();
-  //     this.refresh();
-  //   }
-  // }
-  // public override get position(): IPoint {
-  //   return this._position;
-  // }
-
-  public override positionChange = output<IPoint>({alias: 'fGroupPositionChange'});
-
-  @Input('fGroupRotate')
-  public override set rotate(value: number) {
-    if(this._rotate !== value) {
-      this._rotate = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
-  public override get rotate(): number {
-    return this._rotate;
-  }
-
-  public override rotateChange = output<number>({alias: 'fGroupRotateChange'});
-
   @Input('fGroupSize')
   public override set size(value: ISize) {
-    if(!this.size || !SizeExtensions.isEqual(this._size!, value)) {
+    if (!this.size || !SizeExtensions.isEqual(this._size!, value)) {
       this._size = value;
       this.redraw();
       this.refresh()
     }
   }
+
   public override get size(): ISize {
     return this._size!;
   }
 
   public override sizeChange = output<IRect>({alias: 'fGroupSizeChange'});
+
+  @Input('fGroupRotate')
+  public override set rotate(value: number) {
+    if (this._rotate !== value) {
+      this._rotate = value;
+      this.redraw();
+      this.refresh();
+    }
+  }
+
+  public override get rotate(): number {
+    return this._rotate;
+  }
+
+  public override rotateChange = output<number>({alias: 'fGroupRotateChange'});
 
   public override readonly fConnectOnNode = input(true, {
     transform: booleanAttribute,
@@ -115,6 +103,7 @@ export class FGroupDirective extends FNodeBase
     private fBrowser: BrowserService
   ) {
     super(elementReference.nativeElement);
+    super.positionChanges();
   }
 
   public ngOnInit(): void {
@@ -139,7 +128,7 @@ export class FGroupDirective extends FNodeBase
   }
 
   public ngAfterViewInit(): void {
-    if(!this.fBrowser.isBrowser()) {
+    if (!this.fBrowser.isBrowser()) {
       return;
     }
     this._listenStateSizeChanges();

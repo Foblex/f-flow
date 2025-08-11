@@ -31,35 +31,21 @@ let uniqueId: number = 0;
     {provide: F_NODE, useExisting: FNodeDirective}
   ],
 })
-export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
+export class FNodeDirective extends FNodeBase
+  implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override fId = input<string>(`f-node-${uniqueId++}`, {alias: 'fNodeId'});
+  public override readonly fId = input<string>(`f-node-${uniqueId++}`, {alias: 'fNodeId'});
 
-  public readonly fParentId = input<string | null | undefined>(null, {
+  public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fNodeParentId',
   });
 
-  public override position = model({ x: 0, y: 0}, {
+  public override readonly position = model(PointExtensions.initialize(), {
     alias: 'fNodePosition',
   });
-
-  // @Input('fNodePosition')
-  // public override set position(value: IPoint) {
-  //   if (!PointExtensions.isEqual(this._position, value)) {
-  //     this._position = value;
-  //     this.redraw();
-  //     this.refresh();
-  //   }
-  // }
-  //
-  // public override get position(): IPoint {
-  //   return this._position;
-  // }
-
-  public override positionChange = output<IPoint>({alias: 'fNodePositionChange'});
 
   @Input('fNodeSize')
   public override set size(value: ISize) {
@@ -69,6 +55,12 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
       this.refresh()
     }
   }
+
+  public override get size(): ISize {
+    return this._size!;
+  }
+
+  public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
 
   @Input('fNodeRotate')
   public override set rotate(value: number) {
@@ -84,12 +76,6 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   public override rotateChange = output<number>({alias: 'fNodeRotateChange'});
-
-  public override get size(): ISize {
-    return this._size!;
-  }
-
-  public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
 
   public override readonly fConnectOnNode = input(true, {
     transform: booleanAttribute,
@@ -117,6 +103,7 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     private fBrowser: BrowserService
   ) {
     super(elementReference.nativeElement);
+    super.positionChanges();
   }
 
   public ngOnInit(): void {

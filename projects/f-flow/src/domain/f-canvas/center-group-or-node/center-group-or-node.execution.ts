@@ -27,7 +27,7 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
       return;
     }
 
-    this.toCenter(this.getNodeRect(fNode), this.getFlowRect(), fNode.position);
+    this.toCenter(this.getNodeRect(fNode), this.getFlowRect(), fNode.position());
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
   }

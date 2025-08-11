@@ -100,7 +100,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
 
   private _getNewRect(): IRect {
     return RectExtensions.initialize(
-      this._fNode.position().x, this._fNode.position().y, this._fNode.size?.width, this._fNode.size?.height
+      this._fNode._position.x, this._fNode._position.y, this._fNode.size?.width, this._fNode.size?.height
     );
   }
 }

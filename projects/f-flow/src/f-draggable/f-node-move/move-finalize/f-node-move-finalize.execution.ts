@@ -57,7 +57,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       const event = this._getItems()[0].fData.fNodeIds.map((id: string) => {
         return {
           id,
-          position: this._fComponentsStore.fNodes.find(x => x.fId() === id)!.position,
+          position: this._fComponentsStore.fNodes.find(x => x.fId() === id)!.position(),
         }
       });
       this._fComponentsStore.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(event));

@@ -34,6 +34,7 @@ export class FNodeMoveDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    this.fNode.positionChange.emit(this.fNode.position());
+    // this.fNode.updatePosition(position);
+    this.fNode.position.set(this.fNode._position);
   }
 }

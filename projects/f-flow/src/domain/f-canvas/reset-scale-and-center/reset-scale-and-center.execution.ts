@@ -27,7 +27,7 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
     this._oneToOneCentering(
       fNodesRect,
       RectExtensions.fromElement(this._store.fFlow!.hostElement),
-      this._store.fNodes.map((x) => x.position)
+      this._store.fNodes.map((x) => x.position())
     );
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));

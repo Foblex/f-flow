@@ -1,5 +1,13 @@
-import {InjectionToken, OutputEmitterRef, Signal} from '@angular/core';
-import {IPoint, IRect, ISize, PointExtensions} from '@foblex/2d';
+import {
+  effect,
+  inject,
+  InjectionToken,
+  Injector,
+  ModelSignal,
+  OutputEmitterRef,
+  Signal,
+} from '@angular/core';
+import {IPoint, IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
 import {
   FConnectorBase
 } from '../f-connectors';
@@ -19,6 +27,8 @@ const MIXIN_BASE = mixinChangeSelection(
 
 export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
 
+  private readonly _injector = inject(Injector);
+
   public abstract override fId: Signal<string>;
 
   public abstract fParentId: Signal<string | null | undefined>;
@@ -26,11 +36,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   public readonly stateChanges = new FChannel();
 
 
-  public abstract positionChange: OutputEmitterRef<IPoint>;
+  public abstract position: ModelSignal<IPoint>;
 
-  public abstract position: Signal<IPoint>;
-
-  protected _position: IPoint = PointExtensions.initialize();
+  public _position = PointExtensions.initialize();
 
 
   public abstract rotateChange: OutputEmitterRef<number>;
@@ -61,6 +69,16 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public connectors: FConnectorBase[] = [];
 
+  protected positionChanges(): void {
+    effect(() => {
+      if (!PointExtensions.isEqual(this._position, this.position())) {
+        this._position = this.position();
+        this.redraw();
+        this.refresh();
+      }
+    }, {injector: this._injector});
+  }
+
   protected abstract setStyle(name: string, value: string): void;
 
   public isContains(element: HTMLElement | SVGElement): boolean {
@@ -73,7 +91,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.setStyle('height', '' + this.size.height + 'px');
     }
 
-    this.setStyle('transform', `translate(${this.position().x}px,${this.position().y}px) rotate(${this.rotate}deg)`);
+    this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this.rotate}deg)`);
   }
 
   public updatePosition(position: IPoint): void {
