@@ -7,3 +7,9 @@
     border: 1px dashed var(--node-selected-border-color);
   }
 }
+
+.f-group {
+  background-color: var(--minimap-view-color);
+}
+
+@include flow-common.examples-toolbar;

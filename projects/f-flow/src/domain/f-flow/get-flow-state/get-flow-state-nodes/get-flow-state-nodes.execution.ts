@@ -18,7 +18,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
     return this._store.fNodes.filter((x) => x instanceof request.type).map((x) => {
       return {
         id: x.fId(),
-        parent: x.fParentId,
+        parent: x.fParentId(),
         position: x.position,
         size: x.size,
         fOutputs: this._getOutputs(x.hostElement),

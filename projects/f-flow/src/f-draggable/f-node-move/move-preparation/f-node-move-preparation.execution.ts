@@ -62,7 +62,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
     this._fNode = this._fComponentsStore.fNodes
-      .find(x => x.isContains(element) && !x.fDraggingDisabled);
+      .find(x => x.isContains(element) && !x.fDraggingDisabled());
     return this._fNode;
   }
 
@@ -73,7 +73,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   //We drag nodes from selection model
   private _calculateDraggedItems(fNode: FNodeBase): FSummaryNodeMoveDragHandler {
     let result: FSummaryNodeMoveDragHandler;
-    if (!fNode.fSelectionDisabled) {
+    if (!fNode.fSelectionDisabled()) {
       // Need to select node before drag
       this._fMediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
 

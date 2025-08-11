@@ -61,7 +61,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   }
 
   private _isNodeCanBeDragged(fNode?: FNodeBase): boolean {
-    return !!fNode && !fNode.fDraggingDisabled;
+    return !!fNode && !fNode.fDraggingDisabled();
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {

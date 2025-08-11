@@ -1,11 +1,11 @@
-import {EventEmitter, InjectionToken, Signal} from '@angular/core';
-import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import {InjectionToken, OutputEmitterRef, Signal} from '@angular/core';
+import {IPoint, IRect, ISize, PointExtensions} from '@foblex/2d';
 import {
   FConnectorBase
 } from '../f-connectors';
-import { IHasHostElement } from '../i-has-host-element';
-import { ISelectable, mixinChangeSelection } from '../mixins';
-import { FChannel } from '../reactivity';
+import {IHasHostElement} from '../i-has-host-element';
+import {ISelectable, mixinChangeSelection} from '../mixins';
+import {FChannel} from '../reactivity';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
@@ -21,44 +21,41 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public abstract override fId: Signal<string>;
 
-  public abstract fParentId: string | null | undefined;
+  public abstract fParentId: Signal<string | null | undefined>;
 
   public readonly stateChanges = new FChannel();
 
 
-  public abstract positionChange: EventEmitter<IPoint>;
+  public abstract positionChange: OutputEmitterRef<IPoint>;
 
-  public abstract position: IPoint;
+  public abstract position: Signal<IPoint>;
 
   protected _position: IPoint = PointExtensions.initialize();
 
 
-  public abstract rotateChange: EventEmitter<number>;
+  public abstract rotateChange: OutputEmitterRef<number>;
 
   public abstract rotate: number;
 
   protected _rotate: number = 0;
 
 
-  public abstract sizeChange: EventEmitter<IRect>;
+  public abstract sizeChange: OutputEmitterRef<IRect>;
 
   public abstract size: ISize;
 
   protected _size: ISize | undefined;
 
+  //Add ability to connect to first connectable input if node is at pointer position
+  public abstract fConnectOnNode: Signal<boolean>;
 
-  public abstract fMinimapClass: string[] | string;
+  public abstract fMinimapClass: Signal<string[] | string>;
 
-
-  public abstract fDraggingDisabled: boolean;
-
-  public abstract override fSelectionDisabled: boolean;
-
-  public abstract fConnectOnNode: boolean;
+  public abstract fDraggingDisabled: Signal<boolean>;
 
   public fCanBeResizedByChild: boolean = true;
 
-  public abstract fIncludePadding: boolean;
+  public abstract fIncludePadding: Signal<boolean>;
 
   public abstract refresh(): void;
 
@@ -76,7 +73,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.setStyle('height', '' + this.size.height + 'px');
     }
 
-    this.setStyle('transform', `translate(${ this.position.x }px,${ this.position.y }px) rotate(${ this.rotate }deg)`);
+    this.setStyle('transform', `translate(${this.position().x}px,${this.position().y}px) rotate(${this.rotate}deg)`);
   }
 
   public updatePosition(position: IPoint): void {

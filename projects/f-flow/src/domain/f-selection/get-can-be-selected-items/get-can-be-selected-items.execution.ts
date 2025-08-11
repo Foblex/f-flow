@@ -44,7 +44,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
    * @private
    */
   private getNodesWithRects(): ICanBeSelectedElementAndRect[] {
-    return this.fNodes.filter((x) => !x.fSelectionDisabled).map((x) => {
+    return this.fNodes.filter((x) => !x.fSelectionDisabled()).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(
@@ -60,7 +60,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
    * @private
    */
   private getConnectionsWithRects(): ICanBeSelectedElementAndRect[] {
-    return this.fConnections.filter((x) => !x.fSelectionDisabled).map((x) => {
+    return this.fConnections.filter((x) => !x.fSelectionDisabled()).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(

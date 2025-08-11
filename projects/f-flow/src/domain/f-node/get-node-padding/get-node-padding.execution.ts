@@ -17,7 +17,7 @@ export class GetNodePaddingExecution
   private readonly _browser = inject(BrowserService);
 
   public handle(request: GetNodePaddingRequest): [ number, number, number, number ] {
-    return request.fNode.fIncludePadding ? this.getPaddingData(request.fNode, request.rect) : [ 0, 0, 0, 0 ];
+    return request.fNode.fIncludePadding() ? this.getPaddingData(request.fNode, request.rect) : [ 0, 0, 0, 0 ];
   }
 
   private getPaddingData(node: FNodeBase, rect: IRect): [ number, number, number, number ] {

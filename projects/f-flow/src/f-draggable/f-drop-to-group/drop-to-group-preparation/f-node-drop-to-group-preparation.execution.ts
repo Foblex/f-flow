@@ -16,17 +16,17 @@ import {FExternalItemDragHandler} from "../../../f-external-item";
 export class FNodeDropToGroupPreparationExecution
   implements IExecution<FNodeDropToGroupPreparationRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _fDraggableDataContext = inject(FDraggableDataContext);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
   private get _fNodes(): FNodeBase[] {
-    return this._fComponentsStore.fNodes;
+    return this._store.fNodes;
   }
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fCanvasPosition(): IPoint {
@@ -37,7 +37,7 @@ export class FNodeDropToGroupPreparationExecution
     if (!this._isValid()) {
       return;
     }
-    const fNode = this._fComponentsStore
+    const fNode = this._store
       .fNodes.find(n => n.isContains(request.event.targetElement));
     if (!fNode && !this._isExternalItemDragHandler()) {
       throw new Error('Node not found');
@@ -66,9 +66,12 @@ export class FNodeDropToGroupPreparationExecution
   }
 
   private _getNotDraggedNodesRects(): INodeWithRect[] {
-    const draggedNodes = this._addParentNodes(this._getNodesBeingDragged());
+    const nodesBeingDragged = this._getNodesBeingDragged();
+
+
+    const draggedNodes = this._addParentNodes(nodesBeingDragged);
     return this._getNotDraggedNodes(draggedNodes).map((x) => {
-      const rect = this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+      const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
       return {
         node: x,
         rect: RectExtensions.initialize(
@@ -89,7 +92,7 @@ export class FNodeDropToGroupPreparationExecution
 
   private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {
     return fNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
-      result.push(x, ...this._fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
+      result.push(x, ...this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
       return result;
     }, []);
   }

@@ -15,7 +15,7 @@ import { castToEnum } from '@foblex/utils';
 })
 export class FResizeHandleDirective {
 
-  public type = input.required<EFResizeHandleType, unknown>({
+  public type = input.required<EFResizeHandleType, any>({
     alias: 'fResizeHandleType',
     transform: (x) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType)
   });

@@ -46,7 +46,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
     let result = this._fComponentsStore.fNodes
       .find(x => x.isContains(targetElement));
-    if (result && result.fDraggingDisabled) {
+    if (result && result.fDraggingDisabled()) {
       result = undefined;
     }
     return result;

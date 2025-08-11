@@ -17,7 +17,7 @@ export class GetNormalizedParentNodeRectExecution
 
   public handle(request: GetNormalizedParentNodeRectRequest): IRect {
     let result = RectExtensions.initialize(-Infinity, -Infinity, Infinity, Infinity);
-    const parentNode = this._getNode(request.fNode.fParentId);
+    const parentNode = this._getNode(request.fNode.fParentId());
     if (parentNode) {
       result = this._getParentRect(parentNode);
     }

@@ -109,7 +109,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   private _findConnectableNode(element: HTMLElement): FNodeBase | undefined {
-    return this._fNodes.find((x) => x.isContains(element) && x.fConnectOnNode);
+    return this._fNodes.find((x) => x.isContains(element) && x.fConnectOnNode());
   }
 
   private _findFirstConnectableConnectorOfNode(connectableInputs: IConnectorAndRect[], fNode: FNodeBase): FConnectorBase | undefined {

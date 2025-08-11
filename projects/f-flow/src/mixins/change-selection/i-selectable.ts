@@ -4,7 +4,7 @@ export interface ISelectable {
 
   fId: Signal<string>;
 
-  fSelectionDisabled: boolean;
+  fSelectionDisabled: Signal<boolean>;
 
   hostElement: HTMLElement | SVGElement;
 

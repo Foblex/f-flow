@@ -24,7 +24,7 @@ export class GetParentNodesExecution
     }
     visited.add(fNode.fId());
 
-    const parent = this._store.fNodes.find((x) => x.fId() === fNode.fParentId);
+    const parent = this._store.fNodes.find((x) => x.fId() === fNode.fParentId());
     if (!parent) {
       return result;
     }

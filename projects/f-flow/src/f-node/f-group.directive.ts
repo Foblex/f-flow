@@ -2,11 +2,10 @@ import {
   AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter, inject, input,
-  Input,
+  inject, input,
+  Input, model,
   OnDestroy,
-  OnInit,
-  Output,
+  OnInit, output,
   Renderer2,
 } from "@angular/core";
 import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
@@ -25,8 +24,8 @@ let uniqueId: number = 0;
   host: {
     '[attr.data-f-group-id]': 'fId()',
     class: "f-group f-component",
-    '[class.f-group-dragging-disabled]': 'fDraggingDisabled',
-    '[class.f-group-selection-disabled]': 'fSelectionDisabled',
+    '[class.f-group-dragging-disabled]': 'fDraggingDisabled()',
+    '[class.f-group-selection-disabled]': 'fSelectionDisabled()',
   },
   providers: [
     { provide: F_NODE, useExisting: FGroupDirective }
@@ -36,27 +35,31 @@ export class FGroupDirective extends FNodeBase
   implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
   public override fId = input<string>(`f-group-${ uniqueId++ }`, { alias: 'fGroupId' });
 
-  @Input('fGroupParentId')
-  public override fParentId: string | null | undefined = null;
+  public readonly fParentId = input<string | null | undefined>(null, {
+    alias: 'fGroupParentId',
+  });
 
-  @Input('fGroupPosition')
-  public override set position(value: IPoint) {
-    if(!PointExtensions.isEqual(this._position, value)) {
-      this._position = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
-  public override get position(): IPoint {
-    return this._position;
-  }
-  @Output('fGroupPositionChange')
-  public override positionChange = new EventEmitter<IPoint>();
+  public override position = model({ x: 0, y: 0}, {
+    alias: 'fGroupPosition',
+  });
 
+  // @Input('fGroupPosition')
+  // public override set position(value: IPoint) {
+  //   if(!PointExtensions.isEqual(this._position, value)) {
+  //     this._position = value;
+  //     this.redraw();
+  //     this.refresh();
+  //   }
+  // }
+  // public override get position(): IPoint {
+  //   return this._position;
+  // }
+
+  public override positionChange = output<IPoint>({alias: 'fGroupPositionChange'});
 
   @Input('fGroupRotate')
   public override set rotate(value: number) {
@@ -70,9 +73,7 @@ export class FGroupDirective extends FNodeBase
     return this._rotate;
   }
 
-  @Output('fGroupRotateChange')
-  public override rotateChange = new EventEmitter<number>();
-
+  public override rotateChange = output<number>({alias: 'fGroupRotateChange'});
 
   @Input('fGroupSize')
   public override set size(value: ISize) {
@@ -85,23 +86,28 @@ export class FGroupDirective extends FNodeBase
   public override get size(): ISize {
     return this._size!;
   }
-  @Output('fGroupSizeChange')
-  public override sizeChange = new EventEmitter<IRect>();
 
-  @Input({ alias: 'fGroupDraggingDisabled', transform: booleanAttribute })
-  public override fDraggingDisabled: boolean = false;
+  public override sizeChange = output<IRect>({alias: 'fGroupSizeChange'});
 
-  @Input({ alias: 'fGroupSelectionDisabled', transform: booleanAttribute })
-  public override fSelectionDisabled: boolean = false;
+  public override readonly fConnectOnNode = input(true, {
+    transform: booleanAttribute,
+  });
 
-  @Input({ transform: booleanAttribute })
-  public override fIncludePadding: boolean = true;
+  public override readonly fMinimapClass = input<string[] | string>([]);
 
-  @Input({ transform: booleanAttribute })
-  public override fConnectOnNode: boolean = true;
+  public override readonly fDraggingDisabled = input(false, {
+    alias: 'fGroupDraggingDisabled',
+    transform: booleanAttribute,
+  });
 
-  @Input()
-  public override fMinimapClass: string[] | string = [];
+  public override readonly fSelectionDisabled = input(false, {
+    alias: 'fGroupSelectionDisabled',
+    transform: booleanAttribute,
+  });
+
+  public override readonly fIncludePadding = input(true, {
+    transform: booleanAttribute,
+  });
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
@@ -120,7 +126,7 @@ export class FGroupDirective extends FNodeBase
     this.setStyle('top', '0');
     super.redraw();
 
-    this._fMediator.execute<void>(new AddNodeToStoreRequest(this));
+    this._mediator.execute<void>(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -129,7 +135,7 @@ export class FGroupDirective extends FNodeBase
 
   public override redraw(): void {
     super.redraw();
-    this._fMediator.execute(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
@@ -140,7 +146,7 @@ export class FGroupDirective extends FNodeBase
   }
 
   private _listenStateSizeChanges(): void {
-    this._fMediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
+    this._mediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public refresh(): void {
@@ -148,6 +154,6 @@ export class FGroupDirective extends FNodeBase
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute<void>(new RemoveNodeFromStoreRequest(this));
+    this._mediator.execute<void>(new RemoveNodeFromStoreRequest(this));
   }
 }

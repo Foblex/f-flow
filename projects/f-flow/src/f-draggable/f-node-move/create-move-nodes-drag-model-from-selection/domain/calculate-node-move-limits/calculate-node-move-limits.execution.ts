@@ -16,7 +16,7 @@ export class CalculateNodeMoveLimitsExecution
   private _fMediator = inject(FMediator);
 
   public handle(request: CalculateNodeMoveLimitsRequest): INodeMoveLimits {
-    if (!request.fNode.fParentId || request.hasParentNodeInSelected) {
+    if (!request.fNode.fParentId() || request.hasParentNodeInSelected) {
       return {...infinityMinMax()};
     }
 

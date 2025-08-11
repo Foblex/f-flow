@@ -13,19 +13,19 @@ import { FFlowBase } from '../../../f-flow';
 @FExecutionRegister(MinimapDrawNodesRequest)
 export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesRequest, SVGRectElement[]> {
 
-  private readonly _fBrowser = inject(BrowserService);
-  private readonly _fComponentStore = inject(FComponentsStore);
+  private readonly _browser = inject(BrowserService);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fFlow(): FFlowBase | undefined {
-    return this._fComponentStore.fFlow;
+    return this._store.fFlow;
   }
 
   private get _fNodes(): FNodeBase[] {
-    return this._fComponentStore.fNodes;
+    return this._store.fNodes;
   }
 
   private get _fCanvas(): FCanvasBase {
-    return this._fComponentStore.fCanvas!;
+    return this._store.fCanvas!;
   }
 
   public handle(request: MinimapDrawNodesRequest): SVGRectElement[] {
@@ -42,7 +42,7 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
   }
 
   private _createNodeElement(): SVGRectElement {
-    return createSVGElement('rect', this._fBrowser);
+    return createSVGElement('rect', this._browser);
   }
 
   private _getNodeRect(node: FNodeBase): IRect {
@@ -62,10 +62,11 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
   }
 
   private _getClassList(node: FNodeBase): string[] {
-    if (Array.isArray(node.fMinimapClass)) {
-      return node.fMinimapClass;
+    const classList = node.fMinimapClass();
+    if (Array.isArray(classList)) {
+      return classList;
     } else {
-      return [node.fMinimapClass];
+      return [classList];
     }
   }
 }

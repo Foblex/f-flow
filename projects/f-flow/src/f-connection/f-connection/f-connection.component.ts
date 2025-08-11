@@ -1,30 +1,20 @@
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
-  Component, contentChildren,
+  Component,
   ElementRef,
   inject, input,
   Input,
   numberAttribute,
   OnChanges,
   OnDestroy,
-  OnInit,
-  viewChild,
+  OnInit
 } from "@angular/core";
 import {
-  CONNECTION_GRADIENT,
-  CONNECTION_PATH,
-  CONNECTION_TEXT,
   EFConnectionBehavior,
   EFConnectionType,
-  FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent,
-  FConnectionSelectionComponent,
-  IConnectionGradient,
-  IConnectionPath,
-  IConnectionText,
 } from '../common';
 import {NotifyDataChangedRequest} from '../../f-storage';
-import {FConnectionCenterDirective} from '../f-connection-center';
 import {FConnectionFactory} from '../f-connection-builder';
 import {F_CONNECTION} from '../common/f-connection.injection-token';
 //TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
@@ -46,8 +36,8 @@ let uniqueId: number = 0;
   host: {
     '[attr.id]': 'fId()',
     class: "f-component f-connection",
-    '[class.f-connection-selection-disabled]': 'fSelectionDisabled',
-    '[class.f-connection-reassign-disabled]': 'fDraggingDisabled',
+    '[class.f-connection-selection-disabled]': 'fSelectionDisabled()',
+    '[class.f-connection-reassign-disabled]': 'fDraggingDisabled()',
   },
   providers: [{provide: F_CONNECTION, useExisting: FConnectionComponent}],
 })
@@ -61,10 +51,6 @@ export class FConnectionComponent
 
   @Input()
   public override fTextStartOffset: string = '';
-
-  public override fStartColor = input<string>('black');
-
-  public override fEndColor = input<string>('black');
 
   @Input()
   public override fOutputId: any = '';
@@ -84,36 +70,20 @@ export class FConnectionComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  public override fReassignableStart = input<boolean>(false);
+  public override fSelectionDisabled = input(false, {transform: booleanAttribute});
 
-  @Input({alias: 'fReassignDisabled', transform: booleanAttribute})
-  public override fDraggingDisabled: boolean = false;
+  public override fReassignableStart = input(false, {transform: booleanAttribute});
 
-  @Input({transform: booleanAttribute})
-  public override fSelectionDisabled: boolean = false;
-
-  public override fDefs = viewChild.required<ElementRef<SVGDefsElement>>('defs');
-
-  public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
-
-  public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
-
-  public override fDragHandleStart = viewChild(FConnectionDragHandleStartComponent);
-  public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
-
-  public override fSelection = viewChild.required(FConnectionSelectionComponent);
-
-  public override fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
-
-  public override fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
-
-  public fConnectionCenters = contentChildren(FConnectionCenterDirective, {descendants: true});
+  public override fDraggingDisabled = input(false, {
+    alias: 'fReassignDisabled',
+    transform: booleanAttribute
+  });
 
   public override get boundingElement(): HTMLElement | SVGElement {
     return this.fPath().hostElement;
   }
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
@@ -123,14 +93,14 @@ export class FConnectionComponent
   }
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddConnectionToStoreRequest(this));
+    this._mediator.execute(new AddConnectionToStoreRequest(this));
   }
 
   public ngOnChanges(): void {
-    this._fMediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new NotifyDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute(new RemoveConnectionFromStoreRequest(this));
+    this._mediator.execute(new RemoveConnectionFromStoreRequest(this));
   }
 }

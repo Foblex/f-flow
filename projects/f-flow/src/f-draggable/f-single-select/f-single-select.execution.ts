@@ -105,7 +105,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
       if (this._isItemNotSelectedAndSelectable(fItem)) {
         this._clearSelection();
         this._selectItem(fItem);
-      } else if (fItem.fSelectionDisabled) {
+      } else if (fItem.fSelectionDisabled()) {
         this._clearSelection();
       }
     } else {
@@ -114,7 +114,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isItemNotSelectedAndSelectable(item: ISelectable): boolean {
-    return !item.isSelected() && !item.fSelectionDisabled;
+    return !item.isSelected() && !item.fSelectionDisabled();
   }
 
   private _clearSelection(): void {
@@ -126,7 +126,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _multiSelect(fItem?: ISelectable): void {
-    if (fItem && !fItem.fSelectionDisabled) {
+    if (fItem && !fItem.fSelectionDisabled()) {
       fItem.isSelected() ? this._deselectItem(fItem) : this._selectItem(fItem);
     }
   }
