@@ -13,7 +13,7 @@ import {HomePageBackgroundComponent} from "./home-page/home-page-background/home
 export const HOME_CONFIGURATION = {
   providers: [
     provideHeader(
-      provideHeaderSearch(true),
+      provideHeaderSearch(false),
     ),
     provideLogo('./logo.svg'),
     provideTitle('Foblex Flow'),

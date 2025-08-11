@@ -83,7 +83,7 @@ export const EXAMPLES_CONFIGURATION = {
         range: {start: 2, end: 6},
       }),
       provideHeader(
-        provideHeaderSearch(true),
+        provideHeaderSearch(false),
         provideHeaderNavigation([{
           link: '/docs/get-started',
           active: '/docs',
