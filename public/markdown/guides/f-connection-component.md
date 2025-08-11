@@ -6,31 +6,31 @@ The **FConnectionComponent** is a component that represents a connection between
 
 ## Inputs
 
-  - `fConnectionId: string;` The unique identifier for the component instance. Automatically generated. Default: `f-connection-${uniqueId++}` 
+  - `fConnectionId: InputSignal<string>;` The unique identifier for the component instance. Automatically generated. Default: `f-connection-${uniqueId++}`
 
-  - `fReassignDisabled: boolean;` Indicates whether the connection cannot be reassigned. Default: `false`. 
+  - `fReassignDisabled: InputSignal<boolean>;` Indicates whether the connection cannot be reassigned. Default: `false`.
 
-  - `fSelectionDisabled: boolean;` Indicates whether the connection cannot be selected. Default: `false`. 
+  - `fSelectionDisabled: InputSignal<boolean>;` Indicates whether the connection cannot be selected. Default: `false`.
 
-  - `fStartColor: string;` The color at the start of the connection. Default: `black`.
+  - `fStartColor: InputSignal<string>;` Sets the color at the start of the connection line. Combined with fEndColor, this produces a gradient from start to end. Default: `black`.
 
-  - `fEndColor: string;` The color at the end of the connection. Default: `black`. 
+  - `fEndColor: InputSignal<string>;` Sets the color at the end of the connection line. Use this together with fStartColor to create a two-stop gradient along the connection. Default: `black`.
 
-  - `fOutputId: string;` The identifier of the [FNodeOutputDirective](f-node-output-directive) where the connection starts.  
+  - `fOutputId: InputSignal<string>;` The identifier of the [FNodeOutputDirective](f-node-output-directive) where the connection starts.
 
-  - `fInputId: string;` The identifier of the [FNodeInputDirective](f-node-input-directive) where the connection ends.  
+  - `fInputId: InputSignal<string>;` The identifier of the [FNodeInputDirective](f-node-input-directive) where the connection ends.
 
-  - `fBehavior: EFConnectionBehavior;` The behaviour of the connection, affecting its positioning and flexibility. Accepts a value from [EFConnectionBehavior]() enum. Default: `EFConnectionBehavior.FIXED`
+  - `fBehavior: InputSignal<EFConnectionBehavior>;` The behaviour of the connection, affecting its positioning and flexibility. Accepts a value from [EFConnectionBehavior]() enum. Default: `EFConnectionBehavior.FIXED`
 
-  - `fType: EFConnectionType | string;` The visual type of the connection, such as straight, bezier and etc. Accepts a value from [EFConnectionType]() enum or string for custom connection. Default: `EFConnectionType.STRAIGHT` 
+  - `fType: InputSignal<EFConnectionType | string>;` The visual type of the connection, such as straight, bezier and etc. Accepts a value from [EFConnectionType]() enum or string for custom connection. Default: `EFConnectionType.STRAIGHT`
 
-  - `fText: string;` The text displayed on the connection. Default: `null`
+  - `fText: InputSignal<string>;` The text displayed on the connection. Default: `null`
 
-  - `fTextStartOffset: number;` The offset of the text from the start of the connection. Default: `50%`
+  - `fTextStartOffset: InputSignal<number>;` The offset of the text from the start of the connection. Default: `50%`
 
-  - `fOffset: number;` Minimum length of the connection before a curve can occur. Default: `12`
+  - `fOffset: InputSignal<number>;` Minimum length of the connection before a curve can occur. Default: `12`
 
-  - `fRadius: number;` Radius used for curves. Default: `8`
+  - `fRadius: InputSignal<number>;` Radius used for curves. Default: `8`
 
 ## Styles
   - `.f-component` A general class applied to all F components for shared styling.

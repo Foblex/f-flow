@@ -9,4 +9,6 @@ node_modules
 *-debug.log
 .runtimeconfig.json
 
-
+.env
+*.env
+*.env.local

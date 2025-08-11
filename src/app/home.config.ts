@@ -1,5 +1,5 @@
 import {
-  provideBackground, provideComponents,
+  provideBackground, provideHeader, provideHeaderSearch,
   provideHero,
   provideHomeButtons,
   provideHomeFeatures,
@@ -12,6 +12,9 @@ import {HomePageBackgroundComponent} from "./home-page/home-page-background/home
 
 export const HOME_CONFIGURATION = {
   providers: [
+    provideHeader(
+      provideHeaderSearch(false),
+    ),
     provideLogo('./logo.svg'),
     provideTitle('Foblex Flow'),
     provideHero({

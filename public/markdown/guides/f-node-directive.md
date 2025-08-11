@@ -6,21 +6,31 @@ The **FNodeDirective** is a directive that represents a node within a flow of el
 
 ## Inputs
 
-  - `fNodeId: string;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-${uniqueId++}`
+  - `fNodeId: InputSignal<string>;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-${uniqueId++}`.
 
-  - `fNodePosition: IPoint;` Sets the position of the node. Redraws the node when the position changes.
+  - `fNodeParentId: InputSignal<string | null | undefined>;` The ID of the parent node or group. If not specified, the node will be a top-level node in the flow. Default: `null`.
 
-  - `fNodeSize: IRect;` Sets the size of the node. Redraws the node when the size changes. Use the [fResizeHandle](f-resize-handle-directive) directive to resize the node.
+  - `fNodePosition: InputSignal<IPoint>;` Sets the position of the node. Redraws the node when the position changes.
 
-  - `fNodeDraggingDisabled: boolean;` Indicates whether the node cannot be dragged. Default: `false`
+  - `fNodeSize: InputSignal<ISize>;` Sets the size of the node. Redraws the node when the size changes. Node has a default size fitting its content, but you can specify a custom size.
 
-  - `fNodeSelectionDisabled: boolean;`  Indicates whether the node cannot be selected. Default: `false`
+  - `fNodeRotate: InputSignal<number>;` Sets the rotation angle of the node in degrees. Default: `0`.
+
+  - `fNodeDraggingDisabled: InputSignal<boolean>;` Indicates whether the node cannot be dragged. Default: `false`.
+
+  - `fNodeSelectionDisabled: InputSignal<boolean>;`  Indicates whether the node cannot be selected. Default: `false`.
+
+  - `fIncludePadding: InputSignal<boolean>;` Determines whether the parent node’s or group’s inner spacing (CSS padding) is taken into account when restricting the movement of child nodes. When set to `true`, a child node cannot move beyond the parent’s edges or its inner padding. Default: `true`.
+
+  - `fConnectionOnNode: InputSignal<boolean>;` Allows creating a connection by dropping it anywhere on a node, instead of directly on an input connector. When enabled (`true`), if the connection is dropped on a node (not on a specific connector), the first available connectable input on that node will be automatically used. Default: `true`.
+
+  - `fMinimapClass: InputSignal<string | string[]>;` Additional CSS classes to apply to the node in the minimap. This can be used to style the node differently in the minimap compared to its appearance in the main flow. Default: `[]`.
 
 ## Outputs
 
- - `fNodePositionChange: EventEmitter<IPoint>;` Emits an event when the position of the node changes.  
+ - `fNodePositionChange: OutputEmitterRef<IPoint>;` Emits an event when the position of the node changes.  
 
- - `fNodeSizeChange: EventEmitter<IRect>;` Emits an event when the size of the node changes using the [fResizeHandle](f-resize-handle-directive) directive.
+ - `fNodeSizeChange: OutputEmitterRef<IRect>;` Emits an event when the size of the node changes using the [fResizeHandle](f-resize-handle-directive) directive.
 
 ## Methods
 

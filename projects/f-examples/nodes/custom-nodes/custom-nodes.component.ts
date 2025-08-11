@@ -28,12 +28,11 @@ import { BrowserService } from '@foblex/platform';
   ]
 })
 export class CustomNodesComponent implements OnDestroy {
-  protected readonly fCanvas = viewChild(FCanvasComponent);
-
+  private readonly _fCanvas = viewChild(FCanvasComponent);
   private readonly _fBrowser = inject(BrowserService);
 
   protected onLoaded(): void {
-    this.fCanvas()?.fitToScreen(PointExtensions.initialize(100, 100), false);
+    this._fCanvas()?.fitToScreen(PointExtensions.initialize(100, 100), false);
   }
 
   protected onCanvasChanged(event: FCanvasChangeEvent): void {
