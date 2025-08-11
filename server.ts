@@ -4,9 +4,9 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
-import 'dotenv/config';
-import cookieParser from 'cookie-parser';
-import {setupServerRoutes} from "./server/setup-server-routes";
+// import 'dotenv/config';
+// import cookieParser from 'cookie-parser';
+// import {setupServerRoutes} from "./server/setup-server-routes";
 
 export function app(): express.Express {
   const server = express();
@@ -16,8 +16,8 @@ export function app(): express.Express {
 
   const commonEngine = new CommonEngine();
 
-  server.use(cookieParser());
-  setupServerRoutes(server);
+  // server.use(cookieParser());
+  // setupServerRoutes(server);
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);

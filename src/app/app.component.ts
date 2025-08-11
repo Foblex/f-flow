@@ -30,40 +30,40 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this._setDefaultFontSetClass();
-    this._listenForSearch();
+   // this._listenForSearch();
   }
 
   private _setDefaultFontSetClass(): void {
     this._iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
   }
 
-  private _listenForSearch(): void {
-    this._route.fragment.pipe(
-      takeUntilDestroyed(this._destroyRef), startWith(this._route.snapshot.fragment)
-    ).subscribe(fragment => {
-      if (fragment === 'search') {
-        this._openAssistant();
-      }
-    });
-  }
+  // private _listenForSearch(): void {
+  //   this._route.fragment.pipe(
+  //     takeUntilDestroyed(this._destroyRef), startWith(this._route.snapshot.fragment)
+  //   ).subscribe(fragment => {
+  //     if (fragment === 'search') {
+  //       this._openAssistant();
+  //     }
+  //   });
+  // }
 
-  private _openAssistant(): void {
-    this._dialog.open(AssistantComponent, {
-      width: '800px', maxHeight: '80vh',
-    }).afterClosed().pipe(
-      take(1), takeUntilDestroyed(this._destroyRef)
-    ).subscribe(() => this._clearSearch());
-  }
-
-  private _clearSearch(): void {
-    this._router.navigate([], {
-      fragment: '',
-      queryParamsHandling: 'preserve',
-      replaceUrl: true, // чтобы не добавлять новую запись в историю
-    });
-  }
-
-  protected takeScreenshot(): void {
-    takeScreenshot('f-flow').then();
-  }
+  // private _openAssistant(): void {
+  //   this._dialog.open(AssistantComponent, {
+  //     width: '800px', maxHeight: '80vh',
+  //   }).afterClosed().pipe(
+  //     take(1), takeUntilDestroyed(this._destroyRef)
+  //   ).subscribe(() => this._clearSearch());
+  // }
+  //
+  // private _clearSearch(): void {
+  //   this._router.navigate([], {
+  //     fragment: '',
+  //     queryParamsHandling: 'preserve',
+  //     replaceUrl: true, // чтобы не добавлять новую запись в историю
+  //   });
+  // }
+  //
+  // protected takeScreenshot(): void {
+  //   takeScreenshot('f-flow').then();
+  // }
 }
