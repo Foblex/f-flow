@@ -7,28 +7,38 @@ import {INodeWithRect} from "../../domain";
 @FExecutionRegister(SortContainersForDropByLayerRequest)
 export class SortContainersForDropByLayerExecution implements IExecution<SortContainersForDropByLayerRequest, INodeWithRect[]> {
 
-  public handle({containersForDrop}: SortContainersForDropByLayerRequest): INodeWithRect[] {
-    return containersForDrop.sort((containerA, containerB) => {
-      return this._compareByDomLayer(containerA.node.hostElement, containerB.node.hostElement);
+  public handle({ containersForDrop }: SortContainersForDropByLayerRequest): INodeWithRect[] {
+    const decorated = containersForDrop.map((item, idx) => ({ item, idx }));
+
+    decorated.sort((a, b) => {
+      const elA = a.item.node.hostElement;
+      const elB = b.item.node.hostElement;
+
+      const domOrder = this._domOrder(elA, elB);
+
+      if (domOrder !== 0) return -domOrder;
+
+      return a.idx - b.idx;
     });
+
+    return decorated.map(d => d.item);
   }
 
-  private _compareByDomLayer(a: Element, b: Element): number {
+  private _domOrder(a: Element, b: Element): number {
     if (a === b) return 0;
+
     const pos = a.compareDocumentPosition(b);
 
-    // a раньше b в DOM → хотим, чтобы a шёл ПОЗЖЕ в массиве → возвращаем 1
-    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return 1;
-    // a позже b в DOM → a должен быть РАНЬШЕ в массиве → возвращаем -1
-    if (pos & Node.DOCUMENT_POSITION_PRECEDING) return -1;
+    if (pos & Node.DOCUMENT_POSITION_FOLLOWING)  return -1;
+    if (pos & Node.DOCUMENT_POSITION_PRECEDING)  return  1;
 
-    // Если узлы "разобщены" (например, из разных shadow-root или временно не в документе)
     if (pos & Node.DOCUMENT_POSITION_DISCONNECTED) {
-      // запасной вариант: стабилизируем по top/left, а при равенстве — по исходному порядку
-      const ar = (a as HTMLElement).getBoundingClientRect?.() ?? {top: 0, left: 0};
-      const br = (b as HTMLElement).getBoundingClientRect?.() ?? {top: 0, left: 0};
-      if (ar.top !== br.top) return ar.top - br.top;
-      if (ar.left !== br.left) return ar.left - br.left;
+      const ar = (a as HTMLElement).getBoundingClientRect?.() ?? { top: 0, left: 0 };
+      const br = (b as HTMLElement).getBoundingClientRect?.() ?? { top: 0, left: 0 };
+
+      if (ar.top !== br.top)  return ar.top < br.top ? -1 : 1;
+      if (ar.left !== br.left) return ar.left < br.left ? -1 : 1;
+
       return 0;
     }
 

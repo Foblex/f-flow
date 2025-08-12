@@ -21,34 +21,37 @@ export class FNodeDropToGroupPreparationExecution
   private readonly _store = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
-  private get _fNodes(): FNodeBase[] {
+  private get _allNodesAndGroups(): FNodeBase[] {
     return this._store.fNodes;
   }
 
-  private get _transform(): ITransformModel {
+  private get _canvasTransform(): ITransformModel {
     return this._store.fCanvas!.transform;
   }
 
-  private get _fCanvasPosition(): IPoint {
-    return PointExtensions.sum(this._transform.position, this._transform.scaledPosition)
+  private get _canvasPosition(): IPoint {
+    return PointExtensions.sum(this._canvasTransform.position, this._canvasTransform.scaledPosition)
   }
 
-  public handle(request: FNodeDropToGroupPreparationRequest): void {
-    if (!this._isValid()) {
+  public handle({event}: FNodeDropToGroupPreparationRequest): void {
+    if (!this._canPrepareDropToGroup()) {
       return;
     }
-    const fNode = this._store.fNodes.find(n => n.isContains(request.event.targetElement));
-    if (!fNode && !this._isExternalItemDragHandler()) {
-      throw new Error('Node not found');
+    const _dragTarget = this._allNodesAndGroups.find((x) =>
+      x.isContains(event.targetElement)
+    );
+
+    if (!_dragTarget && !this._isExternalItemDragHandler()) {
+      throw new Error('Drag target node not found');
     }
 
     this._dragContext.draggableItems.push(new FNodeDropToGroupDragHandler(
       this._injector,
-      this._getNotDraggedNodesRects()
+      this._collectGroupingTargetRects()
     ));
   }
 
-  private _isValid(): boolean {
+  private _canPrepareDropToGroup(): boolean {
     return this._isNodeDragHandler() || this._isExternalItemDragHandler();
   }
 
@@ -62,45 +65,48 @@ export class FNodeDropToGroupPreparationExecution
       .some((x) => x instanceof FExternalItemDragHandler);
   }
 
-  private _getNotDraggedNodesRects(): INodeWithRect[] {
-    const nodesBeingDragged = this._getNodesBeingDragged();
+  private _collectGroupingTargetRects(): INodeWithRect[] {
+    const dragged = this._draggedNodes();
+    const draggingGroup = dragged.some((x) => x instanceof FGroupDirective);
 
-    const isGroupInDrag = nodesBeingDragged.some((x) => x instanceof FGroupDirective);
+    const draggedNodes = this._draggedNodesWithParents(dragged);
 
-    const draggedNodes = this._addParentNodes(nodesBeingDragged);
-
-    return this._getNotDraggedNodes(draggedNodes, isGroupInDrag).map((x) => {
-      const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
-      return {
-        node: x,
-        rect: RectExtensions.initialize(
-          rect.x * this._transform.scale + this._fCanvasPosition.x,
-          rect.y * this._transform.scale + this._fCanvasPosition.y,
-          rect.width * this._transform.scale,
-          rect.height * this._transform.scale
-        )
-      }
+    return this._eligibleTargets(draggedNodes, draggingGroup).map((node) => {
+      const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(node.hostElement));
+      return {node, rect: this._toCanvasRect(rect)};
     });
   }
 
-  private _getNodesBeingDragged(): FNodeBase[] {
+  private _draggedNodes(): FNodeBase[] {
     return this._dragContext.draggableItems
       .find((x) => x instanceof FSummaryNodeMoveDragHandler)
       ?.fHandlers.map((x) => x.fNode) || [];
   }
 
-  private _addParentNodes(nodes: FNodeBase[]): FNodeBase[] {
+  /**
+   * Returns the list of dragged nodes extended with all of their parent nodes.
+   *
+   * This ensures that parent nodes are excluded from the potential drop targets,
+   * since they already act as containers for the dragged elements.
+   */
+  private _draggedNodesWithParents(nodes: FNodeBase[]): FNodeBase[] {
     return nodes.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x, ...this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
       return result;
     }, []);
   }
 
-  private _getNotDraggedNodes(draggedNodes: FNodeBase[], isGroupInDrag: boolean): FNodeBase[] {
-    const result = this._fNodes.filter((x) => !draggedNodes.includes(x));
-    if (isGroupInDrag) {
-      return result.filter((x) => x instanceof FGroupDirective);
-    }
-    return result;
+  private _eligibleTargets(dragged: FNodeBase[], draggingGroup: boolean): FNodeBase[] {
+    const nonDragged = this._allNodesAndGroups.filter(x => !dragged.includes(x));
+    return draggingGroup ? nonDragged.filter(x => x instanceof FGroupDirective) : nonDragged;
+  }
+
+  private _toCanvasRect(rect: IRect): IRect {
+    return RectExtensions.initialize(
+      rect.x * this._canvasTransform.scale + this._canvasPosition.x,
+      rect.y * this._canvasTransform.scale + this._canvasPosition.y,
+      rect.width * this._canvasTransform.scale,
+      rect.height * this._canvasTransform.scale
+    );
   }
 }

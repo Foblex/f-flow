@@ -2,6 +2,7 @@ import { IPoint, PointExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
+import {F_CSS_CLASS} from "../../domain";
 
 export class FNodeMoveDragHandler implements IFDragHandler {
 
@@ -15,6 +16,10 @@ export class FNodeMoveDragHandler implements IFDragHandler {
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
     this._onPointerDownPosition = { ...fNode._position };
+  }
+
+  public prepareDragSequence(): void {
+    this.fNode.hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -35,5 +40,6 @@ export class FNodeMoveDragHandler implements IFDragHandler {
 
   public onPointerUp(): void {
     this.fNode.position.set(this.fNode._position);
+    this.fNode.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
   }
 }

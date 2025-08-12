@@ -26,6 +26,10 @@ export class FSummaryNodeMoveDragHandler implements IFDragHandler {
     };
   }
 
+  public prepareDragSequence(): void {
+    this.fHandlers.forEach((x) => x.prepareDragSequence());
+  }
+
   public onPointerMove(difference: IPoint): void {
     const adjustCellSize = this._fComponentStore.fDraggable!.fCellSizeWhileDragging;
     const differenceWithRestrictions = this._fBoundsLimiter.limit(difference, adjustCellSize);
