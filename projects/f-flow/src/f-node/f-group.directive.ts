@@ -51,20 +51,9 @@ export class FGroupDirective extends FNodeBase
 
   public override sizeChange = output<IRect>({alias: 'fGroupSizeChange'});
 
-  @Input('fGroupRotate')
-  public override set rotate(value: number) {
-    if (this._rotate !== value) {
-      this._rotate = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
-
-  public override get rotate(): number {
-    return this._rotate;
-  }
-
-  public override rotateChange = output<number>({alias: 'fGroupRotateChange'});
+  public override readonly rotate = model(0, {
+    alias: 'fGroupRotate',
+  });
 
   public override readonly fConnectOnNode = input(true, {
     transform: booleanAttribute,
@@ -92,6 +81,7 @@ export class FGroupDirective extends FNodeBase
     super(elementReference.nativeElement);
     super.positionChanges();
     super.sizeChanges();
+    super.rotateChanges();
   }
 
   public ngOnInit(): void {

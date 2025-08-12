@@ -3,11 +3,11 @@ import {
   Directive,
   ElementRef,
   inject, input,
-  Input, model,
+  model,
   OnDestroy,
   OnInit, output,
 } from "@angular/core";
-import {IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
+import {IRect, ISize, PointExtensions} from '@foblex/2d';
 import {NotifyTransformChangedRequest} from '../f-storage';
 import {FMediator} from '@foblex/mediator';
 import {F_NODE, FNodeBase} from './f-node-base';
@@ -51,20 +51,9 @@ export class FNodeDirective extends FNodeBase
 
   public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
 
-  @Input('fNodeRotate')
-  public override set rotate(value: number) {
-    if (this._rotate !== value) {
-      this._rotate = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
-
-  public override get rotate(): number {
-    return this._rotate;
-  }
-
-  public override rotateChange = output<number>({alias: 'fNodeRotateChange'});
+  public override readonly rotate = model(0, {
+    alias: 'fNodeRotate',
+  });
 
   public override readonly fConnectOnNode = input(true, {
     transform: booleanAttribute,
@@ -92,6 +81,7 @@ export class FNodeDirective extends FNodeBase
     super(elementReference.nativeElement);
     super.positionChanges();
     super.sizeChanges();
+    super.rotateChanges();
   }
 
   public ngOnInit(): void {

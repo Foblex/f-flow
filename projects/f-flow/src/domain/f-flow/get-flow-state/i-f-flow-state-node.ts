@@ -11,6 +11,8 @@ export interface IFFlowStateNode {
 
   size?: ISize;
 
+  rotate: number;
+
   fInputs: IFFlowStateConnector[];
 
   fOutputs: IFFlowStateConnector[];

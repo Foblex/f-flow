@@ -45,11 +45,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   public _position = PointExtensions.initialize();
 
 
-  public abstract rotateChange: OutputEmitterRef<number>;
+  public abstract rotate: ModelSignal<number>;
 
-  public abstract rotate: number;
-
-  protected _rotate: number = 0;
+  public _rotate: number = 0;
 
 
   public abstract sizeChange: OutputEmitterRef<IRect>;
@@ -100,6 +98,19 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
     }, {injector: this._injector});
   }
 
+  protected rotateChanges(): void {
+    effect(() => {
+      const rotate = this.rotate();
+      untracked(() => {
+        if (this._rotate !== rotate) {
+          this._rotate = rotate;
+          this.redraw();
+          this.refresh();
+        }
+      });
+    }, {injector: this._injector});
+  }
+
   private _isSizeEqual(value?: ISize): boolean {
     return this._size?.width === value?.width && this._size?.height === value?.height;
   }
@@ -116,7 +127,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.setStyle('height', '' + this._size.height + 'px');
     }
 
-    this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this.rotate}deg)`);
+    this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this._rotate}deg)`);
   }
 
   public updatePosition(position: IPoint): void {

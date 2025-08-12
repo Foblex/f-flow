@@ -42,7 +42,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
       connector: IPoint,
     }[],
   ) {
-    this._startRotation = this._fNode.rotate;
+    this._startRotation = this._fNode._rotate;
     this.fData = {
       fNodeId: _fNode.fId(),
     };
@@ -107,6 +107,6 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    this._fNode.rotateChange.emit(this._fNode.rotate);
+    this._fNode.rotate.set(this._fNode._rotate);
   }
 }
