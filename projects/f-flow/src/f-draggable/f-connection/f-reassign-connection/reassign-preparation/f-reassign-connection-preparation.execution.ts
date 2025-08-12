@@ -17,22 +17,22 @@ import {
 export class FReassignConnectionPreparationExecution implements IExecution<FReassignConnectionPreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private _fConnection: FConnectionBase | undefined;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _fConnections(): FConnectionBase[] {
-    return this._fComponentsStore.fConnections;
+    return this._store.fConnections;
   }
 
   public handle(request: FReassignConnectionPreparationRequest): void {
@@ -82,7 +82,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _updateConnectionLayer(): void {
     this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer().nativeElement
+        this._fConnection!, this._store.fCanvas!.fConnectionsContainer().nativeElement
       )
     );
   }

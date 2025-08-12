@@ -8,10 +8,10 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 @FExecutionRegister(ListenCountChangesRequest)
 export class ListenCountChangesExecution implements IExecution<ListenCountChangesRequest, FChannelHub> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: ListenCountChangesRequest): FChannelHub {
-    return new FChannelHub(this._fComponentsStore.countChanges$)
+    return new FChannelHub(this._store.countChanges$)
       .pipe(notifyOnStart(), debounceTime(1));
   }
 }

@@ -19,10 +19,10 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
   implements IExecution<GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IConnectorAndRect[]> {
 
   private readonly _mediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fSourceConnectors(): FNodeOutputBase[] {
-    return this._fComponentsStore.fOutputs as FNodeOutputBase[];
+    return this._store.fOutputs as FNodeOutputBase[];
   }
 
   public handle(payload: GetAllCanBeConnectedSourceConnectorsAndRectsRequest): IConnectorAndRect[] {

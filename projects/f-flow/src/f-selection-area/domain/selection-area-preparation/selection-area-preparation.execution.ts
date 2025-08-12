@@ -12,11 +12,11 @@ import { isValidEventTrigger } from '../../../domain';
 export class SelectionAreaPreparationExecution implements IExecution<SelectionAreaPreparationRequest, void> {
 
   private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
   private _dragContext = inject(FDraggableDataContext);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   public handle(request: SelectionAreaPreparationRequest): void {
@@ -25,7 +25,7 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
     }
     this._dragContext.draggableItems = [
       new SelectionAreaDragHandle(
-        this._fComponentsStore, request.fSelectionArea, this._dragContext, this._fMediator
+        this._store, request.fSelectionArea, this._dragContext, this._fMediator
       )
     ];
 

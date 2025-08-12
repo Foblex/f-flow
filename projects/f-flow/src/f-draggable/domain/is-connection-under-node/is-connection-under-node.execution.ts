@@ -14,7 +14,7 @@ import {GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest} from
 export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUnderNodeRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: IsConnectionUnderNodeRequest): void {
 
@@ -40,27 +40,27 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _getOutputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fOutputs.filter((x) => {
+    return this._store.fOutputs.filter((x) => {
       return fNode.isContains(x.hostElement) && x.canBeConnected;
     });
   }
 
   private _getInputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fInputs.filter((x) => {
+    return this._store.fInputs.filter((x) => {
       return fNode.isContains(x.hostElement) && x.canBeConnected;
     });
   }
 
   private _getOutputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
-    return this._fComponentsStore.fConnections
+    return this._store.fConnections
       .filter((x) => connectorsId.includes(x.fOutputId))
       .map((x) => x.fId());
   }
 
   private _getInputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
-    return this._fComponentsStore.fConnections
+    return this._store.fConnections
       .filter((x) => connectorsId.includes(x.fInputId))
       .map((x) => x.fId());
   }
@@ -71,7 +71,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {
     const fNodeRect = this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(fNode.hostElement));
-    return this._fComponentsStore.fConnections.filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
+    return this._store.fConnections.filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
   }
 
   private _isConnectionHasIntersectionsWithNode(fConnection: FConnectionBase, fNodeRect: IRoundedRect): boolean {
@@ -79,7 +79,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _emitNodeIntersectedWithConnections(fNode: FNodeBase, fConnections: FConnectionBase[]): void {
-    this._fComponentsStore.fDraggable?.fNodeIntersectedWithConnections.emit(
+    this._store.fDraggable?.fNodeIntersectedWithConnections.emit(
       new FNodeIntersectedWithConnections(
         fNode.fId(),
         fConnections.map((x) => x.fId())

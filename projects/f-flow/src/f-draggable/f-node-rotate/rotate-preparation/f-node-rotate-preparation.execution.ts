@@ -19,16 +19,16 @@ import { FConnectionBase } from '../../../f-connection';
 export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private _fNode: FNodeBase | undefined;
@@ -65,7 +65,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._fComponentsStore
+    this._fNode = this._store
       .fNodes.find(x => x.isContains(element));
     return this._fNode;
   }
@@ -87,7 +87,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateInputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
-      const connector = this._fComponentsStore.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
+      const connector = this._store.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
       return {
         connection: new TargetConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
@@ -102,7 +102,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateOutputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
-      const connector = this._fComponentsStore.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
+      const connector = this._store.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
       return {
         connection: new SourceConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter

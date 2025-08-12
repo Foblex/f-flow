@@ -14,7 +14,7 @@ export class FNodeDropToGroupFinalizeExecution
   implements IExecution<FNodeDropToGroupFinalizeRequest, void> {
 
   private readonly _dragContext = inject(FDraggableDataContext);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   public handle(request: FNodeDropToGroupFinalizeRequest): void {
     if (!this._isValid()) {
@@ -33,7 +33,7 @@ export class FNodeDropToGroupFinalizeExecution
   }
 
   private _emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {
-    this._fComponentsStore.fDraggable?.fDropToGroup.emit(
+    this._store.fDraggable?.fDropToGroup.emit(
       new FDropToGroupEvent(fTargetId, this._getDraggedNodeIds(), event.getPosition())
     );
   }

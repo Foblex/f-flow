@@ -21,7 +21,7 @@ export class FCreateConnectionFinalizeExecution
   private _fResult: FDragHandlerResult<IFCreateConnectionDragResult> = inject(FDragHandlerResult);
 
   private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
   private _dragContext = inject(FDraggableDataContext);
 
   private get _fDragHandler(): FCreateConnectionDragHandler {
@@ -52,15 +52,15 @@ export class FCreateConnectionFinalizeExecution
   }
 
   private getOutput(): FConnectorBase | undefined {
-    return this._fComponentsStore.fOutputs.find((x) => x.fId === this._fResult.getData().fOutputId);
+    return this._store.fOutputs.find((x) => x.fId === this._fResult.getData().fOutputId);
   }
 
   private getOutlet(): FConnectorBase | undefined {
-    return this._fComponentsStore.fOutlets.find((x) => x.fId === this._fResult.getData().fOutputId);
+    return this._store.fOutlets.find((x) => x.fId === this._fResult.getData().fOutputId);
   }
 
   private emitEvent(event: IPointerEvent): void {
-    this._fComponentsStore.fDraggable?.fCreateConnection.emit(
+    this._store.fDraggable?.fCreateConnection.emit(
       new FCreateConnectionEvent(
         this.getTargetOutput(this.getOutput() || this.getOutlet()).fId,
         this._getInputUnderPointer(event)?.fId,

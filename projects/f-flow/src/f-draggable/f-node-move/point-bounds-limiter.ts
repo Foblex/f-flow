@@ -4,7 +4,7 @@ import { Injector } from '@angular/core';
 
 export class PointBoundsLimiter {
 
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
 
   private readonly _vCellSize: number;
   private readonly _hCellSize: number;
@@ -14,9 +14,9 @@ export class PointBoundsLimiter {
     private _onPointerDown: IPoint,
     private readonly _limit: IMinMaxPoint
   ) {
-    this._fComponentsStore = _injector.get(FComponentsStore);
-    this._vCellSize = this._fComponentsStore.fDraggable!.vCellSize;
-    this._hCellSize = this._fComponentsStore.fDraggable!.hCellSize;
+    this._store = _injector.get(FComponentsStore);
+    this._vCellSize = this._store.fDraggable!.vCellSize;
+    this._hCellSize = this._store.fDraggable!.hCellSize;
   }
 
   public limit(difference: IPoint, adjustCellSize: boolean): IPoint {

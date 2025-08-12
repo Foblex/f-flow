@@ -8,7 +8,7 @@ export class FLineAlignmentDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'line-alignment';
 
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
 
   private _debounceTimer: any = null;
 
@@ -22,8 +22,8 @@ export class FLineAlignmentDragHandler implements IFDragHandler {
     private _rects: IRect[],
     private _restrictions: IMinMaxPoint,
   ) {
-    this._fComponentsStore = _injector.get(FComponentsStore);
-    this._transform = this._fComponentsStore.fCanvas?.transform!;
+    this._store = _injector.get(FComponentsStore);
+    this._transform = this._store.fCanvas?.transform!;
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -58,7 +58,7 @@ export class FLineAlignmentDragHandler implements IFDragHandler {
 
   public findNearestCoordinate(difference: IPoint): ILineAlignmentResult {
     const rect = RectExtensions.addPoint(this._draggedNodeRect, difference);
-    return findClosestAlignment(this._rects, rect, this._fComponentsStore.fLineAlignment!.fAlignThreshold());
+    return findClosestAlignment(this._rects, rect, this._store.fLineAlignment!.fAlignThreshold());
   }
 
   public onPointerUp(): void {

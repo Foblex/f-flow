@@ -19,7 +19,7 @@ export class FCreateConnectionFromOutletPreparationExecution
   implements IHandler<FCreateConnectionFromOutletPreparationRequest, void> {
 
   private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: FCreateConnectionFromOutletPreparationRequest): void {
 
@@ -40,7 +40,7 @@ export class FCreateConnectionFromOutletPreparationExecution
   }
 
   private _getNodeOutlet(fNode: FNodeBase): FNodeOutletBase {
-    const result = this._fComponentsStore.fOutlets
+    const result = this._store.fOutlets
       .find((x) => fNode.isContains(x.hostElement));
     if (!result) {
       throw new Error('Outlet not found');
@@ -49,7 +49,7 @@ export class FCreateConnectionFromOutletPreparationExecution
   }
 
   private _getNodeOutputs(fNode: FNodeBase): FConnectorBase[] {
-    return this._fComponentsStore.fOutputs
+    return this._store.fOutputs
       .filter((x) => fNode.isContains(x.hostElement));
   }
 

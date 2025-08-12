@@ -21,16 +21,16 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
   private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult> = inject(FDragHandlerResult);
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fBrowser = inject(BrowserService);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _fCreateNode(): EventEmitter<FCreateNodeEvent> {
-    return this._fComponentsStore.fDraggable!.fCreateNode;
+    return this._store.fDraggable!.fCreateNode;
   }
 
   private get _fDragHandler(): FExternalItemDragHandler {

@@ -12,7 +12,7 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 export class GetNormalizedParentNodeRectExecution
   implements IExecution<GetNormalizedParentNodeRectRequest, IRect> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _fMediator = inject(FMediator);
 
   public handle(request: GetNormalizedParentNodeRectRequest): IRect {
@@ -25,7 +25,7 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNode(fId?: string | null): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => x.fId() === fId);
+    return this._store.fNodes.find((x) => x.fId() === fId);
   }
   //   Parent Node
   // +----------------------------------------+

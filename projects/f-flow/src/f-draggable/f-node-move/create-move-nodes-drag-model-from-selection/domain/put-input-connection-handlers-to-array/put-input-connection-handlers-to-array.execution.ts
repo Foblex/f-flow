@@ -13,11 +13,11 @@ import { TargetConnectionDragHandler } from '../../../connection-drag-handlers/t
 export class PutInputConnectionHandlersToArrayExecution
   implements IExecution<PutInputConnectionHandlersToArrayRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
   private get _fConnections(): FConnectionBase[] {
-    return this._fComponentsStore.fConnections;
+    return this._store.fConnections;
   }
 
   public handle(request: PutInputConnectionHandlersToArrayRequest): void {
@@ -32,7 +32,7 @@ export class PutInputConnectionHandlersToArrayExecution
   }
 
   private _getNodeInputIds(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fInputs
+    return this._store.fInputs
       .filter((x) => fNode.isContains(x.hostElement))
       .map((x) => x.fId);
   }

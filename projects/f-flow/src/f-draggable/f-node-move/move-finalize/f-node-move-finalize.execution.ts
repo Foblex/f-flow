@@ -20,11 +20,11 @@ import {FMoveNodesEvent} from "../f-move-nodes.event";
 export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeRequest, void> {
 
   private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
   private _dragContext = inject(FDraggableDataContext);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   public handle(request: FNodeMoveFinalizeRequest): void {
@@ -57,10 +57,10 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       const event = this._getItems()[0].fData.fNodeIds.map((id: string) => {
         return {
           id,
-          position: this._fComponentsStore.fNodes.find(x => x.fId() === id)!._position,
+          position: this._store.fNodes.find(x => x.fId() === id)!._position,
         }
       });
-      this._fComponentsStore.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(event));
+      this._store.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(event));
     }
   }
 
@@ -102,7 +102,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _applyConnectionUnderDroppedNode(): void {
-    if (this._isDraggedJustOneNode() && this._fComponentsStore.fDraggable?.fEmitOnNodeIntersect) {
+    if (this._isDraggedJustOneNode() && this._store.fDraggable?.fEmitOnNodeIntersect) {
 
       const fNode = this._getFirstNodeOrGroup();
       setTimeout(() => this._fMediator.execute(new IsConnectionUnderNodeRequest(fNode)));

@@ -13,13 +13,13 @@ import { Injector } from '@angular/core';
 export class BaseConnectionDragHandler {
 
   private readonly _fMediator: FMediator;
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
 
   private _fOutputWithRect!: IConnectorAndRect;
   private _fInputWithRect!: IConnectorAndRect;
 
   private get _fOutput(): FConnectorBase {
-    const result = this._fComponentsStore.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
+    const result = this._store.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fOutput with id ${ this.fConnection.fOutputId } not found`));
     }
@@ -27,7 +27,7 @@ export class BaseConnectionDragHandler {
   }
 
   private get _fInput(): FConnectorBase {
-    const result = this._fComponentsStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
+    const result = this._store.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fInput with id ${ this.fConnection.fInputId } not found`));
     }
@@ -42,7 +42,7 @@ export class BaseConnectionDragHandler {
     public fConnection: FConnectionBase,
   ) {
     this._fMediator = _injector.get(FMediator);
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
     this._initialize();
   }
 

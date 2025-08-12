@@ -24,16 +24,16 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private readonly _fResult: FDragHandlerResult<IFCreateConnectionDragResult>;
   private readonly _fMediator: FMediator;
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
 
   private readonly _toConnectorRect = new RoundedRect();
 
   private get _fConnection(): FConnectionBase {
-    return this._fComponentsStore.fTempConnection!;
+    return this._store.fTempConnection!;
   }
 
   private get _fSnapConnection(): FSnapConnectionComponent | undefined {
-    return this._fComponentsStore.fSnapConnection as FSnapConnectionComponent;
+    return this._store.fSnapConnection as FSnapConnectionComponent;
   }
 
   private _fOutputWithRect!: IConnectorAndRect;
@@ -47,7 +47,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   ) {
     this._fResult = _injector.get(FDragHandlerResult);
     this._fMediator = _injector.get(FMediator);
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
 
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y)

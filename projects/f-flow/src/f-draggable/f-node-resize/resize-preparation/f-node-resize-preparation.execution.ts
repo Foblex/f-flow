@@ -17,16 +17,16 @@ import { getDataAttrValueFromClosestElementWithClass, isClosestElementHasClass }
 export class FNodeResizePreparationExecution implements IExecution<FNodeResizePreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private _fNode: FNodeBase | undefined;
@@ -66,7 +66,7 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._fComponentsStore
+    this._fNode = this._store
       .fNodes.find(x => x.isContains(element));
     return this._fNode;
   }

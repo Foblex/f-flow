@@ -7,25 +7,25 @@ export class FCanvasDragHandler implements IFDragHandler {
 
   public fEventType = 'canvas-move';
 
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
 
   constructor(
     _injector: Injector,
   ) {
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
   }
 
   public prepareDragSequence(): void {
-    this._onPointerDownPosition = this._fComponentsStore.fCanvas!.transform.position;
+    this._onPointerDownPosition = this._store.fCanvas!.transform.position;
   }
 
   public onPointerMove(difference: IPoint): void {
-    this._fComponentsStore.fCanvas!.setPosition(Point.fromPoint(this._onPointerDownPosition).add(difference));
-    this._fComponentsStore.fCanvas!.redraw();
+    this._store.fCanvas!.setPosition(Point.fromPoint(this._onPointerDownPosition).add(difference));
+    this._store.fCanvas!.redraw();
   }
 
   public onPointerUp(): void {
-    this._fComponentsStore.fCanvas!.emitCanvasChangeEvent();
+    this._store.fCanvas!.emitCanvasChangeEvent();
   }
 }

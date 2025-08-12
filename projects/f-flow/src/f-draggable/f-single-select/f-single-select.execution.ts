@@ -52,7 +52,7 @@ import {IPointerEvent} from "../../drag-toolkit";
 export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: FSingleSelectRequest): void {
@@ -72,7 +72,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isEventInFlowBounds(event: IPointerEvent): boolean {
-    return this._fComponentsStore.fFlow!.hostElement.contains(event.targetElement);
+    return this._store.fFlow!.hostElement.contains(event.targetElement);
   }
 
   private _getItemToSelect(event: IPointerEvent): ISelectable | undefined {
@@ -80,11 +80,11 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _getNodeOrGroup(targetElement: HTMLElement): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => (x).isContains(targetElement));
+    return this._store.fNodes.find((x) => (x).isContains(targetElement));
   }
 
   private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {
-    return this._fComponentsStore.fConnections
+    return this._store.fConnections
       .find(c => c.isContains(element) || c.fConnectionCenter()?.nativeElement?.contains(element));
   }
 

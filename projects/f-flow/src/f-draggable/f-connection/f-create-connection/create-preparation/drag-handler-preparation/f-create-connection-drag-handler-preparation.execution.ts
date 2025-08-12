@@ -12,16 +12,16 @@ import { FCreateConnectionDragHandler } from '../../f-create-connection.drag-han
 export class FCreateConnectionDragHandlerPreparationExecution
   implements IHandler<FCreateConnectionDragHandlerPreparationRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(request: FCreateConnectionDragHandlerPreparationRequest): void {

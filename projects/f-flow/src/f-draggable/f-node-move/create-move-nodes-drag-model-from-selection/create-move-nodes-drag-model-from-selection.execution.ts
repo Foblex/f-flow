@@ -30,7 +30,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, FSummaryNodeMoveDragHandler> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
@@ -68,7 +68,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes
+    return this._store.fNodes
       .find(n => n.isContains(hostElement));
   }
 
@@ -111,7 +111,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _getNodeOutputIds(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fOutputs.filter((x) => fNode.fId() === x.fNodeId)
+    return this._store.fOutputs.filter((x) => fNode.fId() === x.fNodeId)
       .map((x) => x.fId);
   }
 
@@ -120,7 +120,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _getNodeInputIds(fNode: FNodeBase): string[] {
-    return this._fComponentsStore.fInputs.filter((x) => fNode.fId() === x.fNodeId)
+    return this._store.fInputs.filter((x) => fNode.fId() === x.fNodeId)
       .map((x) => x.fId);
   }
 

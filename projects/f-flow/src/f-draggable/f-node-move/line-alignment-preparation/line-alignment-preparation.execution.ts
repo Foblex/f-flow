@@ -16,7 +16,7 @@ import { BrowserService } from '@foblex/platform';
 export class LineAlignmentPreparationExecution implements IExecution<LineAlignmentPreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fBrowser = inject(BrowserService);
   private readonly _injector = inject(Injector);
@@ -48,7 +48,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   private _createLineService(): LineService {
     this._lineService = new LineService(
       this._fBrowser,
-      this._fComponentsStore.fLineAlignment!.hostElement
+      this._store.fLineAlignment!.hostElement
     );
     return this._lineService;
   }
@@ -60,7 +60,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   }
 
   private _getStaticNodes(fNodes: FNodeBase[]): FNodeBase[] {
-    return this._fComponentsStore.fNodes
+    return this._store.fNodes
       .filter((x) => !fNodes.includes(x));
   }
 

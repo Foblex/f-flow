@@ -18,7 +18,7 @@ export class FCreateConnectionPreparationExecution
   implements IHandler<FCreateConnectionPreparationRequest, void> {
 
   private _fMediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
   private _dragContext = inject(FDraggableDataContext);
 
   private _fNode: FNodeBase | undefined;
@@ -44,13 +44,13 @@ export class FCreateConnectionPreparationExecution
   }
 
   private _getNode(event: IPointerEvent): FNodeBase | undefined {
-    this._fNode = this._fComponentsStore
+    this._fNode = this._store
       .fNodes.find(n => n.isContains(event.targetElement));
     return this._fNode;
   }
 
   private _isValidConditions(): boolean {
-    return this._dragContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
+    return this._dragContext.isEmpty() && !!this._store.fTempConnection;
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {

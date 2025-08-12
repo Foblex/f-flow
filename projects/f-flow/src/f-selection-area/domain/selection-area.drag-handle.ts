@@ -14,12 +14,12 @@ export class SelectionAreaDragHandle implements IFDragHandler {
   private _selectedByMove: ISelectable[] = [];
 
   private get _fCanvasPosition(): IPoint {
-    return Point.fromPoint(this._fComponentsStore.fCanvas!.transform.position)
-      .add(this._fComponentsStore.fCanvas!.transform.scaledPosition);
+    return Point.fromPoint(this._store.fCanvas!.transform.position)
+      .add(this._store.fCanvas!.transform.scaledPosition);
   }
 
   constructor(
-    private _fComponentsStore: FComponentsStore,
+    private _store: FComponentsStore,
     private _fSelectionArea: FSelectionAreaBase,
     private _dragContext: FDraggableDataContext,
     private _fMediator: FMediator,

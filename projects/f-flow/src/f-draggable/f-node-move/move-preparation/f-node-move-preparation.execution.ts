@@ -16,15 +16,15 @@ import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler
 export class FNodeMovePreparationExecution implements IExecution<FNodeMovePreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private _fNode: FNodeBase | undefined;
@@ -41,7 +41,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
       .elementTransform(this._fHost).div(this._transform.scale);
     this._dragContext.draggableItems = [summaryDragHandler];
 
-    if(this._fComponentsStore.fLineAlignment) {
+    if(this._store.fLineAlignment) {
       this._fMediator.execute<void>(
         new LineAlignmentPreparationRequest(
           summaryDragHandler.fHandlers.map((x) => x.fNode), summaryDragHandler.commonRect
@@ -61,7 +61,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._fComponentsStore.fNodes
+    this._fNode = this._store.fNodes
       .find(x => x.isContains(element) && !x.fDraggingDisabled());
     return this._fNode;
   }

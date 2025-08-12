@@ -12,12 +12,12 @@ import { isValidEventTrigger } from '../../../domain';
 @FExecutionRegister(FCanvasMovePreparationRequest)
 export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePreparationRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   public handle(request: FCanvasMovePreparationRequest): void {
@@ -36,7 +36,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   }
 
   private _isBackgroundElement(targetElement: HTMLElement): boolean | undefined {
-    return this._fComponentsStore.fBackground?.hostElement.contains(targetElement);
+    return this._store.fBackground?.hostElement.contains(targetElement);
   }
 
   private _isDragOnHost(targetElement: HTMLElement): boolean {
@@ -44,7 +44,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   }
 
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this._fComponentsStore.fNodes
+    let result = this._store.fNodes
       .find(x => x.isContains(targetElement));
     if (result && result.fDraggingDisabled()) {
       result = undefined;

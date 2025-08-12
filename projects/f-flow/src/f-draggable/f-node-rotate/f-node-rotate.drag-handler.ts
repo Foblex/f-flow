@@ -13,7 +13,7 @@ import { Injector } from '@angular/core';
 
 export class FNodeRotateDragHandler implements IFDragHandler {
 
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
   private readonly _fMediator: FMediator;
   private readonly _dragContext: FDraggableDataContext;
 
@@ -27,7 +27,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   private _fNodeRect!: IRect;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   constructor(
@@ -47,7 +47,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
       fNodeId: _fNode.fId(),
     };
 
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
     this._fMediator = _injector.get(FMediator);
     this._dragContext = _injector.get(FDraggableDataContext);
   }

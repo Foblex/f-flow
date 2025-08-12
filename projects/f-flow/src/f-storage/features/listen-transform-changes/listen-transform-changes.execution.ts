@@ -9,13 +9,13 @@ import { FChannelHub } from '../../../reactivity';
 export class ListenTransformChangesExecution
   implements IExecution<ListenTransformChangesRequest, FChannelHub> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: ListenTransformChangesRequest): FChannelHub {
     return new FChannelHub(
-      this._fComponentsStore.transformChanges$,
-      this._fComponentsStore.dataChanges$,
-      this._fComponentsStore.countChanges$
+      this._store.transformChanges$,
+      this._store.dataChanges$,
+      this._store.countChanges$
     );
   }
 }
