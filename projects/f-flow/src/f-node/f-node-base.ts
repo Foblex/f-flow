@@ -2,10 +2,10 @@ import {
   effect,
   inject,
   InjectionToken,
-  Injector,
+  Injector, InputSignal,
   ModelSignal,
-  OutputEmitterRef,
-  Signal,
+  OutputEmitterRef, Renderer2,
+  Signal, untracked,
 } from '@angular/core';
 import {IPoint, IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
 import {
@@ -14,6 +14,7 @@ import {
 import {IHasHostElement} from '../i-has-host-element';
 import {ISelectable, mixinChangeSelection} from '../mixins';
 import {FChannel} from '../reactivity';
+import {BrowserService} from "@foblex/platform";
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
@@ -28,6 +29,9 @@ const MIXIN_BASE = mixinChangeSelection(
 export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
 
   private readonly _injector = inject(Injector);
+
+  protected readonly renderer = inject(Renderer2);
+  protected readonly browser = inject(BrowserService);
 
   public abstract override fId: Signal<string>;
 
@@ -50,9 +54,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public abstract sizeChange: OutputEmitterRef<IRect>;
 
-  public abstract size: ISize;
+  public abstract size: InputSignal<ISize | undefined>;
 
-  protected _size: ISize | undefined;
+  public _size: ISize | undefined;
 
   //Add ability to connect to first connectable input if node is at pointer position
   public abstract fConnectOnNode: Signal<boolean>;
@@ -71,12 +75,33 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   protected positionChanges(): void {
     effect(() => {
-      if (!PointExtensions.isEqual(this._position, this.position())) {
-        this._position = this.position();
-        this.redraw();
-        this.refresh();
-      }
+      const position = this.position();
+      untracked(() => {
+        if (!PointExtensions.isEqual(this._position, position)) {
+          this._position = position;
+          this.redraw();
+          this.refresh();
+        }
+      });
+
     }, {injector: this._injector});
+  }
+
+  protected sizeChanges(): void {
+    effect(() => {
+      const size = this.size();
+      untracked(() => {
+        if (!this._isSizeEqual(size)) {
+          this._size = size;
+          this.redraw();
+          this.refresh()
+        }
+      });
+    }, {injector: this._injector});
+  }
+
+  private _isSizeEqual(value?: ISize): boolean {
+    return this._size?.width === value?.width && this._size?.height === value?.height;
   }
 
   protected abstract setStyle(name: string, value: string): void;
@@ -86,9 +111,9 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   }
 
   public redraw(): void {
-    if (this.size) {
-      this.setStyle('width', '' + this.size.width + 'px');
-      this.setStyle('height', '' + this.size.height + 'px');
+    if (this._size) {
+      this.setStyle('width', '' + this._size.width + 'px');
+      this.setStyle('height', '' + this._size.height + 'px');
     }
 
     this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this.rotate}deg)`);

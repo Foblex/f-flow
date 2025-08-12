@@ -6,13 +6,11 @@ import {
   Input, model,
   OnDestroy,
   OnInit, output,
-  Renderer2,
 } from "@angular/core";
 import {IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
 import {F_NODE, FNodeBase} from './f-node-base';
 import {NotifyTransformChangedRequest} from '../f-storage';
 import {FMediator} from '@foblex/mediator';
-import {BrowserService} from '@foblex/platform';
 import {IHasHostElement} from '../i-has-host-element';
 import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
 
@@ -47,18 +45,9 @@ export class FGroupDirective extends FNodeBase
     alias: 'fGroupPosition',
   });
 
-  @Input('fGroupSize')
-  public override set size(value: ISize) {
-    if (!this.size || !SizeExtensions.isEqual(this._size!, value)) {
-      this._size = value;
-      this.redraw();
-      this.refresh()
-    }
-  }
-
-  public override get size(): ISize {
-    return this._size!;
-  }
+  public override readonly size = input<ISize | undefined>(undefined, {
+    alias: 'fGroupSize',
+  });
 
   public override sizeChange = output<IRect>({alias: 'fGroupSizeChange'});
 
@@ -99,11 +88,10 @@ export class FGroupDirective extends FNodeBase
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private fBrowser: BrowserService
   ) {
     super(elementReference.nativeElement);
     super.positionChanges();
+    super.sizeChanges();
   }
 
   public ngOnInit(): void {
@@ -128,7 +116,7 @@ export class FGroupDirective extends FNodeBase
   }
 
   public ngAfterViewInit(): void {
-    if (!this.fBrowser.isBrowser()) {
+    if (!this.browser.isBrowser()) {
       return;
     }
     this._listenStateSizeChanges();

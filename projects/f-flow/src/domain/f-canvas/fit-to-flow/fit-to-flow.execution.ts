@@ -29,7 +29,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
     this.fitToParent(
       fNodesRect,
       RectExtensions.fromElement(this._store.fFlow!.hostElement),
-      this._store.fNodes.map((x) => x.position()),
+      this._store.fNodes.map((x) => x._position),
       request.toCenter
     );
 

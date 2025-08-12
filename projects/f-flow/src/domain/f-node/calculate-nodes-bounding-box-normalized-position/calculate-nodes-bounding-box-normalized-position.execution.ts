@@ -28,6 +28,6 @@ export class CalculateNodesBoundingBoxNormalizedPositionExecution
   }
 
   private _getElementRect(fNode: FNodeBase, rect: IRect): IRect {
-    return RectExtensions.initialize(fNode.position().x, fNode.position().y, rect.width, rect.height)
+    return RectExtensions.initialize(fNode._position.x, fNode._position.y, rect.width, rect.height)
   }
 }

@@ -82,7 +82,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   private _getNodesMoveLimits(fNodes: FNodeBase[], fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimitsAndPosition[] {
     return fDraggedNodes.map((x) => {
       const fParentNodes = this._fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
-      return { position: x.position(), ...this._getNodeMoveLimits(x, fParentNodes, fDraggedNodes) };
+      return { position: x._position, ...this._getNodeMoveLimits(x, fParentNodes, fDraggedNodes) };
     });
   }
 

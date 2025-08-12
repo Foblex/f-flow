@@ -14,7 +14,7 @@ export class FNodeMoveDragHandler implements IFDragHandler {
     public fSourceHandlers: BaseConnectionDragHandler[] = [],
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
-    this._onPointerDownPosition = { ...fNode.position() };
+    this._onPointerDownPosition = { ...fNode._position };
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -34,7 +34,6 @@ export class FNodeMoveDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    // this.fNode.updatePosition(position);
     this.fNode.position.set(this.fNode._position);
   }
 }

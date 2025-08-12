@@ -19,8 +19,8 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
       return {
         id: x.fId(),
         parent: x.fParentId(),
-        position: x.position(),
-        size: x.size,
+        position: x._position,
+        size: x._size,
         fOutputs: this._getOutputs(x.hostElement),
         fInputs: this._getInputs(x.hostElement),
         isSelected: x.isSelected()
