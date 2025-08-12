@@ -53,7 +53,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: FSingleSelectRequest): void {
     if (!this._isValid(request)) {
@@ -68,7 +68,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isValid(request: FSingleSelectRequest): boolean {
-    return this._isEventInFlowBounds(request.event) && this._fDraggableDataContext.isEmpty();
+    return this._isEventInFlowBounds(request.event) && this._dragContext.isEmpty();
   }
 
   private _isEventInFlowBounds(event: IPointerEvent): boolean {
@@ -118,11 +118,11 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _clearSelection(): void {
-    this._fDraggableDataContext.selectedItems.forEach((x) => {
+    this._dragContext.selectedItems.forEach((x) => {
       x.unmarkAsSelected();
-      this._fDraggableDataContext.markSelectionAsChanged();
+      this._dragContext.markSelectionAsChanged();
     });
-    this._fDraggableDataContext.selectedItems = [];
+    this._dragContext.selectedItems = [];
   }
 
   private _multiSelect(fItem?: ISelectable): void {
@@ -134,19 +134,19 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   private _deselectItem(fItem: ISelectable): void {
     this._removeItemFromSelectedItems(fItem);
     fItem.unmarkAsSelected();
-    this._fDraggableDataContext.markSelectionAsChanged();
+    this._dragContext.markSelectionAsChanged();
   }
 
   private _removeItemFromSelectedItems(fItem: ISelectable): void {
-    const indexInSelection = this._fDraggableDataContext.selectedItems.indexOf(fItem);
+    const indexInSelection = this._dragContext.selectedItems.indexOf(fItem);
     if (indexInSelection > -1) {
-      this._fDraggableDataContext.selectedItems.splice(indexInSelection, 1);
+      this._dragContext.selectedItems.splice(indexInSelection, 1);
     }
   }
 
   private _selectItem(fItem: ISelectable): void {
-    this._fDraggableDataContext.selectedItems.push(fItem);
+    this._dragContext.selectedItems.push(fItem);
     fItem.markAsSelected();
-    this._fDraggableDataContext.markSelectionAsChanged();
+    this._dragContext.markSelectionAsChanged();
   }
 }

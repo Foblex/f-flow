@@ -19,7 +19,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private get fNodes(): FNodeBase[] {
     return this._store.fNodes;
@@ -35,7 +35,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
 
   public handle(): ICanBeSelectedElementAndRect[] {
     return [ ...this.getNodesWithRects(), ...this.getConnectionsWithRects() ].filter((x) => {
-      return !this._fDraggableDataContext.selectedItems.includes(x.element);
+      return !this._dragContext.selectedItems.includes(x.element);
     });
   }
 

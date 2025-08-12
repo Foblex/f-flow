@@ -21,7 +21,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private get _fHost(): HTMLElement {
     return this._fComponentsStore.fFlow!.hostElement;
@@ -35,7 +35,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
 
-    const firstNodeOrGroup: FSummaryNodeMoveDragHandler = this._fDraggableDataContext.draggableItems
+    const firstNodeOrGroup: FSummaryNodeMoveDragHandler = this._dragContext.draggableItems
       .find((x) => x instanceof FSummaryNodeMoveDragHandler)!;
 
     this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
@@ -44,7 +44,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some((x) => x instanceof FSummaryNodeMoveDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof FSummaryNodeMoveDragHandler);
   }
 
   private _finalizeMove(difference: IPoint): void {
@@ -65,14 +65,14 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _getItems(): IFDragHandler[] {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .filter((x) => !(x instanceof FNodeDropToGroupDragHandler));
   }
 
   private _getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
     return Point.fromPoint(position).elementTransform(this._fHost)
-      .div(this._fDraggableDataContext.onPointerDownScale)
-      .sub(this._fDraggableDataContext.onPointerDownPosition);
+      .div(this._dragContext.onPointerDownScale)
+      .sub(this._dragContext.onPointerDownPosition);
   }
 
   private _getDifferenceWithLineAlignment(difference: IPoint): IPoint {
@@ -84,7 +84,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _getLineAlignmentDifference(difference: IPoint): ILineAlignmentResult | undefined {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .find((x) => x instanceof FLineAlignmentDragHandler)
       ?.findNearestCoordinate(difference);
   }
@@ -110,10 +110,10 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _isDraggedJustOneNode(): boolean {
-    return (this._fDraggableDataContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
+    return (this._dragContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
   }
 
   private _getFirstNodeOrGroup(): FNodeBase {
-    return (this._fDraggableDataContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers[0].fNode;
+    return (this._dragContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers[0].fNode;
   }
 }

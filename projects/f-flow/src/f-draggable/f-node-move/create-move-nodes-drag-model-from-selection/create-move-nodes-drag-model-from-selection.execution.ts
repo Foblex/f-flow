@@ -31,7 +31,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   public handle(request: CreateMoveNodesDragModelFromSelectionRequest): FSummaryNodeMoveDragHandler {
@@ -62,7 +62,7 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   }
 
   private _getNodesFromSelection(): FNodeBase[] {
-    return this._fDraggableDataContext.selectedItems
+    return this._dragContext.selectedItems
       .map((x) => this._findNode(x.hostElement))
       .filter((x): x is FNodeBase => !!x);
   }

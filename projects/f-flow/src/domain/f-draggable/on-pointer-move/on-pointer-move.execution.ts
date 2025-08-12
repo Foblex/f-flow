@@ -21,7 +21,7 @@ export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, 
     return this._store.fDraggable!.hostElement;
   }
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: OnPointerMoveRequest): void {
     this._setDifferenceToDraggableItems(
@@ -30,15 +30,15 @@ export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, 
   }
 
   private _setDifferenceToDraggableItems(difference: IPoint): void {
-    this._fDraggableDataContext.draggableItems.forEach((item) => {
+    this._dragContext.draggableItems.forEach((item) => {
       item.onPointerMove({ ...difference });
     });
   }
 
   private _getDifferenceBetweenPointerAndPointerDown(event: IPointerEvent): IPoint {
     return this._getPointerPositionInCanvas(event)
-      .div(this._fDraggableDataContext.onPointerDownScale)
-      .sub(this._fDraggableDataContext.onPointerDownPosition);
+      .div(this._dragContext.onPointerDownScale)
+      .sub(this._dragContext.onPointerDownPosition);
   }
 
   private _getPointerPositionInCanvas(event: IPointerEvent): Point {

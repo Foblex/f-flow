@@ -17,7 +17,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fBrowser = inject(BrowserService);
   private readonly _injector = inject(Injector);
 
@@ -28,7 +28,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   }
 
   private _addLineAlignmentDragHandler(fNodes: FNodeBase[], commonRect: IRect): void {
-    this._fDraggableDataContext.draggableItems.push(
+    this._dragContext.draggableItems.push(
       new FLineAlignmentDragHandler(
         this._injector,
         this._lineService || this._createLineService(),
@@ -65,7 +65,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   }
 
   private _getCommonRestrictions(): IMinMaxPoint {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .filter((x) => x instanceof FSummaryNodeMoveDragHandler)[0].limits;
   }
 }

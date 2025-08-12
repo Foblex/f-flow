@@ -22,10 +22,10 @@ export class FCreateConnectionFinalizeExecution
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private get _fDragHandler(): FCreateConnectionDragHandler {
-    return this._fDraggableDataContext.draggableItems[ 0 ] as FCreateConnectionDragHandler;
+    return this._dragContext.draggableItems[ 0 ] as FCreateConnectionDragHandler;
   }
 
   public handle(request: FCreateConnectionFinalizeRequest): void {
@@ -37,7 +37,7 @@ export class FCreateConnectionFinalizeExecution
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some(
+    return this._dragContext.draggableItems.some(
       (x) => x instanceof FCreateConnectionDragHandler
     );
   }

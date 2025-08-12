@@ -20,7 +20,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
@@ -40,11 +40,11 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
 
     this._selectAndUpdateNodeLayer();
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FNodeRotateDragHandler(
         this._injector,
         this._fNode!,
@@ -55,7 +55,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   }
 
   private _isValid(request: FNodeRotatePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty()
+    return this._dragContext.isEmpty()
       && isRotateHandle(request.event.targetElement)
       && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
   }

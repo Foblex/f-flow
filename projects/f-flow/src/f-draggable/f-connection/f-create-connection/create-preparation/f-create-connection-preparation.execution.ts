@@ -19,7 +19,7 @@ export class FCreateConnectionPreparationExecution
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private _fNode: FNodeBase | undefined;
 
@@ -50,7 +50,7 @@ export class FCreateConnectionPreparationExecution
   }
 
   private _isValidConditions(): boolean {
-    return this._fDraggableDataContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
+    return this._dragContext.isEmpty() && !!this._fComponentsStore.fTempConnection;
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {

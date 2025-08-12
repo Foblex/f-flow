@@ -8,15 +8,14 @@ import { FDraggableDataContext } from '../f-draggable-data-context';
 @Directive()
 export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
-  private readonly _fComponentsStore: FComponentsStore;
-  private readonly _fDraggableDataContext: FDraggableDataContext;
+  private readonly _store: FComponentsStore;
 
   public fEventType = 'move-node-to-parent';
 
   private _DEBOUNCE_TIME = 1;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
@@ -28,9 +27,8 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
     _injector: Injector,
     private notDraggedNodesRects: INodeWithRect[],
   ) {
-    this._fComponentsStore = _injector.get(FComponentsStore);
-    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
-    this._onPointerDownPosition = this._fDraggableDataContext.onPointerDownPosition;
+    this._store = _injector.get(FComponentsStore);
+    this._onPointerDownPosition = _injector.get(FDraggableDataContext).onPointerDownPosition;
   }
 
   private _toggleParentNode(difference: IPoint): void {

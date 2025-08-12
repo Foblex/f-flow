@@ -18,7 +18,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private _fConnection: FConnectionBase | undefined;
@@ -41,11 +41,11 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
       return;
     }
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FReassignConnectionDragHandler(
         this._injector, this._fConnection!, isDragHandleEnd(this._fConnection!, position)
       )
@@ -56,7 +56,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _isValid(position: IPoint): boolean {
     this._fConnection = this._getConnectionToReassign(position);
-    return !!this._fConnection && !this._fDraggableDataContext.draggableItems.length;
+    return !!this._fConnection && !this._dragContext.draggableItems.length;
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {

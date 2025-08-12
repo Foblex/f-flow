@@ -13,7 +13,7 @@ export class PrepareDragSequenceExecution implements IExecution<PrepareDragSeque
 
   private readonly _mediator = inject(FMediator);
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   public handle(request: PrepareDragSequenceRequest): void {
     this._callPrepareDragSequence();
@@ -22,7 +22,7 @@ export class PrepareDragSequenceExecution implements IExecution<PrepareDragSeque
   }
 
   private _callPrepareDragSequence(): void {
-    this._fDraggableDataContext.draggableItems.forEach((item) => {
+    this._dragContext.draggableItems.forEach((item) => {
       item.prepareDragSequence?.();
     });
   }

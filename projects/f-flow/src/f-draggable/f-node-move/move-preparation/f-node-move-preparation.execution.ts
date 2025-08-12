@@ -17,7 +17,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   private get _transform(): ITransformModel {
     return this._fComponentsStore.fCanvas!.transform;
@@ -36,10 +36,10 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
     const summaryDragHandler = this._calculateDraggedItems(this._fNode!);
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
-    this._fDraggableDataContext.draggableItems = [summaryDragHandler];
+    this._dragContext.draggableItems = [summaryDragHandler];
 
     if(this._fComponentsStore.fLineAlignment) {
       this._fMediator.execute<void>(
@@ -51,7 +51,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   }
 
   private _isValid(request: FNodeMovePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty()
+    return this._dragContext.isEmpty()
       && this._isDragHandleElement(request.event.targetElement)
       && !!this._getNode(request.event.targetElement);
   }

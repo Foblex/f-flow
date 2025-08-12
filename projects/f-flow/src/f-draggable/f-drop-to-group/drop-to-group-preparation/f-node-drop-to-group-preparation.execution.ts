@@ -17,7 +17,7 @@ export class FNodeDropToGroupPreparationExecution
   implements IExecution<FNodeDropToGroupPreparationRequest, void> {
 
   private readonly _mediator = inject(FMediator);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
@@ -43,7 +43,7 @@ export class FNodeDropToGroupPreparationExecution
       throw new Error('Node not found');
     }
 
-    this._fDraggableDataContext.draggableItems.push(
+    this._dragContext.draggableItems.push(
       new FNodeDropToGroupDragHandler(
         this._injector,
         this._getNotDraggedNodesRects()
@@ -56,12 +56,12 @@ export class FNodeDropToGroupPreparationExecution
   }
 
   private _isNodeDragHandler(): boolean {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .some((x) => x instanceof FSummaryNodeMoveDragHandler);
   }
 
   private _isExternalItemDragHandler(): boolean {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .some((x) => x instanceof FExternalItemDragHandler);
   }
 
@@ -85,7 +85,7 @@ export class FNodeDropToGroupPreparationExecution
   }
 
   private _getNodesBeingDragged(): FNodeBase[] {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .find((x) => x instanceof FSummaryNodeMoveDragHandler)
       ?.fHandlers.map((x) => x.fNode) || [];
   }

@@ -15,14 +15,14 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private get _hostElement(): HTMLElement {
     return this._store.fDraggable!.hostElement;
   }
 
   public handle(request: StartDragSequenceRequest): void {
-    if (this._fDraggableDataContext.draggableItems.length > 0) {
+    if (this._dragContext.draggableItems.length > 0) {
       this._hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
       this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
       this._emitDragStarted();
@@ -31,8 +31,8 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
 
   private _emitDragStarted(): void {
     this._store.fDraggable?.fDragStarted?.emit({
-      fEventType: this._fDraggableDataContext.draggableItems[ 0 ].fEventType,
-      fData: { ...this._fDraggableDataContext.draggableItems[ 0 ].fData }
+      fEventType: this._dragContext.draggableItems[ 0 ].fEventType,
+      fData: { ...this._dragContext.draggableItems[ 0 ].fData }
     });
   }
 }

@@ -18,7 +18,7 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
 
   private readonly _fMediator = inject(FMediator);
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
@@ -38,12 +38,12 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
 
     this._selectAndUpdateNodeLayer();
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
     const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FNodeResizeDragHandler(
         this._injector,
         this._fNode!, resizeHandleType
@@ -52,7 +52,7 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
   }
 
   private _isValid(request: FNodeResizePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty()
+    return this._dragContext.isEmpty()
       && this._isDragHandleElement(request.event.targetElement)
       && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
   }

@@ -13,7 +13,7 @@ import { isValidEventTrigger } from '../../../domain';
 export class FExternalItemPreparationExecution implements IExecution<FExternalItemPreparationRequest, void> {
 
   private readonly _fExternalItemService = inject(FExternalItemService);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fComponentsStore = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
@@ -29,10 +29,10 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
     if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FExternalItemDragHandler(
         this._injector,
         this._getExternalItem(request.event.targetElement)!,

@@ -13,7 +13,7 @@ import { isValidEventTrigger } from '../../../domain';
 export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePreparationRequest, void> {
 
   private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
@@ -24,14 +24,14 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
     if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
-    this._fDraggableDataContext.onPointerDownScale = 1;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = 1;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost);
-    this._fDraggableDataContext.draggableItems = [ new FCanvasDragHandler(this._injector) ];
+    this._dragContext.draggableItems = [ new FCanvasDragHandler(this._injector) ];
   }
 
   private _isValid(request: FCanvasMovePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty() &&
+    return this._dragContext.isEmpty() &&
       (this._isBackgroundElement(request.event.targetElement) || this._isDragOnHost(request.event.targetElement));
   }
 

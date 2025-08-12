@@ -13,7 +13,7 @@ import {IPointerEvent} from "../../../drag-toolkit";
 export class FNodeDropToGroupFinalizeExecution
   implements IExecution<FNodeDropToGroupFinalizeRequest, void> {
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fComponentsStore = inject(FComponentsStore);
 
   public handle(request: FNodeDropToGroupFinalizeRequest): void {
@@ -28,7 +28,7 @@ export class FNodeDropToGroupFinalizeExecution
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .some((x) => x instanceof FNodeDropToGroupDragHandler);
   }
 
@@ -47,12 +47,12 @@ export class FNodeDropToGroupFinalizeExecution
   }
 
   private _findDragHandleItem(): FNodeDropToGroupDragHandler | undefined {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .find((x) => x instanceof FNodeDropToGroupDragHandler);
   }
 
   private _getDraggedNodeIds(): string[] {
-    return this._fDraggableDataContext.draggableItems
+    return this._dragContext.draggableItems
       .find((x) => x instanceof FSummaryNodeMoveDragHandler)?.fHandlers
       .map((x) => x.fNode.fId()) || [];
   }

@@ -15,7 +15,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
   private readonly _fComponentsStore: FComponentsStore;
   private readonly _fMediator: FMediator;
-  private readonly _fDraggableDataContext: FDraggableDataContext;
+  private readonly _dragContext: FDraggableDataContext;
 
   public fEventType = 'node-rotate';
   public fData: any;
@@ -49,7 +49,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
     this._fComponentsStore = _injector.get(FComponentsStore);
     this._fMediator = _injector.get(FMediator);
-    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
+    this._dragContext = _injector.get(FDraggableDataContext);
   }
 
   public prepareDragSequence(): void {
@@ -64,7 +64,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
   private _calculateDownPoint(): IPoint {
     return PointExtensions.sub(
-      this._fDraggableDataContext.onPointerDownPosition,
+      this._dragContext.onPointerDownPosition,
       PointExtensions.sum(this._transform.position, this._transform.scaledPosition)
     );
   }

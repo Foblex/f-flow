@@ -13,7 +13,7 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
 
   private _fMediator = inject(FMediator);
   private _fComponentsStore = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   private get _fHost(): HTMLElement {
     return this._fComponentsStore.fFlow!.hostElement;
@@ -23,19 +23,19 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
     if (!this._isValid(request)) {
       return;
     }
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new SelectionAreaDragHandle(
-        this._fComponentsStore, request.fSelectionArea, this._fDraggableDataContext, this._fMediator
+        this._fComponentsStore, request.fSelectionArea, this._dragContext, this._fMediator
       )
     ];
 
-    this._fDraggableDataContext.onPointerDownScale = 1;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = 1;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost);
   }
 
   private _isValid(request: SelectionAreaPreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty()
+    return this._dragContext.isEmpty()
       && isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 }
