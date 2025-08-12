@@ -3,7 +3,7 @@
 .f-node, .f-group {
   @include flow-common.node;
 
-  &.f-parent-for-drop {
+  &.f-grouping-over-boundary {
     border: 1px dashed var(--node-selected-border-color);
   }
 }
@@ -11,5 +11,19 @@
 .f-group {
   background-color: var(--minimap-view-color);
 }
+
+.f-flow {
+
+  &.f-dragging {
+    .f-node, .f-group {
+
+      &:not(.f-grouping-drop-active) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+
 
 @include flow-common.examples-toolbar;

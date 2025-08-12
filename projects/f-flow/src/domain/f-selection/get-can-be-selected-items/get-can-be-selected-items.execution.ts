@@ -19,7 +19,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-  private _dragContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   private get fNodes(): FNodeBase[] {
     return this._store.fNodes;

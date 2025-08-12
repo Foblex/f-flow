@@ -5,7 +5,7 @@ import {FComponentsStore} from '../../../f-storage';
 import {INodeWithRect} from '../../domain';
 import {IPoint, IRect, ITransformModel, PointExtensions, RectExtensions} from '@foblex/2d';
 import {GetNormalizedElementRectRequest, GetParentNodesRequest} from '../../../domain';
-import {FNodeBase} from '../../../f-node';
+import {FGroupDirective, FNodeBase} from '../../../f-node';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
 import {FSummaryNodeMoveDragHandler} from '../../f-node-move';
@@ -37,18 +37,15 @@ export class FNodeDropToGroupPreparationExecution
     if (!this._isValid()) {
       return;
     }
-    const fNode = this._store
-      .fNodes.find(n => n.isContains(request.event.targetElement));
+    const fNode = this._store.fNodes.find(n => n.isContains(request.event.targetElement));
     if (!fNode && !this._isExternalItemDragHandler()) {
       throw new Error('Node not found');
     }
 
-    this._dragContext.draggableItems.push(
-      new FNodeDropToGroupDragHandler(
-        this._injector,
-        this._getNotDraggedNodesRects()
-      )
-    );
+    this._dragContext.draggableItems.push(new FNodeDropToGroupDragHandler(
+      this._injector,
+      this._getNotDraggedNodesRects()
+    ));
   }
 
   private _isValid(): boolean {
@@ -68,9 +65,11 @@ export class FNodeDropToGroupPreparationExecution
   private _getNotDraggedNodesRects(): INodeWithRect[] {
     const nodesBeingDragged = this._getNodesBeingDragged();
 
+    const isGroupInDrag = nodesBeingDragged.some((x) => x instanceof FGroupDirective);
 
     const draggedNodes = this._addParentNodes(nodesBeingDragged);
-    return this._getNotDraggedNodes(draggedNodes).map((x) => {
+
+    return this._getNotDraggedNodes(draggedNodes, isGroupInDrag).map((x) => {
       const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
       return {
         node: x,
@@ -90,14 +89,18 @@ export class FNodeDropToGroupPreparationExecution
       ?.fHandlers.map((x) => x.fNode) || [];
   }
 
-  private _addParentNodes(fNodes: FNodeBase[]): FNodeBase[] {
-    return fNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
+  private _addParentNodes(nodes: FNodeBase[]): FNodeBase[] {
+    return nodes.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x, ...this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
       return result;
     }, []);
   }
 
-  private _getNotDraggedNodes(draggedNodes: FNodeBase[]): FNodeBase[] {
-    return this._fNodes.filter((x) => !draggedNodes.includes(x));
+  private _getNotDraggedNodes(draggedNodes: FNodeBase[], isGroupInDrag: boolean): FNodeBase[] {
+    const result = this._fNodes.filter((x) => !draggedNodes.includes(x));
+    if (isGroupInDrag) {
+      return result.filter((x) => x instanceof FGroupDirective);
+    }
+    return result;
   }
 }
