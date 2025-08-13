@@ -1,14 +1,18 @@
-<f-flow fDraggable (fLoaded)="loaded()" (fDropToGroup)="onDropToGroup($event)">
+<f-flow fDraggable (fLoaded)="loaded()" (fDropToGroup)="onDropToGroup($event)" (fCreateNode)="onCreateNode($event)">
   <f-canvas fZoom>
     @for (group of groups(); track group.id) {
       <div fGroup fDragHandle [fGroupId]="group.id" [fGroupParentId]="group.parentId"
            [fIncludePadding]="includePaddings()"
            [fGroupPosition]="group.position"
-           [fGroupSize]="group.parentId ? {width: 150, height: 150} :{ width: 200, height: 200 }">
+           [fGroupSize]="{ width: 200, height: 200 }">
         Group {{ group.id }}
         @if (group.parentId) {
           <span class="f-node-group">Parent: {{ group.parentId }}</span>
         }
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
       </div>
     }
 
@@ -20,10 +24,19 @@
         @if (node.parentId) {
           <span class="f-node-group">Parent: {{ node.parentId }}</span>
         }
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_TOP"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_BOTTOM"></div>
+        <div fResizeHandle [fResizeHandleType]="eResizeHandleType.RIGHT_BOTTOM"></div>
       </div>
     }
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
   <f-checkbox [checked]="includePaddings()" (change)="changePaddings()">Include Paddings</f-checkbox>
+</div>
+<div class="external-panel">
+  <div class="external-item" fExternalItem>
+    Drag to Group
+  </div>
 </div>

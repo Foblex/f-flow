@@ -12,7 +12,7 @@ import { Injector } from '@angular/core';
 
 export class BaseConnectionDragHandler {
 
-  private readonly _fMediator: FMediator;
+  private readonly _mediator: FMediator;
   private readonly _store: FComponentsStore;
 
   private _fOutputWithRect!: IConnectorAndRect;
@@ -41,14 +41,14 @@ export class BaseConnectionDragHandler {
     _injector: Injector,
     public fConnection: FConnectionBase,
   ) {
-    this._fMediator = _injector.get(FMediator);
+    this._mediator = _injector.get(FMediator);
     this._store = _injector.get(FComponentsStore);
     this._initialize();
   }
 
   private _initialize(): void {
-    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
-    this._fInputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fInput));
+    this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
+    this._fInputWithRect = this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fInput));
   }
 
   public setSourceDifference(difference: IPoint): void {
@@ -64,7 +64,7 @@ export class BaseConnectionDragHandler {
   }
 
   private _recalculateConnection(): ILine {
-    return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+    return this._mediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
       RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
       this.fConnection.fBehavior,

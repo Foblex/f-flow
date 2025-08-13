@@ -2,7 +2,18 @@
 
 ## Description
 
-This guide shows how to create a group of nodes by dragging them into a group container. This is a useful feature for organizing nodes in a flow-based diagram.
+This example demonstrates how to group elements by dragging them into containers.
+
+Groups can be nested inside other groups, and nodes can be placed inside groups or other nodes, with no limit to the nesting depth.
+The only restriction is that groups cannot be placed inside nodes.
+
+New nodes can be created directly inside a group or node by dragging them from the external palette [fExternalItem](add-node-from-palette).
+
+When fIncludePadding is enabled, a child node or group cannot cross the parent’s padding area,
+while with the option disabled, the restriction applies only to the container’s outer boundaries.
+
+Inputs: fGroupId, fGroupParentId, fNodeId, fNodeParentId, fIncludePadding, fGroupPosition, fGroupSize, fNodePosition, fResizeHandleType
+Outputs: fDropToGroup, fCreateNode
 
 ## Example
 

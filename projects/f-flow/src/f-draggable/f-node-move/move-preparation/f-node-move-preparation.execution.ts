@@ -1,21 +1,22 @@
-import { inject, Injectable } from '@angular/core';
-import { FNodeMovePreparationRequest } from './f-node-move-preparation.request';
-import { ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeBase } from '../../../f-node';
-import { CreateMoveNodesDragModelFromSelectionRequest } from '../create-move-nodes-drag-model-from-selection';
-import { isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
-import { isClosestElementHasClass } from '@foblex/utils';
-import { LineAlignmentPreparationRequest } from '../line-alignment-preparation';
-import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
+import {inject, Injectable} from '@angular/core';
+import {FNodeMovePreparationRequest} from './f-node-move-preparation.request';
+import {ITransformModel, Point} from '@foblex/2d';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {FComponentsStore} from '../../../f-storage';
+import {FDraggableDataContext} from '../../f-draggable-data-context';
+import {FNodeBase} from '../../../f-node';
+import {CreateMoveNodesDragModelFromSelectionRequest} from '../create-move-nodes-drag-model-from-selection';
+import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
+import {isClosestElementHasClass} from '@foblex/utils';
+import {LineAlignmentPreparationRequest} from '../line-alignment-preparation';
+import {FSummaryNodeMoveDragHandler} from '../f-summary-node-move.drag-handler';
+import {IPointerEvent} from "../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FNodeMovePreparationRequest)
 export class FNodeMovePreparationExecution implements IExecution<FNodeMovePreparationRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
@@ -29,20 +30,20 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private _fNode: FNodeBase | undefined;
 
-  public handle(request: FNodeMovePreparationRequest): void {
-    if(!this._isValid(request) || !this._isValidTrigger(request)) {
+  public handle({event, fTrigger }: FNodeMovePreparationRequest): void {
+    if (!this._isValid(event) || !this._isValidTrigger(event, fTrigger)) {
       return;
     }
 
     const summaryDragHandler = this._calculateDraggedItems(this._fNode!);
 
     this._dragContext.onPointerDownScale = this._transform.scale;
-    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownPosition = Point.fromPoint(event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
     this._dragContext.draggableItems = [summaryDragHandler];
 
-    if(this._store.fLineAlignment) {
-      this._fMediator.execute<void>(
+    if (this._store.fLineAlignment) {
+      this._mediator.execute<void>(
         new LineAlignmentPreparationRequest(
           summaryDragHandler.fHandlers.map((x) => x.fNode), summaryDragHandler.commonRect
         )
@@ -50,10 +51,10 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     }
   }
 
-  private _isValid(request: FNodeMovePreparationRequest): boolean {
+  private _isValid(event: IPointerEvent): boolean {
     return this._dragContext.isEmpty()
-      && this._isDragHandleElement(request.event.targetElement)
-      && !!this._getNode(request.event.targetElement);
+      && this._isDragHandleElement(event.targetElement)
+      && !!this._getNode(event.targetElement);
   }
 
   private _isDragHandleElement(element: HTMLElement): boolean {
@@ -66,8 +67,8 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     return this._fNode;
   }
 
-  private _isValidTrigger(request: FNodeMovePreparationRequest): boolean {
-    return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
+  private _isValidTrigger(event: IPointerEvent, fTrigger: FEventTrigger): boolean {
+    return isValidEventTrigger(event.originalEvent, fTrigger);
   }
 
   //We drag nodes from selection model
@@ -75,7 +76,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     let result: FSummaryNodeMoveDragHandler;
     if (!fNode.fSelectionDisabled()) {
       // Need to select node before drag
-      this._fMediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
+      this._mediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
 
       result = this._dragModelFromSelection();
     } else {
@@ -86,7 +87,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   }
 
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): FSummaryNodeMoveDragHandler {
-    return this._fMediator.execute(
+    return this._mediator.execute(
       new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );
   }

@@ -10,7 +10,7 @@ export class FSummaryNodeMoveDragHandler implements IFDragHandler {
   public readonly fEventType = 'move-node';
   public readonly fData: any;
 
-  private readonly _fComponentStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
   private readonly _fBoundsLimiter: PointBoundsLimiter;
 
   constructor(
@@ -19,7 +19,7 @@ export class FSummaryNodeMoveDragHandler implements IFDragHandler {
     public fHandlers: FNodeMoveDragHandler[],
     public commonRect: IRect
   ) {
-    this._fComponentStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
     this._fBoundsLimiter = new PointBoundsLimiter(_injector, this.commonRect, limits);
     this.fData = {
       fNodeIds: this.fHandlers.map((x) => x.fNode.fId())
@@ -31,7 +31,7 @@ export class FSummaryNodeMoveDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    const adjustCellSize = this._fComponentStore.fDraggable!.fCellSizeWhileDragging;
+    const adjustCellSize = this._store.fDraggable!.fCellSizeWhileDragging;
     const differenceWithRestrictions = this._fBoundsLimiter.limit(difference, adjustCellSize);
 
     this.fHandlers.forEach((x) => x.onPointerMove(differenceWithRestrictions));

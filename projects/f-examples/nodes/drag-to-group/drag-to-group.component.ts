@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, signal, viewChild} from '@angular/core';
 import {
-  FCanvasComponent, FDropToGroupEvent,
+  EFResizeHandleType,
+  FCanvasComponent, FCreateNodeEvent, FDropToGroupEvent,
   FFlowModule,
 } from '@foblex/flow';
 import {FCheckboxComponent} from "@foblex/m-render";
@@ -8,7 +9,7 @@ import {FCheckboxComponent} from "@foblex/m-render";
 interface INode {
   id: string;
   position: { x: number; y: number };
-  parentId: string | null;
+  parentId?: string;
 }
 
 @Component({
@@ -29,15 +30,15 @@ export class DragToGroupComponent {
   protected readonly includePaddings = signal<boolean>(false);
 
   protected readonly groups = signal<INode[]>([{
-    id: 'g1', position: {x: 0, y: 0}, parentId: null,
+    id: 'g1', position: {x: 0, y: 0}
   }, {
-    id: 'g2', position: {x: 0, y: 250}, parentId: null,
+    id: 'g2', position: {x: 0, y: 250}
   }]);
 
   protected readonly nodes = signal<INode[]>([{
-    id: 'n1', position: {x: 250, y: 0}, parentId: null,
+    id: 'n1', position: {x: 250, y: 0}
   }, {
-    id: 'n2', position: {x: 250, y: 250}, parentId: null,
+    id: 'n2', position: {x: 250, y: 250}
   }]);
 
   protected loaded(): void {
@@ -54,18 +55,32 @@ export class DragToGroupComponent {
 
     event.fNodes.forEach((id) => {
       const group = groups.find(x => x.id === id);
-      if (group) {
+      if (group && !group.parentId) {
         group.parentId = event.fTargetNode;
       } else {
         const node = nodes.find(x => x.id === id);
-        node!.parentId = event.fTargetNode;
+        if(node && !node.parentId) {
+          node!.parentId = event.fTargetNode;
+        }
       }
     });
     this.groups.set([...groups]);
     this.nodes.set([...nodes]);
   }
 
+  protected onCreateNode(event: FCreateNodeEvent): void {
+    const newNode: INode = {
+      id: 'n' + (this.nodes().length + 1),
+      position: event.rect,
+      parentId: event.fTargetNode,
+    };
+
+    this.nodes.set([...this.nodes(), newNode]);
+  }
+
   protected changePaddings(): void {
     this.includePaddings.set(!this.includePaddings());
   }
+
+  protected readonly eResizeHandleType = EFResizeHandleType;
 }

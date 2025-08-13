@@ -4,12 +4,13 @@ import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {FComponentsStore} from '../../../f-storage';
 import {INodeWithRect} from '../../domain';
 import {IPoint, IRect, ITransformModel, PointExtensions, RectExtensions} from '@foblex/2d';
-import {GetNormalizedElementRectRequest, GetParentNodesRequest} from '../../../domain';
+import {GetChildNodeIdsRequest, GetNormalizedElementRectRequest, GetParentNodesRequest} from '../../../domain';
 import {FGroupDirective, FNodeBase} from '../../../f-node';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
 import {FSummaryNodeMoveDragHandler} from '../../f-node-move';
 import {FExternalItemDragHandler} from "../../../f-external-item";
+import {SortContainersForDropByLayerRequest} from "../sort-containers-for-drop-by-layer";
 
 @Injectable()
 @FExecutionRegister(FNodeDropToGroupPreparationRequest)
@@ -45,9 +46,20 @@ export class FNodeDropToGroupPreparationExecution
       throw new Error('Drag target node not found');
     }
 
+    let targetRects = this._mediator.execute<INodeWithRect[]>(
+      new SortContainersForDropByLayerRequest(this._collectGroupingTargetRects())
+    );
+
+    if (_dragTarget) {
+      const childIds = this._mediator.execute<string[]>(new GetChildNodeIdsRequest(_dragTarget.fParentId()));
+      if (childIds.length) {
+        targetRects = targetRects.filter(t => childIds.includes(t.node.fId()));
+      }
+    }
+
     this._dragContext.draggableItems.push(new FNodeDropToGroupDragHandler(
       this._injector,
-      this._collectGroupingTargetRects()
+      targetRects
     ));
   }
 

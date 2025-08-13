@@ -29,7 +29,7 @@ import { INodeMoveLimits } from './i-node-move-limits';
 export class CreateMoveNodesDragModelFromSelectionExecution
   implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, FSummaryNodeMoveDragHandler> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
@@ -81,27 +81,27 @@ export class CreateMoveNodesDragModelFromSelectionExecution
 
   private _getNodesMoveLimits(fNodes: FNodeBase[], fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimitsAndPosition[] {
     return fDraggedNodes.map((x) => {
-      const fParentNodes = this._fMediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
+      const fParentNodes = this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
       return { position: x._position, ...this._getNodeMoveLimits(x, fParentNodes, fDraggedNodes) };
     });
   }
 
   private _getNodeMoveLimits(fNode: FNodeBase, fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimits {
-    return this._fMediator.execute<IMinMaxPoint>(
+    return this._mediator.execute<IMinMaxPoint>(
       new CalculateNodeMoveLimitsRequest(fNode, this._isParentNodeInArray(fParentNodes, fDraggedNodes))
     );
   }
 
   private _isParentNodeInArray(fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): boolean {
-    return this._fMediator.execute<boolean>(new IsArrayHasParentNodeRequest(fParentNodes, fDraggedNodes))
+    return this._mediator.execute<boolean>(new IsArrayHasParentNodeRequest(fParentNodes, fDraggedNodes))
   }
 
   private _getChildrenNodes(fId: string): FNodeBase[] {
-    return this._fMediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
+    return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
   }
 
   private _calculateCommonLimits(limits: INodeMoveLimitsAndPosition[]): IMinMaxPoint {
-    return this._fMediator.execute<IMinMaxPoint>(
+    return this._mediator.execute<IMinMaxPoint>(
       new CalculateCommonNodeMoveLimitsRequest(limits)
     );
   }
@@ -133,14 +133,14 @@ export class CreateMoveNodesDragModelFromSelectionExecution
   ): void {
     const fConnectionHandlers: BaseConnectionDragHandler[] = [];
     handlers.forEach((fNodeHandler) => {
-      this._fMediator.execute(new PutOutputConnectionHandlersToArrayRequest(fNodeHandler, inputIds, fConnectionHandlers));
-      this._fMediator.execute(new PutInputConnectionHandlersToArrayRequest(fNodeHandler, outputIds, fConnectionHandlers));
+      this._mediator.execute(new PutOutputConnectionHandlersToArrayRequest(fNodeHandler, inputIds, fConnectionHandlers));
+      this._mediator.execute(new PutInputConnectionHandlersToArrayRequest(fNodeHandler, outputIds, fConnectionHandlers));
     });
   }
 
   private _getDraggedNodesBoundingRect(fNodes: FNodeBase[]): IRect {
     return RectExtensions.union(fNodes.map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+      return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     })) || RectExtensions.initialize();
   }
 }
