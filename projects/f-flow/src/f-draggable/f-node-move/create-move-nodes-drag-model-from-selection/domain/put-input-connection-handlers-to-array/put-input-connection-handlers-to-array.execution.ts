@@ -21,7 +21,7 @@ export class PutInputConnectionHandlersToArrayExecution
   }
 
   public handle(request: PutInputConnectionHandlersToArrayRequest): void {
-    this._getInputConnections(request.fDragHandler.fNode).forEach((fConnection) => {
+    this._getInputConnections(request.fDragHandler.nodeOrGroup).forEach((fConnection) => {
       this._createAndSetConnectionToNodeHandler(fConnection, request);
     });
   }
@@ -38,10 +38,10 @@ export class PutInputConnectionHandlersToArrayExecution
   }
 
   private _createAndSetConnectionToNodeHandler(fConnection: FConnectionBase, request: PutInputConnectionHandlersToArrayRequest): void {
-    let fHandler = this._getExistingConnectionHandler(request.result, fConnection);
+    let fHandler = this._getExistingConnectionHandler(request.existingConnectionHandlers, fConnection);
     if (!fHandler) {
       fHandler = this._createConnectionHandler(request.outputIds, fConnection);
-      request.result.push(fHandler);
+      request.existingConnectionHandlers.push(fHandler);
     }
     request.fDragHandler.fTargetHandlers.push(fHandler);
   }

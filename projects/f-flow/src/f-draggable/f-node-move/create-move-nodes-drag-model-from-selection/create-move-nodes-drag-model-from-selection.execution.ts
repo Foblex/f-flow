@@ -1,59 +1,45 @@
-import { inject, Injectable, Injector } from '@angular/core';
-import { CreateMoveNodesDragModelFromSelectionRequest } from './create-move-nodes-drag-model-from-selection.request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeMoveDragHandler } from '../f-node-move.drag-handler';
-import { FNodeBase } from '../../../f-node';
-import { CalculateNodeMoveLimitsRequest } from './domain/calculate-node-move-limits';
-import { PutOutputConnectionHandlersToArrayRequest } from './domain/put-output-connection-handlers-to-array';
+import {inject, Injectable} from '@angular/core';
+import {CreateMoveNodesDragModelFromSelectionRequest} from './create-move-nodes-drag-model-from-selection.request';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {FComponentsStore} from '../../../f-storage';
+import {FDraggableDataContext} from '../../f-draggable-data-context';
+import {MoveNodeOrGroupDragHandler} from '../move-node-or-group.drag-handler';
+import {FNodeBase} from '../../../f-node';
+import {PutOutputConnectionHandlersToArrayRequest} from './domain/put-output-connection-handlers-to-array';
 import {
   PutInputConnectionHandlersToArrayRequest
 } from './domain/put-input-connection-handlers-to-array';
-import { IsArrayHasParentNodeRequest } from '../../domain';
 import {
   GetDeepChildrenNodesAndGroupsRequest,
-  GetNormalizedElementRectRequest,
-  GetParentNodesRequest
 } from '../../../domain';
-import { flatMap } from '@foblex/utils';
-import { CalculateCommonNodeMoveLimitsRequest } from './domain/calculate-common-node-move-limits';
-import { IMinMaxPoint, IRect, RectExtensions } from '@foblex/2d';
-import { BaseConnectionDragHandler } from '../connection-drag-handlers';
-import { FSummaryNodeMoveDragHandler } from '../f-summary-node-move.drag-handler';
-import { INodeMoveLimitsAndPosition } from './i-node-move-limits-and-position';
-import { INodeMoveLimits } from './i-node-move-limits';
+import {flatMap} from '@foblex/utils';
+import {BaseConnectionDragHandler} from '../connection-drag-handlers';
+import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
+import {BuildDragHierarchyRequest, BuildDragHierarchyResponse} from "./domain/build-drag-hierarchy";
+import {CreateSummaryDragHandlerRequest} from "./domain/create-summary-drag-handler";
 
+// This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
 @FExecutionRegister(CreateMoveNodesDragModelFromSelectionRequest)
 export class CreateMoveNodesDragModelFromSelectionExecution
-  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, FSummaryNodeMoveDragHandler> {
+  implements IExecution<CreateMoveNodesDragModelFromSelectionRequest, MoveSummaryDragHandler> {
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
-  private readonly _injector = inject(Injector);
 
-  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): FSummaryNodeMoveDragHandler {
-    const fDraggedNodes = this._getDraggedNodes(request.nodeWithDisabledSelection);
+  public handle(request: CreateMoveNodesDragModelFromSelectionRequest): MoveSummaryDragHandler {
+    const selectedNodesAndGroups = this._collectSelectedNodesAndGroups(request.nodeWithDisabledSelection);
+    const selectedNodesAndGroupsWithChildren = this._collectSelectedAndAllChildren(selectedNodesAndGroups);
 
-    const fNodesToDrag = this._getNodesToDragWithCommonLimits(fDraggedNodes);
+    const dragHierarchy = this._buildDragHierarchy(selectedNodesAndGroupsWithChildren);
 
-    const fDragHandlers = this._mapToNodeDragHandlers(fNodesToDrag);
+    this._setConnectionsHandlersToNodes(dragHierarchy.list, this._getAllOutputIds(selectedNodesAndGroupsWithChildren), this._getAllInputIds(selectedNodesAndGroupsWithChildren));
 
-    this._setConnectionsHandlersToNodes(fDragHandlers, this._getAllOutputIds(fNodesToDrag), this._getAllInputIds(fNodesToDrag));
-
-    const commonLimits = this._calculateCommonLimits(
-      this._getNodesMoveLimits(fNodesToDrag, [], fDraggedNodes)
-    );
-
-    return new FSummaryNodeMoveDragHandler(
-      this._injector,
-      commonLimits, fDragHandlers, this._getDraggedNodesBoundingRect(fNodesToDrag)
-    );
+    return this._createSummaryDragHandler(dragHierarchy.roots);
   }
 
-  private _getDraggedNodes(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
+  private _collectSelectedNodesAndGroups(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
     const result = this._getNodesFromSelection();
     if (nodeWithDisabledSelection) {
       result.push(nodeWithDisabledSelection);
@@ -72,38 +58,19 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       .find(n => n.isContains(hostElement));
   }
 
-  private _getNodesToDragWithCommonLimits(fDraggedNodes: FNodeBase[]): FNodeBase[] {
-    return fDraggedNodes.reduce((result: FNodeBase[], x: FNodeBase) => {
+  private _collectSelectedAndAllChildren(selectedNodesAndGroups: FNodeBase[]): FNodeBase[] {
+    return selectedNodesAndGroups.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x);
       return result.concat(this._getChildrenNodes(x.fId()));
     }, []);
   }
 
-  private _getNodesMoveLimits(fNodes: FNodeBase[], fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimitsAndPosition[] {
-    return fDraggedNodes.map((x) => {
-      const fParentNodes = this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x));
-      return { position: x._position, ...this._getNodeMoveLimits(x, fParentNodes, fDraggedNodes) };
-    });
-  }
-
-  private _getNodeMoveLimits(fNode: FNodeBase, fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): INodeMoveLimits {
-    return this._mediator.execute<IMinMaxPoint>(
-      new CalculateNodeMoveLimitsRequest(fNode, this._isParentNodeInArray(fParentNodes, fDraggedNodes))
-    );
-  }
-
-  private _isParentNodeInArray(fParentNodes: FNodeBase[], fDraggedNodes: FNodeBase[]): boolean {
-    return this._mediator.execute<boolean>(new IsArrayHasParentNodeRequest(fParentNodes, fDraggedNodes))
+  private _buildDragHierarchy(selectedNodesAndGroupsWithChildren: FNodeBase[]): BuildDragHierarchyResponse {
+    return this._mediator.execute(new BuildDragHierarchyRequest(selectedNodesAndGroupsWithChildren));
   }
 
   private _getChildrenNodes(fId: string): FNodeBase[] {
     return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId));
-  }
-
-  private _calculateCommonLimits(limits: INodeMoveLimitsAndPosition[]): IMinMaxPoint {
-    return this._mediator.execute<IMinMaxPoint>(
-      new CalculateCommonNodeMoveLimitsRequest(limits)
-    );
   }
 
   private _getAllOutputIds(fNodes: FNodeBase[]): string[] {
@@ -124,23 +91,17 @@ export class CreateMoveNodesDragModelFromSelectionExecution
       .map((x) => x.fId);
   }
 
-  private _mapToNodeDragHandlers(items: FNodeBase[]): FNodeMoveDragHandler[] {
-    return items.map((x) => new FNodeMoveDragHandler(x));
-  }
-
   private _setConnectionsHandlersToNodes(
-    handlers: FNodeMoveDragHandler[], outputIds: string[], inputIds: string[]
+    dragHandlers: MoveNodeOrGroupDragHandler[], outputIds: string[], inputIds: string[]
   ): void {
-    const fConnectionHandlers: BaseConnectionDragHandler[] = [];
-    handlers.forEach((fNodeHandler) => {
-      this._mediator.execute(new PutOutputConnectionHandlersToArrayRequest(fNodeHandler, inputIds, fConnectionHandlers));
-      this._mediator.execute(new PutInputConnectionHandlersToArrayRequest(fNodeHandler, outputIds, fConnectionHandlers));
+    const existingConnectionHandlers: BaseConnectionDragHandler[] = [];
+    dragHandlers.forEach((x) => {
+      this._mediator.execute(new PutOutputConnectionHandlersToArrayRequest(x, inputIds, existingConnectionHandlers));
+      this._mediator.execute(new PutInputConnectionHandlersToArrayRequest(x, outputIds, existingConnectionHandlers));
     });
   }
 
-  private _getDraggedNodesBoundingRect(fNodes: FNodeBase[]): IRect {
-    return RectExtensions.union(fNodes.map((x) => {
-      return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
-    })) || RectExtensions.initialize();
+  private _createSummaryDragHandler(hierarchyRoots: MoveNodeOrGroupDragHandler[]): MoveSummaryDragHandler {
+    return this._mediator.execute(new CreateSummaryDragHandlerRequest(hierarchyRoots));
   }
 }

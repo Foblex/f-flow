@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetFlowHostElementRequest } from '../../../domain';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext, FSummaryNodeMoveDragHandler } from '../../index';
+import { FDraggableDataContext, MoveSummaryDragHandler } from '../../index';
 import { FLineAlignmentDragHandler } from '../f-line-alignment.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { LineService } from '../../../f-line-alignment';
@@ -15,7 +15,7 @@ import { BrowserService } from '@foblex/platform';
 @FExecutionRegister(LineAlignmentPreparationRequest)
 export class LineAlignmentPreparationExecution implements IExecution<LineAlignmentPreparationRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fBrowser = inject(BrowserService);
@@ -41,7 +41,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
   }
 
   private _getFlowHostSize(): ISize {
-    return this._fMediator.execute<HTMLElement>(new GetFlowHostElementRequest())
+    return this._mediator.execute<HTMLElement>(new GetFlowHostElementRequest())
       .getBoundingClientRect();
   }
 
@@ -55,7 +55,7 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _getStaticNodeRects(fNodes: FNodeBase[]): IRect[] {
     return this._getStaticNodes(fNodes).map((x) => {
-      return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
+      return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
     })
   }
 
@@ -66,6 +66,6 @@ export class LineAlignmentPreparationExecution implements IExecution<LineAlignme
 
   private _getCommonRestrictions(): IMinMaxPoint {
     return this._dragContext.draggableItems
-      .filter((x) => x instanceof FSummaryNodeMoveDragHandler)[0].limits;
+      .filter((x) => x instanceof MoveSummaryDragHandler)[0].limits;
   }
 }

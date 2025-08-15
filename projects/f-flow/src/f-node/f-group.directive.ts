@@ -75,6 +75,10 @@ export class FGroupDirective extends FNodeBase
     transform: booleanAttribute,
   });
 
+  public override readonly fAutoExpandOnChildHit = input(false, {
+    transform: booleanAttribute,
+  });
+
   constructor(
     elementReference: ElementRef<HTMLElement>,
   ) {

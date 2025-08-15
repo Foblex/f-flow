@@ -11,7 +11,7 @@ import {IFDragHandler} from '../../f-drag-handler';
 import {FNodeDropToGroupDragHandler} from '../../f-drop-to-group';
 import {ILineAlignmentResult, INearestCoordinateResult} from '../../../f-line-alignment';
 import {FLineAlignmentDragHandler} from '../f-line-alignment.drag-handler';
-import {FSummaryNodeMoveDragHandler} from '../f-summary-node-move.drag-handler';
+import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
 import {FNodeBase} from '../../../f-node';
 import {FMoveNodesEvent} from "../f-move-nodes.event";
 
@@ -35,16 +35,16 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition())
     );
 
-    const firstNodeOrGroup: FSummaryNodeMoveDragHandler = this._dragContext.draggableItems
-      .find((x) => x instanceof FSummaryNodeMoveDragHandler)!;
-
-    this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
-
-    this._applyConnectionUnderDroppedNode();
+    // const firstNodeOrGroup: MoveSummaryDragHandler = this._dragContext.draggableItems
+    //   .find((x) => x instanceof MoveSummaryDragHandler)!;
+    //
+    // this._finalizeMove(firstNodeOrGroup.calculateRestrictedDifference(difference));
+    //
+    // this._applyConnectionUnderDroppedNode();
   }
 
   private _isValid(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof FSummaryNodeMoveDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof MoveSummaryDragHandler);
   }
 
   private _finalizeMove(difference: IPoint): void {
@@ -110,10 +110,10 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _isDraggedJustOneNode(): boolean {
-    return (this._dragContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers.length === 1;
+    return (this._dragContext.draggableItems[0] as MoveSummaryDragHandler).dragHandlers.length === 1;
   }
 
   private _getFirstNodeOrGroup(): FNodeBase {
-    return (this._dragContext.draggableItems[0] as FSummaryNodeMoveDragHandler).fHandlers[0].fNode;
+    return (this._dragContext.draggableItems[0] as MoveSummaryDragHandler).dragHandlers[0].nodeOrGroup;
   }
 }

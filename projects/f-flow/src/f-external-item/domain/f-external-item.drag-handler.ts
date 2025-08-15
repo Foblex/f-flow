@@ -115,7 +115,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    const adjustCellSize = this._fComponentStore.fDraggable?.fCellSizeWhileDragging ?? false;
+    const adjustCellSize = this._fComponentStore.fDraggable?.fCellSizeWhileDragging() ?? false;
     const differenceWithRestrictions = Point.fromPoint(this._fBoundsLimiter.limit(difference, adjustCellSize))
       .mult(this._transform.scale);
 

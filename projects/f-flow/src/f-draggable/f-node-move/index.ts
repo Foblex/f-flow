@@ -12,11 +12,11 @@ export * from './f-line-alignment.drag-handler';
 
 export * from './f-move-nodes.event';
 
-export * from './f-node-move.drag-handler';
+export * from './move-node-or-group.drag-handler';
 
 export * from './point-bounds-limiter';
 
 export * from './providers';
 
-export * from './f-summary-node-move.drag-handler';
+export * from './move-summary.drag-handler';
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CalculateCommonNodeMoveLimitsRequest } from './calculate-common-node-move-limits.request';
+import { CalculateSummaryDragLimitsRequest } from './calculate-summary-drag-limits-request';
 import { IPoint } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../../../f-storage';
@@ -7,21 +7,21 @@ import { INodeMoveLimitsAndPosition } from '../../i-node-move-limits-and-positio
 import { INodeMoveLimits } from '../../i-node-move-limits';
 
 @Injectable()
-@FExecutionRegister(CalculateCommonNodeMoveLimitsRequest)
-export class CalculateCommonNodeMoveLimitsExecution
-  implements IExecution<CalculateCommonNodeMoveLimitsRequest, INodeMoveLimits> {
+@FExecutionRegister(CalculateSummaryDragLimitsRequest)
+export class CalculateSummaryDragLimits
+  implements IExecution<CalculateSummaryDragLimitsRequest, INodeMoveLimits> {
 
   private readonly _store = inject(FComponentsStore);
 
   private get _vCellSize(): number {
-    return this._store.fDraggable!.vCellSize;
+    return this._store.fDraggable!.vCellSize();
   }
 
   private get _hCellSize(): number {
-    return this._store.fDraggable!.hCellSize;
+    return this._store.fDraggable!.hCellSize();
   }
 
-  public handle(request: CalculateCommonNodeMoveLimitsRequest): INodeMoveLimits {
+  public handle(request: CalculateSummaryDragLimitsRequest): INodeMoveLimits {
     return this._calculateCommonLimits(request.limits);
   }
 

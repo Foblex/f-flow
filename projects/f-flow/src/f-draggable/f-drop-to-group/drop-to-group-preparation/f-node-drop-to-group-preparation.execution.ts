@@ -8,7 +8,7 @@ import {GetChildNodeIdsRequest, GetNormalizedElementRectRequest, GetParentNodesR
 import {FGroupDirective, FNodeBase} from '../../../f-node';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
-import {FSummaryNodeMoveDragHandler} from '../../f-node-move';
+import {MoveSummaryDragHandler} from '../../f-node-move';
 import {FExternalItemDragHandler} from "../../../f-external-item";
 import {SortContainersForDropByLayerRequest} from "../sort-containers-for-drop-by-layer";
 
@@ -69,7 +69,7 @@ export class FNodeDropToGroupPreparationExecution
 
   private _isNodeDragHandler(): boolean {
     return this._dragContext.draggableItems
-      .some((x) => x instanceof FSummaryNodeMoveDragHandler);
+      .some((x) => x instanceof MoveSummaryDragHandler);
   }
 
   private _isExternalItemDragHandler(): boolean {
@@ -91,8 +91,8 @@ export class FNodeDropToGroupPreparationExecution
 
   private _draggedNodes(): FNodeBase[] {
     return this._dragContext.draggableItems
-      .find((x) => x instanceof FSummaryNodeMoveDragHandler)
-      ?.fHandlers.map((x) => x.fNode) || [];
+      .find((x) => x instanceof MoveSummaryDragHandler)
+      ?.dragHandlers.map((x) => x.nodeOrGroup) || [];
   }
 
   /**

@@ -63,7 +63,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public abstract fDraggingDisabled: Signal<boolean>;
 
-  public fCanBeResizedByChild: boolean = true;
+  public abstract fAutoExpandOnChildHit: Signal<boolean>;
 
   public abstract fIncludePadding: Signal<boolean>;
 

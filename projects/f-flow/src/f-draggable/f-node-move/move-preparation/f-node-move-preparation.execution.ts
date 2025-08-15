@@ -9,7 +9,7 @@ import {CreateMoveNodesDragModelFromSelectionRequest} from '../create-move-nodes
 import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
 import {isClosestElementHasClass} from '@foblex/utils';
 import {LineAlignmentPreparationRequest} from '../line-alignment-preparation';
-import {FSummaryNodeMoveDragHandler} from '../f-summary-node-move.drag-handler';
+import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
 import {IPointerEvent} from "../../../drag-toolkit";
 
 @Injectable()
@@ -45,7 +45,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     if (this._store.fLineAlignment) {
       this._mediator.execute<void>(
         new LineAlignmentPreparationRequest(
-          summaryDragHandler.fHandlers.map((x) => x.fNode), summaryDragHandler.commonRect
+          summaryDragHandler.dragHandlers.map((x) => x.nodeOrGroup), summaryDragHandler.boundingRect
         )
       );
     }
@@ -72,8 +72,8 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   }
 
   //We drag nodes from selection model
-  private _calculateDraggedItems(fNode: FNodeBase): FSummaryNodeMoveDragHandler {
-    let result: FSummaryNodeMoveDragHandler;
+  private _calculateDraggedItems(fNode: FNodeBase): MoveSummaryDragHandler {
+    let result: MoveSummaryDragHandler;
     if (!fNode.fSelectionDisabled()) {
       // Need to select node before drag
       this._mediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
@@ -86,7 +86,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     return result;
   }
 
-  private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): FSummaryNodeMoveDragHandler {
+  private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): MoveSummaryDragHandler {
     return this._mediator.execute(
       new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );

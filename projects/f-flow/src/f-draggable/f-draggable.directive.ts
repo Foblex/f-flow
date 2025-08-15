@@ -1,43 +1,51 @@
 import {
-  AfterViewInit, booleanAttribute, ContentChildren,
+  AfterViewInit,
+  booleanAttribute,
+  ContentChildren,
   Directive,
   ElementRef,
-  EventEmitter, inject, Inject,
+  EventEmitter,
+  inject,
+  Inject,
+  input,
   Input,
-  NgZone, numberAttribute,
+  NgZone,
+  numberAttribute,
   OnDestroy,
-  OnInit, Optional, Output, QueryList
+  OnInit,
+  Optional,
+  Output,
+  QueryList
 } from "@angular/core";
 import {FDraggableBase} from './f-draggable-base';
-import {
-  FMoveNodesEvent,
-  FNodeMoveFinalizeRequest,
-  FNodeMovePreparationRequest
-} from './f-node-move';
+import {FMoveNodesEvent, FNodeMoveFinalizeRequest, FNodeMovePreparationRequest} from './f-node-move';
 import {FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest} from './f-canvas';
 import {
   FCreateConnectionEvent,
-  FReassignConnectionEvent,
-  FReassignConnectionPreparationRequest,
-  FReassignConnectionFinalizeRequest,
+  FCreateConnectionFinalizeRequest,
   FCreateConnectionPreparationRequest,
-  FCreateConnectionFinalizeRequest
+  FReassignConnectionEvent,
+  FReassignConnectionFinalizeRequest,
+  FReassignConnectionPreparationRequest
 } from './f-connection';
 import {FSelectionChangeEvent} from './f-selection-change-event';
 import {FMediator} from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
+  defaultEventTrigger,
   EmitSelectionChangeEventRequest,
-  PrepareDragSequenceRequest,
-  RemoveDndFromStoreRequest,
   EndDragSequenceRequest,
+  FEventTrigger,
+  FTriggerEvent,
   InitializeDragSequenceRequest,
-  OnPointerMoveRequest, FEventTrigger, FTriggerEvent, defaultEventTrigger
+  OnPointerMoveRequest,
+  PrepareDragSequenceRequest,
+  RemoveDndFromStoreRequest
 } from '../domain';
 import {
+  FCreateNodeEvent,
   FExternalItemFinalizeRequest,
   FExternalItemPreparationRequest,
-  FCreateNodeEvent,
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
 import {FSingleSelectRequest} from './f-single-select';
@@ -54,6 +62,9 @@ import {
 import {FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest} from './f-node-rotate';
 import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
 import {isDragBlocker} from "./is-drag-blocker";
+import {EFBoundsMode} from "./enums";
+import {castToEnum} from "@foblex/utils";
+
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
 // │                              │
@@ -112,11 +123,11 @@ import {isDragBlocker} from "./is-drag-blocker";
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 
-  private _elementReference = inject(ElementRef);
+  private readonly _elementReference = inject(ElementRef);
 
-  private _fResult = inject(FDragHandlerResult);
-  private _fMediator = inject(FMediator);
-  private _fPlatform = inject(PlatformService);
+  private readonly _fResult = inject(FDragHandlerResult);
+  private readonly _mediator = inject(FMediator);
+  private readonly _platform = inject(PlatformService);
 
   @Input({transform: booleanAttribute, alias: 'fDraggableDisabled'})
   public override disabled: boolean = false;
@@ -127,7 +138,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
   @Input()
   public fMultiSelectTrigger: FEventTrigger = (event: FTriggerEvent) => {
-    return (this._fPlatform.getOS() === EOperationSystem.MAC_OS) ? event.metaKey : event.ctrlKey;
+    return (this._platform.getOS() === EOperationSystem.MAC_OS) ? event.metaKey : event.ctrlKey;
   };
 
   @Input()
@@ -175,14 +186,35 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
 
-  @Input({transform: numberAttribute})
-  public override vCellSize = 1;
+  /**
+   * Defines the vertical cell size for the grid.
+   * This value is used to snap nodes to a vertical grid while dragging.
+   * The default value is `1`, which means that nodes will snap to every pixel vertically.
+   */
+  public override vCellSize = input(1, {transform: (value: any) => numberAttribute(value, 1)});
 
-  @Input({transform: numberAttribute})
-  public override hCellSize = 1;
+  /**
+   * Defines the horizontal cell size for the grid.
+   * This value is used to snap nodes to a horizontal grid while dragging.
+   * The default value is `1`, which means that nodes will snap to every pixel horizontally.
+   */
+  public override hCellSize = input(1, {transform: (value: any) => numberAttribute(value, 1)});
 
-  @Input({transform: booleanAttribute})
-  public override fCellSizeWhileDragging: boolean = false;
+  /**
+   * Defines whether the cell size should be applied while dragging.
+   * If set to `true`, the dragged nodes will snap to the grid defined by `vCellSize` and `hCellSize`.
+   * If set to `false`, the nodes will move freely without snapping to the grid.
+   */
+  public override fCellSizeWhileDragging = input(false, {transform: (value: any) => booleanAttribute(value)});
+
+  /**
+   * Defines how node bounds are handled when dragging multiple nodes together.
+   * - `HaltOnAnyHit`: Stops the entire group from moving further as soon as any single node reaches its container bounds.
+   * - `ClampIndividually`: Clamps only the nodes that reach their container bounds, allowing other nodes in the group to continue moving.
+   */
+  public override fBoundsMode = input(EFBoundsMode.ClampIndividually, {
+    transform: (value: any) => castToEnum<EFBoundsMode>(value, 'fBoundsMode', EFBoundsMode)
+  });
 
   @Output()
   public override fDragStarted = new EventEmitter<FDragStartedEvent>();
@@ -204,7 +236,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   }
 
   public ngOnInit(): void {
-    this._fMediator.execute<void>(new AddDndToStoreRequest(this));
+    this._mediator.execute<void>(new AddDndToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
@@ -218,15 +250,15 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._fResult.clear();
 
-    this._fMediator.execute<void>(new InitializeDragSequenceRequest());
+    this._mediator.execute<void>(new InitializeDragSequenceRequest());
 
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
-    this._fMediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
+    this._mediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
 
-    this._fMediator.execute<void>(new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
+    this._mediator.execute<void>(new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger));
 
-    this._fMediator.execute<void>(new FCreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
+    this._mediator.execute<void>(new FCreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger));
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
 
@@ -241,63 +273,63 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._fMediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
+    this._mediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
-    this._fMediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
+    this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
-    this._fMediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
+    this._mediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
 
-    this._fMediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
+    this._mediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
-    this._fMediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
+    this._mediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
 
-    this._fMediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
+    this._mediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
 
     this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._fMediator.execute<void>(new PrepareDragSequenceRequest());
+    this._mediator.execute<void>(new PrepareDragSequenceRequest());
   }
 
   protected override onSelect(event: Event): void {
-    this._fMediator.execute<void>(new PreventDefaultIsExternalItemRequest(event));
+    this._mediator.execute<void>(new PreventDefaultIsExternalItemRequest(event));
   }
 
   public override onPointerMove(event: IPointerEvent): void {
-    this._fMediator.execute<void>(new OnPointerMoveRequest(event));
+    this._mediator.execute<void>(new OnPointerMoveRequest(event));
   }
 
   public override onPointerUp(event: IPointerEvent): void {
     this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._fMediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FNodeResizeFinalizeRequest(event));
+    this._mediator.execute<void>(new FNodeResizeFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FNodeRotateFinalizeRequest(event));
+    this._mediator.execute<void>(new FNodeRotateFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FNodeMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new FNodeMoveFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FExternalItemFinalizeRequest(event));
+    this._mediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
+    this._mediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
 
-    this._fMediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._fMediator.execute<void>(new EndDragSequenceRequest());
+    this._mediator.execute<void>(new EndDragSequenceRequest());
   }
 
   protected override finalizeDragSequence(): void {
-    this._fMediator.execute<void>(new EmitSelectionChangeEventRequest());
+    this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._fResult.clear();
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute<void>(new RemoveDndFromStoreRequest());
+    this._mediator.execute<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();
   }
 }

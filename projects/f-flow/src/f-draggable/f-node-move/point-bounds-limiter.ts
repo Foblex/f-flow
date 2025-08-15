@@ -2,6 +2,19 @@ import { IMinMaxPoint, IPoint } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
 import { Injector } from '@angular/core';
 
+export interface ILimitEdges {
+  left: boolean;
+  right: boolean;
+  top: boolean;
+  bottom: boolean;
+}
+
+export interface ILimitResult {
+  value: IPoint;
+  overflow: IPoint;
+  edges: ILimitEdges;
+}
+
 export class PointBoundsLimiter {
 
   private readonly _store: FComponentsStore;
@@ -15,8 +28,8 @@ export class PointBoundsLimiter {
     private readonly _limit: IMinMaxPoint
   ) {
     this._store = _injector.get(FComponentsStore);
-    this._vCellSize = this._store.fDraggable!.vCellSize;
-    this._hCellSize = this._store.fDraggable!.hCellSize;
+    this._vCellSize = this._store.fDraggable!.vCellSize();
+    this._hCellSize = this._store.fDraggable!.hCellSize();
   }
 
   public limit(difference: IPoint, adjustCellSize: boolean): IPoint {

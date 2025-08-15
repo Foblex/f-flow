@@ -1,5 +1,7 @@
 export * from './domain';
 
+export * from './enums';
+
 export * from './f-canvas';
 
 export * from './f-connection';
