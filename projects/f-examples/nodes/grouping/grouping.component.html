@@ -1,7 +1,7 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
-  <f-canvas>
+  <f-canvas fZoom>
 
-    <div fGroup fDragHandle fGroupId="group1" class="with-padding"
+    <div fGroup fDragHandle fGroupId="group1" class="with-padding" [fAutoExpandOnChildHit]="true"
          [fGroupPosition]="{ x: 0, y: 0 }" [fGroupSize]="{ width: 300, height: 300 }">
       I'm Group 1 with padding
     </div>
@@ -11,7 +11,7 @@
       I'm Group 3 in Group 1
     </div>
 
-    <div fGroup fDragHandle fGroupId="group2"
+    <div fGroup fDragHandle fGroupId="group2" [fAutoExpandOnChildHit]="false"
          [fGroupPosition]="{ x: 320, y: 0 }" [fGroupSize]="{ width: 300, height: 300 }">
       I'm Group 2
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>
@@ -25,7 +25,7 @@
       I'm Group 4 in Group 2
     </div>
 
-    <div fNode fDragHandle fNodeId="node1" fNodeParentId="group2"
+    <div fNode fDragHandle fNodeId="node1" fNodeParentId="group2" [fAutoExpandOnChildHit]="true"
          [fNodePosition]="{ x: 330, y: 90 }" [fNodeSize]="{width: 240, height: 80}">
       I'm Node 1 in Group 2
       <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>

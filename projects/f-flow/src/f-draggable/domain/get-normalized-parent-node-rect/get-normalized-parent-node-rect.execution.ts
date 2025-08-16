@@ -13,7 +13,7 @@ export class GetNormalizedParentNodeRectExecution
   implements IExecution<GetNormalizedParentNodeRectRequest, IRect> {
 
   private readonly _store = inject(FComponentsStore);
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
   public handle(request: GetNormalizedParentNodeRectRequest): IRect {
     let result = RectExtensions.initialize(-Infinity, -Infinity, Infinity, Infinity);
@@ -61,10 +61,10 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNodeRect(fNode: FNodeBase): IRect {
-    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
+    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
   }
 
   private _getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this._fMediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+    return this._mediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
   }
 }

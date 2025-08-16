@@ -5,7 +5,7 @@ import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {FComponentsStore} from '../../../f-storage';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
 import {FNodeBase} from '../../../f-node';
-import {CreateMoveNodesDragModelFromSelectionRequest} from '../create-move-nodes-drag-model-from-selection';
+import {CreateDragModelFromSelectionRequest} from '../create-drag-model-from-selection';
 import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
 import {isClosestElementHasClass} from '@foblex/utils';
 import {LineAlignmentPreparationRequest} from '../line-alignment-preparation';
@@ -88,7 +88,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): MoveSummaryDragHandler {
     return this._mediator.execute(
-      new CreateMoveNodesDragModelFromSelectionRequest(nodeWithDisabledSelection)
+      new CreateDragModelFromSelectionRequest(nodeWithDisabledSelection)
     );
   }
 }

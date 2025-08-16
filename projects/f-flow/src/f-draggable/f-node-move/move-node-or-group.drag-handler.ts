@@ -1,13 +1,17 @@
-import {IMinMaxPoint, IPoint, IRect, PointExtensions} from '@foblex/2d';
+import {IPoint, IRect, PointExtensions} from '@foblex/2d';
 import {IFDragHandler} from '../f-drag-handler';
 import {FNodeBase} from '../../f-node';
 import {BaseConnectionDragHandler} from './connection-drag-handlers';
-import {F_CSS_CLASS, GetParentNodesRequest} from "../../domain";
-import {PointBoundsLimiter} from "./point-bounds-limiter";
+import {F_CSS_CLASS} from "../../domain";
 import {Injector} from "@angular/core";
 import {FComponentsStore} from "../../f-storage";
 import {EFBoundsMode} from "../enums";
 import {FMediator} from "@foblex/mediator";
+import {IDragLimits} from "./create-drag-model-from-selection";
+import {HardSoftLimiter} from "./hard-soft-limiter";
+import {ILimitEdges} from "./limit-bounds";
+
+type SideGrow = { left: number; right: number; top: number; bottom: number };
 
 export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
@@ -15,10 +19,12 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
   private readonly _onPointerDownPosition = PointExtensions.initialize();
 
-  private _parentsChain: FNodeBase[] = [];
   private readonly _store: FComponentsStore;
   private readonly _mediator: FMediator;
+
   private _limit: (diff: IPoint) => IPoint = (diff) => diff;
+
+  private _maxGrowByParent = new Map<string, SideGrow>();
 
   constructor(
     private readonly _injector: Injector,
@@ -33,31 +39,32 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     this._mediator = _injector.get(FMediator);
   }
 
-  public setLimits(limits: IMinMaxPoint): void {
+  public setLimits(limits: IDragLimits): void {
     // If the bounds mode is set to halt on any hit, we do not apply individual limits and use the summary limits instead.
     if (this._store.fDraggable?.fBoundsMode() === EFBoundsMode.HaltOnAnyHit) {
       return;
     }
-    this._parentsChain = this._collectParentsChain();
-    this._limit = (diff: IPoint) => new PointBoundsLimiter(this._injector, this._boundingRect, limits)
-      .limit(diff, this._store.fDraggable!.fCellSizeWhileDragging());
-  }
 
-  private _collectParentsChain(): FNodeBase[] {
-    const chain = this._mediator.execute<FNodeBase[] | undefined>(
-      new GetParentNodesRequest(this.nodeOrGroup)
-    );
-    if (chain?.length) return chain;
-    const map = new Map(this._store.fNodes.map(n => [n.fId(), n] as const));
-    const res: FNodeBase[] = [];
-    let pid = this.nodeOrGroup.fParentId?.();
-    while (pid) {
-      const p = map.get(pid);
-      if (!p) break;
-      res.push(p);
-      pid = p.fParentId?.();
+    const limiter = new HardSoftLimiter(this._injector, this._onPointerDownPosition, limits);
+
+    this._limit = (difference: IPoint) => {
+      const limitResult = limiter.limit(difference);
+
+      limitResult.softResult.forEach((result, index) => {
+        const grow = {x: Math.abs(result.overflow.x), y: Math.abs(result.overflow.y)};
+        console.log(grow);
+        const edges = result.edges;
+
+        this.expandParentByOverflow(
+          limits.soft[index].nodeOrGroup,
+          grow,
+          edges,
+          limits.soft[index].boundingRect
+        );
+      });
+
+      return limitResult.hard;
     }
-    return res;
   }
 
   public prepareDragSequence(): void {
@@ -88,5 +95,35 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerUp());
     this.nodeOrGroup.position.set(this.nodeOrGroup._position);
     this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+  }
+
+  public expandParentByOverflow(parent: FNodeBase, grow: IPoint, edges: ILimitEdges, boundingRect: IRect): void {
+
+    let x = boundingRect.x, y = boundingRect.y, width = boundingRect.width, height = boundingRect.height;
+
+    if (edges.right && grow.x > 0) {
+      width += grow.x;
+    }
+    if (edges.bottom && grow.y > 0) {
+      height += grow.y;
+    }
+    if (edges.left && grow.x > 0) {
+      x -= grow.x;
+      width += grow.x;
+    }
+    if (edges.top && grow.y > 0) {
+      y -= grow.y;
+      height += grow.y;
+    }
+
+    parent.updateSize({width, height});
+    parent.updatePosition({x, y});
+    parent.redraw();
+  }
+
+  private _getMaxGrow(parentId: string): SideGrow {
+    let g = this._maxGrowByParent.get(parentId);
+    if (!g) { g = { left: 0, right: 0, top: 0, bottom: 0 }; this._maxGrowByParent.set(parentId, g); }
+    return g;
   }
 }

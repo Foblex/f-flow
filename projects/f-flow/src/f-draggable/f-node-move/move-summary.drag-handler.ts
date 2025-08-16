@@ -1,7 +1,7 @@
 import {IMinMaxPoint, IPoint, IRect} from '@foblex/2d';
 import {IFDragHandler} from '../f-drag-handler';
 import {FComponentsStore} from '../../f-storage';
-import {PointBoundsLimiter} from './point-bounds-limiter';
+// import {PointBoundsLimiter} from './point-bounds-limiter';
 import {MoveNodeOrGroupDragHandler} from './move-node-or-group.drag-handler';
 import {Injector} from '@angular/core';
 import {EFBoundsMode} from "../enums";
@@ -32,8 +32,8 @@ export class MoveSummaryDragHandler implements IFDragHandler {
     if (this._store.fDraggable?.fBoundsMode() === EFBoundsMode.ClampIndividually) {
       return;
     }
-    this._limit = (diff: IPoint) => new PointBoundsLimiter(this._injector, this.boundingRect, limits)
-      .limit(diff, this._store.fDraggable!.fCellSizeWhileDragging());
+    // this._limit = (diff: IPoint) => new PointBoundsLimiter(this._injector, this.boundingRect, limits)
+    //   .limit(diff, this._store.fDraggable!.fCellSizeWhileDragging());
   }
 
   public prepareDragSequence(): void {

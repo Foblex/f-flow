@@ -5,7 +5,7 @@ import {
   FExternalItemCreatePreviewRequest,
   IFExternalItemDragResult
 } from '../../f-external-item';
-import {FDragHandlerResult, IFDragHandler, PointBoundsLimiter} from '../../f-draggable';
+import {FDragHandlerResult, IFDragHandler} from '../../f-draggable';
 import {BrowserService} from '@foblex/platform';
 import {FMediator} from '@foblex/mediator';
 import {Injector} from '@angular/core';
@@ -26,7 +26,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
   private _preview: HTMLElement | SVGElement | undefined;
   private _placeholder: HTMLElement | SVGElement | undefined;
   private _onPointerDownRect: IRect = RectExtensions.initialize();
-  private readonly _fBoundsLimiter: PointBoundsLimiter;
+ // private readonly _fBoundsLimiter: PointBoundsLimiter;
 
   private get _fItemHost(): HTMLElement | SVGElement {
     return this._fExternalItem.hostElement;
@@ -52,9 +52,9 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._fBrowser = _injector.get(BrowserService);
     this._fComponentStore = _injector.get(FComponentsStore);
 
-    this._fBoundsLimiter = new PointBoundsLimiter(
-      _injector, this._getStartPoint(), infinityMinMax()
-    );
+    // this._fBoundsLimiter = new PointBoundsLimiter(
+    //   _injector, this._getStartPoint(), infinityMinMax()
+    // );
 
     this._fItemHostDisplay = this._fItemHost.style.display;
   }
@@ -116,11 +116,11 @@ export class FExternalItemDragHandler implements IFDragHandler {
 
   public onPointerMove(difference: IPoint): void {
     const adjustCellSize = this._fComponentStore.fDraggable?.fCellSizeWhileDragging() ?? false;
-    const differenceWithRestrictions = Point.fromPoint(this._fBoundsLimiter.limit(difference, adjustCellSize))
-      .mult(this._transform.scale);
+    // const differenceWithRestrictions = Point.fromPoint(this._fBoundsLimiter.limit(difference, adjustCellSize))
+    //   .mult(this._transform.scale);
 
-    const position = Point.fromPoint(this._onPointerDownRect).add(differenceWithRestrictions);
-    this._preview!.style.transform = setTransform(position);
+    // const position = Point.fromPoint(this._onPointerDownRect).add(differenceWithRestrictions);
+    // this._preview!.style.transform = setTransform(position);
   }
 
   public onPointerUp(): void {
