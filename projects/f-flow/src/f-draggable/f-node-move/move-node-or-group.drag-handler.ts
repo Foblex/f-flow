@@ -8,10 +8,7 @@ import {FComponentsStore} from "../../f-storage";
 import {EFBoundsMode} from "../enums";
 import {FMediator} from "@foblex/mediator";
 import {IDragLimits} from "./create-drag-model-from-selection";
-import {HardSoftLimiter} from "./hard-soft-limiter";
-import {ILimitEdges} from "./limit-bounds";
-
-type SideGrow = { left: number; right: number; top: number; bottom: number };
+import {DragConstraintPipeline, expandRectFromBaseline, IConstraintResult} from "./constraint";
 
 export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
@@ -22,9 +19,7 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   private readonly _store: FComponentsStore;
   private readonly _mediator: FMediator;
 
-  private _limit: (diff: IPoint) => IPoint = (diff) => diff;
-
-  private _maxGrowByParent = new Map<string, SideGrow>();
+  private _applyConstraints: (difference: IPoint) => IPoint = (difference) => difference;
 
   constructor(
     private readonly _injector: Injector,
@@ -45,26 +40,31 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
       return;
     }
 
-    const limiter = new HardSoftLimiter(this._injector, this._onPointerDownPosition, limits);
+    const pipeline = new DragConstraintPipeline(this._injector, this._onPointerDownPosition, limits);
 
-    this._limit = (difference: IPoint) => {
-      const limitResult = limiter.limit(difference);
+    this._applyConstraints = (difference: IPoint) => {
+      const summary = pipeline.apply(difference);
 
-      limitResult.softResult.forEach((result, index) => {
-        const grow = {x: Math.abs(result.overflow.x), y: Math.abs(result.overflow.y)};
-        console.log(grow);
-        const edges = result.edges;
+      this._applySoftExpansions(summary.soft, limits);
 
-        this.expandParentByOverflow(
-          limits.soft[index].nodeOrGroup,
-          grow,
-          edges,
-          limits.soft[index].boundingRect
-        );
-      });
-
-      return limitResult.hard;
+      return summary.hardDifference;
     }
+  }
+
+  private _applySoftExpansions(
+    softResults: IConstraintResult[], limits: IDragLimits
+  ): void {
+    softResults.forEach((result, index) => {
+      const softLimit = limits.soft[index];
+      const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
+      this._commitParentRect(softLimit.nodeOrGroup, expandedRect);
+    });
+  }
+
+  private _commitParentRect(parent: FNodeBase, rect: IRect): void {
+    parent.updateSize({width: rect.width, height: rect.height});
+    parent.updatePosition({x: rect.x, y: rect.y});
+    parent.redraw();
   }
 
   public prepareDragSequence(): void {
@@ -73,7 +73,7 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    const differenceWithRestrictions = this._limit(difference);
+    const differenceWithRestrictions = this._applyConstraints(difference);
 
     this.childrenNodeAndGroups.forEach((x) => x.onPointerMove(differenceWithRestrictions));
     this._redraw(this._calculateNewPosition(differenceWithRestrictions));
@@ -95,35 +95,5 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerUp());
     this.nodeOrGroup.position.set(this.nodeOrGroup._position);
     this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
-  }
-
-  public expandParentByOverflow(parent: FNodeBase, grow: IPoint, edges: ILimitEdges, boundingRect: IRect): void {
-
-    let x = boundingRect.x, y = boundingRect.y, width = boundingRect.width, height = boundingRect.height;
-
-    if (edges.right && grow.x > 0) {
-      width += grow.x;
-    }
-    if (edges.bottom && grow.y > 0) {
-      height += grow.y;
-    }
-    if (edges.left && grow.x > 0) {
-      x -= grow.x;
-      width += grow.x;
-    }
-    if (edges.top && grow.y > 0) {
-      y -= grow.y;
-      height += grow.y;
-    }
-
-    parent.updateSize({width, height});
-    parent.updatePosition({x, y});
-    parent.redraw();
-  }
-
-  private _getMaxGrow(parentId: string): SideGrow {
-    let g = this._maxGrowByParent.get(parentId);
-    if (!g) { g = { left: 0, right: 0, top: 0, bottom: 0 }; this._maxGrowByParent.set(parentId, g); }
-    return g;
   }
 }
