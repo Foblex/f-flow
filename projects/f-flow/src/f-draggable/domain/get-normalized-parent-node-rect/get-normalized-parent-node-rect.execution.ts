@@ -15,9 +15,9 @@ export class GetNormalizedParentNodeRectExecution
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
-  public handle(request: GetNormalizedParentNodeRectRequest): IRect {
+  public handle({ nodeOrGroup }: GetNormalizedParentNodeRectRequest): IRect {
     let result = RectExtensions.initialize(-Infinity, -Infinity, Infinity, Infinity);
-    const parentNode = this._getNode(request.fNode.fParentId());
+    const parentNode = this._getNode(nodeOrGroup.fParentId());
     if (parentNode) {
       result = this._getParentRect(parentNode);
     }
@@ -49,9 +49,9 @@ export class GetNormalizedParentNodeRectExecution
   // |  +----------------------------------+  |
   // |  padding-bottom                        |
   // +----------------------------------------+
-  private _getParentRect(node: FNodeBase): IRect {
-    const rect = this._getNodeRect(node);
-    const padding = this._getNodePadding(node, rect);
+  private _getParentRect(nodeOrGroup: FNodeBase): IRect {
+    const rect = this._getNodeRect(nodeOrGroup);
+    const padding = this._getNodePadding(nodeOrGroup, rect);
     return RectExtensions.initialize(
       rect.x + padding[ 0 ],
       rect.y + padding[ 1 ],
@@ -60,11 +60,11 @@ export class GetNormalizedParentNodeRectExecution
     );
   }
 
-  private _getNodeRect(fNode: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(fNode.hostElement));
+  private _getNodeRect(nodeOrGroup: FNodeBase): IRect {
+    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
-  private _getNodePadding(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this._mediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(node, rect));
+  private _getNodePadding(nodeOrGroup: FNodeBase, rect: IRect): [ number, number, number, number ] {
+    return this._mediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(nodeOrGroup, rect));
   }
 }

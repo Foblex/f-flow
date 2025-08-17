@@ -55,11 +55,11 @@ export class DragToGroupComponent {
 
     event.fNodes.forEach((id) => {
       const group = groups.find(x => x.id === id);
-      if (group && !group.parentId) {
+      if (group) {
         group.parentId = event.fTargetNode;
       } else {
         const node = nodes.find(x => x.id === id);
-        if(node && !node.parentId) {
+        if(node) {
           node!.parentId = event.fTargetNode;
         }
       }

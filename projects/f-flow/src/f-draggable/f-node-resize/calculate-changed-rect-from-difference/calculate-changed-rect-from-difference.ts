@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { CalculateChangedPositionRequest } from './calculate-changed-position.request';
-import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
+import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference-request';
+import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RESIZE_DIRECTIONS } from '../resize-direction';
 
 @Injectable()
-@FExecutionRegister(CalculateChangedPositionRequest)
-export class CalculateChangedPositionExecution
-  implements IExecution<CalculateChangedPositionRequest, IRect> {
+@FExecutionRegister(CalculateChangedRectFromDifferenceRequest)
+export class CalculateChangedRectFromDifference
+  implements IExecution<CalculateChangedRectFromDifferenceRequest, IRect> {
 
-  public handle(request: CalculateChangedPositionRequest): IRect {
+  public handle(request: CalculateChangedRectFromDifferenceRequest): IRect {
     return this.change(
       request.originalRect, request.difference,
-      RESIZE_DIRECTIONS[ request.fResizeHandleType ], request.changedRect,
+      RESIZE_DIRECTIONS[ request.handleType ], request.changedRect,
     );
   }
 

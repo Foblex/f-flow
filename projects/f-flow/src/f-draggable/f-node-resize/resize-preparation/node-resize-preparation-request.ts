@@ -1,8 +1,8 @@
 import { FEventTrigger } from '../../../domain';
 import {IPointerEvent} from "../../../drag-toolkit";
 
-export class FNodeResizePreparationRequest {
-  static readonly fToken = Symbol('FNodeResizePreparationRequest');
+export class NodeResizePreparationRequest {
+  static readonly fToken = Symbol('NodeResizePreparationRequest');
 
   constructor(
     public event: IPointerEvent,

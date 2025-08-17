@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ApplyChildResizeRestrictionsRequest } from './apply-child-resize-restrictions.request';
+import { ApplyChildResizeConstraintsRequest } from './apply-child-resize-constraints-request';
 import { IRect } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
-const CHILD_RESIZE_OFFSET = 0;
-
 @Injectable()
-@FExecutionRegister(ApplyChildResizeRestrictionsRequest)
-export class ApplyChildResizeRestrictionsExecution
-  implements IExecution<ApplyChildResizeRestrictionsRequest, void> {
+@FExecutionRegister(ApplyChildResizeConstraintsRequest)
+export class ApplyChildResizeConstraints
+  implements IExecution<ApplyChildResizeConstraintsRequest, void> {
 
-  public handle(request: ApplyChildResizeRestrictionsRequest): void {
-    this._apply(request.rect, request.restrictions.childrenBounds!);
+  public handle(request: ApplyChildResizeConstraintsRequest): void {
+    this._apply(request.rect, request.constraint.childrenBounds!);
   }
 
   private _apply(rect: IRect, restrictionsRect: IRect): void {
@@ -22,7 +20,7 @@ export class ApplyChildResizeRestrictionsExecution
   }
 
   private _restrictLeft(rect: IRect, restrictions: IRect): void {
-    const delta = rect.x - (restrictions.x - CHILD_RESIZE_OFFSET);
+    const delta = rect.x - (restrictions.x);
     if (delta > 0) {
       rect.x -= delta;
       rect.width += delta;
@@ -30,7 +28,7 @@ export class ApplyChildResizeRestrictionsExecution
   }
 
   private _restrictTop(rect: IRect, restrictions: IRect): void {
-    const delta = rect.y - (restrictions.y - CHILD_RESIZE_OFFSET);
+    const delta = rect.y - (restrictions.y);
     if (delta > 0) {
       rect.y -= delta;
       rect.height += delta;
@@ -38,14 +36,14 @@ export class ApplyChildResizeRestrictionsExecution
   }
 
   private _restrictRight(rect: IRect, restrictions: IRect): void {
-    const maxRight = restrictions.x + restrictions.width + CHILD_RESIZE_OFFSET;
+    const maxRight = restrictions.x + restrictions.width;
     if (rect.x + rect.width <= maxRight) {
       rect.width = maxRight - rect.x;
     }
   }
 
   private _restrictBottom(rect: IRect, restrictions: IRect): void {
-    const maxBottom = restrictions.y + restrictions.height + CHILD_RESIZE_OFFSET;
+    const maxBottom = restrictions.y + restrictions.height;
     if (rect.y + rect.height <= maxBottom) {
       rect.height = maxBottom - rect.y;
     }

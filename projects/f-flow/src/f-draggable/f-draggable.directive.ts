@@ -49,7 +49,7 @@ import {
   PreventDefaultIsExternalItemRequest
 } from '../f-external-item';
 import {FSingleSelectRequest} from './f-single-select';
-import {FNodeResizeFinalizeRequest, FNodeResizePreparationRequest} from './f-node-resize';
+import {FNodeResizeFinalizeRequest, NodeResizePreparationRequest} from './f-node-resize';
 import {F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin} from './i-f-drag-and-drop-plugin';
 import {BrowserService, EOperationSystem, PlatformService} from '@foblex/platform';
 import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
@@ -262,7 +262,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._mediator.execute<void>(new FNodeResizePreparationRequest(event, this.fNodeResizeTrigger));
+    this._mediator.execute<void>(new NodeResizePreparationRequest(event, this.fNodeResizeTrigger));
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 

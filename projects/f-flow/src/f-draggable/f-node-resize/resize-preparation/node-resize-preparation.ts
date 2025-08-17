@@ -1,5 +1,5 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { FNodeResizePreparationRequest } from './f-node-resize-preparation.request';
+import { NodeResizePreparationRequest } from './node-resize-preparation-request';
 import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -9,14 +9,14 @@ import {
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
-import { FNodeResizeDragHandler } from '../f-node-resize.drag-handler';
+import { NodeResizeDragHandler } from '../node-resize.drag-handler';
 import { getDataAttrValueFromClosestElementWithClass, isClosestElementHasClass } from '@foblex/utils';
 
 @Injectable()
-@FExecutionRegister(FNodeResizePreparationRequest)
-export class FNodeResizePreparationExecution implements IExecution<FNodeResizePreparationRequest, void> {
+@FExecutionRegister(NodeResizePreparationRequest)
+export class NodeResizePreparation implements IExecution<NodeResizePreparationRequest, void> {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
@@ -29,9 +29,9 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
     return this._store.fFlow!.hostElement;
   }
 
-  private _fNode: FNodeBase | undefined;
+  private _nodeOrGroup: FNodeBase | undefined;
 
-  public handle(request: FNodeResizePreparationRequest): void {
+  public handle(request: NodeResizePreparationRequest): void {
     if(!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
@@ -44,14 +44,13 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
 
     const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
     this._dragContext.draggableItems = [
-      new FNodeResizeDragHandler(
-        this._injector,
-        this._fNode!, resizeHandleType
+      new NodeResizeDragHandler(
+        this._injector, this._nodeOrGroup!, resizeHandleType
       )
     ];
   }
 
-  private _isValid(request: FNodeResizePreparationRequest): boolean {
+  private _isValid(request: NodeResizePreparationRequest): boolean {
     return this._dragContext.isEmpty()
       && this._isDragHandleElement(request.event.targetElement)
       && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
@@ -66,18 +65,18 @@ export class FNodeResizePreparationExecution implements IExecution<FNodeResizePr
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._store
+    this._nodeOrGroup = this._store
       .fNodes.find(x => x.isContains(element));
-    return this._fNode;
+    return this._nodeOrGroup;
   }
 
-  private _isValidTrigger(request: FNodeResizePreparationRequest): boolean {
+  private _isValidTrigger(request: NodeResizePreparationRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 
   private _selectAndUpdateNodeLayer() {
-    this._fMediator.execute(
-      new SelectAndUpdateNodeLayerRequest(this._fNode!)
+    this._mediator.execute(
+      new SelectAndUpdateNodeLayerRequest(this._nodeOrGroup!)
     );
   }
 

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CalculateChangedSizeRequest } from './calculate-changed-size.request';
+import { CalculateChangedSizeFromDifferenceRequest } from './calculate-changed-size-from-difference-request';
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RESIZE_DIRECTIONS } from '../resize-direction';
 
 @Injectable()
-@FExecutionRegister(CalculateChangedSizeRequest)
-export class CalculateChangedSizeExecution
-  implements IExecution<CalculateChangedSizeRequest, IRect> {
+@FExecutionRegister(CalculateChangedSizeFromDifferenceRequest)
+export class CalculateChangedSizeFromDifference
+  implements IExecution<CalculateChangedSizeFromDifferenceRequest, IRect> {
 
-  public handle(request: CalculateChangedSizeRequest): IRect {
+  public handle(request: CalculateChangedSizeFromDifferenceRequest): IRect {
     return this.change(
       request.originalRect,
       request.difference,
-      RESIZE_DIRECTIONS[ request.fResizeHandleType ],
+      RESIZE_DIRECTIONS[ request.handleType ],
     );
   }
 
