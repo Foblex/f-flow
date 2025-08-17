@@ -115,20 +115,19 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   protected parentChanges(): void {
     effect(() => {
-      const parentId = this.fParentId();
-      untracked(() => {
-        if (parentId) this.notifyParent();
-      });
+      this.fParentId();
+      this.fIncludePadding();
+      this.fAutoSizeToFitChildren();
+      untracked(() => this.refresh());
     }, {injector: this._injector});
   }
-
-  protected abstract notifyParent(): void;
 
   private _isSizeEqual(value?: ISize): boolean {
     return this._size?.width === value?.width && this._size?.height === value?.height;
   }
 
   protected abstract setStyle(name: string, value: string): void;
+
   protected abstract removeStyle(name: string): void;
 
   public isContains(element: HTMLElement | SVGElement): boolean {

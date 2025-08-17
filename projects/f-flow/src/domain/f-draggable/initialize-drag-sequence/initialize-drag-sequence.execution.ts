@@ -10,7 +10,7 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(InitializeDragSequenceRequest)
 export class InitializeDragSequenceExecution implements IExecution<InitializeDragSequenceRequest, void> {
 
-  private _dragContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: InitializeDragSequenceRequest): void {
     this._dragContext.reset();

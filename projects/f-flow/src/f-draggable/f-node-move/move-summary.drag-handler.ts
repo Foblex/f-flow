@@ -43,11 +43,18 @@ export class MoveSummaryDragHandler implements IFDragHandler {
   public onPointerUp(): void {
     this.rootHandlers.forEach((x) => x.onPointerUp());
     this._lineAlignment?.clearGuides();
+    setTimeout(() => this._refreshDraggedNodes());
   }
 
   private _unionRect(): IRect {
-    return RectExtensions.union(
-      this.rootHandlers.map((x) => x.getLastRect())
-    ) || RectExtensions.initialize();
+    return RectExtensions.union(this._getRootRects()) || RectExtensions.initialize();
+  }
+
+  private _getRootRects(): IRect[] {
+    return this.rootHandlers.map((x) => x.getLastRect());
+  }
+
+  private _refreshDraggedNodes(): void {
+    this.allDraggedNodeHandlers.forEach((x) => x.nodeOrGroup.refresh());
   }
 }

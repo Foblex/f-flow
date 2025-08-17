@@ -1,18 +1,20 @@
-import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
-import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
-import { NotifyDataChangedRequest } from '../../../f-storage';
-import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
-import { FResizeChannel } from '../../../reactivity';
-import { RectExtensions } from '@foblex/2d';
+import {inject, Injectable} from '@angular/core';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {UpdateNodeWhenStateOrSizeChangedRequest} from './update-node-when-state-or-size-changed-request';
+import {EFConnectableSide, FConnectorBase} from '../../../f-connectors';
+import {NotifyDataChangedRequest} from '../../../f-storage';
+import {debounceTime, FChannelHub, notifyOnStart} from '../../../reactivity';
+import {FResizeChannel} from '../../../reactivity';
+import {RectExtensions} from '@foblex/2d';
+import {FitToChildNodesAndGroupsRequest} from "../fit-to-child-nodes-and-groups";
+import {IsDragStartedRequest} from "../../f-draggable";
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
  */
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
-export class UpdateNodeWhenStateOrSizeChangedExecution
+export class UpdateNodeWhenStateOrSizeChanged
   implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
 
   private readonly _mediator = inject(FMediator);
@@ -23,7 +25,7 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
    * @param request
    */
   public handle(request: UpdateNodeWhenStateOrSizeChangedRequest): void {
-    const { hostElement, connectors, stateChanges } = request.fComponent;
+    const {hostElement, connectors, stateChanges} = request.nodeOrGroup;
 
     new FChannelHub(
       new FResizeChannel(hostElement),
@@ -31,6 +33,10 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
     ).pipe(notifyOnStart(), debounceTime(10)).listen(request.destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
       this._mediator.execute<void>(new NotifyDataChangedRequest());
+
+      if (!this._isDragging()) {
+        this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(request.nodeOrGroup));
+      }
     });
   }
 
@@ -94,6 +100,10 @@ export class UpdateNodeWhenStateOrSizeChangedExecution
     }
 
     return result;
+  }
+
+  private _isDragging(): boolean {
+    return this._mediator.execute(new IsDragStartedRequest());
   }
 }
 

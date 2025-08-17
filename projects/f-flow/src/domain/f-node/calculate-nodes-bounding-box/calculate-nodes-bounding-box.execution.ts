@@ -19,9 +19,7 @@ export class CalculateNodesBoundingBoxExecution implements IExecution<CalculateN
   }
 
   private _getNodesRects(): IRect[] {
-    return this._store.fNodes.map((x) => {
-      return this._getElementRect(x.hostElement);
-    });
+    return this._store.fNodes.map((x) => this._getElementRect(x.hostElement));
   }
 
   private _getElementRect(element: HTMLElement | SVGElement): IRect {

@@ -113,10 +113,6 @@ export class FGroupDirective extends FNodeBase
     this.renderer.removeStyle(this.hostElement, styleName);
   }
 
-  protected override notifyParent(): void {
-
-  }
-
   public override redraw(): void {
     super.redraw();
     this._mediator.execute(new NotifyTransformChangedRequest());

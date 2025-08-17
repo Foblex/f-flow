@@ -8,7 +8,7 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(IsDragStartedRequest)
-export class IsDragStartedExecution implements IExecution<IsDragStartedRequest, boolean> {
+export class IsDragStarted implements IExecution<IsDragStartedRequest, boolean> {
 
   private readonly _store = inject(FComponentsStore);
 

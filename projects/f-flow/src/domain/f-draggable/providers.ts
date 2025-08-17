@@ -5,7 +5,7 @@ import { PrepareDragSequenceExecution } from './prepare-drag-sequence';
 import { EndDragSequenceExecution } from './end-drag-sequence';
 import { InitializeDragSequenceExecution } from './initialize-drag-sequence';
 import { OnPointerMoveExecution } from './on-pointer-move';
-import { IsDragStartedExecution } from './is-drag-started';
+import { IsDragStarted } from './is-drag-started';
 import { StartDragSequenceExecution } from './start-drag-sequence';
 
 /**
@@ -25,7 +25,7 @@ export const F_DRAGGABLE_FEATURES = [
 
   PrepareDragSequenceExecution,
 
-  IsDragStartedExecution,
+  IsDragStarted,
 
   StartDragSequenceExecution,
 

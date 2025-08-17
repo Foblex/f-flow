@@ -15,7 +15,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   public readonly fEventType = 'node-resize';
   public readonly fData: any;
 
-  private readonly _fMediator: FMediator;
+  private readonly _mediator: FMediator;
 
   private _originalRect!: IRect;
   private _resizeRestrictions!: INodeResizeRestrictions;
@@ -28,7 +28,7 @@ export class FNodeResizeDragHandler implements IFDragHandler {
     this.fData = {
       fNodeId: _fNode.fId(),
     };
-    this._fMediator = _injector.get(FMediator);
+    this._mediator = _injector.get(FMediator);
   }
 
   public prepareDragSequence(): void {
@@ -37,11 +37,11 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _getOriginalNodeRect(): IRect {
-    return this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode.hostElement));
+    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode.hostElement));
   }
 
   private _getNodeResizeRestrictions(): INodeResizeRestrictions {
-    return this._fMediator.execute<INodeResizeRestrictions>(
+    return this._mediator.execute<INodeResizeRestrictions>(
       new GetNodeResizeRestrictionsRequest(this._fNode, this._originalRect)
     );
   }
@@ -56,13 +56,13 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _calculateSize(difference: IPoint): IRect {
-    return this._fMediator.execute<IRect>(
+    return this._mediator.execute<IRect>(
       new CalculateChangedSizeRequest(this._originalRect, difference, this._fResizeHandleType)
     );
   }
 
   private _calculatePosition(difference: IPoint, changedSize: IRect): IRect {
-    return this._fMediator.execute<IRect>(
+    return this._mediator.execute<IRect>(
       new CalculateChangedPositionRequest(this._originalRect, changedSize, difference, this._fResizeHandleType)
     );
   }
@@ -83,13 +83,13 @@ export class FNodeResizeDragHandler implements IFDragHandler {
   }
 
   private _applyChildRestrictions(changedRect: IRect): void {
-    this._fMediator.execute(
+    this._mediator.execute(
       new ApplyChildResizeRestrictionsRequest(changedRect, this._resizeRestrictions)
     );
   }
 
   private _applyParentRestrictions(changedRect: IRect, restrictions: IRect): void {
-    this._fMediator.execute(
+    this._mediator.execute(
       new ApplyParentResizeRestrictionsRequest(changedRect, restrictions)
     );
   }
