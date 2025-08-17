@@ -1,14 +1,13 @@
-import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
-import { EFResizeHandleType, FNodeBase } from '../../f-node';
-import { FMediator } from '@foblex/mediator';
-import { CalculateResizeLimitsRequest } from './calculate-resize-limits';
-import { ApplyChildResizeConstraintsRequest } from './apply-child-resize-constraints';
-import { CalculateChangedSizeFromDifferenceRequest } from './calculate-changed-size-from-difference';
-import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference';
-import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-constraints';
-import { GetNormalizedElementRectRequest } from '../../domain';
-import { Injector } from '@angular/core';
+import {IPoint, IRect, RectExtensions} from '@foblex/2d';
+import {IFDragHandler} from '../f-drag-handler';
+import {EFResizeHandleType, FNodeBase} from '../../f-node';
+import {FMediator} from '@foblex/mediator';
+import {CalculateResizeLimitsRequest} from './calculate-resize-limits';
+import {ApplyChildResizeConstraintsRequest} from './apply-child-resize-constraints';
+import {CalculateChangedRectFromDifferenceRequest} from './calculate-changed-rect-from-difference';
+import {ApplyParentResizeConstraintsRequest} from './apply-parent-resize-constraints';
+import {GetNormalizedElementRectRequest} from '../../domain';
+import {Injector} from '@angular/core';
 import {IResizeConstraint} from "./constraint";
 
 export class NodeResizeDragHandler implements IFDragHandler {
@@ -48,27 +47,18 @@ export class NodeResizeDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    this._applyResizeChanges(this._newRect(difference,  this._newSize(difference)));
+    this._applyResizeChanges(this._newRect(difference));
   }
 
-  private _newSize(difference: IPoint): IRect {
+  private _newRect(difference: IPoint): IRect {
     return this._mediator.execute<IRect>(
-      new CalculateChangedSizeFromDifferenceRequest(this._originalRect, difference, this._handleType)
-    );
-  }
-
-  private _newRect(difference: IPoint, changedSize: IRect): IRect {
-    return this._mediator.execute<IRect>(
-      new CalculateChangedRectFromDifferenceRequest(this._originalRect, changedSize, difference, this._handleType)
+      new CalculateChangedRectFromDifferenceRequest(this._originalRect, difference, this._handleType)
     );
   }
 
   private _applyResizeChanges(changedRect: IRect): void {
-    if (this._constraints.childrenBounds) {
-      this._applyChildRestrictions(changedRect);
-    }
-
-    this._applyParentRestrictions(changedRect);
+    this._applyChildConstraints(changedRect);
+    this._applyParentConstraints(changedRect);
     this._redraw(changedRect);
   }
 
@@ -78,13 +68,13 @@ export class NodeResizeDragHandler implements IFDragHandler {
     this._nodeOrGroup.redraw();
   }
 
-  private _applyChildRestrictions(changedRect: IRect): void {
+  private _applyChildConstraints(changedRect: IRect): void {
     this._mediator.execute(
-      new ApplyChildResizeConstraintsRequest(changedRect, this._constraints)
+      new ApplyChildResizeConstraintsRequest(changedRect, this._constraints.childrenBounds)
     );
   }
 
-  private _applyParentRestrictions(changedRect: IRect): void {
+  private _applyParentConstraints(changedRect: IRect): void {
     this._mediator.execute(
       new ApplyParentResizeConstraintsRequest(changedRect, this._constraints.limits)
     );

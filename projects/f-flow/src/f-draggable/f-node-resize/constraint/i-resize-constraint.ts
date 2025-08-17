@@ -5,8 +5,6 @@ export interface IResizeConstraint {
 
   limits: IResizeLimits;
 
-  parentBounds: IRect;
-
   childrenBounds: IRect | null;
 
   minimumSize: ISize;

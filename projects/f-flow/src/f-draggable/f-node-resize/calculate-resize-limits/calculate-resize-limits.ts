@@ -3,7 +3,6 @@ import {CalculateResizeLimitsRequest} from './calculate-resize-limits-request';
 import {IRect, SizeExtensions} from '@foblex/2d';
 import {IResizeConstraint, IResizeLimit, IResizeLimits} from '../constraint';
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {GetNormalizedParentNodeRectRequest} from '../../domain';
 import {GetNormalizedChildrenNodesRectRequest} from '../get-normalized-children-nodes-rect';
 import {FNodeBase} from '../../../f-node';
 import {GetNodePaddingRequest, GetParentNodesRequest} from '../../../domain';
@@ -26,18 +25,13 @@ export class CalculateResizeLimits
 
     return {
       limits: this._buildSoftHardLimits(parents),
-      parentBounds: this._getNormalizedParentBounds(nodeOrGroup),
       childrenBounds: this._getNormalizedChildrenBounds(nodeOrGroup, paddings),
-      minimumSize: SizeExtensions.initialize(paddings[0] + paddings[2], paddings[1] + paddings[3])
+      minimumSize: SizeExtensions.initialize(0, 0)
     }
   }
 
   private _calculateNodePaddings(nodeOrGroup: FNodeBase, rect: IRect): [number, number, number, number] {
     return this._mediator.execute<[number, number, number, number]>(new GetNodePaddingRequest(nodeOrGroup, rect));
-  }
-
-  private _getNormalizedParentBounds(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedParentNodeRectRequest(nodeOrGroup));
   }
 
   private _getNormalizedChildrenBounds(nodeOrGroup: FNodeBase, paddings: [number, number, number, number]): IRect | null {

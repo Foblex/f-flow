@@ -6,7 +6,6 @@ export class CalculateChangedRectFromDifferenceRequest {
 
   constructor(
     public readonly originalRect: IRect,
-    public readonly changedRect: IRect,
     public readonly difference: IPoint,
     public readonly handleType: EFResizeHandleType,
   ) {
