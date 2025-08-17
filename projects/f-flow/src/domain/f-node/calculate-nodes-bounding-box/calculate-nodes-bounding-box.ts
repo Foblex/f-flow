@@ -10,7 +10,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
  */
 @Injectable()
 @FExecutionRegister(CalculateNodesBoundingBoxRequest)
-export class CalculateNodesBoundingBoxExecution implements IExecution<CalculateNodesBoundingBoxRequest, IRect | null> {
+export class CalculateNodesBoundingBox implements IExecution<CalculateNodesBoundingBoxRequest, IRect | null> {
 
   private readonly _store = inject(FComponentsStore);
 

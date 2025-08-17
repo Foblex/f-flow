@@ -12,7 +12,7 @@ import { FNodeBase } from '../../../f-node';
  */
 @Injectable()
 @FExecutionRegister(CalculateNodesBoundingBoxNormalizedPositionRequest)
-export class CalculateNodesBoundingBoxNormalizedPositionExecution
+export class CalculateNodesBoundingBoxNormalizedPosition
   implements IExecution<CalculateNodesBoundingBoxNormalizedPositionRequest, IRect | null> {
 
   private readonly _store = inject(FComponentsStore);

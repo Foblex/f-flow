@@ -8,7 +8,7 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddNodeToStoreRequest)
-export class AddNodeToStoreExecution implements IExecution<AddNodeToStoreRequest, void> {
+export class AddNodeToStore implements IExecution<AddNodeToStoreRequest, void> {
 
   private readonly _store = inject(FComponentsStore);
 

@@ -10,7 +10,7 @@ import { FConnectionBase } from '../../../f-connection';
  */
 @Injectable()
 @FExecutionRegister(CalculateInputConnectionsRequest)
-export class CalculateInputConnectionsExecution implements IExecution<CalculateInputConnectionsRequest, FConnectionBase[]> {
+export class CalculateInputConnections implements IExecution<CalculateInputConnectionsRequest, FConnectionBase[]> {
 
   private readonly _store = inject(FComponentsStore);
 

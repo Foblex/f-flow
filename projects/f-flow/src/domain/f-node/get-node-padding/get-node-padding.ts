@@ -11,7 +11,7 @@ import { BrowserService } from '@foblex/platform';
  */
 @Injectable()
 @FExecutionRegister(GetNodePaddingRequest)
-export class GetNodePaddingExecution
+export class GetNodePadding
   implements IExecution<GetNodePaddingRequest, [ number, number, number, number ]> {
 
   private readonly _browser = inject(BrowserService);
