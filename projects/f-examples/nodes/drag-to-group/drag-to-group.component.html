@@ -2,6 +2,7 @@
   <f-canvas fZoom>
     @for (group of groups(); track group.id) {
       <div fGroup fDragHandle [fGroupId]="group.id" [fGroupParentId]="group.parentId"
+           [fAutoExpandOnChildHit]="true"
            [fIncludePadding]="includePaddings()"
            [fGroupPosition]="group.position"
            [fGroupSize]="{ width: 200, height: 200 }">
@@ -18,6 +19,8 @@
 
     @for (node of nodes(); track node.id) {
       <div fNode fDragHandle [fNodeId]="node.id" [fNodeParentId]="node.parentId"
+           [fAutoExpandOnChildHit]="true"
+
            [fIncludePadding]="includePaddings()"
            [fNodePosition]="node.position">
         Node {{ node.id }}

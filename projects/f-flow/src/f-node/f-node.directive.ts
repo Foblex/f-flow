@@ -104,6 +104,10 @@ export class FNodeDirective extends FNodeBase
     this.renderer.setStyle(this.hostElement, styleName, value);
   }
 
+  protected override removeStyle(styleName: string) {
+    this.renderer.removeStyle(this.hostElement, styleName);
+  }
+
   public override redraw(): void {
     super.redraw();
     this._mediator.execute(new NotifyTransformChangedRequest());

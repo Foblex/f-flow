@@ -2,8 +2,6 @@ export * from './build-drag-hierarchy';
 
 export * from './calculate-drag-limits';
 
-export * from './calculate-summary-drag-limits';
-
 export * from './create-summary-drag-handler';
 
 export * from './get-node-bounding-include-paddings';

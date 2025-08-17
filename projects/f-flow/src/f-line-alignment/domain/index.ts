@@ -1,9 +1,9 @@
 export * from './i-line-alignment-rect';
 
-export * from './i-line-alignment-result';
+export * from './i-snap-result';
 
-export * from './i-nearest-coordinate-result';
+export * from './i-snap-coordinate';
 
-export * from './line-element';
+export * from './snap-line-element';
 
-export * from './line-service';
+export * from './snap-line-service';

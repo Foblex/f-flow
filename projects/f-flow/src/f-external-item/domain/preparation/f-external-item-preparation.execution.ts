@@ -32,6 +32,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
     this._dragContext.onPointerDownScale = this._transform.scale;
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
+
     this._dragContext.draggableItems = [
       new FExternalItemDragHandler(
         this._injector,

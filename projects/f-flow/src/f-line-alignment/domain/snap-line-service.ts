@@ -1,15 +1,15 @@
 import { ISize, ITransformModel } from '@foblex/2d';
-import { LineElement } from './line-element';
+import { SnapLineElement } from './snap-line-element';
 import { BrowserService } from '@foblex/platform';
 
-export class LineService {
+export class SnapLineService {
 
-  private fHorizontalLine: LineElement;
-  private fVerticalLine: LineElement;
+  private fHorizontalLine: SnapLineElement;
+  private fVerticalLine: SnapLineElement;
 
   constructor(fBrowser: BrowserService, private hostElement: HTMLElement) {
-    this.fHorizontalLine = new LineElement(fBrowser, this.hostElement);
-    this.fVerticalLine = new LineElement(fBrowser, this.hostElement);
+    this.fHorizontalLine = new SnapLineElement(fBrowser, this.hostElement);
+    this.fVerticalLine = new SnapLineElement(fBrowser, this.hostElement);
     this.fHorizontalLine.hide();
     this.fVerticalLine.hide();
   }

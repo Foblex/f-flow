@@ -116,6 +116,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   }
 
   protected abstract setStyle(name: string, value: string): void;
+  protected abstract removeStyle(name: string): void;
 
   public isContains(element: HTMLElement | SVGElement): boolean {
     return this.hostElement.contains(element);
@@ -128,6 +129,11 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
     }
 
     this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this._rotate}deg)`);
+  }
+
+  public resetSize(): void {
+    this.removeStyle('width');
+    this.removeStyle('height');
   }
 
   public updatePosition(position: IPoint): void {

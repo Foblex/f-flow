@@ -1,52 +1,42 @@
-import {IPoint, IRect, PointExtensions} from '@foblex/2d';
+import {IPoint, IRect, PointExtensions, RectExtensions} from '@foblex/2d';
 import {IFDragHandler} from '../f-drag-handler';
 import {FNodeBase} from '../../f-node';
 import {BaseConnectionDragHandler} from './connection-drag-handlers';
-import {F_CSS_CLASS} from "../../domain";
+import {F_CSS_CLASS, GetNormalizedElementRectRequest} from "../../domain";
 import {Injector} from "@angular/core";
-import {FComponentsStore} from "../../f-storage";
-import {EFBoundsMode} from "../enums";
-import {FMediator} from "@foblex/mediator";
 import {IDragLimits} from "./create-drag-model-from-selection";
 import {DragConstraintPipeline, expandRectFromBaseline, IConstraintResult} from "./constraint";
+import {FMediator} from "@foblex/mediator";
 
 export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'move-node';
 
-  private readonly _onPointerDownPosition = PointExtensions.initialize();
-
-  private readonly _store: FComponentsStore;
-  private readonly _mediator: FMediator;
+  private readonly _startPosition = PointExtensions.initialize();
+  private readonly _startRect = RectExtensions.initialize();
 
   private _applyConstraints: (difference: IPoint) => IPoint = (difference) => difference;
 
+  private _lastSoftResults: IConstraintResult[] = [];
+  private _lastPosition = PointExtensions.initialize();
+
   constructor(
     private readonly _injector: Injector,
-    private readonly _boundingRect: IRect,
     public nodeOrGroup: FNodeBase,
     public childrenNodeAndGroups: MoveNodeOrGroupDragHandler[] = [],
     public fSourceHandlers: BaseConnectionDragHandler[] = [],
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
-    this._onPointerDownPosition = {...nodeOrGroup._position};
-    this._store = _injector.get(FComponentsStore);
-    this._mediator = _injector.get(FMediator);
+    this._startRect = _injector.get(FMediator).execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement))
+    this._startPosition = {...nodeOrGroup._position};
   }
 
   public setLimits(limits: IDragLimits): void {
-    // If the bounds mode is set to halt on any hit, we do not apply individual limits and use the summary limits instead.
-    if (this._store.fDraggable?.fBoundsMode() === EFBoundsMode.HaltOnAnyHit) {
-      return;
-    }
-
-    const pipeline = new DragConstraintPipeline(this._injector, this._onPointerDownPosition, limits);
+    const pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
 
     this._applyConstraints = (difference: IPoint) => {
       const summary = pipeline.apply(difference);
-
       this._applySoftExpansions(summary.soft, limits);
-
       return summary.hardDifference;
     }
   }
@@ -54,7 +44,8 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   private _applySoftExpansions(
     softResults: IConstraintResult[], limits: IDragLimits
   ): void {
-    softResults.forEach((result, index) => {
+    this._lastSoftResults = softResults;
+    this._lastSoftResults.forEach((result, index) => {
       const softLimit = limits.soft[index];
       const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
       this._commitParentRect(softLimit.nodeOrGroup, expandedRect);
@@ -67,6 +58,10 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     parent.redraw();
   }
 
+  public getLastRect(): IRect {
+    return RectExtensions.initialize(this._lastPosition.x, this._lastPosition.y, this._startRect.width, this._startRect.height);
+  }
+
   public prepareDragSequence(): void {
     this.childrenNodeAndGroups.forEach((x) => x.prepareDragSequence());
     this.nodeOrGroup.hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
@@ -76,17 +71,18 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     const differenceWithRestrictions = this._applyConstraints(difference);
 
     this.childrenNodeAndGroups.forEach((x) => x.onPointerMove(differenceWithRestrictions));
-    this._redraw(this._calculateNewPosition(differenceWithRestrictions));
+    this._redraw(this._nodeOrGroupNewPosition(differenceWithRestrictions));
 
     this.fSourceHandlers.forEach((x) => x.setSourceDifference(differenceWithRestrictions));
     this.fTargetHandlers.forEach((x) => x.setTargetDifference(differenceWithRestrictions));
   }
 
-  private _calculateNewPosition(difference: IPoint): IPoint {
-    return PointExtensions.sum(this._onPointerDownPosition, difference);
+  private _nodeOrGroupNewPosition(difference: IPoint): IPoint {
+    return PointExtensions.sum(this._startPosition, difference);
   }
 
   private _redraw(position: IPoint): void {
+    this._lastPosition = position;
     this.nodeOrGroup.updatePosition(position);
     this.nodeOrGroup.redraw();
   }

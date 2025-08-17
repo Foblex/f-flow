@@ -4,13 +4,13 @@ export * from './constraint';
 
 export * from './create-drag-model-from-selection';
 
-export * from './line-alignment-preparation';
+export * from './create-snap-lines';
 
 export * from './move-preparation';
 
 export * from './move-finalize';
 
-export * from './f-line-alignment.drag-handler';
+export * from './create-snap-lines/snap-lines.drag-handler';
 
 export * from './f-move-nodes.event';
 

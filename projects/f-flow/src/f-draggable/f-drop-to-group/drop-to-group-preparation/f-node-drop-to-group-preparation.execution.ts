@@ -92,7 +92,7 @@ export class FNodeDropToGroupPreparationExecution
   private _draggedNodes(): FNodeBase[] {
     return this._dragContext.draggableItems
       .find((x) => x instanceof MoveSummaryDragHandler)
-      ?.dragHandlers.map((x) => x.nodeOrGroup) || [];
+      ?.allDraggedNodeHandlers.map((x) => x.nodeOrGroup) || [];
   }
 
   /**

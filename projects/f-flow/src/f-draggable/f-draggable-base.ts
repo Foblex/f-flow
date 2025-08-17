@@ -1,15 +1,14 @@
-import {Directive, EventEmitter, InputSignal,} from '@angular/core';
-import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
-import { FSelectionChangeEvent } from './f-selection-change-event';
-import { FCreateNodeEvent } from '../f-external-item';
-import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDropToGroupEvent } from './f-drop-to-group';
+import {Directive, EventEmitter, InputSignal} from '@angular/core';
+import {FCreateConnectionEvent, FReassignConnectionEvent} from './f-connection';
+import {FSelectionChangeEvent} from './f-selection-change-event';
+import {FCreateNodeEvent} from '../f-external-item';
+import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
+import {FDropToGroupEvent} from './f-drop-to-group';
 import {DragAndDropBase, ICanRunOutsideAngular} from "../drag-toolkit";
 import {FMoveNodesEvent} from "./f-node-move";
-import {EFBoundsMode} from "./enums";
 
 @Directive()
-export abstract class FDraggableBase extends DragAndDropBase  {
+export abstract class FDraggableBase extends DragAndDropBase {
 
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
@@ -32,8 +31,6 @@ export abstract class FDraggableBase extends DragAndDropBase  {
   public abstract hCellSize: InputSignal<number>;
 
   public abstract fCellSizeWhileDragging: InputSignal<boolean>;
-
-  public abstract fBoundsMode: InputSignal<EFBoundsMode>;
 
   public abstract fDragStarted: EventEmitter<FDragStartedEvent>;
 

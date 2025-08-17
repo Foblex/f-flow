@@ -36,7 +36,7 @@ export class CreateDragModelFromSelection
 
     this._setConnectionsHandlersToNodes(dragHierarchy.list, this._getAllOutputIds(selectedNodesAndGroupsWithChildren), this._getAllInputIds(selectedNodesAndGroupsWithChildren));
 
-    return this._createSummaryDragHandler(dragHierarchy.roots);
+    return this._createSummaryDragHandler(dragHierarchy);
   }
 
   private _collectSelectedNodesAndGroups(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
@@ -101,7 +101,7 @@ export class CreateDragModelFromSelection
     });
   }
 
-  private _createSummaryDragHandler(hierarchyRoots: MoveNodeOrGroupDragHandler[]): MoveSummaryDragHandler {
-    return this._mediator.execute(new CreateSummaryDragHandlerRequest(hierarchyRoots));
+  private _createSummaryDragHandler({ roots, list }: BuildDragHierarchyResponse): MoveSummaryDragHandler {
+    return this._mediator.execute(new CreateSummaryDragHandlerRequest(roots, list));
   }
 }

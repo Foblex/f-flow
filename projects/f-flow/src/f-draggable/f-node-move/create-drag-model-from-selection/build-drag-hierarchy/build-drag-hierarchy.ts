@@ -4,8 +4,6 @@ import {BuildDragHierarchyRequest} from "./build-drag-hierarchy-request";
 import {MoveNodeOrGroupDragHandler} from "../../move-node-or-group.drag-handler";
 import {BuildDragHierarchyResponse} from "./build-drag-hierarchy-response";
 import {FNodeBase} from "../../../../f-node";
-import {GetNormalizedElementRectRequest} from "../../../../domain";
-import {IRect} from "@foblex/2d";
 
 @Injectable()
 @FExecutionRegister(BuildDragHierarchyRequest)
@@ -27,8 +25,7 @@ export class BuildDragHierarchy
   ): Map<string, MoveNodeOrGroupDragHandler> {
     const byId = new Map<string, MoveNodeOrGroupDragHandler>();
     for (const item of selectedNodesAndGroupsWithChildren) {
-      const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(item.hostElement));
-      byId.set(item.fId(), new MoveNodeOrGroupDragHandler(this._injector, rect, item));
+      byId.set(item.fId(), new MoveNodeOrGroupDragHandler(this._injector, item));
     }
     return byId;
   }

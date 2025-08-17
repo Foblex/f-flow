@@ -3,7 +3,6 @@ import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {IMinMaxPoint, IPoint, IRect, PointExtensions} from "@foblex/2d";
 import {CalculateDragLimitsRequest} from "./calculate-drag-limits-request";
 import {infinityMinMax} from "../../../../utils";
-import {INodeMoveLimits} from "../i-node-move-limits";
 import {FNodeBase} from "../../../../f-node";
 import {GetNormalizedElementRectRequest, GetParentNodesRequest} from "../../../../domain";
 import {
@@ -60,7 +59,7 @@ export class CalculateDragLimits
     );
   }
 
-  private _calculateDifference(parentRect: IRect, currentRect: IRect): INodeMoveLimits {
+  private _calculateDifference(parentRect: IRect, currentRect: IRect): IMinMaxPoint {
     return {
       min: this._calculateMinimumDifference(parentRect, currentRect),
       max: this._calculateMaximumDifference(parentRect, currentRect)
@@ -87,6 +86,6 @@ export class CalculateDragLimits
     boundingRect: IRect,
     limits: IMinMaxPoint
   ): ISoftLimit {
-    return { nodeOrGroup, boundingRect, limits };
+    return { nodeOrGroup, boundingRect, initialSize: nodeOrGroup._size, limits };
   }
 }

@@ -53,7 +53,6 @@ export class FNodeDropToGroupFinalizeExecution
 
   private _getDraggedNodeIds(): string[] {
     return this._dragContext.draggableItems
-      .find((x) => x instanceof MoveSummaryDragHandler)?.dragHandlers
-      .map((x) => x.nodeOrGroup.fId()) || [];
+      .find((x) => x instanceof MoveSummaryDragHandler)?.fData.fNodeIds || [];
   }
 }

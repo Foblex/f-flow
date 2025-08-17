@@ -1,4 +1,4 @@
-export interface INearestCoordinateResult {
+export interface ISnapCoordinate {
 
   value: number | undefined;
 

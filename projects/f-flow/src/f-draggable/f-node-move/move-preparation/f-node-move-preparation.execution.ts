@@ -8,7 +8,7 @@ import {FNodeBase} from '../../../f-node';
 import {CreateDragModelFromSelectionRequest} from '../create-drag-model-from-selection';
 import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
 import {isClosestElementHasClass} from '@foblex/utils';
-import {LineAlignmentPreparationRequest} from '../line-alignment-preparation';
+import {CreateSnapLinesRequest} from '../create-snap-lines';
 import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
 import {IPointerEvent} from "../../../drag-toolkit";
 
@@ -43,11 +43,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
     this._dragContext.draggableItems = [summaryDragHandler];
 
     if (this._store.fLineAlignment) {
-      this._mediator.execute<void>(
-        new LineAlignmentPreparationRequest(
-          summaryDragHandler.dragHandlers.map((x) => x.nodeOrGroup), summaryDragHandler.boundingRect
-        )
-      );
+      this._mediator.execute<void>(new CreateSnapLinesRequest(summaryDragHandler));
     }
   }
 

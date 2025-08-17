@@ -62,8 +62,6 @@ import {
 import {FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest} from './f-node-rotate';
 import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
 import {isDragBlocker} from "./is-drag-blocker";
-import {EFBoundsMode} from "./enums";
-import {castToEnum} from "@foblex/utils";
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -206,15 +204,6 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
    * If set to `false`, the nodes will move freely without snapping to the grid.
    */
   public override fCellSizeWhileDragging = input(false, {transform: (value: any) => booleanAttribute(value)});
-
-  /**
-   * Defines how node bounds are handled when dragging multiple nodes together.
-   * - `HaltOnAnyHit`: Stops the entire group from moving further as soon as any single node reaches its container bounds.
-   * - `ClampIndividually`: Clamps only the nodes that reach their container bounds, allowing other nodes in the group to continue moving.
-   */
-  public override fBoundsMode = input(EFBoundsMode.ClampIndividually, {
-    transform: (value: any) => castToEnum<EFBoundsMode>(value, 'fBoundsMode', EFBoundsMode)
-  });
 
   @Output()
   public override fDragStarted = new EventEmitter<FDragStartedEvent>();

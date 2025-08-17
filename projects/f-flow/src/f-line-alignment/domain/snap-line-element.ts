@@ -1,7 +1,7 @@
 import { ILineAlignmentRect } from './i-line-alignment-rect';
 import { BrowserService } from '@foblex/platform';
 
-export class LineElement {
+export class SnapLineElement {
 
   private readonly element: HTMLElement;
 
