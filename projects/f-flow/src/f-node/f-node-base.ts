@@ -65,6 +65,8 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public abstract fAutoExpandOnChildHit: Signal<boolean>;
 
+  public abstract fAutoSizeToFitChildren: Signal<boolean>;
+
   public abstract fIncludePadding: Signal<boolean>;
 
   public abstract refresh(): void;
@@ -110,6 +112,17 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       });
     }, {injector: this._injector});
   }
+
+  protected parentChanges(): void {
+    effect(() => {
+      const parentId = this.fParentId();
+      untracked(() => {
+        if (parentId) this.notifyParent();
+      });
+    }, {injector: this._injector});
+  }
+
+  protected abstract notifyParent(): void;
 
   private _isSizeEqual(value?: ISize): boolean {
     return this._size?.width === value?.width && this._size?.height === value?.height;

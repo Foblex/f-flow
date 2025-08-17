@@ -1,12 +1,10 @@
 import {inject, Injectable, Injector} from '@angular/core';
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {IRect} from "@foblex/2d";
 import {CreateSummaryDragHandlerRequest} from "./create-summary-drag-handler-request";
 import {MoveSummaryDragHandler} from "../../move-summary.drag-handler";
 import {MoveNodeOrGroupDragHandler} from "../../move-node-or-group.drag-handler";
 import {FNodeBase} from "../../../../f-node";
 import {CalculateDragLimitsRequest, IDragLimits} from "../calculate-drag-limits";
-import {GetNormalizedElementRectRequest} from "../../../../domain";
 
 @Injectable()
 @FExecutionRegister(CreateSummaryDragHandlerRequest)
@@ -25,7 +23,6 @@ export class CreateSummaryDragHandler
   private _setLimitsToTheRootHandlers(roots: MoveNodeOrGroupDragHandler[]): void {
     roots.forEach((dragHandler) => {
       dragHandler.setLimits(this._calculateDragLimits(dragHandler.nodeOrGroup));
-      // dragHandler.setStartRect(this._elementRect(dragHandler.nodeOrGroup));
     });
   }
 

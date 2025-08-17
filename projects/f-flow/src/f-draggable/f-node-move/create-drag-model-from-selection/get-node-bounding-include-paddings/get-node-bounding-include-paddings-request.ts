@@ -4,7 +4,8 @@ export class GetNodeBoundingIncludePaddingsRequest {
   static readonly fToken = Symbol('GetNodeBoundingIncludePaddingsRequest');
 
   constructor(
-    public nodeOrGroup: FNodeBase
+    public readonly nodeOrGroup: FNodeBase,
+    public readonly childrenPaddings: [number, number, number, number]
   ) {
   }
 }

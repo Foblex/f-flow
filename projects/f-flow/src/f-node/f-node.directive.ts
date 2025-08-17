@@ -79,6 +79,10 @@ export class FNodeDirective extends FNodeBase
     transform: booleanAttribute,
   });
 
+  public override readonly fAutoSizeToFitChildren = input(true, {
+    transform: booleanAttribute,
+  });
+
   constructor(
     elementReference: ElementRef<HTMLElement>,
   ) {
@@ -86,6 +90,7 @@ export class FNodeDirective extends FNodeBase
     super.positionChanges();
     super.sizeChanges();
     super.rotateChanges();
+    super.parentChanges();
   }
 
   public ngOnInit(): void {
@@ -106,6 +111,10 @@ export class FNodeDirective extends FNodeBase
 
   protected override removeStyle(styleName: string) {
     this.renderer.removeStyle(this.hostElement, styleName);
+  }
+
+  protected override notifyParent(): void {
+
   }
 
   public override redraw(): void {

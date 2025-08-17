@@ -38,8 +38,11 @@ export class CalculateDragLimits
     const soft: ISoftLimit[] = [];
     let hard: IMinMaxPoint = infinityMinMax();
 
+    let childrenPaddings: [number, number, number, number] = [0, 0, 0, 0];
+
     for (const parent of parents) {
-      const parentInfo = this._getParentInfo(parent);
+      const parentInfo = this._getParentInfo(parent, childrenPaddings);
+      childrenPaddings = parentInfo.paddings;
       const limits = this._calculateDifference(parentInfo.innerRect, childRect);
 
       if (this._isAutoExpand(parent)) {
@@ -50,12 +53,12 @@ export class CalculateDragLimits
       }
     }
 
-    return { soft, hard };
+    return {soft, hard};
   }
 
-  private _getParentInfo(parent: FNodeBase): GetNodeBoundingIncludePaddingsResponse {
+  private _getParentInfo(parent: FNodeBase, childrenPaddings: [number, number, number, number]): GetNodeBoundingIncludePaddingsResponse {
     return this._mediator.execute<GetNodeBoundingIncludePaddingsResponse>(
-      new GetNodeBoundingIncludePaddingsRequest(parent)
+      new GetNodeBoundingIncludePaddingsRequest(parent, childrenPaddings)
     );
   }
 
@@ -86,6 +89,6 @@ export class CalculateDragLimits
     boundingRect: IRect,
     limits: IMinMaxPoint
   ): ISoftLimit {
-    return { nodeOrGroup, boundingRect, initialSize: nodeOrGroup._size, limits };
+    return {nodeOrGroup, boundingRect, initialSize: nodeOrGroup._size, limits};
   }
 }

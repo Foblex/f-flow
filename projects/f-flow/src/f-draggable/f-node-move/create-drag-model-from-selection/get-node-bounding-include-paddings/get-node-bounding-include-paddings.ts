@@ -13,22 +13,27 @@ export class GetNodeBoundingIncludePaddings
 
   private readonly _mediator = inject(FMediator);
 
-  public handle({nodeOrGroup}: GetNodeBoundingIncludePaddingsRequest): GetNodeBoundingIncludePaddingsResponse {
-    return this._rect(nodeOrGroup);
+  public handle({nodeOrGroup, childrenPaddings}: GetNodeBoundingIncludePaddingsRequest): GetNodeBoundingIncludePaddingsResponse {
+    return this._rect(nodeOrGroup, childrenPaddings);
   }
 
-  private _rect(nodeOrGroup: FNodeBase): GetNodeBoundingIncludePaddingsResponse {
+  private _rect(nodeOrGroup: FNodeBase, childrenPaddings: [number, number, number, number]): GetNodeBoundingIncludePaddingsResponse {
     const boundingRect = this._boundingRect(nodeOrGroup);
-    const padding = this._paddings(nodeOrGroup, boundingRect);
+    let paddings = this._paddings(nodeOrGroup, boundingRect);
+    paddings[0] += childrenPaddings[0];
+    paddings[1] += childrenPaddings[1];
+    paddings[2] += childrenPaddings[2];
+    paddings[3] += childrenPaddings[3];
     return new GetNodeBoundingIncludePaddingsResponse(
       nodeOrGroup,
       boundingRect,
       RectExtensions.initialize(
-        boundingRect.x + padding[0],
-        boundingRect.y + padding[1],
-        boundingRect.width - padding[0] - padding[2],
-        boundingRect.height - padding[1] - padding[3]
-      )
+        boundingRect.x + paddings[0],
+        boundingRect.y + paddings[1],
+        boundingRect.width - paddings[0] - paddings[2],
+        boundingRect.height - paddings[1] - paddings[3]
+      ),
+      paddings
     )
   }
 
