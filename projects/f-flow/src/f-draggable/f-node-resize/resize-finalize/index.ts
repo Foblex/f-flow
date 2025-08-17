@@ -1,3 +1,3 @@
-export * from './f-node-resize-finalize.execution';
+export * from './node-resize-finalize';
 
-export * from './f-node-resize-finalize.request';
+export * from './node-resize-finalize-request';

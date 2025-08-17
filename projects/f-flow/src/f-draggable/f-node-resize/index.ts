@@ -4,7 +4,7 @@ export * from './apply-parent-resize-constraints';
 
 export * from './calculate-changed-rect-from-difference';
 
-export * from './get-normalized-children-nodes-rect';
+export * from './calculate-direct-children-union-rect';
 
 export * from './calculate-resize-limits';
 

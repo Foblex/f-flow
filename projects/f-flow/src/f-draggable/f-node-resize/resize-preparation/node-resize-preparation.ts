@@ -42,31 +42,29 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
-    const resizeHandleType = EFResizeHandleType[ this._getHandleType(request.event.targetElement) ];
     this._dragContext.draggableItems = [
       new NodeResizeDragHandler(
-        this._injector, this._nodeOrGroup!, resizeHandleType
+        this._injector, this._nodeOrGroup!, EFResizeHandleType[ this._getHandleType(request.event.targetElement) ]
       )
     ];
   }
 
   private _isValid(request: NodeResizePreparationRequest): boolean {
     return this._dragContext.isEmpty()
-      && this._isDragHandleElement(request.event.targetElement)
+      && this._isResizeHandleElement(request.event.targetElement)
       && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
   }
 
-  private _isDragHandleElement(element: HTMLElement): boolean {
+  private _isResizeHandleElement(element: HTMLElement): boolean {
     return isClosestElementHasClass(element, '.f-resize-handle');
   }
 
-  private _isNodeCanBeDragged(fNode?: FNodeBase): boolean {
-    return !!fNode && !fNode.fDraggingDisabled();
+  private _isNodeCanBeDragged(nodeOrGroup?: FNodeBase): boolean {
+    return !!nodeOrGroup && !nodeOrGroup.fDraggingDisabled();
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._nodeOrGroup = this._store
-      .fNodes.find(x => x.isContains(element));
+    this._nodeOrGroup = this._store.fNodes.find(x => x.isContains(element));
     return this._nodeOrGroup;
   }
 
