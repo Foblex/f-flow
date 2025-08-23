@@ -73,6 +73,7 @@ export const EXAMPLES_CONFIGURATION = {
         defineLazyComponent('uml-diagram-example', () => import('../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component')),
         defineLazyComponent('tournament-bracket', () => import('../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component')),
         defineLazyComponent('grid-system', () => import('../../projects/f-examples/extensions/grid-system/grid-system.component')),
+        defineLazyComponent('copy-paste', () => import('../../projects/f-examples/advanced/copy-paste/copy-paste')),
         defineLazyComponent('undo-redo', () => import('../../projects/f-examples/advanced/undo-redo/undo-redo.component')),
         defineLazyComponent('undo-redo-v2', () => import('../../projects/f-examples/advanced/undo-redo-v2/undo-redo-v2')),
         defineLazyComponent('add-node-from-palette', () => import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component')),
@@ -516,6 +517,20 @@ function extensionGroup() {
 
 function advancedGroup() {
   return defineNavigationGroup('Advanced', [{
+    link: 'copy-paste',
+    text: 'Cut/Copy/Paste',
+    description: 'Learn how to implement copy, cut, and paste functionality in Foblex Flow.',
+    image: './previews/examples/copy-paste.light.png',
+    image_dark: './previews/examples/copy-paste.dark.png',
+    image_width: 799,
+    image_height: 600,
+    image_type: 'image/png',
+    date: new Date('2025-08-23 17:23:57'),
+    badge: {
+      text: 'New',
+      type: 'success'
+    },
+  },{
     link: 'undo-redo',
     text: 'Undo/Redo',
     description: 'Add Undo and Redo functionality with Foblex Flow for Angular.',
