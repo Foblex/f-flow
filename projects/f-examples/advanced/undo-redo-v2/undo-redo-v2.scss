@@ -1,0 +1,17 @@
+@use "../../flow-common";
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+  @include flow-common.connection-marker;
+}
+
+.f-node {
+  @include flow-common.node;
+
+  &.f-selected {
+    outline: 1px solid var(--node-selected-border-color);
+  }
+}
+
+@include flow-common.connector;
+@include flow-common.examples-toolbar;

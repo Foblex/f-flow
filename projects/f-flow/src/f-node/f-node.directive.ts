@@ -79,7 +79,7 @@ export class FNodeDirective extends FNodeBase
     transform: booleanAttribute,
   });
 
-  public override readonly fAutoSizeToFitChildren = input(true, {
+  public override readonly fAutoSizeToFitChildren = input(false, {
     transform: booleanAttribute,
   });
 

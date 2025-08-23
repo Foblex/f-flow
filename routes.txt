@@ -60,6 +60,7 @@
 /examples/background
 
 /examples/undo-redo
+/examples/undo-redo-v2
 /examples/dagre-layout
 /examples/elkjs-layout
 /examples/drag-start-end-events

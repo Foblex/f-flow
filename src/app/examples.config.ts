@@ -74,6 +74,7 @@ export const EXAMPLES_CONFIGURATION = {
         defineLazyComponent('tournament-bracket', () => import('../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component')),
         defineLazyComponent('grid-system', () => import('../../projects/f-examples/extensions/grid-system/grid-system.component')),
         defineLazyComponent('undo-redo', () => import('../../projects/f-examples/advanced/undo-redo/undo-redo.component')),
+        defineLazyComponent('undo-redo-v2', () => import('../../projects/f-examples/advanced/undo-redo-v2/undo-redo-v2')),
         defineLazyComponent('add-node-from-palette', () => import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component')),
         defineLazyComponent('drag-start-end-events', () => import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component')),
         defineLazyComponent('custom-event-triggers', () => import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'))
@@ -155,11 +156,7 @@ function nodesGroup() {
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
-    date: new Date('2025-07-19 13:00:22'),
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
+    date: new Date('2025-07-19 13:00:22')
   }, {
     link: 'node-selection',
     text: 'Node Selection',
@@ -169,11 +166,7 @@ function nodesGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    date: new Date('2025-07-19 17:23:21'),
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
+    date: new Date('2025-07-19 17:23:21')
   }, {
     link: 'resize-handle',
     text: 'Resize Handle',
@@ -199,21 +192,29 @@ function nodesGroup() {
     text: 'Grouping',
     image: './previews/examples/grouping.light.png',
     image_dark: './previews/examples/grouping.dark.png',
-    description: 'Group nodes for better organization and management in Foblex Flow diagrams for Angular.',
-    image_width: 806,
-    image_height: 600,
+    description: 'Learn how to group nodes in Foblex Flow, organize nested structures, and use smart geometry features like fIncludePadding, fAutoSizeToFitChildren, and fAutoExpandOnChildHit for dynamic, responsive diagrams in Angular.',
+    image_width: 1612,
+    image_height: 1198,
     image_type: 'image/png',
-    date: new Date('2024-10-02 16:04:08')
+    date: new Date('2025-08-23 16:04:08'),
+    badge: {
+      text: 'Updated',
+      type: 'warning'
+    },
   }, {
     link: 'drag-to-group',
     text: 'Drag to Group',
     image: './previews/examples/drag-to-group.light.png',
     image_dark: './previews/examples/drag-to-group.dark.png',
-    description: 'Drag nodes to group them together in Foblex Flow for Angular.',
-    image_width: 806,
-    image_height: 600,
+    description: 'Drag nodes into groups in Foblex Flow, create nested hierarchies, and build dynamic structures with auto-sizing, padding, and drop events in Angular.',
+    image_width: 1616,
+    image_height: 1208,
     image_type: 'image/png',
-    date: new Date('2024-12-01 23:05:25')
+    date: new Date('2025-08-23 16:04:08'),
+    badge: {
+      text: 'Updated',
+      type: 'warning'
+    },
   }, {
     link: 'stress-test',
     text: 'Stress Test',
@@ -287,10 +288,6 @@ function connectorGroup() {
     image_width: 726,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-01-25 15:04:46')
   }, {
     link: 'connectable-side',
@@ -325,7 +322,11 @@ function connectionGroup() {
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
-    date: new Date('2024-10-02 16:04:08')
+    date: new Date('2025-08-23 16:04:08'),
+    badge: {
+      text: 'Updated',
+      type: 'warning'
+    },
   }, {
     link: 'create-node-on-connection-drop',
     text: 'Create Node on Connection Drop',
@@ -355,10 +356,6 @@ function connectionGroup() {
     image_width: 791,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2024-12-30 15:26:54')
   }, {
     link: 'auto-snap',
@@ -369,10 +366,6 @@ function connectionGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2025-01-31 17:16:33')
   }, {
     link: 'connection-types',
@@ -423,10 +416,6 @@ function connectionGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-01-31 17:16:33')
   }, {
     link: 'connection-center',
@@ -437,10 +426,6 @@ function connectionGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-01-31 18:23:26')
   }, {
     link: 'custom-connections',
@@ -465,10 +450,6 @@ function extensionGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-02-09 12:37:27')
   }, {
     link: 'selection-area',
@@ -499,10 +480,6 @@ function extensionGroup() {
     image_width: 770,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2025-02-09 12:37:27')
   }, {
     link: 'minimap',
@@ -514,10 +491,6 @@ function extensionGroup() {
     image_height: 600,
     image_type: 'image/png',
     date: new Date('2025-07-23 13:28:05'),
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
   }, {
     link: 'zoom',
     text: 'Zoom',
@@ -527,10 +500,6 @@ function extensionGroup() {
     image_width: 821,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2024-10-06 13:57:22')
   }, {
     link: 'background',
@@ -555,11 +524,21 @@ function advancedGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'Updated',
-      type: 'warning'
-    },
     date: new Date('2025-07-19 17:23:57')
+  }, {
+    link: 'undo-redo-v2',
+    text: 'Undo/Redo V2',
+    description: 'Add undo and redo to your Foblex Flow diagrams with @foblex/mutator. Manage state snapshots, revert node moves, and restore connections in Angular.',
+    image: './previews/examples/undo-redo-v2.light.png',
+    image_dark: './previews/examples/undo-redo-v2.dark.png',
+    image_width: 799,
+    image_height: 600,
+    image_type: 'image/png',
+    date: new Date('2025-08-23 17:23:57'),
+    badge: {
+      text: 'New',
+      type: 'success'
+    },
   }, {
     link: 'dagre-layout',
     text: 'Dagre Layout',
@@ -589,10 +568,6 @@ function advancedGroup() {
     image_width: 781,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-02-08 14:01:26')
   }, {
     link: 'custom-event-triggers',
@@ -603,10 +578,6 @@ function advancedGroup() {
     image_width: 802,
     image_height: 600,
     image_type: 'image/png',
-    badge: {
-      text: 'New',
-      type: 'info'
-    },
     date: new Date('2025-02-10 19:00:00')
   }]);
 }

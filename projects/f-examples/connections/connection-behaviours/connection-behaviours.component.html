@@ -1,7 +1,6 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
-    <f-connection [fReassignDisabled]="true" fBehavior="fixed" fOutputId="1" fInputId="2" fText="fixed">
-    </f-connection>
+    <f-connection [fReassignDisabled]="true" fBehavior="fixed" fOutputId="1" fInputId="2" fText="fixed"/>
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1" fOutputConnectableSide="right">
       I'm a node
     </div>
@@ -9,8 +8,7 @@
       I'm a node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fBehavior="fixed_center" fOutputId="3" fInputId="4" fText="fixed_center">
-    </f-connection>
+    <f-connection [fReassignDisabled]="true" fBehavior="fixed_center" fOutputId="3" fInputId="4" fText="fixed_center"/>
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }" fNodeOutput fOutputId="3" fOutputConnectableSide="right">
       I'm a node
     </div>
@@ -18,8 +16,8 @@
       I'm a node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fBehavior="floating" fOutputId="5" fInputId="6" fText="floating">
-    </f-connection>
+    <f-connection [fReassignDisabled]="true" fBehavior="floating" fOutputId="5" fInputId="6" fText="floating"/>
+
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 300 }" fNodeOutput fOutputId="5" fOutputConnectableSide="right">
       I'm a node
     </div>

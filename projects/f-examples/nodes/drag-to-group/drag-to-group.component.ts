@@ -27,7 +27,11 @@ export class DragToGroupComponent {
 
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  protected readonly includePaddings = signal<boolean>(false);
+  protected readonly includePaddings = signal<boolean>(true);
+  protected readonly autoSizeToFitChildren = signal<boolean>(true);
+  protected readonly autoExpandOnChildHit = signal<boolean>(true);
+
+  protected readonly eResizeHandleType = EFResizeHandleType;
 
   protected readonly groups = signal<INode[]>([{
     id: 'g1', position: {x: 0, y: 0}
@@ -43,6 +47,18 @@ export class DragToGroupComponent {
 
   protected loaded(): void {
     this._canvas()?.resetScaleAndCenter(false);
+  }
+
+  protected changePaddings(): void {
+    this.includePaddings.set(!this.includePaddings());
+  }
+
+  protected changeSizeToFitChildren(): void {
+    this.autoSizeToFitChildren.set(!this.autoSizeToFitChildren());
+  }
+
+  protected changeExpandOnChildHit(): void {
+    this.autoExpandOnChildHit.set(!this.autoExpandOnChildHit());
   }
 
   protected onDropToGroup(event: FDropToGroupEvent): void {
@@ -77,10 +93,4 @@ export class DragToGroupComponent {
 
     this.nodes.set([...this.nodes(), newNode]);
   }
-
-  protected changePaddings(): void {
-    this.includePaddings.set(!this.includePaddings());
-  }
-
-  protected readonly eResizeHandleType = EFResizeHandleType;
 }

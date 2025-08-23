@@ -52,7 +52,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
 
   private _newRect(difference: IPoint): IRect {
     return this._mediator.execute<IRect>(
-      new CalculateChangedRectFromDifferenceRequest(this._originalRect, difference, this._handleType)
+      new CalculateChangedRectFromDifferenceRequest(this._originalRect, difference, this._handleType, this._constraints.minimumSize)
     );
   }
 
@@ -82,6 +82,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
 
   public onPointerUp(): void {
     this._nodeOrGroup.sizeChange.emit(this._getNewRect());
+    setTimeout(() => this._nodeOrGroup.refresh());
   }
 
   private _getNewRect(): IRect {

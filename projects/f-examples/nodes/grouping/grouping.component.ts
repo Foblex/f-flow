@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, Component, signal, viewChild} from '@angular/core';
 import {
-  EFResizeHandleType,
   FCanvasComponent,
   FFlowModule
 } from '@foblex/flow';
-import { PointExtensions } from '@foblex/2d';
+import {FCheckboxComponent} from "@foblex/m-render";
 
 @Component({
   selector: 'grouping',
@@ -14,16 +13,30 @@ import { PointExtensions } from '@foblex/2d';
   standalone: true,
   imports: [
     FFlowModule,
+    FCheckboxComponent,
   ]
 })
 export class GroupingComponent {
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  public onLoaded(): void {
-    this.fCanvas.fitToScreen(PointExtensions.initialize(50, 50), false);
+  protected readonly includePaddings = signal<boolean>(true);
+  protected readonly autoSizeToFitChildren = signal<boolean>(true);
+  protected readonly autoExpandOnChildHit = signal<boolean>(true);
+
+  protected loaded(): void {
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
-  protected readonly eResizeHandleType = EFResizeHandleType;
+  protected changePaddings(): void {
+    this.includePaddings.set(!this.includePaddings());
+  }
+
+  protected changeSizeToFitChildren(): void {
+    this.autoSizeToFitChildren.set(!this.autoSizeToFitChildren());
+  }
+
+  protected changeExpandOnChildHit(): void {
+    this.autoExpandOnChildHit.set(!this.autoExpandOnChildHit());
+  }
 }
