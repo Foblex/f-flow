@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {FExecutionRegister, IExecution} from '@foblex/mediator';
-import {SortContainersForDropByLayerRequest} from "./sort-containers-for-drop-by-layer.request";
+import {SortContainersForDropByLayerRequest} from "./sort-containers-for-drop-by-layer-request";
 import {INodeWithRect} from "../../domain";
 
 @Injectable()
 @FExecutionRegister(SortContainersForDropByLayerRequest)
-export class SortContainersForDropByLayerExecution implements IExecution<SortContainersForDropByLayerRequest, INodeWithRect[]> {
+export class SortContainersForDropByLayer implements IExecution<SortContainersForDropByLayerRequest, INodeWithRect[]> {
 
   public handle({ containersForDrop }: SortContainersForDropByLayerRequest): INodeWithRect[] {
     const decorated = containersForDrop.map((item, idx) => ({ item, idx }));

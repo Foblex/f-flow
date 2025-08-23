@@ -18,6 +18,7 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   private _applyConstraints: (difference: IPoint) => IPoint = (difference) => difference;
 
   private _lastSoftResults: IConstraintResult[] = [];
+  private _limits: IDragLimits | null = null;
   private _lastPosition = PointExtensions.initialize();
 
   constructor(
@@ -32,21 +33,22 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   }
 
   public setLimits(limits: IDragLimits): void {
+    this._limits = limits;
     const pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
 
     this._applyConstraints = (difference: IPoint) => {
       const summary = pipeline.apply(difference);
-      this._applySoftExpansions(summary.soft, limits);
+      this._applySoftExpansions(summary.soft);
       return summary.hardDifference;
     }
   }
 
   private _applySoftExpansions(
-    softResults: IConstraintResult[], limits: IDragLimits
+    softResults: IConstraintResult[]
   ): void {
     this._lastSoftResults = softResults;
     this._lastSoftResults.forEach((result, index) => {
-      const softLimit = limits.soft[index];
+      const softLimit = this._limits!.soft[index];
       const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
       this._commitParentRect(softLimit.nodeOrGroup, expandedRect);
     });
@@ -91,5 +93,16 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerUp());
     this.nodeOrGroup.position.set(this.nodeOrGroup._position);
     this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+    this._emitEventIfNodeExpanded();
+  }
+
+  private _emitEventIfNodeExpanded(): void {
+    this._lastSoftResults.forEach((result, index) => {
+      const softLimit = this._limits!.soft[index];
+      const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
+      if (result.overflow.x || result.overflow.y) {
+        softLimit.nodeOrGroup.sizeChange.emit(expandedRect);
+      }
+    });
   }
 }

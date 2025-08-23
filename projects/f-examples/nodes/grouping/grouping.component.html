@@ -29,6 +29,7 @@
          [fIncludePadding]="includePaddings()"
          [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
          [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+         (fGroupSizeChange)="sizeChanged($event)"
          [fGroupPosition]="{ x: 220, y: 190 }">
       <div fNodeInput fInputConnectableSide="top" class="top" fInputId="group2input"></div>
       Group 2
@@ -45,6 +46,7 @@
          [fIncludePadding]="includePaddings()"
          [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
          [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+         (fNodeSizeChange)="sizeChanged($event)"
          [fNodePosition]="{ x: 160, y: 140 }">
       <div fNodeInput fInputConnectableSide="left" class="left" fInputId="node3input"></div>
       Node 3

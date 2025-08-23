@@ -40,7 +40,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _isValid(): boolean {
-    this._summaryHandler =  this._dragContext.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
+    this._summaryHandler = this._dragContext.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
     return !!this._summaryHandler;
   }
 
@@ -48,15 +48,14 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     this._summaryHandler!.onPointerMove({...snappedDifference});
     this._summaryHandler!.onPointerUp?.();
 
-    const event = this._summaryHandler!.fData.fNodeIds.map((id: string) => {
+    const eventNodes = this._summaryHandler!.fData.fNodeIds.map((id: string) => {
       return {
         id,
         position: this._store.fNodes.find(x => x.fId() === id)!._position,
       }
     });
-    this._store.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(event));
+    this._store.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(eventNodes));
   }
-
 
   private _getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
     return Point.fromPoint(position).elementTransform(this._fHost)

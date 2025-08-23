@@ -1,3 +1,3 @@
-export * from './sort-containers-for-drop-by-layer.execution';
+export * from './sort-containers-for-drop-by-layer';
 
-export * from './sort-containers-for-drop-by-layer.request';
+export * from './sort-containers-for-drop-by-layer-request';
