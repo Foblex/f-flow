@@ -1,5 +1,5 @@
 import {inject, Injectable, Injector} from '@angular/core';
-import {FNodeDropToGroupPreparationRequest} from './f-node-drop-to-group-preparation.request';
+import {DropToGroupPreparationRequest} from './drop-to-group-preparation-request';
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {FComponentsStore} from '../../../f-storage';
 import {INodeWithRect} from '../../domain';
@@ -13,9 +13,9 @@ import {FExternalItemDragHandler} from "../../../f-external-item";
 import {SortContainersForDropByLayerRequest} from "../sort-containers-for-drop-by-layer";
 
 @Injectable()
-@FExecutionRegister(FNodeDropToGroupPreparationRequest)
-export class FNodeDropToGroupPreparationExecution
-  implements IExecution<FNodeDropToGroupPreparationRequest, void> {
+@FExecutionRegister(DropToGroupPreparationRequest)
+export class DropToGroupPreparation
+  implements IExecution<DropToGroupPreparationRequest, void> {
 
   private readonly _mediator = inject(FMediator);
   private readonly _dragContext = inject(FDraggableDataContext);
@@ -34,7 +34,7 @@ export class FNodeDropToGroupPreparationExecution
     return PointExtensions.sum(this._canvasTransform.position, this._canvasTransform.scaledPosition)
   }
 
-  public handle({event}: FNodeDropToGroupPreparationRequest): void {
+  public handle({event}: DropToGroupPreparationRequest): void {
     if (!this._canPrepareDropToGroup()) {
       return;
     }
@@ -51,6 +51,7 @@ export class FNodeDropToGroupPreparationExecution
     );
 
     if (_dragTarget) {
+      // We can drop items only to children of direct parent
       const childIds = this._mediator.execute<string[]>(new GetChildNodeIdsRequest(_dragTarget.fParentId()));
       if (childIds.length) {
         targetRects = targetRects.filter(t => childIds.includes(t.node.fId()));

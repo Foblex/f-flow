@@ -56,8 +56,8 @@ import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
 import {FDragHandlerResult} from './f-drag-handler';
 import {
   FDropToGroupEvent,
-  FNodeDropToGroupFinalizeRequest,
-  FNodeDropToGroupPreparationRequest
+  DropToGroupFinalizeRequest,
+  DropToGroupPreparationRequest
 } from './f-drop-to-group';
 import {FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest} from './f-node-rotate';
 import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
@@ -270,7 +270,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._mediator.execute<void>(new FExternalItemPreparationRequest(event, this.fExternalItemTrigger));
 
-    this._mediator.execute<void>(new FNodeDropToGroupPreparationRequest(event));
+    this._mediator.execute<void>(new DropToGroupPreparationRequest(event));
 
     this._mediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
 
@@ -302,7 +302,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
 
     this._mediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FNodeDropToGroupFinalizeRequest(event));
+    this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
 
     this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 

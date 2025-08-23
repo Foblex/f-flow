@@ -1,3 +1,3 @@
-export * from './f-node-drop-to-group-finalize.execution';
+export * from './drop-to-group-finalize';
 
-export * from './f-node-drop-to-group-finalize.request';
+export * from './drop-to-group-finalize-request';
