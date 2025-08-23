@@ -59,6 +59,7 @@
 /examples/zoom
 /examples/background
 
+/examples/copy-paste
 /examples/undo-redo
 /examples/undo-redo-v2
 /examples/dagre-layout
