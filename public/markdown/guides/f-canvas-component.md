@@ -6,9 +6,9 @@ The **FCanvasComponent** is an Angular component that serves as a container for 
 
 ## Inputs
 
-- `position: IPoint;` Sets the position of the canvas. Redraws the canvas when the position changes.
+- `position: InputSignal<IPoint>;` Sets the position of the canvas. Redraws the canvas when the position changes.
 
-- `scale: number;` Sets the scaling factor of the canvas. Redraws the canvas when the scale changes.
+- `scale: InputSignal<number>;` Sets the scaling factor of the canvas. Redraws the canvas when the scale changes.
 
 ## Outputs
 

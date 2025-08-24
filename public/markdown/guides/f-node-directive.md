@@ -22,9 +22,13 @@ The **FNodeDirective** is a directive that represents a node within a flow of el
 
   - `fIncludePadding: InputSignal<boolean>;` Determines whether the parent node’s or group’s inner spacing (CSS padding) is taken into account when restricting the movement of child nodes. When set to `true`, a child node cannot move beyond the parent’s edges or its inner padding. Default: `true`.
 
-  - `fConnectionOnNode: InputSignal<boolean>;` Allows creating a connection by dropping it anywhere on a node, instead of directly on an input connector. When enabled (`true`), if the connection is dropped on a node (not on a specific connector), the first available connectable input on that node will be automatically used. Default: `true`.
+  - `fConnectOnNode: InputSignal<boolean>;` Allows creating a connection by dropping it anywhere on a node, instead of directly on an input connector. When enabled (`true`), if the connection is dropped on a node (not on a specific connector), the first available connectable input on that node will be automatically used. Default: `true`.
 
   - `fMinimapClass: InputSignal<string | string[]>;` Additional CSS classes to apply to the node in the minimap. This can be used to style the node differently in the minimap compared to its appearance in the main flow. Default: `[]`.
+
+  - `fAutoExpandOnChildHit: InputSignal<boolean>;` When enabled (`true`), if a child node is dragged inside a collapsed parent node or group, the parent will automatically expand to accommodate the child. This feature is useful for maintaining visibility and accessibility of child nodes during drag operations. Default: `false`.
+
+  - `fAutoSizeToFitChildren: InputSignal<boolean>;` When enabled (`true`), the node will automatically adjust its size to fit all its child nodes. This ensures that all child nodes are visible within the parent node without overflow. Default: `false`.
 
 ## Outputs
 

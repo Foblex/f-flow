@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.7.0](https://github.com/foblex/flow/compare/v17.5.5...v17.7.0) (2025-08-24)
+
+
+### Features
+
+- **Grouping Improvements**
+  - Refactored the [Grouping Example](https://flow.foblex.com/examples/grouping) and the [Drag-to-Group](https://flow.foblex.com/examples/drag-to-group) Example.
+  - Added **fAutoSizeToFitChildren** — automatically resizes parent nodes and groups to fit the combined size of their children.
+  - Added **fAutoExpandOnChildHit** — expands parent nodes and groups in real time when child nodes are moved inside and do not fit.
+  - Improved drag-to-group behavior: dropping into a node or group that is already part of another parent now correctly validates the target (previously it always defaulted to its existing parent).
+- **New Copy/Paste Example**
+  - [Copy-Paste Example](https://flow.foblex.com/examples/copy-paste) demonstrates how to implement cut, copy, and paste functionality in Foblex Flow.
+  - Shows how to duplicate nodes (with their connections), remove selected elements, and insert them back while keeping IDs and connections consistent.
+- **New Undo/Redo Example**
+  - [Undo-Redo V2 Example](https://flow.foblex.com/examples/undo-redo-v2) demonstrates how to add undo and redo functionality to a flow editor.
+  - Built on top of @foblex/mutator, a lightweight state management utility that tracks state changes, snapshots, and history.
+  - Provides a full time-travel editing experience, allowing users to revert and reapply actions for a smoother workflow.
+
+### 🧹 Improvements
+
+- Grouping internals were refactored and clarified, including renaming of execution classes and better separation of responsibilities.
+
+### 📚 Documentation
+- Updated documentation to reflect new features and API changes:
+  - [FNodeDirective](https://flow.foblex.com/docs/f-node-directive)
+  - [FFlowComponent](https://flow.foblex.com/docs/f-flow-component)
+  - [FCanvasComponent](https://flow.foblex.com/docs/f-canvas-component)
+
+### 🐞 Bug Fixes
+
+* resolve drag-and-drop issues on macOS by improving event handling ([#187](https://github.com/foblex/flow/issues/187)) ([142745c](https://github.com/foblex/flow/commit/142745c277736b0c43085dde5c6590eb90ca87f1))
+* smooth wheel zoom ([#198](https://github.com/foblex/flow/issues/198)) ([e302e75](https://github.com/foblex/flow/commit/e302e75a1116ef585eaf0e6e10b2411c059d7777))
+
+### ⚠️ Breaking Changes
+- **CSS Class Rename**:
+  - .f-parent-for-drop → .f-grouping-over-boundary
+- **New CSS Class**:
+  - .f-grouping-drop-active — applied to nodes or groups that are valid drop targets for grouping.
+
+If you are using custom styles based on the old .f-parent-for-drop selector, you will need to update your CSS.
+
+### 🔎 TL;DR
+- Groups now support auto-resize and auto-expand on child moves.
+- Drag-to-group behavior is more robust.
+- Breaking change: CSS class .f-parent-for-drop renamed.
+- Documentation updated.
+- Two new examples: Copy/Paste and Undo/Redo V2.
+
 ## [17.6.0](https://github.com/foblex/flow/compare/v17.5.5...v17.6.0) (2025-07-23)
 
 ### Features

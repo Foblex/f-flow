@@ -6,11 +6,11 @@ The **FDraggableDirective** enhances a component, typically a flow [f-flow](f-fl
 
 ## Inputs
 
-  - `fDraggableDisabled: boolean;` Determines whether the draggable functionality is disabled. Default: `false`.
+  - `fDraggableDisabled: InputSignal<boolean>;` Determines whether the draggable functionality is disabled. Default: `false`.
 
-  - `vCellSize: number;` Defines the vertical size of each grid cell. Default: `1`.
+  - `vCellSize: InputSignal<number>;` Defines the vertical size of each grid cell. Default: `1`.
 
-  - `hCellSize: number;` Defines the horizontal size of each grid cell. Default: `1`.
+  - `hCellSize: InputSignal<number>;` Defines the horizontal size of each grid cell. Default: `1`.
 
 ## Outputs
 
