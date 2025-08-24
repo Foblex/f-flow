@@ -8,7 +8,6 @@ import {FResizeChannel} from '../../../reactivity';
 import {RectExtensions} from '@foblex/2d';
 import {FitToChildNodesAndGroupsRequest} from "../fit-to-child-nodes-and-groups";
 import {IsDragStartedRequest} from "../../f-draggable";
-import {FNodeBase} from "../../../f-node";
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
@@ -20,10 +19,6 @@ export class UpdateNodeWhenStateOrSizeChanged
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-
-  private get _nodes(): FNodeBase[] {
-    return this._store.fNodes;
-  }
 
   /**
    * Handles the request to update the node's connectors based on state or size changes.
@@ -41,10 +36,7 @@ export class UpdateNodeWhenStateOrSizeChanged
       this._mediator.execute<void>(new NotifyDataChangedRequest());
 
       if (!this._isDragging()) {
-        const directParent = this._nodes.find(x => x.fId() === nodeOrGroup.fParentId());
-        if (directParent) {
-          this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(directParent));
-        }
+        this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
       }
     });
   }

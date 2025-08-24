@@ -20,18 +20,16 @@ export class FitToChildNodesAndGroups
   }
 
   public handle({nodeOrGroup}: FitToChildNodesAndGroupsRequest): void {
-    if (!nodeOrGroup.fAutoSizeToFitChildren()) {
-      return;
-    }
+    if (nodeOrGroup.fAutoSizeToFitChildren()) {
+      const directChildren = this._calculateDirectChildren(nodeOrGroup);
+      if (directChildren.length) {
+        const currentBounding = this._boundingRect(nodeOrGroup);
+        const childrenBounding = this._calculateChildrenBounding(directChildren, this._paddings(nodeOrGroup, currentBounding));
 
-    const directChildren = this._calculateDirectChildren(nodeOrGroup);
-    if (directChildren.length) {
-      const currentBounding = this._boundingRect(nodeOrGroup);
-      const childrenBounding = this._calculateChildrenBounding(directChildren, this._paddings(nodeOrGroup, currentBounding));
-
-      nodeOrGroup.updatePosition(childrenBounding);
-      nodeOrGroup.updateSize(childrenBounding);
-      nodeOrGroup.redraw();
+        nodeOrGroup.updatePosition(childrenBounding);
+        nodeOrGroup.updateSize(childrenBounding);
+        nodeOrGroup.redraw();
+      }
     }
 
     const parent = nodeOrGroup.fParentId();
