@@ -82,7 +82,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
 
   public onPointerUp(): void {
     this._nodeOrGroup.sizeChange.emit(this._getNewRect());
-    setTimeout(() => this._nodeOrGroup.refresh());
+    requestAnimationFrame(() => this._nodeOrGroup.refresh());
   }
 
   private _getNewRect(): IRect {

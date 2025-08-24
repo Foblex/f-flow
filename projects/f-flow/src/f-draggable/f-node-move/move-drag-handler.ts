@@ -8,7 +8,7 @@ import {IDragLimits} from "./create-drag-model-from-selection";
 import {DragConstraintPipeline, expandRectFromBaseline, IConstraintResult} from "./constraint";
 import {FMediator} from "@foblex/mediator";
 
-export class MoveNodeOrGroupDragHandler implements IFDragHandler {
+export class MoveDragHandler implements IFDragHandler {
 
   public readonly fEventType = 'move-node';
 
@@ -18,13 +18,14 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
   private _applyConstraints: (difference: IPoint) => IPoint = (difference) => difference;
 
   private _lastSoftResults: IConstraintResult[] = [];
+  private _pipeline!: DragConstraintPipeline;
   private _limits: IDragLimits | null = null;
   private _lastPosition = PointExtensions.initialize();
 
   constructor(
     private readonly _injector: Injector,
     public nodeOrGroup: FNodeBase,
-    public childrenNodeAndGroups: MoveNodeOrGroupDragHandler[] = [],
+    public childrenNodeAndGroups: MoveDragHandler[] = [],
     public fSourceHandlers: BaseConnectionDragHandler[] = [],
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
@@ -34,10 +35,10 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
   public setLimits(limits: IDragLimits): void {
     this._limits = limits;
-    const pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
+    this._pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
 
     this._applyConstraints = (difference: IPoint) => {
-      const summary = pipeline.apply(difference);
+      const summary = this._pipeline.apply(difference);
       this._applySoftExpansions(summary.soft);
       return summary.hardDifference;
     }
@@ -77,6 +78,14 @@ export class MoveNodeOrGroupDragHandler implements IFDragHandler {
 
     this.fSourceHandlers.forEach((x) => x.setSourceDifference(differenceWithRestrictions));
     this.fTargetHandlers.forEach((x) => x.setTargetDifference(differenceWithRestrictions));
+  }
+
+  public assignFinalConstraints(): void {
+    this._applyConstraints = (difference: IPoint) => {
+      const summary = this._pipeline.finalize(difference);
+      this._applySoftExpansions(summary.soft);
+      return summary.hardDifference;
+    }
   }
 
   private _nodeOrGroupNewPosition(difference: IPoint): IPoint {

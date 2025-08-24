@@ -3,7 +3,7 @@ import {CreateDragModelFromSelectionRequest} from './create-drag-model-from-sele
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {FComponentsStore} from '../../../f-storage';
 import {FDraggableDataContext} from '../../f-draggable-data-context';
-import {MoveNodeOrGroupDragHandler} from '../move-node-or-group.drag-handler';
+import {MoveDragHandler} from '../move-drag-handler';
 import {FNodeBase} from '../../../f-node';
 import {CreateOutputConnectionHandlerAndSetToNodeHandlerRequest} from './create-output-connection-handler-and-set-to-node-handler';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../../domain';
 import {flatMap} from '@foblex/utils';
 import {BaseConnectionDragHandler} from '../connection-drag-handlers';
-import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
+import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
 import {BuildDragHierarchyRequest, BuildDragHierarchyResponse} from "./build-drag-hierarchy";
 import {CreateSummaryDragHandlerRequest} from "./create-summary-drag-handler";
 
@@ -92,7 +92,7 @@ export class CreateDragModelFromSelection
   }
 
   private _setConnectionsHandlersToNodes(
-    dragHandlers: MoveNodeOrGroupDragHandler[], outputIds: string[], inputIds: string[]
+      dragHandlers: MoveDragHandler[], outputIds: string[], inputIds: string[]
   ): void {
     const existingConnectionHandlers: BaseConnectionDragHandler[] = [];
     dragHandlers.forEach((x) => {

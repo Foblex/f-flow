@@ -1,6 +1,6 @@
 import {IPoint, IRect, RectExtensions} from '@foblex/2d';
 import {IFDragHandler} from '../f-drag-handler';
-import {MoveNodeOrGroupDragHandler} from './move-node-or-group.drag-handler';
+import {MoveDragHandler} from './move-drag-handler';
 import {Injector} from "@angular/core";
 import {SnapLinesDragHandler} from "./create-snap-lines/snap-lines.drag-handler";
 import {ISnapResult} from "../../f-line-alignment";
@@ -14,8 +14,8 @@ export class MoveSummaryDragHandler implements IFDragHandler {
 
   constructor(
     _injector: Injector,
-    public allDraggedNodeHandlers: MoveNodeOrGroupDragHandler[],
-    public rootHandlers: MoveNodeOrGroupDragHandler[],
+    public allDraggedNodeHandlers: MoveDragHandler[],
+    public rootHandlers: MoveDragHandler[],
   ) {
     this.fData = {
       fNodeIds: allDraggedNodeHandlers.map((x) => x.nodeOrGroup.fId())
@@ -43,7 +43,7 @@ export class MoveSummaryDragHandler implements IFDragHandler {
   public onPointerUp(): void {
     this.rootHandlers.forEach((x) => x.onPointerUp());
     this._lineAlignment?.clearGuides();
-    setTimeout(() => this._refreshDraggedNodes());
+    requestAnimationFrame(() => this._refreshDraggedNodes());
   }
 
   private _unionRect(): IRect {

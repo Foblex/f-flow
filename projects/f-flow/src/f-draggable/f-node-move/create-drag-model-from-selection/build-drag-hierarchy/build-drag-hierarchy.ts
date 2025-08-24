@@ -1,7 +1,7 @@
 import {inject, Injectable, Injector} from '@angular/core';
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {BuildDragHierarchyRequest} from "./build-drag-hierarchy-request";
-import {MoveNodeOrGroupDragHandler} from "../../move-node-or-group.drag-handler";
+import {MoveDragHandler} from "../../move-drag-handler";
 import {BuildDragHierarchyResponse} from "./build-drag-hierarchy-response";
 import {FNodeBase} from "../../../../f-node";
 
@@ -22,19 +22,19 @@ export class BuildDragHierarchy
 
   private _createHandlersMap(
     selectedNodesAndGroupsWithChildren: FNodeBase[]
-  ): Map<string, MoveNodeOrGroupDragHandler> {
-    const byId = new Map<string, MoveNodeOrGroupDragHandler>();
+  ): Map<string, MoveDragHandler> {
+    const byId = new Map<string, MoveDragHandler>();
     for (const item of selectedNodesAndGroupsWithChildren) {
-      byId.set(item.fId(), new MoveNodeOrGroupDragHandler(this._injector, item));
+      byId.set(item.fId(), new MoveDragHandler(this._injector, item));
     }
     return byId;
   }
 
   private _linkParentsAndCollectRoots(
     selectedNodesAndGroupsWithChildren: FNodeBase[],
-    byId: Map<string, MoveNodeOrGroupDragHandler>
-  ): MoveNodeOrGroupDragHandler[] {
-    const roots: MoveNodeOrGroupDragHandler[] = [];
+    byId: Map<string, MoveDragHandler>
+  ): MoveDragHandler[] {
+    const roots: MoveDragHandler[] = [];
 
     for (const item of selectedNodesAndGroupsWithChildren) {
       const handler = byId.get(item.fId())!;

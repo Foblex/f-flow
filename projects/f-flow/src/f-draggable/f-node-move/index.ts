@@ -14,11 +14,11 @@ export * from './create-snap-lines/snap-lines.drag-handler';
 
 export * from './f-move-nodes.event';
 
-export * from './move-node-or-group.drag-handler';
+export * from './move-drag-handler';
 
 export * from './providers';
 
-export * from './move-summary.drag-handler';
+export * from './move-summary-drag-handler';
 
 export * from './constraint/snap-to-grid';
 

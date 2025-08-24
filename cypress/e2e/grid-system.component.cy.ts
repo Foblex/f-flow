@@ -20,8 +20,6 @@ describe('GridSystemComponent', () => {
       const fromX = rect.left + rect.width / 2;
       const fromY = rect.top + rect.height / 2;
 
-      cy.log(JSON.stringify(before));
-
       cy.wrap($node)
         .trigger('mousedown', { clientX: fromX, clientY: fromY, button: 0, force: true })
         .trigger('mousemove', { clientX: fromX + 10, clientY: fromY + 10, force: true })

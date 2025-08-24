@@ -1,11 +1,11 @@
-import {MoveNodeOrGroupDragHandler} from "../../move-node-or-group.drag-handler";
+import {MoveDragHandler} from "../../move-drag-handler";
 
 export class CreateSummaryDragHandlerRequest {
   static readonly fToken = Symbol('CreateSummaryDragHandlerRequest');
 
   constructor(
-    public readonly roots: MoveNodeOrGroupDragHandler[],
-    public readonly list: MoveNodeOrGroupDragHandler[],
+    public readonly roots: MoveDragHandler[],
+    public readonly list: MoveDragHandler[],
   ) {
   }
 }

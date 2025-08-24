@@ -20,8 +20,9 @@ export class SnapToGrid {
     this._adjustCellSize = this._store.fDraggable!.fCellSizeWhileDragging();
   }
 
-  public snap(difference: IPoint): IPoint {
-    return this._cellSizeStrategies[+this._adjustCellSize](difference);
+  public snap(difference: IPoint, adjustCellSize: boolean): IPoint {
+    const _adjustCellSize = adjustCellSize || this._adjustCellSize;
+    return this._cellSizeStrategies[+_adjustCellSize](difference);
   }
 
   private _cellSizeStrategies: Record<number, (difference: IPoint) => IPoint> = {

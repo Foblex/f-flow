@@ -30,13 +30,17 @@ export class DragConstraintPipeline {
     }
   }
 
-  public apply(difference: IPoint): IConstraintSummary {
-    const snapped = this._snapper.snap(difference);
+  public apply(difference: IPoint, adjustCellSize: boolean = false): IConstraintSummary {
+    const snapped = this._snapper.snap(difference, adjustCellSize);
     const hardDifference = this._hardConstraint.apply(snapped).value;
 
     return {
       hardDifference,
       soft: this._softConstraints.map(c => c.apply(hardDifference)),
     };
+  }
+
+  public finalize(difference: IPoint): IConstraintSummary {
+    return this.apply(difference, true);
   }
 }

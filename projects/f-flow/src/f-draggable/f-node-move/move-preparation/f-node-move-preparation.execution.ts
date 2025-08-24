@@ -9,7 +9,7 @@ import {CreateDragModelFromSelectionRequest} from '../create-drag-model-from-sel
 import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
 import {isClosestElementHasClass} from '@foblex/utils';
 import {CreateSnapLinesRequest} from '../create-snap-lines';
-import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
+import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
 import {IPointerEvent} from "../../../drag-toolkit";
 
 @Injectable()

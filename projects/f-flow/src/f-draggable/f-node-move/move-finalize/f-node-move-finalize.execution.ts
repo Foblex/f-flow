@@ -8,7 +8,7 @@ import {
   IsConnectionUnderNodeRequest
 } from '../../domain';
 import {ISnapResult, ISnapCoordinate} from '../../../f-line-alignment';
-import {MoveSummaryDragHandler} from '../move-summary.drag-handler';
+import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
 import {FNodeBase} from '../../../f-node';
 import {FMoveNodesEvent} from "../f-move-nodes.event";
 
@@ -26,15 +26,15 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     return this._store.fFlow!.hostElement;
   }
 
-  public handle(request: FNodeMoveFinalizeRequest): void {
+  public handle({ event }: FNodeMoveFinalizeRequest): void {
     if (!this._isValid()) {
       return;
     }
-    const difference = this._getDifferenceBetweenPreparationAndFinalize(request.event.getPosition());
+    const difference = this._getDifferenceBetweenPreparationAndFinalize(event.getPosition());
 
-    const snappedDifference = this._applySnapDifference(difference, this._getSnapLinesResult(difference))
+    const snapLinesDifference = this._applySnapLinesDifference(difference, this._getSnapLinesResult(difference))
 
-    this._finalizeMove(snappedDifference);
+    this._finalizeMove(snapLinesDifference);
 
     this._applyConnectionUnderDroppedNode();
   }
@@ -42,19 +42,6 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   private _isValid(): boolean {
     this._summaryHandler = this._dragContext.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
     return !!this._summaryHandler;
-  }
-
-  private _finalizeMove(snappedDifference: IPoint): void {
-    this._summaryHandler!.onPointerMove({...snappedDifference});
-    this._summaryHandler!.onPointerUp?.();
-
-    const eventNodes = this._summaryHandler!.fData.fNodeIds.map((id: string) => {
-      return {
-        id,
-        position: this._store.fNodes.find(x => x.fId() === id)!._position,
-      }
-    });
-    this._store.fDraggable?.fMoveNodes.emit(new FMoveNodesEvent(eventNodes));
   }
 
   private _getDifferenceBetweenPreparationAndFinalize(position: IPoint): Point {
@@ -67,13 +54,35 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     return this._summaryHandler?.findClosestAlignment(difference);
   }
 
-  private _applySnapDifference(difference: IPoint, intersection: ISnapResult | undefined): IPoint {
+  private _applySnapLinesDifference(difference: IPoint, intersection: ISnapResult | undefined): IPoint {
     if (intersection) {
       difference.x = this._isIntersectValue(intersection.xResult) ? (difference.x - intersection.xResult.distance!) : difference.x;
       difference.y = this._isIntersectValue(intersection.yResult) ? (difference.y - intersection.yResult.distance!) : difference.y;
     }
     return difference;
   }
+
+  private _finalizeMove(snappedDifference: IPoint): void {
+    this._summaryHandler?.rootHandlers.forEach((x) => x.assignFinalConstraints());
+    this._summaryHandler!.onPointerMove({...snappedDifference});
+    this._summaryHandler!.onPointerUp?.();
+
+    this._store.fDraggable?.fMoveNodes.emit(this._createMoveNodesEvent());
+  }
+
+  private _createMoveNodesEvent(): FMoveNodesEvent {
+    const eventNodes = this._summaryHandler!.fData.fNodeIds.map((id: string) => {
+      return {
+        id,
+        position: this._store.fNodes.find(x => x.fId() === id)!._position,
+      }
+    });
+    return new FMoveNodesEvent(eventNodes);
+  }
+
+
+
+
 
   private _isIntersectValue(result: ISnapCoordinate): boolean {
     return result.value !== undefined && result.value !== null;
@@ -82,16 +91,16 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   private _applyConnectionUnderDroppedNode(): void {
     if (this._isDraggedJustOneNode() && this._store.fDraggable?.fEmitOnNodeIntersect) {
 
-      const fNode = this._getFirstNodeOrGroup();
-      setTimeout(() => this._mediator.execute(new IsConnectionUnderNodeRequest(fNode)));
+      const nodeOrGroup = this._getFirstNodeOrGroup();
+      setTimeout(() => this._mediator.execute(new IsConnectionUnderNodeRequest(nodeOrGroup)));
     }
   }
 
   private _isDraggedJustOneNode(): boolean {
-    return (this._dragContext.draggableItems[0] as MoveSummaryDragHandler).rootHandlers.length === 1;
+    return this._summaryHandler!.rootHandlers.length === 1;
   }
 
   private _getFirstNodeOrGroup(): FNodeBase {
-    return (this._dragContext.draggableItems[0] as MoveSummaryDragHandler).rootHandlers[0].nodeOrGroup;
+    return this._summaryHandler!.rootHandlers[0].nodeOrGroup;
   }
 }

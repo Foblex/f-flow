@@ -1,10 +1,10 @@
-import {MoveNodeOrGroupDragHandler} from "../../move-node-or-group.drag-handler";
+import {MoveDragHandler} from "../../move-drag-handler";
 
 export class BuildDragHierarchyResponse {
 
   constructor(
-    public roots: MoveNodeOrGroupDragHandler[],
-    public list: MoveNodeOrGroupDragHandler[],
+    public roots: MoveDragHandler[],
+    public list: MoveDragHandler[],
   ) {
   }
 }
