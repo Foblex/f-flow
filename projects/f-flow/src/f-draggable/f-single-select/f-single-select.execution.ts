@@ -52,8 +52,8 @@ import {IPointerEvent} from "../../drag-toolkit";
 export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: FSingleSelectRequest): void {
     if (!this._isValid(request)) {
@@ -68,11 +68,11 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isValid(request: FSingleSelectRequest): boolean {
-    return this._isEventInFlowBounds(request.event) && this._fDraggableDataContext.isEmpty();
+    return this._isEventInFlowBounds(request.event) && this._dragContext.isEmpty();
   }
 
   private _isEventInFlowBounds(event: IPointerEvent): boolean {
-    return this._fComponentsStore.fFlow!.hostElement.contains(event.targetElement);
+    return this._store.fFlow!.hostElement.contains(event.targetElement);
   }
 
   private _getItemToSelect(event: IPointerEvent): ISelectable | undefined {
@@ -80,11 +80,11 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _getNodeOrGroup(targetElement: HTMLElement): FNodeBase | undefined {
-    return this._fComponentsStore.fNodes.find((x) => (x).isContains(targetElement));
+    return this._store.fNodes.find((x) => (x).isContains(targetElement));
   }
 
   private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {
-    return this._fComponentsStore.fConnections
+    return this._store.fConnections
       .find(c => c.isContains(element) || c.fConnectionCenter()?.nativeElement?.contains(element));
   }
 
@@ -105,7 +105,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
       if (this._isItemNotSelectedAndSelectable(fItem)) {
         this._clearSelection();
         this._selectItem(fItem);
-      } else if (fItem.fSelectionDisabled) {
+      } else if (fItem.fSelectionDisabled()) {
         this._clearSelection();
       }
     } else {
@@ -114,19 +114,19 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _isItemNotSelectedAndSelectable(item: ISelectable): boolean {
-    return !item.isSelected() && !item.fSelectionDisabled;
+    return !item.isSelected() && !item.fSelectionDisabled();
   }
 
   private _clearSelection(): void {
-    this._fDraggableDataContext.selectedItems.forEach((x) => {
+    this._dragContext.selectedItems.forEach((x) => {
       x.unmarkAsSelected();
-      this._fDraggableDataContext.markSelectionAsChanged();
+      this._dragContext.markSelectionAsChanged();
     });
-    this._fDraggableDataContext.selectedItems = [];
+    this._dragContext.selectedItems = [];
   }
 
   private _multiSelect(fItem?: ISelectable): void {
-    if (fItem && !fItem.fSelectionDisabled) {
+    if (fItem && !fItem.fSelectionDisabled()) {
       fItem.isSelected() ? this._deselectItem(fItem) : this._selectItem(fItem);
     }
   }
@@ -134,19 +134,19 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   private _deselectItem(fItem: ISelectable): void {
     this._removeItemFromSelectedItems(fItem);
     fItem.unmarkAsSelected();
-    this._fDraggableDataContext.markSelectionAsChanged();
+    this._dragContext.markSelectionAsChanged();
   }
 
   private _removeItemFromSelectedItems(fItem: ISelectable): void {
-    const indexInSelection = this._fDraggableDataContext.selectedItems.indexOf(fItem);
+    const indexInSelection = this._dragContext.selectedItems.indexOf(fItem);
     if (indexInSelection > -1) {
-      this._fDraggableDataContext.selectedItems.splice(indexInSelection, 1);
+      this._dragContext.selectedItems.splice(indexInSelection, 1);
     }
   }
 
   private _selectItem(fItem: ISelectable): void {
-    this._fDraggableDataContext.selectedItems.push(fItem);
+    this._dragContext.selectedItems.push(fItem);
     fItem.markAsSelected();
-    this._fDraggableDataContext.markSelectionAsChanged();
+    this._dragContext.markSelectionAsChanged();
   }
 }

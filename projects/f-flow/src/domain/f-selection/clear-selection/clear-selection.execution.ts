@@ -10,11 +10,11 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(ClearSelectionRequest)
 export class ClearSelectionExecution implements IExecution<ClearSelectionRequest, void> {
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   public handle(request: ClearSelectionRequest): void {
-    this._fDraggableDataContext.selectedItems.forEach((x) => x.unmarkAsSelected());
-    this._fDraggableDataContext.selectedItems = [];
-    this._fDraggableDataContext.isSelectedChanged = true;
+    this._dragContext.selectedItems.forEach((x) => x.unmarkAsSelected());
+    this._dragContext.selectedItems = [];
+    this._dragContext.isSelectedChanged = true;
   }
 }

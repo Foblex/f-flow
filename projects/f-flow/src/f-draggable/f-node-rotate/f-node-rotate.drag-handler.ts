@@ -13,9 +13,9 @@ import { Injector } from '@angular/core';
 
 export class FNodeRotateDragHandler implements IFDragHandler {
 
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _store: FComponentsStore;
   private readonly _fMediator: FMediator;
-  private readonly _fDraggableDataContext: FDraggableDataContext;
+  private readonly _dragContext: FDraggableDataContext;
 
   public fEventType = 'node-rotate';
   public fData: any;
@@ -27,7 +27,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   private _fNodeRect!: IRect;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   constructor(
@@ -42,14 +42,14 @@ export class FNodeRotateDragHandler implements IFDragHandler {
       connector: IPoint,
     }[],
   ) {
-    this._startRotation = this._fNode.rotate;
+    this._startRotation = this._fNode._rotate;
     this.fData = {
       fNodeId: _fNode.fId(),
     };
 
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._store = _injector.get(FComponentsStore);
     this._fMediator = _injector.get(FMediator);
-    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
+    this._dragContext = _injector.get(FDraggableDataContext);
   }
 
   public prepareDragSequence(): void {
@@ -64,7 +64,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
   private _calculateDownPoint(): IPoint {
     return PointExtensions.sub(
-      this._fDraggableDataContext.onPointerDownPosition,
+      this._dragContext.onPointerDownPosition,
       PointExtensions.sum(this._transform.position, this._transform.scaledPosition)
     );
   }
@@ -107,6 +107,6 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   }
 
   public onPointerUp(): void {
-    this._fNode.rotateChange.emit(this._fNode.rotate);
+    this._fNode.rotate.set(this._fNode._rotate);
   }
 }

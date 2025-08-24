@@ -21,17 +21,17 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
     return this._store.fDraggable!.fSelectionChange;
   }
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: EmitSelectionChangeEventRequest): void {
     if (
-      !this._fDraggableDataContext.isSelectedChanged
+      !this._dragContext.isSelectedChanged
     ) {
       return;
     }
 
     this._emitSelectionChange(this._getSelection());
-    this._fDraggableDataContext.isSelectedChanged = false;
+    this._dragContext.isSelectedChanged = false;
     this._mediator.execute<void>(new NotifyTransformChangedRequest());
   }
 

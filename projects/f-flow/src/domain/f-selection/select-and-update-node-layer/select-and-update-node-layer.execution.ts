@@ -15,7 +15,7 @@ import { FNodeBase } from '../../../f-node';
 @FExecutionRegister(SelectAndUpdateNodeLayerRequest)
 export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpdateNodeLayerRequest, void> {
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _mediator = inject(FMediator);
 
   public handle(request: SelectAndUpdateNodeLayerRequest): void {
@@ -27,10 +27,10 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
   }
 
   private selectNodeIfNotSelected(fNode: FNodeBase) {
-    if (!this._fDraggableDataContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled) {
-      this._fDraggableDataContext.selectedItems.push(fNode);
+    if (!this._dragContext.selectedItems.includes(fNode) && !fNode.fSelectionDisabled()) {
+      this._dragContext.selectedItems.push(fNode);
       fNode.markAsSelected();
-      this._fDraggableDataContext.isSelectedChanged = true;
+      this._dragContext.isSelectedChanged = true;
     }
   }
 }

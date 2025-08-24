@@ -12,31 +12,31 @@ import { isValidEventTrigger } from '../../../domain';
 @FExecutionRegister(FCanvasMovePreparationRequest)
 export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePreparationRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   public handle(request: FCanvasMovePreparationRequest): void {
     if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
-    this._fDraggableDataContext.onPointerDownScale = 1;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = 1;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost);
-    this._fDraggableDataContext.draggableItems = [ new FCanvasDragHandler(this._injector) ];
+    this._dragContext.draggableItems = [ new FCanvasDragHandler(this._injector) ];
   }
 
   private _isValid(request: FCanvasMovePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty() &&
+    return this._dragContext.isEmpty() &&
       (this._isBackgroundElement(request.event.targetElement) || this._isDragOnHost(request.event.targetElement));
   }
 
   private _isBackgroundElement(targetElement: HTMLElement): boolean | undefined {
-    return this._fComponentsStore.fBackground?.hostElement.contains(targetElement);
+    return this._store.fBackground?.hostElement.contains(targetElement);
   }
 
   private _isDragOnHost(targetElement: HTMLElement): boolean {
@@ -44,9 +44,9 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   }
 
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this._fComponentsStore.fNodes
+    let result = this._store.fNodes
       .find(x => x.isContains(targetElement));
-    if (result && result.fDraggingDisabled) {
+    if (result && result.fDraggingDisabled()) {
       result = undefined;
     }
     return result;

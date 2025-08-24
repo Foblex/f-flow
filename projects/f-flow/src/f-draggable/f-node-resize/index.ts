@@ -1,20 +1,20 @@
-export * from './apply-child-resize-restrictions';
+export * from './apply-child-resize-constraints';
 
-export * from './apply-parent-resize-restrictions';
+export * from './apply-parent-resize-constraints';
 
-export * from './calculate-changed-position';
+export * from './calculate-changed-rect-from-difference';
 
-export * from './calculate-changed-size';
+export * from './calculate-direct-children-union-rect';
 
-export * from './get-normalized-children-nodes-rect';
+export * from './calculate-resize-limits';
 
-export * from './get-node-resize-restrictions';
+export * from './constraint';
 
 export * from './resize-finalize';
 
 export * from './resize-preparation';
 
-export * from './f-node-resize.drag-handler';
+export * from './node-resize.drag-handler';
 
 export * from './providers';
 

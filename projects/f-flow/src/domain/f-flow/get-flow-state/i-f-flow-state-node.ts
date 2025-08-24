@@ -9,7 +9,9 @@ export interface IFFlowStateNode {
 
   position: IPoint;
 
-  size: ISize;
+  size?: ISize;
+
+  rotate: number;
 
   fInputs: IFFlowStateConnector[];
 

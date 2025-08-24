@@ -1,7 +1,7 @@
 import {
-  AfterViewInit,
+  AfterViewInit, booleanAttribute,
   ChangeDetectionStrategy,
-  Component, contentChildren,
+  Component,
   ElementRef,
   inject, input,
   Input,
@@ -9,22 +9,10 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  signal, viewChild
+  signal
 } from "@angular/core";
-import {
-  CONNECTION_GRADIENT,
-  CONNECTION_PATH,
-  CONNECTION_TEXT,
-  FConnectionDragHandleEndComponent,
-  FConnectionDragHandleStartComponent,
-  FConnectionSelectionComponent,
-  IConnectionGradient,
-  IConnectionPath,
-  IConnectionText,
-} from '../common';
 import {EFConnectionBehavior} from '../common';
 import {EFConnectionType} from '../common';
-import {FConnectionCenterDirective} from '../f-connection-center';
 import {FConnectionFactory} from '../f-connection-builder';
 import {NotifyDataChangedRequest} from '../../f-storage';
 import {F_CONNECTION} from '../common/f-connection.injection-token';
@@ -57,10 +45,6 @@ export class FConnectionForCreateComponent
 
   public override fTextStartOffset: string = '';
 
-  public override fStartColor = input<string>('black');
-
-  public override fEndColor = input<string>('black');
-
   public override fOutputId!: string;
 
   public override fInputId!: string;
@@ -77,32 +61,12 @@ export class FConnectionForCreateComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
-  public override fDraggingDisabled: boolean = false;
-
-  public override fSelectionDisabled: boolean = false;
-
-  public override fDefs = viewChild.required<ElementRef<SVGDefsElement>>('defs');
-
-  public override fPath = viewChild.required<IConnectionPath>(CONNECTION_PATH);
-
-  public override fGradient = viewChild.required<IConnectionGradient>(CONNECTION_GRADIENT);
-
-  public override fDragHandleStart = viewChild(FConnectionDragHandleStartComponent);
-  public override fDragHandleEnd = viewChild.required(FConnectionDragHandleEndComponent);
-
-  public override fSelection = viewChild.required(FConnectionSelectionComponent);
-
-  public override fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
-
-  public override fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
-
-  public fConnectionCenters = contentChildren(FConnectionCenterDirective, {descendants: true});
 
   public override get boundingElement(): HTMLElement | SVGElement {
     return this.fPath().hostElement;
   }
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
@@ -112,7 +76,7 @@ export class FConnectionForCreateComponent
   }
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddConnectionForCreateToStoreRequest(this));
+    this._mediator.execute(new AddConnectionForCreateToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
@@ -120,10 +84,10 @@ export class FConnectionForCreateComponent
   }
 
   public ngOnChanges(): void {
-    this._fMediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new NotifyDataChangedRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute(new RemoveConnectionForCreateFromStoreRequest());
+    this._mediator.execute(new RemoveConnectionForCreateFromStoreRequest());
   }
 }

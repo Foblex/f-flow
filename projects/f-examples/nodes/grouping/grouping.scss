@@ -1,0 +1,19 @@
+@use "../../flow-common";
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+}
+
+.f-node, .f-group {
+  @include flow-common.node;
+}
+
+.f-group {
+  background-color: var(--minimap-view-color);
+}
+
+.f-node-input, .f-node-output {
+  @include flow-common.connectors;
+}
+
+@include flow-common.examples-toolbar;

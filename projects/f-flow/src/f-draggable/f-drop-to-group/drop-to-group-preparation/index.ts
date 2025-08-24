@@ -1,3 +1,3 @@
-export * from './f-node-drop-to-group-preparation.execution';
+export * from './drop-to-group-preparation';
 
-export * from './f-node-drop-to-group-preparation.request';
+export * from './drop-to-group-preparation-request';

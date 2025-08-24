@@ -147,7 +147,11 @@
     <priority>0.9</priority>
   </url>
 
-
+  <url>
+    <loc>https://flow.foblex.com/examples/drag-to-group/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://flow.foblex.com/examples/drag-to-connect/</loc>
     <changefreq>weekly</changefreq>
@@ -226,7 +230,21 @@
     <priority>0.9</priority>
   </url>
 
-
+  <url>
+    <loc>https://flow.foblex.com/examples/copy-paste/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/undo-redo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/undo-redo-v2/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://flow.foblex.com/examples/dagre-layout/</loc>
     <changefreq>weekly</changefreq>

@@ -1,3 +1,5 @@
+export * from './constraint';
+
 export * from './create-placeholder';
 
 export * from './create-preview';

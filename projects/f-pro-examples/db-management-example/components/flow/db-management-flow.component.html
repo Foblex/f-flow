@@ -51,7 +51,7 @@
     }
     @for (group of viewModel.groups; track group.id) {
       <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position"
-           [fGroupSize]="group.size" fDragHandle>
+           [fGroupSize]="group.size" fDragHandle fAutoExpandOnChildHit fIncludePadding>
         <div class="group-title">{{ group.name }}</div>
         <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT"></div>
         <div fResizeHandle [fResizeHandleType]="eResizeHandleType.LEFT_TOP"></div>

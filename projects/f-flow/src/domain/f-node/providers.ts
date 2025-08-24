@@ -1,38 +1,44 @@
-import { AddNodeToStoreExecution } from './add-node-to-store';
-import { RemoveNodeFromStoreExecution } from './remove-node-from-store';
-import { UpdateNodeWhenStateOrSizeChangedExecution } from './update-node-when-state-or-size-changed';
-import { GetNodesExecution } from './get-nodes';
-import { CalculateNodesBoundingBoxExecution } from './calculate-nodes-bounding-box';
+import { AddNodeToStore } from './add-node-to-store';
+import { RemoveNodeFromStore } from './remove-node-from-store';
+import { UpdateNodeWhenStateOrSizeChanged } from './update-node-when-state-or-size-changed';
+import { GetNodes } from './get-nodes';
+import { CalculateNodesBoundingBox } from './calculate-nodes-bounding-box';
 import {
-  CalculateNodesBoundingBoxNormalizedPositionExecution
+  CalculateNodesBoundingBoxNormalizedPosition
 } from './calculate-nodes-bounding-box-normalized-position';
-import { GetNodePaddingExecution } from './get-node-padding';
-import { GetParentNodesExecution } from './get-parent-nodes';
-import { CalculateInputConnectionsExecution } from './calculate-input-connections';
-import { CalculateOutputConnectionsExecution } from './calculate-output-connections';
+import { GetNodePadding } from './get-node-padding';
+import { GetParentNodes } from './get-parent-nodes';
+import { CalculateInputConnections } from './calculate-input-connections';
+import { CalculateOutputConnections } from './calculate-output-connections';
+import {GetChildNodeIds} from "./get-child-node-ids";
+import {FitToChildNodesAndGroups} from "./fit-to-child-nodes-and-groups";
 
 /**
  * This file exports all the node-related executions that can be used in the F-Flow domain.
  */
 export const F_NODE_FEATURES = [
 
-  AddNodeToStoreExecution,
+  AddNodeToStore,
 
-  CalculateInputConnectionsExecution,
+  CalculateInputConnections,
 
-  CalculateNodesBoundingBoxExecution,
+  CalculateNodesBoundingBox,
 
-  CalculateNodesBoundingBoxNormalizedPositionExecution,
+  CalculateNodesBoundingBoxNormalizedPosition,
 
-  CalculateOutputConnectionsExecution,
+  CalculateOutputConnections,
 
-  GetNodePaddingExecution,
+  FitToChildNodesAndGroups,
 
-  GetNodesExecution,
+  GetChildNodeIds,
 
-  GetParentNodesExecution,
+  GetNodePadding,
 
-  UpdateNodeWhenStateOrSizeChangedExecution,
+  GetNodes,
 
-  RemoveNodeFromStoreExecution
+  GetParentNodes,
+
+  UpdateNodeWhenStateOrSizeChanged,
+
+  RemoveNodeFromStore
 ];

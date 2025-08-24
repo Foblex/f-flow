@@ -1,27 +1,24 @@
-import { FNodeResizeFinalizeExecution } from './resize-finalize';
-import { FNodeResizePreparationExecution } from './resize-preparation';
-import { GetNodeResizeRestrictionsExecution } from './get-node-resize-restrictions';
-import { ApplyChildResizeRestrictionsExecution } from './apply-child-resize-restrictions';
-import { ApplyParentResizeRestrictionsExecution } from './apply-parent-resize-restrictions';
-import { CalculateChangedSizeExecution } from './calculate-changed-size';
-import { CalculateChangedPositionExecution } from './calculate-changed-position';
-import { GetNormalizedChildrenNodesRectExecution } from './get-normalized-children-nodes-rect';
+import { NodeResizeFinalize } from './resize-finalize';
+import { NodeResizePreparation } from './resize-preparation';
+import { CalculateResizeLimits } from './calculate-resize-limits';
+import { ApplyChildResizeConstraints } from './apply-child-resize-constraints';
+import { ApplyParentResizeConstraints } from './apply-parent-resize-constraints';
+import { CalculateChangedRectFromDifference } from './calculate-changed-rect-from-difference';
+import { CalculateDirectChildrenUnionRect } from './calculate-direct-children-union-rect';
 
 export const NODE_RESIZE_PROVIDERS = [
 
-  ApplyChildResizeRestrictionsExecution,
+  ApplyChildResizeConstraints,
 
-  ApplyParentResizeRestrictionsExecution,
+  ApplyParentResizeConstraints,
 
-  CalculateChangedPositionExecution,
+  CalculateChangedRectFromDifference,
 
-  CalculateChangedSizeExecution,
+  CalculateDirectChildrenUnionRect,
 
-  GetNormalizedChildrenNodesRectExecution,
+  CalculateResizeLimits,
 
-  GetNodeResizeRestrictionsExecution,
+  NodeResizeFinalize,
 
-  FNodeResizeFinalizeExecution,
-
-  FNodeResizePreparationExecution,
+  NodeResizePreparation,
 ];

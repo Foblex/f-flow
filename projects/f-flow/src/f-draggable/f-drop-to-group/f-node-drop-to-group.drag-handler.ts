@@ -1,22 +1,22 @@
-import { Directive, Injector } from '@angular/core';
-import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
-import { FComponentsStore } from '../../f-storage';
-import { INodeWithRect } from '../domain';
-import { FDraggableDataContext } from '../f-draggable-data-context';
+import {Directive, Injector} from '@angular/core';
+import {IPoint, ITransformModel, Point, PointExtensions, RectExtensions} from '@foblex/2d';
+import {IFDragHandler} from '../f-drag-handler';
+import {FComponentsStore} from '../../f-storage';
+import {INodeWithRect} from '../domain';
+import {FDraggableDataContext} from '../f-draggable-data-context';
+import {F_CSS_CLASS} from "../../domain";
 
 @Directive()
 export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
-  private readonly _fComponentsStore: FComponentsStore;
-  private readonly _fDraggableDataContext: FDraggableDataContext;
+  private readonly _store: FComponentsStore;
 
   public fEventType = 'move-node-to-parent';
 
   private _DEBOUNCE_TIME = 1;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
@@ -26,11 +26,16 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
   constructor(
     _injector: Injector,
-    private notDraggedNodesRects: INodeWithRect[],
+    private containersForDrop: INodeWithRect[],
   ) {
-    this._fComponentsStore = _injector.get(FComponentsStore);
-    this._fDraggableDataContext = _injector.get(FDraggableDataContext);
-    this._onPointerDownPosition = this._fDraggableDataContext.onPointerDownPosition;
+    this._store = _injector.get(FComponentsStore);
+    this._onPointerDownPosition = _injector.get(FDraggableDataContext).onPointerDownPosition;
+  }
+
+  public prepareDragSequence(): void {
+    this.containersForDrop.forEach(({node}) => {
+      node.hostElement.classList.add(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
+    });
   }
 
   private _toggleParentNode(difference: IPoint): void {
@@ -47,7 +52,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
   }
 
   private _isNodeInsideAnotherNode(point: IPoint): INodeWithRect | undefined {
-    return this.notDraggedNodesRects.find((x) => RectExtensions.isIncludePoint(x.rect, point));
+    return this.containersForDrop.find((x) => RectExtensions.isIncludePoint(x.rect, point));
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -61,17 +66,19 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
   private _markIncludeNode(nodeWithRect: INodeWithRect): void {
     this._unmarkIncludeNode();
     this.fNodeWithRect = nodeWithRect;
-    nodeWithRect.node.setClass('f-parent-for-drop');
+    nodeWithRect.node.setClass(F_CSS_CLASS.GROUPING.OVER_BOUNDARY);
   }
 
   private _unmarkIncludeNode(): void {
-    this.fNodeWithRect?.node.removeClass('f-parent-for-drop');
+    this.fNodeWithRect?.node.removeClass(F_CSS_CLASS.GROUPING.OVER_BOUNDARY);
     this.fNodeWithRect = null;
   }
 
   public onPointerUp(): void {
     this._unmarkIncludeNode();
-
+    this.containersForDrop.forEach(({node}) => {
+      node.hostElement.classList.remove(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
+    });
     if (this._debounceTimer) {
       clearTimeout(this._debounceTimer);
       this._debounceTimer = null;

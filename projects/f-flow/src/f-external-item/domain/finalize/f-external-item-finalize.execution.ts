@@ -21,20 +21,20 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
   private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult> = inject(FDragHandlerResult);
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _fBrowser = inject(BrowserService);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _fCreateNode(): EventEmitter<FCreateNodeEvent> {
-    return this._fComponentsStore.fDraggable!.fCreateNode;
+    return this._store.fDraggable!.fCreateNode;
   }
 
   private get _fDragHandler(): FExternalItemDragHandler {
-    return this._fDraggableDataContext.draggableItems[0] as FExternalItemDragHandler;
+    return this._dragContext.draggableItems[0] as FExternalItemDragHandler;
   }
 
   public handle(request: FExternalItemFinalizeRequest): void {
@@ -50,11 +50,11 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
     );
 
     this._fDragHandler.onPointerUp();
-    this._fDraggableDataContext.draggableItems = [];
+    this._dragContext.draggableItems = [];
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some(
+    return this._dragContext.draggableItems.some(
       (x) => x instanceof FExternalItemDragHandler
     );
   }
@@ -67,7 +67,7 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
   }
 
   private _getDropToGroupHandler(): FNodeDropToGroupDragHandler {
-    const result = this._fDraggableDataContext.draggableItems
+    const result = this._dragContext.draggableItems
       .find((x) => x instanceof FNodeDropToGroupDragHandler)
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');

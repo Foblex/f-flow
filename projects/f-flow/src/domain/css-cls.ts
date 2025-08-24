@@ -7,6 +7,13 @@ export const F_CSS_CLASS = {
     CONNECTIONS_DRAGGING: 'f-connections-dragging',
   },
 
+  GROUPING: {
+
+    OVER_BOUNDARY: 'f-grouping-over-boundary',
+
+    DROP_ACTIVE: 'f-grouping-drop-active',
+  },
+
   CONNECTOR: {
 
     OUTPUT_CONNECTED: 'f-node-output-connected',

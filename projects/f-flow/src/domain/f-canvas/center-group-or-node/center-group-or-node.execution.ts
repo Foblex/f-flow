@@ -1,10 +1,10 @@
-import { inject, Injectable } from '@angular/core';
-import { CenterGroupOrNodeRequest } from './center-group-or-node-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { FComponentsStore } from '../../../f-storage';
-import { FNodeBase } from '../../../f-node';
-import { RedrawCanvasWithAnimationRequest } from '../../../domain';
+import {inject, Injectable} from '@angular/core';
+import {CenterGroupOrNodeRequest} from './center-group-or-node-request';
+import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import {IPoint, IRect, ITransformModel, PointExtensions, RectExtensions} from '@foblex/2d';
+import {FComponentsStore} from '../../../f-storage';
+import {FNodeBase} from '../../../f-node';
+import {RedrawCanvasWithAnimationRequest} from '../../../domain';
 
 /**
  * Execution that centers a group or a node inside the flow.
@@ -20,14 +20,13 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
     return this._store.fCanvas!.transform;
   }
 
-
   public handle(request: CenterGroupOrNodeRequest): void {
     const fNode = this.getNode(request.id);
     if (!fNode) {
       return;
     }
 
-    this.toCenter(this.getNodeRect(fNode), this.getFlowRect(), fNode.position);
+    this.toCenter(this.getNodeRect(fNode), this.getFlowRect(), fNode._position);
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
   }

@@ -17,22 +17,22 @@ import {
 export class FReassignConnectionPreparationExecution implements IExecution<FReassignConnectionPreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private _fConnection: FConnectionBase | undefined;
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _fConnections(): FConnectionBase[] {
-    return this._fComponentsStore.fConnections;
+    return this._store.fConnections;
   }
 
   public handle(request: FReassignConnectionPreparationRequest): void {
@@ -41,11 +41,11 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
       return;
     }
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FReassignConnectionDragHandler(
         this._injector, this._fConnection!, isDragHandleEnd(this._fConnection!, position)
       )
@@ -56,7 +56,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _isValid(position: IPoint): boolean {
     this._fConnection = this._getConnectionToReassign(position);
-    return !!this._fConnection && !this._fDraggableDataContext.draggableItems.length;
+    return !!this._fConnection && !this._dragContext.draggableItems.length;
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {
@@ -82,7 +82,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _updateConnectionLayer(): void {
     this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._fConnection!, this._fComponentsStore.fCanvas!.fConnectionsContainer().nativeElement
+        this._fConnection!, this._store.fCanvas!.fConnectionsContainer().nativeElement
       )
     );
   }

@@ -8,9 +8,9 @@ import { FComponentsStore } from '../../f-components-store';
 export class NotifyTransformChangedExecution
   implements IExecution<NotifyTransformChangedRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: NotifyTransformChangedRequest): void {
-    this._fComponentsStore.transformChanged();
+    this._store.transformChanged();
   }
 }

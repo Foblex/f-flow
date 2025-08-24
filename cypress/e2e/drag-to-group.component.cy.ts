@@ -17,13 +17,16 @@ describe('DragToGroupComponent', () => {
         const toY = groupRect.top + groupRect.height / 2;
 
         cy.wrap($node)
+          .first()
           .trigger('mousedown', { clientX: fromX, clientY: fromY, button: 0, force: true })
           .trigger('mousemove', { clientX: fromX + 10, clientY: fromY + 10, force: true })
           .trigger('mousemove', { clientX: toX, clientY: toY, force: true })
           .wait(500)
           .trigger('pointerup', { clientX: toX, clientY: toY, force: true });
 
-        cy.wrap($node).should('contain.text', 'I am in group1');
+        cy.wrap($node)
+          .first()
+          .should('have.attr', 'ng-reflect-f-parent-id', 'g1');
       });
     });
   });

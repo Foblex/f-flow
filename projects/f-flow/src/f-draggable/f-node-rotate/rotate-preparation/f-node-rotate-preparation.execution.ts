@@ -19,16 +19,16 @@ import { FConnectionBase } from '../../../f-connection';
 export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePreparationRequest, void> {
 
   private readonly _fMediator = inject(FMediator);
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private _fNode: FNodeBase | undefined;
@@ -40,11 +40,11 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
 
     this._selectAndUpdateNodeLayer();
 
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
-    this._fDraggableDataContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
+    this._dragContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._fHost).div(this._transform.scale);
 
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FNodeRotateDragHandler(
         this._injector,
         this._fNode!,
@@ -55,17 +55,17 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   }
 
   private _isValid(request: FNodeRotatePreparationRequest): boolean {
-    return this._fDraggableDataContext.isEmpty()
+    return this._dragContext.isEmpty()
       && isRotateHandle(request.event.targetElement)
       && this._isNodeCanBeDragged(this._getNode(request.event.targetElement));
   }
 
   private _isNodeCanBeDragged(fNode?: FNodeBase): boolean {
-    return !!fNode && !fNode.fDraggingDisabled;
+    return !!fNode && !fNode.fDraggingDisabled();
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._fComponentsStore
+    this._fNode = this._store
       .fNodes.find(x => x.isContains(element));
     return this._fNode;
   }
@@ -87,7 +87,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateInputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
-      const connector = this._fComponentsStore.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
+      const connector = this._store.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
       return {
         connection: new TargetConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
@@ -102,7 +102,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     return this._fMediator.execute<FConnectionBase[]>(
       new CalculateOutputConnectionsRequest(this._fNode!)
     ).map((x: FConnectionBase) => {
-      const connector = this._fComponentsStore.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
+      const connector = this._store.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
       return {
         connection: new SourceConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter

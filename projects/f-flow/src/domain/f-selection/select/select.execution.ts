@@ -11,20 +11,20 @@ import { FDraggableDataContext } from '../../../f-draggable';
 @FExecutionRegister(SelectRequest)
 export class SelectExecution implements IExecution<SelectRequest, void> {
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: SelectRequest): void {
-    this._fDraggableDataContext.selectedItems.forEach((x) => {
+    this._dragContext.selectedItems.forEach((x) => {
       x.unmarkAsSelected();
     });
-    this._fDraggableDataContext.selectedItems = [];
+    this._dragContext.selectedItems = [];
 
     request.nodes.forEach((key) => {
       const node = this._store.fNodes.find((x) => x.fId() === key);
       if(node) {
         node.markAsSelected();
-        this._fDraggableDataContext.selectedItems.push(node);
+        this._dragContext.selectedItems.push(node);
       }
     });
 
@@ -32,10 +32,10 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
       const connection = this._store.fConnections.find((x) => x.fId() === key);
       if(connection) {
         connection.markAsSelected();
-        this._fDraggableDataContext.selectedItems.push(connection);
+        this._dragContext.selectedItems.push(connection);
       }
     });
 
-    this._fDraggableDataContext.isSelectedChanged = request.isSelectedChanged;
+    this._dragContext.isSelectedChanged = request.isSelectedChanged;
   }
 }

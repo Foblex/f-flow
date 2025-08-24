@@ -8,19 +8,19 @@ import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
 @FExecutionRegister(SelectionAreaFinalizeRequest)
 export class SelectionAreaFinalizeExecution implements IExecution<SelectionAreaFinalizeRequest, void> {
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   public handle(request: SelectionAreaFinalizeRequest): void {
     if(!this._isValid()) {
       return;
     }
-    this._fDraggableDataContext.draggableItems.forEach((x) => {
+    this._dragContext.draggableItems.forEach((x) => {
       x.onPointerUp?.();
     });
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some((x) =>
+    return this._dragContext.draggableItems.some((x) =>
       x instanceof SelectionAreaDragHandle
     );
   }

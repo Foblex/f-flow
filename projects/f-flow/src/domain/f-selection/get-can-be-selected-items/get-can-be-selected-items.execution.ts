@@ -19,7 +19,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
 
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   private get fNodes(): FNodeBase[] {
     return this._store.fNodes;
@@ -35,7 +35,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
 
   public handle(): ICanBeSelectedElementAndRect[] {
     return [ ...this.getNodesWithRects(), ...this.getConnectionsWithRects() ].filter((x) => {
-      return !this._fDraggableDataContext.selectedItems.includes(x.element);
+      return !this._dragContext.selectedItems.includes(x.element);
     });
   }
 
@@ -44,7 +44,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
    * @private
    */
   private getNodesWithRects(): ICanBeSelectedElementAndRect[] {
-    return this.fNodes.filter((x) => !x.fSelectionDisabled).map((x) => {
+    return this.fNodes.filter((x) => !x.fSelectionDisabled()).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(
@@ -60,7 +60,7 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
    * @private
    */
   private getConnectionsWithRects(): ICanBeSelectedElementAndRect[] {
-    return this.fConnections.filter((x) => !x.fSelectionDisabled).map((x) => {
+    return this.fConnections.filter((x) => !x.fSelectionDisabled()).map((x) => {
       return {
         element: x,
         fRect: RectExtensions.mult(

@@ -11,7 +11,7 @@ import { ICurrentSelection } from './i-current-selection';
 @FExecutionRegister(GetCurrentSelectionRequest)
 export class GetCurrentSelectionExecution implements IExecution<GetCurrentSelectionRequest, ICurrentSelection> {
 
-  private _fDraggableDataContext = inject(FDraggableDataContext);
+  private _dragContext = inject(FDraggableDataContext);
 
   public handle(): ICurrentSelection {
     return {
@@ -22,19 +22,19 @@ export class GetCurrentSelectionExecution implements IExecution<GetCurrentSelect
   }
 
   private _getSelectedNodes(): string[] {
-    return this._fDraggableDataContext.selectedItems
+    return this._dragContext.selectedItems
       .filter(x => x.hostElement.classList.contains('f-node'))
       .map(x => x.hostElement.dataset[ 'fNodeId' ]!);
   }
 
   private _getSelectedGroups(): string[] {
-    return this._fDraggableDataContext.selectedItems
+    return this._dragContext.selectedItems
       .filter(x => x.hostElement.classList.contains('f-group'))
       .map(x => x.hostElement.dataset[ 'fGroupId' ]!);
   }
 
   private _getSelectedConnections(): string[] {
-    return this._fDraggableDataContext.selectedItems
+    return this._dragContext.selectedItems
       .filter(x => !x.hostElement.classList.contains('f-node') && !x.hostElement.classList.contains('f-group'))
       .map(x => x.hostElement.id);
   }

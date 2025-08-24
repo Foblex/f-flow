@@ -12,28 +12,28 @@ import { FCreateConnectionDragHandler } from '../../f-create-connection.drag-han
 export class FCreateConnectionDragHandlerPreparationExecution
   implements IHandler<FCreateConnectionDragHandlerPreparationRequest, void> {
 
-  private readonly _fComponentsStore = inject(FComponentsStore);
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
-    return this._fComponentsStore.fFlow!.hostElement;
+    return this._store.fFlow!.hostElement;
   }
 
   private get _transform(): ITransformModel {
-    return this._fComponentsStore.fCanvas!.transform;
+    return this._store.fCanvas!.transform;
   }
 
   public handle(request: FCreateConnectionDragHandlerPreparationRequest): void {
-    this._fDraggableDataContext.onPointerDownScale = this._transform.scale;
+    this._dragContext.onPointerDownScale = this._transform.scale;
     const positionRelativeToFlowComponent = Point.fromPoint(request.onPointerDownPosition)
       .elementTransform(this._fHost).div(this._transform.scale);
-    this._fDraggableDataContext.onPointerDownPosition = positionRelativeToFlowComponent;
+    this._dragContext.onPointerDownPosition = positionRelativeToFlowComponent;
 
     const positionRelativeToCanvasComponent = Point.fromPoint(positionRelativeToFlowComponent).mult(this._transform.scale)
       .sub(this._transform.position).sub(this._transform.scaledPosition).div(this._transform.scale);
 
-    this._fDraggableDataContext.draggableItems = [
+    this._dragContext.draggableItems = [
       new FCreateConnectionDragHandler(
         this._injector, request.fOutputOrOutlet, positionRelativeToCanvasComponent
       )

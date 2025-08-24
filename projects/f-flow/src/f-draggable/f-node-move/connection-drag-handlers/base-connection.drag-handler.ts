@@ -12,14 +12,14 @@ import { Injector } from '@angular/core';
 
 export class BaseConnectionDragHandler {
 
-  private readonly _fMediator: FMediator;
-  private readonly _fComponentsStore: FComponentsStore;
+  private readonly _mediator: FMediator;
+  private readonly _store: FComponentsStore;
 
   private _fOutputWithRect!: IConnectorAndRect;
   private _fInputWithRect!: IConnectorAndRect;
 
   private get _fOutput(): FConnectorBase {
-    const result = this._fComponentsStore.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
+    const result = this._store.fOutputs.find((x) => x.fId === this.fConnection.fOutputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fOutput with id ${ this.fConnection.fOutputId } not found`));
     }
@@ -27,7 +27,7 @@ export class BaseConnectionDragHandler {
   }
 
   private get _fInput(): FConnectorBase {
-    const result = this._fComponentsStore.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
+    const result = this._store.fInputs.find((x) => x.fId === this.fConnection.fInputId)!;
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fInput with id ${ this.fConnection.fInputId } not found`));
     }
@@ -41,14 +41,14 @@ export class BaseConnectionDragHandler {
     _injector: Injector,
     public fConnection: FConnectionBase,
   ) {
-    this._fMediator = _injector.get(FMediator);
-    this._fComponentsStore = _injector.get(FComponentsStore);
+    this._mediator = _injector.get(FMediator);
+    this._store = _injector.get(FComponentsStore);
     this._initialize();
   }
 
   private _initialize(): void {
-    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
-    this._fInputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fInput));
+    this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutput));
+    this._fInputWithRect = this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fInput));
   }
 
   public setSourceDifference(difference: IPoint): void {
@@ -64,7 +64,7 @@ export class BaseConnectionDragHandler {
   }
 
   private _recalculateConnection(): ILine {
-    return this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+    return this._mediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
       RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
       RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
       this.fConnection.fBehavior,

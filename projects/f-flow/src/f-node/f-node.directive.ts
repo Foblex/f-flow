@@ -2,20 +2,17 @@ import {
   AfterViewInit, booleanAttribute, DestroyRef,
   Directive,
   ElementRef,
-  EventEmitter, inject, input,
-  Input,
+  inject, input,
+  model,
   OnDestroy,
-  OnInit,
-  Output,
-  Renderer2,
+  OnInit, output,
 } from "@angular/core";
-import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
-import { NotifyTransformChangedRequest } from '../f-storage';
-import { FMediator } from '@foblex/mediator';
-import { F_NODE, FNodeBase } from './f-node-base';
-import { IHasHostElement } from '../i-has-host-element';
-import { AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest } from '../domain';
+import {IRect, ISize, PointExtensions} from '@foblex/2d';
+import {NotifyTransformChangedRequest} from '../f-storage';
+import {FMediator} from '@foblex/mediator';
+import {F_NODE, FNodeBase} from './f-node-base';
+import {IHasHostElement} from '../i-has-host-element';
+import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
 
 let uniqueId: number = 0;
 
@@ -25,93 +22,75 @@ let uniqueId: number = 0;
   host: {
     '[attr.data-f-node-id]': 'fId()',
     class: "f-node f-component",
-    '[class.f-node-dragging-disabled]': 'fDraggingDisabled',
-    '[class.f-node-selection-disabled]': 'fSelectionDisabled',
+    '[class.f-node-dragging-disabled]': 'fDraggingDisabled()',
+    '[class.f-node-selection-disabled]': 'fSelectionDisabled()',
   },
   providers: [
-    { provide: F_NODE, useExisting: FNodeDirective }
+    {provide: F_NODE, useExisting: FNodeDirective}
   ],
 })
-export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
+export class FNodeDirective extends FNodeBase
+  implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
 
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
 
-  public override fId = input<string>(`f-node-${ uniqueId++ }`, { alias: 'fNodeId' });
+  public override readonly fId = input<string>(`f-node-${uniqueId++}`, {alias: 'fNodeId'});
 
-  @Input('fNodeParentId')
-  public override fParentId: string | null | undefined = null;
+  public override readonly fParentId = input<string | null | undefined>(null, {
+    alias: 'fNodeParentId',
+  });
 
-  @Input('fNodePosition')
-  public override set position(value: IPoint) {
-    if(!PointExtensions.isEqual(this._position, value)) {
-      this._position = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
+  public override readonly position = model(PointExtensions.initialize(), {
+    alias: 'fNodePosition',
+  });
 
-  public override get position(): IPoint {
-    return this._position;
-  }
+  public override readonly size = input<ISize | undefined>(undefined, {
+    alias: 'fNodeSize',
+  });
 
-  @Output('fNodePositionChange')
-  public override positionChange: EventEmitter<IPoint> = new EventEmitter<IPoint>();
+  public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
 
-  @Input('fNodeSize')
-  public override set size(value: ISize) {
-    if(!this.size || !SizeExtensions.isEqual(this._size!, value)) {
-      this._size = value;
-      this.redraw();
-      this.refresh()
-    }
-  }
+  public override readonly rotate = model(0, {
+    alias: 'fNodeRotate',
+  });
 
-  @Input('fNodeRotate')
-  public override set rotate(value: number) {
-    if(this._rotate !== value) {
-      this._rotate = value;
-      this.redraw();
-      this.refresh();
-    }
-  }
-  public override get rotate(): number {
-    return this._rotate;
-  }
+  public override readonly fConnectOnNode = input(true, {
+    transform: booleanAttribute,
+  });
 
-  @Output('fNodeRotateChange')
-  public override rotateChange = new EventEmitter<number>();
+  public override readonly fMinimapClass = input<string[] | string>([]);
 
+  public override readonly fDraggingDisabled = input(false, {
+    alias: 'fNodeDraggingDisabled',
+    transform: booleanAttribute,
+  });
 
-  public override get size(): ISize {
-    return this._size!;
-  }
+  public override readonly fSelectionDisabled = input(false, {
+    alias: 'fNodeSelectionDisabled',
+    transform: booleanAttribute,
+  });
 
-  @Output('fNodeSizeChange')
-  public override sizeChange: EventEmitter<IRect> = new EventEmitter<IRect>();
+  public override readonly fIncludePadding = input(true, {
+    transform: booleanAttribute,
+  });
 
-  @Input({ alias: 'fNodeDraggingDisabled', transform: booleanAttribute })
-  public override fDraggingDisabled: boolean = false;
+  public override readonly fAutoExpandOnChildHit = input(false, {
+    transform: booleanAttribute,
+  });
 
-  @Input({ alias: 'fNodeSelectionDisabled', transform: booleanAttribute })
-  public override fSelectionDisabled: boolean = false;
-
-  @Input({ transform: booleanAttribute })
-  public override fIncludePadding: boolean = true;
-
-  //Add ability to connect to first connectable input if node is at pointer position
-  @Input({ transform: booleanAttribute })
-  public override fConnectOnNode: boolean = true;
-
-  @Input()
-  public override fMinimapClass: string[] | string = [];
+  public override readonly fAutoSizeToFitChildren = input(false, {
+    transform: booleanAttribute,
+  });
 
   constructor(
     elementReference: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private fBrowser: BrowserService
   ) {
     super(elementReference.nativeElement);
+    super.positionChanges();
+    super.sizeChanges();
+    super.rotateChanges();
+    super.parentChanges();
   }
 
   public ngOnInit(): void {
@@ -123,27 +102,31 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
     this.setStyle('top', '0');
     super.redraw();
 
-    this._fMediator.execute<void>(new AddNodeToStoreRequest(this));
+    this._mediator.execute<void>(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
     this.renderer.setStyle(this.hostElement, styleName, value);
   }
 
+  protected override removeStyle(styleName: string) {
+    this.renderer.removeStyle(this.hostElement, styleName);
+  }
+
   public override redraw(): void {
     super.redraw();
-    this._fMediator.execute(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   public ngAfterViewInit(): void {
-    if(!this.fBrowser.isBrowser()) {
+    if (!this.browser.isBrowser()) {
       return;
     }
     this._listenStateSizeChanges();
   }
 
   private _listenStateSizeChanges(): void {
-    this._fMediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
+    this._mediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public override refresh(): void {
@@ -151,6 +134,6 @@ export class FNodeDirective extends FNodeBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute<void>(new RemoveNodeFromStoreRequest(this));
+    this._mediator.execute<void>(new RemoveNodeFromStoreRequest(this));
   }
 }

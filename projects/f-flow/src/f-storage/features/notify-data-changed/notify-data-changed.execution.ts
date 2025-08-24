@@ -7,9 +7,9 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(NotifyDataChangedRequest)
 export class NotifyDataChangedExecution implements IExecution<NotifyDataChangedRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: NotifyDataChangedRequest): void {
-    this._fComponentsStore.dataChanged();
+    this._store.dataChanged();
   }
 }

@@ -15,10 +15,10 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
   implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]> {
 
   private readonly _mediator = inject(FMediator);
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   private get _fInputs(): FConnectorBase[] {
-    return this._fComponentsStore.fInputs;
+    return this._store.fInputs;
   }
 
   public handle(payload: GetAllCanBeConnectedInputsAndRectsRequest): IConnectorAndRect[] {

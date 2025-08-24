@@ -12,7 +12,7 @@ import { signal } from '@angular/core';
 function createNode(id: string, element: HTMLElement, parentId?: string): FNodeBase {
   return {
     fId: signal(id).asReadonly(),
-    fParentId: parentId,
+    fParentId: signal(parentId).asReadonly(),
     hostElement: element,
   } as FNodeBase;
 }

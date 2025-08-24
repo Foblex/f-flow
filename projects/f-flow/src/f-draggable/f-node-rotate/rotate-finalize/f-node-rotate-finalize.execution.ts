@@ -8,19 +8,19 @@ import { FNodeRotateDragHandler } from '../f-node-rotate.drag-handler';
 @FExecutionRegister(FNodeRotateFinalizeRequest)
 export class FNodeRotateFinalizeExecution implements IExecution<FNodeRotateFinalizeRequest, void> {
 
-  private readonly _fDraggableDataContext = inject(FDraggableDataContext);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: FNodeRotateFinalizeRequest): void {
     if (!this._isValid()) {
       return;
     }
-    this._fDraggableDataContext.draggableItems.forEach((x) => {
+    this._dragContext.draggableItems.forEach((x) => {
       x.onPointerUp?.();
     });
   }
 
   private _isValid(): boolean {
-    return this._fDraggableDataContext.draggableItems.some((x) =>
+    return this._dragContext.draggableItems.some((x) =>
       x instanceof FNodeRotateDragHandler
     );
   }

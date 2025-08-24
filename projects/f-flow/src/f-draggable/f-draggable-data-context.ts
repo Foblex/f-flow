@@ -6,6 +6,8 @@ import { ISelectable } from '../mixins';
 @Injectable()
 export class FDraggableDataContext {
 
+  public isDragging: boolean = false;
+
   public selectedItems: ISelectable[] = [];
 
   public isSelectedChanged: boolean = false;

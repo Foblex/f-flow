@@ -1,3 +1,3 @@
-export * from './f-node-resize-preparation.execution';
+export * from './node-resize-preparation';
 
-export * from './f-node-resize-preparation.request';
+export * from './node-resize-preparation-request';

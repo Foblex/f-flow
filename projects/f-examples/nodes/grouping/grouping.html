@@ -1,0 +1,65 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-canvas fZoom>
+    <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="node1output" fInputId="node2input"/>
+    <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="node1output" fInputId="group2input"/>
+    <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="node2output" fInputId="group3input"/>
+    <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="group1output" fInputId="node3input"/>
+
+    <div fNode fDragHandle fNodeId="node1"
+         [fNodePosition]="{ x: 180, y: -100 }">
+      <div fNodeOutput fOutputConnectableSide="bottom" class="bottom"
+           fOutputId="node1output"></div>
+      Node 1
+    </div>
+
+    <div fNode fDragHandle fNodeId="node2"
+         [fNodePosition]="{ x: 440, y: 20 }">
+      <div fNodeInput fInputConnectableSide="top" class="top" fInputId="node2input"></div>
+      <div fNodeOutput fOutputConnectableSide="bottom" class="bottom" fOutputId="node2output"></div>
+      Node 2
+    </div>
+
+    <div fGroup fDragHandle fGroupId="group1"
+         [fGroupPosition]="{ x: 10, y: 100 }">
+      <div fNodeOutput fOutputConnectableSide="bottom" class="bottom" fOutputId="group1output"></div>
+      Group 1
+    </div>
+
+    <div fGroup fDragHandle fGroupId="group2"
+         [fIncludePadding]="includePaddings()"
+         [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
+         [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+         (fGroupSizeChange)="sizeChanged($event)"
+         [fGroupPosition]="{ x: 220, y: 190 }">
+      <div fNodeInput fInputConnectableSide="top" class="top" fInputId="group2input"></div>
+      Group 2
+    </div>
+
+
+    <div fGroup fDragHandle fGroupId="group3" fGroupParentId="group2"
+         [fGroupPosition]="{ x: 350, y: 300 }">
+      <div fNodeInput fInputConnectableSide="top" class="top" fInputId="group3input"></div>
+      Group 3
+    </div>
+
+    <div fNode fDragHandle fNodeId="node3" fNodeParentId="group2"
+         [fIncludePadding]="includePaddings()"
+         [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
+         [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+         (fNodeSizeChange)="sizeChanged($event)"
+         [fNodePosition]="{ x: 160, y: 140 }">
+      <div fNodeInput fInputConnectableSide="left" class="left" fInputId="node3input"></div>
+      Node 3
+    </div>
+
+    <div fNode fDragHandle fNodeId="node4" fNodeParentId="node3"
+         [fNodePosition]="{ x: 160, y: 140 }">
+      Node 4
+    </div>
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <f-checkbox [checked]="includePaddings()" (change)="changePaddings()">Include Paddings</f-checkbox>
+  <f-checkbox [checked]="autoSizeToFitChildren()" (change)="changeSizeToFitChildren()">Auto Size to Fit Children</f-checkbox>
+  <f-checkbox [checked]="autoExpandOnChildHit()" (change)="changeExpandOnChildHit()">Auto Expand on Child Hit</f-checkbox>
+</div>

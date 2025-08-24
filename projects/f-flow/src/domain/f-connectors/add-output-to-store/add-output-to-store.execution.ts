@@ -10,9 +10,9 @@ import { FComponentsStore } from '../../../f-storage';
 @FExecutionRegister(AddOutputToStoreRequest)
 export class AddOutputToStoreExecution implements IExecution<AddOutputToStoreRequest, void> {
 
-  private _fComponentsStore = inject(FComponentsStore);
+  private _store = inject(FComponentsStore);
 
   public handle(request: AddOutputToStoreRequest): void {
-    this._fComponentsStore.addComponent(this._fComponentsStore.fOutputs, request.fComponent);
+    this._store.addComponent(this._store.fOutputs, request.fComponent);
   }
 }
