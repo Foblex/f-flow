@@ -3,11 +3,11 @@ import {
   Directive,
   ElementRef,
   inject, input,
-  Input, model,
+  model,
   OnDestroy,
   OnInit, output,
 } from "@angular/core";
-import {IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
+import {IRect, ISize, PointExtensions} from '@foblex/2d';
 import {F_NODE, FNodeBase} from './f-node-base';
 import {NotifyTransformChangedRequest} from '../f-storage';
 import {FMediator} from '@foblex/mediator';
@@ -129,7 +129,7 @@ export class FGroupDirective extends FNodeBase
     this._mediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
-  public refresh(): void {
+  public override refresh(): void {
     this.stateChanges.notify();
   }
 

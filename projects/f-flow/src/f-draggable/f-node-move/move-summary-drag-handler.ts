@@ -55,6 +55,6 @@ export class MoveSummaryDragHandler implements IFDragHandler {
   }
 
   private _refreshDraggedNodes(): void {
-    this.allDraggedNodeHandlers.forEach((x) => x.nodeOrGroup.refresh());
+    this.rootHandlers.forEach(({nodeOrGroup}) => nodeOrGroup.refresh());
   }
 }

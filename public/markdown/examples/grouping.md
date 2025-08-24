@@ -17,6 +17,7 @@ Grouping helps structure complex diagrams by combining related nodes into logica
 It also shows how groups can have inputs/outputs like regular nodes, and how connections route accordingly.
 
 #### When to use
+
 - You want to move several related nodes as a single unit.
 - You need to visually separate subsections of a pipeline or editor.
 - The group should automatically resize to wrap its content.
@@ -25,9 +26,9 @@ It also shows how groups can have inputs/outputs like regular nodes, and how con
 ## Example
 
 ::: ng-component <grouping></grouping> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/grouping/grouping.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 

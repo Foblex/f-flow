@@ -2,12 +2,13 @@ import {inject, Injectable} from '@angular/core';
 import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
 import {UpdateNodeWhenStateOrSizeChangedRequest} from './update-node-when-state-or-size-changed-request';
 import {EFConnectableSide, FConnectorBase} from '../../../f-connectors';
-import {NotifyDataChangedRequest} from '../../../f-storage';
+import {FComponentsStore, NotifyDataChangedRequest} from '../../../f-storage';
 import {debounceTime, FChannelHub, notifyOnStart} from '../../../reactivity';
 import {FResizeChannel} from '../../../reactivity';
 import {RectExtensions} from '@foblex/2d';
 import {FitToChildNodesAndGroupsRequest} from "../fit-to-child-nodes-and-groups";
 import {IsDragStartedRequest} from "../../f-draggable";
+import {FNodeBase} from "../../../f-node";
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
@@ -18,24 +19,32 @@ export class UpdateNodeWhenStateOrSizeChanged
   implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void> {
 
   private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
+
+  private get _nodes(): FNodeBase[] {
+    return this._store.fNodes;
+  }
 
   /**
    * Handles the request to update the node's connectors based on state or size changes.
    * It listens for resize events and recalculates the connectable sides of the connectors.
    * @param request
    */
-  public handle(request: UpdateNodeWhenStateOrSizeChangedRequest): void {
-    const {hostElement, connectors, stateChanges} = request.nodeOrGroup;
+  public handle({nodeOrGroup, destroyRef}: UpdateNodeWhenStateOrSizeChangedRequest): void {
+    const {hostElement, connectors, stateChanges} = nodeOrGroup;
 
     new FChannelHub(
       new FResizeChannel(hostElement),
       stateChanges
-    ).pipe(notifyOnStart(), debounceTime(10)).listen(request.destroyRef, () => {
+    ).pipe(notifyOnStart(), debounceTime(10)).listen(destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
       this._mediator.execute<void>(new NotifyDataChangedRequest());
 
       if (!this._isDragging()) {
-        this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(request.nodeOrGroup));
+        const directParent = this._nodes.find(x => x.fId() === nodeOrGroup.fParentId());
+        if (directParent) {
+          this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(directParent));
+        }
       }
     });
   }

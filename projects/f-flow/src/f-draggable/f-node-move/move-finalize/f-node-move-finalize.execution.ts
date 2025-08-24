@@ -16,9 +16,9 @@ import {FMoveNodesEvent} from "../f-move-nodes.event";
 @FExecutionRegister(FNodeMoveFinalizeRequest)
 export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeRequest, void> {
 
-  private _mediator = inject(FMediator);
-  private _store = inject(FComponentsStore);
-  private _dragContext = inject(FDraggableDataContext);
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   private _summaryHandler: MoveSummaryDragHandler | undefined;
 
@@ -62,6 +62,10 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     return difference;
   }
 
+  private _isIntersectValue(result: ISnapCoordinate): boolean {
+    return result.value !== undefined && result.value !== null;
+  }
+
   private _finalizeMove(snappedDifference: IPoint): void {
     this._summaryHandler?.rootHandlers.forEach((x) => x.assignFinalConstraints());
     this._summaryHandler!.onPointerMove({...snappedDifference});
@@ -80,19 +84,9 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     return new FMoveNodesEvent(eventNodes);
   }
 
-
-
-
-
-  private _isIntersectValue(result: ISnapCoordinate): boolean {
-    return result.value !== undefined && result.value !== null;
-  }
-
   private _applyConnectionUnderDroppedNode(): void {
     if (this._isDraggedJustOneNode() && this._store.fDraggable?.fEmitOnNodeIntersect) {
-
-      const nodeOrGroup = this._getFirstNodeOrGroup();
-      setTimeout(() => this._mediator.execute(new IsConnectionUnderNodeRequest(nodeOrGroup)));
+      setTimeout(() => this._mediator.execute(new IsConnectionUnderNodeRequest(this._firstNodeOrGroup())));
     }
   }
 
@@ -100,7 +94,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
     return this._summaryHandler!.rootHandlers.length === 1;
   }
 
-  private _getFirstNodeOrGroup(): FNodeBase {
+  private _firstNodeOrGroup(): FNodeBase {
     return this._summaryHandler!.rootHandlers[0].nodeOrGroup;
   }
 }

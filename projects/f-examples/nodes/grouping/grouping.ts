@@ -8,8 +8,8 @@ import {IRect} from "@foblex/2d";
 
 @Component({
   selector: 'grouping',
-  styleUrls: [ './grouping.component.scss' ],
-  templateUrl: './grouping.component.html',
+  styleUrls: [ './grouping.scss' ],
+  templateUrl: './grouping.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -17,7 +17,7 @@ import {IRect} from "@foblex/2d";
     FCheckboxComponent,
   ]
 })
-export class GroupingComponent {
+export class Grouping {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
   protected readonly includePaddings = signal<boolean>(true);

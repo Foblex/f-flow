@@ -4,7 +4,7 @@ export class FitToChildNodesAndGroupsRequest {
   static readonly fToken = Symbol('FitToChildNodesAndGroupsRequest');
 
   constructor(
-    public nodeOrGroup: FNodeBase,
+    public readonly nodeOrGroup: FNodeBase,
   ) {
   }
 }
