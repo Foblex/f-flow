@@ -129,7 +129,7 @@ function overviewGroup() {
   return defineNavigationGroup('Introduction', [{
     link: 'overview',
     text: 'Overview',
-    description: 'Foblex Flow: Angular library for creating interactive diagrams. Overview of features and getting started guide.',
+    description: 'Foblex Flow: Angular library for interactive flowcharts and graphs. See features, live demos, and how to get started quickly.',
     image: './previews/examples/overview.png',
     image_width: 3244,
     image_height: 1832,
@@ -143,7 +143,7 @@ function nodesGroup() {
     text: 'Custom Nodes',
     image: './previews/examples/custom-nodes.light.png',
     image_dark: './previews/examples/custom-nodes.dark.png',
-    description: 'Create custom nodes with varied content, styles, and behaviors using Foblex Flow for Angular.',
+    description: 'Create custom nodes in Angular flowcharts: ports, styles, templates and events. Practical example with reusable code.',
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
@@ -153,7 +153,7 @@ function nodesGroup() {
     text: 'Drag Handle',
     image: './previews/examples/drag-handle.light.png',
     image_dark: './previews/examples/drag-handle.dark.png',
-    description: 'Create draggable handles for nodes to enable easy movement in Foblex Flow for Angular.',
+    description: 'Add a drag handle to nodes for precise movement. Clean UX patterns and Angular code you can reuse.',
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
@@ -161,7 +161,7 @@ function nodesGroup() {
   }, {
     link: 'node-selection',
     text: 'Node Selection',
-    description: 'Select nodes in Foblex Flow diagrams for Angular.',
+    description: 'Click, box and keyboard selection for diagram nodes in Angular. Multi-select, modifiers and clean UX patterns with code.',
     image: './previews/examples/node-selection.light.png',
     image_dark: './previews/examples/node-selection.dark.png',
     image_width: 781,
@@ -173,7 +173,7 @@ function nodesGroup() {
     text: 'Resize Handle',
     image: './previews/examples/resize-handle.light.png',
     image_dark: './previews/examples/resize-handle.dark.png',
-    description: 'Add resize handles to make nodes adjustable in Foblex Flow diagrams for Angular',
+    description: 'Make diagram nodes resizable with handles. Constraints, snapping and clean UX — complete Angular example.',
     image_width: 801,
     image_height: 600,
     image_type: 'image/png',
@@ -183,7 +183,7 @@ function nodesGroup() {
     text: 'Rotate Handle',
     image: './previews/examples/rotate-handle.light.png',
     image_dark: './previews/examples/rotate-handle.dark.png',
-    description: 'Add rotate handles to make nodes adjustable in Foblex Flow diagrams for Angular',
+    description: 'Add rotation handles with snapping and constraints for diagram nodes. Lightweight Angular example with code.',
     image_width: 795,
     image_height: 600,
     image_type: 'image/png',
@@ -193,7 +193,7 @@ function nodesGroup() {
     text: 'Grouping',
     image: './previews/examples/grouping.light.png',
     image_dark: './previews/examples/grouping.dark.png',
-    description: 'Learn how to group nodes in Foblex Flow, organize nested structures, and use smart geometry features like fIncludePadding, fAutoSizeToFitChildren, and fAutoExpandOnChildHit for dynamic, responsive diagrams in Angular.',
+    description: 'Group nodes and build nested structures with auto-sizing and padding. Includes smart geometry tips and Angular example.',
     image_width: 1612,
     image_height: 1198,
     image_type: 'image/png',
@@ -221,7 +221,7 @@ function nodesGroup() {
     text: 'Stress Test',
     image: './previews/examples/stress-test.light.png',
     image_dark: './previews/examples/stress-test.dark.png',
-    description: 'Test the performance of Foblex Flow with a large number of nodes in Angular.',
+    description: 'Performance test with thousands of nodes in Angular. FPS tips, batching and rendering strategies for large diagrams.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
@@ -231,7 +231,7 @@ function nodesGroup() {
     text: 'Stress Test with Connections',
     image: './previews/examples/stress-test-with-connections.light.png',
     image_dark: './previews/examples/stress-test-with-connections.dark.png',
-    description: 'Test the performance of Foblex Flow with a large number of connections in Angular.',
+    description: 'Performance with many connections: throttling, async updates and routing tips. Angular example you can reuse.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
@@ -243,7 +243,7 @@ function connectorGroup() {
   return defineNavigationGroup('Connectors', [{
     link: 'node-as-connector',
     text: 'Node as Connector',
-    description: 'Use nodes as connectors, enabling easy connections in Foblex Flow for Angular.',
+    description: 'Use nodes as interactive connectors with dynamic ports. Patterns and Angular code for complex flows.',
     image: './previews/examples/node-as-connector.light.png',
     image_dark: './previews/examples/node-as-connector.dark.png',
     image_width: 726,
@@ -253,7 +253,7 @@ function connectorGroup() {
   }, {
     link: 'connector-inside-node',
     text: 'Connector Inside Node',
-    description: 'Add connectors inside nodes, allowing easy connections in Foblex Flow for Angular.',
+    description: 'Place connectors inside nodes for compact UIs. Alignment, routing and a practical Angular example.',
     image: './previews/examples/connector-inside-node.light.png',
     image_dark: './previews/examples/connector-inside-node.dark.png',
     image_width: 726,
@@ -263,7 +263,7 @@ function connectorGroup() {
   }, {
     link: 'connector-outlet',
     text: 'Connector Outlet',
-    description: 'Create connectors that control other connectors, enabling complex connections in Foblex Flow for Angular.',
+    description: 'Control connectors via outlets and route multiple edges. Clean patterns for complex flows in Angular.',
     image: './previews/examples/connector-outlet.light.png',
     image_dark: './previews/examples/connector-outlet.dark.png',
     image_width: 726,
@@ -273,7 +273,7 @@ function connectorGroup() {
   }, {
     link: 'limiting-connections',
     text: 'Limiting Connections',
-    description: 'Limit the number of connections between nodes in Foblex Flow diagrams for Angular.',
+    description: 'Limit connections per node or port with validation rules. Prevent spaghetti graphs in Angular diagrams.',
     image: './previews/examples/limiting-connections.light.png',
     image_dark: './previews/examples/limiting-connections.dark.png',
     image_width: 726,
@@ -283,7 +283,7 @@ function connectorGroup() {
   }, {
     link: 'connectability-check',
     text: 'Connectability Check',
-    description: 'Check if nodes can be connected in Foblex Flow diagrams for Angular.',
+    description: 'Check if nodes can connect using rules and callbacks. Clear feedback and guard logic for Angular diagrams.',
     image: './previews/examples/connectability-check.light.png',
     image_dark: './previews/examples/connectability-check.dark.png',
     image_width: 726,
@@ -293,7 +293,7 @@ function connectorGroup() {
   }, {
     link: 'connectable-side',
     text: 'Connectable Side',
-    description: 'Connect nodes from specific sides in Foblex Flow.',
+    description: 'Restrict connections by side (top/right/bottom/left). Orientation rules and code for Angular diagrams.',
     image: './previews/examples/connectable-side.light.png',
     image_dark: './previews/examples/connectable-side.dark.png',
     image_width: 726,
@@ -309,7 +309,7 @@ function connectionGroup() {
     text: 'Drag to Connect',
     image: './previews/examples/drag-to-connect.light.png',
     image_dark: './previews/examples/drag-to-connect.dark.png',
-    description: 'Drag to create connections between nodes in Foblex Flow diagrams for Angular.',
+    description: 'Let users create edges by dragging between ports. Validation, snapping and UX details with Angular code.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
@@ -319,7 +319,7 @@ function connectionGroup() {
     text: 'Drag to Reassign',
     image: './previews/examples/drag-to-reassign.light.png',
     image_dark: './previews/examples/drag-to-reassign.dark.png',
-    description: 'Reassign connections by dragging them to new nodes in Foblex Flow for Angular.',
+    description: 'Reassign connections by dragging edges to new nodes. Guard rules and smooth UX in Angular diagrams.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
@@ -331,7 +331,7 @@ function connectionGroup() {
   }, {
     link: 'create-node-on-connection-drop',
     text: 'Create Node on Connection Drop',
-    description: 'Create a node when a connection is dropped in Foblex Flow for Angular.',
+    description: 'Create a node when an edge is dropped. Context-aware creation and UX details — Angular example.',
     image: './previews/examples/create-node-on-connection-drop.light.png',
     image_dark: './previews/examples/create-node-on-connection-drop.dark.png',
     image_width: 791,
@@ -341,7 +341,7 @@ function connectionGroup() {
   }, {
     link: 'remove-connection-on-drop',
     text: 'Remove Connection on Drop',
-    description: 'Remove a connection when it is dropped in Foblex Flow diagrams for Angular.',
+    description: 'Remove a connection on drop to trash/invalid targets. Guards, feedback and concise Angular code.',
     image: './previews/examples/remove-connection-on-drop.light.png',
     image_dark: './previews/examples/remove-connection-on-drop.dark.png',
     image_width: 791,
@@ -351,7 +351,7 @@ function connectionGroup() {
   }, {
     link: 'assign-node-to-connection-on-drop',
     text: 'Assign Node to Connection on Drop',
-    description: 'Assign a node to a connection when node is dropped and intersects with a connection in Foblex Flow for Angular.',
+    description: 'Assign a node to an existing edge when dropped on it. Mid-edge targets, events and Angular demo.',
     image: './previews/examples/assign-node-to-connection-on-drop.light.png',
     image_dark: './previews/examples/assign-node-to-connection-on-drop.dark.png',
     image_width: 791,
@@ -361,7 +361,7 @@ function connectionGroup() {
   }, {
     link: 'auto-snap',
     text: 'Auto Snap',
-    description: 'Automatically snap connections to nodes in Foblex Flow, enabling easier diagram creation in Angular.',
+    description: 'Auto-snap connections to nearest ports or nodes. Magnetic behavior, UX tips and Angular example.',
     image: './previews/examples/auto-snap.light.png',
     image_dark: './previews/examples/auto-snap.dark.png',
     image_width: 781,
@@ -370,8 +370,8 @@ function connectionGroup() {
     date: new Date('2025-01-31 17:16:33')
   }, {
     link: 'connection-types',
-    text: 'Connection Types',
-    description: 'Set different connection types for building interactive flow-based diagrams in Foblex Flow for Angular.',
+    text: 'Connection Types (Straight, Bezier, Step)',
+    description: 'Compare edge types for Angular diagrams: straight, bezier, step. Code samples, when to use which, and visuals.',
     image: './previews/examples/connection-types.light.png',
     image_dark: './previews/examples/connection-types.dark.png',
     image_width: 791,
@@ -381,7 +381,7 @@ function connectionGroup() {
   }, {
     link: 'custom-connection-type',
     text: 'Custom Connection Type',
-    description: 'Create custom connection types for interactive diagrams in Foblex Flow for Angular.',
+    description: 'Define your own connection style and behavior. Full example with rendering, hit-tests, and interaction hooks.',
     image: './previews/examples/custom-connection-type.light.png',
     image_dark: './previews/examples/custom-connection-type.dark.png',
     image_width: 791,
@@ -391,7 +391,7 @@ function connectionGroup() {
   }, {
     link: 'connection-behaviours',
     text: 'Connection Behaviours',
-    description: 'Customize connection behaviors for interactive diagrams in Foblex Flow for Angular.',
+    description: 'Customize connection behavior: snapping, rerouting, constraints and hover feedback for Angular diagrams.',
     image: './previews/examples/connection-behaviours.light.png',
     image_dark: './previews/examples/connection-behaviours.dark.png',
     image_width: 791,
@@ -401,7 +401,7 @@ function connectionGroup() {
   }, {
     link: 'connection-markers',
     text: 'Connection Markers',
-    description: 'Add markers to connections for better visualization in Foblex Flow diagrams.',
+    description: 'Add arrowheads and markers to edges. SVG styling, sizes and examples for Angular flowcharts.',
     image: './previews/examples/connection-markers.light.png',
     image_dark: './previews/examples/connection-markers.dark.png',
     image_width: 791,
@@ -411,7 +411,7 @@ function connectionGroup() {
   }, {
     link: 'connection-text',
     text: 'Connection Text',
-    description: 'Add text to connections in Foblex Flow diagrams for Angular.',
+    description: 'Add labels to connections with smart placement and scaling. Centered or offset text — Angular example.',
     image: './previews/examples/connection-text.light.png',
     image_dark: './previews/examples/connection-text.dark.png',
     image_width: 781,
@@ -421,7 +421,7 @@ function connectionGroup() {
   }, {
     link: 'connection-center',
     text: 'Connection Center',
-    description: 'Add centered content to connections with Foblex Flow for Angular',
+    description: 'Place centered widgets (badges/buttons) on edges. Interaction patterns and Angular code.',
     image: './previews/examples/connection-center.light.png',
     image_dark: './previews/examples/connection-center.dark.png',
     image_width: 781,
@@ -431,7 +431,7 @@ function connectionGroup() {
   }, {
     link: 'custom-connections',
     text: 'Custom Connections',
-    description: 'Create and customize connections in Foblex Flow diagrams for Angular.',
+    description: 'Build fully custom connections: drawing, routing and interactivity. Complete Angular example with code.',
     image: './previews/examples/custom-connections.light.png',
     image_dark: './previews/examples/custom-connections.dark.png',
     image_width: 791,
@@ -445,7 +445,7 @@ function extensionGroup() {
   return defineNavigationGroup('Extensions', [{
     link: 'add-node-from-palette',
     text: 'Add Node from Palette',
-    description: 'Add nodes to the diagram from an external palette in Foblex Flow for Angular.',
+    description: 'Drag nodes from an external palette into the canvas. Data binding, events and Angular implementation.',
     image: './previews/examples/add-node-from-palette.light.png',
     image_dark: './previews/examples/add-node-from-palette.dark.png',
     image_width: 781,
@@ -455,7 +455,7 @@ function extensionGroup() {
   }, {
     link: 'selection-area',
     text: 'Selection Area',
-    description: 'Add a selection area for multiple node selection in Foblex Flow for Angular.',
+    description: 'Add multi-select with a rubber-band box and keyboard modifiers. Accessibility and performance tips in Angular.',
     image: './previews/examples/selection-area.light.png',
     image_dark: './previews/examples/selection-area.dark.png',
     image_width: 821,
@@ -465,7 +465,7 @@ function extensionGroup() {
   }, {
     link: 'help-in-positioning',
     text: 'Help in Positioning',
-    description: 'Automatically align nodes to each other in Foblex Flow for Angular.',
+    description: 'Auto-align nodes with guides and snap lines. Spacing, alignment rules and clean UX for Angular diagrams.',
     image: './previews/examples/help-in-positioning.light.png',
     image_dark: './previews/examples/help-in-positioning.dark.png',
     image_width: 821,
@@ -475,7 +475,7 @@ function extensionGroup() {
   }, {
     link: 'grid-system',
     text: 'Grid System',
-    description: 'Add a grid system to Foblex Flow diagrams for Angular.',
+    description: 'Add a configurable grid with snapping for precise positioning. Lightweight Angular example and code.',
     image: './previews/examples/grid-system.light.png',
     image_dark: './previews/examples/grid-system.dark.png',
     image_width: 770,
@@ -485,7 +485,7 @@ function extensionGroup() {
   }, {
     link: 'minimap',
     text: 'Minimap',
-    description: 'Add a minimap to navigate large diagrams in Foblex Flow for Angular.',
+    description: 'Show a minimap to navigate large diagrams. Viewport sync, performance tips and Angular example.',
     image: './previews/examples/minimap-example.light.png',
     image_dark: './previews/examples/minimap-example.dark.png',
     image_width: 821,
@@ -495,7 +495,7 @@ function extensionGroup() {
   }, {
     link: 'zoom',
     text: 'Zoom',
-    description: 'Add zoom controls to Foblex Flow diagrams for Angular.',
+    description: 'Add zoom controls and wheel zoom with sensible limits. Smooth UX and performance tips for Angular diagrams.',
     image: './previews/examples/zoom.light.png',
     image_dark: './previews/examples/zoom.dark.png',
     image_width: 821,
@@ -505,7 +505,7 @@ function extensionGroup() {
   }, {
     link: 'background',
     text: 'Background',
-    description: 'Add background shapes to Foblex Flow diagrams for Angular.',
+    description: 'Add background shapes and frames to structure the canvas. Layering and styling patterns in Angular.',
     image: './previews/examples/background-example.light.png',
     image_dark: './previews/examples/background-example.dark.png',
     image_width: 821,
@@ -519,7 +519,7 @@ function advancedGroup() {
   return defineNavigationGroup('Advanced', [{
     link: 'copy-paste',
     text: 'Cut/Copy/Paste',
-    description: 'Learn how to implement copy, cut, and paste functionality in Foblex Flow.',
+    description: 'Implement cut/copy/paste for diagram nodes and connections. Clipboard format, serialization, and a ready-to-use Angular example.',
     image: './previews/examples/copy-paste.light.png',
     image_dark: './previews/examples/copy-paste.dark.png',
     image_width: 799,
@@ -533,7 +533,7 @@ function advancedGroup() {
   },{
     link: 'undo-redo',
     text: 'Undo/Redo',
-    description: 'Add Undo and Redo functionality with Foblex Flow for Angular.',
+    description: 'Undo/Redo basics for Angular diagrams. Snapshot patterns, node moves and connection restore with example.',
     image: './previews/examples/undo-redo.light.png',
     image_dark: './previews/examples/undo-redo.dark.png',
     image_width: 781,
@@ -543,7 +543,7 @@ function advancedGroup() {
   }, {
     link: 'undo-redo-v2',
     text: 'Undo/Redo V2',
-    description: 'Add undo and redo to your Foblex Flow diagrams with @foblex/mutator. Manage state snapshots, revert node moves, and restore connections in Angular.',
+    description: 'Undo/Redo with @foblex/mutator: state snapshots, revert node moves, restore connections. Patterns and demo.',
     image: './previews/examples/undo-redo-v2.light.png',
     image_dark: './previews/examples/undo-redo-v2.dark.png',
     image_width: 799,
@@ -556,20 +556,20 @@ function advancedGroup() {
     },
   }, {
     link: 'dagre-layout',
-    text: 'Dagre Layout',
+    text: 'Dagre Layout (Directed Graph)',
     image: './previews/examples/dagre-layout.light.png',
     image_dark: './previews/examples/dagre-layout.dark.png',
-    description: 'Use Dagre.js in Foblex Flow for structured tree diagrams in Angular.',
+    description: 'Build auto-arranged directed graphs in Angular using Dagre. Step-by-step example with code, tips for large graphs, and live demo in Foblex Flow.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
     date: new Date('2025-02-08 14:01:26')
   }, {
     link: 'elkjs-layout',
-    text: 'ELKJS Layout',
+    text: 'ELKJS Layout (Directed Graph)',
     image: './previews/examples/elkjs-layout.light.png',
     image_dark: './previews/examples/elkjs-layout.dark.png',
-    description: 'Create structured tree diagrams with ELKJS in Foblex Flow for Angular.',
+    description: 'Create tidy tree & layered layouts with ELKJS in Angular. Working example, config options, performance notes, and live demo in Foblex Flow.',
     image_width: 806,
     image_height: 600,
     image_type: 'image/png',
@@ -577,7 +577,7 @@ function advancedGroup() {
   }, {
     link: 'drag-start-end-events',
     text: 'Drag Start/End Events',
-    description: 'Listen to drag start and end events in Foblex Flow for Angular.',
+    description: 'Listen to drag start and end events on nodes and edges. Clean event patterns with Angular example.',
     image: './previews/examples/drag-start-end-events.light.png',
     image_dark: './previews/examples/drag-start-end-events.dark.png',
     image_width: 781,
@@ -587,7 +587,7 @@ function advancedGroup() {
   }, {
     link: 'custom-event-triggers',
     text: 'Custom Event Triggers',
-    description: 'Create custom event triggers in Foblex Flow for Angular.',
+    description: 'Create custom event triggers for diagram interactions. Hooks, callbacks and Angular example code.',
     image: './previews/examples/custom-event-triggers.light.png',
     image_dark: './previews/examples/custom-event-triggers.dark.png',
     image_width: 802,
@@ -601,7 +601,7 @@ function proExamplesGroup() {
   return defineNavigationGroup('Pro Examples', [{
     text: 'Visual Programming',
     link: 'f-visual-programming-flow',
-    description: 'Create a visual programming interface using Angular and Foblex Flow.',
+    description: 'Visual programming editor in Angular: create nodes, connect logic and run workflows in an interactive diagram.',
     image: './previews/examples/vp-flow.light.png',
     image_dark: './previews/examples/vp-flow.dark.png',
     image_width: 757,
@@ -610,7 +610,7 @@ function proExamplesGroup() {
   }, {
     text: 'DB Management',
     link: 'f-db-management-flow',
-    description: 'Build a database management workflow using Angular and Foblex Flow.',
+    description: 'Database workflow builder in Angular. Nodes, CRUD connections and interactive diagram with live demo.',
     image: './previews/examples/db-management-flow.light.png',
     image_dark: './previews/examples/db-management-flow.dark.png',
     image_width: 806,
@@ -619,7 +619,7 @@ function proExamplesGroup() {
   }, {
     text: 'UML Diagram',
     link: 'uml-diagram-example',
-    description: 'Create a UML diagram with Angular and Foblex Flow.',
+    description: 'Build UML diagrams in Angular with Foblex Flow. Class nodes, relationships and auto-layout demo.',
     image: './previews/examples/uml-diagram-example.light.png',
     image_dark: './previews/examples/uml-diagram-example.dark.png',
     image_width: 821,
@@ -628,7 +628,7 @@ function proExamplesGroup() {
   }, {
     text: 'Tournament Bracket',
     link: 'tournament-bracket',
-    description: 'Create a tournament bracket using Angular and Foblex Flow.',
+    description: 'Create a tournament bracket in Angular. Automatic match connections, updates and live demo.',
     image: './previews/examples/tournament-bracket.light.png',
     image_dark: './previews/examples/tournament-bracket.dark.png',
     image_width: 821,
