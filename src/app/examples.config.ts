@@ -102,7 +102,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       provideFooterNavigation({
         editLink: {
-          pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/en/',
+          pattern: 'https://github.com/foblex/f-flow/edit/main/public/examples/',
           text: 'Edit this page on GitHub'
         },
         previous: 'Previous Page',

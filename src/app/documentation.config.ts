@@ -75,7 +75,7 @@ export const DOCUMENTATION_CONFIGURATION = {
     ),
     provideFooterNavigation({
       editLink: {
-        pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/en/',
+        pattern: 'https://github.com/foblex/f-flow/edit/main/public/docs/',
         text: 'Edit this page on GitHub'
       },
       previous: 'Previous Page',
