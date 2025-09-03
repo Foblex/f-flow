@@ -3,10 +3,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Main -->
   <url>
     <loc>https://flow.foblex.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- Documentation -->
+  <url>
+    <loc>https://flow.foblex.com/docs/intro/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://flow.foblex.com/docs/get-started/</loc>
@@ -89,38 +97,37 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Examples -->
   <url>
     <loc>https://flow.foblex.com/examples/overview/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://flow.foblex.com/examples/custom-nodes</loc>
+    <loc>https://flow.foblex.com/examples/custom-nodes/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/drag-handle</loc>
+    <loc>https://flow.foblex.com/examples/drag-handle/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/node-selection</loc>
+    <loc>https://flow.foblex.com/examples/node-selection/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/resize-handle</loc>
+    <loc>https://flow.foblex.com/examples/resize-handle/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/grouping</loc>
+    <loc>https://flow.foblex.com/examples/grouping/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://flow.foblex.com/examples/node-as-connector/</loc>
     <changefreq>weekly</changefreq>
@@ -146,7 +153,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://flow.foblex.com/examples/drag-to-group/</loc>
     <changefreq>weekly</changefreq>
@@ -202,34 +208,31 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-
   <url>
-    <loc>https://flow.foblex.com/examples/selection-area</loc>
+    <loc>https://flow.foblex.com/examples/selection-area/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/help-in-positioning</loc>
+    <loc>https://flow.foblex.com/examples/help-in-positioning/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/minimap</loc>
+    <loc>https://flow.foblex.com/examples/minimap/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/zoom</loc>
+    <loc>https://flow.foblex.com/examples/zoom/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/background</loc>
+    <loc>https://flow.foblex.com/examples/background/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://flow.foblex.com/examples/copy-paste/</loc>
     <changefreq>weekly</changefreq>
@@ -255,7 +258,6 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://flow.foblex.com/examples/f-visual-programming-flow/</loc>
     <changefreq>weekly</changefreq>
@@ -267,12 +269,12 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/uml-diagram-example</loc>
+    <loc>https://flow.foblex.com/examples/uml-diagram-example/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/tournament-bracket</loc>
+    <loc>https://flow.foblex.com/examples/tournament-bracket/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

@@ -19,6 +19,11 @@ export const routes: Routes = [
   },
   {
     path: 'docs',
+    pathMatch: 'full',
+    redirectTo: 'docs/intro'
+  },
+  {
+    path: 'docs',
     loadChildren: () => import('@foblex/m-render').then((m) => m.DOCUMENTATION_ROUTES.map((route) => ({
       ...route,
       providers: [
@@ -27,6 +32,11 @@ export const routes: Routes = [
         ),
       ],
     }))),
+  },
+  {
+    path: 'examples',
+    pathMatch: 'full',
+    redirectTo: 'examples/overview'
   },
   {
     path: 'examples',

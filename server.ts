@@ -22,6 +22,28 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  server.get(['/docs', '/docs/'], (_req, res) => {
+    res.redirect(301, '/docs/intro/');
+  });
+
+  server.get(['/examples', '/examples/'], (_req, res) => {
+    res.redirect(301, '/examples/overview/');
+  });
+
+  const slashCanonicalPrefixes = ['/docs', '/examples'];
+  server.use((req, res, next) => {
+    const [pathOnly, query = ''] = req.url.split('?', 2);
+    const isAsset = /\.[A-Za-z0-9]{1,8}$/.test(pathOnly); // простая проверка "есть расширение"
+    const needsPrefix = slashCanonicalPrefixes.some((p) =>
+      pathOnly === p || pathOnly.startsWith(p + '/')
+    );
+
+    if (needsPrefix && !isAsset && !pathOnly.endsWith('/')) {
+      return res.redirect(301, pathOnly + '/' + (query ? '?' + query : ''));
+    }
+    next();
+  });
+
   server.get('**', express.static(browserDistFolder, {
     maxAge: '1d',
     index: 'index.html',
