@@ -74,6 +74,7 @@
     "@foblex/platform": "1.0.4",
     "@foblex/utils": "1.1.1",
     "axios": "^1.11.0",
+    "chokidar": "^4.0.3",
     "cookie-parser": "^1.4.7",
     "dagre": "^0.8.5",
     "dotenv": "^17.2.1",
