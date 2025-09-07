@@ -3,6 +3,7 @@ import {provideDocumentation, provideHomePage} from "@foblex/m-render";
 import {HOME_CONFIGURATION} from "./home.config";
 import {DOCUMENTATION_CONFIGURATION} from "./documentation.config";
 import {EXAMPLES_CONFIGURATION} from "./examples.config";
+import {SHOWCASE_CONFIGURATION} from "./showcase.config";
 
 export const routes: Routes = [
   {
@@ -45,6 +46,22 @@ export const routes: Routes = [
       providers: [
         provideDocumentation(
           EXAMPLES_CONFIGURATION,
+        ),
+      ],
+    }))),
+  },
+  {
+    path: 'showcase',
+    pathMatch: 'full',
+    redirectTo: 'showcase/overview'
+  },
+  {
+    path: 'showcase',
+    loadChildren: () => import('@foblex/m-render').then((m) => m.DOCUMENTATION_ROUTES.map((route) => ({
+      ...route,
+      providers: [
+        provideDocumentation(
+          SHOWCASE_CONFIGURATION,
         ),
       ],
     }))),

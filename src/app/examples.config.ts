@@ -4,7 +4,6 @@ import {
   provide404Markdown,
   provideComponents,
   provideDirectory,
-  provideDocumentationMeta,
   provideFooterNavigation,
   provideHeader,
   provideHeaderMediaLinks,
@@ -13,7 +12,7 @@ import {
   provideLogo,
   provideNavigation,
   provideTitle,
-  provideTocData,
+  provideTableOfContent, provideMeta,
 } from '@foblex/m-render';
 
 export const EXAMPLES_CONFIGURATION = {
@@ -80,7 +79,7 @@ export const EXAMPLES_CONFIGURATION = {
         defineLazyComponent('drag-start-end-events', () => import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component')),
         defineLazyComponent('custom-event-triggers', () => import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'))
       ]),
-      provideTocData({
+      provideTableOfContent({
         title: 'In this article',
         range: {start: 2, end: 6},
       }),
@@ -94,6 +93,10 @@ export const EXAMPLES_CONFIGURATION = {
           link: '/examples/overview',
           active: '/examples',
           text: 'Examples',
+        }, {
+          link: '/showcase/overview',
+          active: '/showcase',
+          text: 'Showcase',
         }]),
         provideHeaderMediaLinks([
           {icon: 'github', link: 'https://github.com/Foblex/f-flow'},
@@ -108,7 +111,7 @@ export const EXAMPLES_CONFIGURATION = {
         previous: 'Previous Page',
         next: 'Next Page',
       }),
-      provideDocumentationMeta({
+      provideMeta({
         url: 'https://flow.foblex.com',
         type: 'website',
         title: 'Angular Library for Flow-Based UIs - Foblex Flow',

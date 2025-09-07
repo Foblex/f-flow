@@ -4,7 +4,6 @@ import {
   provide404Markdown,
   provideComponents,
   provideDirectory,
-  provideDocumentationMeta,
   provideFooterNavigation,
   provideHeader,
   provideHeaderMediaLinks,
@@ -13,7 +12,7 @@ import {
   provideLogo,
   provideNavigation,
   provideTitle,
-  provideTocData,
+  provideTableOfContent, provideMeta,
 } from '@foblex/m-render';
 
 export const DOCUMENTATION_CONFIGURATION = {
@@ -53,7 +52,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent('adding-dragging-functionality-example', () => import('../../projects/f-guides-examples/node/adding-dragging-functionality-example/adding-dragging-functionality-example.component')),
       defineLazyComponent('node-with-drag-handle-example', () => import('../../projects/f-guides-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component')),
     ]),
-    provideTocData({
+    provideTableOfContent({
       title: 'In this articles',
       range: {start: 2, end: 6},
     }),
@@ -67,6 +66,10 @@ export const DOCUMENTATION_CONFIGURATION = {
         link: '/examples/overview',
         active: '/examples',
         text: 'Examples',
+      }, {
+        link: '/showcase/overview',
+        active: '/showcase',
+        text: 'Showcase',
       }]),
       provideHeaderMediaLinks([
         {icon: 'github', link: 'https://github.com/Foblex/f-flow'},
@@ -81,7 +84,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       previous: 'Previous Page',
       next: 'Next Page',
     }),
-    provideDocumentationMeta({
+    provideMeta({
       url: 'https://flow.foblex.com',
       type: 'website',
       title: 'Angular Library for Flow-Based UIs - Foblex Flow',

@@ -12,9 +12,6 @@ import {HomePageBackgroundComponent} from "./home-page/home-page-background/home
 
 export const HOME_CONFIGURATION = {
   providers: [
-    provideHeader(
-      provideHeaderSearch(false),
-    ),
     provideLogo('./logo.svg'),
     provideTitle('Foblex Flow'),
     provideHero({
@@ -35,6 +32,9 @@ export const HOME_CONFIGURATION = {
     }, {
       text: 'GitHub',
       href: 'https://github.com/Foblex/f-flow',
+    }, {
+      text: 'Showcase',
+      routerLink: '/showcase/overview',
     }, {
       icon: 'heart',
       text: 'Support Us',
