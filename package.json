@@ -24,7 +24,7 @@
     "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run",
     "lint": "ng lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "standard-version": {
     "types": [
@@ -52,6 +52,15 @@
         "type": "chore",
         "hidden": true
       }
+    ]
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,html,css,scss}": [
+      "prettier --write"
     ]
   },
   "private": true,
@@ -92,6 +101,8 @@
     "@angular-devkit/build-angular": "18.2.19",
     "@angular/cli": "18.2.19",
     "@angular/compiler-cli": "18.2.13",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/cookie-parser": "^1.4.9",
     "@types/dagre": "^0.7.52",
     "@types/express": "^4.17.17",
@@ -112,6 +123,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^16.1.6",
     "ng-packagr": "^18.1.0",
     "packagename": "^2.0.1",
     "prettier": "^3.6.2",
