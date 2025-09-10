@@ -28,6 +28,7 @@ export class MoveSummaryDragHandler implements IFDragHandler {
 
   public findClosestAlignment(difference: IPoint): ISnapResult | undefined {
     this.rootHandlers.forEach((x) => x.onPointerMove(difference));
+
     return this._lineAlignment?.findClosestAlignment(this._unionRect());
   }
 

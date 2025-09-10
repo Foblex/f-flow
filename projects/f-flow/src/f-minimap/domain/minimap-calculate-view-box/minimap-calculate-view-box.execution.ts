@@ -25,6 +25,7 @@ export class MinimapCalculateViewBoxExecution implements IExecution<MinimapCalcu
     if(!this._flowComponent || !this._canvasComponent) {
       return RectExtensions.initialize();
     }
+
     return this._getRectForMinimapView();
   }
 
@@ -32,6 +33,7 @@ export class MinimapCalculateViewBoxExecution implements IExecution<MinimapCalcu
     const result = this._calculateViewBox();
     result.x = 0;
     result.y = 0;
+
     return result;
   }
 

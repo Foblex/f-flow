@@ -10,8 +10,9 @@ import { FMinimapData } from '../f-minimap-data';
 
 @Injectable()
 @FExecutionRegister(MinimapDragPreparationRequest)
-export class MinimapDragPreparationExecution implements IExecution<MinimapDragPreparationRequest, void> {
-
+export class MinimapDragPreparationExecution
+  implements IExecution<MinimapDragPreparationRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _draggableDataContext = inject(FDraggableDataContext);
@@ -21,41 +22,52 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
   }
 
   public handle(request: MinimapDragPreparationRequest): void {
-    if(!this._isValid(request)) {
+    if (!this._isValid(request)) {
       return;
     }
     const eventPoint = request.event.getPosition();
     const startCanvasPosition = Point.fromPoint(this._store.fCanvas!.transform.position);
 
-    this._store.fCanvas!.setPosition(this.getNewPosition(eventPoint, request.minimap));
+    this._store.fCanvas!.setPosition(this._getNewPosition(eventPoint, request.minimap));
     this._store.fCanvas!.redraw();
     this._store.fCanvas!.emitCanvasChangeEvent();
 
     this._draggableDataContext.onPointerDownScale = 1;
-    this._draggableDataContext.onPointerDownPosition = Point.fromPoint(eventPoint).elementTransform(this._flowHost);
+    this._draggableDataContext.onPointerDownPosition = Point.fromPoint(eventPoint).elementTransform(
+      this._flowHost,
+    );
     this._draggableDataContext.draggableItems = [
       new FMinimapDragHandler(
-        this._store, this._mediator, this.getFlowRect(),
-        startCanvasPosition, eventPoint, request.minimap,
+        this._store,
+        this._mediator,
+        this._getFlowRect(),
+        startCanvasPosition,
+        eventPoint,
+        request.minimap,
       ),
     ];
   }
 
   private _isValid(request: MinimapDragPreparationRequest): boolean {
-    return !this._draggableDataContext.draggableItems.length &&
+    return (
+      !this._draggableDataContext.draggableItems.length &&
       !!request.event.targetElement.closest('.f-minimap') &&
-      this._store.flowHost.contains(request.event.targetElement);
+      this._store.flowHost.contains(request.event.targetElement)
+    );
   }
 
-  private getNewPosition(eventPoint: IPoint, minimap: FMinimapData): IPoint {
-    return this._mediator.execute<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
-      this.getFlowRect(),
-      Point.fromPoint(this._store.fCanvas!.transform.position),
-      eventPoint, minimap,
-    ));
+  private _getNewPosition(eventPoint: IPoint, minimap: FMinimapData): IPoint {
+    return this._mediator.execute<IPoint>(
+      new CalculateFlowPointFromMinimapPointRequest(
+        this._getFlowRect(),
+        Point.fromPoint(this._store.fCanvas!.transform.position),
+        eventPoint,
+        minimap,
+      ),
+    );
   }
 
-  private getFlowRect(): IRect {
+  private _getFlowRect(): IRect {
     return RectExtensions.fromElement(this._flowHost);
   }
 }

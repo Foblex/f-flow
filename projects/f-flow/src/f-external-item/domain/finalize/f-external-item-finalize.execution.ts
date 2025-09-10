@@ -63,6 +63,7 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
     const dropToGroupHandler = this._getDropToGroupHandler();
     const result = dropToGroupHandler.fNodeWithRect?.node.fId();
     dropToGroupHandler.onPointerUp?.();
+
     return result;
   }
 
@@ -72,6 +73,7 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }
+
     return result;
   }
 

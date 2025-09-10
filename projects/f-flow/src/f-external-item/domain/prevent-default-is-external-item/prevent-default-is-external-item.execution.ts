@@ -16,6 +16,7 @@ export class PreventDefaultIsExternalItemExecution implements IExecution<Prevent
   private _isTargetItemExternal(event: Event): boolean {
     const isTargetItemExternal = this._isExternalItem(event.target as HTMLElement);
     const isTargetParentItemExternal = this._isExternalItem((event.target as Node).parentNode as HTMLElement);
+
     return isTargetItemExternal || isTargetParentItemExternal;
   }
 
@@ -25,6 +26,7 @@ export class PreventDefaultIsExternalItemExecution implements IExecution<Prevent
       result = isExternalItem(target);
     } catch (e) {
     }
+
     return result;
   }
 }

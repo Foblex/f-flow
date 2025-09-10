@@ -15,6 +15,7 @@ export class FChannelHub {
   public pipe(...operators: FChannelOperator[]): FChannelHub {
     const result = new FChannelHub(...this._channels);
     result._operators = [...this._operators, ...operators];
+
     return result;
   }
 

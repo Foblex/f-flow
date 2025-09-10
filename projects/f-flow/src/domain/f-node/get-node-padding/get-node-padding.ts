@@ -22,6 +22,7 @@ export class GetNodePadding
 
   private getPaddingData(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
     const style = this._browser.window.getComputedStyle(node.hostElement);
+
     return [
       this._browser.toPixels(style.paddingLeft, rect.width, rect.height, style.fontSize),
       this._browser.toPixels(style.paddingTop, rect.width, rect.height, style.fontSize),

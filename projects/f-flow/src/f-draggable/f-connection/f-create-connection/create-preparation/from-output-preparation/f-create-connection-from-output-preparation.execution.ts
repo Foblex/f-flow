@@ -47,6 +47,7 @@ export class FCreateConnectionFromOutputPreparationExecution
     if (!result) {
       throw new Error('Output not found');
     }
+
     return result as FNodeOutputBase;
   }
 }

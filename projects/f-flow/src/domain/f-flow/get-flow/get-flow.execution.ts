@@ -18,6 +18,7 @@ export class GetFlowExecution implements IExecution<GetFlowRequest, FFlowBase> {
     if (!result) {
       throw new Error(`Flow not found in store`);
     }
+
     return result;
   }
 }

@@ -79,6 +79,7 @@ export class FConnectionTextComponent implements IConnectionText {
 
   private static getTextStartOffset(line: ILine, name: string, symbolWidth: number): number {
     const vectorLength: number = PointExtensions.hypotenuse(line.point1, line.point2);
+
     return vectorLength / 2 - ((name || '').length * symbolWidth) / 2;
   }
 }

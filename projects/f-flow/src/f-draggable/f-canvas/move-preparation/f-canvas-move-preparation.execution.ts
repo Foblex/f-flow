@@ -49,6 +49,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
     if (result && result.fDraggingDisabled()) {
       result = undefined;
     }
+
     return result;
   }
 

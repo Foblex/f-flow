@@ -9,9 +9,8 @@ import { FChannelHub } from '../../../reactivity';
 export class ListenTransformChangesExecution
   implements IExecution<ListenTransformChangesRequest, FChannelHub>
 {
-  private _store = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public handle(_request: ListenTransformChangesRequest): FChannelHub {
     return new FChannelHub(
       this._store.transformChanges$,

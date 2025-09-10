@@ -13,6 +13,7 @@ export class FBezierPathBuilder implements IFConnectionBuilder {
     if (distance >= offset) {
       return distance;
     }
+
     return offset * Math.sqrt(offset - distance);
   }
 

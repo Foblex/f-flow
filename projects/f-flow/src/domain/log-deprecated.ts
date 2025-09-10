@@ -9,8 +9,10 @@ export function Deprecated(newMethodName: string, removalVersion: string = '18.0
       console.warn(
         `Method "${String(propertyKey)}" is deprecated. Use "${newMethodName}" instead. This method will be removed in version ${removalVersion}.`,
       );
+
       return originalMethod.apply(this, args);
     };
+
     return descriptor;
   };
 }

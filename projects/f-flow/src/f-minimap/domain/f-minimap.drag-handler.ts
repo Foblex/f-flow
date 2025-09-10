@@ -6,47 +6,52 @@ import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-poin
 import { FMinimapData } from './f-minimap-data';
 
 export class FMinimapDragHandler implements IFDragHandler {
-
   public fEventType = 'minimap';
 
-  private lastDifference: IPoint | null = null;
+  private _lastDifference: IPoint | null = null;
 
   constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-    private flowRect: IRect,
-    private canvasPosition: IPoint,
-    private eventPoint: IPoint,
-    private minimap: FMinimapData,
-  ) {
-  }
+    private readonly _store: FComponentsStore,
+    private readonly _mediator: FMediator,
+    private readonly _flowRect: IRect,
+    private readonly _canvasPosition: IPoint,
+    private readonly _eventPoint: IPoint,
+    private readonly _minimap: FMinimapData,
+  ) {}
 
   public prepareDragSequence(): void {
-    this.fComponentsStore.fCanvas?.hostElement.classList.add('f-scaled-animate');
+    this._store.fCanvas?.hostElement.classList.add('f-scaled-animate');
   }
 
   public onPointerMove(difference: IPoint): void {
-    if (this.lastDifference && this.isSamePoint(difference, this.lastDifference)) {
+    if (this._lastDifference && this._isSamePoint(difference, this._lastDifference)) {
       return;
     }
 
-    this.lastDifference = difference;
-    this.fComponentsStore.fCanvas!.setPosition(this.getNewPosition(Point.fromPoint(this.eventPoint).add(difference)));
-    this.fComponentsStore.fCanvas!.redraw();
+    this._lastDifference = difference;
+    this._store.fCanvas?.setPosition(
+      this._getNewPosition(Point.fromPoint(this._eventPoint).add(difference)),
+    );
+    this._store.fCanvas?.redraw();
   }
 
-  private isSamePoint(point1: IPoint, point2: IPoint): boolean {
+  private _isSamePoint(point1: IPoint, point2: IPoint): boolean {
     return point1.x === point2.x && point1.y === point2.y;
   }
 
-  private getNewPosition(eventPoint: IPoint): IPoint {
-    return this.fMediator.execute<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
-      this.flowRect, this.canvasPosition, eventPoint, this.minimap,
-    ));
+  private _getNewPosition(eventPoint: IPoint): IPoint {
+    return this._mediator.execute<IPoint>(
+      new CalculateFlowPointFromMinimapPointRequest(
+        this._flowRect,
+        this._canvasPosition,
+        eventPoint,
+        this._minimap,
+      ),
+    );
   }
 
   public onPointerUp(): void {
-    this.fComponentsStore.fCanvas?.hostElement.classList.remove('f-scaled-animate');
-    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
+    this._store.fCanvas?.hostElement.classList.remove('f-scaled-animate');
+    this._store.fCanvas?.emitCanvasChangeEvent();
   }
 }

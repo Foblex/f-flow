@@ -41,6 +41,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
     fItem: FNodeBase,
   ): HTMLElement[] {
     const indexInContainer = this._fItemElements.indexOf(fItem.hostElement);
+
     return this._getChildrenItems(fItem.fId())
       .filter((child: HTMLElement) => this._fItemElements.indexOf(child) < indexInContainer)
       .sort((a, b) => this._fItemElements.indexOf(a) - this._fItemElements.indexOf(b));

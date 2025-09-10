@@ -21,6 +21,7 @@ export class GetNormalizedParentNodeRectExecution
     if (parentNode) {
       result = this._getParentRect(parentNode);
     }
+
     return result;
   }
 
@@ -52,6 +53,7 @@ export class GetNormalizedParentNodeRectExecution
   private _getParentRect(nodeOrGroup: FNodeBase): IRect {
     const rect = this._getNodeRect(nodeOrGroup);
     const padding = this._getNodePadding(nodeOrGroup, rect);
+
     return RectExtensions.initialize(
       rect.x + padding[ 0 ],
       rect.y + padding[ 1 ],

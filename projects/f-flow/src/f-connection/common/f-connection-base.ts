@@ -128,6 +128,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
   private getPathResult(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): any {
     const radius = this.fRadius > 0 ? this.fRadius : 0;
     const offset = this.fOffset > 0 ? this.fOffset : 1;
+
     return this.cFactory.handle(
       {
         type: this.fType,

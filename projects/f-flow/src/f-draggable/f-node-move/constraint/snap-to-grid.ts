@@ -22,6 +22,7 @@ export class SnapToGrid {
 
   public snap(difference: IPoint, adjustCellSize: boolean): IPoint {
     const _adjustCellSize = adjustCellSize || this._adjustCellSize;
+
     return this._cellSizeStrategies[+_adjustCellSize](difference);
   }
 

@@ -47,6 +47,7 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
   private _getZeroPositionWithoutScale(points: IPoint[]): IPoint {
     const xPoint = points.length ? Math.min(...points.map((point) => point.x)) : 0;
     const yPoint = points.length ? Math.min(...points.map((point) => point.y)) : 0;
+
     return PointExtensions.initialize(xPoint, yPoint)
   }
 }

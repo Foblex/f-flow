@@ -38,6 +38,7 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
         fInputs = this._filterSelfConnectable(fInputs, fOutputOrOutlet);
       }
     }
+
     return fInputs;
   }
 

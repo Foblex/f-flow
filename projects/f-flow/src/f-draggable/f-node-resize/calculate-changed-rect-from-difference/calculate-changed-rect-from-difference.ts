@@ -11,6 +11,7 @@ export class CalculateChangedRectFromDifference
 
   public handle({ originalRect, difference, handleType, minimumSize }: CalculateChangedRectFromDifferenceRequest): IRect {
     const changedRect = this._changeSizeInRect(originalRect, difference, RESIZE_DIRECTIONS[handleType], minimumSize);
+
     return this._changePosition(originalRect, difference, RESIZE_DIRECTIONS[handleType], changedRect);
   }
 

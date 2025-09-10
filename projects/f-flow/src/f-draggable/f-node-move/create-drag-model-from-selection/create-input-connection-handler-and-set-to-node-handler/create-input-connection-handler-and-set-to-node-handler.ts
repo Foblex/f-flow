@@ -30,6 +30,7 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
 
   private _getInputConnections(nodeOrGroup: FNodeBase): FConnectionBase[] {
     const ids = new Set(this._getNodeInputIds(nodeOrGroup));
+
     return this._connections.filter((x) => ids.has(x.fInputId));
   }
 
@@ -59,6 +60,7 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
     } else {
       result = new TargetConnectionDragHandler(this._injector, connection);
     }
+
     return result;
   }
 }

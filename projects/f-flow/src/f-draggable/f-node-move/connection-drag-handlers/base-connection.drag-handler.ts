@@ -23,6 +23,7 @@ export class BaseConnectionDragHandler {
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fOutput with id ${ this.fConnection.fOutputId } not found`));
     }
+
     return result;
   }
 
@@ -31,6 +32,7 @@ export class BaseConnectionDragHandler {
     if (!result) {
       throw new Error(this._connectorNotFoundPrefix(`fInput with id ${ this.fConnection.fInputId } not found`));
     }
+
     return result;
   }
 

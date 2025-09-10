@@ -21,6 +21,7 @@ export function ngUpdate(): Rule {
 
     context.addTask(new NodePackageInstallTask());
     context.logger.info('✅ All dependencies updated and installed successfully.');
+
     return tree;
   };
 }

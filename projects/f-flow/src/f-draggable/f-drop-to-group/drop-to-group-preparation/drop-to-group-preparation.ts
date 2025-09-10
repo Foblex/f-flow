@@ -86,6 +86,7 @@ export class DropToGroupPreparation
 
     return this._eligibleTargets(draggedNodes, draggingGroup).map((node) => {
       const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(node.hostElement));
+
       return { node, rect: this._toCanvasRect(rect) };
     });
   }
@@ -105,12 +106,14 @@ export class DropToGroupPreparation
   private _draggedNodesWithParents(nodes: FNodeBase[]): FNodeBase[] {
     return nodes.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x, ...this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(x)));
+
       return result;
     }, []);
   }
 
   private _eligibleTargets(dragged: FNodeBase[], draggingGroup: boolean): FNodeBase[] {
     const nonDragged = this._allNodesAndGroups.filter(x => !dragged.includes(x));
+
     return draggingGroup ? nonDragged.filter(x => x instanceof FGroupDirective) : nonDragged;
   }
 

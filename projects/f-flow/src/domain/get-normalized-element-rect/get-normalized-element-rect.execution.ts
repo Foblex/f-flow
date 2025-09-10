@@ -36,6 +36,7 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect)
 
     const offsetSize = this._getOffsetSize(request.element, unscaledSize);
+
     return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 

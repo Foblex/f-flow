@@ -87,17 +87,20 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
         return true;
       }
     }
+
     return false;
   }
 
   private _getChildrenGroups(elements: HTMLElement[]): HTMLElement[] {
     const allElements = Array.from(this._fGroupsContainer.children) as HTMLElement[];
+
     return elements.filter((x) => this._fGroupsContainer.contains(x))
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }
 
   private _getChildrenNodes(elements: HTMLElement[]): HTMLElement[] {
     const allElements = Array.from(this._fNodesContainer.children) as HTMLElement[];
+
     return elements.filter((x) => this._fNodesContainer.contains(x))
       .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
   }

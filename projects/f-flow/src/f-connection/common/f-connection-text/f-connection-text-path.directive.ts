@@ -49,6 +49,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
   private getFontStyles(element: SVGTextPathElement): { fontSize: string, fontFamily: string } {
     const computedStyles = this.fBrowser.window.getComputedStyle(element);
+
     return {
       fontSize: computedStyles.fontSize,
       fontFamily: computedStyles.fontFamily,
@@ -75,6 +76,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
     const metrics = context.measureText(text);
     const symbolWidth = metrics.width / text.length;
+
     return symbolWidth;
   }
 }

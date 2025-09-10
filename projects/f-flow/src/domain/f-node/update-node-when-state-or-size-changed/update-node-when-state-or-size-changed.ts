@@ -68,6 +68,7 @@ export class UpdateNodeWhenStateOrSizeChanged
     } else {
       result = fConnector.userFConnectableSide;
     }
+
     return result;
   }
 

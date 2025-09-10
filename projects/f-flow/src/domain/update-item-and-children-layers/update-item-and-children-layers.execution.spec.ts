@@ -19,6 +19,7 @@ import { signal } from '@angular/core';
 function createElement(id: string): HTMLElement {
   const element = document.createElement('div');
   element.id = id;
+
   return element;
 }
 

@@ -28,13 +28,22 @@ module.exports = tseslint.config(
         {
           'selector': 'memberLike',
           'format': ['camelCase'],
-          'leadingUnderscore': 'forbid',
+          'leadingUnderscore': 'allow',
         },
         {
           'selector': 'memberLike',
           'modifiers': ['private'],
           'format': ['camelCase'],
           'leadingUnderscore': 'require',
+        },
+        {
+          'selector': 'enumMember',
+          'format': ['UPPER_CASE'],
+        },
+        {
+          'selector': 'property',
+          'format': null,
+          'modifiers': ['requiresQuotes'],
         },
       ],
       '@typescript-eslint/no-non-null-assertion': 'warn',
@@ -56,6 +65,11 @@ module.exports = tseslint.config(
           ignoreParameters: true,
           ignoreProperties: true,
         },
+      ],
+
+      'padding-line-between-statements': [
+        'error',
+        { 'blankLine': 'always', 'prev': '*', 'next': 'return' },
       ],
       'comma-dangle': ['error', 'always-multiline'],
       'id-blacklist': 'off',

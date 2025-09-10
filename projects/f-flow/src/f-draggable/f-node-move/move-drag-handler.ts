@@ -40,6 +40,7 @@ export class MoveDragHandler implements IFDragHandler {
     this._applyConstraints = (difference: IPoint) => {
       const summary = this._pipeline.apply(difference);
       this._applySoftExpansions(summary.soft);
+
       return summary.hardDifference;
     }
   }
@@ -84,6 +85,7 @@ export class MoveDragHandler implements IFDragHandler {
     this._applyConstraints = (difference: IPoint) => {
       const summary = this._pipeline.finalize(difference);
       this._applySoftExpansions(summary.soft);
+
       return summary.hardDifference;
     }
   }

@@ -36,6 +36,7 @@ export class FConnectionDragHandleEndComponent implements IHasHostElement {
     const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y) || 1;
     const unitDirection = { x: direction.x / length, y: direction.y / length };
     const scaledDirection = { x: unitDirection.x * radius, y: unitDirection.y * radius };
+
     return { x: end.x - scaledDirection.x, y: end.y - scaledDirection.y };
   }
 }

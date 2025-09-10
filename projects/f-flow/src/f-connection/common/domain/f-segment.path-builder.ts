@@ -143,6 +143,7 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     if (sourceSide === EFConnectableSide.LEFT || sourceSide === EFConnectableSide.RIGHT) {
       return source.x < target.x ? PointExtensions.initialize(1, 0) : PointExtensions.initialize(-1, 0);
     }
+
     return source.y < target.y ? PointExtensions.initialize(0, 1) : PointExtensions.initialize(0, -1);
   }
 
@@ -180,11 +181,13 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     if (a.y === y) {
       const xDir = a.x < c.x ? -1 : 1;
       const yDir = a.y < c.y ? 1 : -1;
+
       return `L ${x + bendSize * xDir},${y}Q ${x},${y} ${x},${y + bendSize * yDir}`;
     }
 
     const xDir = a.x < c.x ? 1 : -1;
     const yDir = a.y < c.y ? -1 : 1;
+
     return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
   }
 

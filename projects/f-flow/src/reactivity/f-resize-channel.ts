@@ -18,6 +18,7 @@ export class FResizeChannel extends FChannel {
       this._observer.observe(this._htmlElement);
       this._isObserving = true;
     }
+
     return super.listen(callback);
   }
 

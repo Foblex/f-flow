@@ -24,6 +24,7 @@ export class GetNodeBoundingIncludePaddings
     paddings[1] += childrenPaddings[1];
     paddings[2] += childrenPaddings[2];
     paddings[3] += childrenPaddings[3];
+
     return new GetNodeBoundingIncludePaddingsResponse(
       nodeOrGroup,
       boundingRect,

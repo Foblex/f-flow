@@ -43,6 +43,7 @@ export class DropToGroupFinalize
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }
+
     return result;
   }
 
@@ -59,6 +60,7 @@ export class DropToGroupFinalize
 
     return nodeOrGroups.filter(node => {
       const parentId = node.fParentId();
+
       return !parentId || !idSet.has(parentId);
     }).map(node => node.fId());
   }
@@ -69,6 +71,7 @@ export class DropToGroupFinalize
     if (!result) {
       throw new Error('Drop To Group can`t be used without MoveSummaryDragHandler');
     }
+
     return result;
   }
 }

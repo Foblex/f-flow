@@ -44,6 +44,7 @@ export class MinimapCalculateSvgScaleAndViewBoxExecution
     const globalRect = this._calculateNodesBoundingBox();
     const flowRect = this._convertFromGlobalToFlowRect(globalRect);
     const scaledRect = this._convertRectToMinimapScale(flowRect);
+
     return adjustRectToMinSize(scaledRect, minSize);
   }
 
@@ -79,6 +80,7 @@ export class MinimapCalculateSvgScaleAndViewBoxExecution
   private _calculateCenteredViewBox(nodesRect: IRect, viewSize: ISize): IRect {
     const centeredX = nodesRect.x - (viewSize.width - nodesRect.width) / 2;
     const centeredY = nodesRect.y - (viewSize.height - nodesRect.height) / 2;
+
     return RectExtensions.initialize(centeredX, centeredY, viewSize.width, viewSize.height);
   }
 }

@@ -10,10 +10,9 @@ import { F_ZOOM_TAG } from '../f-zoom-tag';
 @Injectable()
 @FExecutionRegister(RemoveZoomFromStoreRequest)
 export class RemoveZoomFromStoreExecution implements IExecution<RemoveZoomFromStoreRequest, void> {
-
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveZoomFromStoreRequest): void {
+  public handle(_request: RemoveZoomFromStoreRequest): void {
     this._store.fComponents = {
       [F_ZOOM_TAG]: undefined,
     };

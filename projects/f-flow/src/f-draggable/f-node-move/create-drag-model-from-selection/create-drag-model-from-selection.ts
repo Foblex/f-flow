@@ -44,6 +44,7 @@ export class CreateDragModelFromSelection
     if (nodeWithDisabledSelection) {
       result.push(nodeWithDisabledSelection);
     }
+
     return result;
   }
 
@@ -61,6 +62,7 @@ export class CreateDragModelFromSelection
   private _collectSelectedAndAllChildren(selectedNodesAndGroups: FNodeBase[]): FNodeBase[] {
     return selectedNodesAndGroups.reduce((result: FNodeBase[], x: FNodeBase) => {
       result.push(x);
+
       return result.concat(this._getChildrenNodes(x.fId()));
     }, []);
   }

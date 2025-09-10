@@ -25,6 +25,7 @@ export class GetChildNodeIds
     const visited = new Set<string>();
     const result: string[] = [];
     this._collectDescendants(request.id, result, visited);
+
     return result;
   }
 

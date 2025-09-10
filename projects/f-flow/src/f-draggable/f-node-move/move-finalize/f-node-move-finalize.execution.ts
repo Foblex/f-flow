@@ -41,6 +41,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
 
   private _isValid(): boolean {
     this._summaryHandler = this._dragContext.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
+
     return !!this._summaryHandler;
   }
 
@@ -59,6 +60,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       difference.x = this._isIntersectValue(intersection.xResult) ? (difference.x - intersection.xResult.distance!) : difference.x;
       difference.y = this._isIntersectValue(intersection.yResult) ? (difference.y - intersection.yResult.distance!) : difference.y;
     }
+
     return difference;
   }
 
@@ -81,6 +83,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
         position: this._store.fNodes.find(x => x.fId() === id)!._position,
       }
     });
+
     return new FMoveNodesEvent(eventNodes);
   }
 

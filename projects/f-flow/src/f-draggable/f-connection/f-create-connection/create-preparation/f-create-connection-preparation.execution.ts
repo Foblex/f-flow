@@ -46,6 +46,7 @@ export class FCreateConnectionPreparationExecution
   private _getNode(event: IPointerEvent): FNodeBase | undefined {
     this._fNode = this._store
       .fNodes.find(n => n.isContains(event.targetElement));
+
     return this._fNode;
   }
 

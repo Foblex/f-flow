@@ -255,6 +255,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
     if (!isMouseLeftOrTouch) {
       this.finalizeDragSequence();
     }
+
     return isMouseLeftOrTouch;
   }
 

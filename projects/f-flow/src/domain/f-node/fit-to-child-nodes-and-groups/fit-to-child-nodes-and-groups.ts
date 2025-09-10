@@ -71,6 +71,7 @@ export class FitToChildNodesAndGroups
       childrenBounding.width + left + right,
       childrenBounding.height + top + bottom,
     );
+
     return childrenBounding;
   }
 }

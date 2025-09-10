@@ -116,6 +116,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     const scrollLeft = this._browser.window.pageXOffset || this._browser.document.documentElement.scrollLeft;
     const offsetTop = rect.top + scrollTop;
     const offsetLeft = rect.left + scrollLeft;
+
     return RectExtensions.initialize(offsetLeft, offsetTop, rect.width, rect.height);
   }
 

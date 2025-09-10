@@ -47,6 +47,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
 
   private _createLineService(): SnapLineService {
     this._lineService = new SnapLineService(this._browser, this._store.fLineAlignment!.hostElement);
+
     return this._lineService;
   }
 

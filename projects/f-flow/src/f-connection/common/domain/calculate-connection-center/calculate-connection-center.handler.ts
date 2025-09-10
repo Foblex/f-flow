@@ -42,6 +42,7 @@ export class CalculateConnectionCenterHandler
     const ratio = distance / totalDistance;
     const x = (1 - ratio) * startPoint.x + ratio * endPoint.x;
     const y = (1 - ratio) * startPoint.y + ratio * endPoint.y;
+
     return { x, y };
   }
 }

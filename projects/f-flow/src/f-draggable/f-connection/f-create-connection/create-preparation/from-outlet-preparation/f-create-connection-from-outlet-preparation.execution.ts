@@ -45,6 +45,7 @@ export class FCreateConnectionFromOutletPreparationExecution
     if (!result) {
       throw new Error('Outlet not found');
     }
+
     return result as FNodeOutletBase;
   }
 

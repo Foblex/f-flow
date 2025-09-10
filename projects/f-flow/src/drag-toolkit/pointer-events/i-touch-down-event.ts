@@ -16,6 +16,7 @@ export class ITouchDownEvent extends IPointerEvent {
 
   public getPosition(): { x: number, y: number } {
     const touches = (this.originalEvent as TouchEvent).touches;
+
     return { x: touches[ 0 ].clientX, y: touches[ 0 ].clientY };
   }
 }

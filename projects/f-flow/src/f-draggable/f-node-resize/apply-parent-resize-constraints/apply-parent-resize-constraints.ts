@@ -52,6 +52,7 @@ return;
     if (limits.hardLimit) {
       this._clampRectToInner(copy, limits.hardLimit.innerRect);
     }
+
     return copy;
   }
 
@@ -114,6 +115,7 @@ return;
 
     if (!this._hasOverflow(overflow)) {
       this._applyParentRect(limit, original);
+
       return;
     }
 
@@ -132,6 +134,7 @@ return;
     const top = Math.max(0, (inner.y) - child.y);
     const right = Math.max(0, (child.x + child.width) - (inner.x + inner.width));
     const bottom = Math.max(0, (child.y + child.height) - (inner.y + inner.height));
+
     return { left, top, right, bottom };
   }
 

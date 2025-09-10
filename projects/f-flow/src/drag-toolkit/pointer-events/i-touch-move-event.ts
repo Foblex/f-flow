@@ -16,6 +16,7 @@ export class ITouchMoveEvent extends IPointerEvent {
 
   public getPosition(): { x: number, y: number } {
     const touch = (this.originalEvent as TouchEvent).targetTouches[0];
+
     return { x: touch.clientX, y: touch.clientY };
   }
 }

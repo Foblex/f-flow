@@ -22,6 +22,7 @@ export class CalculateDirectChildrenUnionRect
     const childNodeRect = RectExtensions.union(
       this._calculateDirectChildren(nodeOrGroup.fId()).map((x) => this._normalizeRect(x)),
     );
+
     return childNodeRect ?
       this._concatRectWithParentPadding(childNodeRect, paddings) : null;
   }

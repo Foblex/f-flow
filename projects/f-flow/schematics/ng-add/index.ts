@@ -22,6 +22,7 @@ export function ngAdd(): Rule {
     context.addTask(new NodePackageInstallTask());
 
     context.logger.info('✅ All dependencies installed successfully.');
+
     return tree;
   };
 }

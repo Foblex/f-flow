@@ -178,6 +178,7 @@ export abstract class DragAndDropBase {
 
         if (!isDelayElapsed) {
           this.endDragSequence();
+
           return;
         }
 
@@ -287,6 +288,7 @@ function isFakeMousedownFromScreenReader(event: MouseEvent): boolean {
 function isFakeTouchstartFromScreenReader(event: TouchEvent): boolean {
   const touch: Touch | undefined =
     (event.touches && event.touches[0]) || (event.changedTouches && event.changedTouches[0]);
+
   return (
     !!touch &&
     touch.identifier === -1 &&

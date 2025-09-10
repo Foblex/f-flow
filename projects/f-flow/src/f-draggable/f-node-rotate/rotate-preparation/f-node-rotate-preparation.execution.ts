@@ -67,6 +67,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
   private _getNode(element: HTMLElement): FNodeBase | undefined {
     this._fNode = this._store
       .fNodes.find(x => x.isContains(element));
+
     return this._fNode;
   }
 
@@ -88,6 +89,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
       new CalculateInputConnectionsRequest(this._fNode!),
     ).map((x: FConnectionBase) => {
       const connector = this._store.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
+
       return {
         connection: new TargetConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter,
@@ -103,6 +105,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
       new CalculateOutputConnectionsRequest(this._fNode!),
     ).map((x: FConnectionBase) => {
       const connector = this._store.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
+
       return {
         connection: new SourceConnectionDragHandler(this._injector, x),
         connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter,

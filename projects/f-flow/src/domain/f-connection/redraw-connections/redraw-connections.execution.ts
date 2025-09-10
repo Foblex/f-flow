@@ -42,6 +42,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     if (!result) {
       throw new Error(`Output with id ${id} not found`);
     }
+
     return result;
   }
 
@@ -50,6 +51,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     if (!result) {
       throw new Error(`Input with id ${id} not found`);
     }
+
     return result;
   }
 

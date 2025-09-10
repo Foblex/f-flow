@@ -50,6 +50,7 @@ export class RectConstraint {
 return 0;
 }
     const k = v / step;
+
     return (v > 0 ? Math.ceil(k) : Math.floor(k)) * step;
   }
 

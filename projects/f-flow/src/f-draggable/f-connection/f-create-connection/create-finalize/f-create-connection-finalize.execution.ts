@@ -46,6 +46,7 @@ export class FCreateConnectionFinalizeExecution
     if (!output) {
       throw new Error(`Output with fOutputId ${ this._fResult.getData().fOutputId } not found. Make sure there is no f-connection to a non-existent fOutput.`);
     }
+
     return isNodeOutlet(output.hostElement) ? this._fMediator.execute<FNodeOutputBase>(
       new GetFirstConnectableOutputRequest(output as FNodeOutletBase),
     ) : output;

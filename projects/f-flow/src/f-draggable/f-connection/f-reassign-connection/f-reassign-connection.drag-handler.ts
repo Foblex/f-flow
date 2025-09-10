@@ -32,6 +32,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     if (!result) {
       throw new Error('Connection output not found');
     }
+
     return result as FNodeOutputDirective;
   }
 
@@ -40,6 +41,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     if (!result) {
       throw new Error('Connection input not found');
     }
+
     return result as FNodeInputDirective;
   }
 

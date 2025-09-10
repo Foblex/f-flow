@@ -56,6 +56,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _isValid(position: IPoint): boolean {
     this._fConnection = this._getConnectionToReassign(position);
+
     return !!this._fConnection && !this._dragContext.draggableItems.length;
   }
 
@@ -72,6 +73,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _getConnectionToReassign(position: IPoint): FConnectionBase | undefined {
     const connections = this._getConnectionsFromPoint(position);
+
     return connections.length ? connections[0] : undefined;
   }
 

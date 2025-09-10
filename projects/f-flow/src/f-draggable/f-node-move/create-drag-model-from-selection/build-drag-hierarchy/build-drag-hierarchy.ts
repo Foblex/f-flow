@@ -27,6 +27,7 @@ export class BuildDragHierarchy
     for (const item of selectedNodesAndGroupsWithChildren) {
       byId.set(item.fId(), new MoveDragHandler(this._injector, item));
     }
+
     return byId;
   }
 

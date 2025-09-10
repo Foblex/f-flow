@@ -32,6 +32,7 @@ export class GetFirstConnectableOutputExecution
     if(!fOutputs.length) {
       throw new Error('The fNode must contain at least one fOutput if there is an fOutlet')
     }
+
     return fOutputs[0];
   }
 
@@ -41,6 +42,7 @@ export class GetFirstConnectableOutputExecution
 
   private _getNode(fOutlet: FNodeOutletBase): FNodeBase {
     this._fNode = this._fNodes.find((x) => x.isContains(fOutlet.hostElement))!;
+
     return this._fNode;
   }
 

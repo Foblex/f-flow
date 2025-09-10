@@ -43,6 +43,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
 
   public handle(payload: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase | undefined {
     const connectors = this._findConnectorAtPosition(payload);
+
     return connectors.length > 0 ? connectors[ 0 ] : undefined;
   }
 

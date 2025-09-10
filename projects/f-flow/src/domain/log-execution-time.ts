@@ -14,6 +14,7 @@ export function LogExecutionTime(label?: string): MethodDecorator {
       }
 
       console.timeEnd(label || String(propertyKey));
+
       return result;
     };
 

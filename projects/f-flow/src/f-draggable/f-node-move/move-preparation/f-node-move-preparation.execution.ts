@@ -60,6 +60,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
   private _getNode(element: HTMLElement): FNodeBase | undefined {
     this._fNode = this._store.fNodes
       .find(x => x.isContains(element) && !x.fDraggingDisabled());
+
     return this._fNode;
   }
 
@@ -79,6 +80,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
       // User can drag node that can't be selected
       result = this._dragModelFromSelection(fNode);
     }
+
     return result;
   }
 

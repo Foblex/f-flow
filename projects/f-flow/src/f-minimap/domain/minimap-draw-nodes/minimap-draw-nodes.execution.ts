@@ -38,6 +38,7 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
       const element = this._createNodeElement();
       setRectToElement(this._getNodeRect(x), element);
       this._applyClassList(element, x, x instanceof FNodeDirective);
+
       return element;
     });
   }
