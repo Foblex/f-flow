@@ -4,8 +4,7 @@ import { ISnapResult, SnapLineService } from '../../../f-line-alignment';
 import { Injector } from '@angular/core';
 
 export class SnapLinesDragHandler {
-
-  private _debounceTimer: any = null;
+  private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   private readonly _canvasTransform: ITransformModel;
   private readonly _alignThreshold: number = 10;
@@ -32,12 +31,20 @@ export class SnapLinesDragHandler {
   private _renderGuides(_draggedRect: IRect): void {
     const intersect = this.findClosestAlignment(_draggedRect);
     if (intersect.xResult.value !== undefined) {
-      this._lineService.drawVerticalLine(intersect.xResult.value, this._size, this._canvasTransform);
+      this._lineService.drawVerticalLine(
+        intersect.xResult.value,
+        this._size,
+        this._canvasTransform,
+      );
     } else {
       this._lineService.hideVerticalLine();
     }
     if (intersect.yResult.value !== undefined) {
-      this._lineService.drawHorizontalLine(intersect.yResult.value, this._size, this._canvasTransform);
+      this._lineService.drawHorizontalLine(
+        intersect.yResult.value,
+        this._size,
+        this._canvasTransform,
+      );
     } else {
       this._lineService.hideHorizontalLine();
     }

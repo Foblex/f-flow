@@ -46,6 +46,8 @@ module.exports = tseslint.config(
           'modifiers': ['requiresQuotes'],
         },
       ],
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
 
