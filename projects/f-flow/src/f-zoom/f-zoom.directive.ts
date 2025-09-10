@@ -42,7 +42,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private _fMediator = inject(FMediator);
   private _rendered = inject(Renderer2);
 
-  private _triggersListener: Function[] = [];
+  private _triggersListener: (() => void)[] = [];
 
   @Input({ alias: 'fZoom', transform: booleanAttribute })
   public isEnabled: boolean = false;

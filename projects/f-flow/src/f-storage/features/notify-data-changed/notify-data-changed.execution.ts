@@ -6,10 +6,10 @@ import { FComponentsStore } from '../../../f-storage';
 @Injectable()
 @FExecutionRegister(NotifyDataChangedRequest)
 export class NotifyDataChangedExecution implements IExecution<NotifyDataChangedRequest, void> {
-
   private _store = inject(FComponentsStore);
 
-  public handle(request: NotifyDataChangedRequest): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public handle(_request: NotifyDataChangedRequest): void {
     this._store.dataChanged();
   }
 }

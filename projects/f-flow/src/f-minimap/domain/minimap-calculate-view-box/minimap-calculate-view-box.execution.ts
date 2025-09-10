@@ -10,18 +10,19 @@ import { FFlowBase } from '../../../f-flow';
 @FExecutionRegister(MinimapCalculateViewBoxRequest)
 export class MinimapCalculateViewBoxExecution implements IExecution<MinimapCalculateViewBoxRequest, IRect> {
 
-  private _fComponentStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
-  private get _fFlow(): FFlowBase | undefined {
-    return this._fComponentStore.fFlow;
+  private get _flowComponent(): FFlowBase | undefined {
+    return this._store.fFlow;
   }
 
-  private get _fCanvas(): FCanvasBase {
-    return this._fComponentStore.fCanvas!;
+  private get _canvasComponent(): FCanvasBase {
+    return this._store.fCanvas!;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public handle(request: MinimapCalculateViewBoxRequest): IRect {
-    if(!this._fFlow || !this._fCanvas) {
+    if(!this._flowComponent || !this._canvasComponent) {
       return RectExtensions.initialize();
     }
     return this._getRectForMinimapView();
@@ -35,6 +36,6 @@ export class MinimapCalculateViewBoxExecution implements IExecution<MinimapCalcu
   }
 
   private _calculateViewBox(): IRect {
-    return RectExtensions.div(RectExtensions.fromElement(this._fFlow!.hostElement), this._fCanvas.transform.scale);
+    return RectExtensions.div(RectExtensions.fromElement(this._flowComponent!.hostElement), this._canvasComponent.transform.scale);
   }
 }

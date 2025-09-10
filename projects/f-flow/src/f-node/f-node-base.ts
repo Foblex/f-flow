@@ -7,7 +7,7 @@ import {
   OutputEmitterRef, Renderer2,
   Signal, untracked,
 } from '@angular/core';
-import { IPoint, IRect, ISize, PointExtensions, SizeExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import {
   FConnectorBase,
 } from '../f-connectors';

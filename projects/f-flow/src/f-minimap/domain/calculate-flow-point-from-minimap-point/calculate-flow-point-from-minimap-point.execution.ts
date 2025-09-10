@@ -1,6 +1,6 @@
 import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point.request';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FMinimapData } from '../f-minimap-data';
@@ -10,13 +10,10 @@ import { FMinimapData } from '../f-minimap-data';
 export class CalculateFlowPointFromMinimapPointExecution
   implements IExecution<CalculateFlowPointFromMinimapPointRequest, IPoint> {
 
-  private get canvasScale(): number {
-    return this.fComponentsStore.fCanvas!.transform.scale;
-  }
+  private readonly _store = inject(FComponentsStore);
 
-  constructor(
-    private fComponentsStore: FComponentsStore,
-  ) {
+  private get _canvasScale(): number {
+    return this._store.fCanvas!.transform.scale;
   }
 
   public handle(payload: CalculateFlowPointFromMinimapPointRequest): IPoint {
@@ -37,13 +34,13 @@ export class CalculateFlowPointFromMinimapPointExecution
     const eventPointInFlow = this.normalizeEventPoint(eventPoint, minimap);
     return PointExtensions.sum(
       eventPointInFlow,
-      RectExtensions.mult(minimap.viewBox, this.canvasScale),
+      RectExtensions.mult(minimap.viewBox, this._canvasScale),
     );
   }
 
   public normalizeEventPoint(point: IPoint, minimap: FMinimapData): Point {
     return this.getEventPointInMinimap(point, minimap)
-     .mult(minimap.scale).mult(this.canvasScale);
+     .mult(minimap.scale).mult(this._canvasScale);
   }
 
   private getEventPointInMinimap(eventPoint: IPoint, minimap: FMinimapData): Point {

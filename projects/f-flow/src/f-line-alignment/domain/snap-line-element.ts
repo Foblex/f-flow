@@ -6,11 +6,11 @@ export class SnapLineElement {
   private readonly element: HTMLElement;
 
   constructor(
-    fBrowser: BrowserService,
-    private readonly hostElement: HTMLElement,
+    browser: BrowserService,
+    hostElement: HTMLElement,
   ) {
-    this.element = fBrowser.document.createElement('div');
-    this.hostElement.appendChild(this.element);
+    this.element = browser.document.createElement('div');
+    hostElement.appendChild(this.element);
     this.element.classList.add('f-line');
   }
 
@@ -24,10 +24,18 @@ export class SnapLineElement {
 
   public draw(object: Partial<ILineAlignmentRect>): void {
     this.element.style.position = 'absolute';
-    Object.keys(object).forEach((key: string) => {
-      // @ts-ignore
-      this.element.style[ key ] = object[ key ] + 'px';
-    });
+
+    type RectKey = keyof ILineAlignmentRect;
+    for (const [prop, value] of Object.entries(object) as [RectKey, number | undefined][]) {
+      if (value != null) {
+        this.element.style.setProperty(prop as string, `${value}px`);
+      }
+    }
+    //
+    //
+    // Object.keys(object).forEach((key: string) => {
+    //   this.element.style[ key ] = object[ key ] + 'px';
+    // });
   }
 }
 

@@ -1,6 +1,6 @@
 import {
   AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef,
-  inject, input, Input, viewChild, ViewChild,
+  inject, input, viewChild,
 } from "@angular/core";
 import { FMediator } from '@foblex/mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';

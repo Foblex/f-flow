@@ -84,6 +84,7 @@ export class FGroupDirective extends FNodeBase
   });
 
   constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     elementReference: ElementRef<HTMLElement>,
   ) {
     super(elementReference.nativeElement);
