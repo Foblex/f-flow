@@ -15,8 +15,33 @@ module.exports = tseslint.config(
     processor: angular.processInlineTemplates,
     rules: {
       '@angular-eslint/no-input-rename': 'off',
-      '@typescript-eslint/unbound-method': 'off',
       '@angular-eslint/directive-class-suffix': 'off',
+      '@angular-eslint/component-class-suffix': 'off',
+      '@angular-eslint/no-forward-ref': 'off',
+
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          'selector': 'memberLike',
+          'format': ['camelCase'],
+          'leadingUnderscore': 'forbid',
+        },
+        {
+          'selector': 'memberLike',
+          'modifiers': ['private'],
+          'format': ['camelCase'],
+          'leadingUnderscore': 'require',
+        },
+      ],
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'warn',
+
+      '@typescript-eslint/ban-types': 'off',
+      '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/dot-notation': 'off',
       '@typescript-eslint/member-delimiter-style': 'off',
@@ -24,8 +49,7 @@ module.exports = tseslint.config(
       '@typescript-eslint/no-empty-function': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
       '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@angular-eslint/no-forward-ref': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-inferrable-types': [
         'error',
         {
@@ -40,15 +64,7 @@ module.exports = tseslint.config(
       'no-empty': 'off',
       'no-multiple-empty-lines': 'error',
       'no-underscore-dangle': 'off',
-      'max-len': [
-        'error',
-        {
-          code: 140,
-          ignoreUrls: true,
-          ignoreRegExpLiterals: true,
-          ignorePattern: '^import .*',
-        },
-      ],
+      'max-len': 'off',
       'no-multi-spaces': 'error',
       'object-curly-spacing': ['error', 'always'],
       'quote-props': 'off',
@@ -62,17 +78,13 @@ module.exports = tseslint.config(
         },
       ],
       'no-restricted-imports': ['error', 'rxjs/Rx'],
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
       'no-prototype-builtins': 'off',
     },
   },
   {
     files: ['**/*.html'],
     ignores: ['dist/**', 'coverage/**', 'node_modules/**'],
-    extends: [
-      angular.configs.templateRecommended,
-      angular.configs.templateAccessibility,
-    ],
+    extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
   },
 );
