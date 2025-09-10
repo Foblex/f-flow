@@ -16,5 +16,5 @@ export const F_ZOOM_FEATURES = [
 
   ResetZoomExecution,
 
-  SetZoomExecution
+  SetZoomExecution,
 ];

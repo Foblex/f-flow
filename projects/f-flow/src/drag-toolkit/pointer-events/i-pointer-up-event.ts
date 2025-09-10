@@ -1,4 +1,4 @@
-import {IPointerEvent} from "./i-pointer-event";
+import { IPointerEvent } from "./i-pointer-event";
 
 export class IPointerUpEvent extends IPointerEvent {
 

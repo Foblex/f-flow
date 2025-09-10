@@ -1,11 +1,11 @@
-import {inject, Injectable} from '@angular/core';
-import {CalculateResizeLimitsRequest} from './calculate-resize-limits-request';
-import {IRect, SizeExtensions} from '@foblex/2d';
-import {IResizeConstraint, IResizeLimit, IResizeLimits} from '../constraint';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {CalculateDirectChildrenUnionRectRequest} from '../calculate-direct-children-union-rect';
-import {FNodeBase} from '../../../f-node';
-import {GetNodePaddingRequest, GetParentNodesRequest} from '../../../domain';
+import { inject, Injectable } from '@angular/core';
+import { CalculateResizeLimitsRequest } from './calculate-resize-limits-request';
+import { IRect, SizeExtensions } from '@foblex/2d';
+import { IResizeConstraint, IResizeLimit, IResizeLimits } from '../constraint';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { CalculateDirectChildrenUnionRectRequest } from '../calculate-direct-children-union-rect';
+import { FNodeBase } from '../../../f-node';
+import { GetNodePaddingRequest, GetParentNodesRequest } from '../../../domain';
 import {
   GetNodeBoundingIncludePaddingsRequest,
   GetNodeBoundingIncludePaddingsResponse,
@@ -18,7 +18,7 @@ export class CalculateResizeLimits
 
   private readonly _mediator = inject(FMediator);
 
-  public handle({nodeOrGroup, rect}: CalculateResizeLimitsRequest): IResizeConstraint {
+  public handle({ nodeOrGroup, rect }: CalculateResizeLimitsRequest): IResizeConstraint {
     const parents = this._getParentsChain(nodeOrGroup);
 
     const paddings = this._calculateNodePaddings(nodeOrGroup, rect);
@@ -26,7 +26,7 @@ export class CalculateResizeLimits
     return {
       limits: this._buildSoftHardLimits(parents),
       childrenBounds: this._getNormalizedChildrenBounds(nodeOrGroup, paddings),
-      minimumSize: SizeExtensions.initialize(paddings[0] + paddings[2], paddings[1] + paddings[3])
+      minimumSize: SizeExtensions.initialize(paddings[0] + paddings[2], paddings[1] + paddings[3]),
     }
   }
 
@@ -68,7 +68,7 @@ export class CalculateResizeLimits
 
   private _getParentInfo(parent: FNodeBase, childrenPaddings: [number, number, number, number]): GetNodeBoundingIncludePaddingsResponse {
     return this._mediator.execute<GetNodeBoundingIncludePaddingsResponse>(
-      new GetNodeBoundingIncludePaddingsRequest(parent, childrenPaddings)
+      new GetNodeBoundingIncludePaddingsRequest(parent, childrenPaddings),
     );
   }
 
@@ -78,8 +78,8 @@ export class CalculateResizeLimits
 
   private _makeLimit(
     nodeOrGroup: FNodeBase,
-    {boundingRect, innerRect}: GetNodeBoundingIncludePaddingsResponse
+    { boundingRect, innerRect }: GetNodeBoundingIncludePaddingsResponse,
   ): IResizeLimit {
-    return {nodeOrGroup, boundingRect, innerRect};
+    return { nodeOrGroup, boundingRect, innerRect };
   }
 }

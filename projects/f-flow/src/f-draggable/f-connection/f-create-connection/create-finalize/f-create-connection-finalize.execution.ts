@@ -10,8 +10,8 @@ import { FCreateConnectionEvent } from '../f-create-connection.event';
 import { FCreateConnectionDragHandler } from '../f-create-connection.drag-handler';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { IFCreateConnectionDragResult } from '../i-f-create-connection-drag-result';
-import {IPointerEvent} from "../../../../drag-toolkit";
-import {FindConnectableConnectorUsingPriorityAndPositionRequest} from "../../../../domain";
+import { IPointerEvent } from "../../../../drag-toolkit";
+import { FindConnectableConnectorUsingPriorityAndPositionRequest } from "../../../../domain";
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionFinalizeRequest)
@@ -38,7 +38,7 @@ export class FCreateConnectionFinalizeExecution
 
   private _isValid(): boolean {
     return this._dragContext.draggableItems.some(
-      (x) => x instanceof FCreateConnectionDragHandler
+      (x) => x instanceof FCreateConnectionDragHandler,
     );
   }
 
@@ -47,7 +47,7 @@ export class FCreateConnectionFinalizeExecution
       throw new Error(`Output with fOutputId ${ this._fResult.getData().fOutputId } not found. Make sure there is no f-connection to a non-existent fOutput.`);
     }
     return isNodeOutlet(output.hostElement) ? this._fMediator.execute<FNodeOutputBase>(
-      new GetFirstConnectableOutputRequest(output as FNodeOutletBase)
+      new GetFirstConnectableOutputRequest(output as FNodeOutletBase),
     ) : output;
   }
 
@@ -64,8 +64,8 @@ export class FCreateConnectionFinalizeExecution
       new FCreateConnectionEvent(
         this.getTargetOutput(this.getOutput() || this.getOutlet()).fId,
         this._getInputUnderPointer(event)?.fId,
-        event.getPosition()
-      )
+        event.getPosition(),
+      ),
     );
   }
 
@@ -73,8 +73,8 @@ export class FCreateConnectionFinalizeExecution
     return this._fMediator.execute<FConnectorBase | undefined>(
       new FindConnectableConnectorUsingPriorityAndPositionRequest(
         event.getPosition(),
-        this._fResult.getData().canBeConnectedInputs
-      )
+        this._fResult.getData().canBeConnectedInputs,
+      ),
     );
   }
 }

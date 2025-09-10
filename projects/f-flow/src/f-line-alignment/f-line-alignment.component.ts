@@ -12,10 +12,10 @@ import { FMediator } from '@foblex/mediator';
   styleUrls: [ "./f-line-alignment.component.scss" ],
   exportAs: "fComponent",
   host: {
-    'class': 'f-line-alignment f-component'
+    'class': 'f-line-alignment f-component',
   },
   providers: [
-    { provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent }
+    { provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent },
   ],
 })
 export class FLineAlignmentComponent

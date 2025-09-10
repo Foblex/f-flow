@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component, contentChild,
   ElementRef, inject, OnDestroy,
-  OnInit
+  OnInit,
 } from "@angular/core";
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
@@ -12,7 +12,7 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddBackgroundToStoreRequest,
   AddPatternToBackgroundRequest,
-  RemoveBackgroundFromStoreRequest
+  RemoveBackgroundFromStoreRequest,
 } from '../domain';
 
 @Component({
@@ -21,7 +21,7 @@ import {
   styleUrls: [ "./f-background.component.scss" ],
   standalone: true,
   host: {
-    'class': 'f-component f-background'
+    'class': 'f-component f-background',
   },
   providers: [ { provide: F_BACKGROUND, useExisting: FBackgroundComponent } ],
   changeDetection: ChangeDetectionStrategy.OnPush,

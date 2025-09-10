@@ -8,5 +8,5 @@ export const F_BACKGROUND_PROVIDERS = [
 
   FRectPatternComponent,
 
-  FCirclePatternComponent
+  FCirclePatternComponent,
 ];

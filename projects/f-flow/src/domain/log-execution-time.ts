@@ -1,8 +1,8 @@
 export function LogExecutionTime(label?: string): MethodDecorator {
   return function (
-    target: Object,
+    target: object,
     propertyKey: string | symbol,
-    descriptor: TypedPropertyDescriptor<any>
+    descriptor: TypedPropertyDescriptor<any>,
   ): TypedPropertyDescriptor<any> | void {
     const originalMethod = descriptor.value;
     descriptor.value = function (...args: any[]) {

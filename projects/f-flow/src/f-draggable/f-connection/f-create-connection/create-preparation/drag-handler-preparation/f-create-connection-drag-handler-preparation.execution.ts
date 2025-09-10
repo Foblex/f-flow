@@ -35,8 +35,8 @@ export class FCreateConnectionDragHandlerPreparationExecution
 
     this._dragContext.draggableItems = [
       new FCreateConnectionDragHandler(
-        this._injector, request.fOutputOrOutlet, positionRelativeToCanvasComponent
-      )
+        this._injector, request.fOutputOrOutlet, positionRelativeToCanvasComponent,
+      ),
     ];
   }
 }

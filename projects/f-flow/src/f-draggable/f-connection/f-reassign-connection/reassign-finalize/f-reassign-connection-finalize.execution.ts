@@ -12,7 +12,7 @@ import {
 } from '../../../../domain';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { IFReassignConnectionDragResult } from '../i-f-reassign-connection-drag-result';
-import {IPointerEvent} from "../../../../drag-toolkit";
+import { IPointerEvent } from "../../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FReassignConnectionFinalizeRequest)
@@ -42,7 +42,7 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
 
   private _isDroppedConnectionReassignEvent(): boolean {
     return this._draggableContext.draggableItems.some(
-      (x) => x instanceof FReassignConnectionDragHandler
+      (x) => x instanceof FReassignConnectionDragHandler,
     );
   }
 
@@ -61,8 +61,8 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
     return this._mediator.execute<FConnectorBase | undefined>(
       new FindConnectableConnectorUsingPriorityAndPositionRequest(
         event.getPosition(),
-        this._dragResult.getData().connectableConnectors
-      )
+        this._dragResult.getData().connectableConnectors,
+      ),
     );
   }
 
@@ -91,7 +91,7 @@ export class FReassignConnectionFinalizeExecution implements IExecution<FReassig
       !isTargetDragHandle ? fConnector?.fId : undefined,
       fConnection.fInputId,
       isTargetDragHandle ? fConnector?.fId : undefined,
-      event.getPosition()
+      event.getPosition(),
     );
   }
 }

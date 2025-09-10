@@ -4,7 +4,7 @@ import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import {IPointerEvent} from "../../../drag-toolkit";
+import { IPointerEvent } from "../../../drag-toolkit";
 
 /**
  * Execution that handles pointer move events during a drag operation.
@@ -25,7 +25,7 @@ export class OnPointerMoveExecution implements IExecution<OnPointerMoveRequest, 
 
   public handle(request: OnPointerMoveRequest): void {
     this._setDifferenceToDraggableItems(
-      this._getDifferenceBetweenPointerAndPointerDown(request.event)
+      this._getDifferenceBetweenPointerAndPointerDown(request.event),
     );
   }
 

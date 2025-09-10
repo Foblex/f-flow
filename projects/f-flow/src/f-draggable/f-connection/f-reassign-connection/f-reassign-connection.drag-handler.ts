@@ -1,18 +1,18 @@
-import {FDragHandlerResult, IFDragHandler} from '../../f-drag-handler';
+import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
 import {
   GetConnectorAndRectRequest,
   IConnectorAndRect,
 } from '../../../domain';
-import {FConnectionBase, FSnapConnectionComponent} from '../../../f-connection';
-import {FNodeInputDirective, FNodeOutputDirective} from '../../../f-connectors';
-import {IPoint} from '@foblex/2d';
-import {FMediator} from '@foblex/mediator';
-import {FComponentsStore} from '../../../f-storage';
-import {IFReassignConnectionDragResult} from './i-f-reassign-connection-drag-result';
-import {Injector} from '@angular/core';
-import {IFReassignHandler, roundedRectFromPoint} from "./i-f-reassign-handler";
-import {FReassignTargetDragHandler} from "./f-reassign-target.drag-handler";
-import {FReassignSourceDragHandler} from "./f-reassign-source.drag-handler";
+import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
+import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
+import { IPoint } from '@foblex/2d';
+import { FMediator } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
+import { IFReassignConnectionDragResult } from './i-f-reassign-connection-drag-result';
+import { Injector } from '@angular/core';
+import { IFReassignHandler, roundedRectFromPoint } from "./i-f-reassign-handler";
+import { FReassignTargetDragHandler } from "./f-reassign-target.drag-handler";
+import { FReassignSourceDragHandler } from "./f-reassign-source.drag-handler";
 
 export class FReassignConnectionDragHandler implements IFDragHandler {
 
@@ -56,14 +56,14 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   constructor(
     _injector: Injector,
     private _connection: FConnectionBase,
-    private _isTargetDragHandle: boolean
+    private _isTargetDragHandle: boolean,
   ) {
     this._fResult = _injector.get(FDragHandlerResult);
     this._fMediator = _injector.get(FMediator);
     this._store = _injector.get(FComponentsStore);
 
     this.fData = {
-      fConnectionId: this._connection.fId()
+      fConnectionId: this._connection.fId(),
     };
 
     this._reassignHandler = this._isTargetDragHandle ? this._targetDragHandler() : this._sourceDragHandler();
@@ -86,7 +86,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
       sourceConnectorRect: roundedRectFromPoint(this._connection.line.point1),
       targetConnectorRect: roundedRectFromPoint(this._connection.line.point2),
       connectableConnectors: this._reassignHandler.getConnectableConnectors(),
-      fConnection: this._connection
+      fConnection: this._connection,
     });
   }
 

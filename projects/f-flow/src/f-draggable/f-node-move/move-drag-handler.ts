@@ -1,12 +1,12 @@
-import {IPoint, IRect, PointExtensions, RectExtensions} from '@foblex/2d';
-import {IFDragHandler} from '../f-drag-handler';
-import {FNodeBase} from '../../f-node';
-import {BaseConnectionDragHandler} from './connection-drag-handlers';
-import {F_CSS_CLASS, GetNormalizedElementRectRequest} from "../../domain";
-import {Injector} from "@angular/core";
-import {IDragLimits} from "./create-drag-model-from-selection";
-import {DragConstraintPipeline, expandRectFromBaseline, IConstraintResult} from "./constraint";
-import {FMediator} from "@foblex/mediator";
+import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IFDragHandler } from '../f-drag-handler';
+import { FNodeBase } from '../../f-node';
+import { BaseConnectionDragHandler } from './connection-drag-handlers';
+import { F_CSS_CLASS, GetNormalizedElementRectRequest } from "../../domain";
+import { Injector } from "@angular/core";
+import { IDragLimits } from "./create-drag-model-from-selection";
+import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from "./constraint";
+import { FMediator } from "@foblex/mediator";
 
 export class MoveDragHandler implements IFDragHandler {
 
@@ -30,7 +30,7 @@ export class MoveDragHandler implements IFDragHandler {
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
     this._startRect = _injector.get(FMediator).execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement))
-    this._startPosition = {...nodeOrGroup._position};
+    this._startPosition = { ...nodeOrGroup._position };
   }
 
   public setLimits(limits: IDragLimits): void {
@@ -45,7 +45,7 @@ export class MoveDragHandler implements IFDragHandler {
   }
 
   private _applySoftExpansions(
-    softResults: IConstraintResult[]
+    softResults: IConstraintResult[],
   ): void {
     this._lastSoftResults = softResults;
     this._lastSoftResults.forEach((result, index) => {
@@ -56,8 +56,8 @@ export class MoveDragHandler implements IFDragHandler {
   }
 
   private _commitParentRect(parent: FNodeBase, rect: IRect): void {
-    parent.updateSize({width: rect.width, height: rect.height});
-    parent.updatePosition({x: rect.x, y: rect.y});
+    parent.updateSize({ width: rect.width, height: rect.height });
+    parent.updatePosition({ x: rect.x, y: rect.y });
     parent.redraw();
   }
 

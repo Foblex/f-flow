@@ -55,7 +55,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
     sortedChildrenItems: HTMLElement[],
     parent: FNodeBase,
   ): void {
-    let nextSibling = parent.hostElement.nextElementSibling;
+    const nextSibling = parent.hostElement.nextElementSibling;
 
     const fragment = this._browser.document.createDocumentFragment();
 

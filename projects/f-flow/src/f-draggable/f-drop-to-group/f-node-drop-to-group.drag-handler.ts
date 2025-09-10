@@ -1,10 +1,10 @@
-import {Directive, Injector} from '@angular/core';
-import {IPoint, ITransformModel, Point, PointExtensions, RectExtensions} from '@foblex/2d';
-import {IFDragHandler} from '../f-drag-handler';
-import {FComponentsStore} from '../../f-storage';
-import {INodeWithRect} from '../domain';
-import {FDraggableDataContext} from '../f-draggable-data-context';
-import {F_CSS_CLASS} from "../../domain";
+import { Directive, Injector } from '@angular/core';
+import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IFDragHandler } from '../f-drag-handler';
+import { FComponentsStore } from '../../f-storage';
+import { INodeWithRect } from '../domain';
+import { FDraggableDataContext } from '../f-draggable-data-context';
+import { F_CSS_CLASS } from "../../domain";
 
 @Directive()
 export class FNodeDropToGroupDragHandler implements IFDragHandler {
@@ -33,7 +33,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
   }
 
   public prepareDragSequence(): void {
-    this.containersForDrop.forEach(({node}) => {
+    this.containersForDrop.forEach(({ node }) => {
       node.hostElement.classList.add(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
     });
   }
@@ -76,7 +76,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
   public onPointerUp(): void {
     this._unmarkIncludeNode();
-    this.containersForDrop.forEach(({node}) => {
+    this.containersForDrop.forEach(({ node }) => {
       node.hostElement.classList.remove(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
     });
     if (this._debounceTimer) {

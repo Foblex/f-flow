@@ -17,7 +17,7 @@ export class GetCurrentSelectionExecution implements IExecution<GetCurrentSelect
     return {
       fNodeIds: this._getSelectedNodes(),
       fGroupIds: this._getSelectedGroups(),
-      fConnectionIds: this._getSelectedConnections()
+      fConnectionIds: this._getSelectedConnections(),
     }
   }
 

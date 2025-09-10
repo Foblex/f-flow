@@ -24,7 +24,7 @@ export class MinimapDragFinalizeExecution implements IExecution<MinimapDragFinal
 
   private _isValid(): boolean {
     return this.fDraggableDataContext.draggableItems.some(
-      (x) => x instanceof FMinimapDragHandler
+      (x) => x instanceof FMinimapDragHandler,
     );
   }
 }

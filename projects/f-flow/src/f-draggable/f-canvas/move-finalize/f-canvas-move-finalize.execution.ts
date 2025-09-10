@@ -19,7 +19,7 @@ export class FCanvasMoveFinalizeExecution implements IExecution<FCanvasMoveFinal
 
   private _isValid(): boolean {
     return this._dragContext.draggableItems.some(
-      (x) => x instanceof FCanvasDragHandler
+      (x) => x instanceof FCanvasDragHandler,
     );
   }
 }

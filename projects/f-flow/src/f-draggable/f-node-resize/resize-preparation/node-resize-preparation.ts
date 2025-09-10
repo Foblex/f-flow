@@ -44,8 +44,8 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
 
     this._dragContext.draggableItems = [
       new NodeResizeDragHandler(
-        this._injector, this._nodeOrGroup!, EFResizeHandleType[ this._getHandleType(request.event.targetElement) ]
-      )
+        this._injector, this._nodeOrGroup!, EFResizeHandleType[ this._getHandleType(request.event.targetElement) ],
+      ),
     ];
   }
 
@@ -74,7 +74,7 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
 
   private _selectAndUpdateNodeLayer() {
     this._mediator.execute(
-      new SelectAndUpdateNodeLayerRequest(this._nodeOrGroup!)
+      new SelectAndUpdateNodeLayerRequest(this._nodeOrGroup!),
     );
   }
 

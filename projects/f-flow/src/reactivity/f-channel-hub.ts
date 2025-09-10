@@ -26,7 +26,7 @@ export class FChannelHub {
     });
 
     const unsubscribeCallbacks = this._channels.map(channel =>
-      channel.listen(() => modifiedCallback())
+      channel.listen(() => modifiedCallback()),
     );
 
     destroyRef.onDestroy(() => {

@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, Inject, ViewChild
+  Component, ElementRef, Inject, ViewChild,
 } from "@angular/core";
 import { ILine, PointExtensions } from '@foblex/2d';
 import { FConnectionTextPathDirective } from './f-connection-text-path.directive';
@@ -24,7 +24,7 @@ export class FConnectionTextComponent implements IConnectionText {
 
   public get textId(): string {
     return F_CONNECTION_IDENTIFIERS.textId(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 

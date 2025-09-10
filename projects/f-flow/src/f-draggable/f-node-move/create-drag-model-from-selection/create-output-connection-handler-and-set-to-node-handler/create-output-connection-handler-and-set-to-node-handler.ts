@@ -7,7 +7,7 @@ import { FConnectionBase } from '../../../../f-connection';
 import {
   BaseConnectionDragHandler,
   SourceTargetConnectionDragHandler,
-  SourceConnectionDragHandler
+  SourceConnectionDragHandler,
 } from "../../connection-drag-handlers";
 
 @Injectable()

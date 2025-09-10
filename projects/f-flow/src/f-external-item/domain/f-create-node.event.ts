@@ -1,4 +1,4 @@
-import {IPoint, IRect} from '@foblex/2d';
+import { IPoint, IRect } from '@foblex/2d';
 
 export class FCreateNodeEvent<TData = any> {
 

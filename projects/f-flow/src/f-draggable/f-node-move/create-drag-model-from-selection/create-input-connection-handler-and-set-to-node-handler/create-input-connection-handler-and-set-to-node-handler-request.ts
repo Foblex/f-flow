@@ -7,7 +7,7 @@ export class CreateInputConnectionHandlerAndSetToNodeHandlerRequest {
   constructor(
     public dragHandler: MoveDragHandler,
     public outputIds: string[],
-    public existingConnectionHandlers: BaseConnectionDragHandler[]
+    public existingConnectionHandlers: BaseConnectionDragHandler[],
   ) {
   }
 }

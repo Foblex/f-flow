@@ -16,7 +16,7 @@ export class GetElementRoundedRectExecution implements IExecution<GetElementRoun
 
   public handle(request: GetElementRoundedRectRequest): RoundedRect {
     return this._getRoundedRect(
-      RectExtensions.fromElement(request.element), request.element, this._getComputedStyle(request.element)
+      RectExtensions.fromElement(request.element), request.element, this._getComputedStyle(request.element),
     );
   }
 
@@ -29,7 +29,7 @@ export class GetElementRoundedRectExecution implements IExecution<GetElementRoun
       this._toPixels(styles.borderTopLeftRadius, element, styles.fontSize),
       this._toPixels(styles.borderTopRightRadius, element, styles.fontSize),
       this._toPixels(styles.borderBottomRightRadius, element, styles.fontSize),
-      this._toPixels(styles.borderBottomLeftRadius, element, styles.fontSize)
+      this._toPixels(styles.borderBottomLeftRadius, element, styles.fontSize),
     );
   }
 

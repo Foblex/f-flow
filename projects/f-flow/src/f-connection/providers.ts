@@ -2,7 +2,7 @@ import {
   FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent,
   FConnectionGradientComponent, FConnectionPathComponent, FConnectionSelectionComponent,
   FConnectionTextComponent,
-  FConnectionTextPathDirective
+  FConnectionTextPathDirective,
 } from './common';
 import { FConnectionComponent } from './f-connection';
 import { FConnectionCenterDirective } from './f-connection-center';
@@ -24,5 +24,5 @@ export const F_CONNECTION_PROVIDERS = [
   FConnectionCenterDirective,
   FConnectionForCreateComponent,
   FMarkerDirective,
-  FSnapConnectionComponent
+  FSnapConnectionComponent,
 ];

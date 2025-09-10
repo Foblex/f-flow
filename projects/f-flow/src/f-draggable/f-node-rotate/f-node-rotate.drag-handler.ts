@@ -65,14 +65,14 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   private _calculateDownPoint(): IPoint {
     return PointExtensions.sub(
       this._dragContext.onPointerDownPosition,
-      PointExtensions.sum(this._transform.position, this._transform.scaledPosition)
+      PointExtensions.sum(this._transform.position, this._transform.scaledPosition),
     );
   }
 
   private _calculateAngleBetweenVectors(position: IPoint): number {
     return Math.atan2(
       position.y - this._fNodeRect.gravityCenter.y,
-      position.x - this._fNodeRect.gravityCenter.x
+      position.x - this._fNodeRect.gravityCenter.x,
     ) * (180 / Math.PI);
   }
 
@@ -83,12 +83,12 @@ export class FNodeRotateDragHandler implements IFDragHandler {
 
     this._fSourceHandlers.forEach((x) => {
       x.connection.setSourceDifference(
-        this._calculateDifferenceAfterRotation(x.connector, rotation)
+        this._calculateDifferenceAfterRotation(x.connector, rotation),
       )
     });
     this._fTargetHandlers.forEach((x) => {
       x.connection.setTargetDifference(
-        this._calculateDifferenceAfterRotation(x.connector, rotation)
+        this._calculateDifferenceAfterRotation(x.connector, rotation),
       );
     });
   }
@@ -102,7 +102,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
     return calculateDifferenceAfterRotation(
       position,
       rotation - this._startRotation,
-      this._fNodeRect.gravityCenter
+      this._fNodeRect.gravityCenter,
     )
   }
 

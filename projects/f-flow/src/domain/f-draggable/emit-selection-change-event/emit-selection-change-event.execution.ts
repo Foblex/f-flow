@@ -41,7 +41,7 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
 
   private _emitSelectionChange(selection: ICurrentSelection): void {
     this._fSelectionChange.emit(
-      new FSelectionChangeEvent(selection.fNodeIds, selection.fGroupIds, selection.fConnectionIds)
+      new FSelectionChangeEvent(selection.fNodeIds, selection.fGroupIds, selection.fConnectionIds),
     );
   }
 }

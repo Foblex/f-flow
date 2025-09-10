@@ -15,7 +15,7 @@ export class ListenTransformChangesExecution
     return new FChannelHub(
       this._store.transformChanges$,
       this._store.dataChanges$,
-      this._store.countChanges$
+      this._store.countChanges$,
     );
   }
 }

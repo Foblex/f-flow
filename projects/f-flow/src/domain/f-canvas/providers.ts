@@ -35,5 +35,5 @@ export const F_CANVAS_FEATURES = [
 
   ResetScaleAndCenterExecution,
 
-  UpdateScaleExecution
+  UpdateScaleExecution,
 ];

@@ -1,3 +1,1 @@
-export interface IMap<T = string> {
-  [ key: string ]: T;
-}
+export type IMap<T = string> = Record<string, T>;

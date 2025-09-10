@@ -1,9 +1,9 @@
-import {inject, Injectable, Injector} from '@angular/core';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {BuildDragHierarchyRequest} from "./build-drag-hierarchy-request";
-import {MoveDragHandler} from "../../move-drag-handler";
-import {BuildDragHierarchyResponse} from "./build-drag-hierarchy-response";
-import {FNodeBase} from "../../../../f-node";
+import { inject, Injectable, Injector } from '@angular/core';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { BuildDragHierarchyRequest } from "./build-drag-hierarchy-request";
+import { MoveDragHandler } from "../../move-drag-handler";
+import { BuildDragHierarchyResponse } from "./build-drag-hierarchy-response";
+import { FNodeBase } from "../../../../f-node";
 
 @Injectable()
 @FExecutionRegister(BuildDragHierarchyRequest)
@@ -13,7 +13,7 @@ export class BuildDragHierarchy
   private readonly _injector = inject(Injector);
   private readonly _mediator = inject(FMediator);
 
-  public handle({selectedNodesAndGroupsWithChildren}: BuildDragHierarchyRequest): BuildDragHierarchyResponse {
+  public handle({ selectedNodesAndGroupsWithChildren }: BuildDragHierarchyRequest): BuildDragHierarchyResponse {
     const byId = this._createHandlersMap(selectedNodesAndGroupsWithChildren);
     const roots = this._linkParentsAndCollectRoots(selectedNodesAndGroupsWithChildren, byId);
 
@@ -21,7 +21,7 @@ export class BuildDragHierarchy
   }
 
   private _createHandlersMap(
-    selectedNodesAndGroupsWithChildren: FNodeBase[]
+    selectedNodesAndGroupsWithChildren: FNodeBase[],
   ): Map<string, MoveDragHandler> {
     const byId = new Map<string, MoveDragHandler>();
     for (const item of selectedNodesAndGroupsWithChildren) {
@@ -32,7 +32,7 @@ export class BuildDragHierarchy
 
   private _linkParentsAndCollectRoots(
     selectedNodesAndGroupsWithChildren: FNodeBase[],
-    byId: Map<string, MoveDragHandler>
+    byId: Map<string, MoveDragHandler>,
   ): MoveDragHandler[] {
     const roots: MoveDragHandler[] = [];
 

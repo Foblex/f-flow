@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {FExecutionRegister, IExecution} from '@foblex/mediator';
-import {SortContainersForDropByLayerRequest} from "./sort-containers-for-drop-by-layer-request";
-import {INodeWithRect} from "../../domain";
+import { Injectable } from '@angular/core';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { SortContainersForDropByLayerRequest } from "./sort-containers-for-drop-by-layer-request";
+import { INodeWithRect } from "../../domain";
 
 @Injectable()
 @FExecutionRegister(SortContainersForDropByLayerRequest)
@@ -16,7 +16,9 @@ export class SortContainersForDropByLayer implements IExecution<SortContainersFo
 
       const domOrder = this._domOrder(elA, elB);
 
-      if (domOrder !== 0) return -domOrder;
+      if (domOrder !== 0) {
+return -domOrder;
+}
 
       return a.idx - b.idx;
     });
@@ -25,19 +27,29 @@ export class SortContainersForDropByLayer implements IExecution<SortContainersFo
   }
 
   private _domOrder(a: Element, b: Element): number {
-    if (a === b) return 0;
+    if (a === b) {
+return 0;
+}
 
     const pos = a.compareDocumentPosition(b);
 
-    if (pos & Node.DOCUMENT_POSITION_FOLLOWING)  return -1;
-    if (pos & Node.DOCUMENT_POSITION_PRECEDING)  return  1;
+    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) {
+return -1;
+}
+    if (pos & Node.DOCUMENT_POSITION_PRECEDING) {
+return 1;
+}
 
     if (pos & Node.DOCUMENT_POSITION_DISCONNECTED) {
       const ar = (a as HTMLElement).getBoundingClientRect?.() ?? { top: 0, left: 0 };
       const br = (b as HTMLElement).getBoundingClientRect?.() ?? { top: 0, left: 0 };
 
-      if (ar.top !== br.top)  return ar.top < br.top ? -1 : 1;
-      if (ar.left !== br.left) return ar.left < br.left ? -1 : 1;
+      if (ar.top !== br.top) {
+return ar.top < br.top ? -1 : 1;
+}
+      if (ar.left !== br.left) {
+return ar.left < br.left ? -1 : 1;
+}
 
       return 0;
     }

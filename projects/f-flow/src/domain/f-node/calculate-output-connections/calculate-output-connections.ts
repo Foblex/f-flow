@@ -17,7 +17,7 @@ export class CalculateOutputConnections
 
   public handle(request: CalculateOutputConnectionsRequest): FConnectionBase[] {
     return this._calculateConnections(
-      new Set(this._calculateConnectors(request.fNode))
+      new Set(this._calculateConnectors(request.fNode)),
     );
   }
 

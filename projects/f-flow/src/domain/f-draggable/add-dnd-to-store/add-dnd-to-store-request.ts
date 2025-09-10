@@ -4,7 +4,7 @@ export class AddDndToStoreRequest {
   static readonly fToken = Symbol('AddDndToStoreRequest');
 
   constructor(
-    public fComponent: FDraggableBase
+    public fComponent: FDraggableBase,
   ) {
   }
 }

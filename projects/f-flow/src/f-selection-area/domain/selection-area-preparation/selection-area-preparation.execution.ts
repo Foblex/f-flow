@@ -25,8 +25,8 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
     }
     this._dragContext.draggableItems = [
       new SelectionAreaDragHandle(
-        this._store, request.fSelectionArea, this._dragContext, this._fMediator
-      )
+        this._store, request.fSelectionArea, this._dragContext, this._fMediator,
+      ),
     ];
 
     this._dragContext.onPointerDownScale = 1;

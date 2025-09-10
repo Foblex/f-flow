@@ -4,7 +4,7 @@ import { CalculateConnectionCenterHandler, CalculateConnectionCenterRequest } fr
 import {
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
-  IFConnectionBuilderResponse
+  IFConnectionBuilderResponse,
 } from '../../f-connection-builder';
 
 export class FBezierPathBuilder implements IFConnectionBuilder {
@@ -18,7 +18,7 @@ export class FBezierPathBuilder implements IFConnectionBuilder {
 
   private static getAnglePoint(side: EFConnectableSide, source: IPoint, target: IPoint, offset: number): IPoint {
 
-    let result: IPoint = { x: source.x, y: source.y };
+    const result: IPoint = { x: source.x, y: source.y };
 
     switch (side) {
       case EFConnectableSide.LEFT:
@@ -48,7 +48,7 @@ export class FBezierPathBuilder implements IFConnectionBuilder {
     const path = `M ${ source.x } ${ source.y } C ${ sourceAnglePoint.x } ${ sourceAnglePoint.y }, ${ targetAnglePoint.x } ${ targetAnglePoint.y }, ${ target.x + 0.0002 } ${ target.y + 0.0002 }`;
 
     const connectionCenter = new CalculateConnectionCenterHandler().handle(
-      new CalculateConnectionCenterRequest([ source, sourceAnglePoint, targetAnglePoint, target ])
+      new CalculateConnectionCenterRequest([ source, sourceAnglePoint, targetAnglePoint, target ]),
     );
 
     return {

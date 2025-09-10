@@ -1,4 +1,4 @@
-import {ICanRunOutsideAngular} from './i-can-run-outside-angular';
+import { ICanRunOutsideAngular } from './i-can-run-outside-angular';
 import {
   IMouseEvent,
   IPointerEvent,
@@ -6,7 +6,7 @@ import {
   ITouchDownEvent,
   ITouchMoveEvent,
 } from './pointer-events';
-import {EventExtensions} from './event.extensions';
+import { EventExtensions } from './event.extensions';
 
 export const MOUSE_EVENT_IGNORE_TIME = 800;
 
@@ -38,7 +38,7 @@ export abstract class DragAndDropBase {
   private dragStartDelay: number = 0;
 
   private dragStartTime: number = 0;
-  private dragStartPosition: { x: number, y: number } = {x: 0, y: 0};
+  private dragStartPosition: { x: number, y: number } = { x: 0, y: 0 };
 
   public abstract disabled: boolean;
 
@@ -47,7 +47,7 @@ export abstract class DragAndDropBase {
   private pointerDownElement: HTMLElement | null = null;
 
   protected constructor(
-    protected ngZone: ICanRunOutsideAngular | undefined
+    protected ngZone: ICanRunOutsideAngular | undefined,
   ) {
   }
 
@@ -66,7 +66,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this.pointerDownElement = mouseEvent.targetElement;
-    let result = this.onPointerDown(mouseEvent);
+    const result = this.onPointerDown(mouseEvent);
     if (result) {
 
       this.dragStartTime = Date.now();
@@ -104,7 +104,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this.pointerDownElement = touchEvent.targetElement;
-    let result = this.onPointerDown(touchEvent);
+    const result = this.onPointerDown(touchEvent);
     if (result) {
 
       this.dragStartTime = Date.now();

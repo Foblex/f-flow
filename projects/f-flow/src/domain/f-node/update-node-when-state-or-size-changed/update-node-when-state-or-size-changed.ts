@@ -1,13 +1,13 @@
-import {inject, Injectable} from '@angular/core';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {UpdateNodeWhenStateOrSizeChangedRequest} from './update-node-when-state-or-size-changed-request';
-import {EFConnectableSide, FConnectorBase} from '../../../f-connectors';
-import {FComponentsStore, NotifyDataChangedRequest} from '../../../f-storage';
-import {debounceTime, FChannelHub, notifyOnStart} from '../../../reactivity';
-import {FResizeChannel} from '../../../reactivity';
-import {RectExtensions} from '@foblex/2d';
-import {FitToChildNodesAndGroupsRequest} from "../fit-to-child-nodes-and-groups";
-import {IsDragStartedRequest} from "../../f-draggable";
+import { inject, Injectable } from '@angular/core';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
+import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
+import { FComponentsStore, NotifyDataChangedRequest } from '../../../f-storage';
+import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
+import { FResizeChannel } from '../../../reactivity';
+import { RectExtensions } from '@foblex/2d';
+import { FitToChildNodesAndGroupsRequest } from "../fit-to-child-nodes-and-groups";
+import { IsDragStartedRequest } from "../../f-draggable";
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
@@ -25,12 +25,12 @@ export class UpdateNodeWhenStateOrSizeChanged
    * It listens for resize events and recalculates the connectable sides of the connectors.
    * @param request
    */
-  public handle({nodeOrGroup, destroyRef}: UpdateNodeWhenStateOrSizeChangedRequest): void {
-    const {hostElement, connectors, stateChanges} = nodeOrGroup;
+  public handle({ nodeOrGroup, destroyRef }: UpdateNodeWhenStateOrSizeChangedRequest): void {
+    const { hostElement, connectors, stateChanges } = nodeOrGroup;
 
     new FChannelHub(
       new FResizeChannel(hostElement),
-      stateChanges
+      stateChanges,
     ).pipe(notifyOnStart(), debounceTime(10)).listen(destroyRef, () => {
       this._calculateConnectorsConnectableSide(connectors, hostElement);
       this._mediator.execute<void>(new NotifyDataChangedRequest());

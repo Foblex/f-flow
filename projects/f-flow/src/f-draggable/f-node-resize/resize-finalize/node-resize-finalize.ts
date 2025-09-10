@@ -19,7 +19,7 @@ export class NodeResizeFinalize implements IExecution<NodeResizeFinalizeRequest,
 
   private _isNodeResizeHandler(): boolean {
     return this._dragContext.draggableItems.some((x) =>
-      x instanceof NodeResizeDragHandler
+      x instanceof NodeResizeDragHandler,
     );
   }
 }

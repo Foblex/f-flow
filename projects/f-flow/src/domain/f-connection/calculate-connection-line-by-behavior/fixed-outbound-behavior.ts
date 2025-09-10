@@ -11,12 +11,12 @@ export function fixedOutboundBehavior(payload: CalculateConnectionLineByBehavior
   return {
     point1: _getPosition(
       payload.outputRect,
-      payload.outputSide === EFConnectableSide.AUTO ? EFConnectableSide.BOTTOM : payload.outputSide
+      payload.outputSide === EFConnectableSide.AUTO ? EFConnectableSide.BOTTOM : payload.outputSide,
     ),
     point2: _getPosition(
       payload.inputRect,
-      payload.inputSide === EFConnectableSide.AUTO ? EFConnectableSide.TOP : payload.inputSide
-    )
+      payload.inputSide === EFConnectableSide.AUTO ? EFConnectableSide.TOP : payload.inputSide,
+    ),
   };
 }
 
@@ -34,7 +34,5 @@ function _getPosition(rect: IRect, side: EFConnectableSide): IPoint {
       throw new Error(`Unknown side: ${ side }`);
   }
 }
-
-
 
 

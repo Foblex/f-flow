@@ -26,7 +26,9 @@ export class ApplyParentResizeConstraints
   // ──────────────────────────────────────────────────────────────────────────────
 
   private _applyResizeConstraints(childRect: IRect, limits: IResizeLimits): void {
-    if (!limits) return;
+    if (!limits) {
+return;
+}
 
     // 1) Clone child rect and pre-clamp it by hard limit (calculation only).
     const childForCalc: IRect = this._clampedCopyForCalculation(childRect, limits);
@@ -92,7 +94,9 @@ export class ApplyParentResizeConstraints
 
   /** Iterates over all soft limits and applies expansion if overflow is detected. */
   private applySoftParentExpansions(childForCalc: IRect, softLimits: IResizeLimit[]): void {
-    if (!softLimits?.length) return;
+    if (!softLimits?.length) {
+return;
+}
     for (const limit of softLimits) {
       this.expandParentFromOriginalIfOverflow(childForCalc, limit);
     }
@@ -103,7 +107,7 @@ export class ApplyParentResizeConstraints
    * based on the original boundingRect and apply it. Otherwise, reset to original.
    */
   private expandParentFromOriginalIfOverflow(child: IRect, limit: IResizeLimit): void {
-    const inner = limit.innerRect;       // detector only
+    const inner = limit.innerRect; // detector only
     const original = limit.boundingRect; // parent's original rect
 
     const overflow = this._computeOverflow(inner, child);

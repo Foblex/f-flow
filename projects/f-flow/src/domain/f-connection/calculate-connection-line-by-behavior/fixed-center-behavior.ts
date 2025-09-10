@@ -9,6 +9,6 @@ import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection
 export function fixedCenterBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
   return {
     point1: payload.outputRect.gravityCenter,
-    point2: payload.inputRect.gravityCenter
+    point2: payload.inputRect.gravityCenter,
   };
 }

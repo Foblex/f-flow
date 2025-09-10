@@ -1,5 +1,5 @@
 import { MoveDragHandler } from '../../move-drag-handler';
-import {BaseConnectionDragHandler} from "../../connection-drag-handlers";
+import { BaseConnectionDragHandler } from "../../connection-drag-handlers";
 
 export class CreateOutputConnectionHandlerAndSetToNodeHandlerRequest {
   static readonly fToken = Symbol('CreateOutputConnectionHandlerAndSetToNodeHandlerRequest');
@@ -7,7 +7,7 @@ export class CreateOutputConnectionHandlerAndSetToNodeHandlerRequest {
   constructor(
     public fDragHandler: MoveDragHandler,
     public inputIds: string[],
-    public existingConnectionHandlers: BaseConnectionDragHandler[]
+    public existingConnectionHandlers: BaseConnectionDragHandler[],
   ) {
   }
 }

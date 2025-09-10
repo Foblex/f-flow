@@ -3,7 +3,7 @@ import { FMediator } from '@foblex/mediator';
 import {
   CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
-  IConnectorAndRect
+  IConnectorAndRect,
 } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
@@ -69,7 +69,7 @@ export class BaseConnectionDragHandler {
       RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
       this.fConnection.fBehavior,
       this._fOutputWithRect.fConnector.fConnectableSide,
-      this._fInputWithRect.fConnector.fConnectableSide
+      this._fInputWithRect.fConnector.fConnectableSide,
     ));
   }
 
@@ -77,7 +77,7 @@ export class BaseConnectionDragHandler {
     this.fConnection.setLine(
       line,
       this._fOutputWithRect.fConnector.fConnectableSide,
-      this._fInputWithRect.fConnector.fConnectableSide
+      this._fInputWithRect.fConnector.fConnectableSide,
     );
     this.fConnection.redraw();
   }

@@ -15,7 +15,7 @@ export class RemoveZoomFromStoreExecution implements IExecution<RemoveZoomFromSt
 
   public handle(request: RemoveZoomFromStoreRequest): void {
     this._store.fComponents = {
-      [F_ZOOM_TAG]: undefined
+      [F_ZOOM_TAG]: undefined,
     };
   }
 }

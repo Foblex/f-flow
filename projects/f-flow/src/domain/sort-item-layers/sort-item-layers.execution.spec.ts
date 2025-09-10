@@ -24,7 +24,7 @@ function getFCanvasBase(): FCanvasBase {
     }).asReadonly(),
     fNodesContainer: signal({
       nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly()
+    }).asReadonly(),
   } as FCanvasBase;
 }
 

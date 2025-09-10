@@ -10,5 +10,5 @@ export const F_LINE_ALIGNMENT_FEATURES = [
 
   AddLineAlignmentToStoreExecution,
 
-  RemoveLineAlignmentFromStoreExecution
+  RemoveLineAlignmentFromStoreExecution,
 ];

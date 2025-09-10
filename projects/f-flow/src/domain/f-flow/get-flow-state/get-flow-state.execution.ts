@@ -24,7 +24,7 @@ export class GetFlowStateExecution implements IExecution<GetFlowStateRequest, IF
       scale: this._store.fCanvas!.transform.scale,
       nodes: this._mediator.execute(new GetFlowStateNodesRequest(FNodeDirective)),
       groups: this._mediator.execute(new GetFlowStateNodesRequest(FGroupDirective)),
-      connections: this._mediator.execute(new GetFlowStateConnectionsRequest())
+      connections: this._mediator.execute(new GetFlowStateConnectionsRequest()),
     }
   }
 
@@ -32,6 +32,5 @@ export class GetFlowStateExecution implements IExecution<GetFlowStateRequest, IF
     return PointExtensions.sum(transform.position, transform.scaledPosition);
   }
 }
-
 
 

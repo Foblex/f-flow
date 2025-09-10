@@ -5,7 +5,7 @@ import { SelectExecution } from './select.execution';
 import { setupTestModule } from '../../test-setup';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { FComponentsStore } from '../../../f-storage';
-import {signal} from "@angular/core";
+import { signal } from "@angular/core";
 
 describe('SelectExecution', () => {
   let fDraggableDataContext: FDraggableDataContext;
@@ -22,7 +22,7 @@ describe('SelectExecution', () => {
   it('should deselect all items and clear selectedItems array', () => {
     const mockSelectedItems = [
       { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') }
+      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 

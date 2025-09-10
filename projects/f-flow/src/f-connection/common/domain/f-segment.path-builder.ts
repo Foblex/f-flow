@@ -1,16 +1,16 @@
-import {IPoint, PointExtensions} from '@foblex/2d';
-import {EFConnectableSide} from '../../../f-connectors';
+import { IPoint, PointExtensions } from '@foblex/2d';
+import { EFConnectableSide } from '../../../f-connectors';
 import {
   CalculateCenterBetweenPointsHandler,
-  CalculateCenterBetweenPointsRequest
+  CalculateCenterBetweenPointsRequest,
 } from './calculate-center-between-points';
-import {CalculateConnectionCenterHandler, CalculateConnectionCenterRequest} from './calculate-connection-center';
+import { CalculateConnectionCenterHandler, CalculateConnectionCenterRequest } from './calculate-connection-center';
 import {
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
-  IFConnectionBuilderResponse
+  IFConnectionBuilderResponse,
 } from '../../f-connection-builder';
-import {IMap} from '../../../domain';
+import { IMap } from '../../../domain';
 
 const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
 
@@ -28,14 +28,14 @@ const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
 export class FSegmentPathBuilder implements IFConnectionBuilder {
 
   public handle(request: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
-    const {source, sourceSide, target, targetSide} = request;
+    const { source, sourceSide, target, targetSide } = request;
 
-    const {points, center} = this.getPathPoints(
+    const { points, center } = this.getPathPoints(
       source,
       sourceSide,
       target,
       targetSide,
-      request.offset
+      request.offset,
     );
 
     const path = this.buildPath(points, request.radius);
@@ -44,18 +44,18 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     const secondPoint = points.length > 1 ? points[1] : target;
 
 
-    return {path, connectionCenter: center, penultimatePoint, secondPoint};
+    return { path, connectionCenter: center, penultimatePoint, secondPoint };
   }
 
   private getPathPoints(
-    source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide, offset: number
+    source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide, offset: number,
   ): { points: IPoint[], center: IPoint } {
 
     const sourceDirection = CONNECTOR_SIDE_POINT[sourceSide];
     const targetDirection = CONNECTOR_SIDE_POINT[targetSide];
 
-    const sourceGap: IPoint = {x: source.x + sourceDirection.x * offset, y: source.y + sourceDirection.y * offset};
-    const targetGap: IPoint = {x: target.x + targetDirection.x * offset, y: target.y + targetDirection.y * offset};
+    const sourceGap: IPoint = { x: source.x + sourceDirection.x * offset, y: source.y + sourceDirection.y * offset };
+    const targetGap: IPoint = { x: target.x + targetDirection.x * offset, y: target.y + targetDirection.y * offset };
 
     const direction = this.getDirection(sourceGap, sourceSide, targetGap);
     const directionAccessor = direction.x !== 0 ? 'x' : 'y';
@@ -66,17 +66,17 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     const targetGapOffset = PointExtensions.initialize();
 
     const centerBetweenPoints = new CalculateCenterBetweenPointsHandler().handle(
-      new CalculateCenterBetweenPointsRequest(source, target)
+      new CalculateCenterBetweenPointsRequest(source, target),
     );
 
     if (sourceDirection[directionAccessor] * targetDirection[directionAccessor] === -1) {
       const verticalSplit: IPoint[] = [
-        {x: centerBetweenPoints.x, y: sourceGap.y},
-        {x: centerBetweenPoints.x, y: targetGap.y},
+        { x: centerBetweenPoints.x, y: sourceGap.y },
+        { x: centerBetweenPoints.x, y: targetGap.y },
       ];
       const horizontalSplit: IPoint[] = [
-        {x: sourceGap.x, y: centerBetweenPoints.y},
-        {x: targetGap.x, y: centerBetweenPoints.y},
+        { x: sourceGap.x, y: centerBetweenPoints.y },
+        { x: targetGap.x, y: centerBetweenPoints.y },
       ];
 
       if (sourceDirection[directionAccessor] === currentDirection) {
@@ -85,8 +85,8 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
         points = directionAccessor === 'x' ? horizontalSplit : verticalSplit;
       }
     } else {
-      const sourceTarget: IPoint[] = [{x: sourceGap.x, y: targetGap.y}];
-      const targetSource: IPoint[] = [{x: targetGap.x, y: sourceGap.y}];
+      const sourceTarget: IPoint[] = [{ x: sourceGap.x, y: targetGap.y }];
+      const targetSource: IPoint[] = [{ x: targetGap.x, y: sourceGap.y }];
 
       if (directionAccessor === 'x') {
         points = sourceDirection.x === currentDirection ? targetSource : sourceTarget;
@@ -126,17 +126,17 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
 
     const pathPoints = [
       source,
-      {x: sourceGap.x + sourceGapOffset.x, y: sourceGap.y + sourceGapOffset.y},
+      { x: sourceGap.x + sourceGapOffset.x, y: sourceGap.y + sourceGapOffset.y },
       ...points,
-      {x: targetGap.x + targetGapOffset.x, y: targetGap.y + targetGapOffset.y},
+      { x: targetGap.x + targetGapOffset.x, y: targetGap.y + targetGapOffset.y },
       target,
     ];
 
     const center = new CalculateConnectionCenterHandler().handle(
-      new CalculateConnectionCenterRequest(pathPoints)
+      new CalculateConnectionCenterRequest(pathPoints),
     );
 
-    return {points: pathPoints, center: center};
+    return { points: pathPoints, center };
   }
 
   private getDirection(source: IPoint, sourceSide: EFConnectableSide, target: IPoint): IPoint {
@@ -171,7 +171,7 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
 
   private getBend(a: IPoint, b: IPoint, c: IPoint, size: number): string {
     const bendSize = Math.min(this.distance(a, b) / 2, this.distance(b, c) / 2, size);
-    const {x, y} = b;
+    const { x, y } = b;
 
     if ((a.x === x && x === c.x) || (a.y === y && y === c.y)) {
       return `L${x} ${y}`;

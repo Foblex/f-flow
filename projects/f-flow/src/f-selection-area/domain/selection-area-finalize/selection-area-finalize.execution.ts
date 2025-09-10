@@ -21,7 +21,7 @@ export class SelectionAreaFinalizeExecution implements IExecution<SelectionAreaF
 
   private _isValid(): boolean {
     return this._dragContext.draggableItems.some((x) =>
-      x instanceof SelectionAreaDragHandle
+      x instanceof SelectionAreaDragHandle,
     );
   }
 }

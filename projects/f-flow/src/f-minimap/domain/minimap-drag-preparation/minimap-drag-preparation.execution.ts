@@ -40,7 +40,7 @@ export class MinimapDragPreparationExecution implements IExecution<MinimapDragPr
       new FMinimapDragHandler(
         this.fComponentsStore, this.fMediator, this.getFlowRect(),
         startCanvasPosition, eventPoint, request.minimap,
-      )
+      ),
     ];
   }
 

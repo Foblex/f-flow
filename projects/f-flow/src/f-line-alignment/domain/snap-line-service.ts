@@ -20,7 +20,7 @@ export class SnapLineService {
       left: x * transform.scale + transform.position.x + transform.scaledPosition.x,
       top: 0,
       width: 1,
-      height: size.height
+      height: size.height,
     });
   }
 
@@ -30,7 +30,7 @@ export class SnapLineService {
       left: 0,
       top: y * transform.scale + transform.position.y + transform.scaledPosition.y,
       width: size.width,
-      height: 1
+      height: 1,
     });
   }
 

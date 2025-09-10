@@ -35,5 +35,5 @@ export const F_CONNECTION_FEATURES = [
 
   RemoveConnectionMarkerFromStoreExecution,
 
-  RemoveSnapConnectionFromStoreExecution
+  RemoveSnapConnectionFromStoreExecution,
 ];

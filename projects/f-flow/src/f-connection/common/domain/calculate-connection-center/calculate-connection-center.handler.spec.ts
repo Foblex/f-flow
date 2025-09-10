@@ -13,7 +13,7 @@ describe('CalculateConnectionCenterHandler', () => {
     const points: IPoint[] = [
       { x: 0, y: 0 },
       { x: 4, y: 0 },
-      { x: 4, y: 4 }
+      { x: 4, y: 4 },
     ];
     const request = new CalculateConnectionCenterRequest(points);
 
@@ -26,7 +26,7 @@ describe('CalculateConnectionCenterHandler', () => {
   it('should calculate the center point for a straight line', () => {
     const points: IPoint[] = [
       { x: 0, y: 0 },
-      { x: 4, y: 0 }
+      { x: 4, y: 0 },
     ];
     const request = new CalculateConnectionCenterRequest(points);
 
@@ -39,7 +39,7 @@ describe('CalculateConnectionCenterHandler', () => {
   it('should calculate the center point for a single segment', () => {
     const points: IPoint[] = [
       { x: 0, y: 0 },
-      { x: 0, y: 4 }
+      { x: 0, y: 4 },
     ];
     const request = new CalculateConnectionCenterRequest(points);
 
@@ -53,7 +53,7 @@ describe('CalculateConnectionCenterHandler', () => {
     const points: IPoint[] = [
       { x: 0, y: 0 },
       { x: 3, y: 4 },
-      { x: 6, y: 0 }
+      { x: 6, y: 0 },
     ];
     const request = new CalculateConnectionCenterRequest(points);
 

@@ -7,14 +7,14 @@ import {
   OnDestroy,
   OnInit, output,
 } from "@angular/core";
-import {IRect, ISize, PointExtensions} from '@foblex/2d';
-import {NotifyTransformChangedRequest} from '../f-storage';
-import {FMediator} from '@foblex/mediator';
-import {F_NODE, FNodeBase} from './f-node-base';
-import {IHasHostElement} from '../i-has-host-element';
-import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
+import { IRect, ISize, PointExtensions } from '@foblex/2d';
+import { NotifyTransformChangedRequest } from '../f-storage';
+import { FMediator } from '@foblex/mediator';
+import { F_NODE, FNodeBase } from './f-node-base';
+import { IHasHostElement } from '../i-has-host-element';
+import { AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest } from '../domain';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fNode]",
@@ -26,7 +26,7 @@ let uniqueId: number = 0;
     '[class.f-node-selection-disabled]': 'fSelectionDisabled()',
   },
   providers: [
-    {provide: F_NODE, useExisting: FNodeDirective}
+    { provide: F_NODE, useExisting: FNodeDirective },
   ],
 })
 export class FNodeDirective extends FNodeBase
@@ -35,7 +35,7 @@ export class FNodeDirective extends FNodeBase
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override readonly fId = input<string>(`f-node-${uniqueId++}`, {alias: 'fNodeId'});
+  public override readonly fId = input<string>(`f-node-${uniqueId++}`, { alias: 'fNodeId' });
 
   public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fNodeParentId',
@@ -49,7 +49,7 @@ export class FNodeDirective extends FNodeBase
     alias: 'fNodeSize',
   });
 
-  public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
+  public override sizeChange = output<IRect>({ alias: 'fNodeSizeChange' });
 
   public override readonly rotate = model(0, {
     alias: 'fNodeRotate',

@@ -1,16 +1,16 @@
-import {inject, Injectable} from '@angular/core';
-import {FNodeMovePreparationRequest} from './f-node-move-preparation.request';
-import {ITransformModel, Point} from '@foblex/2d';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FComponentsStore} from '../../../f-storage';
-import {FDraggableDataContext} from '../../f-draggable-data-context';
-import {FNodeBase} from '../../../f-node';
-import {CreateDragModelFromSelectionRequest} from '../create-drag-model-from-selection';
-import {FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest} from '../../../domain';
-import {isClosestElementHasClass} from '@foblex/utils';
-import {CreateSnapLinesRequest} from '../create-snap-lines';
-import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
-import {IPointerEvent} from "../../../drag-toolkit";
+import { inject, Injectable } from '@angular/core';
+import { FNodeMovePreparationRequest } from './f-node-move-preparation.request';
+import { ITransformModel, Point } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { FNodeBase } from '../../../f-node';
+import { CreateDragModelFromSelectionRequest } from '../create-drag-model-from-selection';
+import { FEventTrigger, isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
+import { isClosestElementHasClass } from '@foblex/utils';
+import { CreateSnapLinesRequest } from '../create-snap-lines';
+import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { IPointerEvent } from "../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FNodeMovePreparationRequest)
@@ -30,7 +30,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private _fNode: FNodeBase | undefined;
 
-  public handle({event, fTrigger }: FNodeMovePreparationRequest): void {
+  public handle({ event, fTrigger }: FNodeMovePreparationRequest): void {
     if (!this._isValid(event) || !this._isValidTrigger(event, fTrigger)) {
       return;
     }
@@ -84,7 +84,7 @@ export class FNodeMovePreparationExecution implements IExecution<FNodeMovePrepar
 
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): MoveSummaryDragHandler {
     return this._mediator.execute(
-      new CreateDragModelFromSelectionRequest(nodeWithDisabledSelection)
+      new CreateDragModelFromSelectionRequest(nodeWithDisabledSelection),
     );
   }
 }

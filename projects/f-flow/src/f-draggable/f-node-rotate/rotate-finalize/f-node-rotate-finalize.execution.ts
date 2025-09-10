@@ -21,7 +21,7 @@ export class FNodeRotateFinalizeExecution implements IExecution<FNodeRotateFinal
 
   private _isValid(): boolean {
     return this._dragContext.draggableItems.some((x) =>
-      x instanceof FNodeRotateDragHandler
+      x instanceof FNodeRotateDragHandler,
     );
   }
 }

@@ -1,16 +1,16 @@
-import {inject, Injectable} from '@angular/core';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {IMinMaxPoint, IPoint, IRect, PointExtensions} from "@foblex/2d";
-import {CalculateDragLimitsRequest} from "./calculate-drag-limits-request";
-import {infinityMinMax} from "../../../../utils";
-import {FNodeBase} from "../../../../f-node";
-import {GetNormalizedElementRectRequest, GetParentNodesRequest} from "../../../../domain";
+import { inject, Injectable } from '@angular/core';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IMinMaxPoint, IPoint, IRect, PointExtensions } from "@foblex/2d";
+import { CalculateDragLimitsRequest } from "./calculate-drag-limits-request";
+import { infinityMinMax } from "../../../../utils";
+import { FNodeBase } from "../../../../f-node";
+import { GetNormalizedElementRectRequest, GetParentNodesRequest } from "../../../../domain";
 import {
   GetNodeBoundingIncludePaddingsRequest,
-  GetNodeBoundingIncludePaddingsResponse
+  GetNodeBoundingIncludePaddingsResponse,
 } from "../get-node-bounding-include-paddings";
-import {ISoftLimit} from "./i-soft-limit";
-import {IDragLimits} from "./i-drag-limits";
+import { ISoftLimit } from "./i-soft-limit";
+import { IDragLimits } from "./i-drag-limits";
 
 @Injectable()
 @FExecutionRegister(CalculateDragLimitsRequest)
@@ -19,7 +19,7 @@ export class CalculateDragLimits
 
   private readonly _mediator = inject(FMediator);
 
-  public handle({nodeOrGroup}: CalculateDragLimitsRequest): IDragLimits {
+  public handle({ nodeOrGroup }: CalculateDragLimitsRequest): IDragLimits {
     const currentRect = this._getCurrentRect(nodeOrGroup);
     const parents = this._getParentsChain(nodeOrGroup);
 
@@ -53,19 +53,19 @@ export class CalculateDragLimits
       }
     }
 
-    return {soft, hard};
+    return { soft, hard };
   }
 
   private _getParentInfo(parent: FNodeBase, childrenPaddings: [number, number, number, number]): GetNodeBoundingIncludePaddingsResponse {
     return this._mediator.execute<GetNodeBoundingIncludePaddingsResponse>(
-      new GetNodeBoundingIncludePaddingsRequest(parent, childrenPaddings)
+      new GetNodeBoundingIncludePaddingsRequest(parent, childrenPaddings),
     );
   }
 
   private _calculateDifference(parentRect: IRect, currentRect: IRect): IMinMaxPoint {
     return {
       min: this._calculateMinimumDifference(parentRect, currentRect),
-      max: this._calculateMaximumDifference(parentRect, currentRect)
+      max: this._calculateMaximumDifference(parentRect, currentRect),
     };
   }
 
@@ -87,8 +87,8 @@ export class CalculateDragLimits
   private _makeSoftLimit(
     nodeOrGroup: FNodeBase,
     boundingRect: IRect,
-    limits: IMinMaxPoint
+    limits: IMinMaxPoint,
   ): ISoftLimit {
-    return {nodeOrGroup, boundingRect, initialSize: nodeOrGroup._size, limits};
+    return { nodeOrGroup, boundingRect, initialSize: nodeOrGroup._size, limits };
   }
 }

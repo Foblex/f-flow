@@ -15,7 +15,7 @@ export class CalculateFlowPointFromMinimapPointExecution
   }
 
   constructor(
-    private fComponentsStore: FComponentsStore
+    private fComponentsStore: FComponentsStore,
   ) {
   }
 
@@ -24,8 +24,8 @@ export class CalculateFlowPointFromMinimapPointExecution
       payload.canvasPosition,
       PointExtensions.sub(
         this.getPositionInViewBox(payload.eventPoint, payload.minimap),
-        this.getNormalizedFlowCenter(payload.flowRect)
-      )
+        this.getNormalizedFlowCenter(payload.flowRect),
+      ),
     );
   }
 
@@ -37,7 +37,7 @@ export class CalculateFlowPointFromMinimapPointExecution
     const eventPointInFlow = this.normalizeEventPoint(eventPoint, minimap);
     return PointExtensions.sum(
       eventPointInFlow,
-      RectExtensions.mult(minimap.viewBox, this.canvasScale)
+      RectExtensions.mult(minimap.viewBox, this.canvasScale),
     );
   }
 

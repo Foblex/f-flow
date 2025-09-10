@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, inject
+  Component, ElementRef, inject,
 } from "@angular/core";
 import { IPoint } from '@foblex/2d';
 import { IHasHostElement } from '../../../i-has-host-element';
@@ -11,8 +11,8 @@ import { F_CSS_CLASS } from '../../../domain/css-cls';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class]': 'class'
-  }
+    '[class]': 'class',
+  },
 })
 export class FConnectionDragHandleStartComponent implements IHasHostElement {
   private readonly _elementReference = inject(ElementRef);

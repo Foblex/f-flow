@@ -11,7 +11,7 @@ import { F_EXTERNAL_ITEM } from './f-external-item-token';
   standalone: true,
   host: {
     class: "f-component f-external-item-placeholder",
-  }
+  },
 })
 export class FExternalItemPlaceholderDirective<T = any> implements OnInit, OnDestroy {
 

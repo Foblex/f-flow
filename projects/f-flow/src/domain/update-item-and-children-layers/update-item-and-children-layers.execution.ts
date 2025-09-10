@@ -76,7 +76,7 @@ export class UpdateItemAndChildrenLayersExecution implements IExecution<UpdateIt
     const targetIndex = allElements.findIndex((x) => x === item);
     if (this._isAnythingNeedToBeMoved(allElements, targetIndex, elementsThatShouldBeInFront)) {
       this._mediator.execute(
-        new MoveFrontElementsBeforeTargetElementRequest(itemContainer, allElements, elementsThatShouldBeInFront, targetIndex)
+        new MoveFrontElementsBeforeTargetElementRequest(itemContainer, allElements, elementsThatShouldBeInFront, targetIndex),
       );
     }
   }

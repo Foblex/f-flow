@@ -36,7 +36,7 @@ export class MinimapCalculateSvgScaleAndViewBoxExecution
 
     return {
       scale,
-      viewBox: this._calculateViewBox(nodesRect, minimapRect, scale)
+      viewBox: this._calculateViewBox(nodesRect, minimapRect, scale),
     }
   }
 

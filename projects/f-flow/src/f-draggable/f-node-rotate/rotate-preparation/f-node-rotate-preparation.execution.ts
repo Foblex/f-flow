@@ -50,7 +50,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
         this._fNode!,
         this._calculateOutputConnectionsDragHandlers(),
         this._calculateInputConnectionsDragHandlers(),
-      )
+      ),
     ];
   }
 
@@ -76,7 +76,7 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
 
   private _selectAndUpdateNodeLayer() {
     this._fMediator.execute(
-      new SelectAndUpdateNodeLayerRequest(this._fNode!)
+      new SelectAndUpdateNodeLayerRequest(this._fNode!),
     );
   }
 
@@ -85,12 +85,12 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     connector: IPoint,
   }[] {
     return this._fMediator.execute<FConnectionBase[]>(
-      new CalculateInputConnectionsRequest(this._fNode!)
+      new CalculateInputConnectionsRequest(this._fNode!),
     ).map((x: FConnectionBase) => {
       const connector = this._store.fInputs.find((y) => y.fId === x.fInputId)!.hostElement;
       return {
         connection: new TargetConnectionDragHandler(this._injector, x),
-        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter,
       }
     });
   }
@@ -100,12 +100,12 @@ export class FNodeRotatePreparationExecution implements IExecution<FNodeRotatePr
     connector: IPoint,
   }[] {
     return this._fMediator.execute<FConnectionBase[]>(
-      new CalculateOutputConnectionsRequest(this._fNode!)
+      new CalculateOutputConnectionsRequest(this._fNode!),
     ).map((x: FConnectionBase) => {
       const connector = this._store.fOutputs.find((y) => y.fId === x.fOutputId)!.hostElement;
       return {
         connection: new SourceConnectionDragHandler(this._injector, x),
-        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter
+        connector: this._fMediator.execute<IRect>(new GetNormalizedElementRectRequest(connector)).gravityCenter,
       }
     });
   }

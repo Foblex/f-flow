@@ -1,10 +1,10 @@
-import {inject, Injectable} from '@angular/core';
-import {CenterGroupOrNodeRequest} from './center-group-or-node-request';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {IPoint, IRect, ITransformModel, PointExtensions, RectExtensions} from '@foblex/2d';
-import {FComponentsStore} from '../../../f-storage';
-import {FNodeBase} from '../../../f-node';
-import {RedrawCanvasWithAnimationRequest} from '../../../domain';
+import { inject, Injectable } from '@angular/core';
+import { CenterGroupOrNodeRequest } from './center-group-or-node-request';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
+import { FComponentsStore } from '../../../f-storage';
+import { FNodeBase } from '../../../f-node';
+import { RedrawCanvasWithAnimationRequest } from '../../../domain';
 
 /**
  * Execution that centers a group or a node inside the flow.
@@ -35,7 +35,7 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
     this.transform.scaledPosition = PointExtensions.initialize();
     this.transform.position = PointExtensions.initialize(
       (fFlowRect.width - fNodeRect.width) / 2 - position.x * this.transform.scale,
-      (fFlowRect.height - fNodeRect.height) / 2 - position.y * this.transform.scale
+      (fFlowRect.height - fNodeRect.height) / 2 - position.y * this.transform.scale,
     );
   }
 

@@ -1,7 +1,7 @@
-import {findClosestAlignment, IRect, ISize, ITransformModel} from '@foblex/2d';
-import {FComponentsStore} from '../../../f-storage';
-import {ISnapResult, SnapLineService} from '../../../f-line-alignment';
-import {Injector} from '@angular/core';
+import { findClosestAlignment, IRect, ISize, ITransformModel } from '@foblex/2d';
+import { FComponentsStore } from '../../../f-storage';
+import { ISnapResult, SnapLineService } from '../../../f-line-alignment';
+import { Injector } from '@angular/core';
 
 export class SnapLinesDragHandler {
 

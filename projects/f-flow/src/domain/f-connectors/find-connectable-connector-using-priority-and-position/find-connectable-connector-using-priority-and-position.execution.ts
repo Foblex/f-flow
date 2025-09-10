@@ -85,7 +85,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
     }
 
     const closestConnector = this._mediator.execute<IClosestConnector | undefined>(
-      new FindClosestConnectorRequest(this._getPointInFlow(request.pointerPosition), request.connectableConnectors)
+      new FindClosestConnectorRequest(this._getPointInFlow(request.pointerPosition), request.connectableConnectors),
     );
 
     return this._isValidClosestInput(closestConnector) ? closestConnector : undefined;

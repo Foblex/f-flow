@@ -5,7 +5,7 @@ export class FCreateConnectionDragHandlerPreparationRequest {
   static readonly fToken = Symbol('FCreateConnectionDragHandlerPreparationRequest');
   constructor(
     public onPointerDownPosition: IPoint,
-    public fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase
+    public fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
   ) {
   }
 }

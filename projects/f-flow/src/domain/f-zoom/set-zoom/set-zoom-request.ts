@@ -6,7 +6,7 @@ export class SetZoomRequest {
     public position: IPoint,
     public step: number,
     public direction: number,
-    public animate: boolean = false
+    public animate: boolean = false,
   ) {
   }
 }

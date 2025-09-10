@@ -1,5 +1,5 @@
-import {IPoint} from "@foblex/2d";
-import {FConnectionBase} from "../../../../f-connection";
+import { IPoint } from "@foblex/2d";
+import { FConnectionBase } from "../../../../f-connection";
 
 export function isPointerInsideStartOrEndDragHandles(connection: FConnectionBase, position: IPoint): boolean {
   return isDragHandleEnd(connection, position) || isDragHandleStart(connection, position);

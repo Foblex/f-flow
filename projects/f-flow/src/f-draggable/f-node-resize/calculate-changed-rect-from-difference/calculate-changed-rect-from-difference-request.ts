@@ -1,4 +1,4 @@
-import {IPoint, IRect, ISize} from '@foblex/2d';
+import { IPoint, IRect, ISize } from '@foblex/2d';
 import { EFResizeHandleType } from '../../../f-node';
 
 export class CalculateChangedRectFromDifferenceRequest {
@@ -8,7 +8,7 @@ export class CalculateChangedRectFromDifferenceRequest {
     public readonly originalRect: IRect,
     public readonly difference: IPoint,
     public readonly handleType: EFResizeHandleType,
-    public readonly minimumSize: ISize
+    public readonly minimumSize: ISize,
   ) {
   }
 }

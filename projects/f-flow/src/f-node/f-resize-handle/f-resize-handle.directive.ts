@@ -1,6 +1,6 @@
 import {
   computed,
-  Directive, input
+  Directive, input,
 } from "@angular/core";
 import { EFResizeHandleType } from './e-f-resize-handle-type';
 import { castToEnum } from '@foblex/utils';
@@ -10,14 +10,14 @@ import { castToEnum } from '@foblex/utils';
   host: {
     class: `f-resize-handle f-component`,
     '[attr.data-f-resize-handle-type]': 'type().toUpperCase()',
-    '[class]': 'class()'
+    '[class]': 'class()',
   },
 })
 export class FResizeHandleDirective {
 
   public type = input.required<EFResizeHandleType, any>({
     alias: 'fResizeHandleType',
-    transform: (x) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType)
+    transform: (x) => castToEnum(x, 'fResizeHandleType', EFResizeHandleType),
   });
 
   protected class = computed(() => {

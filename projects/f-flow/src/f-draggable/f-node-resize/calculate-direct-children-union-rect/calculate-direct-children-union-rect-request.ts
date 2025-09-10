@@ -5,7 +5,7 @@ export class CalculateDirectChildrenUnionRectRequest {
 
   constructor(
     public nodeOrGroup: FNodeBase,
-    public paddings: [ number, number, number, number ]
+    public paddings: [ number, number, number, number ],
   ) {
   }
 }

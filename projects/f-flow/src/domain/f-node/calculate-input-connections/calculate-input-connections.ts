@@ -16,7 +16,7 @@ export class CalculateInputConnections implements IExecution<CalculateInputConne
 
   public handle(request: CalculateInputConnectionsRequest): FConnectionBase[] {
     return this._calculateConnections(
-      new Set(this._calculateConnectors(request.fNode))
+      new Set(this._calculateConnectors(request.fNode)),
     );
   }
 

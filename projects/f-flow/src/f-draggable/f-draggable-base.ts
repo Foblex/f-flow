@@ -1,11 +1,11 @@
-import {Directive, EventEmitter, InputSignal} from '@angular/core';
-import {FCreateConnectionEvent, FReassignConnectionEvent} from './f-connection';
-import {FSelectionChangeEvent} from './f-selection-change-event';
-import {FCreateNodeEvent} from '../f-external-item';
-import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
-import {FDropToGroupEvent} from './f-drop-to-group';
-import {DragAndDropBase, ICanRunOutsideAngular} from "../drag-toolkit";
-import {FMoveNodesEvent} from "./f-node-move";
+import { Directive, EventEmitter, InputSignal } from '@angular/core';
+import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
+import { FSelectionChangeEvent } from './f-selection-change-event';
+import { FCreateNodeEvent } from '../f-external-item';
+import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
+import { FDropToGroupEvent } from './f-drop-to-group';
+import { DragAndDropBase, ICanRunOutsideAngular } from "../drag-toolkit";
+import { FMoveNodesEvent } from "./f-node-move";
 
 @Directive()
 export abstract class FDraggableBase extends DragAndDropBase {
@@ -37,7 +37,7 @@ export abstract class FDraggableBase extends DragAndDropBase {
   public abstract fDragEnded: EventEmitter<void>;
 
   protected constructor(
-    ngZone: ICanRunOutsideAngular | undefined
+    ngZone: ICanRunOutsideAngular | undefined,
   ) {
     super(ngZone);
   }

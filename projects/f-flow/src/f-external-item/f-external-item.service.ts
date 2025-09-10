@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FExternalItemBase } from './f-external-item-base';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FExternalItemService {
 

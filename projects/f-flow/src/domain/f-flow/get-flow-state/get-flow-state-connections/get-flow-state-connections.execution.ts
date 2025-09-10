@@ -25,7 +25,7 @@ export class GetFlowStateConnectionsExecution implements IExecution<GetFlowState
       fInputId: x.fInputId,
       fType: x.fType,
       fBehavior: x.fBehavior,
-      isSelected: x.isSelected()
+      isSelected: x.isSelected(),
     }
   }
 }

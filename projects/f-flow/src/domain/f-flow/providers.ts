@@ -19,5 +19,5 @@ export const F_FLOW_FEATURES = [
 
   ...GET_FLOW_STATE_PROVIDERS,
 
-  RemoveFlowFromStoreExecution
+  RemoveFlowFromStoreExecution,
 ];

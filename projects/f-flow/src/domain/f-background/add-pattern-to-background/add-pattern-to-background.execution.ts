@@ -7,7 +7,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { FBackgroundBase } from '../../../f-backgroud';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 /**
  * Execution that adds a pattern to the background in the FComponentsStore.

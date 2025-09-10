@@ -15,21 +15,21 @@ import {
   OnInit,
   Optional,
   Output,
-  QueryList
+  QueryList,
 } from "@angular/core";
-import {FDraggableBase} from './f-draggable-base';
-import {FMoveNodesEvent, FNodeMoveFinalizeRequest, FNodeMovePreparationRequest} from './f-node-move';
-import {FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest} from './f-canvas';
+import { FDraggableBase } from './f-draggable-base';
+import { FMoveNodesEvent, FNodeMoveFinalizeRequest, FNodeMovePreparationRequest } from './f-node-move';
+import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
   FCreateConnectionEvent,
   FCreateConnectionFinalizeRequest,
   FCreateConnectionPreparationRequest,
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
-  FReassignConnectionPreparationRequest
+  FReassignConnectionPreparationRequest,
 } from './f-connection';
-import {FSelectionChangeEvent} from './f-selection-change-event';
-import {FMediator} from '@foblex/mediator';
+import { FSelectionChangeEvent } from './f-selection-change-event';
+import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,
@@ -40,28 +40,28 @@ import {
   InitializeDragSequenceRequest,
   OnPointerMoveRequest,
   PrepareDragSequenceRequest,
-  RemoveDndFromStoreRequest
+  RemoveDndFromStoreRequest,
 } from '../domain';
 import {
   FCreateNodeEvent,
   FExternalItemFinalizeRequest,
   FExternalItemPreparationRequest,
-  PreventDefaultIsExternalItemRequest
+  PreventDefaultIsExternalItemRequest,
 } from '../f-external-item';
-import {FSingleSelectRequest} from './f-single-select';
-import {NodeResizeFinalizeRequest, NodeResizePreparationRequest} from './f-node-resize';
-import {F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin} from './i-f-drag-and-drop-plugin';
-import {BrowserService, EOperationSystem, PlatformService} from '@foblex/platform';
-import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
-import {FDragHandlerResult} from './f-drag-handler';
+import { FSingleSelectRequest } from './f-single-select';
+import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './f-node-resize';
+import { F_AFTER_MAIN_PLUGIN, F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from './i-f-drag-and-drop-plugin';
+import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
+import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
+import { FDragHandlerResult } from './f-drag-handler';
 import {
   FDropToGroupEvent,
   DropToGroupFinalizeRequest,
-  DropToGroupPreparationRequest
+  DropToGroupPreparationRequest,
 } from './f-drop-to-group';
-import {FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest} from './f-node-rotate';
-import {ICanRunOutsideAngular, IPointerEvent} from "../drag-toolkit";
-import {isDragBlocker} from "./is-drag-blocker";
+import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
+import { ICanRunOutsideAngular, IPointerEvent } from "../drag-toolkit";
+import { isDragBlocker } from "./is-drag-blocker";
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -117,7 +117,7 @@ import {isDragBlocker} from "./is-drag-blocker";
 @Directive({
   selector: "f-flow[fDraggable]",
   exportAs: 'fDraggable',
-  providers: [FDragHandlerResult]
+  providers: [FDragHandlerResult],
 })
 export class FDraggableDirective extends FDraggableBase implements OnInit, AfterViewInit, OnDestroy {
 
@@ -127,7 +127,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   private readonly _mediator = inject(FMediator);
   private readonly _platform = inject(PlatformService);
 
-  @Input({transform: booleanAttribute, alias: 'fDraggableDisabled'})
+  @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
 
   public override get hostElement(): HTMLElement {
@@ -166,7 +166,7 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fNodeIntersectedWithConnections = new EventEmitter<FNodeIntersectedWithConnections>();
 
-  @Input({transform: booleanAttribute})
+  @Input({ transform: booleanAttribute })
   public override fEmitOnNodeIntersect: boolean = false;
 
   @Output()
@@ -189,21 +189,21 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
    * This value is used to snap nodes to a vertical grid while dragging.
    * The default value is `1`, which means that nodes will snap to every pixel vertically.
    */
-  public override vCellSize = input(1, {transform: (value: any) => numberAttribute(value, 1)});
+  public override vCellSize = input(1, { transform: (value: any) => numberAttribute(value, 1) });
 
   /**
    * Defines the horizontal cell size for the grid.
    * This value is used to snap nodes to a horizontal grid while dragging.
    * The default value is `1`, which means that nodes will snap to every pixel horizontally.
    */
-  public override hCellSize = input(1, {transform: (value: any) => numberAttribute(value, 1)});
+  public override hCellSize = input(1, { transform: (value: any) => numberAttribute(value, 1) });
 
   /**
    * Defines whether the cell size should be applied while dragging.
    * If set to `true`, the dragged nodes will snap to the grid defined by `vCellSize` and `hCellSize`.
    * If set to `false`, the nodes will move freely without snapping to the grid.
    */
-  public override fCellSizeWhileDragging = input(false, {transform: (value: any) => booleanAttribute(value)});
+  public override fCellSizeWhileDragging = input(false, { transform: (value: any) => booleanAttribute(value) });
 
   @Output()
   public override fDragStarted = new EventEmitter<FDragStartedEvent>();
@@ -211,10 +211,10 @@ export class FDraggableDirective extends FDraggableBase implements OnInit, After
   @Output()
   public override fDragEnded = new EventEmitter<void>();
 
-  @ContentChildren(F_BEFORE_MAIN_PLUGIN, {descendants: true})
+  @ContentChildren(F_BEFORE_MAIN_PLUGIN, { descendants: true })
   private _beforePlugins!: QueryList<IFDragAndDropPlugin>;
 
-  @ContentChildren(F_AFTER_MAIN_PLUGIN, {descendants: true})
+  @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
   constructor(

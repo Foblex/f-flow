@@ -1,22 +1,22 @@
-import {inject, Injectable} from '@angular/core';
-import {CreateDragModelFromSelectionRequest} from './create-drag-model-from-selection-request';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FComponentsStore} from '../../../f-storage';
-import {FDraggableDataContext} from '../../f-draggable-data-context';
-import {MoveDragHandler} from '../move-drag-handler';
-import {FNodeBase} from '../../../f-node';
-import {CreateOutputConnectionHandlerAndSetToNodeHandlerRequest} from './create-output-connection-handler-and-set-to-node-handler';
+import { inject, Injectable } from '@angular/core';
+import { CreateDragModelFromSelectionRequest } from './create-drag-model-from-selection-request';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { MoveDragHandler } from '../move-drag-handler';
+import { FNodeBase } from '../../../f-node';
+import { CreateOutputConnectionHandlerAndSetToNodeHandlerRequest } from './create-output-connection-handler-and-set-to-node-handler';
 import {
-  CreateInputConnectionHandlerAndSetToNodeHandlerRequest
+  CreateInputConnectionHandlerAndSetToNodeHandlerRequest,
 } from './create-input-connection-handler-and-set-to-node-handler';
 import {
   GetDeepChildrenNodesAndGroupsRequest,
 } from '../../../domain';
-import {flatMap} from '@foblex/utils';
-import {BaseConnectionDragHandler} from '../connection-drag-handlers';
-import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
-import {BuildDragHierarchyRequest, BuildDragHierarchyResponse} from "./build-drag-hierarchy";
-import {CreateSummaryDragHandlerRequest} from "./create-summary-drag-handler";
+import { flatMap } from '@foblex/utils';
+import { BaseConnectionDragHandler } from '../connection-drag-handlers';
+import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { BuildDragHierarchyRequest, BuildDragHierarchyResponse } from "./build-drag-hierarchy";
+import { CreateSummaryDragHandlerRequest } from "./create-summary-drag-handler";
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
@@ -92,7 +92,7 @@ export class CreateDragModelFromSelection
   }
 
   private _setConnectionsHandlersToNodes(
-      dragHandlers: MoveDragHandler[], outputIds: string[], inputIds: string[]
+      dragHandlers: MoveDragHandler[], outputIds: string[], inputIds: string[],
   ): void {
     const existingConnectionHandlers: BaseConnectionDragHandler[] = [];
     dragHandlers.forEach((x) => {

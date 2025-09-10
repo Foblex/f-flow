@@ -4,7 +4,7 @@ export class GetNormalizedParentNodeRectRequest {
   static readonly fToken = Symbol('GetNormalizedParentNodeRectRequest');
 
   constructor(
-    public readonly nodeOrGroup: FNodeBase
+    public readonly nodeOrGroup: FNodeBase,
   ) {
   }
 }

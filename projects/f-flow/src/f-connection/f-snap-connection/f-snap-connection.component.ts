@@ -11,17 +11,17 @@ import {
   OnInit,
   signal,
 } from "@angular/core";
-import {EFConnectionBehavior} from '../common';
-import {EFConnectionType} from '../common';
-import {FConnectionFactory} from '../f-connection-builder';
-import {NotifyDataChangedRequest} from '../../f-storage';
-import {F_CONNECTION} from '../common/f-connection.injection-token';
-import {FConnectionBase} from '../common/f-connection-base';
-import {castToEnum} from '@foblex/utils';
-import {FMediator} from '@foblex/mediator';
-import {AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest} from '../../domain';
+import { EFConnectionBehavior } from '../common';
+import { EFConnectionType } from '../common';
+import { FConnectionFactory } from '../f-connection-builder';
+import { NotifyDataChangedRequest } from '../../f-storage';
+import { F_CONNECTION } from '../common/f-connection.injection-token';
+import { FConnectionBase } from '../common/f-connection-base';
+import { castToEnum } from '@foblex/utils';
+import { FMediator } from '@foblex/mediator';
+import { AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest } from '../../domain';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Component({
   selector: "f-snap-connection",
@@ -29,9 +29,9 @@ let uniqueId: number = 0;
   styleUrls: ["./f-snap-connection.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: "f-component f-connection f-snap-connection"
+    class: "f-component f-connection f-snap-connection",
   },
-  providers: [{provide: F_CONNECTION, useExisting: FSnapConnectionComponent}],
+  providers: [{ provide: F_CONNECTION, useExisting: FSnapConnectionComponent }],
 })
 export class FSnapConnectionComponent
   extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -42,20 +42,20 @@ export class FSnapConnectionComponent
 
   public override fTextStartOffset: string = '';
 
-  @Input({transform: numberAttribute})
+  @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
 
   public override fOutputId!: string;
 
   public override fInputId!: string;
 
-  @Input({transform: numberAttribute})
+  @Input({ transform: numberAttribute })
   public override fRadius: number = 8;
 
-  @Input({transform: numberAttribute})
+  @Input({ transform: numberAttribute })
   public override fOffset: number = 12;
 
-  @Input({transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior)})
+  @Input({ transform: (value: unknown) => castToEnum(value, 'fBehavior', EFConnectionBehavior) })
   public override fBehavior: EFConnectionBehavior = EFConnectionBehavior.FIXED;
 
   @Input()

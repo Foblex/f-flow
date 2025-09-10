@@ -1,8 +1,8 @@
-import {IPoint} from "@foblex/2d";
-import {SnapToGrid} from "./snap-to-grid";
-import {IConstraintResult, RectConstraint} from "./rect-constraint";
-import {Injector} from "@angular/core";
-import {IDragLimits} from "../create-drag-model-from-selection";
+import { IPoint } from "@foblex/2d";
+import { SnapToGrid } from "./snap-to-grid";
+import { IConstraintResult, RectConstraint } from "./rect-constraint";
+import { Injector } from "@angular/core";
+import { IDragLimits } from "../create-drag-model-from-selection";
 
 export interface IConstraintSummary {
   hardDifference: IPoint;
@@ -17,7 +17,7 @@ export class DragConstraintPipeline {
   constructor(
     injector: Injector,
     pointerDown: IPoint,
-    limits: IDragLimits
+    limits: IDragLimits,
   ) {
     this._snapper = new SnapToGrid(injector, pointerDown);
     this._hardConstraint = new RectConstraint(limits.hard);

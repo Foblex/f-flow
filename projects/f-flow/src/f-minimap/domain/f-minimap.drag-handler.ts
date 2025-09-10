@@ -1,9 +1,9 @@
-import {IPoint, IRect, Point} from '@foblex/2d';
-import {FComponentsStore} from '../../f-storage';
-import {IFDragHandler} from '../../f-draggable';
-import {FMediator} from '@foblex/mediator';
-import {CalculateFlowPointFromMinimapPointRequest} from './calculate-flow-point-from-minimap-point';
-import {FMinimapData} from './f-minimap-data';
+import { IPoint, IRect, Point } from '@foblex/2d';
+import { FComponentsStore } from '../../f-storage';
+import { IFDragHandler } from '../../f-draggable';
+import { FMediator } from '@foblex/mediator';
+import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point';
+import { FMinimapData } from './f-minimap-data';
 
 export class FMinimapDragHandler implements IFDragHandler {
 
@@ -17,7 +17,7 @@ export class FMinimapDragHandler implements IFDragHandler {
     private flowRect: IRect,
     private canvasPosition: IPoint,
     private eventPoint: IPoint,
-    private minimap: FMinimapData
+    private minimap: FMinimapData,
   ) {
   }
 
@@ -41,7 +41,7 @@ export class FMinimapDragHandler implements IFDragHandler {
 
   private getNewPosition(eventPoint: IPoint): IPoint {
     return this.fMediator.execute<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
-      this.flowRect, this.canvasPosition, eventPoint, this.minimap
+      this.flowRect, this.canvasPosition, eventPoint, this.minimap,
     ));
   }
 

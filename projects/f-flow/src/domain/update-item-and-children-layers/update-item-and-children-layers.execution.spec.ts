@@ -9,7 +9,7 @@ import {
   SortItemLayersExecution,
   SortItemLayersRequest,
   SortItemsByParentExecution,
-  SortNodeLayersExecution
+  SortNodeLayersExecution,
 } from '@foblex/flow';
 import { GetDeepChildrenNodesAndGroupsExecution } from '@foblex/flow';
 import { MoveFrontElementsBeforeTargetElementExecution } from '@foblex/flow';
@@ -40,7 +40,7 @@ function createCanvas(): FCanvasBase {
     }).asReadonly(),
     fConnectionsContainer: signal({
       nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly()
+    }).asReadonly(),
   } as FCanvasBase;
 }
 

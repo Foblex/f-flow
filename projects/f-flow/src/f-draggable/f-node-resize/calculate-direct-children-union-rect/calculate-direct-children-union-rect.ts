@@ -1,10 +1,10 @@
-import {inject, Injectable} from '@angular/core';
-import {CalculateDirectChildrenUnionRectRequest} from './calculate-direct-children-union-rect-request';
-import {IRect, RectExtensions} from '@foblex/2d';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FNodeBase} from '../../../f-node';
-import {GetNormalizedElementRectRequest} from '../../../domain';
-import {FComponentsStore} from "../../../f-storage";
+import { inject, Injectable } from '@angular/core';
+import { CalculateDirectChildrenUnionRectRequest } from './calculate-direct-children-union-rect-request';
+import { IRect, RectExtensions } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FNodeBase } from '../../../f-node';
+import { GetNormalizedElementRectRequest } from '../../../domain';
+import { FComponentsStore } from "../../../f-storage";
 
 @Injectable()
 @FExecutionRegister(CalculateDirectChildrenUnionRectRequest)
@@ -18,9 +18,9 @@ export class CalculateDirectChildrenUnionRect
     return this._store.fNodes;
   }
 
-  public handle({nodeOrGroup, paddings}: CalculateDirectChildrenUnionRectRequest): IRect | null {
+  public handle({ nodeOrGroup, paddings }: CalculateDirectChildrenUnionRectRequest): IRect | null {
     const childNodeRect = RectExtensions.union(
-      this._calculateDirectChildren(nodeOrGroup.fId()).map((x) => this._normalizeRect(x))
+      this._calculateDirectChildren(nodeOrGroup.fId()).map((x) => this._normalizeRect(x)),
     );
     return childNodeRect ?
       this._concatRectWithParentPadding(childNodeRect, paddings) : null;
@@ -39,7 +39,7 @@ export class CalculateDirectChildrenUnionRect
       rect.x - padding[0],
       rect.y - padding[1],
       rect.width + padding[0] + padding[2],
-      rect.height + +padding[1] + padding[3]
+      rect.height + +padding[1] + padding[3],
     );
   }
 }

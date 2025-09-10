@@ -1,7 +1,7 @@
-import {AbstractConstructor, Constructor} from '../constructor';
-import {IHasHostElement} from '../../i-has-host-element';
-import {ISelectable} from './i-selectable';
-import {signal} from "@angular/core";
+import { AbstractConstructor, Constructor } from '../constructor';
+import { IHasHostElement } from '../../i-has-host-element';
+import { ISelectable } from './i-selectable';
+import { signal } from "@angular/core";
 
 export const F_SELECTED_CLASS = 'f-selected';
 

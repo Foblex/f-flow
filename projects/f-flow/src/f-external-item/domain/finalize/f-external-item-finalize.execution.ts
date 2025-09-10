@@ -1,18 +1,18 @@
-import {EventEmitter, inject, Injectable} from '@angular/core';
-import {FExternalItemFinalizeRequest} from './f-external-item-finalize.request';
-import {IPoint, IRect} from '@foblex/2d';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FComponentsStore} from '../../../f-storage';
-import {FExternalItemDragHandler} from '../f-external-item.drag-handler';
-import {FCreateNodeEvent} from '../f-create-node.event';
-import {GetNormalizedElementRectRequest} from '../../../domain';
+import { EventEmitter, inject, Injectable } from '@angular/core';
+import { FExternalItemFinalizeRequest } from './f-external-item-finalize.request';
+import { IPoint, IRect } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
+import { FExternalItemDragHandler } from '../f-external-item.drag-handler';
+import { FCreateNodeEvent } from '../f-create-node.event';
+import { GetNormalizedElementRectRequest } from '../../../domain';
 import {
   FDraggableDataContext,
   FDragHandlerResult,
-  FNodeDropToGroupDragHandler
+  FNodeDropToGroupDragHandler,
 } from '../../../f-draggable';
-import {BrowserService} from '@foblex/platform';
-import {IFExternalItemDragResult} from '../i-f-external-item-drag-result';
+import { BrowserService } from '@foblex/platform';
+import { IFExternalItemDragResult } from '../i-f-external-item-drag-result';
 
 @Injectable()
 @FExecutionRegister(FExternalItemFinalizeRequest)
@@ -46,7 +46,7 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
 
     this._emitEvent(
       this._getElementsFromPoint(request.event.getPosition()),
-      destinationNodeOrGroupId, request.event.getPosition()
+      destinationNodeOrGroupId, request.event.getPosition(),
     );
 
     this._fDragHandler.onPointerUp();
@@ -55,13 +55,13 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
 
   private _isValid(): boolean {
     return this._dragContext.draggableItems.some(
-      (x) => x instanceof FExternalItemDragHandler
+      (x) => x instanceof FExternalItemDragHandler,
     );
   }
 
   private _getDestinationNodeOrGroupId(): string | undefined {
     const dropToGroupHandler = this._getDropToGroupHandler();
-    let result = dropToGroupHandler.fNodeWithRect?.node.fId();
+    const result = dropToGroupHandler.fNodeWithRect?.node.fId();
     dropToGroupHandler.onPointerUp?.();
     return result;
   }
@@ -86,8 +86,8 @@ export class FExternalItemFinalizeExecution implements IExecution<FExternalItemF
       this._fCreateNode.emit(
         new FCreateNodeEvent(
           this._getPreviewRect(), this._fResult.getData().fExternalItem.fData,
-          destinationNodeOrGroupId, destinationNodeOrGroupId ? eventPosition : undefined
-        )
+          destinationNodeOrGroupId, destinationNodeOrGroupId ? eventPosition : undefined,
+        ),
       );
     }
   }

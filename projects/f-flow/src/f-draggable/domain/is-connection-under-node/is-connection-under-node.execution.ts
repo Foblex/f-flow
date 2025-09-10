@@ -7,7 +7,7 @@ import { FNodeIntersectedWithConnections } from '../../index';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
-import {GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest} from '../../../domain';
+import { GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(IsConnectionUnderNodeRequest)
@@ -82,8 +82,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     this._store.fDraggable?.fNodeIntersectedWithConnections.emit(
       new FNodeIntersectedWithConnections(
         fNode.fId(),
-        fConnections.map((x) => x.fId())
-      )
+        fConnections.map((x) => x.fId()),
+      ),
     );
   }
 }

@@ -6,13 +6,13 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
 import { FExternalItemBase } from './f-external-item-base';
 import { FExternalItemService } from './f-external-item.service';
 import { F_EXTERNAL_ITEM } from './f-external-item-token';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fExternalItem]",
@@ -23,7 +23,7 @@ let uniqueId: number = 0;
     '[class.f-external-item-disabled]': 'fDisabled',
   },
   providers: [
-    { provide: F_EXTERNAL_ITEM, useExisting: FExternalItemDirective }
+    { provide: F_EXTERNAL_ITEM, useExisting: FExternalItemDirective },
   ],
 })
 export class FExternalItemDirective<TData> extends FExternalItemBase<TData> implements OnInit, OnDestroy {

@@ -16,7 +16,7 @@ export class AddZoomToStoreExecution
 
   public handle(request: AddZoomToStoreRequest): void {
     this._store.fComponents = {
-      [F_ZOOM_TAG]: request.fComponent
+      [F_ZOOM_TAG]: request.fComponent,
     };
   }
 }

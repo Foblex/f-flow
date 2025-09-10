@@ -30,7 +30,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
       fNodesRect,
       RectExtensions.fromElement(this._store.fFlow!.hostElement),
       this._store.fNodes.map((x) => x._position),
-      request.toCenter
+      request.toCenter,
     );
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));

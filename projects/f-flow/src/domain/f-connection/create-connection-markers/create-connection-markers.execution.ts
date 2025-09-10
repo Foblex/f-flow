@@ -1,10 +1,10 @@
-import {inject, Injectable} from '@angular/core';
-import {CreateConnectionMarkersRequest} from './create-connection-markers-request';
-import {FConnectionBase, FMarkerBase} from '../../../f-connection';
-import {FExecutionRegister, IExecution} from '@foblex/mediator';
-import {BrowserService} from '@foblex/platform';
-import {normalizeDomElementId} from '@foblex/utils';
-import {FComponentsStore} from '../../../f-storage';
+import { inject, Injectable } from '@angular/core';
+import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
+import { FConnectionBase, FMarkerBase } from '../../../f-connection';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { BrowserService } from '@foblex/platform';
+import { normalizeDomElementId } from '@foblex/utils';
+import { FComponentsStore } from '../../../f-storage';
 
 /**
  * Execution that creates connection markers for a given connection.

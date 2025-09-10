@@ -29,5 +29,5 @@ export const F_DRAGGABLE_FEATURES = [
 
   StartDragSequenceExecution,
 
-  RemoveDndFromStoreExecution
+  RemoveDndFromStoreExecution,
 ];

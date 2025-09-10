@@ -15,5 +15,5 @@ export const F_BACKGROUND_FEATURES = [
 
   RemoveBackgroundFromStoreExecution,
 
-  SetBackgroundTransformExecution
+  SetBackgroundTransformExecution,
 ];

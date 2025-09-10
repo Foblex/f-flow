@@ -1,6 +1,6 @@
 import { IMinMaxPoint, IPoint } from '@foblex/2d';
 import { Injector } from '@angular/core';
-import {FComponentsStore} from "../../../f-storage";
+import { FComponentsStore } from "../../../f-storage";
 
 export class ExternalRectConstraint {
 
@@ -11,7 +11,7 @@ export class ExternalRectConstraint {
   constructor(
     injector: Injector,
     private _onPointerDown: IPoint,
-    private readonly _limit: IMinMaxPoint
+    private readonly _limit: IMinMaxPoint,
   ) {
     const store = injector.get(FComponentsStore);
     this._vCellSize = store.fDraggable!.vCellSize();
@@ -32,13 +32,13 @@ export class ExternalRectConstraint {
 
   private _cellSizeStrategies: Record<number, (difference: IPoint) => IPoint> = {
     0: this._skipCellSize.bind(this),
-    1: this._applyCellSize.bind(this)
+    1: this._applyCellSize.bind(this),
   };
 
   private _applyCellSize(difference: IPoint): IPoint {
     return {
       x: this._snapToGrid(this._onPointerDown.x + difference.x, this._hCellSize) - this._onPointerDown.x,
-      y: this._snapToGrid(this._onPointerDown.y + difference.y, this._vCellSize) - this._onPointerDown.y
+      y: this._snapToGrid(this._onPointerDown.y + difference.y, this._vCellSize) - this._onPointerDown.y,
     };
   }
 

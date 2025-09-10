@@ -1,4 +1,4 @@
-import {FConnectorBase} from '../../../f-connectors';
+import { FConnectorBase } from '../../../f-connectors';
 
 export class MarkConnectableConnectorsRequest {
   static readonly fToken = Symbol('MarkConnectableConnectorsRequest');

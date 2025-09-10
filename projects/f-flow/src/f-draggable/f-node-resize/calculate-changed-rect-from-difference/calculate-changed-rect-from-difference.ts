@@ -1,21 +1,21 @@
-import {Injectable} from '@angular/core';
-import {CalculateChangedRectFromDifferenceRequest} from './calculate-changed-rect-from-difference-request';
-import {IPoint, IRect, ISize, RectExtensions} from '@foblex/2d';
-import {FExecutionRegister, IExecution} from '@foblex/mediator';
-import {RESIZE_DIRECTIONS} from '../resize-direction';
+import { Injectable } from '@angular/core';
+import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference-request';
+import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { RESIZE_DIRECTIONS } from '../resize-direction';
 
 @Injectable()
 @FExecutionRegister(CalculateChangedRectFromDifferenceRequest)
 export class CalculateChangedRectFromDifference
   implements IExecution<CalculateChangedRectFromDifferenceRequest, IRect> {
 
-  public handle({originalRect, difference, handleType, minimumSize}: CalculateChangedRectFromDifferenceRequest): IRect {
+  public handle({ originalRect, difference, handleType, minimumSize }: CalculateChangedRectFromDifferenceRequest): IRect {
     const changedRect = this._changeSizeInRect(originalRect, difference, RESIZE_DIRECTIONS[handleType], minimumSize);
     return this._changePosition(originalRect, difference, RESIZE_DIRECTIONS[handleType], changedRect);
   }
 
   private _changeSizeInRect(
-    originalRect: IRect, difference: IPoint, direction: IPoint, minimumSize: ISize
+    originalRect: IRect, difference: IPoint, direction: IPoint, minimumSize: ISize,
   ): IRect {
     let w = originalRect.width + direction.x * difference.x;
     let h = originalRect.height + direction.y * difference.y;
@@ -56,7 +56,7 @@ export class CalculateChangedRectFromDifference
 
     return RectExtensions.initialize(
       x, y,
-      changedRect.width, changedRect.height
+      changedRect.width, changedRect.height,
     );
   }
 }

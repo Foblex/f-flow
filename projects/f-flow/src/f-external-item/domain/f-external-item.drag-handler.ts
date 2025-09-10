@@ -1,18 +1,18 @@
-import {IPoint, IRect, ITransformModel, Point, RectExtensions} from '@foblex/2d';
+import { IPoint, IRect, ITransformModel, Point, RectExtensions } from '@foblex/2d';
 import {
   ExternalRectConstraint,
   FExternalItemBase,
   FExternalItemCreatePlaceholderRequest,
   FExternalItemCreatePreviewRequest,
-  IFExternalItemDragResult
+  IFExternalItemDragResult,
 } from '../../f-external-item';
-import {FDragHandlerResult, IFDragHandler} from '../../f-draggable';
-import {BrowserService} from '@foblex/platform';
-import {FMediator} from '@foblex/mediator';
-import {Injector} from '@angular/core';
-import {FComponentsStore} from "../../f-storage";
-import {GetNormalizedElementRectRequest} from "../../domain";
-import {infinityMinMax} from "../../utils";
+import { FDragHandlerResult, IFDragHandler } from '../../f-draggable';
+import { BrowserService } from '@foblex/platform';
+import { FMediator } from '@foblex/mediator';
+import { Injector } from '@angular/core';
+import { FComponentsStore } from "../../f-storage";
+import { GetNormalizedElementRectRequest } from "../../domain";
+import { infinityMinMax } from "../../utils";
 
 export class FExternalItemDragHandler implements IFDragHandler {
 
@@ -52,7 +52,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._fResult = injector.get(FDragHandlerResult);
     this._mediator = injector.get(FMediator);
     this._browser = injector.get(BrowserService);
-    this.fData = {fData: _fExternalItem.fData};
+    this.fData = { fData: _fExternalItem.fData };
     this._initializeConstraints(injector);
     this._fItemHostDisplay = this._fItemHost.style.display;
   }
@@ -66,7 +66,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
 
   private _getStartPoint(): IPoint {
     return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(this._fExternalItem.hostElement)
+      new GetNormalizedElementRectRequest(this._fExternalItem.hostElement),
     );
   }
 
@@ -81,7 +81,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
 
   private _createAndAppendPreview(): void {
     this._preview = this._mediator.execute<HTMLElement>(
-      new FExternalItemCreatePreviewRequest(this._fExternalItem)
+      new FExternalItemCreatePreviewRequest(this._fExternalItem),
     );
     if (this._fExternalItem.fPreviewMatchSize) {
       this._matchElementSize(this._preview, this._onPointerDownRect);
@@ -92,7 +92,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
 
   private _createAndAppendPlaceholder(): void {
     this._placeholder = this._mediator.execute<HTMLElement>(
-      new FExternalItemCreatePlaceholderRequest(this._fExternalItem)
+      new FExternalItemCreatePlaceholderRequest(this._fExternalItem),
     );
     this._body.appendChild(this._fItemHost.parentElement!.replaceChild(this._placeholder!, this._fItemHost));
     this._fItemHost.style.display = 'none';
@@ -136,7 +136,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
   }
 }
 
-function setTransform({x, y}: IPoint): string {
+function setTransform({ x, y }: IPoint): string {
   return `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
 }
 
