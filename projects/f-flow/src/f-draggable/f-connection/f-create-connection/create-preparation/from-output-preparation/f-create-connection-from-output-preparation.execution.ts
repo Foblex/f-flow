@@ -23,7 +23,7 @@ export class FCreateConnectionFromOutputPreparationExecution
 
     if (fOutput.canBeConnected) {
       this._fMediator.execute(
-        new FCreateConnectionDragHandlerPreparationRequest(request.event.getPosition(), fOutput)
+        new FCreateConnectionDragHandlerPreparationRequest(request.event.getPosition(), fOutput),
       );
     }
   }
@@ -47,6 +47,7 @@ export class FCreateConnectionFromOutputPreparationExecution
     if (!result) {
       throw new Error('Output not found');
     }
+
     return result as FNodeOutputBase;
   }
 }

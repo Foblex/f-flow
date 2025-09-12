@@ -11,5 +11,5 @@ export const GET_FLOW_STATE_PROVIDERS = [
 
   GetFlowStateNodesExecution,
 
-  GetFlowStateConnectionsExecution
+  GetFlowStateConnectionsExecution,
 ];

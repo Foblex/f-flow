@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
-import {ApplyChildResizeConstraintsRequest} from './apply-child-resize-constraints-request';
-import {IRect} from '@foblex/2d';
-import {FExecutionRegister, IExecution} from '@foblex/mediator';
+import { Injectable } from '@angular/core';
+import { ApplyChildResizeConstraintsRequest } from './apply-child-resize-constraints-request';
+import { IRect } from '@foblex/2d';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(ApplyChildResizeConstraintsRequest)
 export class ApplyChildResizeConstraints
   implements IExecution<ApplyChildResizeConstraintsRequest, void> {
 
-  public handle({rect, childrenBounds}: ApplyChildResizeConstraintsRequest): void {
-    if (!childrenBounds) return;
+  public handle({ rect, childrenBounds }: ApplyChildResizeConstraintsRequest): void {
+    if (!childrenBounds) {
+return;
+}
     this._apply(rect, childrenBounds);
   }
 

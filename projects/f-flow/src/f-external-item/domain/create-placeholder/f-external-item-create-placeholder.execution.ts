@@ -36,6 +36,7 @@ export class FExternalItemCreatePlaceholderExecution
   private _createViewRef(template: TemplateRef<any>): EmbeddedViewRef<any> {
     const result = this._containerRef.createEmbeddedView(template);
     result.detectChanges();
+
     return result;
   }
 }

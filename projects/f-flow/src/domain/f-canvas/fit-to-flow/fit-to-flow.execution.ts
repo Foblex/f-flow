@@ -30,7 +30,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
       fNodesRect,
       RectExtensions.fromElement(this._store.fFlow!.hostElement),
       this._store.fNodes.map((x) => x._position),
-      request.toCenter
+      request.toCenter,
     );
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
@@ -57,6 +57,7 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
   private getZeroPositionWithoutScale(points: IPoint[]): IPoint {
     const xPoint = points.length ? Math.min(...points.map((point) => point.x)) : 0;
     const yPoint = points.length ? Math.min(...points.map((point) => point.y)) : 0;
+
     return PointExtensions.initialize(xPoint, yPoint)
   }
 }

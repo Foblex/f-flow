@@ -7,21 +7,21 @@ import {
   OutputEmitterRef, Renderer2,
   Signal, untracked,
 } from '@angular/core';
-import {IPoint, IRect, ISize, PointExtensions, SizeExtensions} from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
 import {
-  FConnectorBase
+  FConnectorBase,
 } from '../f-connectors';
-import {IHasHostElement} from '../i-has-host-element';
-import {ISelectable, mixinChangeSelection} from '../mixins';
-import {FChannel} from '../reactivity';
-import {BrowserService} from "@foblex/platform";
+import { IHasHostElement } from '../i-has-host-element';
+import { ISelectable, mixinChangeSelection } from '../mixins';
+import { FChannel } from '../reactivity';
+import { BrowserService } from "@foblex/platform";
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
 const MIXIN_BASE = mixinChangeSelection(
   class {
     constructor(
-      public hostElement: HTMLElement
+      public hostElement: HTMLElement,
     ) {
     }
   });
@@ -84,7 +84,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
         }
       });
 
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   protected sizeChanges(): void {
@@ -97,7 +97,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
           this.refresh()
         }
       });
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   protected rotateChanges(): void {
@@ -110,7 +110,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
           this.refresh();
         }
       });
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   protected parentChanges(): void {
@@ -119,7 +119,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.fIncludePadding();
       this.fAutoSizeToFitChildren();
       untracked(() => this.refresh());
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   private _isSizeEqual(value?: ISize): boolean {

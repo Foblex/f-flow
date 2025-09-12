@@ -32,11 +32,13 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
     return this._createMinimapNodeElements(request);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _createMinimapNodeElements(request: MinimapDrawNodesRequest): SVGRectElement[] {
     return this._fNodes.map((x) => {
       const element = this._createNodeElement();
       setRectToElement(this._getNodeRect(x), element);
       this._applyClassList(element, x, x instanceof FNodeDirective);
+
       return element;
     });
   }

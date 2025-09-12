@@ -1,4 +1,4 @@
-import {IMinMaxPoint, IPoint} from "@foblex/2d";
+import { IMinMaxPoint, IPoint } from "@foblex/2d";
 
 export interface IConstraintEdges {
   left: boolean;
@@ -15,12 +15,12 @@ export interface IConstraintResult {
 
 export class RectConstraint {
   constructor(
-    private readonly _limits: IMinMaxPoint
+    private readonly _limits: IMinMaxPoint,
   ) {
   }
 
   public apply(offset: IPoint): IConstraintResult {
-    const {min, max} = this._limits;
+    const { min, max } = this._limits;
 
     const clampedX = this._clamp(offset.x, min.x, max.x);
     const clampedY = this._clamp(offset.y, min.y, max.y);
@@ -39,15 +39,18 @@ export class RectConstraint {
     };
 
     return {
-      value: {x: clampedX, y: clampedY},
-      overflow: {x: Math.abs(overflowX), y: Math.abs(overflowY)},
+      value: { x: clampedX, y: clampedY },
+      overflow: { x: Math.abs(overflowX), y: Math.abs(overflowY) },
       edges,
     };
   }
 
   private _quantizeSigned(v: number, step: number): number {
-    if (step <= 0 || v === 0) return 0;
+    if (step <= 0 || v === 0) {
+return 0;
+}
     const k = v / step;
+
     return (v > 0 ? Math.ceil(k) : Math.floor(k)) * step;
   }
 

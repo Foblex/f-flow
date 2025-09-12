@@ -6,13 +6,12 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(ListenCountChangesRequest)
-export class ListenCountChangesExecution implements IExecution<ListenCountChangesRequest, FChannelHub> {
+export class ListenCountChangesExecution
+  implements IExecution<ListenCountChangesRequest, FChannelHub>
+{
+  private readonly _store = inject(FComponentsStore);
 
-  private _store = inject(FComponentsStore);
-
-  public handle(request: ListenCountChangesRequest): FChannelHub {
-    return new FChannelHub(this._store.countChanges$)
-      .pipe(notifyOnStart(), debounceTime(1));
+  public handle(_request: ListenCountChangesRequest): FChannelHub {
+    return new FChannelHub(this._store.countChanges$).pipe(notifyOnStart(), debounceTime(1));
   }
 }
-

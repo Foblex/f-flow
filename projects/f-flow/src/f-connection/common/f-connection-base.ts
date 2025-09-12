@@ -6,33 +6,33 @@ import {
   input,
   signal,
   Signal,
-  viewChild
+  viewChild,
 } from '@angular/core';
-import {ILine, IPoint, LineExtensions, PointExtensions} from '@foblex/2d';
-import {EFConnectionBehavior} from './e-f-connection-behavior';
-import {EFConnectionType} from './e-f-connection-type';
-import {IHasConnectionColor} from './i-has-connection-color';
-import {IHasConnectionFromTo} from './i-has-connection-from-to';
-import {IHasConnectionText} from './i-has-connection-text';
-import {CONNECTION_PATH, IConnectionPath} from './f-path';
-import {CONNECTION_GRADIENT, IConnectionGradient} from './f-gradient';
-import {FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent} from './f-drag-handle';
-import {FConnectionSelectionComponent} from './f-selection';
-import {CONNECTION_TEXT, IConnectionText} from './f-connection-text';
-import {EFConnectableSide} from '../../f-connectors';
-import {FConnectionFactory} from '../f-connection-builder';
-import {IHasHostElement} from '../../i-has-host-element';
+import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
+import { EFConnectionBehavior } from './e-f-connection-behavior';
+import { EFConnectionType } from './e-f-connection-type';
+import { IHasConnectionColor } from './i-has-connection-color';
+import { IHasConnectionFromTo } from './i-has-connection-from-to';
+import { IHasConnectionText } from './i-has-connection-text';
+import { CONNECTION_PATH, IConnectionPath } from './f-path';
+import { CONNECTION_GRADIENT, IConnectionGradient } from './f-gradient';
+import { FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent } from './f-drag-handle';
+import { FConnectionSelectionComponent } from './f-selection';
+import { CONNECTION_TEXT, IConnectionText } from './f-connection-text';
+import { EFConnectableSide } from '../../f-connectors';
+import { FConnectionFactory } from '../f-connection-builder';
+import { IHasHostElement } from '../../i-has-host-element';
 import {
   ISelectable, ICanChangeVisibility,
-  mixinChangeSelection, mixinChangeVisibility
+  mixinChangeSelection, mixinChangeVisibility,
 } from '../../mixins';
-import {FConnectionCenterDirective} from "../f-connection-center";
+import { FConnectionCenterDirective } from "../f-connection-center";
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
     class {
       constructor(
-        public hostElement: HTMLElement
+        public hostElement: HTMLElement,
       ) {
       }
     }));
@@ -94,14 +94,14 @@ export abstract class FConnectionBase extends MIXIN_BASE
 
   public readonly fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
 
-  public readonly fConnectionCenters = contentChildren(FConnectionCenterDirective, {descendants: true});
+  public readonly fConnectionCenters = contentChildren(FConnectionCenterDirective, { descendants: true });
 
   private penultimatePoint: IPoint = PointExtensions.initialize();
   private secondPoint: IPoint = PointExtensions.initialize();
 
   protected constructor(
     elementReference: ElementRef<HTMLElement>,
-    private cFactory: FConnectionFactory
+    private cFactory: FConnectionFactory,
   ) {
     super(elementReference.nativeElement);
   }
@@ -116,7 +116,7 @@ export abstract class FConnectionBase extends MIXIN_BASE
     return (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element);
   }
 
-  public setLine({point1, point2}: ILine, sourceSide: EFConnectableSide, targetSide: EFConnectableSide): void {
+  public setLine({ point1, point2 }: ILine, sourceSide: EFConnectableSide, targetSide: EFConnectableSide): void {
     this.line = LineExtensions.initialize(point1, point2);
     const pathResult = this.getPathResult(point1, sourceSide, point2, targetSide);
     this.path = pathResult.path;
@@ -128,11 +128,12 @@ export abstract class FConnectionBase extends MIXIN_BASE
   private getPathResult(source: IPoint, sourceSide: EFConnectableSide, target: IPoint, targetSide: EFConnectableSide): any {
     const radius = this.fRadius > 0 ? this.fRadius : 0;
     const offset = this.fOffset > 0 ? this.fOffset : 1;
+
     return this.cFactory.handle(
       {
         type: this.fType,
-        payload: {source, sourceSide, target, targetSide, radius, offset}
-      }
+        payload: { source, sourceSide, target, targetSide, radius, offset },
+      },
     );
   }
 

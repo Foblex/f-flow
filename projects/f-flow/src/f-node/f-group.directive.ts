@@ -7,14 +7,14 @@ import {
   OnDestroy,
   OnInit, output,
 } from "@angular/core";
-import {IRect, ISize, PointExtensions} from '@foblex/2d';
-import {F_NODE, FNodeBase} from './f-node-base';
-import {NotifyTransformChangedRequest} from '../f-storage';
-import {FMediator} from '@foblex/mediator';
-import {IHasHostElement} from '../i-has-host-element';
-import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
+import { IRect, ISize, PointExtensions } from '@foblex/2d';
+import { F_NODE, FNodeBase } from './f-node-base';
+import { NotifyTransformChangedRequest } from '../f-storage';
+import { FMediator } from '@foblex/mediator';
+import { IHasHostElement } from '../i-has-host-element';
+import { AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest } from '../domain';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fGroup]",
@@ -26,7 +26,7 @@ let uniqueId: number = 0;
     '[class.f-group-selection-disabled]': 'fSelectionDisabled()',
   },
   providers: [
-    {provide: F_NODE, useExisting: FGroupDirective}
+    { provide: F_NODE, useExisting: FGroupDirective },
   ],
 })
 export class FGroupDirective extends FNodeBase
@@ -35,7 +35,7 @@ export class FGroupDirective extends FNodeBase
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override readonly fId = input<string>(`f-group-${uniqueId++}`, {alias: 'fGroupId'});
+  public override readonly fId = input<string>(`f-group-${uniqueId++}`, { alias: 'fGroupId' });
 
   public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fGroupParentId',
@@ -49,7 +49,7 @@ export class FGroupDirective extends FNodeBase
     alias: 'fGroupSize',
   });
 
-  public override sizeChange = output<IRect>({alias: 'fGroupSizeChange'});
+  public override sizeChange = output<IRect>({ alias: 'fGroupSizeChange' });
 
   public override readonly rotate = model(0, {
     alias: 'fGroupRotate',
@@ -84,6 +84,7 @@ export class FGroupDirective extends FNodeBase
   });
 
   constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     elementReference: ElementRef<HTMLElement>,
   ) {
     super(elementReference.nativeElement);

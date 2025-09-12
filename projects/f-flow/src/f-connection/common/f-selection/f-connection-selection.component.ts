@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, Inject
+  Component, ElementRef, Inject,
 } from "@angular/core";
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { IHasConnectionFromTo } from '../i-has-connection-from-to';
@@ -21,7 +21,7 @@ export class FConnectionSelectionComponent implements IHasHostElement {
 
   public get connectionForSelectionId(): string {
     return F_CONNECTION_IDENTIFIERS.connectionForSelectionId(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 

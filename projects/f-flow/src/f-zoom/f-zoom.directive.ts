@@ -9,7 +9,7 @@ import {
   OnDestroy,
   OnInit,
   Renderer2,
-  SimpleChanges
+  SimpleChanges,
 } from "@angular/core";
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FMediator } from '@foblex/mediator';
@@ -21,7 +21,7 @@ import {
   GetFlowHostElementRequest, isValidEventTrigger,
   RemoveZoomFromStoreRequest,
   ResetZoomRequest,
-  SetZoomRequest
+  SetZoomRequest,
 } from '../domain';
 import { FCanvasBase } from '../f-canvas';
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
@@ -33,7 +33,7 @@ import { EFZoomDirection } from './e-f-zoom-direction';
   exportAs: 'fComponent',
   standalone: true,
   host: {
-    'class': 'f-zoom f-component'
+    'class': 'f-zoom f-component',
   },
   providers: [ { provide: F_ZOOM, useExisting: FZoomDirective } ],
 })
@@ -42,7 +42,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private _fMediator = inject(FMediator);
   private _rendered = inject(Renderer2);
 
-  private _triggersListener: Function[] = [];
+  private _triggersListener: (() => void)[] = [];
 
   @Input({ alias: 'fZoom', transform: booleanAttribute })
   public isEnabled: boolean = false;
@@ -117,13 +117,14 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       PointExtensions.initialize(event.clientX, event.clientY),
       step,
       this._calculateDirection(event.deltaY),
-      false
+      false,
     );
   }
 
   private _normalizeWheelStep(deltaY: number): number {
     const intensity = Math.abs(deltaY) / 100;
     const normalized = Math.max(0.1, Math.min(intensity, 1));
+
     return this.step * normalized;
   }
 
@@ -144,7 +145,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
     this.setZoom(
       PointExtensions.initialize(event.clientX, event.clientY),
-      this.dblClickStep, EFZoomDirection.ZOOM_IN, true
+      this.dblClickStep, EFZoomDirection.ZOOM_IN, true,
     );
   }
 
@@ -163,13 +164,13 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private _onZoomToCenter(direction: EFZoomDirection, position?: IPoint): void {
     this.setZoom(
       this._getToCenterPosition(position, RectExtensions.fromElement(this._fHost)),
-      this.step, direction, false
+      this.step, direction, false,
     );
   }
 
   public setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean) {
     this._fMediator.execute(
-      new SetZoomRequest(position, step, direction, animated)
+      new SetZoomRequest(position, step, direction, animated),
     );
   }
 

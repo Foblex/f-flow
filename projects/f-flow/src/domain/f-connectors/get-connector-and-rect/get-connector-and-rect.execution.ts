@@ -4,7 +4,7 @@ import { GetConnectorAndRectRequest } from './get-connector-and-rect-request';
 import { IRoundedRect } from '@foblex/2d';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 import { FConnectorBase } from '../../../f-connectors';
-import {GetNormalizedConnectorRectRequest} from "../../get-normalized-connector-rect";
+import { GetNormalizedConnectorRectRequest } from "../../get-normalized-connector-rect";
 
 /**
  * Execution that retrieves a connector and its rectangle.
@@ -18,7 +18,7 @@ export class GetConnectorAndRectExecution implements IExecution<GetConnectorAndR
   public handle(request: GetConnectorAndRectRequest): IConnectorAndRect {
     return {
       fConnector: request.fConnector,
-      fRect: this._getConnectorRect(request.fConnector)
+      fRect: this._getConnectorRect(request.fConnector),
     }
   }
 

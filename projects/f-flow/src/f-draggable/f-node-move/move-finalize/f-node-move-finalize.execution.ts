@@ -1,16 +1,16 @@
-import {inject, Injectable} from '@angular/core';
-import {FNodeMoveFinalizeRequest} from './f-node-move-finalize.request';
-import {IPoint, Point} from '@foblex/2d';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FComponentsStore} from '../../../f-storage';
-import {FDraggableDataContext} from '../../f-draggable-data-context';
+import { inject, Injectable } from '@angular/core';
+import { FNodeMoveFinalizeRequest } from './f-node-move-finalize.request';
+import { IPoint, Point } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FComponentsStore } from '../../../f-storage';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
-  IsConnectionUnderNodeRequest
+  IsConnectionUnderNodeRequest,
 } from '../../domain';
-import {ISnapResult, ISnapCoordinate} from '../../../f-line-alignment';
-import {MoveSummaryDragHandler} from '../move-summary-drag-handler';
-import {FNodeBase} from '../../../f-node';
-import {FMoveNodesEvent} from "../f-move-nodes.event";
+import { ISnapResult, ISnapCoordinate } from '../../../f-line-alignment';
+import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { FNodeBase } from '../../../f-node';
+import { FMoveNodesEvent } from "../f-move-nodes.event";
 
 @Injectable()
 @FExecutionRegister(FNodeMoveFinalizeRequest)
@@ -41,6 +41,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
 
   private _isValid(): boolean {
     this._summaryHandler = this._dragContext.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
+
     return !!this._summaryHandler;
   }
 
@@ -59,6 +60,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
       difference.x = this._isIntersectValue(intersection.xResult) ? (difference.x - intersection.xResult.distance!) : difference.x;
       difference.y = this._isIntersectValue(intersection.yResult) ? (difference.y - intersection.yResult.distance!) : difference.y;
     }
+
     return difference;
   }
 
@@ -68,7 +70,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
 
   private _finalizeMove(snappedDifference: IPoint): void {
     this._summaryHandler?.rootHandlers.forEach((x) => x.assignFinalConstraints());
-    this._summaryHandler!.onPointerMove({...snappedDifference});
+    this._summaryHandler!.onPointerMove({ ...snappedDifference });
     this._summaryHandler!.onPointerUp?.();
 
     this._store.fDraggable?.fMoveNodes.emit(this._createMoveNodesEvent());
@@ -81,6 +83,7 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
         position: this._store.fNodes.find(x => x.fId() === id)!._position,
       }
     });
+
     return new FMoveNodesEvent(eventNodes);
   }
 

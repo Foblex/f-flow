@@ -14,8 +14,8 @@ import { IResizeLimit, IResizeLimits, IResizeOverflow } from '../constraint';
 @Injectable()
 @FExecutionRegister(ApplyParentResizeConstraintsRequest)
 export class ApplyParentResizeConstraints
-  implements IExecution<ApplyParentResizeConstraintsRequest, void> {
-
+  implements IExecution<ApplyParentResizeConstraintsRequest, void>
+{
   /** Entry point: applies soft and hard resize constraints. */
   public handle({ rect, limits }: ApplyParentResizeConstraintsRequest): void {
     this._applyResizeConstraints(rect, limits);
@@ -26,13 +26,15 @@ export class ApplyParentResizeConstraints
   // ──────────────────────────────────────────────────────────────────────────────
 
   private _applyResizeConstraints(childRect: IRect, limits: IResizeLimits): void {
-    if (!limits) return;
+    if (!limits) {
+      return;
+    }
 
     // 1) Clone child rect and pre-clamp it by hard limit (calculation only).
     const childForCalc: IRect = this._clampedCopyForCalculation(childRect, limits);
 
     // 2) Apply SOFT expansions for all parent limits based on the clamped child.
-    this.applySoftParentExpansions(childForCalc, limits.softLimits);
+    this._applySoftParentExpansions(childForCalc, limits.softLimits);
 
     // 3) Final HARD clamp on the real child rect.
     if (limits.hardLimit) {
@@ -50,6 +52,7 @@ export class ApplyParentResizeConstraints
     if (limits.hardLimit) {
       this._clampRectToInner(copy, limits.hardLimit.innerRect);
     }
+
     return copy;
   }
 
@@ -57,14 +60,14 @@ export class ApplyParentResizeConstraints
   private _clampRectToInner(rect: IRect, inner: IRect): void {
     // Left
     if (rect.x < inner.x) {
-      const diff = (inner.x) - rect.x;
+      const diff = inner.x - rect.x;
       rect.x += diff;
       rect.width -= diff;
     }
 
     // Top
     if (rect.y < inner.y) {
-      const diff = (inner.y) - rect.y;
+      const diff = inner.y - rect.y;
       rect.y += diff;
       rect.height -= diff;
     }
@@ -91,10 +94,12 @@ export class ApplyParentResizeConstraints
   // ──────────────────────────────────────────────────────────────────────────────
 
   /** Iterates over all soft limits and applies expansion if overflow is detected. */
-  private applySoftParentExpansions(childForCalc: IRect, softLimits: IResizeLimit[]): void {
-    if (!softLimits?.length) return;
+  private _applySoftParentExpansions(childForCalc: IRect, softLimits: IResizeLimit[]): void {
+    if (!softLimits?.length) {
+      return;
+    }
     for (const limit of softLimits) {
-      this.expandParentFromOriginalIfOverflow(childForCalc, limit);
+      this._expandParentFromOriginalIfOverflow(childForCalc, limit);
     }
   }
 
@@ -102,14 +107,15 @@ export class ApplyParentResizeConstraints
    * If the child overflows the parent's innerRect, calculate a new parent rect
    * based on the original boundingRect and apply it. Otherwise, reset to original.
    */
-  private expandParentFromOriginalIfOverflow(child: IRect, limit: IResizeLimit): void {
-    const inner = limit.innerRect;       // detector only
+  private _expandParentFromOriginalIfOverflow(child: IRect, limit: IResizeLimit): void {
+    const inner = limit.innerRect; // detector only
     const original = limit.boundingRect; // parent's original rect
 
     const overflow = this._computeOverflow(inner, child);
 
     if (!this._hasOverflow(overflow)) {
       this._applyParentRect(limit, original);
+
       return;
     }
 
@@ -124,10 +130,11 @@ export class ApplyParentResizeConstraints
 
   /** Computes overflow values for each side relative to innerRect. */
   private _computeOverflow(inner: IRect, child: IRect): IResizeOverflow {
-    const left = Math.max(0, (inner.x) - child.x);
-    const top = Math.max(0, (inner.y) - child.y);
-    const right = Math.max(0, (child.x + child.width) - (inner.x + inner.width));
-    const bottom = Math.max(0, (child.y + child.height) - (inner.y + inner.height));
+    const left = Math.max(0, inner.x - child.x);
+    const top = Math.max(0, inner.y - child.y);
+    const right = Math.max(0, child.x + child.width - (inner.x + inner.width));
+    const bottom = Math.max(0, child.y + child.height - (inner.y + inner.height));
+
     return { left, top, right, bottom };
   }
 

@@ -5,8 +5,9 @@ import { isExternalItem } from '../../is-external-item';
 
 @Injectable()
 @FExecutionRegister(PreventDefaultIsExternalItemRequest)
-export class PreventDefaultIsExternalItemExecution implements IExecution<PreventDefaultIsExternalItemRequest, void> {
-
+export class PreventDefaultIsExternalItemExecution
+  implements IExecution<PreventDefaultIsExternalItemRequest, void>
+{
   public handle(request: PreventDefaultIsExternalItemRequest): void {
     if (this._isTargetItemExternal(request.event)) {
       request.event.preventDefault();
@@ -14,8 +15,11 @@ export class PreventDefaultIsExternalItemExecution implements IExecution<Prevent
   }
 
   private _isTargetItemExternal(event: Event): boolean {
-    let isTargetItemExternal = this._isExternalItem(event.target as HTMLElement);
-    let isTargetParentItemExternal = this._isExternalItem((event.target as Node).parentNode as HTMLElement);
+    const isTargetItemExternal = this._isExternalItem(event.target as HTMLElement);
+    const isTargetParentItemExternal = this._isExternalItem(
+      (event.target as Node).parentNode as HTMLElement,
+    );
+
     return isTargetItemExternal || isTargetParentItemExternal;
   }
 
@@ -23,8 +27,9 @@ export class PreventDefaultIsExternalItemExecution implements IExecution<Prevent
     let result = false;
     try {
       result = isExternalItem(target);
-    } catch (e) {
-    }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {}
+
     return result;
   }
 }

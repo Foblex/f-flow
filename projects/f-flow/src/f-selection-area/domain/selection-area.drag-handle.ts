@@ -33,8 +33,8 @@ export class SelectionAreaDragHandle implements IFDragHandler {
     this._fSelectionArea.draw(
       RectExtensions.initialize(
         this._dragContext.onPointerDownPosition.x,
-        this._dragContext.onPointerDownPosition.y
-      )
+        this._dragContext.onPointerDownPosition.y,
+      ),
     );
   }
 
@@ -68,7 +68,7 @@ export class SelectionAreaDragHandle implements IFDragHandler {
   private _getMinimumPoint(point1: IPoint, point2: IPoint): IPoint {
     return PointExtensions.initialize(
       Math.min(point1.x, point2.x),
-      Math.min(point1.y, point2.y)
+      Math.min(point1.y, point2.y),
     );
   }
 

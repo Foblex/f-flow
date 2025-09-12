@@ -6,7 +6,7 @@ import { FMediator } from '@foblex/mediator';
 import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fNodeOutlet]",
@@ -14,7 +14,7 @@ let uniqueId: number = 0;
   host: {
     '[attr.data-f-outlet-id]': 'fId',
     class: "f-component f-node-outlet",
-    '[class.f-node-outlet-disabled]': 'disabled'
+    '[class.f-node-outlet-disabled]': 'disabled',
   },
   providers: [ { provide: F_NODE_OUTLET, useExisting: FNodeOutletDirective } ],
 })

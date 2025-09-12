@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetNodePaddingRequest } from './get-node-padding.request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
@@ -22,11 +22,12 @@ export class GetNodePadding
 
   private getPaddingData(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
     const style = this._browser.window.getComputedStyle(node.hostElement);
+
     return [
       this._browser.toPixels(style.paddingLeft, rect.width, rect.height, style.fontSize),
       this._browser.toPixels(style.paddingTop, rect.width, rect.height, style.fontSize),
       this._browser.toPixels(style.paddingRight, rect.width, rect.height, style.fontSize),
-      this._browser.toPixels(style.paddingBottom, rect.width, rect.height, style.fontSize)
+      this._browser.toPixels(style.paddingBottom, rect.width, rect.height, style.fontSize),
     ];
   }
 }

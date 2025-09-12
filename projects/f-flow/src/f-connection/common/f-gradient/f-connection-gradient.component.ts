@@ -12,7 +12,7 @@ import { CONNECTION_GRADIENT, IConnectionGradient } from './i-connection-gradien
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: "f-component f-connection-gradient",
-    '[attr.id]': 'gradientId'
+    '[attr.id]': 'gradientId',
   },
   providers: [ { provide: CONNECTION_GRADIENT, useExisting: FConnectionGradientComponent } ],
 })
@@ -20,7 +20,7 @@ export class FConnectionGradientComponent implements IConnectionGradient {
 
   public get gradientId(): string {
     return F_CONNECTION_IDENTIFIERS.gradientId(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 

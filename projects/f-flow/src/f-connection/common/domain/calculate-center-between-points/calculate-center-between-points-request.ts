@@ -1,4 +1,4 @@
-import {IPoint} from '@foblex/2d';
+import { IPoint } from '@foblex/2d';
 
 export class CalculateCenterBetweenPointsRequest {
   static readonly fToken = Symbol('CalculateCenterBetweenPointsRequest');

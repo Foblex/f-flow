@@ -5,7 +5,7 @@ import { ClearSelectionExecution } from '@foblex/flow';
 import { setupTestModule } from '../../test-setup';
 import { ISelectable } from '@foblex/flow';
 import { FDraggableDataContext } from '@foblex/flow';
-import {signal} from "@angular/core";
+import { signal } from "@angular/core";
 
 export const MOCK_SELECTABLE_ITEM: ISelectable = {
   fId: signal('1'),
@@ -13,7 +13,7 @@ export const MOCK_SELECTABLE_ITEM: ISelectable = {
   hostElement: document.createElement('svg'),
   markAsSelected: jasmine.createSpy('markAsSelected'),
   unmarkAsSelected: jasmine.createSpy('unmarkAsSelected'),
-  isSelected: jasmine.createSpy('isSelected').and.returnValue(true)
+  isSelected: jasmine.createSpy('isSelected').and.returnValue(true),
 };
 
 describe('ClearSelectionExecution', () => {

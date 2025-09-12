@@ -7,7 +7,7 @@ import { FNodeIntersectedWithConnections } from '../../index';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
-import {GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest} from '../../../domain';
+import { GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(IsConnectionUnderNodeRequest)
@@ -53,6 +53,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _getOutputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
+
     return this._store.fConnections
       .filter((x) => connectorsId.includes(x.fOutputId))
       .map((x) => x.fId());
@@ -60,6 +61,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _getInputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
+
     return this._store.fConnections
       .filter((x) => connectorsId.includes(x.fInputId))
       .map((x) => x.fId());
@@ -71,6 +73,7 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {
     const fNodeRect = this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(fNode.hostElement));
+
     return this._store.fConnections.filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
   }
 
@@ -82,8 +85,8 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
     this._store.fDraggable?.fNodeIntersectedWithConnections.emit(
       new FNodeIntersectedWithConnections(
         fNode.fId(),
-        fConnections.map((x) => x.fId())
-      )
+        fConnections.map((x) => x.fId()),
+      ),
     );
   }
 }

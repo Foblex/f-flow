@@ -15,7 +15,6 @@ import { IsDragStartedRequest } from '../../f-draggable';
 @Injectable()
 @FExecutionRegister(SetZoomRequest)
 export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
-
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -28,7 +27,7 @@ export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
   }
 
   private get _fZoomComponent(): FZoomBase {
-    return this._store.fComponents[F_ZOOM_TAG]!;
+    return this._store.fComponents[F_ZOOM_TAG]! as FZoomBase;
   }
 
   private get _isDragStarted(): boolean {

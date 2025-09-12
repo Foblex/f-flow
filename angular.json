@@ -96,6 +96,15 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/f-flow/**/*.ts",
+              "projects/f-flow/**/*.html"
+            ]
+          }
         }
       }
     },

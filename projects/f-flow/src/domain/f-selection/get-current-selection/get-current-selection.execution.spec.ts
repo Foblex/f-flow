@@ -21,23 +21,23 @@ describe('GetSelectionExecution', () => {
         hostElement: {
           classList: { contains: (className: string) => className === 'f-node' },
           dataset: { fNodeId: 'node1' },
-          id: 'connection1'
-        }
+          id: 'connection1',
+        },
       },
       {
         hostElement: {
           classList: { contains: (className: string) => className === 'f-group' },
           dataset: { fGroupId: 'group1' },
-          id: 'group1'
-        }
+          id: 'group1',
+        },
       },
       {
         hostElement: {
           classList: { contains: (className: string) => className === 'f-connection' },
           dataset: {},
-          id: 'connection2'
-        }
-      }
+          id: 'connection2',
+        },
+      },
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 

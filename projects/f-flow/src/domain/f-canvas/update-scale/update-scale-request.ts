@@ -4,7 +4,7 @@ export class UpdateScaleRequest {
   static readonly fToken = Symbol('UpdateScaleRequest');
   constructor(
     public scale: number,
-    public toPosition: IPoint
+    public toPosition: IPoint,
   ) {
   }
 }

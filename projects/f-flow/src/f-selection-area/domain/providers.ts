@@ -5,5 +5,5 @@ export const F_SELECTION_AREA_DRAG_AND_DROP_PROVIDERS = [
 
   SelectionAreaPreparationExecution,
 
-  SelectionAreaFinalizeExecution
+  SelectionAreaFinalizeExecution,
 ];

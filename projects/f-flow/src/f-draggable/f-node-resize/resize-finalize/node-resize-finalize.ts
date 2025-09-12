@@ -7,10 +7,9 @@ import { NodeResizeDragHandler } from '../node-resize.drag-handler';
 @Injectable()
 @FExecutionRegister(NodeResizeFinalizeRequest)
 export class NodeResizeFinalize implements IExecution<NodeResizeFinalizeRequest, void> {
-
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  public handle(request: NodeResizeFinalizeRequest): void {
+  public handle(_request: NodeResizeFinalizeRequest): void {
     if (!this._isNodeResizeHandler()) {
       return;
     }
@@ -18,8 +17,6 @@ export class NodeResizeFinalize implements IExecution<NodeResizeFinalizeRequest,
   }
 
   private _isNodeResizeHandler(): boolean {
-    return this._dragContext.draggableItems.some((x) =>
-      x instanceof NodeResizeDragHandler
-    );
+    return this._dragContext.draggableItems.some((x) => x instanceof NodeResizeDragHandler);
   }
 }

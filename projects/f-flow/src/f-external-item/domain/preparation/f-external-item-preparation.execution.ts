@@ -1,6 +1,6 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { FExternalItemPreparationRequest } from './f-external-item-preparation.request';
-import {ITransformModel, Point} from '@foblex/2d';
+import { ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FExternalItemBase, FExternalItemService, getExternalItem, isExternalItem } from '../../../f-external-item';
@@ -37,7 +37,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
       new FExternalItemDragHandler(
         this._injector,
         this._getExternalItem(request.event.targetElement)!,
-      )
+      ),
     ];
   }
 

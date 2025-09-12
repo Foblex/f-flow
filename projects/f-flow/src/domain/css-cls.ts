@@ -30,5 +30,5 @@ export const F_CSS_CLASS = {
   CONNECTION: {
 
     DRAG_HANDLE: 'f-connection-drag-handle',
-  }
+  },
 }

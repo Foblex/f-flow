@@ -9,7 +9,7 @@ import {
   SortItemLayersExecution,
   SortItemLayersRequest,
   SortItemsByParentExecution,
-  SortNodeLayersExecution
+  SortNodeLayersExecution,
 } from '@foblex/flow';
 import { GetDeepChildrenNodesAndGroupsExecution } from '@foblex/flow';
 import { MoveFrontElementsBeforeTargetElementExecution } from '@foblex/flow';
@@ -19,6 +19,7 @@ import { signal } from '@angular/core';
 function createElement(id: string): HTMLElement {
   const element = document.createElement('div');
   element.id = id;
+
   return element;
 }
 
@@ -40,7 +41,7 @@ function createCanvas(): FCanvasBase {
     }).asReadonly(),
     fConnectionsContainer: signal({
       nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly()
+    }).asReadonly(),
   } as FCanvasBase;
 }
 

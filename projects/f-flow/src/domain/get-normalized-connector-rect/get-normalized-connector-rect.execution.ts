@@ -11,7 +11,7 @@ import {
   ITransformModel,
 } from '@foblex/2d';
 import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
-import {GetNormalizedPointRequest} from "../get-normalized-point";
+import { GetNormalizedPointRequest } from "../get-normalized-point";
 
 /**
  * Execution that retrieves the normalized rectangle of a connector.
@@ -36,12 +36,13 @@ export class GetNormalizedConnectorRectExecution implements IExecution<GetNormal
     const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect)
 
     const offsetSize = this._getOffsetSize(request.element, unscaledSize);
+
     return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 
   private _getElementRoundedRect(request: GetNormalizedConnectorRectRequest): IRoundedRect {
     return this._mediator.execute<IRoundedRect>(
-      new GetElementRoundedRectRequest(request.element)
+      new GetElementRoundedRectRequest(request.element),
     );
   }
 
@@ -56,7 +57,7 @@ export class GetNormalizedConnectorRectExecution implements IExecution<GetNormal
   private _getUnscaledRect(position: IPoint, size: ISize, rect: IRoundedRect): IRoundedRect {
     return new RoundedRect(
       position.x, position.y, size.width, size.height,
-      rect.radius1, rect.radius2, rect.radius3, rect.radius4
+      rect.radius1, rect.radius2, rect.radius3, rect.radius4,
     )
   }
 

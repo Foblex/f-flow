@@ -1,11 +1,11 @@
 import {
   Directive, ElementRef, inject,
 } from "@angular/core";
-import {FMediator} from '@foblex/mediator';
-import {MinimapDrawNodesRequest} from './domain';
+import { FMediator } from '@foblex/mediator';
+import { MinimapDrawNodesRequest } from './domain';
 
 @Directive({
-  selector: 'g[fMinimapCanvas]'
+  selector: 'g[fMinimapCanvas]',
 })
 export class FMinimapCanvasDirective {
 

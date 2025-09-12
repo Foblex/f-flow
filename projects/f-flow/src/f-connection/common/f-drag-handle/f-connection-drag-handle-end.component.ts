@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component, ElementRef, inject
+  Component, ElementRef, inject,
 } from "@angular/core";
 import { IPoint } from '@foblex/2d';
 import { IHasHostElement } from '../../../i-has-host-element';
@@ -11,8 +11,8 @@ import { F_CSS_CLASS } from '../../../domain/css-cls';
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class]': 'class'
-  }
+    '[class]': 'class',
+  },
 })
 export class FConnectionDragHandleEndComponent implements IHasHostElement {
   private readonly _elementReference = inject(ElementRef);
@@ -36,6 +36,7 @@ export class FConnectionDragHandleEndComponent implements IHasHostElement {
     const length = Math.sqrt(direction.x * direction.x + direction.y * direction.y) || 1;
     const unitDirection = { x: direction.x / length, y: direction.y / length };
     const scaledDirection = { x: unitDirection.x * radius, y: unitDirection.y * radius };
+
     return { x: end.x - scaledDirection.x, y: end.y - scaledDirection.y };
   }
 }

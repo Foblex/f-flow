@@ -12,7 +12,6 @@ import { IMap } from '../domain';
 
 @Injectable()
 export class FComponentsStore {
-
   public readonly transformChanges$ = new FChannel();
 
   public readonly dataChanges$ = new FChannel();
@@ -23,7 +22,7 @@ export class FComponentsStore {
     return this.fFlow?.hostElement!;
   }
 
-  public fComponents: IMap<any> = {};
+  public fComponents: IMap<unknown> = {};
 
   public fFlow: FFlowBase | undefined;
 

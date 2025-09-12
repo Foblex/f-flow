@@ -2,32 +2,32 @@ import {
   ChangeDetectionStrategy,
   Component, DestroyRef,
   ElementRef, inject, input, Input, numberAttribute, OnChanges, OnDestroy,
-  OnInit, SimpleChanges
+  OnInit, SimpleChanges,
 } from "@angular/core";
 import {
   IPoint,
   ITransformModel,
   PointExtensions,
-  TransformModelExtensions
+  TransformModelExtensions,
 } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { BrowserService } from '@foblex/platform';
 import { createSVGElement } from '../../domain';
 import { FChannel, FChannelHub, notifyOnStart } from '../../reactivity';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Component({
   selector: "f-circle-pattern",
   template: ``,
   standalone: true,
   host: {
-    '[attr.id]': 'id'
+    '[attr.id]': 'id',
   },
   providers: [
-    { provide: F_BACKGROUND_PATTERN, useExisting: FCirclePatternComponent }
+    { provide: F_BACKGROUND_PATTERN, useExisting: FCirclePatternComponent },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
 
@@ -43,7 +43,7 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
 
   public id = input<string>(`f-pattern-${ uniqueId++ }`);
   public color = input<string>('rgba(0,0,0,0.1)');
-  public radius = input<number, unknown>(20, { transform: numberAttribute});
+  public radius = input<number, unknown>(20, { transform: numberAttribute });
 
   private _scaledRadius: number = 20;
 

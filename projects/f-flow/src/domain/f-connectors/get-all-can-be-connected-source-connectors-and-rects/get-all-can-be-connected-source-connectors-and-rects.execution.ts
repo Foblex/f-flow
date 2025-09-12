@@ -1,12 +1,12 @@
 import {
-  GetAllCanBeConnectedSourceConnectorsAndRectsRequest
+  GetAllCanBeConnectedSourceConnectorsAndRectsRequest,
 } from './get-all-can-be-connected-source-connectors-and-rects.request';
-import {inject, Injectable} from '@angular/core';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FConnectorBase, FNodeInputBase, FNodeOutputBase} from '../../../f-connectors';
-import {FComponentsStore} from '../../../f-storage';
-import {IConnectorAndRect} from '../i-connector-and-rect';
-import {GetConnectorAndRectRequest} from '../get-connector-and-rect';
+import { inject, Injectable } from '@angular/core';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../../../f-connectors';
+import { FComponentsStore } from '../../../f-storage';
+import { IConnectorAndRect } from '../i-connector-and-rect';
+import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
 
 /**
  * Execution that retrieves all source connectors that can be connected to a given target connector,

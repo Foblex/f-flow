@@ -9,14 +9,14 @@ import { IHasHostElement } from '../../../i-has-host-element';
 @Directive({
   selector: 'textPath[f-connection-text-path]',
   host: {
-    '[attr.href]': 'linkToConnection'
-  }
+    '[attr.href]': 'linkToConnection',
+  },
 })
 export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
   public get linkToConnection(): string {
     return F_CONNECTION_IDENTIFIERS.linkToConnection(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 
@@ -30,7 +30,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   constructor(
       private elementReference: ElementRef<SVGTextPathElement>,
       @Inject(F_CONNECTION) private base: IHasConnectionText & IHasConnectionFromTo,
-      private fBrowser: BrowserService
+      private fBrowser: BrowserService,
   ) {
   }
 
@@ -49,9 +49,10 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
   private getFontStyles(element: SVGTextPathElement): { fontSize: string, fontFamily: string } {
     const computedStyles = this.fBrowser.window.getComputedStyle(element);
+
     return {
       fontSize: computedStyles.fontSize,
-      fontFamily: computedStyles.fontFamily
+      fontFamily: computedStyles.fontFamily,
     };
   }
 
@@ -75,6 +76,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
 
     const metrics = context.measureText(text);
     const symbolWidth = metrics.width / text.length;
+
     return symbolWidth;
   }
 }

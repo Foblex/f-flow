@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetFlowStateNodesRequest } from './get-flow-state-nodes-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
@@ -24,7 +24,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
         rotate: x._rotate,
         fOutputs: this._getOutputs(x.hostElement),
         fInputs: this._getInputs(x.hostElement),
-        isSelected: x.isSelected()
+        isSelected: x.isSelected(),
       };
     });
   }
@@ -33,7 +33,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
     return this._store.fOutputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
         id: x.fId,
-        fConnectableSide: x.fConnectableSide
+        fConnectableSide: x.fConnectableSide,
       }
     });
   }
@@ -42,7 +42,7 @@ export class GetFlowStateNodesExecution implements IExecution<GetFlowStateNodesR
     return this._store.fInputs.filter((x) => hostElement.contains(x.hostElement)).map((x) => {
       return {
         id: x.fId,
-        fConnectableSide: x.fConnectableSide
+        fConnectableSide: x.fConnectableSide,
       }
     });
   }

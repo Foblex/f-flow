@@ -23,6 +23,7 @@ export class RemoveConnectionFromStoreExecution implements IExecution<RemoveConn
     if (result === -1) {
       throw new Error(`Connection not found in store`);
     }
+
     return result;
   }
 }

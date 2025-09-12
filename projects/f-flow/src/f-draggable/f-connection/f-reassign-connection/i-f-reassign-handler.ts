@@ -1,6 +1,6 @@
-import {IPoint, RectExtensions, RoundedRect} from "@foblex/2d";
-import {IClosestConnector, IConnectorAndRect} from "../../../domain";
-import {FSnapConnectionComponent} from "../../../f-connection";
+import { IPoint, RectExtensions, RoundedRect } from "@foblex/2d";
+import { IClosestConnector, IConnectorAndRect } from "../../../domain";
+import { FSnapConnectionComponent } from "../../../f-connection";
 
 export interface IFReassignHandler {
 

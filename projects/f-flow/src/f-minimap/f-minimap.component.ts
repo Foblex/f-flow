@@ -1,6 +1,6 @@
 import {
   AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef,
-  inject, input, Input, viewChild, ViewChild,
+  inject, input, viewChild,
 } from "@angular/core";
 import { FMediator } from '@foblex/mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
@@ -11,7 +11,7 @@ import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './dom
 import { ListenTransformChangesRequest } from '../f-storage';
 import { debounceTime, FChannelHub, notifyOnStart } from '../reactivity';
 import { BrowserService } from '@foblex/platform';
-import {IPointerEvent} from "../drag-toolkit";
+import { IPointerEvent } from "../drag-toolkit";
 
 @Component({
   selector: 'f-minimap',
@@ -44,7 +44,7 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
 
   private _listenTransformChanges(): void {
     this._mediator.execute<FChannelHub>(new ListenTransformChangesRequest()).pipe(
-      notifyOnStart(), debounceTime(2)
+      notifyOnStart(), debounceTime(2),
     ).listen(this._destroyRef, () => {
       this._redraw()
     });

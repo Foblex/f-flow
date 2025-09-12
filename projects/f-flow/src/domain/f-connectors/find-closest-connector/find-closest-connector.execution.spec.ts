@@ -20,7 +20,7 @@ describe('FindClosestConnectorExecution', () => {
 
   it('should return undefined when connectors is empty', () => {
     const result = fMediator.execute(
-      new FindClosestConnectorRequest({ x: 50, y: 50 }, [])
+      new FindClosestConnectorRequest({ x: 50, y: 50 }, []),
     );
     expect(result).toBeUndefined();
   });
@@ -30,15 +30,15 @@ describe('FindClosestConnectorExecution', () => {
     const result = fMediator.execute<IClosestConnector>(
       new FindClosestConnectorRequest({ x: 10, y: 10 }, [ {
         fConnector: {
-          fId: 'input1'
+          fId: 'input1',
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(12, 12, 10, 10)),
       }, {
         fConnector: {
-          fId: 'input2'
+          fId: 'input2',
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
-      }, ])
+      } ]),
     );
     expect(result).toBeDefined();
     expect(result?.fConnector.fId).toBe('input1');
@@ -48,15 +48,15 @@ describe('FindClosestConnectorExecution', () => {
     const result = fMediator.execute<IClosestConnector>(
       new FindClosestConnectorRequest({ x: 0, y: 0 }, [ {
         fConnector: {
-          fId: 'input1'
+          fId: 'input1',
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(10, 0, 10, 10)),
       }, {
         fConnector: {
-          fId: 'input2'
+          fId: 'input2',
         } as FConnectorBase,
         fRect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
-      }, ])
+      } ]),
     );
     expect(result?.distance).toBe(10);
   });

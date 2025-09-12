@@ -1,4 +1,4 @@
-import {Signal} from "@angular/core";
+import { Signal } from "@angular/core";
 
 export interface IHasConnectionFromTo {
 

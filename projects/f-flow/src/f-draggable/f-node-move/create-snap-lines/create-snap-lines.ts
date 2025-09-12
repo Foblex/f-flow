@@ -1,15 +1,15 @@
-import {inject, Injectable, Injector} from '@angular/core';
-import {CreateSnapLinesRequest} from './create-snap-lines-request';
-import {IRect, ISize} from '@foblex/2d';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {GetFlowHostElementRequest} from '../../../domain';
-import {GetNormalizedElementRectRequest} from '../../../domain';
-import {FComponentsStore} from '../../../f-storage';
-import {MoveSummaryDragHandler} from '../../index';
-import {SnapLinesDragHandler} from './snap-lines.drag-handler';
-import {FNodeBase} from '../../../f-node';
-import {SnapLineService} from '../../../f-line-alignment';
-import {BrowserService} from '@foblex/platform';
+import { inject, Injectable, Injector } from '@angular/core';
+import { CreateSnapLinesRequest } from './create-snap-lines-request';
+import { IRect, ISize } from '@foblex/2d';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { GetFlowHostElementRequest } from '../../../domain';
+import { GetNormalizedElementRectRequest } from '../../../domain';
+import { FComponentsStore } from '../../../f-storage';
+import { MoveSummaryDragHandler } from '../../index';
+import { SnapLinesDragHandler } from './snap-lines.drag-handler';
+import { FNodeBase } from '../../../f-node';
+import { SnapLineService } from '../../../f-line-alignment';
+import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(CreateSnapLinesRequest)
@@ -22,7 +22,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
 
   private _lineService: SnapLineService | undefined;
 
-  public handle({summaryHandler}: CreateSnapLinesRequest): void {
+  public handle({ summaryHandler }: CreateSnapLinesRequest): void {
     this._addLineAlignmentDragHandler(summaryHandler);
   }
 
@@ -33,7 +33,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
         this._lineService || this._createLineService(),
         this._getFlowHostSize(),
         this._collectNotDraggedNodeRects(this._allDraggedNodes(handler)),
-      )
+      ),
     )
   }
 
@@ -47,6 +47,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
 
   private _createLineService(): SnapLineService {
     this._lineService = new SnapLineService(this._browser, this._store.fLineAlignment!.hostElement);
+
     return this._lineService;
   }
 

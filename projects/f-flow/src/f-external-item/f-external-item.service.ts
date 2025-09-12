@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { FExternalItemBase } from './f-external-item-base';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FExternalItemService {
-
-  private _items: FExternalItemBase[] = [];
+  private readonly _items: FExternalItemBase[] = [];
 
   public registerItem(item: FExternalItemBase): void {
     this._items.push(item);
   }
 
   public getItem(element: HTMLElement | SVGElement): FExternalItemBase | undefined {
-    return this._items.find(item => item.hostElement === element);
+    return this._items.find((item) => item.hostElement === element);
   }
 
   public removeItem(item: FExternalItemBase): void {

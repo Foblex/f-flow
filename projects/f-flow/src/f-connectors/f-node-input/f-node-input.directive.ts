@@ -6,7 +6,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit, SimpleChanges
+  OnInit, SimpleChanges,
 } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
@@ -16,7 +16,7 @@ import { FMediator } from '@foblex/mediator';
 import { AddInputToStoreRequest, F_CSS_CLASS, RemoveInputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fNodeInput]",
@@ -25,7 +25,7 @@ let uniqueId: number = 0;
     '[attr.data-f-input-id]': 'fId',
     class: "f-component f-node-input",
     '[class.f-node-input-multiple]': 'multiple',
-    '[class.f-node-input-disabled]': 'disabled'
+    '[class.f-node-input-disabled]': 'disabled',
   },
   providers: [ { provide: F_NODE_INPUT, useExisting: FNodeInputDirective } ],
 })
@@ -46,7 +46,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
 
   @Input({
     alias: 'fInputConnectableSide',
-    transform: (value: unknown) => castToEnum(value, 'fInputConnectableSide', EFConnectableSide)
+    transform: (value: unknown) => castToEnum(value, 'fInputConnectableSide', EFConnectableSide),
   })
   public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 

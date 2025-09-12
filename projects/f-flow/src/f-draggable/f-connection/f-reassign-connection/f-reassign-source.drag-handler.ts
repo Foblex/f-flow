@@ -1,15 +1,15 @@
-import {FMediator} from "@foblex/mediator";
+import { FMediator } from "@foblex/mediator";
 import {
   CalculateConnectionLineByBehaviorRequest,
   FindClosestConnectorRequest,
   GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IClosestConnector,
   IConnectorAndRect,
-  MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest
+  MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest,
 } from "../../../domain";
-import {EFConnectableSide, FNodeInputDirective, FNodeOutputDirective} from "../../../f-connectors";
-import {FConnectionBase, FSnapConnectionComponent} from "../../../f-connection";
-import {ILine, IPoint, RoundedRect} from "@foblex/2d";
-import {IFReassignHandler, isClosestConnectorInsideSnapThreshold, roundedRectFromPoint} from "./i-f-reassign-handler";
+import { EFConnectableSide, FNodeInputDirective, FNodeOutputDirective } from "../../../f-connectors";
+import { FConnectionBase, FSnapConnectionComponent } from "../../../f-connection";
+import { ILine, IPoint, RoundedRect } from "@foblex/2d";
+import { IFReassignHandler, isClosestConnectorInsideSnapThreshold, roundedRectFromPoint } from "./i-f-reassign-handler";
 
 export class FReassignSourceDragHandler implements IFReassignHandler {
 
@@ -42,7 +42,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
 
   public markConnectableConnector(): void {
     this._connectableConnectors = this._mediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedSourceConnectorsAndRectsRequest(this._targetConnector)
+      new GetAllCanBeConnectedSourceConnectorsAndRectsRequest(this._targetConnector),
     );
     const isExistCurrentSourceConnector = this._connectableConnectors.some((x) => x.fConnector.fId === this._sourceConnector.fId);
     if (!isExistCurrentSourceConnector) {
@@ -50,7 +50,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     }
 
     this._mediator.execute(
-      new MarkConnectableConnectorsRequest(this._connectableConnectors.map((x) => x.fConnector))
+      new MarkConnectableConnectorsRequest(this._connectableConnectors.map((x) => x.fConnector)),
     );
   }
 
@@ -69,7 +69,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     const fClosestConnector = this._findClosestConnector(newPoint, this._connectableConnectors);
     this._drawConnection(
       newPoint,
-      fClosestConnector?.fConnector.fConnectableSide || this._sourceConnector.fConnectableSide
+      fClosestConnector?.fConnector.fConnectableSide || this._sourceConnector.fConnectableSide,
     );
     if (this._snapConnection) {
       this._drawSnapConnection(isClosestConnectorInsideSnapThreshold(fClosestConnector, this._snapConnection));
@@ -93,7 +93,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
         this._connection.fBehavior,
         fSide,
         this._targetConnectorAndRect.fConnector.fConnectableSide,
-      )
+      ),
     );
   }
 
@@ -115,7 +115,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
       this._targetConnectorAndRect.fRect,
       snapConnection.fBehavior,
       fClosestInput.fConnector.fConnectableSide,
-      this._targetConnector.fConnectableSide
+      this._targetConnector.fConnectableSide,
     ));
   }
 
@@ -124,7 +124,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     this._snapConnection?.hide();
 
     this._mediator.execute(
-      new UnmarkConnectableConnectorsRequest(this._connectableConnectors.map((x) => x.fConnector))
+      new UnmarkConnectableConnectorsRequest(this._connectableConnectors.map((x) => x.fConnector)),
     );
   }
 }

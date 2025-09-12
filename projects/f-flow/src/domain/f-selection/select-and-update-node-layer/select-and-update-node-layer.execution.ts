@@ -1,5 +1,5 @@
 import { IHandler } from '@foblex/mediator';
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer.request';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -22,7 +22,7 @@ export class SelectAndUpdateNodeLayerExecution implements IHandler<SelectAndUpda
     this.selectNodeIfNotSelected(request.fNode);
 
     this._mediator.execute<void>(
-      new UpdateItemAndChildrenLayersRequest(request.fNode, request.fNode.hostElement.parentElement as HTMLElement)
+      new UpdateItemAndChildrenLayersRequest(request.fNode, request.fNode.hostElement.parentElement as HTMLElement),
     );
   }
 

@@ -21,7 +21,7 @@ describe('SelectAllExecution', () => {
   it('should unmarkAsSelected all items and clear selectedItems array', () => {
     const mockSelectedItems = [
       { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') }
+      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
     ];
     fDraggableDataContext.selectedItems = mockSelectedItems as any;
 

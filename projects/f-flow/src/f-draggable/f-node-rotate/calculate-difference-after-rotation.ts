@@ -1,7 +1,7 @@
 export function calculateDifferenceAfterRotation(
   position: { x: number; y: number },
   rotation: number,
-  pivot: { x: number; y: number }
+  pivot: { x: number; y: number },
 ): { x: number; y: number } {
 
   const { x: newX, y: newY } = calculatePositionAfterRotation(position, rotation, pivot);
@@ -15,7 +15,7 @@ export function calculateDifferenceAfterRotation(
 export function calculatePositionAfterRotation(
   position: { x: number; y: number },
   rotation: number,
-  pivot: { x: number; y: number }
+  pivot: { x: number; y: number },
 ): { x: number; y: number } {
   const translatedX = position.x - pivot.x;
   const translatedY = position.y - pivot.y;

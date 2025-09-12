@@ -1,8 +1,8 @@
-import {PointExtensions, TransformModelExtensions, IPoint} from '@foblex/2d';
-import {DestroyRef, Directive, ElementRef, inject, InjectionToken, OutputEmitterRef, Signal} from '@angular/core';
-import {FCanvasChangeEvent} from './domain';
-import {IHasHostElement} from '../i-has-host-element';
-import {debounceTime, FChannel, FChannelHub} from "../reactivity";
+import { PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
+import { DestroyRef, Directive, ElementRef, inject, InjectionToken, OutputEmitterRef, Signal } from '@angular/core';
+import { FCanvasChangeEvent } from './domain';
+import { IHasHostElement } from '../i-has-host-element';
+import { debounceTime, FChannel, FChannelHub } from "../reactivity";
 
 export const F_CANVAS = new InjectionToken<FCanvasBase>('F_CANVAS');
 
@@ -48,10 +48,10 @@ export abstract class FCanvasBase implements IHasHostElement {
 
   protected subscribeOnCanvasChange(): void {
     new FChannelHub(
-      this._fCanvasChange
+      this._fCanvasChange,
     ).pipe(debounceTime(this.debounce())).listen(this._destroyRef, () => {
       this.fCanvasChange.emit(
-        new FCanvasChangeEvent(PointExtensions.sum(this.transform.position, this.transform.scaledPosition), this.transform.scale)
+        new FCanvasChangeEvent(PointExtensions.sum(this.transform.position, this.transform.scaledPosition), this.transform.scale),
       );
     });
   }

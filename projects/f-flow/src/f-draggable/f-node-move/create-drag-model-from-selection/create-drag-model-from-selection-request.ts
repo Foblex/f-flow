@@ -4,7 +4,7 @@ export class CreateDragModelFromSelectionRequest {
   static readonly fToken = Symbol('CreateDragModelFromSelectionRequest');
 
   constructor(
-    public nodeWithDisabledSelection?: FNodeBase
+    public nodeWithDisabledSelection?: FNodeBase,
   ) {
   }
 }

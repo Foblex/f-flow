@@ -32,13 +32,13 @@ export class FConnectionPathComponent implements IConnectionPath {
 
   public get linkToGradient(): string {
     return F_CONNECTION_IDENTIFIERS.linkToGradient(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 
   public get attrConnectionId(): string {
     return F_CONNECTION_IDENTIFIERS.connectionId(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId
+      this.base.fId() + this.base.fOutputId + this.base.fInputId,
     );
   }
 
@@ -48,7 +48,7 @@ export class FConnectionPathComponent implements IConnectionPath {
 
   constructor(
     private elementReference: ElementRef<SVGPathElement>,
-    @Inject(F_CONNECTION) private base: IHasConnectionColor & IHasConnectionFromTo
+    @Inject(F_CONNECTION) private base: IHasConnectionColor & IHasConnectionFromTo,
   ) {
   }
 

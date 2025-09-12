@@ -24,13 +24,14 @@ function getFCanvasBase(): FCanvasBase {
     }).asReadonly(),
     fNodesContainer: signal({
       nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly()
+    }).asReadonly(),
   } as FCanvasBase;
 }
 
 function createElementWithId(id: string): HTMLElement {
   const element = document.createElement('div');
   element.id = id;
+
   return element;
 }
 

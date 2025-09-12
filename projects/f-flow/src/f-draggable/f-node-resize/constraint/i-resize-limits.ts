@@ -1,4 +1,4 @@
-import {IResizeLimit} from "./i-resize-limit";
+import { IResizeLimit } from "./i-resize-limit";
 
 export interface IResizeLimits {
   softLimits: IResizeLimit[];

@@ -8,7 +8,7 @@ export class FResizeChannel extends FChannel {
   private _isObserving = false;
 
   constructor(
-    private readonly _htmlElement: HTMLElement | SVGElement
+    private readonly _htmlElement: HTMLElement | SVGElement,
   ) {
     super();
   }
@@ -18,6 +18,7 @@ export class FResizeChannel extends FChannel {
       this._observer.observe(this._htmlElement);
       this._isObserving = true;
     }
+
     return super.listen(callback);
   }
 

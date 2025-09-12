@@ -15,6 +15,7 @@ export class FChannelHub {
   public pipe(...operators: FChannelOperator[]): FChannelHub {
     const result = new FChannelHub(...this._channels);
     result._operators = [...this._operators, ...operators];
+
     return result;
   }
 
@@ -26,7 +27,7 @@ export class FChannelHub {
     });
 
     const unsubscribeCallbacks = this._channels.map(channel =>
-      channel.listen(() => modifiedCallback())
+      channel.listen(() => modifiedCallback()),
     );
 
     destroyRef.onDestroy(() => {

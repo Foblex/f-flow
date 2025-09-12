@@ -49,8 +49,8 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
         element: x,
         fRect: RectExtensions.mult(
           this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
-          this.transform.scale
-        )
+          this.transform.scale,
+        ),
       };
     });
   }
@@ -65,8 +65,8 @@ export class GetCanBeSelectedItemsExecution implements IExecution<void, ICanBeSe
         element: x,
         fRect: RectExtensions.mult(
           this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.boundingElement)),
-          this.transform.scale
-        )
+          this.transform.scale,
+        ),
       };
     });
   }

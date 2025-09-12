@@ -6,7 +6,7 @@ export class CalculateResizeLimitsRequest {
 
   constructor(
     public nodeOrGroup: FNodeBase,
-    public rect: IRect
+    public rect: IRect,
   ) {
   }
 }

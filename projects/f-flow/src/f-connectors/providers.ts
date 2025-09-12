@@ -8,5 +8,5 @@ export const F_CONNECTORS_PROVIDERS = [
 
   FNodeOutletDirective,
 
-  FNodeOutputDirective
+  FNodeOutputDirective,
 ];

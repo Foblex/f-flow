@@ -5,7 +5,7 @@ export class GetNodePaddingRequest {
   static readonly fToken = Symbol('GetNodePaddingRequest');
   constructor(
     public fNode: FNodeBase,
-    public rect: IRect
+    public rect: IRect,
   ) {
   }
 }

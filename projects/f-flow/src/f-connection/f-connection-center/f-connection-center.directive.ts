@@ -1,9 +1,9 @@
 import {
-  Directive
+  Directive,
 } from "@angular/core";
 
 @Directive({
-  selector: "[fConnectionCenter]"
+  selector: "[fConnectionCenter]",
 })
-export class FConnectionCenterDirective  {
+export class FConnectionCenterDirective {
 }

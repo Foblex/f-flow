@@ -1,12 +1,12 @@
-import {inject, Injectable} from '@angular/core';
-import {DropToGroupFinalizeRequest} from './drop-to-group-finalize-request';
-import {FExecutionRegister, IExecution} from '@foblex/mediator';
-import {FDraggableDataContext} from '../../f-draggable-data-context';
-import {FNodeDropToGroupDragHandler} from '../f-node-drop-to-group.drag-handler';
-import {FComponentsStore} from '../../../f-storage';
-import {MoveSummaryDragHandler} from '../../f-node-move';
-import {FDropToGroupEvent} from '../f-drop-to-group.event';
-import {IPointerEvent} from "../../../drag-toolkit";
+import { inject, Injectable } from '@angular/core';
+import { DropToGroupFinalizeRequest } from './drop-to-group-finalize-request';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
+import { FComponentsStore } from '../../../f-storage';
+import { MoveSummaryDragHandler } from '../../f-node-move';
+import { FDropToGroupEvent } from '../f-drop-to-group.event';
+import { IPointerEvent } from "../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(DropToGroupFinalizeRequest)
@@ -34,7 +34,7 @@ export class DropToGroupFinalize
 
   private _emitDroppedChildrenEvent(fTargetId: string, event: IPointerEvent): void {
     this._store.fDraggable?.fDropToGroup.emit(
-      new FDropToGroupEvent(fTargetId, this._getDroppedIds(), event.getPosition())
+      new FDropToGroupEvent(fTargetId, this._getDroppedIds(), event.getPosition()),
     );
   }
 
@@ -43,6 +43,7 @@ export class DropToGroupFinalize
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }
+
     return result;
   }
 
@@ -59,6 +60,7 @@ export class DropToGroupFinalize
 
     return nodeOrGroups.filter(node => {
       const parentId = node.fParentId();
+
       return !parentId || !idSet.has(parentId);
     }).map(node => node.fId());
   }
@@ -69,6 +71,7 @@ export class DropToGroupFinalize
     if (!result) {
       throw new Error('Drop To Group can`t be used without MoveSummaryDragHandler');
     }
+
     return result;
   }
 }

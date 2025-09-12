@@ -19,7 +19,7 @@ export class FConnectionFactory {
   }
 
   constructor(
-    @Optional() @Inject(F_CONNECTION_BUILDERS) builders: IFConnectionBuilders
+    @Optional() @Inject(F_CONNECTION_BUILDERS) builders: IFConnectionBuilders,
   ) {
     if (builders) {
       this.builders = { ...this.builders, ...builders };

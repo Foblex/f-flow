@@ -7,7 +7,7 @@ import { FConnectionBase } from '../../../../f-connection';
 import {
   BaseConnectionDragHandler,
   SourceTargetConnectionDragHandler,
-  SourceConnectionDragHandler
+  SourceConnectionDragHandler,
 } from "../../connection-drag-handlers";
 
 @Injectable()
@@ -30,6 +30,7 @@ export class CreateOutputConnectionHandlerAndSetToNodeHandler
 
   public _getOutputConnections(nodeOrGroup: FNodeBase): FConnectionBase[] {
     const ids = new Set(this._getNodeOutputIds(nodeOrGroup));
+
     return this._connections.filter((x) => ids.has(x.fOutputId));
   }
 
@@ -59,6 +60,7 @@ export class CreateOutputConnectionHandlerAndSetToNodeHandler
     } else {
       result = new SourceConnectionDragHandler(this._injector, connection)
     }
+
     return result;
   }
 }

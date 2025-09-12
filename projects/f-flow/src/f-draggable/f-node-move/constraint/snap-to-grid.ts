@@ -1,6 +1,6 @@
-import {Injector} from "@angular/core";
-import {FComponentsStore} from "../../../f-storage";
-import {IPoint} from "@foblex/2d";
+import { Injector } from "@angular/core";
+import { FComponentsStore } from "../../../f-storage";
+import { IPoint } from "@foblex/2d";
 
 export class SnapToGrid {
 
@@ -22,18 +22,19 @@ export class SnapToGrid {
 
   public snap(difference: IPoint, adjustCellSize: boolean): IPoint {
     const _adjustCellSize = adjustCellSize || this._adjustCellSize;
+
     return this._cellSizeStrategies[+_adjustCellSize](difference);
   }
 
   private _cellSizeStrategies: Record<number, (difference: IPoint) => IPoint> = {
     0: this._noSnap.bind(this),
-    1: this._snapWithCellSize.bind(this)
+    1: this._snapWithCellSize.bind(this),
   };
 
   private _snapWithCellSize(difference: IPoint): IPoint {
     return {
       x: this._snapToGrid(this._onPointerDown.x + difference.x, this._hCellSize) - this._onPointerDown.x,
-      y: this._snapToGrid(this._onPointerDown.y + difference.y, this._vCellSize) - this._onPointerDown.y
+      y: this._snapToGrid(this._onPointerDown.y + difference.y, this._vCellSize) - this._onPointerDown.y,
     };
   }
 

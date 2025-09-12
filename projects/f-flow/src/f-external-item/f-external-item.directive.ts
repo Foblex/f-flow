@@ -6,37 +6,34 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
 import { FExternalItemBase } from './f-external-item-base';
 import { FExternalItemService } from './f-external-item.service';
 import { F_EXTERNAL_ITEM } from './f-external-item-token';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
-  selector: "[fExternalItem]",
+  selector: '[fExternalItem]',
   standalone: true,
   host: {
     '[attr.id]': 'fExternalItemId',
-    class: "f-component f-external-item",
+    class: 'f-component f-external-item',
     '[class.f-external-item-disabled]': 'fDisabled',
   },
-  providers: [
-    { provide: F_EXTERNAL_ITEM, useExisting: FExternalItemDirective }
-  ],
+  providers: [{ provide: F_EXTERNAL_ITEM, useExisting: FExternalItemDirective }],
 })
-export class FExternalItemDirective<TData> extends FExternalItemBase<TData> implements OnInit, OnDestroy {
+export class FExternalItemDirective<TData>
+  extends FExternalItemBase<TData>
+  implements OnInit, OnDestroy
+{
+  public override hostElement = inject(ElementRef).nativeElement as HTMLElement;
 
-  private readonly _elementReference = inject(ElementRef);
-  private readonly _fExternalItemService = inject(FExternalItemService);
+  private readonly _externalItemService = inject(FExternalItemService);
 
   @Input()
-  public override fExternalItemId: string = `f-external-item-${ uniqueId++ }`;
-
-  public override get hostElement(): HTMLElement | SVGElement {
-    return this._elementReference.nativeElement;
-  }
+  public override fExternalItemId: string = `f-external-item-${uniqueId++}`;
 
   @Input()
   public override fData: TData | undefined;
@@ -45,27 +42,27 @@ export class FExternalItemDirective<TData> extends FExternalItemBase<TData> impl
   public override fDisabled: boolean = false;
 
   @Input()
-  public override fPreview: TemplateRef<any> | undefined;
+  public override fPreview: TemplateRef<unknown> | undefined;
 
   @Input({ transform: booleanAttribute })
   public override fPreviewMatchSize: boolean = true;
 
   @Input()
-  public override fPlaceholder: TemplateRef<any> | undefined;
+  public override fPlaceholder: TemplateRef<unknown> | undefined;
 
   public ngOnInit(): void {
-    this._fExternalItemService.registerItem(this);
-    this.disablePointerEvents(Array.from(this.hostElement.children) as HTMLElement[]);
+    this._externalItemService.registerItem(this);
+    this._disablePointerEvents(Array.from(this.hostElement.children) as HTMLElement[]);
   }
 
-  private disablePointerEvents(children: HTMLElement[]): void {
+  private _disablePointerEvents(children: HTMLElement[]): void {
     children.forEach((x) => {
       x.style.pointerEvents = 'none';
-      this.disablePointerEvents(Array.from(x.children) as HTMLElement[]);
+      this._disablePointerEvents(Array.from(x.children) as HTMLElement[]);
     });
   }
 
   public ngOnDestroy(): void {
-    this._fExternalItemService.removeItem(this);
+    this._externalItemService.removeItem(this);
   }
 }

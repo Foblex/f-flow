@@ -23,6 +23,7 @@ export class InputCanvasPositionExecution implements IExecution<InputCanvasPosit
       request.transform.scaledPosition = PointExtensions.initialize();
       this._store.fCanvas?.redraw();
     }
+
     return void 0;
   }
 }

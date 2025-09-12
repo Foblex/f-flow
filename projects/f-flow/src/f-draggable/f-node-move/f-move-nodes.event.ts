@@ -1,4 +1,4 @@
-import {IPoint} from '@foblex/2d';
+import { IPoint } from '@foblex/2d';
 
 /**
  * Event that is emitted when nodes and groups are moved.

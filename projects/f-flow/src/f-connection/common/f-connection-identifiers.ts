@@ -19,5 +19,5 @@ export const F_CONNECTION_IDENTIFIERS = {
   },
   linkToConnection(connectionId: string): string {
     return `#${ F_CONNECTION_IDENTIFIERS.connectionId(connectionId) }`;
-  }
+  },
 }

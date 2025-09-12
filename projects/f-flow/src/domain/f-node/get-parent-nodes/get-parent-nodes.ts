@@ -30,6 +30,7 @@ export class GetParentNodes
     }
 
     result.push(parent);
+
     return this._getParentNodes(parent, visited, result);
   }
 }

@@ -5,20 +5,20 @@ import { IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './domain';
 import { FEventTrigger, FTriggerEvent } from '../domain';
-import {IPointerEvent} from "../drag-toolkit";
+import { IPointerEvent } from "../drag-toolkit";
 
 @Component({
   selector: "f-selection-area",
   template: ``,
   styleUrls: [ './f-selection-area.component.scss' ],
   host: {
-    'class': 'f-selection-area f-component'
+    'class': 'f-selection-area f-component',
   },
   providers: [
     { provide: F_BEFORE_MAIN_PLUGIN, useExisting: FSelectionAreaComponent },
   ],
 })
-export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin  {
+export class FSelectionAreaComponent extends FSelectionAreaBase implements OnInit, IFDragAndDropPlugin {
 
   private _fMediator = inject(FMediator);
   private _elementReference = inject(ElementRef);

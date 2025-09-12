@@ -18,6 +18,7 @@ export class GetCanvasExecution implements IExecution<GetCanvasRequest, FCanvasB
     if (!result) {
       throw new Error(`Canvas not found in store`);
     }
+
     return result;
   }
 }

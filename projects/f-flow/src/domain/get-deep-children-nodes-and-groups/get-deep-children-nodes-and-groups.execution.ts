@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetDeepChildrenNodesAndGroupsRequest } from './get-deep-children-nodes-and-groups.request';
 import { FComponentsStore } from '../../f-storage';
 import { FNodeBase } from '../../f-node';
@@ -19,13 +19,14 @@ export class GetDeepChildrenNodesAndGroupsExecution
     return this._getChildrenNodes(request.fId);
   }
 
-  private _getChildrenNodes(fId: string, visited: Set<string> = new Set()): FNodeBase[] {
+  private _getChildrenNodes(fId: string, visited = new Set<string>()): FNodeBase[] {
     if (visited.has(fId)) {
       throw new Error('Circular reference detected in the node hierarchy. Node id: ' + fId);
     }
     visited.add(fId);
 
     const directChildren = this._store.fNodes.filter((x) => x.fParentId() === fId);
+
     return directChildren.reduce((result, x) => {
       return result.concat(this._getChildrenNodes(x.fId(), visited));
     }, directChildren);

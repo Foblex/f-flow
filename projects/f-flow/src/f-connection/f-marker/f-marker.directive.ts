@@ -1,5 +1,5 @@
 import {
-  Directive, ElementRef, inject, Input, OnDestroy, OnInit
+  Directive, ElementRef, inject, Input, OnDestroy, OnInit,
 } from "@angular/core";
 import { F_MARKER, FMarkerBase } from './f-marker-base';
 import { EFMarkerType } from './e-f-marker-type';
@@ -9,7 +9,7 @@ import { AddConnectionMarkerToStoreRequest, RemoveConnectionMarkerFromStoreReque
 @Directive({
   selector: "svg[fMarker]",
   host: {
-    class: "f-component f-marker"
+    class: "f-component f-marker",
   },
   providers: [ { provide: F_MARKER, useExisting: FMarkerDirective } ],
 })

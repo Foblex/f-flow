@@ -7,7 +7,7 @@ import { MinimapCalculateViewBoxRequest } from './domain';
   selector: 'rect[fMinimapView]',
   host: {
     'class': 'f-component f-minimap-view',
-  }
+  },
 })
 export class FMinimapViewDirective {
 
@@ -21,7 +21,7 @@ export class FMinimapViewDirective {
   public redraw(): void {
     setRectToElement(
       this._mediator.execute<IRect>(new MinimapCalculateViewBoxRequest()),
-      this.hostElement
+      this.hostElement,
     );
   }
 }

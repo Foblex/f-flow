@@ -1,11 +1,11 @@
-import {inject, Injectable} from '@angular/core';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FitToChildNodesAndGroupsRequest} from './fit-to-child-nodes-and-groups-request';
-import {FComponentsStore} from '../../../f-storage';
-import {FNodeBase} from "../../../f-node";
-import {IRect, RectExtensions} from "@foblex/2d";
-import {GetNormalizedElementRectRequest} from "../../get-normalized-element-rect";
-import {GetNodePaddingRequest} from "../get-node-padding";
+import { inject, Injectable } from '@angular/core';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FitToChildNodesAndGroupsRequest } from './fit-to-child-nodes-and-groups-request';
+import { FComponentsStore } from '../../../f-storage';
+import { FNodeBase } from "../../../f-node";
+import { IRect, RectExtensions } from "@foblex/2d";
+import { GetNormalizedElementRectRequest } from "../../get-normalized-element-rect";
+import { GetNodePaddingRequest } from "../get-node-padding";
 
 @Injectable()
 @FExecutionRegister(FitToChildNodesAndGroupsRequest)
@@ -19,7 +19,7 @@ export class FitToChildNodesAndGroups
     return this._store.fNodes;
   }
 
-  public handle({nodeOrGroup}: FitToChildNodesAndGroupsRequest): void {
+  public handle({ nodeOrGroup }: FitToChildNodesAndGroupsRequest): void {
     if (nodeOrGroup.fAutoSizeToFitChildren()) {
       const directChildren = this._calculateDirectChildren(nodeOrGroup);
       if (directChildren.length) {
@@ -51,7 +51,7 @@ export class FitToChildNodesAndGroups
 
   private _unionRect(nodeOrGroups: FNodeBase[]): IRect {
     return RectExtensions.union(
-      nodeOrGroups.map((x) => this._boundingRect(x))
+      nodeOrGroups.map((x) => this._boundingRect(x)),
     ) || RectExtensions.initialize();
   }
 
@@ -69,8 +69,9 @@ export class FitToChildNodesAndGroups
       childrenBounding.x - left,
       childrenBounding.y - top,
       childrenBounding.width + left + right,
-      childrenBounding.height + top + bottom
+      childrenBounding.height + top + bottom,
     );
+
     return childrenBounding;
   }
 }

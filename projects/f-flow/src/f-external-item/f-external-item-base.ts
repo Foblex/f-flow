@@ -2,8 +2,7 @@ import { Directive, TemplateRef } from '@angular/core';
 import { IHasHostElement } from '../i-has-host-element';
 
 @Directive()
-export abstract class FExternalItemBase<TData = any> implements IHasHostElement {
-
+export abstract class FExternalItemBase<TData = unknown> implements IHasHostElement {
   public abstract fExternalItemId: string;
 
   public abstract hostElement: HTMLElement | SVGElement;
@@ -12,9 +11,9 @@ export abstract class FExternalItemBase<TData = any> implements IHasHostElement 
 
   public abstract fDisabled: boolean;
 
-  public abstract fPreview: TemplateRef<any> | undefined;
+  public abstract fPreview: TemplateRef<unknown> | undefined;
 
   public abstract fPreviewMatchSize: boolean;
 
-  public abstract fPlaceholder: TemplateRef<any> | undefined;
+  public abstract fPlaceholder: TemplateRef<unknown> | undefined;
 }

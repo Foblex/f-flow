@@ -7,7 +7,7 @@ import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
-import {IPointerEvent} from "../../drag-toolkit";
+import { IPointerEvent } from "../../drag-toolkit";
 
 /**
  * Implements the functionality for selecting elements in a graphical interface.
@@ -91,7 +91,7 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   private _updateItemAndChildrenLayers(fItem?: ISelectable): void {
     if (fItem) {
       this._fMediator.execute<void>(
-        new UpdateItemAndChildrenLayersRequest(fItem, fItem.hostElement.parentElement!)
+        new UpdateItemAndChildrenLayersRequest(fItem, fItem.hostElement.parentElement!),
       );
     }
   }

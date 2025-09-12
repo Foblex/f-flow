@@ -1,41 +1,48 @@
 import {
-  AfterViewInit, booleanAttribute, DestroyRef,
+  AfterViewInit,
+  booleanAttribute,
+  DestroyRef,
   Directive,
   ElementRef,
-  inject, input,
+  inject,
+  input,
   model,
   OnDestroy,
-  OnInit, output,
-} from "@angular/core";
-import {IRect, ISize, PointExtensions} from '@foblex/2d';
-import {NotifyTransformChangedRequest} from '../f-storage';
-import {FMediator} from '@foblex/mediator';
-import {F_NODE, FNodeBase} from './f-node-base';
-import {IHasHostElement} from '../i-has-host-element';
-import {AddNodeToStoreRequest, UpdateNodeWhenStateOrSizeChangedRequest, RemoveNodeFromStoreRequest} from '../domain';
+  OnInit,
+  output,
+} from '@angular/core';
+import { IRect, ISize, PointExtensions } from '@foblex/2d';
+import { NotifyTransformChangedRequest } from '../f-storage';
+import { FMediator } from '@foblex/mediator';
+import { F_NODE, FNodeBase } from './f-node-base';
+import { IHasHostElement } from '../i-has-host-element';
+import {
+  AddNodeToStoreRequest,
+  UpdateNodeWhenStateOrSizeChangedRequest,
+  RemoveNodeFromStoreRequest,
+} from '../domain';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
-  selector: "[fNode]",
-  exportAs: "fComponent",
+  selector: '[fNode]',
+  exportAs: 'fComponent',
   host: {
     '[attr.data-f-node-id]': 'fId()',
-    class: "f-node f-component",
+    class: 'f-node f-component',
     '[class.f-node-dragging-disabled]': 'fDraggingDisabled()',
     '[class.f-node-selection-disabled]': 'fSelectionDisabled()',
   },
-  providers: [
-    {provide: F_NODE, useExisting: FNodeDirective}
-  ],
+  providers: [{ provide: F_NODE, useExisting: FNodeDirective }],
 })
-export class FNodeDirective extends FNodeBase
-  implements OnInit, AfterViewInit, IHasHostElement, OnDestroy {
-
+export class FNodeDirective
+  extends FNodeBase
+  implements OnInit, AfterViewInit, IHasHostElement, OnDestroy
+{
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override readonly fId = input<string>(`f-node-${uniqueId++}`, {alias: 'fNodeId'});
+  public override readonly fId = input<string>(`f-node-${uniqueId++}`, { alias: 'fNodeId' });
 
   public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fNodeParentId',
@@ -49,7 +56,7 @@ export class FNodeDirective extends FNodeBase
     alias: 'fNodeSize',
   });
 
-  public override sizeChange = output<IRect>({alias: 'fNodeSizeChange'});
+  public override sizeChange = output<IRect>({ alias: 'fNodeSizeChange' });
 
   public override readonly rotate = model(0, {
     alias: 'fNodeRotate',
@@ -84,6 +91,7 @@ export class FNodeDirective extends FNodeBase
   });
 
   constructor(
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     elementReference: ElementRef<HTMLElement>,
   ) {
     super(elementReference.nativeElement);
@@ -126,7 +134,9 @@ export class FNodeDirective extends FNodeBase
   }
 
   private _listenStateSizeChanges(): void {
-    this._mediator.execute<void>(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
+    this._mediator.execute<void>(
+      new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef),
+    );
   }
 
   public override refresh(): void {

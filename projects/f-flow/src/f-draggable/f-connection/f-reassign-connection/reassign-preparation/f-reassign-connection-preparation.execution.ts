@@ -1,15 +1,15 @@
-import {inject, Injectable, Injector} from '@angular/core';
-import {FReassignConnectionPreparationRequest} from './f-reassign-connection-preparation.request';
-import {IPoint, ITransformModel, Point} from '@foblex/2d';
-import {FComponentsStore} from '../../../../f-storage';
-import {FDraggableDataContext} from '../../../f-draggable-data-context';
-import {isValidEventTrigger, UpdateItemAndChildrenLayersRequest} from '../../../../domain';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {FConnectionBase} from '../../../../f-connection';
-import {FReassignConnectionDragHandler} from '../f-reassign-connection.drag-handler';
+import { inject, Injectable, Injector } from '@angular/core';
+import { FReassignConnectionPreparationRequest } from './f-reassign-connection-preparation.request';
+import { IPoint, ITransformModel, Point } from '@foblex/2d';
+import { FComponentsStore } from '../../../../f-storage';
+import { FDraggableDataContext } from '../../../f-draggable-data-context';
+import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FConnectionBase } from '../../../../f-connection';
+import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-handler';
 import {
   isDragHandleEnd,
-  isPointerInsideStartOrEndDragHandles
+  isPointerInsideStartOrEndDragHandles,
 } from "./is-pointer-inside-start-or-end-drag-handles";
 
 @Injectable()
@@ -47,8 +47,8 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
     this._dragContext.draggableItems = [
       new FReassignConnectionDragHandler(
-        this._injector, this._fConnection!, isDragHandleEnd(this._fConnection!, position)
-      )
+        this._injector, this._fConnection!, isDragHandleEnd(this._fConnection!, position),
+      ),
     ];
 
     setTimeout(() => this._updateConnectionLayer());
@@ -56,6 +56,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _isValid(position: IPoint): boolean {
     this._fConnection = this._getConnectionToReassign(position);
+
     return !!this._fConnection && !this._dragContext.draggableItems.length;
   }
 
@@ -72,6 +73,7 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
 
   private _getConnectionToReassign(position: IPoint): FConnectionBase | undefined {
     const connections = this._getConnectionsFromPoint(position);
+
     return connections.length ? connections[0] : undefined;
   }
 
@@ -82,8 +84,8 @@ export class FReassignConnectionPreparationExecution implements IExecution<FReas
   private _updateConnectionLayer(): void {
     this._fMediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._fConnection!, this._store.fCanvas!.fConnectionsContainer().nativeElement
-      )
+        this._fConnection!, this._store.fCanvas!.fConnectionsContainer().nativeElement,
+      ),
     );
   }
 }

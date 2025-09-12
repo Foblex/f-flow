@@ -4,7 +4,7 @@ import {
   GetAllCanBeConnectedInputsAndRectsRequest,
   CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
-  IConnectorAndRect, IClosestConnector, MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest
+  IConnectorAndRect, IClosestConnector, MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
 import {
@@ -50,7 +50,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._store = _injector.get(FComponentsStore);
 
     this._toConnectorRect = RoundedRect.fromRect(
-      RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y)
+      RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y),
     );
     this.fData = {
       fOutputOrOutletId: this._fOutputOrOutlet.fId,
@@ -76,11 +76,11 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private _getAndMarkCanBeConnectedInputs(): void {
     this._canBeConnectedInputs = this._fMediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutputOrOutlet)
+      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutputOrOutlet),
     );
 
     this._fMediator.execute(
-      new MarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new MarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector)),
     );
   }
 
@@ -102,7 +102,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
     this._drawConnectionForCreate(
       this._toConnectorRect.addPoint(difference),
-      fClosestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP
+      fClosestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP,
     );
 
     if (this._fSnapConnection) {
@@ -116,8 +116,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
         toConnectorRect,
         this._fConnection.fBehavior,
         this._fOutputWithRect.fConnector.fConnectableSide,
-        fSide
-      )
+        fSide,
+      ),
     );
 
     this._fConnection.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fSide);
@@ -131,8 +131,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
           fClosestInput.fRect,
           this._fSnapConnection!.fBehavior,
           this._fOutputWithRect.fConnector.fConnectableSide,
-          fClosestInput.fConnector.fConnectableSide
-        )
+          fClosestInput.fConnector.fConnectableSide,
+        ),
       );
       this._fSnapConnection!.show();
       this._fSnapConnection!.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fClosestInput.fConnector.fConnectableSide);
@@ -147,7 +147,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
       new FindClosestConnectorRequest(
         this._toConnectorRect.addPoint(difference),
         this._canBeConnectedInputs,
-      )
+      ),
     );
   }
 
@@ -161,7 +161,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._fSnapConnection?.hide();
 
     this._fMediator.execute(
-      new UnmarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector))
+      new UnmarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector)),
     );
   }
 }

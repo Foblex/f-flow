@@ -23,11 +23,11 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
         y: 100,
         width: 100,
         height: 100,
-        gravityCenter: PointExtensions.initialize(150, 150)
+        gravityCenter: PointExtensions.initialize(150, 150),
       }),
       EFConnectionBehavior.FLOATING,
       EFConnectableSide.AUTO,
-      EFConnectableSide.AUTO
+      EFConnectableSide.AUTO,
     ));
 
     expect(result.point1.x).toEqual(100);
@@ -42,11 +42,11 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
         y: 100,
         width: 100,
         height: 100,
-        gravityCenter: PointExtensions.initialize(150, 150)
+        gravityCenter: PointExtensions.initialize(150, 150),
       }),
       EFConnectionBehavior.FIXED_CENTER,
       EFConnectableSide.AUTO,
-      EFConnectableSide.AUTO
+      EFConnectableSide.AUTO,
     ));
 
     expect(result.point1.x).toEqual(50);
@@ -61,11 +61,11 @@ describe('CalculateConnectionLineByBehaviorExecution', () => {
         y: 100,
         width: 100,
         height: 100,
-        gravityCenter: PointExtensions.initialize(150, 150)
+        gravityCenter: PointExtensions.initialize(150, 150),
       }),
       EFConnectionBehavior.FIXED,
       EFConnectableSide.LEFT,
-      EFConnectableSide.RIGHT
+      EFConnectableSide.RIGHT,
     ));
 
     expect(result.point1.x).toEqual(0);

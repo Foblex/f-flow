@@ -20,5 +20,5 @@ export const F_SELECTION_FEATURES = [
 
   SelectAllExecution,
 
-  SelectAndUpdateNodeLayerExecution
+  SelectAndUpdateNodeLayerExecution,
 ];

@@ -10,7 +10,7 @@ import { FCreateConnectionFromOutputPreparationRequest } from './from-output-pre
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FReassignConnectionPreparationRequest } from '../../f-reassign-connection';
 import { isValidEventTrigger } from '../../../../domain';
-import {IPointerEvent} from "../../../../drag-toolkit";
+import { IPointerEvent } from "../../../../drag-toolkit";
 
 @Injectable()
 @FExecutionRegister(FCreateConnectionPreparationRequest)
@@ -30,11 +30,11 @@ export class FCreateConnectionPreparationExecution
 
     if (isNodeOutlet(request.event.targetElement)) {
       this._fMediator.execute<void>(
-        new FCreateConnectionFromOutletPreparationRequest(request.event, this._fNode!)
+        new FCreateConnectionFromOutletPreparationRequest(request.event, this._fNode!),
       );
     } else if (isNodeOutput(request.event.targetElement)) {
       this._fMediator.execute<void>(
-        new FCreateConnectionFromOutputPreparationRequest(request.event, this._fNode!)
+        new FCreateConnectionFromOutputPreparationRequest(request.event, this._fNode!),
       );
     }
   }
@@ -46,6 +46,7 @@ export class FCreateConnectionPreparationExecution
   private _getNode(event: IPointerEvent): FNodeBase | undefined {
     this._fNode = this._store
       .fNodes.find(n => n.isContains(event.targetElement));
+
     return this._fNode;
   }
 

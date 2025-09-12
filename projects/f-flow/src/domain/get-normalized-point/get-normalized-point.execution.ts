@@ -2,7 +2,7 @@ import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedPointRequest } from './get-normalized-point-request';
 import { FComponentsStore } from '../../f-storage';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 
 /**
  * Execution that retrieves the normalized point of a position.

@@ -43,6 +43,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
 
   public handle(payload: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase | undefined {
     const connectors = this._findConnectorAtPosition(payload);
+
     return connectors.length > 0 ? connectors[ 0 ] : undefined;
   }
 
@@ -85,7 +86,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
     }
 
     const closestConnector = this._mediator.execute<IClosestConnector | undefined>(
-      new FindClosestConnectorRequest(this._getPointInFlow(request.pointerPosition), request.connectableConnectors)
+      new FindClosestConnectorRequest(this._getPointInFlow(request.pointerPosition), request.connectableConnectors),
     );
 
     return this._isValidClosestInput(closestConnector) ? closestConnector : undefined;

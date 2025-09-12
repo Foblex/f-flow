@@ -7,15 +7,15 @@ import { FChannelHub } from '../../../reactivity';
 @Injectable()
 @FExecutionRegister(ListenTransformChangesRequest)
 export class ListenTransformChangesExecution
-  implements IExecution<ListenTransformChangesRequest, FChannelHub> {
+  implements IExecution<ListenTransformChangesRequest, FChannelHub>
+{
+  private readonly _store = inject(FComponentsStore);
 
-  private _store = inject(FComponentsStore);
-
-  public handle(request: ListenTransformChangesRequest): FChannelHub {
+  public handle(_request: ListenTransformChangesRequest): FChannelHub {
     return new FChannelHub(
       this._store.transformChanges$,
       this._store.dataChanges$,
-      this._store.countChanges$
+      this._store.countChanges$,
     );
   }
 }

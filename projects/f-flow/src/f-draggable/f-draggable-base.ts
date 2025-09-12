@@ -1,15 +1,13 @@
-import {Directive, EventEmitter, InputSignal} from '@angular/core';
-import {FCreateConnectionEvent, FReassignConnectionEvent} from './f-connection';
-import {FSelectionChangeEvent} from './f-selection-change-event';
-import {FCreateNodeEvent} from '../f-external-item';
-import {FDragStartedEvent, FNodeIntersectedWithConnections} from './domain';
-import {FDropToGroupEvent} from './f-drop-to-group';
-import {DragAndDropBase, ICanRunOutsideAngular} from "../drag-toolkit";
-import {FMoveNodesEvent} from "./f-node-move";
+import { EventEmitter, InputSignal, InputSignalWithTransform } from '@angular/core';
+import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
+import { FSelectionChangeEvent } from './f-selection-change-event';
+import { FCreateNodeEvent } from '../f-external-item';
+import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
+import { FDropToGroupEvent } from './f-drop-to-group';
+import { DragAndDropBase, ICanRunOutsideAngular } from '../drag-toolkit';
+import { FMoveNodesEvent } from './f-node-move';
 
-@Directive()
 export abstract class FDraggableBase extends DragAndDropBase {
-
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
@@ -26,19 +24,17 @@ export abstract class FDraggableBase extends DragAndDropBase {
 
   public abstract fDropToGroup: EventEmitter<FDropToGroupEvent>;
 
-  public abstract vCellSize: InputSignal<number>;
+  public abstract vCellSize: InputSignalWithTransform<number, unknown>;
 
-  public abstract hCellSize: InputSignal<number>;
+  public abstract hCellSize: InputSignalWithTransform<number, unknown>;
 
-  public abstract fCellSizeWhileDragging: InputSignal<boolean>;
+  public abstract fCellSizeWhileDragging: InputSignalWithTransform<boolean, unknown>;
 
   public abstract fDragStarted: EventEmitter<FDragStartedEvent>;
 
   public abstract fDragEnded: EventEmitter<void>;
 
-  protected constructor(
-    ngZone: ICanRunOutsideAngular | undefined
-  ) {
+  protected constructor(ngZone: ICanRunOutsideAngular | undefined) {
     super(ngZone);
   }
 }

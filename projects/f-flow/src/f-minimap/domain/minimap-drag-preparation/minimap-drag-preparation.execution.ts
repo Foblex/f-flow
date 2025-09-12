@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MinimapDragPreparationRequest } from './minimap-drag-preparation.request';
 import { IPoint, IRect, Point, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -10,55 +10,64 @@ import { FMinimapData } from '../f-minimap-data';
 
 @Injectable()
 @FExecutionRegister(MinimapDragPreparationRequest)
-export class MinimapDragPreparationExecution implements IExecution<MinimapDragPreparationRequest, void> {
+export class MinimapDragPreparationExecution
+  implements IExecution<MinimapDragPreparationRequest, void>
+{
+  private readonly _store = inject(FComponentsStore);
+  private readonly _mediator = inject(FMediator);
+  private readonly _draggableDataContext = inject(FDraggableDataContext);
 
-  private get flowHost(): HTMLElement {
-    return this.fComponentsStore.fFlow!.hostElement;
-  }
-
-  constructor(
-    private fComponentsStore: FComponentsStore,
-    private fMediator: FMediator,
-    private fDraggableDataContext: FDraggableDataContext,
-  ) {
+  private get _flowHost(): HTMLElement {
+    return this._store.fFlow!.hostElement;
   }
 
   public handle(request: MinimapDragPreparationRequest): void {
-    if(!this._isValid(request)) {
+    if (!this._isValid(request)) {
       return;
     }
     const eventPoint = request.event.getPosition();
-    const startCanvasPosition = Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position);
+    const startCanvasPosition = Point.fromPoint(this._store.fCanvas!.transform.position);
 
-    this.fComponentsStore.fCanvas!.setPosition(this.getNewPosition(eventPoint, request.minimap));
-    this.fComponentsStore.fCanvas!.redraw();
-    this.fComponentsStore.fCanvas!.emitCanvasChangeEvent();
+    this._store.fCanvas!.setPosition(this._getNewPosition(eventPoint, request.minimap));
+    this._store.fCanvas!.redraw();
+    this._store.fCanvas!.emitCanvasChangeEvent();
 
-    this.fDraggableDataContext.onPointerDownScale = 1;
-    this.fDraggableDataContext.onPointerDownPosition = Point.fromPoint(eventPoint).elementTransform(this.flowHost);
-    this.fDraggableDataContext.draggableItems = [
+    this._draggableDataContext.onPointerDownScale = 1;
+    this._draggableDataContext.onPointerDownPosition = Point.fromPoint(eventPoint).elementTransform(
+      this._flowHost,
+    );
+    this._draggableDataContext.draggableItems = [
       new FMinimapDragHandler(
-        this.fComponentsStore, this.fMediator, this.getFlowRect(),
-        startCanvasPosition, eventPoint, request.minimap,
-      )
+        this._store,
+        this._mediator,
+        this._getFlowRect(),
+        startCanvasPosition,
+        eventPoint,
+        request.minimap,
+      ),
     ];
   }
 
   private _isValid(request: MinimapDragPreparationRequest): boolean {
-    return !this.fDraggableDataContext.draggableItems.length &&
+    return (
+      !this._draggableDataContext.draggableItems.length &&
       !!request.event.targetElement.closest('.f-minimap') &&
-      this.fComponentsStore.flowHost.contains(request.event.targetElement);
+      this._store.flowHost.contains(request.event.targetElement)
+    );
   }
 
-  private getNewPosition(eventPoint: IPoint, minimap: FMinimapData): IPoint {
-    return this.fMediator.execute<IPoint>(new CalculateFlowPointFromMinimapPointRequest(
-      this.getFlowRect(),
-      Point.fromPoint(this.fComponentsStore.fCanvas!.transform.position),
-      eventPoint, minimap,
-    ));
+  private _getNewPosition(eventPoint: IPoint, minimap: FMinimapData): IPoint {
+    return this._mediator.execute<IPoint>(
+      new CalculateFlowPointFromMinimapPointRequest(
+        this._getFlowRect(),
+        Point.fromPoint(this._store.fCanvas!.transform.position),
+        eventPoint,
+        minimap,
+      ),
+    );
   }
 
-  private getFlowRect(): IRect {
-    return RectExtensions.fromElement(this.flowHost);
+  private _getFlowRect(): IRect {
+    return RectExtensions.fromElement(this._flowHost);
   }
 }

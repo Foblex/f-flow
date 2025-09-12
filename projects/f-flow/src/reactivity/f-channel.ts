@@ -10,6 +10,7 @@ export class FChannel {
 
   public listen(callback: FChannelListener): () => void {
     this._listeners.add(callback);
+
     return () => this.stop(callback);
   }
 

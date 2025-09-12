@@ -9,7 +9,7 @@ export class CalculateConnectionCenterHandler
 
     const { points } = request;
     let totalDistance = 0;
-    let distances: number[] = [];
+    const distances: number[] = [];
 
     for (let i = 0; i < points.length - 1; i++) {
       const distance = this.calculateDistance(points[ i ], points[ i + 1 ]);
@@ -42,6 +42,7 @@ export class CalculateConnectionCenterHandler
     const ratio = distance / totalDistance;
     const x = (1 - ratio) * startPoint.x + ratio * endPoint.x;
     const y = (1 - ratio) * startPoint.y + ratio * endPoint.y;
+
     return { x, y };
   }
 }

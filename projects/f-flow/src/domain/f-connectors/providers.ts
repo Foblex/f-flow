@@ -10,10 +10,10 @@ import { GetAllCanBeConnectedInputsAndRectsExecution } from './get-all-can-be-co
 import { GetConnectorAndRectExecution } from './get-connector-and-rect';
 import { FindClosestConnectorExecution } from './find-closest-connector';
 import {
-  GetAllCanBeConnectedSourceConnectorsAndRectsExecution
+  GetAllCanBeConnectedSourceConnectorsAndRectsExecution,
 } from "./get-all-can-be-connected-source-connectors-and-rects";
 import {
-  FindConnectableConnectorUsingPriorityAndPositionExecution
+  FindConnectableConnectorUsingPriorityAndPositionExecution,
 } from "./find-connectable-connector-using-priority-and-position";
 /*
   * This file exports all the connector-related executions that can be used in the FFlow domain.
@@ -44,5 +44,5 @@ export const F_CONNECTORS_FEATURES = [
 
   RemoveOutputFromStoreExecution,
 
-  UnmarkConnectableConnectorsExecution
+  UnmarkConnectableConnectorsExecution,
 ];

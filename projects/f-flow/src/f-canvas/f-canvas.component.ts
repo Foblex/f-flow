@@ -13,10 +13,10 @@ import {
   output,
   viewChild,
 } from "@angular/core";
-import {F_CANVAS, FCanvasBase} from './f-canvas-base';
-import {IPoint, PointExtensions, TransformModelExtensions} from '@foblex/2d';
-import {FCanvasChangeEvent,} from './domain';
-import {FMediator} from '@foblex/mediator';
+import { F_CANVAS, FCanvasBase } from './f-canvas-base';
+import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import { FCanvasChangeEvent } from './domain';
+import { FMediator } from '@foblex/mediator';
 import {
   AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
@@ -33,8 +33,8 @@ import {
   transitionEnd,
   UpdateScaleRequest,
 } from '../domain';
-import {NotifyTransformChangedRequest} from '../f-storage';
-import {FFlowBase} from '../f-flow';
+import { NotifyTransformChangedRequest } from '../f-storage';
+import { FFlowBase } from '../f-flow';
 
 /**
  * Component representing a canvas in the F-Flow framework.
@@ -54,7 +54,7 @@ import {FFlowBase} from '../f-flow';
     'class': 'f-component f-canvas',
   },
   providers: [
-    {provide: F_CANVAS, useExisting: FCanvasComponent}
+    { provide: F_CANVAS, useExisting: FCanvasComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -68,9 +68,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   public override fCanvasChange = output<FCanvasChangeEvent>();
 
-  public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), {transform: PointExtensions.castToPoint});
-  public readonly scale = input<number, unknown>(1, {transform: numberAttribute});
-  public readonly debounceTime = input<number, unknown>(0, {transform: numberAttribute});
+  public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), { transform: PointExtensions.castToPoint });
+  public readonly scale = input<number, unknown>(1, { transform: numberAttribute });
+  public readonly debounceTime = input<number, unknown>(0, { transform: numberAttribute });
   public override debounce = computed(() => this.debounceTime() < 0 ? 0 : this.debounceTime());
 
   public override get hostElement(): HTMLElement {
@@ -96,13 +96,13 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private _positionChange(): void {
     effect(() => {
       this._mediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   private _scaleChange(): void {
     effect(() => {
       this._mediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
-    }, {injector: this._injector});
+    }, { injector: this._injector });
   }
 
   /**

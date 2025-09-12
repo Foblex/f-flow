@@ -1,4 +1,4 @@
-import {MoveDragHandler} from "../../move-drag-handler";
+import { MoveDragHandler } from "../../move-drag-handler";
 
 export class BuildDragHierarchyResponse {
 

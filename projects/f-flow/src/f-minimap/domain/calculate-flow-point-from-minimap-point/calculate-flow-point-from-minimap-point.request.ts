@@ -8,7 +8,7 @@ export class CalculateFlowPointFromMinimapPointRequest {
     public flowRect: IRect,
     public canvasPosition: IPoint,
     public eventPoint: IPoint,
-    public minimap: FMinimapData
+    public minimap: FMinimapData,
   ) {
   }
 }

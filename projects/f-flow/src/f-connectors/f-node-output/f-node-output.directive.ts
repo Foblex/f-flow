@@ -6,7 +6,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit, SimpleChanges
+  OnInit, SimpleChanges,
 } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
@@ -16,7 +16,7 @@ import { FMediator } from '@foblex/mediator';
 import { AddOutputToStoreRequest, F_CSS_CLASS, RemoveOutputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 
-let uniqueId: number = 0;
+let uniqueId = 0;
 
 @Directive({
   selector: "[fNodeOutput]",
@@ -47,7 +47,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
 
   @Input({
     alias: 'fOutputConnectableSide',
-    transform: (value: unknown) => castToEnum(value, 'fOutputConnectableSide', EFConnectableSide)
+    transform: (value: unknown) => castToEnum(value, 'fOutputConnectableSide', EFConnectableSide),
   })
   public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 

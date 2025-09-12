@@ -1,13 +1,13 @@
-import {ILine, IRoundedRect} from '@foblex/2d';
-import {inject, Injectable} from '@angular/core';
-import {RedrawConnectionsRequest} from './redraw-connections-request';
-import {FComponentsStore} from '../../../f-storage';
-import {CalculateConnectionLineByBehaviorRequest} from '../calculate-connection-line-by-behavior';
-import {FConnectorBase} from '../../../f-connectors';
-import {FConnectionBase} from '../../../f-connection';
-import {FExecutionRegister, FMediator, IExecution} from '@foblex/mediator';
-import {CreateConnectionMarkersRequest} from '../create-connection-markers';
-import {GetNormalizedConnectorRectRequest} from "../../get-normalized-connector-rect";
+import { ILine, IRoundedRect } from '@foblex/2d';
+import { inject, Injectable } from '@angular/core';
+import { RedrawConnectionsRequest } from './redraw-connections-request';
+import { FComponentsStore } from '../../../f-storage';
+import { CalculateConnectionLineByBehaviorRequest } from '../calculate-connection-line-by-behavior';
+import { FConnectorBase } from '../../../f-connectors';
+import { FConnectionBase } from '../../../f-connection';
+import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { CreateConnectionMarkersRequest } from '../create-connection-markers';
+import { GetNormalizedConnectorRectRequest } from "../../get-normalized-connector-rect";
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -42,6 +42,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     if (!result) {
       throw new Error(`Output with id ${id} not found`);
     }
+
     return result;
   }
 
@@ -50,6 +51,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     if (!result) {
       throw new Error(`Input with id ${id} not found`);
     }
+
     return result;
   }
 
@@ -78,14 +80,14 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
         this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(input.hostElement)),
         connection.fBehavior,
         output.fConnectableSide,
-        input.fConnectableSide
-      )
+        input.fConnectableSide,
+      ),
     );
   }
 
   private _setMarkers(connection: FConnectionBase): void {
     this._fMediator.execute(
-      new CreateConnectionMarkersRequest(connection)
+      new CreateConnectionMarkersRequest(connection),
     );
   }
 }

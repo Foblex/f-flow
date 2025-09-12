@@ -6,12 +6,13 @@ import { SelectionAreaDragHandle } from '../selection-area.drag-handle';
 
 @Injectable()
 @FExecutionRegister(SelectionAreaFinalizeRequest)
-export class SelectionAreaFinalizeExecution implements IExecution<SelectionAreaFinalizeRequest, void> {
+export class SelectionAreaFinalizeExecution
+  implements IExecution<SelectionAreaFinalizeRequest, void>
+{
+  private readonly _dragContext = inject(FDraggableDataContext);
 
-  private _dragContext = inject(FDraggableDataContext);
-
-  public handle(request: SelectionAreaFinalizeRequest): void {
-    if(!this._isValid()) {
+  public handle(_request: SelectionAreaFinalizeRequest): void {
+    if (!this._isValid()) {
       return;
     }
     this._dragContext.draggableItems.forEach((x) => {
@@ -20,8 +21,6 @@ export class SelectionAreaFinalizeExecution implements IExecution<SelectionAreaF
   }
 
   private _isValid(): boolean {
-    return this._dragContext.draggableItems.some((x) =>
-      x instanceof SelectionAreaDragHandle
-    );
+    return this._dragContext.draggableItems.some((x) => x instanceof SelectionAreaDragHandle);
   }
 }

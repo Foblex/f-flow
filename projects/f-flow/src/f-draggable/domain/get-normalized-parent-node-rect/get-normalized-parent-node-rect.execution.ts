@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GetNormalizedParentNodeRectRequest } from './get-normalized-parent-node-rect.request';
 import { IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
@@ -21,6 +21,7 @@ export class GetNormalizedParentNodeRectExecution
     if (parentNode) {
       result = this._getParentRect(parentNode);
     }
+
     return result;
   }
 
@@ -52,11 +53,12 @@ export class GetNormalizedParentNodeRectExecution
   private _getParentRect(nodeOrGroup: FNodeBase): IRect {
     const rect = this._getNodeRect(nodeOrGroup);
     const padding = this._getNodePadding(nodeOrGroup, rect);
+
     return RectExtensions.initialize(
       rect.x + padding[ 0 ],
       rect.y + padding[ 1 ],
       rect.width - padding[ 0 ] - padding[ 2 ],
-      rect.height - padding[ 1 ] - padding[ 3 ]
+      rect.height - padding[ 1 ] - padding[ 3 ],
     );
   }
 
