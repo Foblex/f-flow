@@ -4,23 +4,29 @@ import {
   GetAllCanBeConnectedInputsAndRectsRequest,
   CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
-  IConnectorAndRect, IClosestConnector, MarkConnectableConnectorsRequest, UnmarkConnectableConnectorsRequest,
+  IConnectorAndRect,
+  IClosestConnector,
+  MarkConnectableConnectorsRequest,
+  UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
 import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
-import {
-  EFConnectableSide, FNodeOutletBase,
-  FNodeOutputBase,
-} from '../../../f-connectors';
+import { EFConnectableSide, FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
-import { RoundedRect, ILine, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
+import {
+  RoundedRect,
+  ILine,
+  IPoint,
+  PointExtensions,
+  RectExtensions,
+  IRoundedRect,
+} from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { IFCreateConnectionDragResult } from './i-f-create-connection-drag-result';
 import { Injector } from '@angular/core';
 
 export class FCreateConnectionDragHandler implements IFDragHandler {
-
   public fEventType = 'create-connection';
-  public fData: any;
+  public fData: unknown;
 
   private readonly _fResult: FDragHandlerResult<IFCreateConnectionDragResult>;
   private readonly _fMediator: FMediator;
@@ -62,7 +68,9 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._initializeSnapConnection();
     this._initializeConnectionForCreate();
 
-    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(this._fOutputOrOutlet));
+    this._fOutputWithRect = this._fMediator.execute<IConnectorAndRect>(
+      new GetConnectorAndRectRequest(this._fOutputOrOutlet),
+    );
 
     this._fConnection.show();
     this.onPointerMove(PointExtensions.initialize());
@@ -111,7 +119,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   }
 
   private _drawConnectionForCreate(toConnectorRect: IRoundedRect, fSide: EFConnectableSide): void {
-    const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+    const line = this._fMediator.execute<ILine>(
+      new CalculateConnectionLineByBehaviorRequest(
         this._fOutputWithRect.fRect,
         toConnectorRect,
         this._fConnection.fBehavior,
@@ -126,7 +135,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private _drawSnapConnection(fClosestInput: IClosestConnector | undefined): void {
     if (fClosestInput) {
-      const line = this._fMediator.execute<ILine>(new CalculateConnectionLineByBehaviorRequest(
+      const line = this._fMediator.execute<ILine>(
+        new CalculateConnectionLineByBehaviorRequest(
           this._fOutputWithRect.fRect,
           fClosestInput.fRect,
           this._fSnapConnection!.fBehavior,
@@ -135,7 +145,11 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
         ),
       );
       this._fSnapConnection!.show();
-      this._fSnapConnection!.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fClosestInput.fConnector.fConnectableSide);
+      this._fSnapConnection!.setLine(
+        line,
+        this._fOutputWithRect.fConnector.fConnectableSide,
+        fClosestInput.fConnector.fConnectableSide,
+      );
       this._fSnapConnection!.redraw();
     } else {
       this._fSnapConnection?.hide();
@@ -151,8 +165,12 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     );
   }
 
-  private _getClosestInputForSnapConnection(fClosestInput: IClosestConnector | undefined): IClosestConnector | undefined {
-    return fClosestInput && fClosestInput.distance < this._fSnapConnection!.fSnapThreshold ? fClosestInput : undefined;
+  private _getClosestInputForSnapConnection(
+    fClosestInput: IClosestConnector | undefined,
+  ): IClosestConnector | undefined {
+    return fClosestInput && fClosestInput.distance < this._fSnapConnection!.fSnapThreshold
+      ? fClosestInput
+      : undefined;
   }
 
   public onPointerUp(): void {

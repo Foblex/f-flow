@@ -7,10 +7,9 @@ import { FCanvasDragHandler } from '../f-canvas.drag-handler';
 @Injectable()
 @FExecutionRegister(FCanvasMoveFinalizeRequest)
 export class FCanvasMoveFinalizeExecution implements IExecution<FCanvasMoveFinalizeRequest, void> {
+  private readonly _dragContext = inject(FDraggableDataContext);
 
-  private _dragContext = inject(FDraggableDataContext);
-
-  public handle(request: FCanvasMoveFinalizeRequest): void {
+  public handle(_request: FCanvasMoveFinalizeRequest): void {
     if (!this._isValid()) {
       return;
     }
@@ -18,8 +17,6 @@ export class FCanvasMoveFinalizeExecution implements IExecution<FCanvasMoveFinal
   }
 
   private _isValid(): boolean {
-    return this._dragContext.draggableItems.some(
-      (x) => x instanceof FCanvasDragHandler,
-    );
+    return this._dragContext.draggableItems.some((x) => x instanceof FCanvasDragHandler);
   }
 }

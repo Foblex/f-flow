@@ -7,17 +7,17 @@ import { FNodeIntersectedWithConnections } from '../../index';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
-import { GetNormalizedConnectorRectRequest, GetNormalizedElementRectRequest } from '../../../domain';
+import { GetNormalizedConnectorRectRequest } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(IsConnectionUnderNodeRequest)
-export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUnderNodeRequest, void> {
-
-  private readonly _fMediator = inject(FMediator);
+export class IsConnectionUnderNodeExecution
+  implements IExecution<IsConnectionUnderNodeRequest, void>
+{
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: IsConnectionUnderNodeRequest): void {
-
     const fOutputConnectors = this._getOutputConnectors(request.fNode);
     const fInputConnectors = this._getInputConnectors(request.fNode);
 
@@ -72,16 +72,31 @@ export class IsConnectionUnderNodeExecution implements IExecution<IsConnectionUn
   }
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {
-    const fNodeRect = this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(fNode.hostElement));
+    const fNodeRect = this._mediator.execute<IRoundedRect>(
+      new GetNormalizedConnectorRectRequest(fNode.hostElement),
+    );
 
-    return this._store.fConnections.filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
+    return this._store.fConnections.filter((x) =>
+      this._isConnectionHasIntersectionsWithNode(x, fNodeRect),
+    );
   }
 
-  private _isConnectionHasIntersectionsWithNode(fConnection: FConnectionBase, fNodeRect: IRoundedRect): boolean {
-    return GetIntersections.getRoundedRectIntersectionsWithSVGPath(fConnection.fPath().hostElement, fNodeRect).length > 0;
+  private _isConnectionHasIntersectionsWithNode(
+    fConnection: FConnectionBase,
+    fNodeRect: IRoundedRect,
+  ): boolean {
+    return (
+      GetIntersections.getRoundedRectIntersectionsWithSVGPath(
+        fConnection.fPath().hostElement,
+        fNodeRect,
+      ).length > 0
+    );
   }
 
-  private _emitNodeIntersectedWithConnections(fNode: FNodeBase, fConnections: FConnectionBase[]): void {
+  private _emitNodeIntersectedWithConnections(
+    fNode: FNodeBase,
+    fConnections: FConnectionBase[],
+  ): void {
     this._store.fDraggable?.fNodeIntersectedWithConnections.emit(
       new FNodeIntersectedWithConnections(
         fNode.fId(),

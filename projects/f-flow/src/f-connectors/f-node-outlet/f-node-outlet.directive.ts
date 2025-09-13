@@ -1,32 +1,38 @@
-import { booleanAttribute, Directive, ElementRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE } from '../../f-node';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FMediator } from '@foblex/mediator';
 import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
-import { FConnectorBase } from '../f-connector-base';
 
 let uniqueId = 0;
 
 @Directive({
-  selector: "[fNodeOutlet]",
+  selector: '[fNodeOutlet]',
   exportAs: 'fNodeOutlet',
   host: {
     '[attr.data-f-outlet-id]': 'fId',
-    class: "f-component f-node-outlet",
+    class: 'f-component f-node-outlet',
     '[class.f-node-outlet-disabled]': 'disabled',
   },
-  providers: [ { provide: F_NODE_OUTLET, useExisting: FNodeOutletDirective } ],
+  providers: [{ provide: F_NODE_OUTLET, useExisting: FNodeOutletDirective }],
 })
 export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnDestroy {
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
-  private _elementReference = inject(ElementRef);
-  private _fMediator = inject(FMediator);
-  /// Inject FNodeBase to check if the outlet inside the node
-  private _fNode = inject(F_NODE);
+  private readonly _mediator = inject(FMediator);
+  private readonly _node = inject(F_NODE);
 
   @Input('fOutletId')
-  public override fId: string = `f-node-outlet-${ uniqueId++ }`;
+  public override fId: string = `f-node-outlet-${uniqueId++}`;
 
   @Input({ alias: 'fOutletDisabled', transform: booleanAttribute })
   public override disabled: boolean = false;
@@ -42,18 +48,14 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   public override canBeConnectedInputs: string[] = [];
 
   public override get fNodeId(): string {
-    return this._fNode.fId();
-  }
-
-  public get hostElement(): HTMLElement | SVGElement {
-    return this._elementReference.nativeElement;
+    return this._node.fId();
   }
 
   public ngOnInit() {
-    this._fMediator.execute(new AddOutletToStoreRequest(this));
+    this._mediator.execute(new AddOutletToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute(new RemoveOutletFromStoreRequest(this));
+    this._mediator.execute(new RemoveOutletFromStoreRequest(this));
   }
 }

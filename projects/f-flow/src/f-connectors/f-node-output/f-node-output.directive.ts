@@ -6,7 +6,8 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit, SimpleChanges,
+  OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
 import { EFConnectableSide } from '../e-f-connectable-side';
@@ -19,25 +20,25 @@ import { FConnectorBase } from '../f-connector-base';
 let uniqueId = 0;
 
 @Directive({
-  selector: "[fNodeOutput]",
+  selector: '[fNodeOutput]',
   exportAs: 'fNodeOutput',
   host: {
     '[attr.data-f-output-id]': 'fId',
-    class: "f-component f-node-output",
+    class: 'f-component f-node-output',
     '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
     '[class.f-node-output-self-connectable]': 'isSelfConnectable',
   },
-  providers: [ { provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective } ],
+  providers: [{ provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective }],
 })
 export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnChanges, OnDestroy {
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
-  private _elementReference = inject(ElementRef);
-  private _fMediator = inject(FMediator);
-  private _fNode = inject(F_NODE);
+  private readonly _mediator = inject(FMediator);
+  private readonly _node = inject(F_NODE);
 
   @Input('fOutputId')
-  public override fId: string = `f-node-output-${ uniqueId++ }`;
+  public override fId: string = `f-node-output-${uniqueId++}`;
 
   @Input('fOutputMultiple')
   public override multiple: boolean = false;
@@ -58,38 +59,40 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   public override canBeConnectedInputs: string[] = [];
 
   public override get fNodeId(): string {
-    return this._fNode.fId();
-  }
-
-  public get hostElement(): HTMLElement | SVGElement {
-    return this._elementReference.nativeElement;
+    return this._node.fId();
   }
 
   public ngOnInit() {
-    this._fMediator.execute(new AddOutputToStoreRequest(this));
-    this._fNode.addConnector(this);
+    this._mediator.execute(new AddOutputToStoreRequest(this));
+    this._node.addConnector(this);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes[ 'userFConnectableSide' ]) {
-      this._fNode.refresh();
+    if (changes['userFConnectableSide']) {
+      this._node.refresh();
     }
   }
 
   public override setConnected(toConnector: FConnectorBase): void {
     super.setConnected(toConnector);
     this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, true);
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE, !this.canBeConnected);
+    this.hostElement.classList.toggle(
+      F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE,
+      !this.canBeConnected,
+    );
   }
 
   public override resetConnected(): void {
     super.resetConnected();
     this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, false);
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE, !this.canBeConnected);
+    this.hostElement.classList.toggle(
+      F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE,
+      !this.canBeConnected,
+    );
   }
 
   public ngOnDestroy(): void {
-    this._fNode.removeConnector(this);
-    this._fMediator.execute(new RemoveOutputFromStoreRequest(this));
+    this._node.removeConnector(this);
+    this._mediator.execute(new RemoveOutputFromStoreRequest(this));
   }
 }

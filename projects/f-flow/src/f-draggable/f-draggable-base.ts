@@ -1,4 +1,4 @@
-import { EventEmitter, InputSignal, InputSignalWithTransform } from '@angular/core';
+import { EventEmitter, InputSignalWithTransform } from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
