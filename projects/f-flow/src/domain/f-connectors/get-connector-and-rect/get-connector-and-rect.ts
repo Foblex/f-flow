@@ -4,25 +4,28 @@ import { GetConnectorAndRectRequest } from './get-connector-and-rect-request';
 import { IRoundedRect } from '@foblex/2d';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 import { FConnectorBase } from '../../../f-connectors';
-import { GetNormalizedConnectorRectRequest } from "../../get-normalized-connector-rect";
+import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
 
 /**
  * Execution that retrieves a connector and its rectangle.
  */
 @Injectable()
 @FExecutionRegister(GetConnectorAndRectRequest)
-export class GetConnectorAndRectExecution implements IExecution<GetConnectorAndRectRequest, IConnectorAndRect> {
-
+export class GetConnectorAndRect
+  implements IExecution<GetConnectorAndRectRequest, IConnectorAndRect>
+{
   private readonly _mediator = inject(FMediator);
 
-  public handle(request: GetConnectorAndRectRequest): IConnectorAndRect {
+  public handle({ connector }: GetConnectorAndRectRequest): IConnectorAndRect {
     return {
-      fConnector: request.fConnector,
-      fRect: this._getConnectorRect(request.fConnector),
-    }
+      fConnector: connector,
+      fRect: this._getConnectorRect(connector),
+    };
   }
 
   private _getConnectorRect(fConnector: FConnectorBase): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(fConnector.hostElement));
+    return this._mediator.execute<IRoundedRect>(
+      new GetNormalizedConnectorRectRequest(fConnector.hostElement),
+    );
   }
 }

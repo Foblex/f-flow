@@ -4,7 +4,7 @@ export * from './add-outlet-to-store';
 
 export * from './add-output-to-store';
 
-export * from './find-closest-connector';
+export * from './calculate-closest-connector';
 
 export * from './find-connectable-connector-using-priority-and-position';
 

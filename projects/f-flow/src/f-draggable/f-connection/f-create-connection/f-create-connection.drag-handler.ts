@@ -1,6 +1,6 @@
 import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
 import {
-  FindClosestConnectorRequest,
+  CalculateClosestConnectorRequest,
   GetAllCanBeConnectedInputsAndRectsRequest,
   CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
@@ -158,7 +158,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private _findClosestInput(difference: IPoint): IClosestConnector | undefined {
     return this._mediator.execute<IClosestConnector | undefined>(
-      new FindClosestConnectorRequest(
+      new CalculateClosestConnectorRequest(
         this._toConnectorRect.addPoint(difference),
         this._canBeConnectedInputs,
       ),

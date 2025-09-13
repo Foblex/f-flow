@@ -1,3 +1,3 @@
-export * from './mark-connectable-connectors.request';
+export * from './mark-connectable-connectors-request';
 
-export * from './mark-connectable-connectors.execution';
+export * from './mark-connectable-connectors';

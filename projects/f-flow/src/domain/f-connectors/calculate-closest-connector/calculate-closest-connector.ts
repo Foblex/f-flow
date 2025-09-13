@@ -1,4 +1,4 @@
-import { FindClosestConnectorRequest } from './find-closest-connector.request';
+import { CalculateClosestConnectorRequest } from './calculate-closest-connector-request';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IPoint } from '@foblex/2d';
@@ -11,16 +11,19 @@ import { IConnectorAndRect } from '../index';
  * and returns the closest one along with its distance.
  */
 @Injectable()
-@FExecutionRegister(FindClosestConnectorRequest)
-export class FindClosestConnectorExecution
-  implements IExecution<FindClosestConnectorRequest, IClosestConnector | undefined> {
-
-  public handle(payload: FindClosestConnectorRequest): IClosestConnector | undefined {
+@FExecutionRegister(CalculateClosestConnectorRequest)
+export class CalculateClosestConnector
+  implements IExecution<CalculateClosestConnectorRequest, IClosestConnector | undefined>
+{
+  public handle({
+    position,
+    connectors,
+  }: CalculateClosestConnectorRequest): IClosestConnector | undefined {
     let result: IConnectorAndRect | undefined;
     let minDistance = Infinity;
 
-    for (const element of payload.connectors) {
-      const distance = this._distanceToRectangle(payload.position, element);
+    for (const element of connectors) {
+      const distance = this._distanceToRectangle(position, element);
 
       if (distance < minDistance) {
         minDistance = distance;
@@ -28,15 +31,25 @@ export class FindClosestConnectorExecution
       }
     }
 
-    return result ? {
-      ...result,
-      distance: minDistance,
-    } : undefined;
+    return result
+      ? {
+          ...result,
+          distance: minDistance,
+        }
+      : undefined;
   }
 
   private _distanceToRectangle(point: IPoint, inputWithRect: IConnectorAndRect): number {
-    const closestX = this._clamp(point.x, inputWithRect.fRect.x, inputWithRect.fRect.x + inputWithRect.fRect.width);
-    const closestY = this._clamp(point.y, inputWithRect.fRect.y, inputWithRect.fRect.y + inputWithRect.fRect.height);
+    const closestX = this._clamp(
+      point.x,
+      inputWithRect.fRect.x,
+      inputWithRect.fRect.x + inputWithRect.fRect.width,
+    );
+    const closestY = this._clamp(
+      point.y,
+      inputWithRect.fRect.y,
+      inputWithRect.fRect.y + inputWithRect.fRect.height,
+    );
 
     const dx = point.x - closestX;
     const dy = point.y - closestY;

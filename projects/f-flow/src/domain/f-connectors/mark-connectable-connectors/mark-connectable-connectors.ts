@@ -1,4 +1,4 @@
-import { MarkConnectableConnectorsRequest } from './mark-connectable-connectors.request';
+import { MarkConnectableConnectorsRequest } from './mark-connectable-connectors-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FConnectorBase } from '../../../f-connectors';
@@ -10,17 +10,17 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(MarkConnectableConnectorsRequest)
-export class MarkConnectableConnectorsExecution
-  implements IExecution<MarkConnectableConnectorsRequest, void> {
-
+export class MarkConnectableConnectors
+  implements IExecution<MarkConnectableConnectorsRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(payload: MarkConnectableConnectorsRequest): void {
+  public handle({ connectors }: MarkConnectableConnectorsRequest): void {
     this._store.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.CONNECTIONS_DRAGGING);
-    payload.fConnectors.forEach((fConnector) => this._markConnector(fConnector));
+    connectors.forEach((x) => this._markConnector(x));
   }
 
-  private _markConnector(fConnector: FConnectorBase): void {
-    fConnector.hostElement.classList.add(F_CSS_CLASS.CONNECTOR.CONNECTABLE);
+  private _markConnector({ hostElement }: FConnectorBase): void {
+    hostElement.classList.add(F_CSS_CLASS.CONNECTOR.CONNECTABLE);
   }
 }

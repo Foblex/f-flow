@@ -43,7 +43,8 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
     transform: (value) => stringAttribute(value) || `f-node-input-${uniqueId++}`,
   });
 
-  public override fType = input<string | undefined, unknown>(undefined, {
+  public override category = input<string | undefined, unknown>(undefined, {
+    alias: 'fInputCategory',
     transform: stringAttribute,
   });
 

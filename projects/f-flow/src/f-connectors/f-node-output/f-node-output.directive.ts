@@ -8,7 +8,6 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  signal,
   SimpleChanges,
 } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
@@ -44,8 +43,6 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     alias: 'fOutputId',
     transform: (value) => stringAttribute(value) || `f-node-output-${uniqueId++}`,
   });
-
-  public override fType = signal(undefined);
 
   public override multiple = input<boolean, unknown>(false, {
     alias: 'fOutputMultiple',

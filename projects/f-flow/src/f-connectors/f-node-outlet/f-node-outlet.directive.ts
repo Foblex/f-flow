@@ -7,7 +7,6 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  signal,
 } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE } from '../../f-node';
@@ -38,8 +37,6 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
     alias: 'fOutletId',
     transform: (value) => stringAttribute(value) || `f-node-outlet-${uniqueId++}`,
   });
-
-  public override fType = signal(undefined);
 
   public override disabled = input<boolean, unknown>(false, {
     alias: 'fOutletDisabled',

@@ -8,11 +8,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddInputToStoreRequest)
-export class AddInputToStoreExecution implements IExecution<AddInputToStoreRequest, void> {
-
+export class AddInputToStore implements IExecution<AddInputToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddInputToStoreRequest): void {
-    this._store.addComponent(this._store.fInputs, request.fComponent);
+  public handle({ component }: AddInputToStoreRequest): void {
+    this._store.addComponent(this._store.fInputs, component);
   }
 }
