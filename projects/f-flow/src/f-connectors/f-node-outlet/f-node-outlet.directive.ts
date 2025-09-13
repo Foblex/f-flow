@@ -3,6 +3,7 @@ import {
   Directive,
   ElementRef,
   inject,
+  input,
   Input,
   OnDestroy,
   OnInit,
@@ -12,6 +13,7 @@ import { F_NODE } from '../../f-node';
 import { EFConnectableSide } from '../e-f-connectable-side';
 import { FMediator } from '@foblex/mediator';
 import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
+import { stringAttribute } from '../../utils';
 
 let uniqueId = 0;
 
@@ -19,7 +21,7 @@ let uniqueId = 0;
   selector: '[fNodeOutlet]',
   exportAs: 'fNodeOutlet',
   host: {
-    '[attr.data-f-outlet-id]': 'fId',
+    '[attr.data-f-outlet-id]': 'fId()',
     class: 'f-component f-node-outlet',
     '[class.f-node-outlet-disabled]': 'disabled',
   },
@@ -31,8 +33,10 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   private readonly _mediator = inject(FMediator);
   private readonly _node = inject(F_NODE);
 
-  @Input('fOutletId')
-  public override fId: string = `f-node-outlet-${uniqueId++}`;
+  public override fId = input<string, unknown>(`f-node-outlet-${uniqueId++}`, {
+    alias: 'fOutletId',
+    transform: (value) => stringAttribute(value) || `f-node-outlet-${uniqueId++}`,
+  });
 
   @Input({ alias: 'fOutletDisabled', transform: booleanAttribute })
   public override disabled: boolean = false;

@@ -1,6 +1,4 @@
-import {
-  GetAllCanBeConnectedSourceConnectorsAndRectsRequest,
-} from './get-all-can-be-connected-source-connectors-and-rects.request';
+import { GetAllCanBeConnectedSourceConnectorsAndRectsRequest } from './get-all-can-be-connected-source-connectors-and-rects.request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../../../f-connectors';
@@ -16,8 +14,8 @@ import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
 @Injectable()
 @FExecutionRegister(GetAllCanBeConnectedSourceConnectorsAndRectsRequest)
 export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
-  implements IExecution<GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IConnectorAndRect[]> {
-
+  implements IExecution<GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IConnectorAndRect[]>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -35,7 +33,7 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
     return this._fSourceConnectors.filter((x) => {
       let result = x.canBeConnected;
       if (result && x.canBeConnectedInputs?.length) {
-        result = x.canBeConnectedInputs?.includes(fTargetConnector.fId);
+        result = x.canBeConnectedInputs?.includes(fTargetConnector.fId());
       }
 
       return result;

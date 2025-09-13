@@ -68,7 +68,7 @@ export class IsConnectionUnderNodeExecution
   }
 
   private _getConnectorsId(connectors: FConnectorBase[]): string[] {
-    return connectors.map((x) => x.fId);
+    return connectors.map((x) => x.fId());
   }
 
   private _calculateConnectionsUnderNode(fNode: FNodeBase): FConnectionBase[] {

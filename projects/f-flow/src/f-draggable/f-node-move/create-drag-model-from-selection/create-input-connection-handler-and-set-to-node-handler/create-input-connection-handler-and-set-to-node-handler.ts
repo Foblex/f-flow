@@ -8,13 +8,13 @@ import {
   BaseConnectionDragHandler,
   SourceTargetConnectionDragHandler,
   TargetConnectionDragHandler,
-} from "../../connection-drag-handlers";
+} from '../../connection-drag-handlers';
 
 @Injectable()
 @FExecutionRegister(CreateInputConnectionHandlerAndSetToNodeHandlerRequest)
 export class CreateInputConnectionHandlerAndSetToNodeHandler
-  implements IExecution<CreateInputConnectionHandlerAndSetToNodeHandlerRequest, void> {
-
+  implements IExecution<CreateInputConnectionHandlerAndSetToNodeHandlerRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
 
@@ -37,11 +37,17 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
   private _getNodeInputIds(nodeOrGroup: FNodeBase): string[] {
     return this._store.fInputs
       .filter((x) => nodeOrGroup.isContains(x.hostElement))
-      .map((x) => x.fId);
+      .map((x) => x.fId());
   }
 
-  private _createAndSetConnectionToNodeHandler(connection: FConnectionBase, request: CreateInputConnectionHandlerAndSetToNodeHandlerRequest): void {
-    let connectionHandler = this._getExistingConnectionHandler(request.existingConnectionHandlers, connection);
+  private _createAndSetConnectionToNodeHandler(
+    connection: FConnectionBase,
+    request: CreateInputConnectionHandlerAndSetToNodeHandlerRequest,
+  ): void {
+    let connectionHandler = this._getExistingConnectionHandler(
+      request.existingConnectionHandlers,
+      connection,
+    );
     if (!connectionHandler) {
       connectionHandler = this._createConnectionHandler(request.outputIds, connection);
       request.existingConnectionHandlers.push(connectionHandler);
@@ -49,11 +55,17 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
     request.dragHandler.fTargetHandlers.push(connectionHandler);
   }
 
-  private _getExistingConnectionHandler(existingConnectionHandlers: BaseConnectionDragHandler[], connection: FConnectionBase): BaseConnectionDragHandler | undefined {
+  private _getExistingConnectionHandler(
+    existingConnectionHandlers: BaseConnectionDragHandler[],
+    connection: FConnectionBase,
+  ): BaseConnectionDragHandler | undefined {
     return existingConnectionHandlers.find((x) => x.fConnection.fId() === connection.fId());
   }
 
-  private _createConnectionHandler(outputIds: string[], connection: FConnectionBase): BaseConnectionDragHandler {
+  private _createConnectionHandler(
+    outputIds: string[],
+    connection: FConnectionBase,
+  ): BaseConnectionDragHandler {
     let result: BaseConnectionDragHandler | undefined;
     if (outputIds.includes(connection.fOutputId)) {
       result = new SourceTargetConnectionDragHandler(this._injector, connection);
@@ -64,4 +76,3 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
     return result;
   }
 }
-

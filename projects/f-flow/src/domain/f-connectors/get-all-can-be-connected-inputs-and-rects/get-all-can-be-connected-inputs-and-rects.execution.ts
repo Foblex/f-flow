@@ -12,8 +12,8 @@ import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
 @Injectable()
 @FExecutionRegister(GetAllCanBeConnectedInputsAndRectsRequest)
 export class GetAllCanBeConnectedInputsAndRectsExecution
-  implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]> {
-
+  implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]>
+{
   private readonly _mediator = inject(FMediator);
   private _store = inject(FComponentsStore);
 
@@ -27,14 +27,16 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
     });
   }
 
-  private _getCanBeConnectedInputs(fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase): FConnectorBase[] {
+  private _getCanBeConnectedInputs(
+    fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
+  ): FConnectorBase[] {
     let fInputs: FConnectorBase[] = [];
     if (fOutputOrOutlet.canBeConnectedInputs?.length) {
-      fInputs = this._fInputs.filter((x) => fOutputOrOutlet.canBeConnectedInputs.includes(x.fId));
+      fInputs = this._fInputs.filter((x) => fOutputOrOutlet.canBeConnectedInputs.includes(x.fId()));
     } else {
       fInputs = this._fInputs.filter((x) => x.canBeConnected);
 
-      if(!fOutputOrOutlet.isSelfConnectable) {
+      if (!fOutputOrOutlet.isSelfConnectable) {
         fInputs = this._filterSelfConnectable(fInputs, fOutputOrOutlet);
       }
     }
@@ -42,7 +44,10 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
     return fInputs;
   }
 
-  private _filterSelfConnectable(fInputs: FConnectorBase[], fOutputOrOutlet: FConnectorBase): FConnectorBase[] {
+  private _filterSelfConnectable(
+    fInputs: FConnectorBase[],
+    fOutputOrOutlet: FConnectorBase,
+  ): FConnectorBase[] {
     return fInputs.filter((x) => fOutputOrOutlet.fNodeId !== x.fNodeId);
   }
 }

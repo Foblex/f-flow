@@ -3,6 +3,7 @@ import {
   Directive,
   ElementRef,
   inject,
+  input,
   Input,
   OnChanges,
   OnDestroy,
@@ -16,6 +17,7 @@ import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddOutputToStoreRequest, F_CSS_CLASS, RemoveOutputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
+import { stringAttribute } from '../../utils';
 
 let uniqueId = 0;
 
@@ -23,7 +25,7 @@ let uniqueId = 0;
   selector: '[fNodeOutput]',
   exportAs: 'fNodeOutput',
   host: {
-    '[attr.data-f-output-id]': 'fId',
+    '[attr.data-f-output-id]': 'fId()',
     class: 'f-component f-node-output',
     '[class.f-node-output-multiple]': 'multiple',
     '[class.f-node-output-disabled]': 'disabled',
@@ -37,8 +39,10 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   private readonly _mediator = inject(FMediator);
   private readonly _node = inject(F_NODE);
 
-  @Input('fOutputId')
-  public override fId: string = `f-node-output-${uniqueId++}`;
+  public override fId = input<string, unknown>(`f-node-output-${uniqueId++}`, {
+    alias: 'fOutputId',
+    transform: (value) => stringAttribute(value) || `f-node-output-${uniqueId++}`,
+  });
 
   @Input('fOutputMultiple')
   public override multiple: boolean = false;

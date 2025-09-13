@@ -61,18 +61,18 @@ export class FCreateConnectionFinalizeExecution
   }
 
   private _getOutput(): FConnectorBase | undefined {
-    return this._store.fOutputs.find((x) => x.fId === this._result.getData().fOutputId);
+    return this._store.fOutputs.find((x) => x.fId() === this._result.getData().fOutputId);
   }
 
   private _getOutlet(): FConnectorBase | undefined {
-    return this._store.fOutlets.find((x) => x.fId === this._result.getData().fOutputId);
+    return this._store.fOutlets.find((x) => x.fId() === this._result.getData().fOutputId);
   }
 
   private _emitEvent(event: IPointerEvent): void {
     this._store.fDraggable?.fCreateConnection.emit(
       new FCreateConnectionEvent(
-        this._getTargetOutput(this._getOutput() || this._getOutlet()).fId,
-        this._getInputUnderPointer(event)?.fId,
+        this._getTargetOutput(this._getOutput() || this._getOutlet()).fId(),
+        this._getInputUnderPointer(event)?.fId(),
         event.getPosition(),
       ),
     );
