@@ -6,24 +6,14 @@ import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'connection-text',
-  styleUrls: [
-    '../../_mdc-controls.scss',
-    './connection-text.component.scss'
-  ],
+  styleUrls: ['./connection-text.component.scss'],
   templateUrl: './connection-text.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect
-  ]
+  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect],
 })
 export class ConnectionTextComponent {
-
-  protected offsetOptions: string[] = [ '10', '25%', '30', '50%', '75', '100%' ];
+  protected offsetOptions: string[] = ['10', '25%', '30', '50%', '75', '100%'];
 
   protected fTextStartOffset: string = '50%';
 

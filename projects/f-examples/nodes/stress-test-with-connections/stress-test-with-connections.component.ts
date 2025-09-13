@@ -6,7 +6,8 @@ import {
   EFMarkerType,
   FCanvasComponent,
   FFlowComponent,
-  FFlowModule, FZoomDirective
+  FFlowModule,
+  FZoomDirective,
 } from '@foblex/flow';
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -15,39 +16,36 @@ import { MatSelect, MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'stress-test-with-connections',
-  styleUrls: [
-    '../../_mdc-controls.scss',
-    './stress-test-with-connections.component.scss'
-  ],
+  styleUrls: ['./stress-test-with-connections.component.scss'],
   templateUrl: './stress-test-with-connections.component.html',
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    FZoomDirective,
-  ]
+  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect, FZoomDirective],
 })
 export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit {
-
   @ViewChild(FFlowComponent, { static: false })
   public fFlow!: FFlowComponent;
 
   @ViewChild(FCanvasComponent, { static: false })
   public fCanvas!: FCanvasComponent;
 
-  public counts: number[] = [ 25, 50, 75, 100, 150 ];
+  public counts: number[] = [25, 50, 75, 100, 150];
   public count = 25;
 
-  public behaviors: string[] = [ EFConnectionBehavior.FIXED, EFConnectionBehavior.FIXED_CENTER, EFConnectionBehavior.FLOATING ];
+  public behaviors: string[] = [
+    EFConnectionBehavior.FIXED,
+    EFConnectionBehavior.FIXED_CENTER,
+    EFConnectionBehavior.FLOATING,
+  ];
   public behavior = EFConnectionBehavior.FLOATING;
 
-  public types: string[] = [ EFConnectionType.STRAIGHT, EFConnectionType.SEGMENT, EFConnectionType.BEZIER ];
+  public types: string[] = [
+    EFConnectionType.STRAIGHT,
+    EFConnectionType.SEGMENT,
+    EFConnectionType.BEZIER,
+  ];
   public type = EFConnectionType.STRAIGHT;
 
-  public nodes: { id: number, position: IPoint, side: EFConnectableSide }[] = [];
+  public nodes: { id: number; position: IPoint; side: EFConnectableSide }[] = [];
 
   public onLoaded(): void {
     this.fCanvas?.fitToScreen(PointExtensions.initialize(20, 20), false);
@@ -61,13 +59,21 @@ export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit
     this.fFlow.reset();
   }
 
-  private _generateNodes(nodeCount: number, spacing: number = 10): { id: number, position: IPoint, side: EFConnectableSide  }[] {
-    const result: { id: number, position: IPoint, side: EFConnectableSide  }[] = [];
+  private _generateNodes(
+    nodeCount: number,
+    spacing: number = 10,
+  ): { id: number; position: IPoint; side: EFConnectableSide }[] {
+    const result: { id: number; position: IPoint; side: EFConnectableSide }[] = [];
 
     const nodeSize = 100;
     const baseRadius = 150;
 
-    const sides: EFConnectableSide[] = [EFConnectableSide.BOTTOM, EFConnectableSide.LEFT, EFConnectableSide.TOP, EFConnectableSide.RIGHT];
+    const sides: EFConnectableSide[] = [
+      EFConnectableSide.BOTTOM,
+      EFConnectableSide.LEFT,
+      EFConnectableSide.TOP,
+      EFConnectableSide.RIGHT,
+    ];
     const nodesPerSide = Math.ceil(nodeCount / 4);
 
     for (let i = 0; i < nodeCount; i++) {
@@ -79,24 +85,32 @@ export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit
 
       switch (side) {
         case EFConnectableSide.BOTTOM:
-          x = (i % nodesPerSide) * (nodeSize + spacing) - (nodesPerSide - 1) * (nodeSize + spacing) / 2;
+          x =
+            (i % nodesPerSide) * (nodeSize + spacing) -
+            ((nodesPerSide - 1) * (nodeSize + spacing)) / 2;
           y = -radius;
           break;
         case EFConnectableSide.LEFT:
           x = radius;
-          y = (i % nodesPerSide) * (nodeSize + spacing) - (nodesPerSide - 1) * (nodeSize + spacing) / 2;
+          y =
+            (i % nodesPerSide) * (nodeSize + spacing) -
+            ((nodesPerSide - 1) * (nodeSize + spacing)) / 2;
           break;
         case EFConnectableSide.TOP:
-          x = (i % nodesPerSide) * (nodeSize + spacing) - (nodesPerSide - 1) * (nodeSize + spacing) / 2;
+          x =
+            (i % nodesPerSide) * (nodeSize + spacing) -
+            ((nodesPerSide - 1) * (nodeSize + spacing)) / 2;
           y = radius;
           break;
         case EFConnectableSide.RIGHT:
           x = -radius;
-          y = (i % nodesPerSide) * (nodeSize + spacing) - (nodesPerSide - 1) * (nodeSize + spacing) / 2;
+          y =
+            (i % nodesPerSide) * (nodeSize + spacing) -
+            ((nodesPerSide - 1) * (nodeSize + spacing)) / 2;
           break;
       }
 
-      result.push({ id: i + 1, position: { x, y }, side: side });
+      result.push({ id: i + 1, position: { x, y }, side });
     }
 
     return result;

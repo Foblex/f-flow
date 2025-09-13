@@ -1,13 +1,16 @@
 @if (columns) {
-  <f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-flow fDraggable (fLoaded)="loaded()">
     <f-canvas fZoom>
       @for (column of columns; track column; let cIndex = $index) {
-          <div fNode *ngFor="let node of column; let rIndex = index"
-               [fNodePosition]="{ x: 120 * cIndex, y: rIndex * 120 }" fDragHandle>
-            Node
-          </div>
+        <div
+          fNode
+          *ngFor="let node of column; let rIndex = index"
+          [fNodePosition]="{ x: 120 * cIndex, y: rIndex * 120 }"
+          fDragHandle
+        >
+          Node
+        </div>
       }
     </f-canvas>
   </f-flow>
 }
-
