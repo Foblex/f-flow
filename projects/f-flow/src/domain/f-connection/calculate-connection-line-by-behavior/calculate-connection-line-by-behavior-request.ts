@@ -6,11 +6,10 @@ export class CalculateConnectionLineByBehaviorRequest {
   static readonly fToken = Symbol('CalculateConnectionLineByBehaviorRequest');
 
   constructor(
-    public outputRect: IRoundedRect,
-    public inputRect: IRoundedRect,
+    public sourceRect: IRoundedRect,
+    public targetRect: IRoundedRect,
     public behavior: EFConnectionBehavior | string,
-    public outputSide: EFConnectableSide,
-    public inputSide: EFConnectableSide,
-  ) {
-  }
+    public sourceConnectableSide: EFConnectableSide,
+    public targetConnectableSide: EFConnectableSide,
+  ) {}
 }

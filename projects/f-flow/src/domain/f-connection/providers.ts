@@ -8,13 +8,12 @@ import { RemoveSnapConnectionFromStoreExecution } from './remove-snap-connection
 import { AddConnectionMarkerToStoreExecution } from './add-connection-marker-to-store';
 import { RemoveConnectionMarkerFromStoreExecution } from './remove-connection-marker-from-store';
 import { RedrawConnectionsExecution } from './redraw-connections';
-import { CalculateConnectionLineByBehaviorExecution } from './calculate-connection-line-by-behavior';
+import { CalculateConnectionLineByBehavior } from './calculate-connection-line-by-behavior';
 
 /**
  * This file exports all the connection-related features for the F-Flow domain.
  */
 export const F_CONNECTION_FEATURES = [
-
   AddConnectionForCreateToStoreExecution,
 
   AddConnectionMarkerToStoreExecution,
@@ -25,7 +24,7 @@ export const F_CONNECTION_FEATURES = [
 
   CreateConnectionMarkersExecution,
 
-  CalculateConnectionLineByBehaviorExecution,
+  CalculateConnectionLineByBehavior,
 
   RedrawConnectionsExecution,
 

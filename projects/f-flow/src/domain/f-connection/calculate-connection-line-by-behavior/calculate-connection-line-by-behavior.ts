@@ -1,4 +1,4 @@
-import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
+import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior-request';
 import { Injectable } from '@angular/core';
 import { EFConnectionBehavior } from '../../../f-connection';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
@@ -12,20 +12,18 @@ import { fixedOutboundBehavior } from './fixed-outbound-behavior';
  */
 @Injectable()
 @FExecutionRegister(CalculateConnectionLineByBehaviorRequest)
-export class CalculateConnectionLineByBehaviorExecution
-  implements IExecution<CalculateConnectionLineByBehaviorRequest, ILine> {
-
+export class CalculateConnectionLineByBehavior
+  implements IExecution<CalculateConnectionLineByBehaviorRequest, ILine>
+{
   private _handlers = {
+    [EFConnectionBehavior.FLOATING.toString()]: floatingBehavior,
 
-    [ EFConnectionBehavior.FLOATING.toString() ]: floatingBehavior,
+    [EFConnectionBehavior.FIXED_CENTER.toString()]: fixedCenterBehavior,
 
-    [ EFConnectionBehavior.FIXED_CENTER.toString() ]: fixedCenterBehavior,
-
-    [ EFConnectionBehavior.FIXED.toString() ]: fixedOutboundBehavior,
-  }
+    [EFConnectionBehavior.FIXED.toString()]: fixedOutboundBehavior,
+  };
 
   public handle(payload: CalculateConnectionLineByBehaviorRequest): ILine {
-    return this._handlers[ payload.behavior ](payload);
+    return this._handlers[payload.behavior](payload);
   }
 }
-
