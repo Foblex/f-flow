@@ -28,7 +28,7 @@ let uniqueId = 0;
     '[attr.data-f-input-id]': 'fId()',
     class: 'f-component f-node-input',
     '[class.f-node-input-multiple]': 'multiple',
-    '[class.f-node-input-disabled]': 'disabled',
+    '[class.f-node-input-disabled]': 'disabled()',
   },
   providers: [{ provide: F_NODE_INPUT, useExisting: FNodeInputDirective }],
 })
@@ -43,11 +43,19 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
     transform: (value) => stringAttribute(value) || `f-node-input-${uniqueId++}`,
   });
 
-  @Input('fInputMultiple')
-  public override multiple: boolean = true;
+  public override fType = input<string | undefined, unknown>(undefined, {
+    transform: stringAttribute,
+  });
 
-  @Input({ alias: 'fInputDisabled', transform: booleanAttribute })
-  public override disabled: boolean = false;
+  public override multiple = input<boolean, unknown>(true, {
+    alias: 'fInputMultiple',
+    transform: booleanAttribute,
+  });
+
+  public override disabled = input<boolean, unknown>(false, {
+    alias: 'fInputDisabled',
+    transform: booleanAttribute,
+  });
 
   @Input({
     alias: 'fInputConnectableSide',

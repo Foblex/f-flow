@@ -10,7 +10,7 @@ export abstract class FNodeOutletBase extends FConnectorBase {
   private _outputs: FConnectorBase[] = [];
 
   public get canBeConnected(): boolean {
-    return !this.disabled && this._outputs.some((output) => output.canBeConnected);
+    return !this.disabled() && this._outputs.some((output) => output.canBeConnected);
   }
 
   public abstract canBeConnectedInputs: string[];

@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  signal,
 } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE } from '../../f-node';
@@ -23,7 +24,7 @@ let uniqueId = 0;
   host: {
     '[attr.data-f-outlet-id]': 'fId()',
     class: 'f-component f-node-outlet',
-    '[class.f-node-outlet-disabled]': 'disabled',
+    '[class.f-node-outlet-disabled]': 'disabled()',
   },
   providers: [{ provide: F_NODE_OUTLET, useExisting: FNodeOutletDirective }],
 })
@@ -38,8 +39,12 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
     transform: (value) => stringAttribute(value) || `f-node-outlet-${uniqueId++}`,
   });
 
-  @Input({ alias: 'fOutletDisabled', transform: booleanAttribute })
-  public override disabled: boolean = false;
+  public override fType = signal(undefined);
+
+  public override disabled = input<boolean, unknown>(false, {
+    alias: 'fOutletDisabled',
+    transform: booleanAttribute,
+  });
 
   public override fConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 

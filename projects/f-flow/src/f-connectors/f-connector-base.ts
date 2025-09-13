@@ -5,9 +5,11 @@ import { Signal } from '@angular/core';
 export abstract class FConnectorBase implements IHasHostElement {
   public abstract fId: Signal<string>;
 
+  public abstract fType: Signal<string | undefined>;
+
   public abstract fNodeId: string;
 
-  public abstract disabled: boolean;
+  public abstract disabled: Signal<boolean>;
 
   public abstract hostElement: HTMLElement | SVGElement;
 

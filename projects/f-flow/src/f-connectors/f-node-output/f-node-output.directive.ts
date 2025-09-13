@@ -8,6 +8,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  signal,
   SimpleChanges,
 } from '@angular/core';
 import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
@@ -28,7 +29,7 @@ let uniqueId = 0;
     '[attr.data-f-output-id]': 'fId()',
     class: 'f-component f-node-output',
     '[class.f-node-output-multiple]': 'multiple',
-    '[class.f-node-output-disabled]': 'disabled',
+    '[class.f-node-output-disabled]': 'disabled()',
     '[class.f-node-output-self-connectable]': 'isSelfConnectable',
   },
   providers: [{ provide: F_NODE_OUTPUT, useExisting: FNodeOutputDirective }],
@@ -44,11 +45,17 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     transform: (value) => stringAttribute(value) || `f-node-output-${uniqueId++}`,
   });
 
-  @Input('fOutputMultiple')
-  public override multiple: boolean = false;
+  public override fType = signal(undefined);
 
-  @Input({ alias: 'fOutputDisabled', transform: booleanAttribute })
-  public override disabled: boolean = false;
+  public override multiple = input<boolean, unknown>(false, {
+    alias: 'fOutputMultiple',
+    transform: booleanAttribute,
+  });
+
+  public override disabled = input<boolean, unknown>(false, {
+    alias: 'fOutputDisabled',
+    transform: booleanAttribute,
+  });
 
   @Input({
     alias: 'fOutputConnectableSide',
