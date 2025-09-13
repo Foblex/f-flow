@@ -65,7 +65,7 @@
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>Number</mat-label>
     <mat-select [(value)]="count" (selectionChange)="onSelectionChange($event)">
       @for (option of counts; track option) {
@@ -73,7 +73,7 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>Behavior</mat-label>
     <mat-select [(value)]="behavior">
       @for (option of behaviors; track option) {
@@ -81,7 +81,7 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>Select Background</mat-label>
     <mat-select [(value)]="type">
       @for (option of types; track option) {

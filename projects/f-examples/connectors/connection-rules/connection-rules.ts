@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'connection-rules',
@@ -7,12 +10,18 @@ import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/f
   templateUrl: './connection-rules.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule],
+  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect],
 })
 export class ConnectionRules {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
   protected readonly connections = signal<{ from: string; to: string }[]>([]);
+
+  protected readonly categories = signal(['A', 'B', 'C']);
+  protected readonly category = model('A');
+
+  protected readonly inputs = signal(['input1', 'input2', 'input3']);
+  protected readonly input = model('input1');
 
   protected loaded(): void {
     this._canvas()?.resetScaleAndCenter(false);

@@ -17,7 +17,7 @@
       [fNodePosition]="{ x: 0, y: 150 }"
       fNodeOutput
       [fOutputMultiple]="true"
-      [fCanBeConnectedInputs]="['input1', 'input3']"
+      [fCanBeConnectedInputs]="[category(), input()]"
     >
       Node
     </div>
@@ -54,5 +54,21 @@
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
+  <mat-form-field>
+    <mat-label>Can be connected to Input</mat-label>
+    <mat-select [(value)]="input">
+      @for (option of inputs(); track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Can be connected to Category</mat-label>
+    <mat-select [(value)]="category">
+      @for (option of categories(); track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <button class="f-button" (click)="deleteConnections()">Delete Connections</button>
 </div>

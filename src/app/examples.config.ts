@@ -543,14 +543,19 @@ function connectorGroup() {
     {
       link: 'connection-rules',
       text: 'Connection Rules',
+      pageTitle: 'Connection Rules in Angular Flow Diagrams',
       description:
-        'Check if nodes can connect using rules and callbacks. Clear feedback and guard logic for Angular diagrams.',
+        'Learn how to restrict and validate connections between nodes in Angular flow diagrams with Foblex Flow using IDs, categories, and visual feedback.',
       image: './previews/examples/connection-rules.light.png',
       image_dark: './previews/examples/connection-rules.dark.png',
-      image_width: 726,
-      image_height: 600,
+      image_width: 1607,
+      image_height: 1200,
       image_type: 'image/png',
-      date: new Date('2025-01-25 15:04:46'),
+      date: new Date('2025-09-13 15:04:46'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'connectable-side',

@@ -34,7 +34,7 @@
 /examples/connector-inside-node
 /examples/connector-outlet
 /examples/limiting-connections
-/examples/connectability-check
+/examples/connection-rules
 /examples/connectable-side
 
 /examples/drag-to-connect
@@ -71,3 +71,5 @@
 /examples/f-db-management-flow
 /examples/uml-diagram-example
 /examples/tournament-bracket
+
+/showcase/overview
