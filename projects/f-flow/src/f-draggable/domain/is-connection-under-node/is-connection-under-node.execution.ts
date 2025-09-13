@@ -55,7 +55,7 @@ export class IsConnectionUnderNodeExecution
     const connectorsId = this._getConnectorsId(connectors);
 
     return this._store.fConnections
-      .filter((x) => connectorsId.includes(x.fOutputId))
+      .filter((x) => connectorsId.includes(x.fOutputId()))
       .map((x) => x.fId());
   }
 
@@ -63,7 +63,7 @@ export class IsConnectionUnderNodeExecution
     const connectorsId = this._getConnectorsId(connectors);
 
     return this._store.fConnections
-      .filter((x) => connectorsId.includes(x.fInputId))
+      .filter((x) => connectorsId.includes(x.fInputId()))
       .map((x) => x.fId());
   }
 

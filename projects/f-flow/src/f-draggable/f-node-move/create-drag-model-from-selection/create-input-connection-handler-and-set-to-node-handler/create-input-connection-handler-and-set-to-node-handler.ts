@@ -31,7 +31,7 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
   private _getInputConnections(nodeOrGroup: FNodeBase): FConnectionBase[] {
     const ids = new Set(this._getNodeInputIds(nodeOrGroup));
 
-    return this._connections.filter((x) => ids.has(x.fInputId));
+    return this._connections.filter((x) => ids.has(x.fInputId()));
   }
 
   private _getNodeInputIds(nodeOrGroup: FNodeBase): string[] {
@@ -67,7 +67,7 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
     connection: FConnectionBase,
   ): BaseConnectionDragHandler {
     let result: BaseConnectionDragHandler | undefined;
-    if (outputIds.includes(connection.fOutputId)) {
+    if (outputIds.includes(connection.fOutputId())) {
       result = new SourceTargetConnectionDragHandler(this._injector, connection);
     } else {
       result = new TargetConnectionDragHandler(this._injector, connection);

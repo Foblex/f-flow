@@ -68,7 +68,7 @@ export class FReassignTargetDragHandler implements IFReassignHandler {
     if (!snapConnection) {
       return;
     }
-    snapConnection.fOutputId = this._connection.fOutputId;
+    snapConnection.fOutputId.set(this._connection.fOutputId());
     snapConnection.initialize();
   }
 

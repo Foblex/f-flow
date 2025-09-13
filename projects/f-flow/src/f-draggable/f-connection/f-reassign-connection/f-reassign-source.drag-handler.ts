@@ -70,7 +70,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     if (!snapConnection) {
       return;
     }
-    snapConnection.fInputId = this._connection.fInputId;
+    snapConnection.fInputId.set(this._connection.fInputId());
     snapConnection.initialize();
   }
 

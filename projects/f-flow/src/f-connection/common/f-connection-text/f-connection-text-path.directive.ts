@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Inject, OnInit } from '@angular/core';
+import { Directive, ElementRef, inject, OnInit } from '@angular/core';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
 import { F_CONNECTION } from '../f-connection.injection-token';
 import { IHasConnectionText } from '../i-has-connection-text';
@@ -13,30 +13,22 @@ import { IHasHostElement } from '../../../i-has-host-element';
   },
 })
 export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
+  public readonly hostElement = inject(ElementRef<SVGTextPathElement>).nativeElement;
+  private readonly _base = inject(F_CONNECTION) as IHasConnectionText & IHasConnectionFromTo;
+  private readonly _browser = inject(BrowserService);
 
   public get linkToConnection(): string {
     return F_CONNECTION_IDENTIFIERS.linkToConnection(
-      this.base.fId() + this.base.fOutputId + this.base.fInputId,
+      this._base.fId() + this._base.fOutputId() + this._base.fInputId(),
     );
-  }
-
-  public get hostElement(): SVGTextPathElement {
-    return this.elementReference.nativeElement;
   }
 
   public symbolWidth: number = 8;
   public fontSize: string = '12px';
 
-  constructor(
-      private elementReference: ElementRef<SVGTextPathElement>,
-      @Inject(F_CONNECTION) private base: IHasConnectionText & IHasConnectionFromTo,
-      private fBrowser: BrowserService,
-  ) {
-  }
-
   public ngOnInit(): void {
     this.hostElement.setAttribute('text-anchor', `middle`);
-    this.symbolWidth = this.getSymbolWidth(this.base.fText || '');
+    this.symbolWidth = this._getSymbolWidth(this._base.fText || '');
   }
 
   public getBBox(): DOMRect {
@@ -44,11 +36,11 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
   }
 
   public redraw(): void {
-    this.hostElement.setAttribute('startOffset', this.base.fTextStartOffset || '50%');
+    this.hostElement.setAttribute('startOffset', this._base.fTextStartOffset || '50%');
   }
 
-  private getFontStyles(element: SVGTextPathElement): { fontSize: string, fontFamily: string } {
-    const computedStyles = this.fBrowser.window.getComputedStyle(element);
+  private _getFontStyles(element: SVGTextPathElement): { fontSize: string; fontFamily: string } {
+    const computedStyles = this._browser.window.getComputedStyle(element);
 
     return {
       fontSize: computedStyles.fontSize,
@@ -56,15 +48,16 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
     };
   }
 
-  private getSymbolWidth(name: string): number {
+  private _getSymbolWidth(name: string): number {
     const text = name || 'connection';
-    const { fontFamily, fontSize } = this.getFontStyles(this.hostElement);
+    const { fontFamily, fontSize } = this._getFontStyles(this.hostElement);
     this.fontSize = fontSize || '12px';
-    const canvas = this.fBrowser.document.createElement('canvas');
+    const canvas = this._browser.document.createElement('canvas');
     let context;
 
     try {
       context = canvas.getContext('2d');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       context = null;
     }
@@ -72,7 +65,7 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
       return 0;
     }
 
-    context.font = `${ fontSize } ${ fontFamily }`;
+    context.font = `${fontSize} ${fontFamily}`;
 
     const metrics = context.measureText(text);
     const symbolWidth = metrics.width / text.length;
@@ -80,4 +73,3 @@ export class FConnectionTextPathDirective implements IHasHostElement, OnInit {
     return symbolWidth;
   }
 }
-

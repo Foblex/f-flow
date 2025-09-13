@@ -95,7 +95,11 @@ export class FNodeRotatePreparationExecution
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(this._fNode!))
       .map((x: FConnectionBase) => {
-        const connector = this._store.fInputs.find((y) => y.fId() === x.fInputId)!.hostElement;
+        const connector = this._store.fInputs.find((y) => y.fId() === x.fInputId())?.hostElement;
+
+        if (!connector) {
+          throw new Error(`Connector with id ${x.fInputId()} not found`);
+        }
 
         return {
           connection: new TargetConnectionDragHandler(this._injector, x),
@@ -112,7 +116,11 @@ export class FNodeRotatePreparationExecution
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(this._fNode!))
       .map((x: FConnectionBase) => {
-        const connector = this._store.fOutputs.find((y) => y.fId() === x.fOutputId)!.hostElement;
+        const connector = this._store.fOutputs.find((y) => y.fId() === x.fOutputId())?.hostElement;
+
+        if (!connector) {
+          throw new Error(`Connector with id ${x.fOutputId()} not found`);
+        }
 
         return {
           connection: new SourceConnectionDragHandler(this._injector, x),

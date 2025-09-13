@@ -18,7 +18,7 @@ export class BaseConnectionDragHandler {
   private _fInputWithRect!: IConnectorAndRect;
 
   private get _fOutput(): FConnectorBase {
-    const result = this._store.fOutputs.find((x) => x.fId() === this.fConnection.fOutputId);
+    const result = this._store.fOutputs.find((x) => x.fId() === this.fConnection.fOutputId());
     if (!result) {
       throw new Error(
         this._connectorNotFoundPrefix(`fOutput with id ${this.fConnection.fOutputId} not found`),
@@ -29,7 +29,7 @@ export class BaseConnectionDragHandler {
   }
 
   private get _fInput(): FConnectorBase {
-    const result = this._store.fInputs.find((x) => x.fId() === this.fConnection.fInputId);
+    const result = this._store.fInputs.find((x) => x.fId() === this.fConnection.fInputId());
     if (!result) {
       throw new Error(
         this._connectorNotFoundPrefix(`fInput with id ${this.fConnection.fInputId} not found`),

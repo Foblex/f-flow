@@ -32,7 +32,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     }
 
     this._store.fConnections.forEach((x) => {
-      this._setupConnection(this._getOutput(x.fOutputId), this._getInput(x.fInputId), x);
+      this._setupConnection(this._getOutput(x.fOutputId()), this._getInput(x.fInputId()), x);
     });
   }
 

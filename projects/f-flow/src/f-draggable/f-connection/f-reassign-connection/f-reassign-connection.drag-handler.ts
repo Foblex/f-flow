@@ -24,7 +24,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   }
 
   private get _sourceConnector(): FNodeOutputDirective {
-    const result = this._store.fOutputs.find((x) => x.fId() === this._connection.fOutputId);
+    const result = this._store.fOutputs.find((x) => x.fId() === this._connection.fOutputId());
     if (!result) {
       throw new Error('Connection output not found');
     }
@@ -33,7 +33,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   }
 
   private get _targetConnector(): FNodeInputDirective {
-    const result = this._store.fInputs.find((x) => x.fId() === this._connection.fInputId);
+    const result = this._store.fInputs.find((x) => x.fId() === this._connection.fInputId());
     if (!result) {
       throw new Error('Connection input not found');
     }

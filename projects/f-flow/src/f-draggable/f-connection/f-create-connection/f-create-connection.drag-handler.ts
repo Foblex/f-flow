@@ -9,7 +9,7 @@ import {
   MarkConnectableConnectorsRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
-import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
+import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../../../f-connection';
 import { EFConnectableSide, FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -34,8 +34,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private readonly _toConnectorRect = new RoundedRect();
 
-  private get _connection(): FConnectionBase {
-    return this._store.fTempConnection!;
+  private get _connection(): FConnectionForCreateComponent {
+    return this._store.fTempConnection as FConnectionForCreateComponent;
   }
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
@@ -96,12 +96,12 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     if (!this._snapConnection) {
       return;
     }
-    this._snapConnection.fOutputId = this._fOutputOrOutlet.fId();
+    this._snapConnection.fOutputId.set(this._fOutputOrOutlet.fId());
     this._snapConnection.initialize();
   }
 
   private _initializeConnectionForCreate(): void {
-    this._connection.fOutputId = this._fOutputOrOutlet.fId();
+    this._connection.fOutputId.set(this._fOutputOrOutlet.fId());
     this._connection.initialize();
   }
 

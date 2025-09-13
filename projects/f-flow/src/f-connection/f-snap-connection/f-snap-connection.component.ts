@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   inject,
   Input,
   numberAttribute,
@@ -10,32 +9,35 @@ import {
   OnDestroy,
   OnInit,
   signal,
-} from "@angular/core";
+} from '@angular/core';
 import { EFConnectionBehavior } from '../common';
 import { EFConnectionType } from '../common';
-import { FConnectionFactory } from '../f-connection-builder';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddSnapConnectionToStoreRequest, RemoveSnapConnectionFromStoreRequest } from '../../domain';
+import {
+  AddSnapConnectionToStoreRequest,
+  RemoveSnapConnectionFromStoreRequest,
+} from '../../domain';
 
 let uniqueId = 0;
 
 @Component({
-  selector: "f-snap-connection",
-  templateUrl: "./f-snap-connection.component.html",
-  styleUrls: ["./f-snap-connection.component.scss"],
+  selector: 'f-snap-connection',
+  templateUrl: './f-snap-connection.component.html',
+  styleUrls: ['./f-snap-connection.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: "f-component f-connection f-snap-connection",
+    class: 'f-component f-connection f-snap-connection',
   },
   providers: [{ provide: F_CONNECTION, useExisting: FSnapConnectionComponent }],
 })
 export class FSnapConnectionComponent
-  extends FConnectionBase implements AfterViewInit, OnInit, OnChanges, OnDestroy {
-
+  extends FConnectionBase
+  implements AfterViewInit, OnInit, OnChanges, OnDestroy
+{
   public override fId = signal<string>(`f-snap-connection-${uniqueId++}`);
 
   public override fText: string = '';
@@ -45,9 +47,9 @@ export class FSnapConnectionComponent
   @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
 
-  public override fOutputId!: string;
+  public override fOutputId = signal('');
 
-  public override fInputId!: string;
+  public override fInputId = signal('');
 
   @Input({ transform: numberAttribute })
   public override fRadius: number = 8;
@@ -66,13 +68,6 @@ export class FSnapConnectionComponent
   }
 
   private readonly _mediator = inject(FMediator);
-
-  constructor(
-    elementReference: ElementRef<HTMLElement>,
-    fConnectionFactory: FConnectionFactory,
-  ) {
-    super(elementReference, fConnectionFactory);
-  }
 
   public ngOnInit(): void {
     this._mediator.execute(new AddSnapConnectionToStoreRequest(this));

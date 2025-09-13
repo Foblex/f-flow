@@ -24,6 +24,6 @@ export class CalculateInputConnections
   }
 
   private _calculateConnections(ids: Set<string>): FConnectionBase[] {
-    return this._store.fConnections.filter((x) => ids.has(x.fInputId));
+    return this._store.fConnections.filter((x) => ids.has(x.fInputId()));
   }
 }

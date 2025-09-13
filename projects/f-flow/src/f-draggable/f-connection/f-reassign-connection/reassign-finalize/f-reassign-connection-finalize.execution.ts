@@ -68,9 +68,9 @@ export class FReassignConnectionFinalizeExecution
 
   private _isReassignToDifferentConnector(fConnector: FConnectorBase): boolean {
     if (!this._dragResult.getData().isTargetDragHandle) {
-      return this._dragResult.getData().fConnection.fInputId !== fConnector.fId();
+      return this._dragResult.getData().fConnection.fInputId() !== fConnector.fId();
     } else {
-      return this._dragResult.getData().fConnection.fOutputId !== fConnector.fId();
+      return this._dragResult.getData().fConnection.fOutputId() !== fConnector.fId();
     }
   }
 
@@ -90,9 +90,9 @@ export class FReassignConnectionFinalizeExecution
       fConnection.fId(),
       !isTargetDragHandle,
       isTargetDragHandle,
-      fConnection.fOutputId,
+      fConnection.fOutputId(),
       !isTargetDragHandle ? fConnector?.fId() : undefined,
-      fConnection.fInputId,
+      fConnection.fInputId(),
       isTargetDragHandle ? fConnector?.fId() : undefined,
       event.getPosition(),
     );
