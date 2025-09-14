@@ -1,12 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  model,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowComponent, FFlowModule } from '@foblex/flow';
-import * as dagre from "dagre";
+import * as dagre from 'dagre';
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { graphlib } from 'dagre';
 import Graph = graphlib.Graph;
 import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
 import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface INodeViewModel {
   id: string;
@@ -21,31 +29,23 @@ interface IConnectionViewModel {
 }
 
 @Component({
-  selector: 'dagre-layout-example',
-  styleUrls: [ './dagre-layout-example.component.scss' ],
-  templateUrl: './dagre-layout-example.component.html',
+  selector: 'dagre-layout',
+  styleUrls: ['./dagre-layout.scss'],
+  templateUrl: './dagre-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FCheckboxComponent,
-    NgClass
-  ]
+  imports: [FFlowModule, FCheckboxComponent, NgClass, FormsModule],
 })
-export class DagreLayoutExampleComponent implements OnInit {
+export class DagreLayout implements OnInit {
+  private readonly _flow = viewChild(FFlowComponent);
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  protected nodes: INodeViewModel[] = [];
-  protected connections: IConnectionViewModel[] = [];
+  protected nodes = signal<INodeViewModel[]>([]);
+  protected connections = signal<IConnectionViewModel[]>([]);
 
-  protected configuration = CONFIGURATION[ Direction.TOP_TO_BOTTOM ];
+  protected configuration = signal(CONFIGURATION[Direction.TOP_TO_BOTTOM]);
 
-  @ViewChild(FFlowComponent, { static: true })
-  protected fFlowComponent!: FFlowComponent;
-
-  @ViewChild(FCanvasComponent, { static: true })
-  protected fCanvasComponent!: FCanvasComponent;
-
-  protected isAutoLayout: boolean = true;
+  protected isAutoLayout = model(true);
 
   public ngOnInit(): void {
     this._getData(new dagre.graphlib.Graph(), Direction.TOP_TO_BOTTOM);
@@ -56,19 +56,19 @@ export class DagreLayoutExampleComponent implements OnInit {
   }
 
   private _getData(graph: Graph, direction: Direction): void {
-    if (this.isAutoLayout) {
-      this.fFlowComponent.reset();
+    if (this.isAutoLayout()) {
+      this._flow()?.reset();
       // if auto layout is disabled, onLoaded will be called only after the first rendering of the flow
     }
-    this._setGraph(graph, direction);
-    this.nodes = this._getNodes(graph);
-    this.connections = this.getConnections(graph);
+    this._updateGraph(graph, direction);
+    this.nodes.set(this._calculateNodes(graph));
+    this.connections.set(this._calculateConnections(graph));
   }
 
-  private _setGraph(graph: Graph, direction: Direction): void {
-    this.configuration = CONFIGURATION[ direction ];
+  private _updateGraph(graph: Graph, direction: Direction): void {
+    this.configuration.set(CONFIGURATION[direction]);
     graph.setGraph({ rankdir: direction });
-    GRAPH_DATA.forEach(node => {
+    GRAPH_DATA.forEach((node) => {
       graph.setNode(node.id, { width: 120, height: 73 });
       if (node.parentId != null) {
         graph.setEdge(node.parentId, node.id, {});
@@ -77,18 +77,19 @@ export class DagreLayoutExampleComponent implements OnInit {
     dagre.layout(graph);
   }
 
-  private _getNodes(graph: Graph): INodeViewModel[] {
+  private _calculateNodes(graph: Graph): INodeViewModel[] {
     return graph.nodes().map((x) => {
-      let node = graph.node(x);
+      const node = graph.node(x);
+
       return {
         id: generateGuid(),
         connectorId: x,
-        position: { x: node.x, y: node.y }
-      }
+        position: { x: node.x, y: node.y },
+      };
     });
   }
 
-  private getConnections(graph: Graph): IConnectionViewModel[] {
+  private _calculateConnections(graph: Graph): IConnectionViewModel[] {
     return graph.edges().map((x) => ({ id: generateGuid(), from: x.v, to: x.w }));
   }
 
@@ -101,28 +102,28 @@ export class DagreLayoutExampleComponent implements OnInit {
   }
 
   protected fitToScreen(): void {
-    this.fCanvasComponent.fitToScreen(PointExtensions.initialize(50, 50), false);
+    this._canvas()?.fitToScreen(PointExtensions.initialize(50, 50), false);
   }
 
-  protected onAutoLayoutChange(checked: boolean): void {
-    this.isAutoLayout = checked;
+  protected autoLayoutChanged(): void {
+    this.isAutoLayout.update((x) => !x);
   }
 }
 
 enum Direction {
   LEFT_TO_RIGHT = 'LR',
-  TOP_TO_BOTTOM = 'TB'
+  TOP_TO_BOTTOM = 'TB',
 }
 
 const CONFIGURATION = {
-  [ Direction.LEFT_TO_RIGHT ]: {
+  [Direction.LEFT_TO_RIGHT]: {
     outputSide: EFConnectableSide.RIGHT,
-    inputSide: EFConnectableSide.LEFT
+    inputSide: EFConnectableSide.LEFT,
   },
-  [ Direction.TOP_TO_BOTTOM ]: {
+  [Direction.TOP_TO_BOTTOM]: {
     outputSide: EFConnectableSide.BOTTOM,
-    inputSide: EFConnectableSide.TOP
-  }
+    inputSide: EFConnectableSide.TOP,
+  },
 };
 
 const GRAPH_DATA = [
@@ -133,5 +134,7 @@ const GRAPH_DATA = [
   { id: 'Node5', parentId: 'Node3' },
   { id: 'Node6', parentId: 'Node3' },
   { id: 'Node7', parentId: 'Node3' },
-  { id: 'Node8', parentId: 'Node2' }
+  { id: 'Node8', parentId: 'Node2' },
+  { id: 'Node9', parentId: 'Node7' },
+  { id: 'Node10', parentId: 'Node7' },
 ];

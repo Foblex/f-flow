@@ -1,4 +1,4 @@
-@use "../../flow-common";
+@use '../../flow-common';
 
 ::ng-deep f-flow {
   @include flow-common.connection;
@@ -9,4 +9,3 @@
 }
 @include flow-common.connector;
 @include flow-common.examples-toolbar;
-

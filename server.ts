@@ -34,8 +34,8 @@ export function app(): express.Express {
   server.use((req, res, next) => {
     const [pathOnly, query = ''] = req.url.split('?', 2);
     const isAsset = /\.[A-Za-z0-9]{1,8}$/.test(pathOnly); // простая проверка "есть расширение"
-    const needsPrefix = slashCanonicalPrefixes.some((p) =>
-      pathOnly === p || pathOnly.startsWith(p + '/')
+    const needsPrefix = slashCanonicalPrefixes.some(
+      (p) => pathOnly === p || pathOnly.startsWith(p + '/'),
     );
 
     if (needsPrefix && !isAsset && !pathOnly.endsWith('/')) {
@@ -44,10 +44,23 @@ export function app(): express.Express {
     next();
   });
 
-  server.get('**', express.static(browserDistFolder, {
-    maxAge: '1d',
-    index: 'index.html',
-  }));
+  server.get('/:slug', (req, res, next) => {
+    const { slug } = req.params;
+
+    if (/\.[A-Za-z0-9]{1,8}$/.test(slug)) return next();
+
+    if (!slug) return next();
+
+    return res.status(404).send('Not Found');
+  });
+
+  server.get(
+    '**',
+    express.static(browserDistFolder, {
+      maxAge: '1d',
+      index: 'index.html',
+    }),
+  );
 
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
@@ -68,7 +81,8 @@ export function app(): express.Express {
     res.status(404).send('Page not found');
   });
 
-  server.use((err: any, req: any, res: any, next: any): void => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  server.use((err: any, req: any, res: any, _next: any): void => {
     console.error('Error occurred:', err.message);
     res.status(500).send('Internal Server Error');
   });
@@ -81,6 +95,7 @@ function run(): void {
 
   const server = app();
   server.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }

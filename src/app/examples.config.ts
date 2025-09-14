@@ -197,11 +197,8 @@ export const EXAMPLES_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
-        'dagre-layout-example',
-        () =>
-          import(
-            '../../projects/f-examples/advanced/dagre-layout-example/dagre-layout-example.component'
-          ),
+        'dagre-layout',
+        () => import('../../projects/f-examples/advanced/dagre-layout/dagre-layout'),
       ),
       defineLazyComponent(
         'elkjs-layout-example',
@@ -359,11 +356,13 @@ function overviewGroup() {
     {
       link: 'overview',
       text: 'Overview',
+      pageTitle: 'Foblex Flow – Angular Flowchart & Diagram Library Examples Overview',
       description:
-        'Foblex Flow: Angular library for interactive flowcharts and graphs. See features, live demos, and how to get started quickly.',
-      image: './previews/examples/overview.png',
-      image_width: 3244,
-      image_height: 1832,
+        'Foblex Flow: Angular library for interactive flowcharts and diagrams. Explore features, live demos, and learn how to start building diagrams quickly.',
+      image: './previews/examples/examples-overview.light.png',
+      image_dark: './previews/examples/examples-overview.dark.png',
+      image_width: 1612,
+      image_height: 1392,
       image_type: 'image/png',
     },
   ]);
@@ -374,6 +373,7 @@ function nodesGroup() {
     {
       link: 'custom-nodes',
       text: 'Custom Nodes',
+      pageTitle: 'Angular Flowchart Example – Custom Nodes with Ports, Styles & Events',
       image: './previews/examples/custom-nodes.light.png',
       image_dark: './previews/examples/custom-nodes.dark.png',
       description:
@@ -386,6 +386,7 @@ function nodesGroup() {
     {
       link: 'drag-handle',
       text: 'Drag Handle',
+      pageTitle: 'Angular Diagram Example – Node Drag Handle for Precise Movement',
       image: './previews/examples/drag-handle.light.png',
       image_dark: './previews/examples/drag-handle.dark.png',
       description:
@@ -398,6 +399,7 @@ function nodesGroup() {
     {
       link: 'node-selection',
       text: 'Node Selection',
+      pageTitle: 'Angular Diagram Example – Node Selection & Multi-Select with Foblex Flow',
       description:
         'Click, box and keyboard selection for diagram nodes in Angular. Multi-select, modifiers and clean UX patterns with code.',
       image: './previews/examples/node-selection.light.png',
@@ -410,6 +412,7 @@ function nodesGroup() {
     {
       link: 'resize-handle',
       text: 'Resize Handle',
+      pageTitle: 'Angular Flowchart Example – Resizable Nodes with Handles',
       image: './previews/examples/resize-handle.light.png',
       image_dark: './previews/examples/resize-handle.dark.png',
       description:
@@ -422,6 +425,7 @@ function nodesGroup() {
     {
       link: 'rotate-handle',
       text: 'Rotate Handle',
+      pageTitle: 'Angular Diagram Example – Node Rotation Handles with Constraints',
       image: './previews/examples/rotate-handle.light.png',
       image_dark: './previews/examples/rotate-handle.dark.png',
       description:
@@ -434,6 +438,7 @@ function nodesGroup() {
     {
       link: 'grouping',
       text: 'Grouping',
+      pageTitle: 'Angular Flowchart Example – Node Grouping & Nested Structures',
       image: './previews/examples/grouping.light.png',
       image_dark: './previews/examples/grouping.dark.png',
       description:
@@ -450,6 +455,7 @@ function nodesGroup() {
     {
       link: 'drag-to-group',
       text: 'Drag to Group',
+      pageTitle: 'Angular Diagram Example – Drag Nodes into Groups with Foblex Flow',
       image: './previews/examples/drag-to-group.light.png',
       image_dark: './previews/examples/drag-to-group.dark.png',
       description:
@@ -466,6 +472,7 @@ function nodesGroup() {
     {
       link: 'stress-test',
       text: 'Stress Test',
+      pageTitle: 'Angular Diagram Performance Example – Thousands of Nodes',
       image: './previews/examples/stress-test.light.png',
       image_dark: './previews/examples/stress-test.dark.png',
       description:
@@ -478,6 +485,7 @@ function nodesGroup() {
     {
       link: 'stress-test-with-connections',
       text: 'Stress Test with Connections',
+      pageTitle: 'Angular Flowchart Performance Example – Many Connections',
       image: './previews/examples/stress-test-with-connections.light.png',
       image_dark: './previews/examples/stress-test-with-connections.dark.png',
       description:
@@ -875,14 +883,15 @@ function advancedGroup() {
     {
       link: 'dagre-layout',
       text: 'Dagre Layout (Directed Graph)',
+      pageTitle: 'Angular Dagre Graph Layout Example',
       image: './previews/examples/dagre-layout.light.png',
       image_dark: './previews/examples/dagre-layout.dark.png',
       description:
-        'Build auto-arranged directed graphs in Angular using Dagre. Step-by-step example with code, tips for large graphs, and live demo in Foblex Flow.',
-      image_width: 806,
-      image_height: 600,
+        'Interactive Angular example showing automatic graph and tree layouts with Dagre and Foblex Flow. Learn how to build directed graphs, org charts, and hierarchical diagrams with auto-arranged nodes, connections, and layout controls.',
+      image_width: 1600,
+      image_height: 1200,
       image_type: 'image/png',
-      date: new Date('2025-02-08 14:01:26'),
+      date: new Date('2025-09-14 14:01:26'),
     },
     {
       link: 'elkjs-layout',
