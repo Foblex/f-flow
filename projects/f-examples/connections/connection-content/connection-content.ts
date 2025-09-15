@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, model, signal, viewChild } from '@angular/core';
 import {
-  ConnectionContentAlign,
+  PolylineContentAlign,
   FCanvasComponent,
   FConnectionContent,
   FFlowModule,
@@ -39,19 +39,19 @@ export class ConnectionContent {
 
   protected position = model<number>(0.5);
 
-  protected aligns: KeyValue<string, ConnectionContentAlign>[] = [
-    { key: 'None', value: ConnectionContentAlign.NONE },
-    { key: 'Along', value: ConnectionContentAlign.ALONG },
+  protected aligns: KeyValue<string, PolylineContentAlign>[] = [
+    { key: 'None', value: PolylineContentAlign.NONE },
+    { key: 'Along', value: PolylineContentAlign.ALONG },
   ];
 
-  protected align = model<ConnectionContentAlign>(ConnectionContentAlign.NONE);
+  protected align = model<PolylineContentAlign>(PolylineContentAlign.NONE);
 
   protected offsets: KeyValue<string, number>[] = [
     { key: '0px', value: 0 },
-    { key: '-12px', value: -12 },
-    { key: '12px', value: 12 },
     { key: '-25px', value: -25 },
     { key: '25px', value: 25 },
+    { key: '-50px', value: -50 },
+    { key: '50px', value: 50 },
   ];
 
   protected offset = signal(0);

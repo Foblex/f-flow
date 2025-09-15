@@ -1,17 +1,8 @@
-import {
-  Directive,
-  effect,
-  ElementRef,
-  inject,
-  Injector,
-  input,
-  OnInit,
-  untracked,
-} from '@angular/core';
+import { Directive, effect, ElementRef, inject, Injector, input, OnInit, untracked } from '@angular/core';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { FMediator } from '@foblex/mediator';
-import { ConnectionContentAlign } from './models';
 import { castToEnum } from '@foblex/utils';
+import { IPolylineContent, PolylineContentAlign } from './polyline-content-engine';
 
 /**
  * Directive for placing custom user content (text, icons, buttons, etc.)
@@ -47,7 +38,7 @@ import { castToEnum } from '@foblex/utils';
     'class': 'f-connection-content',
   },
 })
-export class FConnectionContent implements OnInit {
+export class FConnectionContent implements OnInit, IPolylineContent {
   private readonly _mediator = inject(FMediator);
   private readonly _injector = inject(Injector);
 
@@ -86,8 +77,8 @@ export class FConnectionContent implements OnInit {
    * - `'none'` — no rotation (default).
    * - `'along'` — aligned along the path (tangent).
    */
-  public readonly align = input<ConnectionContentAlign, unknown>(ConnectionContentAlign.NONE, {
-    transform: (x) => castToEnum<ConnectionContentAlign>(x, 'align', ConnectionContentAlign),
+  public readonly align = input<PolylineContentAlign, unknown>(PolylineContentAlign.NONE, {
+    transform: (x) => castToEnum<PolylineContentAlign>(x, 'align', PolylineContentAlign),
   });
 
   public ngOnInit(): void {
