@@ -242,7 +242,7 @@
 
 @mixin examples-toolbar {
   .examples-toolbar {
-    width: calc(100% - 32px);
+    width: fit-content;
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;

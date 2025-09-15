@@ -190,6 +190,10 @@ export const EXAMPLES_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
+        'connection-content',
+        () => import('../../projects/f-examples/connections/connection-content/connection-content'),
+      ),
+      defineLazyComponent(
         'custom-connections',
         () =>
           import(
@@ -449,7 +453,7 @@ function nodesGroup() {
       date: new Date('2025-08-23 16:04:08'),
       badge: {
         text: 'Updated',
-        type: 'warning',
+        type: 'info',
       },
     },
     {
@@ -466,7 +470,7 @@ function nodesGroup() {
       date: new Date('2025-08-23 16:04:08'),
       badge: {
         text: 'Updated',
-        type: 'warning',
+        type: 'info',
       },
     },
     {
@@ -607,7 +611,7 @@ function connectionGroup() {
       date: new Date('2025-08-23 16:04:08'),
       badge: {
         text: 'Updated',
-        type: 'warning',
+        type: 'info',
       },
     },
     {
@@ -717,6 +721,10 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-01-31 17:16:33'),
+      badge: {
+        text: 'Deprecated',
+        type: 'danger',
+      },
     },
     {
       link: 'connection-center',
@@ -729,6 +737,26 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-01-31 18:23:26'),
+      badge: {
+        text: 'Deprecated',
+        type: 'danger',
+      },
+    },
+    {
+      link: 'connection-content',
+      text: 'Connection Content',
+      description:
+        'Place centered widgets (badges/buttons) on edges. Interaction patterns and Angular code.',
+      image: './previews/examples/connection-center.light.png',
+      image_dark: './previews/examples/connection-center.dark.png',
+      image_width: 781,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2025-01-31 18:23:26'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'custom-connections',

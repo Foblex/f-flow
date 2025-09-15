@@ -1,0 +1,17 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+
+  .f-connection-content {
+    padding: 12px;
+    background: gray;
+    border-radius: var(--node-border-radius);
+    border: 0.2px solid var(--node-border-color);
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}
+@include flow-common.examples-toolbar;

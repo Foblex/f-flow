@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, viewChild } from '@angular/core';
 import { ILine, PointExtensions } from '@foblex/2d';
 import { FConnectionTextPathDirective } from './f-connection-text-path.directive';
 import { F_CONNECTION_IDENTIFIERS } from '../f-connection-identifiers';
@@ -21,6 +21,8 @@ export class FConnectionTextComponent implements IConnectionText {
   public readonly hostElement = inject(ElementRef<SVGTextElement>).nativeElement;
   private readonly _base = inject(F_CONNECTION) as IHasConnectionText & IHasConnectionFromTo;
 
+  private readonly _textPathDirective = viewChild.required(FConnectionTextPathDirective);
+
   public get textId(): string {
     return F_CONNECTION_IDENTIFIERS.textId(
       this._base.fId() + this._base.fOutputId() + this._base.fInputId(),
@@ -31,17 +33,14 @@ export class FConnectionTextComponent implements IConnectionText {
     return this._base.fText || '';
   }
 
-  @ViewChild(FConnectionTextPathDirective, { static: true })
-  public textPathDirective!: FConnectionTextPathDirective;
-
   public redraw(line: ILine): void {
-    this.textPathDirective.redraw();
+    this._textPathDirective().redraw();
     const isTextReverse: boolean = FConnectionTextComponent._isTextReverse(line);
-    const dyValue = this._calculateDy(this.textPathDirective.fontSize, isTextReverse);
+    const dyValue = this._calculateDy(this._textPathDirective().fontSize, isTextReverse);
 
     this.hostElement.setAttribute('dy', dyValue);
 
-    const textRect = this.textPathDirective.getBBox();
+    const textRect = this._textPathDirective().getBBox();
     const textRectCenter = [textRect.x + textRect.width / 2, textRect.y + textRect.height / 2];
     this.hostElement.setAttribute(
       'transform',
@@ -50,7 +49,7 @@ export class FConnectionTextComponent implements IConnectionText {
     const startOffset = FConnectionTextComponent._getTextStartOffset(
       line,
       this._base.fText || '',
-      this.textPathDirective.symbolWidth,
+      this._textPathDirective().symbolWidth,
     );
     if (startOffset < 0) {
       this.hostElement.style.display = 'none';

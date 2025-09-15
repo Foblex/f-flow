@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" style="overflow: visible; display: block; vertical-align: middle;">
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  style="overflow: visible; display: block; vertical-align: middle;"
+>
   <defs #defs></defs>
   <ng-content></ng-content>
   <g class="f-connection-group">
@@ -18,4 +21,8 @@
   <div #fConnectionCenter class="f-connection-center">
     <ng-content select="[fConnectionCenter]"></ng-content>
   </div>
+}
+
+@if (fConnectionContents().length) {
+  <ng-content select="[fConnectionContent]"></ng-content>
 }

@@ -23,7 +23,7 @@ import {
 import { FConnectionSelectionComponent } from './f-selection';
 import { CONNECTION_TEXT, IConnectionText } from './f-connection-text';
 import { EFConnectableSide } from '../../f-connectors';
-import { FConnectionFactory } from '../f-connection-builder';
+import { FConnectionFactory, IFConnectionBuilderResponse } from '../f-connection-builder';
 import { IHasHostElement } from '../../i-has-host-element';
 import {
   ISelectable,
@@ -32,6 +32,13 @@ import {
   mixinChangeVisibility,
 } from '../../mixins';
 import { FConnectionCenterDirective } from '../f-connection-center';
+import {
+  calculateConnectionContentRotation,
+  calculatePathPointsIfEmpty,
+  FConnectionContent,
+  PathSampler,
+  sizeAlongDirection,
+} from '../f-connection-content';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
@@ -108,8 +115,14 @@ export abstract class FConnectionBase
     descendants: true,
   });
 
+  public readonly fConnectionContents = contentChildren(FConnectionContent, {
+    descendants: true,
+  });
+
   private _penultimatePoint = PointExtensions.initialize();
   private _secondPoint = PointExtensions.initialize();
+
+  private readonly _pathSampler = new PathSampler();
 
   protected constructor() {
     super(inject(ElementRef<HTMLElement>).nativeElement);
@@ -132,13 +145,58 @@ export abstract class FConnectionBase
   ): void {
     this.line = LineExtensions.initialize(point1, point2);
     const pathResult = this._getPathResult(point1, sourceSide, point2, targetSide);
+
     this.path = pathResult.path;
     this._penultimatePoint = pathResult.penultimatePoint || point1;
     this._secondPoint = pathResult.secondPoint || point2;
+
+    this._positionContents(pathResult);
+
     this.fConnectionCenter()?.nativeElement?.setAttribute(
       'style',
-      this._getTransform(pathResult.connectionCenter),
+      this._createTransformString(pathResult.connectionCenter),
     );
+  }
+
+  private _positionContents(pathResult: IFConnectionBuilderResponse): void {
+    const totalLength = this._pathSampler.calculateTotalLength(
+      pathResult.points ?? calculatePathPointsIfEmpty(this.line, pathResult),
+    );
+
+    this._contents().forEach((content) => {
+      const targetLength = content.position() * totalLength;
+
+      const { point, tangent } = this._pathSampler.getPointAtLength(content.position());
+      const normal = { x: -tangent.y, y: tangent.x };
+
+      const sizeAlong = sizeAlongDirection(content.hostElement, tangent);
+      const edgeGuard = sizeAlong / 2;
+
+      let x = point.x + normal.x * (content.offset() ?? 0);
+      let y = point.y + normal.y * (content.offset() ?? 0);
+
+      if (targetLength <= edgeGuard) {
+        const push = edgeGuard - targetLength;
+        x += tangent.x * push;
+        y += tangent.y * push;
+      } else if (totalLength - targetLength <= edgeGuard) {
+        const push = edgeGuard - (totalLength - targetLength);
+        x -= tangent.x * push;
+        y -= tangent.y * push;
+      }
+
+      content.hostElement.setAttribute(
+        'style',
+        this._createTransformString(
+          { x, y },
+          calculateConnectionContentRotation(content.align(), tangent),
+        ),
+      );
+    });
+  }
+
+  private _contents(): FConnectionContent[] {
+    return Array.from(this.fConnectionContents()?.values() ?? []);
   }
 
   private _getPathResult(
@@ -156,8 +214,8 @@ export abstract class FConnectionBase
     });
   }
 
-  private _getTransform(position: IPoint): string {
-    return `position: absolute; pointerEvents: all; transform: translate(-50%, -50%); left: ${position.x}px; top: ${position.y}px`;
+  private _createTransformString(position: IPoint, rotate: number = 0): string {
+    return `position: fixed; pointer-events: all; transform: translate(-50%, -50%) rotate(${rotate}deg); left: ${position.x}px; top: ${position.y}px`;
   }
 
   public override markChildrenAsSelected(): void {

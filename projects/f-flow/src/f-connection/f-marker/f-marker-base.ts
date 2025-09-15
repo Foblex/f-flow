@@ -1,11 +1,9 @@
-import { Directive, InjectionToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { IHasHostElement } from '../../i-has-host-element';
 
 export const F_MARKER = new InjectionToken('F_MARKER');
 
-@Directive()
 export abstract class FMarkerBase implements IHasHostElement {
-
   public abstract hostElement: HTMLElement;
 
   public abstract width: number;
