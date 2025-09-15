@@ -1,29 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FCanvasComponent,
-  FFlowModule, FZoomDirective
-} from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, OnInit, viewChild } from '@angular/core';
+import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { NgForOf } from '@angular/common';
 import { PointExtensions } from '@foblex/2d';
 
 @Component({
   selector: 'stress-test',
-  styleUrls: [ './stress-test.component.scss' ],
+  styleUrls: ['./stress-test.component.scss'],
   templateUrl: './stress-test.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    NgForOf,
-    FZoomDirective,
-  ]
+  imports: [FFlowModule, NgForOf, FZoomDirective],
 })
 export class StressTestComponent implements OnInit {
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: false })
-  public fCanvas!: FCanvasComponent;
-
-  public columns: number[][] | undefined;
+  protected columns: number[][] | undefined;
 
   public ngOnInit(): void {
     const totalNodes = 500;
@@ -31,11 +22,11 @@ export class StressTestComponent implements OnInit {
 
     const numbers = Array.from({ length: totalNodes }, (_, i) => i + 1);
     this.columns = Array.from({ length: 25 }, (_, i) =>
-      numbers.slice(i * nodesPerColumn, (i + 1) * nodesPerColumn)
+      numbers.slice(i * nodesPerColumn, (i + 1) * nodesPerColumn),
     );
   }
 
-  public onLoaded(): void {
-    this.fCanvas?.fitToScreen(PointExtensions.initialize(20, 20), false);
+  protected loaded(): void {
+    this._canvas()?.fitToScreen(PointExtensions.initialize(20, 20), false);
   }
 }

@@ -1,12 +1,13 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fReassignConnection)="reassignConnection($event)">
+<f-flow fDraggable (fLoaded)="loaded()" (fReassignConnection)="reassignConnection($event)">
   <f-canvas>
-
     @for (connection of connections(); track connection.id) {
-      <f-connection fBehavior="floating" [fReassignDisabled]="false"
-                    [fReassignableStart]="reassignableStart()"
-                    [fConnectionId]="connection.id"
-                    [fOutputId]="connection.source" [fInputId]="connection.target">
-      </f-connection>
+      <f-connection
+        fBehavior="floating"
+        [fReassignableStart]="reassignableStart()"
+        [fConnectionId]="connection.id"
+        [fOutputId]="connection.source"
+        [fInputId]="connection.target"
+      />
     }
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1">Output</div>
@@ -17,5 +18,7 @@
 </f-flow>
 
 <div class="examples-toolbar">
-  <button class="f-button" (click)="onToggleReassignStart()">Enable Reassign Start</button>
+  <f-checkbox (change)="reassignStartChange()" [checked]="reassignableStart()"
+    >Enable Reassign Start</f-checkbox
+  >
 </div>

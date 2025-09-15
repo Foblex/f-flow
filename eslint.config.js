@@ -5,7 +5,7 @@ const angular = require('angular-eslint'); // meta pkg
 module.exports = tseslint.config(
   {
     files: ['**/*.ts'],
-    ignores: ['dist/**', 'coverage/**', 'node_modules/**'],
+    ignores: ['dist/**', 'coverage/**', 'node_modules/**', 'src/**'],
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,

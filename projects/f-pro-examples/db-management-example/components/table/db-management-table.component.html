@@ -3,11 +3,13 @@
   @for (column of viewModel.columns; track column.id) {
     <db-management-table-column
       [column]="viewModel.columns[$index]"
-      [tableId]="viewModel.id" [formGroup]="getColumnForm(column.id)">
-      <mat-form-field class="db-management-control">
-        <input matInput formControlName="name">
+      [tableId]="viewModel.id"
+      [formGroup]="getColumnForm(column.id)"
+    >
+      <mat-form-field class="db-management-control" appearance="fill">
+        <input matInput formControlName="name" />
       </mat-form-field>
-      <mat-form-field class="db-management-control">
+      <mat-form-field class="db-management-control" appearance="fill">
         <mat-select formControlName="type" panelClass="db-management-control">
           @for (type of columnTypes; track type) {
             <mat-option [value]="type">{{ type }}</mat-option>
@@ -17,6 +19,3 @@
     </db-management-table-column>
   }
 </div>
-
-
-

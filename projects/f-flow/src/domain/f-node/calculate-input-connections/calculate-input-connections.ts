@@ -10,24 +10,20 @@ import { FConnectionBase } from '../../../f-connection';
  */
 @Injectable()
 @FExecutionRegister(CalculateInputConnectionsRequest)
-export class CalculateInputConnections implements IExecution<CalculateInputConnectionsRequest, FConnectionBase[]> {
-
+export class CalculateInputConnections
+  implements IExecution<CalculateInputConnectionsRequest, FConnectionBase[]>
+{
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateInputConnectionsRequest): FConnectionBase[] {
-    return this._calculateConnections(
-      new Set(this._calculateConnectors(request.fNode)),
-    );
+    return this._calculateConnections(new Set(this._calculateConnectors(request.fNode)));
   }
 
   private _calculateConnectors(fNode: FNodeBase): string[] {
-    return this._store.fInputs
-      .filter((x) => fNode.isContains(x.hostElement))
-      .map((x) => x.fId);
+    return this._store.fInputs.filter((x) => fNode.isContains(x.hostElement)).map((x) => x.fId());
   }
 
   private _calculateConnections(ids: Set<string>): FConnectionBase[] {
-    return this._store.fConnections
-      .filter((x) => ids.has(x.fInputId));
+    return this._store.fConnections.filter((x) => ids.has(x.fInputId()));
   }
 }

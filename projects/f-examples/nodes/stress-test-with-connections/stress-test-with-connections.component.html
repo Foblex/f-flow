@@ -1,53 +1,89 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas fZoom>
     @for (node of nodes; track node.position; let index = $index) {
-      <div fNode
-           [fNodePosition]="node.position" fDragHandle fNodeInput [fInputId]="node.id" [fInputConnectableSide]="node.side">
+      <div
+        fNode
+        [fNodePosition]="node.position"
+        fDragHandle
+        fNodeInput
+        [fInputId]="node.id"
+        [fInputConnectableSide]="node.side"
+      >
         Node {{ node.id }}
       </div>
     }
 
-    <div fNode class="main-node"
-         [fNodePosition]="{ x: 0, y: 0 }" fDragHandle fNodeOutput fOutputId="0">
+    <div
+      fNode
+      class="main-node"
+      [fNodePosition]="{ x: 0, y: 0 }"
+      fDragHandle
+      fNodeOutput
+      fOutputId="0"
+    >
       Move me
     </div>
 
     @for (node of nodes; track node.position; let index = $index) {
-      <f-connection [fType]="type" [fBehavior]="behavior" fOutputId="0" [fInputId]="node.id" fReassignDisabled="true" fSelectionDisabled="true">
-        <svg viewBox="0 0 700 700" fMarker [type]="eMarkerType.START" class="connection-marker"
-             [height]="5" [width]="5"
-             [refX]="2.5" [refY]="2.5" markerUnits="strokeWidth">
-          <circle cx="350" cy="350" r="350"/>
+      <f-connection
+        [fType]="type"
+        [fBehavior]="behavior"
+        fOutputId="0"
+        [fInputId]="node.id"
+        fReassignDisabled="true"
+        fSelectionDisabled="true"
+      >
+        <svg
+          viewBox="0 0 700 700"
+          fMarker
+          [type]="eMarkerType.START"
+          class="connection-marker"
+          [height]="5"
+          [width]="5"
+          [refX]="2.5"
+          [refY]="2.5"
+          markerUnits="strokeWidth"
+        >
+          <circle cx="350" cy="350" r="350" />
         </svg>
-        <svg viewBox="0 0 6 7" fMarker [type]="eMarkerType.END"  class="connection-marker"
-             [height]="7" [width]="6"
-             [refX]="5.5" [refY]="3.5" markerUnits="strokeWidth" orient="auto">
-          <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z"/>
+        <svg
+          viewBox="0 0 6 7"
+          fMarker
+          [type]="eMarkerType.END"
+          class="connection-marker"
+          [height]="7"
+          [width]="6"
+          [refX]="5.5"
+          [refY]="3.5"
+          markerUnits="strokeWidth"
+          orient="auto"
+        >
+          <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
         </svg>
       </f-connection>
     }
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <mat-form-field appearance="fill" class="f-form-field">
+  <mat-form-field>
     <mat-label>Number</mat-label>
-    <mat-select panelClass="f-select-panel" [(value)]="count" (selectionChange)="onSelectionChange($event)">
+    <mat-select [(value)]="count" (selectionChange)="onSelectionChange($event)">
       @for (option of counts; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill" class="f-form-field">
+  <mat-form-field>
     <mat-label>Behavior</mat-label>
-    <mat-select panelClass="f-select-panel" [(value)]="behavior">
+    <mat-select [(value)]="behavior">
       @for (option of behaviors; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="fill" class="f-form-field">
+  <mat-form-field>
     <mat-label>Select Background</mat-label>
-    <mat-select panelClass="f-select-panel" [(value)]="type">
+    <mat-select [(value)]="type">
       @for (option of types; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }

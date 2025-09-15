@@ -21,6 +21,7 @@ import {
   UpdateNodeWhenStateOrSizeChangedRequest,
   RemoveNodeFromStoreRequest,
 } from '../domain';
+import { stringAttribute } from '../utils';
 
 let uniqueId = 0;
 
@@ -42,7 +43,10 @@ export class FNodeDirective
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
-  public override readonly fId = input<string>(`f-node-${uniqueId++}`, { alias: 'fNodeId' });
+  public override readonly fId = input<string, unknown>(`f-node-${uniqueId++}`, {
+    alias: 'fNodeId',
+    transform: (value) => stringAttribute(value) || `f-node-${uniqueId++}`,
+  });
 
   public override readonly fParentId = input<string | null | undefined>(null, {
     alias: 'fNodeParentId',

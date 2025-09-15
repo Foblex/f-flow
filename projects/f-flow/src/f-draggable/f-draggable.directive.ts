@@ -6,14 +6,12 @@ import {
   ElementRef,
   EventEmitter,
   inject,
-  Inject,
   input,
   Input,
   NgZone,
   numberAttribute,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
   QueryList,
 } from '@angular/core';
@@ -68,7 +66,7 @@ import {
   DropToGroupPreparationRequest,
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
-import { ICanRunOutsideAngular, IPointerEvent } from '../drag-toolkit';
+import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 
 // ┌──────────────────────────────┐
@@ -131,19 +129,15 @@ export class FDraggableDirective
   extends FDraggableBase
   implements OnInit, AfterViewInit, OnDestroy
 {
-  private readonly _elementReference = inject(ElementRef);
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
-  private readonly _fResult = inject(FDragHandlerResult);
+  private readonly _result = inject(FDragHandlerResult);
   private readonly _mediator = inject(FMediator);
   private readonly _platform = inject(PlatformService);
   private readonly _browser = inject(BrowserService);
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
-
-  public override get hostElement(): HTMLElement {
-    return this._elementReference.nativeElement;
-  }
 
   @Input()
   public fMultiSelectTrigger: FEventTrigger = (event: FTriggerEvent) => {
@@ -235,11 +229,8 @@ export class FDraggableDirective
   @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
-  constructor(
-    // eslint-disable-next-line @angular-eslint/prefer-inject
-    @Inject(NgZone) @Optional() ngZone: ICanRunOutsideAngular,
-  ) {
-    super(ngZone);
+  constructor() {
+    super(inject(NgZone, { optional: true }));
   }
 
   public ngOnInit(): void {
@@ -255,7 +246,7 @@ export class FDraggableDirective
       return false;
     }
 
-    this._fResult.clear();
+    this._result.clear();
 
     this._mediator.execute<void>(new InitializeDragSequenceRequest());
 
@@ -338,7 +329,7 @@ export class FDraggableDirective
   protected override finalizeDragSequence(): void {
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
-    this._fResult.clear();
+    this._result.clear();
   }
 
   public ngOnDestroy(): void {

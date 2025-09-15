@@ -4,9 +4,7 @@
     <linearGradient fConnectionGradient></linearGradient>
     <path fConnectionSelection [attr.d]="path"></path>
     <g>
-      <path f-connection-path
-            [attr.d]="path">
-      </path>
+      <path f-connection-path [attr.d]="path"></path>
       <circle f-connection-drag-handle-start r="8"></circle>
       <circle f-connection-drag-handle-end r="8"></circle>
     </g>
@@ -20,3 +18,6 @@
   </div>
 }
 
+@if (fConnectionContents().length) {
+  <ng-content select="[fConnectionContent]"></ng-content>
+}

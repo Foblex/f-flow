@@ -6,35 +6,38 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { MoveDragHandler } from '../move-drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { CreateOutputConnectionHandlerAndSetToNodeHandlerRequest } from './create-output-connection-handler-and-set-to-node-handler';
-import {
-  CreateInputConnectionHandlerAndSetToNodeHandlerRequest,
-} from './create-input-connection-handler-and-set-to-node-handler';
-import {
-  GetDeepChildrenNodesAndGroupsRequest,
-} from '../../../domain';
+import { CreateInputConnectionHandlerAndSetToNodeHandlerRequest } from './create-input-connection-handler-and-set-to-node-handler';
+import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 import { BaseConnectionDragHandler } from '../connection-drag-handlers';
 import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
-import { BuildDragHierarchyRequest, BuildDragHierarchyResponse } from "./build-drag-hierarchy";
-import { CreateSummaryDragHandlerRequest } from "./create-summary-drag-handler";
+import { BuildDragHierarchyRequest, BuildDragHierarchyResponse } from './build-drag-hierarchy';
+import { CreateSummaryDragHandlerRequest } from './create-summary-drag-handler';
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
 @FExecutionRegister(CreateDragModelFromSelectionRequest)
 export class CreateDragModelFromSelection
-  implements IExecution<CreateDragModelFromSelectionRequest, MoveSummaryDragHandler> {
-
+  implements IExecution<CreateDragModelFromSelectionRequest, MoveSummaryDragHandler>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: CreateDragModelFromSelectionRequest): MoveSummaryDragHandler {
-    const selectedNodesAndGroups = this._collectSelectedNodesAndGroups(request.nodeWithDisabledSelection);
-    const selectedNodesAndGroupsWithChildren = this._collectSelectedAndAllChildren(selectedNodesAndGroups);
+    const selectedNodesAndGroups = this._collectSelectedNodesAndGroups(
+      request.nodeWithDisabledSelection,
+    );
+    const selectedNodesAndGroupsWithChildren =
+      this._collectSelectedAndAllChildren(selectedNodesAndGroups);
 
     const dragHierarchy = this._buildDragHierarchy(selectedNodesAndGroupsWithChildren);
 
-    this._setConnectionsHandlersToNodes(dragHierarchy.list, this._getAllOutputIds(selectedNodesAndGroupsWithChildren), this._getAllInputIds(selectedNodesAndGroupsWithChildren));
+    this._setConnectionsHandlersToNodes(
+      dragHierarchy.list,
+      this._getAllOutputIds(selectedNodesAndGroupsWithChildren),
+      this._getAllInputIds(selectedNodesAndGroupsWithChildren),
+    );
 
     return this._createSummaryDragHandler(dragHierarchy);
   }
@@ -55,8 +58,7 @@ export class CreateDragModelFromSelection
   }
 
   private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this._store.fNodes
-      .find(n => n.isContains(hostElement));
+    return this._store.fNodes.find((n) => n.isContains(hostElement));
   }
 
   private _collectSelectedAndAllChildren(selectedNodesAndGroups: FNodeBase[]): FNodeBase[] {
@@ -67,8 +69,12 @@ export class CreateDragModelFromSelection
     }, []);
   }
 
-  private _buildDragHierarchy(selectedNodesAndGroupsWithChildren: FNodeBase[]): BuildDragHierarchyResponse {
-    return this._mediator.execute(new BuildDragHierarchyRequest(selectedNodesAndGroupsWithChildren));
+  private _buildDragHierarchy(
+    selectedNodesAndGroupsWithChildren: FNodeBase[],
+  ): BuildDragHierarchyResponse {
+    return this._mediator.execute(
+      new BuildDragHierarchyRequest(selectedNodesAndGroupsWithChildren),
+    );
   }
 
   private _getChildrenNodes(fId: string): FNodeBase[] {
@@ -80,8 +86,7 @@ export class CreateDragModelFromSelection
   }
 
   private _getNodeOutputIds(fNode: FNodeBase): string[] {
-    return this._store.fOutputs.filter((x) => fNode.fId() === x.fNodeId)
-      .map((x) => x.fId);
+    return this._store.fOutputs.filter((x) => fNode.fId() === x.fNodeId).map((x) => x.fId());
   }
 
   private _getAllInputIds(fNodes: FNodeBase[]): string[] {
@@ -89,21 +94,37 @@ export class CreateDragModelFromSelection
   }
 
   private _getNodeInputIds(fNode: FNodeBase): string[] {
-    return this._store.fInputs.filter((x) => fNode.fId() === x.fNodeId)
-      .map((x) => x.fId);
+    return this._store.fInputs.filter((x) => fNode.fId() === x.fNodeId).map((x) => x.fId());
   }
 
   private _setConnectionsHandlersToNodes(
-      dragHandlers: MoveDragHandler[], outputIds: string[], inputIds: string[],
+    dragHandlers: MoveDragHandler[],
+    outputIds: string[],
+    inputIds: string[],
   ): void {
     const existingConnectionHandlers: BaseConnectionDragHandler[] = [];
     dragHandlers.forEach((x) => {
-      this._mediator.execute(new CreateOutputConnectionHandlerAndSetToNodeHandlerRequest(x, inputIds, existingConnectionHandlers));
-      this._mediator.execute(new CreateInputConnectionHandlerAndSetToNodeHandlerRequest(x, outputIds, existingConnectionHandlers));
+      this._mediator.execute(
+        new CreateOutputConnectionHandlerAndSetToNodeHandlerRequest(
+          x,
+          inputIds,
+          existingConnectionHandlers,
+        ),
+      );
+      this._mediator.execute(
+        new CreateInputConnectionHandlerAndSetToNodeHandlerRequest(
+          x,
+          outputIds,
+          existingConnectionHandlers,
+        ),
+      );
     });
   }
 
-  private _createSummaryDragHandler({ roots, list }: BuildDragHierarchyResponse): MoveSummaryDragHandler {
+  private _createSummaryDragHandler({
+    roots,
+    list,
+  }: BuildDragHierarchyResponse): MoveSummaryDragHandler {
     return this._mediator.execute(new CreateSummaryDragHandlerRequest(roots, list));
   }
 }

@@ -1,4 +1,4 @@
-import { EventEmitter, InputSignal, InputSignalWithTransform } from '@angular/core';
+import { EventEmitter, InputSignalWithTransform } from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
@@ -34,7 +34,7 @@ export abstract class FDraggableBase extends DragAndDropBase {
 
   public abstract fDragEnded: EventEmitter<void>;
 
-  protected constructor(ngZone: ICanRunOutsideAngular | undefined) {
-    super(ngZone);
+  protected constructor(ngZone: ICanRunOutsideAngular | null) {
+    super(ngZone || undefined);
   }
 }

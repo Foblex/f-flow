@@ -1,38 +1,103 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
-    <f-connection [fReassignDisabled]="true"
-                  fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment" [fTextStartOffset]="fTextStartOffset" fText="Text 1">
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="1"
+      fInputId="2"
+      fBehavior="fixed"
+      fType="segment"
+      [fTextStartOffset]="fTextStartOffset"
+      fText="Text 1"
+    >
     </f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1" fOutputConnectableSide="bottom">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 0 }"
+      fNodeOutput
+      fOutputId="1"
+      fOutputConnectableSide="bottom"
+    >
       I'm a node
     </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" fNodeInput fInputId="2" fInputConnectableSide="top">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 0 }"
+      fNodeInput
+      fInputId="2"
+      fInputConnectableSide="top"
+    >
       I'm a node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fOutputId="3" fInputId="4" fBehavior="floating" fText="Text 2" [fTextStartOffset]="fTextStartOffset">
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="3"
+      fInputId="4"
+      fBehavior="floating"
+      fText="Text 2"
+      [fTextStartOffset]="fTextStartOffset"
+    >
     </f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }" fNodeOutput fOutputId="3" fOutputConnectableSide="right">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 150 }"
+      fNodeOutput
+      fOutputId="3"
+      fOutputConnectableSide="right"
+    >
       I'm a node
     </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 150 }" fNodeInput fInputId="4" fInputConnectableSide="left">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 150 }"
+      fNodeInput
+      fInputId="4"
+      fInputConnectableSide="left"
+    >
       I'm a node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fOffset="10" fOutputId="5" fInputId="6" fType="bezier" fBehavior="fixed" fText="Text 3" [fTextStartOffset]="fTextStartOffset">
+    <f-connection
+      [fReassignDisabled]="true"
+      fOffset="10"
+      fOutputId="5"
+      fInputId="6"
+      fType="bezier"
+      fBehavior="fixed"
+      fText="Text 3"
+      [fTextStartOffset]="fTextStartOffset"
+    >
     </f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 300 }" fNodeOutput fOutputId="5" fOutputConnectableSide="bottom">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 300 }"
+      fNodeOutput
+      fOutputId="5"
+      fOutputConnectableSide="bottom"
+    >
       I'm a node
     </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 300 }" fNodeInput fInputId="6" fInputConnectableSide="top">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 300 }"
+      fNodeInput
+      fInputId="6"
+      fInputConnectableSide="top"
+    >
       I'm a node
     </div>
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <mat-form-field appearance="fill" class="f-form-field">
+  <mat-form-field>
     <mat-label>Text Offset</mat-label>
-    <mat-select panelClass="f-select-panel" [(value)]="fTextStartOffset">
+    <mat-select [(value)]="fTextStartOffset">
       @for (option of offsetOptions; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }

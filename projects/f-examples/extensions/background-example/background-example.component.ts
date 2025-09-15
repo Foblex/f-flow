@@ -6,23 +6,13 @@ import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'background-example',
-  styleUrls: [
-    '../../_mdc-controls.scss',
-    './background-example.component.scss'
-  ],
+  styleUrls: ['./background-example.component.scss'],
   templateUrl: './background-example.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelectModule
-  ]
+  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelectModule],
 })
 export class BackgroundExampleComponent {
-
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;
 

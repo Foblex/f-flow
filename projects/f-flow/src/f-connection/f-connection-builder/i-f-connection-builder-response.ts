@@ -1,7 +1,6 @@
 import { IPoint } from '@foblex/2d';
 
 export interface IFConnectionBuilderResponse {
-
   path: string;
 
   connectionCenter: IPoint;
@@ -9,4 +8,6 @@ export interface IFConnectionBuilderResponse {
   penultimatePoint: IPoint;
 
   secondPoint: IPoint;
+
+  points?: IPoint[];
 }

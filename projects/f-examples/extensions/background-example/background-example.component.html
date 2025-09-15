@@ -14,16 +14,16 @@
       <div fNodeOutput fOutputId="output1" class="right"></div>
       I'm a node
     </div>
-    <div fNode [fNodePosition]="{ x: 200, y: 0 }"  fDragHandle>
+    <div fNode [fNodePosition]="{ x: 200, y: 0 }" fDragHandle>
       <div fNodeInput fInputId="input1" class="left"></div>
       I'm a node
     </div>
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <mat-form-field appearance="fill" class="f-form-field">
+  <mat-form-field>
     <mat-label>Select Background</mat-label>
-    <mat-select panelClass="f-select-panel" [(value)]="background">
+    <mat-select [(value)]="background">
       @for (option of backgroundOptions; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }

@@ -1,0 +1,74 @@
+<f-flow fDraggable (fLoaded)="loaded()" (fCreateConnection)="createConnection($event)">
+  <f-canvas>
+    <f-connection-for-create fBehavior="floating" />
+
+    @for (connection of connections(); track connection.to) {
+    <f-connection
+      [fReassignDisabled]="true"
+      [fOutputId]="connection.from"
+      [fInputId]="connection.to"
+      fBehavior="floating"
+    />
+    }
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 150 }"
+      fNodeOutput
+      [fOutputMultiple]="true"
+      [fCanBeConnectedInputs]="[category(), input()]"
+    >
+      Node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 250, y: 0 }"
+      fNodeInput
+      fInputId="input1"
+      fInputCategory="A"
+    >
+      Node 1 Category A
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 250, y: 150 }"
+      fNodeInput
+      fInputId="input2"
+      fInputCategory="B"
+    >
+      Node 2 Category B
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 250, y: 300 }"
+      fNodeInput
+      fInputId="input3"
+      fInputCategory="C"
+    >
+      Node 3 Category C
+    </div>
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <mat-form-field>
+    <mat-label>Can be connected to Input</mat-label>
+    <mat-select [(value)]="input">
+      @for (option of inputs(); track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Can be connected to Category</mat-label>
+    <mat-select [(value)]="category">
+      @for (option of categories(); track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button class="f-button" (click)="deleteConnections()">Delete Connections</button>
+</div>

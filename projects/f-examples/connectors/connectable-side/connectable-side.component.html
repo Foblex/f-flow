@@ -1,23 +1,30 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fDraggable (fLoaded)="loaded()">
   <f-canvas>
+    <f-connection fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment"> </f-connection>
 
-    <f-connection [fReassignDisabled]="true"
-                  fOutputId="1" fInputId="2"
-                  fBehavior="fixed" fType="segment">
-    </f-connection>
-
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }"
-         fNodeOutput fOutputId="1" [fOutputConnectableSide]="outputSide">
-      I'm connector with {{ outputSide }} connectable side
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 150 }"
+      fNodeOutput
+      fOutputId="1"
+      [fOutputConnectableSide]="outputSide()"
+    >
+      I'm connector with <b>{{ outputSide() }}</b> connectable side
     </div>
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 150 }"
-         fNodeInput fInputId="2" [fInputConnectableSide]="inputSide">
-      I'm connector with {{ inputSide }} connectable side
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 150 }"
+      fNodeInput
+      fInputId="2"
+      [fInputConnectableSide]="inputSide()"
+    >
+      I'm connector with <b>{{ inputSide() }}</b> connectable side
     </div>
-
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <button class="f-button" (click)="onSwitchSides()">Switch Sides</button>
+  <button class="f-button" (click)="switchSides()">Switch Sides</button>
 </div>

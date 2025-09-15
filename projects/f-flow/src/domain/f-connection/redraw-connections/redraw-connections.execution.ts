@@ -7,7 +7,7 @@ import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
-import { GetNormalizedConnectorRectRequest } from "../../get-normalized-connector-rect";
+import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -17,11 +17,10 @@ import { GetNormalizedConnectorRectRequest } from "../../get-normalized-connecto
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)
 export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsRequest, void> {
-
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RedrawConnectionsRequest): void {
+  public handle(_request: RedrawConnectionsRequest): void {
     this._resetConnectors();
 
     if (this._store.fTempConnection) {
@@ -33,12 +32,12 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     }
 
     this._store.fConnections.forEach((x) => {
-      this._setupConnection(this._getOutput(x.fOutputId), this._getInput(x.fInputId), x);
+      this._setupConnection(this._getOutput(x.fOutputId()), this._getInput(x.fInputId()), x);
     });
   }
 
   private _getOutput(id: string): FConnectorBase {
-    const result = this._store.fOutputs.find((x) => x.fId === id)!;
+    const result = this._store.fOutputs.find((x) => x.fId() === id);
     if (!result) {
       throw new Error(`Output with id ${id} not found`);
     }
@@ -47,7 +46,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private _getInput(id: string): FConnectorBase {
-    const result = this._store.fInputs.find((x) => x.fId === id)!;
+    const result = this._store.fInputs.find((x) => x.fId() === id);
     if (!result) {
       throw new Error(`Input with id ${id} not found`);
     }
@@ -60,7 +59,11 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     this._store.fInputs.forEach((x) => x.resetConnected());
   }
 
-  private _setupConnection(fOutput: FConnectorBase, fInput: FConnectorBase, fConnection: FConnectionBase): void {
+  private _setupConnection(
+    fOutput: FConnectorBase,
+    fInput: FConnectorBase,
+    fConnection: FConnectionBase,
+  ): void {
     fOutput.setConnected(fInput);
     fInput.setConnected(fOutput);
 
@@ -74,10 +77,19 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     fConnection.isSelected() ? fConnection.markAsSelected() : null;
   }
 
-  private _getLine(output: FConnectorBase, input: FConnectorBase, connection: FConnectionBase): ILine {
-    return this._fMediator.execute(new CalculateConnectionLineByBehaviorRequest(
-        this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(output.hostElement)),
-        this._fMediator.execute<IRoundedRect>(new GetNormalizedConnectorRectRequest(input.hostElement)),
+  private _getLine(
+    output: FConnectorBase,
+    input: FConnectorBase,
+    connection: FConnectionBase,
+  ): ILine {
+    return this._mediator.execute(
+      new CalculateConnectionLineByBehaviorRequest(
+        this._mediator.execute<IRoundedRect>(
+          new GetNormalizedConnectorRectRequest(output.hostElement),
+        ),
+        this._mediator.execute<IRoundedRect>(
+          new GetNormalizedConnectorRectRequest(input.hostElement),
+        ),
         connection.fBehavior,
         output.fConnectableSide,
         input.fConnectableSide,
@@ -86,9 +98,6 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
   }
 
   private _setMarkers(connection: FConnectionBase): void {
-    this._fMediator.execute(
-      new CreateConnectionMarkersRequest(connection),
-    );
+    this._mediator.execute(new CreateConnectionMarkersRequest(connection));
   }
 }
-

@@ -10,22 +10,23 @@ import { FConnectionBase } from '../../../../f-connection';
  */
 @Injectable()
 @FExecutionRegister(GetFlowStateConnectionsRequest)
-export class GetFlowStateConnectionsExecution implements IExecution<GetFlowStateConnectionsRequest, IFFlowStateConnection[]> {
-
+export class GetFlowStateConnectionsExecution
+  implements IExecution<GetFlowStateConnectionsRequest, IFFlowStateConnection[]>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: GetFlowStateConnectionsRequest): IFFlowStateConnection[] {
+  public handle(_request: GetFlowStateConnectionsRequest): IFFlowStateConnection[] {
     return this._store.fConnections.map(this._mapToConnectionState);
   }
 
   private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {
     return {
       id: x.fId(),
-      fOutputId: x.fOutputId,
-      fInputId: x.fInputId,
+      fOutputId: x.fOutputId(),
+      fInputId: x.fInputId(),
       fType: x.fType,
       fBehavior: x.fBehavior,
       isSelected: x.isSelected(),
-    }
+    };
   }
 }

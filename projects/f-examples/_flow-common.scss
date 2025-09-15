@@ -74,7 +74,8 @@
       stroke-width: 2;
     }
 
-    .f-connection-text, .f-connection-center {
+    .f-connection-text,
+    .f-connection-center {
       fill: var(--connection-color);
       color: var(--connection-color);
     }
@@ -103,16 +104,19 @@
 
 @mixin connection-marker {
   .connection-marker {
-    circle, rect, path {
+    circle,
+    rect,
+    path {
       fill: var(--connection-color);
     }
   }
 
   .f-connection {
     &.f-selected {
-
       .connection-marker {
-        circle, rect, path {
+        circle,
+        rect,
+        path {
           fill: var(--minimap-node-selected-color);
         }
       }
@@ -137,7 +141,7 @@
     }
 
     .f-minimap-view {
-      fill: var(--minimap-view-color)
+      fill: var(--minimap-view-color);
     }
   }
 }
@@ -216,13 +220,14 @@
   }
 }
 
-
 @mixin connector {
-  .f-node-input, .f-node-output {
+  .f-node-input,
+  .f-node-output {
     &:not(.f-node) {
       @include connectors;
 
-      &.f-node-output-not-connectable, &.f-node-input-not-connectable {
+      &.f-node-output-not-connectable,
+      &.f-node-input-not-connectable {
         background-color: var(--disabled-color);
       }
     }
@@ -235,12 +240,12 @@
   }
 }
 
-
 @mixin examples-toolbar {
   .examples-toolbar {
+    width: fit-content;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 8px;
     position: absolute;

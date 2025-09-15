@@ -1,0 +1,22 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+@include flow-common.connector;
+
+.f-connections-dragging {
+  .f-node-input {
+    &:not(.f-connector-connectable) {
+      //.f-node-input-can-be-connected-to changed to .f-connector-connectable
+      background-color: var(--disabled-color);
+    }
+  }
+}
+
+@include flow-common.examples-toolbar;

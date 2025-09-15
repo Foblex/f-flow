@@ -1,12 +1,17 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
-    <f-connection [fReassignDisabled]="true"
-                  fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment">
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="1"
+      fInputId="2"
+      fBehavior="fixed"
+      fType="segment"
+    >
       <div fConnectionCenter>
         Connection Center
-        <mat-form-field appearance="fill" class="f-form-field">
+        <mat-form-field>
           <mat-label>Select</mat-label>
-          <mat-select panelClass="f-select-panel" [(value)]="value">
+          <mat-select [(value)]="value">
             @for (option of options; track option) {
               <mat-option [value]="option">{{ option }}</mat-option>
             }
@@ -14,10 +19,24 @@
         </mat-form-field>
       </div>
     </f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1" fOutputConnectableSide="bottom">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 0 }"
+      fNodeOutput
+      fOutputId="1"
+      fOutputConnectableSide="bottom"
+    >
       I'm a node
     </div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 400, y: 100 }" fNodeInput fInputId="2" fInputConnectableSide="top">
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 400, y: 100 }"
+      fNodeInput
+      fInputId="2"
+      fInputConnectableSide="top"
+    >
       I'm a node
     </div>
   </f-canvas>

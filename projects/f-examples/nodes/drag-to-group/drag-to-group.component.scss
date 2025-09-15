@@ -1,6 +1,7 @@
-@use "../../flow-common";
+@use '../../flow-common';
 
-.f-node, .f-group {
+.f-node,
+.f-group {
   @include flow-common.node;
 
   &.f-grouping-over-boundary {
@@ -35,19 +36,6 @@
 
 @include flow-common.examples-toolbar;
 
-.external-panel {
-  background-color: var(--node-background-color);
-  width: 170px;
-  border-radius: 4px;
-  padding: 4px;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .external-item {
   padding: 4px;
   min-height: 24px;
@@ -58,4 +46,3 @@
   text-align: center;
   user-select: none;
 }
-

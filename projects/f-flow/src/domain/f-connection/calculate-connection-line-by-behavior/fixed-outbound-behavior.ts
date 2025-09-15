@@ -1,5 +1,5 @@
 import { ILine, IPoint, IRect } from '@foblex/2d';
-import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior.request';
+import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior-request';
 import { EFConnectableSide } from '../../../f-connectors';
 
 /**
@@ -7,15 +7,24 @@ import { EFConnectableSide } from '../../../f-connectors';
  * It constructs a line between the specified sides of the output and input rectangles
  * @param payload
  */
-export function fixedOutboundBehavior(payload: CalculateConnectionLineByBehaviorRequest): ILine {
+export function fixedOutboundBehavior({
+  sourceRect,
+  sourceConnectableSide,
+  targetRect,
+  targetConnectableSide,
+}: CalculateConnectionLineByBehaviorRequest): ILine {
   return {
     point1: _getPosition(
-      payload.outputRect,
-      payload.outputSide === EFConnectableSide.AUTO ? EFConnectableSide.BOTTOM : payload.outputSide,
+      sourceRect,
+      sourceConnectableSide === EFConnectableSide.AUTO
+        ? EFConnectableSide.BOTTOM
+        : sourceConnectableSide,
     ),
     point2: _getPosition(
-      payload.inputRect,
-      payload.inputSide === EFConnectableSide.AUTO ? EFConnectableSide.TOP : payload.inputSide,
+      targetRect,
+      targetConnectableSide === EFConnectableSide.AUTO
+        ? EFConnectableSide.TOP
+        : targetConnectableSide,
     ),
   };
 }
@@ -31,8 +40,6 @@ function _getPosition(rect: IRect, side: EFConnectableSide): IPoint {
     case EFConnectableSide.RIGHT:
       return { x: rect.x + rect.width, y: rect.y + rect.height / 2 };
     default:
-      throw new Error(`Unknown side: ${ side }`);
+      throw new Error(`Unknown side: ${side}`);
   }
 }
-
-

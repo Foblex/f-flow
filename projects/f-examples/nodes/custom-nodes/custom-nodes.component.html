@@ -1,13 +1,30 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fDraggable (fLoaded)="loaded()">
   <f-canvas fZoom (fCanvasChange)="onCanvasChanged($event)">
-    <f-connection [fReassignDisabled]="true" fOutputId="fOutput1" fInputId="fInput1" fType="bezier"></f-connection>
-    <f-connection [fReassignDisabled]="true" fOutputId="fOutput2" fInputId="fInput2" fType="segment"></f-connection>
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="fOutput1"
+      fInputId="fInput1"
+      fType="bezier"
+    ></f-connection>
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="fOutput2"
+      fInputId="fInput2"
+      fType="segment"
+    ></f-connection>
 
-    <div class="simple-node" fNode fDragHandle [fNodePosition]="{ x: -300, y: 200 }"
-         fNodeOutput fOutputId="fOutput1" fOutputConnectableSide="right">
-      <mat-form-field appearance="fill" class="f-form-field">
+    <div
+      class="simple-node"
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: -300, y: 200 }"
+      fNodeOutput
+      fOutputId="fOutput1"
+      fOutputConnectableSide="right"
+    >
+      <mat-form-field>
         <mat-label>Select</mat-label>
-        <mat-select panelClass="f-select-panel">
+        <mat-select>
           <mat-option value="steak-0">Steak</mat-option>
           <mat-option value="pizza-1">Pizza</mat-option>
           <mat-option value="tacos-2">Tacos</mat-option>
@@ -15,20 +32,34 @@
       </mat-form-field>
     </div>
 
-    <mat-card class="node-with-card" appearance="outlined" fNode [fNodePosition]="{ x: 24, y: 24 }" fDragHandle
-              fNodeInput fInputId="fInput1" fInputConnectableSide="left"
-              fNodeOutput fOutputId="fOutput2" fOutputConnectableSide="right">
+    <mat-card
+      class="node-with-card"
+      appearance="outlined"
+      fNode
+      [fNodePosition]="{ x: 24, y: 24 }"
+      fDragHandle
+      fNodeInput
+      fInputId="fInput1"
+      fInputConnectableSide="left"
+      fNodeOutput
+      fOutputId="fOutput2"
+      fOutputConnectableSide="right"
+    >
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>Shiba Inu</mat-card-title>
         <mat-card-subtitle>Dog Breed</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <img
+        mat-card-image
+        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        alt="Photo of a Shiba Inu"
+      />
       <mat-card-content>
         <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
+          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
+          Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
+          originally bred for hunting.
         </p>
       </mat-card-content>
       <mat-card-actions>
@@ -37,10 +68,17 @@
       </mat-card-actions>
     </mat-card>
 
-    <div class="simple-node" fNode fDragHandle [fNodePosition]="{ x: 500, y: 200 }"
-         fNodeInput fInputId="fInput2" fInputConnectableSide="left">
+    <div
+      class="simple-node"
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 500, y: 200 }"
+      fNodeInput
+      fInputId="fInput2"
+      fInputConnectableSide="left"
+    >
       <video width="320" height="240" controls autoplay muted>
-        <source src="./example.mov" type="video/mp4">
+        <source src="./example.mov" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>

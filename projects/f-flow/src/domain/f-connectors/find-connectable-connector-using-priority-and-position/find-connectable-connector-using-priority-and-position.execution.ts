@@ -7,7 +7,7 @@ import { FConnectorBase } from '../../../f-connectors';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
 import { IClosestConnector } from '../i-closest-connector';
-import { FindClosestConnectorRequest } from '../find-closest-connector';
+import { CalculateClosestConnectorRequest } from '../calculate-closest-connector';
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 
@@ -19,8 +19,9 @@ import { IConnectorAndRect } from '../i-connector-and-rect';
 @Injectable()
 @FExecutionRegister(FindConnectableConnectorUsingPriorityAndPositionRequest)
 export class FindConnectableConnectorUsingPriorityAndPositionExecution
-  implements IExecution<FindConnectableConnectorUsingPriorityAndPositionRequest, FConnectorBase | undefined> {
-
+  implements
+    IExecution<FindConnectableConnectorUsingPriorityAndPositionRequest, FConnectorBase | undefined>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);
@@ -41,13 +42,17 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
     return this._store.fSnapConnection as FSnapConnectionComponent;
   }
 
-  public handle(payload: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase | undefined {
+  public handle(
+    payload: FindConnectableConnectorUsingPriorityAndPositionRequest,
+  ): FConnectorBase | undefined {
     const connectors = this._findConnectorAtPosition(payload);
 
-    return connectors.length > 0 ? connectors[ 0 ] : undefined;
+    return connectors.length > 0 ? connectors[0] : undefined;
   }
 
-  private _findConnectorAtPosition(request: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase[] {
+  private _findConnectorAtPosition(
+    request: FindConnectableConnectorUsingPriorityAndPositionRequest,
+  ): FConnectorBase[] {
     const result: FConnectorBase[] = [];
 
     result.push(...this._filterConnectorsThatLocatedAtPosition(request));
@@ -67,26 +72,39 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
     return result;
   }
 
-  private _filterConnectorsThatLocatedAtPosition(request: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase[] {
-    return request.connectableConnectors.filter((x) => {
-      return RectExtensions.isIncludePoint(x.fRect, this._getPointInFlow(request.pointerPosition));
-    }).map((x) => x.fConnector);
+  private _filterConnectorsThatLocatedAtPosition(
+    request: FindConnectableConnectorUsingPriorityAndPositionRequest,
+  ): FConnectorBase[] {
+    return request.connectableConnectors
+      .filter((x) => {
+        return RectExtensions.isIncludePoint(
+          x.fRect,
+          this._getPointInFlow(request.pointerPosition),
+        );
+      })
+      .map((x) => x.fConnector);
   }
 
   private _getPointInFlow(position: IPoint): IPoint {
     return Point.fromPoint(position)
       .elementTransform(this._fHost)
-      .sub(this._transform.scaledPosition).sub(this._transform.position)
+      .sub(this._transform.scaledPosition)
+      .sub(this._transform.position)
       .div(this._transform.scale);
   }
 
-  private _isSnapConnectionEnabledAndHasClosestConnector(request: FindConnectableConnectorUsingPriorityAndPositionRequest): IClosestConnector | undefined {
+  private _isSnapConnectionEnabledAndHasClosestConnector(
+    request: FindConnectableConnectorUsingPriorityAndPositionRequest,
+  ): IClosestConnector | undefined {
     if (!this._fSnapConnection) {
       return undefined;
     }
 
     const closestConnector = this._mediator.execute<IClosestConnector | undefined>(
-      new FindClosestConnectorRequest(this._getPointInFlow(request.pointerPosition), request.connectableConnectors),
+      new CalculateClosestConnectorRequest(
+        this._getPointInFlow(request.pointerPosition),
+        request.connectableConnectors,
+      ),
     );
 
     return this._isValidClosestInput(closestConnector) ? closestConnector : undefined;
@@ -97,7 +115,9 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   //if node placed in position and fConnectOnNode is true, return the first connectable connector of the node
-  private _getFirstConnectableConnectorOfNodeAtPosition(request: FindConnectableConnectorUsingPriorityAndPositionRequest): FConnectorBase | undefined {
+  private _getFirstConnectableConnectorOfNodeAtPosition(
+    request: FindConnectableConnectorUsingPriorityAndPositionRequest,
+  ): FConnectorBase | undefined {
     return this._getElementsFromPoint(request.pointerPosition)
       .map((x) => this._findConnectableNode(x))
       .filter((x) => !!x)
@@ -113,7 +133,10 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
     return this._fNodes.find((x) => x.isContains(element) && x.fConnectOnNode());
   }
 
-  private _findFirstConnectableConnectorOfNode(connectableInputs: IConnectorAndRect[], fNode: FNodeBase): FConnectorBase | undefined {
-    return connectableInputs.find((x) => x.fConnector.fNodeId === fNode.fId())?.fConnector
+  private _findFirstConnectableConnectorOfNode(
+    connectableInputs: IConnectorAndRect[],
+    fNode: FNodeBase,
+  ): FConnectorBase | undefined {
+    return connectableInputs.find((x) => x.fConnector.fNodeId === fNode.fId())?.fConnector;
   }
 }

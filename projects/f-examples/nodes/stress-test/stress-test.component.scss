@@ -1,10 +1,6 @@
-@use "../../flow-common";
+@use '../../flow-common';
 
 .f-node {
   @include flow-common.node;
   width: unset;
-
 }
-
-
-
