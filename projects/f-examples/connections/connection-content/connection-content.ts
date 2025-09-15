@@ -28,7 +28,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class ConnectionContent {
-  protected positions: KeyValue<string, number>[] = [
+  protected readonly positions: KeyValue<string, number>[] = [
     { key: '10%', value: 0.1 },
     { key: '25%', value: 0.25 },
     { key: '30%', value: 0.3 },
@@ -36,25 +36,22 @@ export class ConnectionContent {
     { key: '75%', value: 0.75 },
     { key: '100%', value: 1 },
   ];
+  protected readonly position = model<number>(0.5);
 
-  protected position = model<number>(0.5);
-
-  protected aligns: KeyValue<string, PolylineContentAlign>[] = [
+  protected readonly aligns: KeyValue<string, PolylineContentAlign>[] = [
     { key: 'None', value: PolylineContentAlign.NONE },
     { key: 'Along', value: PolylineContentAlign.ALONG },
   ];
+  protected readonly align = model<PolylineContentAlign>(PolylineContentAlign.NONE);
 
-  protected align = model<PolylineContentAlign>(PolylineContentAlign.NONE);
-
-  protected offsets: KeyValue<string, number>[] = [
+  protected readonly offsets: KeyValue<string, number>[] = [
     { key: '0px', value: 0 },
     { key: '-25px', value: -25 },
     { key: '25px', value: 25 },
     { key: '-50px', value: -50 },
     { key: '50px', value: 50 },
   ];
-
-  protected offset = signal(0);
+  protected readonly offset = signal(0);
 
   private readonly _canvas = viewChild.required(FCanvasComponent);
 

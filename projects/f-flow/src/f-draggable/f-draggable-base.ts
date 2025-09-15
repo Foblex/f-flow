@@ -34,7 +34,7 @@ export abstract class FDraggableBase extends DragAndDropBase {
 
   public abstract fDragEnded: EventEmitter<void>;
 
-  protected constructor(ngZone: ICanRunOutsideAngular | undefined) {
-    super(ngZone);
+  protected constructor(ngZone: ICanRunOutsideAngular | null) {
+    super(ngZone || undefined);
   }
 }

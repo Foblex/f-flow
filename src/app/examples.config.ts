@@ -745,14 +745,15 @@ function connectionGroup() {
     {
       link: 'connection-content',
       text: 'Connection Content',
+      pageTitle: 'Angular Diagram Example – Connection Content on Edges',
       description:
-        'Place centered widgets (badges/buttons) on edges. Interaction patterns and Angular code.',
-      image: './previews/examples/connection-center.light.png',
-      image_dark: './previews/examples/connection-center.dark.png',
-      image_width: 781,
-      image_height: 600,
+        'Attach custom content (labels, icons, buttons) to diagram connections in Angular with Foblex Flow. Control position, offset and alignment for interactive flowcharts.',
+      image: './previews/examples/connection-content.light.png',
+      image_dark: './previews/examples/connection-content.dark.png',
+      image_width: 1572,
+      image_height: 1204,
       image_type: 'image/png',
-      date: new Date('2025-01-31 18:23:26'),
+      date: new Date('2025-09-15 18:23:26'),
       badge: {
         text: 'New',
         type: 'success',

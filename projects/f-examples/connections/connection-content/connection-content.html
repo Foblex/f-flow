@@ -1,5 +1,5 @@
 <f-flow fDraggable (fLoaded)="loaded()">
-  <f-canvas>
+  <f-canvas fZoom>
     <f-connection
       [fReassignDisabled]="true"
       fOutputId="1"
@@ -112,14 +112,6 @@
       }
     </mat-select>
   </mat-form-field>
-  <!--  <mat-form-field>-->
-  <!--    <mat-label>Margin</mat-label>-->
-  <!--    <mat-select [(ngModel)]="margin">-->
-  <!--      @for (option of margins; track option.key) {-->
-  <!--        <mat-option [value]="option.value">{{ option.key }}</mat-option>-->
-  <!--      }-->
-  <!--    </mat-select>-->
-  <!--  </mat-form-field>-->
   <mat-form-field>
     <mat-label>Offset</mat-label>
     <mat-select [(ngModel)]="offset">

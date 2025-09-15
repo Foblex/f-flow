@@ -49,6 +49,7 @@
 /examples/connection-markers
 /examples/connection-text
 /examples/connection-center
+/examples/connection-content
 /examples/custom-connections
 
 /examples/add-node-from-palette

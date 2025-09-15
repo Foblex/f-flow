@@ -2,8 +2,19 @@
 
 ## Description
 
-This page explains the `fConnectionCenter` directive in Foblex Flow for Angular. The `fConnectionCenter` directive allows you to insert any custom content inside a block, which will be positioned relative to the center of the connection line. This is useful for adding labels, icons, or other elements that need to be dynamically displayed at the center of a connection.
-The directive provides flexible styling and positioning, allowing you to fully customize the appearance and behavior of the centered content.
+The fConnectionContent directive lets you attach any custom content to a connection line — text, icons, buttons, or widgets. The element can be positioned along the path, shifted perpendicularly, and optionally rotated to follow the connection. Multiple content elements can be placed on the same connection.
+
+This is useful for adding labels, statuses, metrics, or interactive controls directly on diagram edges.
+
+## API
+
+- **position: number (0..1)** — position along the connection.
+  0 = start, 0.5 = middle (default), 1 = end.
+- **offset: number** — perpendicular shift from the connection (in pixels).
+  Negative values shift left, positive values shift right.
+- **align: 'none' | 'along'** — orientation of the content.
+  - none — no rotation (default).
+  - along — rotated along the path (tangent).
 
 ## Example
 
