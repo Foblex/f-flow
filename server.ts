@@ -51,7 +51,16 @@ export function app(): express.Express {
 
     if (!slug) return next();
 
-    return res.status(404).send('Not Found');
+    commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: `${req.protocol}://${req.headers.host}/404`,
+        publicPath: browserDistFolder,
+        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      })
+      .then((html) => res.status(404).send(html))
+      .catch((err) => next(err));
   });
 
   server.get(
