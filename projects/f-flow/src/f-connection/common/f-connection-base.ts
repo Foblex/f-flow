@@ -32,10 +32,7 @@ import {
   mixinChangeVisibility,
 } from '../../mixins';
 import { FConnectionCenterDirective } from '../f-connection-center';
-import {
-  ConnectionContentLayoutEngine,
-  FConnectionContent,
-} from '../f-connection-content';
+import { ConnectionContentLayoutEngine, FConnectionContent } from '../f-connection-content';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
@@ -173,7 +170,7 @@ export abstract class FConnectionBase
   }
 
   private _createTransformString(position: IPoint, rotate: number = 0): string {
-    return `position: fixed; pointer-events: all; transform: translate(-50%, -50%) rotate(${rotate}deg); left: ${position.x}px; top: ${position.y}px`;
+    return `position: absolute; pointer-events: all; transform: translate(-50%, -50%) rotate(${rotate}deg); left: ${position.x}px; top: ${position.y}px`;
   }
 
   public override markChildrenAsSelected(): void {
