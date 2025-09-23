@@ -13,7 +13,7 @@ export class GetCanvasExecution implements IExecution<GetCanvasRequest, FCanvasB
 
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: GetCanvasRequest): FCanvasBase {
+  public handle(_request: GetCanvasRequest): FCanvasBase {
     const result = this._store.fCanvas;
     if (!result) {
       throw new Error(`Canvas not found in store`);

@@ -68,7 +68,7 @@ export class MoveDragHandler implements IFDragHandler {
 
   public prepareDragSequence(): void {
     this.childrenNodeAndGroups.forEach((x) => x.prepareDragSequence());
-    this.nodeOrGroup.hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+    this.nodeOrGroup.hostElement.classList.add(F_CSS_CLASS.dragAndDrop.dragging);
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -103,7 +103,7 @@ export class MoveDragHandler implements IFDragHandler {
   public onPointerUp(): void {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerUp());
     this.nodeOrGroup.position.set(this.nodeOrGroup._position);
-    this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+    this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.dragAndDrop.dragging);
     this._emitEventIfNodeExpanded();
   }
 

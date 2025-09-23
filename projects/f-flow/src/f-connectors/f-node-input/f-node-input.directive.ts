@@ -81,18 +81,18 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
 
   public override setConnected(toConnector: FConnectorBase): void {
     super.setConnected(toConnector);
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_CONNECTED, true);
+    this.hostElement.classList.toggle(F_CSS_CLASS.connector.inputConnected, true);
     this.hostElement.classList.toggle(
-      F_CSS_CLASS.CONNECTOR.INPUT_NOT_CONNECTABLE,
+      F_CSS_CLASS.connector.inputNotConnectable,
       !this.canBeConnected,
     );
   }
 
   public override resetConnected(): void {
     super.resetConnected();
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.INPUT_CONNECTED, false);
+    this.hostElement.classList.toggle(F_CSS_CLASS.connector.inputConnected, false);
     this.hostElement.classList.toggle(
-      F_CSS_CLASS.CONNECTOR.INPUT_NOT_CONNECTABLE,
+      F_CSS_CLASS.connector.inputNotConnectable,
       !this.canBeConnected,
     );
   }

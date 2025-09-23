@@ -1,34 +1,34 @@
 export const F_CSS_CLASS = {
 
-  DRAG_AND_DROP: {
+  dragAndDrop: {
 
-    DRAGGING: 'f-dragging',
+    dragging: 'f-dragging',
 
-    CONNECTIONS_DRAGGING: 'f-connections-dragging',
+    connectionsDragging: 'f-connections-dragging',
   },
 
-  GROUPING: {
+  grouping: {
 
-    OVER_BOUNDARY: 'f-grouping-over-boundary',
+    overBoundary: 'f-grouping-over-boundary',
 
-    DROP_ACTIVE: 'f-grouping-drop-active',
+    dropActive: 'f-grouping-drop-active',
   },
 
-  CONNECTOR: {
+  connector: {
 
-    OUTPUT_CONNECTED: 'f-node-output-connected',
+    outputConnected: 'f-node-output-connected',
 
-    OUTPUT_NOT_CONNECTABLE: 'f-node-output-not-connectable',
+    outputNotConnectable: 'f-node-output-not-connectable',
 
-    INPUT_CONNECTED: 'f-node-input-connected',
+    inputConnected: 'f-node-input-connected',
 
-    INPUT_NOT_CONNECTABLE: 'f-node-input-not-connectable',
+    inputNotConnectable: 'f-node-input-not-connectable',
 
-    CONNECTABLE: 'f-connector-connectable',
+    connectable: 'f-connector-connectable',
   },
 
-  CONNECTION: {
+  connection: {
 
-    DRAG_HANDLE: 'f-connection-drag-handle',
+    dragHandle: 'f-connection-drag-handle',
   },
 }

@@ -83,18 +83,18 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
 
   public override setConnected(toConnector: FConnectorBase): void {
     super.setConnected(toConnector);
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, true);
+    this.hostElement.classList.toggle(F_CSS_CLASS.connector.outputConnected, true);
     this.hostElement.classList.toggle(
-      F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE,
+      F_CSS_CLASS.connector.outputNotConnectable,
       !this.canBeConnected,
     );
   }
 
   public override resetConnected(): void {
     super.resetConnected();
-    this.hostElement.classList.toggle(F_CSS_CLASS.CONNECTOR.OUTPUT_CONNECTED, false);
+    this.hostElement.classList.toggle(F_CSS_CLASS.connector.outputConnected, false);
     this.hostElement.classList.toggle(
-      F_CSS_CLASS.CONNECTOR.OUTPUT_NOT_CONNECTABLE,
+      F_CSS_CLASS.connector.outputNotConnectable,
       !this.canBeConnected,
     );
   }

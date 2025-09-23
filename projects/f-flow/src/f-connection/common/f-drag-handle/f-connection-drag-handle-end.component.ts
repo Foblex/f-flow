@@ -17,7 +17,7 @@ import { F_CSS_CLASS } from '../../../domain/css-cls';
 export class FConnectionDragHandleEndComponent implements IHasHostElement {
   private readonly _elementReference = inject(ElementRef);
 
-  protected readonly class: string = F_CSS_CLASS.CONNECTION.DRAG_HANDLE;
+  protected readonly class: string = F_CSS_CLASS.connection.dragHandle;
 
   public point!: IPoint;
 

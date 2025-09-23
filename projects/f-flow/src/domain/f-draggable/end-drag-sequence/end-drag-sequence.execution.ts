@@ -21,7 +21,7 @@ export class EndDragSequenceExecution implements IExecution<EndDragSequenceReque
   private _dragContext = inject(FDraggableDataContext);
 
   public handle(request: EndDragSequenceRequest): void {
-    this._hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+    this._hostElement.classList.remove(F_CSS_CLASS.dragAndDrop.dragging);
 
     this._dragContext.reset();
     this._emitDragEnded();

@@ -16,11 +16,11 @@ export class MarkConnectableConnectors
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connectors }: MarkConnectableConnectorsRequest): void {
-    this._store.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.CONNECTIONS_DRAGGING);
+    this._store.flowHost.classList.add(F_CSS_CLASS.dragAndDrop.connectionsDragging);
     connectors.forEach((x) => this._markConnector(x));
   }
 
   private _markConnector({ hostElement }: FConnectorBase): void {
-    hostElement.classList.add(F_CSS_CLASS.CONNECTOR.CONNECTABLE);
+    hostElement.classList.add(F_CSS_CLASS.connector.connectable);
   }
 }

@@ -16,38 +16,38 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   private readonly _store = inject(FComponentsStore);
   private readonly _fMediator = inject(FMediator);
 
-  private get transform(): ITransformModel {
+  private get _transform(): ITransformModel {
     return this._store.fCanvas!.transform;
   }
 
   public handle(request: CenterGroupOrNodeRequest): void {
-    const fNode = this.getNode(request.id);
+    const fNode = this._getNode(request.id);
     if (!fNode) {
       return;
     }
 
-    this.toCenter(this.getNodeRect(fNode), this.getFlowRect(), fNode._position);
+    this.toCenter(this._getNodeRect(fNode), this._getFlowRect(), fNode._position);
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));
   }
 
   public toCenter(fNodeRect: IRect, fFlowRect: IRect, position: IPoint): void {
-    this.transform.scaledPosition = PointExtensions.initialize();
-    this.transform.position = PointExtensions.initialize(
-      (fFlowRect.width - fNodeRect.width) / 2 - position.x * this.transform.scale,
-      (fFlowRect.height - fNodeRect.height) / 2 - position.y * this.transform.scale,
+    this._transform.scaledPosition = PointExtensions.initialize();
+    this._transform.position = PointExtensions.initialize(
+      (fFlowRect.width - fNodeRect.width) / 2 - position.x * this._transform.scale,
+      (fFlowRect.height - fNodeRect.height) / 2 - position.y * this._transform.scale,
     );
   }
 
-  private getNode(id: string): FNodeBase | undefined {
+  private _getNode(id: string): FNodeBase | undefined {
     return this._store.fNodes.find((x) => x.fId() === id);
   }
 
-  private getNodeRect(fNode: FNodeBase): IRect {
+  private _getNodeRect(fNode: FNodeBase): IRect {
     return RectExtensions.fromElement(fNode.hostElement);
   }
 
-  private getFlowRect(): IRect {
+  private _getFlowRect(): IRect {
     return RectExtensions.fromElement(this._store.fFlow!.hostElement);
   }
 }

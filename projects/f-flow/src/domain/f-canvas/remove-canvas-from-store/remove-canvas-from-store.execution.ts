@@ -12,7 +12,7 @@ export class RemoveCanvasFromStoreExecution implements IExecution<RemoveCanvasFr
 
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveCanvasFromStoreRequest): void {
+  public handle(_request: RemoveCanvasFromStoreRequest): void {
     this._store.fCanvas = undefined;
   }
 }

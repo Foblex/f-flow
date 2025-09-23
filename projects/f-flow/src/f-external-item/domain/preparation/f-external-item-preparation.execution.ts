@@ -49,7 +49,7 @@ export class FExternalItemPreparationExecution implements IExecution<FExternalIt
     return isExternalItem(element) && !!fExternalItem && !fExternalItem.fDisabled;
   }
 
-  private _getExternalItem(targetElement: HTMLElement): FExternalItemBase<any> | undefined {
+  private _getExternalItem(targetElement: HTMLElement): FExternalItemBase | undefined {
     return this._fExternalItemService.getItem(getExternalItem(targetElement));
   }
 

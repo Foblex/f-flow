@@ -32,7 +32,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
 
   public prepareDragSequence(): void {
     this._containersForDrop.forEach(({ node }) => {
-      node.hostElement.classList.add(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
+      node.hostElement.classList.add(F_CSS_CLASS.grouping.dropActive);
     });
   }
 
@@ -64,18 +64,18 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
   private _markIncludeNode(nodeWithRect: INodeWithRect): void {
     this._unmarkIncludeNode();
     this.fNodeWithRect = nodeWithRect;
-    nodeWithRect.node.setClass(F_CSS_CLASS.GROUPING.OVER_BOUNDARY);
+    nodeWithRect.node.setClass(F_CSS_CLASS.grouping.overBoundary);
   }
 
   private _unmarkIncludeNode(): void {
-    this.fNodeWithRect?.node.removeClass(F_CSS_CLASS.GROUPING.OVER_BOUNDARY);
+    this.fNodeWithRect?.node.removeClass(F_CSS_CLASS.grouping.overBoundary);
     this.fNodeWithRect = null;
   }
 
   public onPointerUp(): void {
     this._unmarkIncludeNode();
     this._containersForDrop.forEach(({ node }) => {
-      node.hostElement.classList.remove(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
+      node.hostElement.classList.remove(F_CSS_CLASS.grouping.dropActive);
     });
     if (this._debounceTimer) {
       clearTimeout(this._debounceTimer);

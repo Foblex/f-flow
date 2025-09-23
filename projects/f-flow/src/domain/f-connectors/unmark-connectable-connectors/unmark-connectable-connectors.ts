@@ -16,11 +16,11 @@ export class UnmarkConnectableConnectors
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connectors }: UnmarkConnectableConnectorsRequest): void {
-    this._store.flowHost.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.CONNECTIONS_DRAGGING);
+    this._store.flowHost.classList.remove(F_CSS_CLASS.dragAndDrop.connectionsDragging);
     connectors.forEach((x) => this._unmarkConnector(x));
   }
 
   private _unmarkConnector({ hostElement }: FConnectorBase): void {
-    hostElement.classList.remove(F_CSS_CLASS.CONNECTOR.CONNECTABLE);
+    hostElement.classList.remove(F_CSS_CLASS.connector.connectable);
   }
 }
