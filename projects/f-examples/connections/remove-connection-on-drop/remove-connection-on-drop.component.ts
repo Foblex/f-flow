@@ -67,7 +67,9 @@ export class RemoveConnectionOnDropComponent {
 
   private reassignConnection(event: FReassignConnectionEvent): void {
     this.removeConnection(event);
-    this.connections.push({ outputId: event.oldSourceId, inputId: event.newTargetId! });
+    if (event.newTargetId) {
+      this.connections.push({ outputId: event.oldSourceId, inputId: event.newTargetId });
+    }
   }
 
   public onLoaded(): void {

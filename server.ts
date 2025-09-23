@@ -63,13 +63,9 @@ export function app(): express.Express {
       .catch((err) => next(err));
   });
 
-  server.get(
-    '**',
-    express.static(browserDistFolder, {
-      maxAge: '1d',
-      index: 'index.html',
-    }),
-  );
+  server.use('**/.*', express.static(browserDistFolder, {
+    maxAge: '1d',
+  }));
 
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;

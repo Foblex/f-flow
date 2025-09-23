@@ -22,7 +22,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
 
     this.getMarkers(fConnection).forEach((marker) => {
 
-      const markerElement = this.createMarkerElement(marker, fConnection.fId());
+      const markerElement = this._createMarkerElement(marker, fConnection.fId());
 
       const clone = marker.hostElement.cloneNode(true) as HTMLElement;
       clone.setAttribute('height', `${marker.height}`);
@@ -38,7 +38,7 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
       defs.nativeElement.innerHTML = element.innerHTML;
     }
 
-    this.makeSafariCompatible(fConnection);
+    this._makeSafariCompatible(fConnection);
   }
 
   public getMarkers(fConnection: FConnectionBase): FMarkerBase[] {
@@ -46,11 +46,11 @@ export class CreateConnectionMarkersExecution implements IExecution<CreateConnec
   }
 
   // Safari does not support markers on path elements if markers are defined after the path element
-  private makeSafariCompatible(fConnection: FConnectionBase): void {
+  private _makeSafariCompatible(fConnection: FConnectionBase): void {
     fConnection.fPath().hostElement.replaceWith(fConnection.fPath().hostElement);
   }
 
-  private createMarkerElement(marker: FMarkerBase, fConnectionId: string): SVGElement {
+  private _createMarkerElement(marker: FMarkerBase, fConnectionId: string): SVGElement {
     const markerElement = createSVGElement('marker', this._browser);
 
     markerElement.setAttribute('id', normalizeDomElementId(marker.type + '-' + fConnectionId));
