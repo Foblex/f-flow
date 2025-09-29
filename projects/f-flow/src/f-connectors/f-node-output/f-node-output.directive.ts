@@ -70,6 +70,10 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     return this._node.fId();
   }
 
+  public override get fNodeHost(): HTMLElement | SVGElement {
+    return this._node.hostElement;
+  }
+
   public ngOnInit() {
     this._mediator.execute(new AddOutputToStoreRequest(this));
     this._node.addConnector(this);

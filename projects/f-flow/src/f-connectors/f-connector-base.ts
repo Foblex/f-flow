@@ -7,6 +7,8 @@ export abstract class FConnectorBase implements IHasHostElement {
 
   public abstract fNodeId: string;
 
+  public abstract fNodeHost: HTMLElement | SVGElement;
+
   public abstract disabled: Signal<boolean>;
 
   public abstract hostElement: HTMLElement | SVGElement;

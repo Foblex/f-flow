@@ -2,32 +2,30 @@ import {
   effect,
   inject,
   InjectionToken,
-  Injector, InputSignal,
+  Injector,
+  InputSignal,
   ModelSignal,
-  OutputEmitterRef, Renderer2,
-  Signal, untracked,
+  OutputEmitterRef,
+  Renderer2,
+  Signal,
+  untracked,
 } from '@angular/core';
 import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
-import {
-  FConnectorBase,
-} from '../f-connectors';
+import { FConnectorBase } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ISelectable, mixinChangeSelection } from '../mixins';
 import { FChannel } from '../reactivity';
-import { BrowserService } from "@foblex/platform";
+import { BrowserService } from '@foblex/platform';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 
 const MIXIN_BASE = mixinChangeSelection(
   class {
-    constructor(
-      public hostElement: HTMLElement,
-    ) {
-    }
-  });
+    constructor(public hostElement: HTMLElement) {}
+  },
+);
 
 export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasHostElement {
-
   private readonly _injector = inject(Injector);
 
   protected readonly renderer = inject(Renderer2);
@@ -39,16 +37,13 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public readonly stateChanges = new FChannel();
 
-
   public abstract position: ModelSignal<IPoint>;
 
   public _position = PointExtensions.initialize();
 
-
   public abstract rotate: ModelSignal<number>;
 
   public _rotate: number = 0;
-
 
   public abstract sizeChange: OutputEmitterRef<IRect>;
 
@@ -74,52 +69,63 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
   public connectors: FConnectorBase[] = [];
 
   protected positionChanges(): void {
-    effect(() => {
-      const position = this.position();
-      untracked(() => {
-        if (!PointExtensions.isEqual(this._position, position)) {
-          this._position = position;
-          this.redraw();
-          this.refresh();
-        }
-      });
-
-    }, { injector: this._injector });
+    effect(
+      () => {
+        const position = this.position();
+        untracked(() => {
+          if (!PointExtensions.isEqual(this._position, position)) {
+            this._position = position;
+            this.redraw();
+            this.refresh();
+          }
+        });
+      },
+      { injector: this._injector },
+    );
   }
 
   protected sizeChanges(): void {
-    effect(() => {
-      const size = this.size();
-      untracked(() => {
-        if (!this._isSizeEqual(size)) {
-          this._size = size;
-          this.redraw();
-          this.refresh()
-        }
-      });
-    }, { injector: this._injector });
+    effect(
+      () => {
+        const size = this.size();
+        untracked(() => {
+          if (!this._isSizeEqual(size)) {
+            this._size = size;
+            this.redraw();
+            this.refresh();
+          }
+        });
+      },
+      { injector: this._injector },
+    );
   }
 
   protected rotateChanges(): void {
-    effect(() => {
-      const rotate = this.rotate();
-      untracked(() => {
-        if (this._rotate !== rotate) {
-          this._rotate = rotate;
-          this.redraw();
-          this.refresh();
-        }
-      });
-    }, { injector: this._injector });
+    effect(
+      () => {
+        const rotate = this.rotate();
+        untracked(() => {
+          if (this._rotate !== rotate) {
+            this._rotate = rotate;
+            this.redraw();
+            this.refresh();
+          }
+        });
+      },
+      { injector: this._injector },
+    );
   }
 
   protected parentChanges(): void {
-    effect(() => {
-      this.fParentId();
-      this.fIncludePadding();
-      this.fAutoSizeToFitChildren();
-      untracked(() => this.refresh());
-    }, { injector: this._injector });
+    effect(
+      () => {
+        this.fParentId();
+        this.fIncludePadding();
+        this.fAutoSizeToFitChildren();
+        untracked(() => this.refresh());
+      },
+      { injector: this._injector },
+    );
   }
 
   private _isSizeEqual(value?: ISize): boolean {
@@ -140,7 +146,10 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
       this.setStyle('height', '' + this._size.height + 'px');
     }
 
-    this.setStyle('transform', `translate(${this._position.x}px,${this._position.y}px) rotate(${this._rotate}deg)`);
+    this.setStyle(
+      'transform',
+      `translate(${this._position.x}px,${this._position.y}px) rotate(${this._rotate}deg)`,
+    );
   }
 
   public resetSize(): void {

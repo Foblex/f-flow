@@ -2,6 +2,8 @@ export * from './add-node-to-store';
 
 export * from './calculate-input-connections';
 
+export * from './calculate-node-connectors-connectable-sides';
+
 export * from './calculate-nodes-bounding-box';
 
 export * from './calculate-nodes-bounding-box-normalized-position';

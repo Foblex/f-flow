@@ -5,8 +5,7 @@ export class UpdateNodeWhenStateOrSizeChangedRequest {
   static readonly fToken = Symbol('UpdateNodeWhenStateOrSizeChangedRequest');
 
   constructor(
-    public nodeOrGroup: FNodeBase,
-    public destroyRef: DestroyRef,
-  ) {
-  }
+    public readonly nodeOrGroup: FNodeBase,
+    public readonly destroyRef: DestroyRef,
+  ) {}
 }
