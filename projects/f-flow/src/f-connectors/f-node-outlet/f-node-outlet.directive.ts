@@ -57,6 +57,10 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
     return this._node.fId();
   }
 
+  public override get fNodeHost(): HTMLElement | SVGElement {
+    return this._node.hostElement;
+  }
+
   public ngOnInit() {
     this._mediator.execute(new AddOutletToStoreRequest(this));
   }

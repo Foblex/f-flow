@@ -68,6 +68,10 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
     return this._node.fId();
   }
 
+  public override get fNodeHost(): HTMLElement | SVGElement {
+    return this._node.hostElement;
+  }
+
   public ngOnInit() {
     this._mediator.execute(new AddInputToStoreRequest(this));
     this._node.addConnector(this);

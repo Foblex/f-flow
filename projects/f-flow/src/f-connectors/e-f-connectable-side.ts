@@ -1,5 +1,4 @@
 export enum EFConnectableSide {
-
   LEFT = 'left',
 
   TOP = 'top',
@@ -7,6 +6,8 @@ export enum EFConnectableSide {
   RIGHT = 'right',
 
   BOTTOM = 'bottom',
+
+  CALCULATE = 'calculate',
 
   AUTO = 'auto',
 }

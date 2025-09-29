@@ -13,17 +13,19 @@ import {
 } from '@angular/core';
 import { IRect, ISize, PointExtensions } from '@foblex/2d';
 import { NotifyTransformChangedRequest } from '../f-storage';
-import { FMediator } from '@foblex/mediator';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { IHasHostElement } from '../i-has-host-element';
 import {
   AddNodeToStoreRequest,
   UpdateNodeWhenStateOrSizeChangedRequest,
   RemoveNodeFromStoreRequest,
+  CalculateNodeConnectorsConnectableSidesRequest,
 } from '../domain';
 import { stringAttribute } from '../utils';
+import { FMediator } from '@foblex/mediator';
 
 let uniqueId = 0;
+const _DEBOUNCE_TIME = 3;
 
 @Directive({
   selector: '[fNode]',
@@ -40,6 +42,8 @@ export class FNodeDirective
   extends FNodeBase
   implements OnInit, AfterViewInit, IHasHostElement, OnDestroy
 {
+  private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
 
@@ -128,6 +132,21 @@ export class FNodeDirective
   public override redraw(): void {
     super.redraw();
     this._mediator.execute(new NotifyTransformChangedRequest());
+    this._updateConnectorsSides();
+  }
+
+  protected _updateConnectorsSides(): void {
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+    }
+    this._debounceTimer = setTimeout(
+      () => this._calculateNodeConnectorsConnectableSides(),
+      _DEBOUNCE_TIME,
+    );
+  }
+
+  private _calculateNodeConnectorsConnectableSides(): void {
+    this._mediator.execute<void>(new CalculateNodeConnectorsConnectableSidesRequest(this));
   }
 
   public ngAfterViewInit(): void {

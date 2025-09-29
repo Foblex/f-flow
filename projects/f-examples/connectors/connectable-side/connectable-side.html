@@ -1,6 +1,6 @@
 <f-flow fDraggable (fLoaded)="loaded()">
   <f-canvas>
-    <f-connection fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment"> </f-connection>
+    <f-connection fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment" />
 
     <div
       fNode
@@ -10,7 +10,7 @@
       fOutputId="1"
       [fOutputConnectableSide]="outputSide()"
     >
-      I'm connector with <b>{{ outputSide() }}</b> connectable side
+      <b>{{ outputSide() }}</b> connectable side
     </div>
 
     <div
@@ -21,10 +21,15 @@
       fInputId="2"
       [fInputConnectableSide]="inputSide()"
     >
-      I'm connector with <b>{{ inputSide() }}</b> connectable side
+      <b>{{ inputSide() }}</b> connectable side
     </div>
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <button class="f-button" (click)="switchSides()">Switch Sides</button>
+  <f-checkbox [checked]="calculateSides()" (change)="calculateSides.set($event)"
+    >Calculate Side
+  </f-checkbox>
+  <button class="f-button" (click)="switchSides()" [disabled]="calculateSides()">
+    Switch Sides
+  </button>
 </div>

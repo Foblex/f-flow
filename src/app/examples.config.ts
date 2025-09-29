@@ -107,10 +107,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connectable-side',
-        () =>
-          import(
-            '../../projects/f-examples/connectors/connectable-side/connectable-side.component'
-          ),
+        () => import('../../projects/f-examples/connectors/connectable-side/connectable-side'),
       ),
       defineLazyComponent(
         'drag-to-connect',
@@ -572,14 +569,20 @@ function connectorGroup() {
     {
       link: 'connectable-side',
       text: 'Connectable Side',
+      pageTitle:
+        'Angular Diagram Connectors – Control Connectable Sides (Top, Right, Bottom, Left)',
       description:
-        'Restrict connections by side (top/right/bottom/left). Orientation rules and code for Angular diagrams.',
+        'Control how nodes connect by defining allowed sides (top, right, bottom, left) or using automatic calculation. Includes manual switching and dynamic side detection for Angular diagrams.',
       image: './previews/examples/connectable-side.light.png',
       image_dark: './previews/examples/connectable-side.dark.png',
-      image_width: 726,
-      image_height: 600,
+      image_width: 1540,
+      image_height: 1200,
       image_type: 'image/png',
-      date: new Date('2024-10-03 14:17:29'),
+      date: new Date('2025-09-29 14:17:29'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
   ]);
 }
