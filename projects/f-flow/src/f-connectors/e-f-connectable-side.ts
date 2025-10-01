@@ -9,5 +9,9 @@ export enum EFConnectableSide {
 
   CALCULATE = 'calculate',
 
+  CALCULATE_HORIZONTAL = 'calculate_horizontal',
+
+  CALCULATE_VERTICAL = 'calculate_vertical',
+
   AUTO = 'auto',
 }

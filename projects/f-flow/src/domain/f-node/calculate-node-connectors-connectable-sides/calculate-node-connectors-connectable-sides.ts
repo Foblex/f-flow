@@ -2,18 +2,28 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateNodeConnectorsConnectableSidesRequest } from './calculate-node-connectors-connectable-sides-request';
 import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
-import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions';
+import {
+  CalculateConnectableSideByConnectedPositionsRequest,
+  TCalculateMode,
+} from './calculate-connectable-side-by-connected-positions';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position';
+
+/** Fast predicate: whether the user side is a calculate mode. */
+function isCalculateMode(side: EFConnectableSide): boolean {
+  return (
+    side === EFConnectableSide.CALCULATE ||
+    side === EFConnectableSide.CALCULATE_HORIZONTAL ||
+    side === EFConnectableSide.CALCULATE_VERTICAL
+  );
+}
 
 /**
  * Execution that calculates connectable sides for all connectors of a node.
  *
- * Responsibility:
- * - For each connector, decide the effective connectable side according to:
- *   - AUTO       -> by internal position relative to node host
- *   - CALCULATE  -> by positions of connected connectors
- *   - explicit   -> use the user-defined side as-is
- * - For each `toConnector` whose user side is CALCULATE, recalculate it as well.
+ * Performance goals:
+ * - Single-pass loops (no `forEach`).
+ * - Unique target recomputation (avoid repeated mediator calls for the same target).
+ * - Fast checks for "calculate" modes (bit mask instead of `includes`).
  */
 @Injectable()
 @FExecutionRegister(CalculateNodeConnectorsConnectableSidesRequest)
@@ -24,80 +34,79 @@ export class CalculateNodeConnectorsConnectableSides
 
   /**
    * Orchestrates side calculation for all connectors of the given node.
-   *
-   * @param request.node - Node whose connectors should be recalculated.
+   * Two-phase approach:
+   *  1) Update each connector's own side.
+   *  2) Collect unique `toConnector` with calculate modes and recompute once.
    */
   public handle({ node }: CalculateNodeConnectorsConnectableSidesRequest): void {
-    node.connectors.forEach((connector: FConnectorBase) => {
-      this._updateConnectorSide(connector);
-      this._updateConnectedTargets(connector);
-    });
-  }
+    const mediator = this._mediator;
+    const connectors = node.connectors;
+    const len = connectors.length;
 
-  /**
-   * Calculates and assigns the connectable side for a single connector.
-   *
-   * @param connector - The connector being updated.
-   */
-  private _updateConnectorSide(connector: FConnectorBase): void {
-    connector.fConnectableSide = this._resolveSideForConnector(connector);
-  }
+    for (let i = 0; i < len; i++) {
+      const connection = connectors[i];
+      connection.fConnectableSide = this._resolveSideForConnectorFast(mediator, connection);
+    }
 
-  /**
-   * Recalculates connectable sides for all `toConnector` items that are marked as CALCULATE.
-   *
-   * @param source - The source connector whose outgoing connections should be processed.
-   */
-  private _updateConnectedTargets(source: FConnectorBase): void {
-    source.toConnector.forEach((target) => {
-      if (target.userFConnectableSide === EFConnectableSide.CALCULATE) {
-        target.fConnectableSide = this._resolveSideByConnectedPositions(target);
+    const toRecalc = new Set<FConnectorBase>();
+
+    for (let i = 0; i < len; i++) {
+      const source = connectors[i];
+      const outs = source.toConnector;
+      if (outs && outs.length) {
+        for (let j = 0, m = outs.length; j < m; j++) {
+          const target = outs[j];
+          const userSide = target.userFConnectableSide;
+          if (isCalculateMode(userSide)) {
+            toRecalc.add(target);
+          }
+        }
       }
-    });
+    }
+
+    if (toRecalc.size > 0) {
+      toRecalc.forEach((target) => {
+        target.fConnectableSide = mediator.execute(
+          new CalculateConnectableSideByConnectedPositionsRequest(
+            target,
+            userSideToTCalculateMode(target.userFConnectableSide),
+          ),
+        );
+      });
+    }
   }
 
   /**
-   * Resolves the effective side for a connector according to its user preference.
-   *
-   * @param connector - The connector to resolve side for.
-   * @returns {EFConnectableSide} - The resolved side.
+   * Fast resolver for a single connector.
+   * Uses switch and avoids array operations.
    */
-  private _resolveSideForConnector(connector: FConnectorBase): EFConnectableSide {
+  private _resolveSideForConnectorFast(
+    mediator: FMediator,
+    connector: FConnectorBase,
+  ): EFConnectableSide {
     const preference = connector.userFConnectableSide;
 
+    if (preference !== EFConnectableSide.AUTO && !isCalculateMode(preference)) {
+      return preference;
+    }
+
     if (preference === EFConnectableSide.AUTO) {
-      return this._resolveSideByInternalPosition(connector);
+      return mediator.execute(new CalculateConnectableSideByInternalPositionRequest(connector));
     }
 
-    if (preference === EFConnectableSide.CALCULATE) {
-      return this._resolveSideByConnectedPositions(connector);
-    }
-
-    // Explicit side set by the user
-    return preference;
-  }
-
-  /**
-   * Calculates side using the connector's internal position relative to the node host.
-   * Delegates to `CalculateConnectableSideByInternalPositionRequest`.
-   *
-   * @param connector - Current connector.
-   * @returns {EFConnectableSide}
-   */
-  private _resolveSideByInternalPosition(connector: FConnectorBase): EFConnectableSide {
-    return this._mediator.execute(new CalculateConnectableSideByInternalPositionRequest(connector));
-  }
-
-  /**
-   * Calculates side using average positions of connectors connected to the given connector.
-   * Delegates to `CalculateConnectableSideByConnectedPositionsRequest`.
-   *
-   * @param connector - Current connector.
-   * @returns {EFConnectableSide}
-   */
-  private _resolveSideByConnectedPositions(connector: FConnectorBase): EFConnectableSide {
-    return this._mediator.execute(
-      new CalculateConnectableSideByConnectedPositionsRequest(connector),
+    return mediator.execute(
+      new CalculateConnectableSideByConnectedPositionsRequest(
+        connector,
+        userSideToTCalculateMode(preference),
+      ),
     );
   }
+}
+
+/**
+ * Utility: maps EFConnectableSide user value to TCalculateMode safely.
+ * If your enums are distinct, implement the exact mapping here.
+ */
+function userSideToTCalculateMode(side: EFConnectableSide): TCalculateMode {
+  return side as unknown as TCalculateMode;
 }

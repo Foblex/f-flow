@@ -5,30 +5,27 @@
     <div
       fNode
       fDragHandle
-      [fNodePosition]="{ x: 0, y: 150 }"
+      [fNodePosition]="{ x: 0, y: 0 }"
       fNodeOutput
       fOutputId="1"
-      [fOutputConnectableSide]="outputSide()"
+      [fOutputConnectableSide]="node1Side()"
     >
-      <b>{{ outputSide() }}</b> connectable side
+      <b>{{ node1Side() }}</b> connectable side
     </div>
 
     <div
       fNode
       fDragHandle
-      [fNodePosition]="{ x: 300, y: 150 }"
+      [fNodePosition]="{ x: 150, y: 150 }"
       fNodeInput
       fInputId="2"
-      [fInputConnectableSide]="inputSide()"
+      [fInputConnectableSide]="node2Side()"
     >
-      <b>{{ inputSide() }}</b> connectable side
+      <b>{{ node2Side() }}</b> connectable side
     </div>
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <f-checkbox [checked]="calculateSides()" (change)="calculateSides.set($event)"
-    >Calculate Side
-  </f-checkbox>
   <button class="f-button" (click)="switchSides()" [disabled]="calculateSides()">
     Switch Sides
   </button>

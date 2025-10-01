@@ -2,12 +2,34 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions-request';
 import { EFConnectableSide, FConnectorBase } from '../../../../f-connectors';
-import { IPoint, PointExtensions, RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '@foblex/2d';
 import { CalculateConnectableSideByInternalPositionRequest } from '../calculate-connectable-side-by-internal-position';
+
+const SNAP_EPS = 2;
+
+const enum SideMask {
+  NONE = 0,
+  LEFT = 1 << 0,
+  RIGHT = 1 << 1,
+  TOP = 1 << 2,
+  BOTTOM = 1 << 3,
+  ALL = (1 << 4) - 1,
+}
+
+const CALCULATE_SIDES = {
+  [EFConnectableSide.CALCULATE]: [
+    EFConnectableSide.TOP,
+    EFConnectableSide.BOTTOM,
+    EFConnectableSide.LEFT,
+    EFConnectableSide.RIGHT,
+  ],
+  [EFConnectableSide.CALCULATE_HORIZONTAL]: [EFConnectableSide.LEFT, EFConnectableSide.RIGHT],
+  [EFConnectableSide.CALCULATE_VERTICAL]: [EFConnectableSide.TOP, EFConnectableSide.BOTTOM],
+};
 
 /**
  * Execution that calculates the connectable side for a connector
- * based on the positions of its connected connectors.
+ * based on positions of connected connectors and allowed sides.
  */
 @Injectable()
 @FExecutionRegister(CalculateConnectableSideByConnectedPositionsRequest)
@@ -17,90 +39,188 @@ export class CalculateConnectableSideByConnectedPositions
   private readonly _mediator = inject(FMediator);
 
   /**
-   * Handles the request to calculate the connectable side for a connector
-   * based on the positions of its connected connectors.
+   * Entry point (hot path). Avoids intermediate arrays and redundant allocations.
    *
-   * @param request - Contains the connector host element and its connected connectors.
-   * @returns {EFConnectableSide} - The calculated connectable side.
+   * @param request - Contains the connector and optionally allowed sides.
+   * @returns {EFConnectableSide} - The chosen connectable side.
    */
   public handle({
     connector,
+    mode,
   }: CalculateConnectableSideByConnectedPositionsRequest): EFConnectableSide {
     const selfCenter = RectExtensions.fromElement(connector.hostElement).gravityCenter;
-    const targetCenters = this._getConnectedCenters(connector.hostElement, connector.toConnector);
 
-    if (!targetCenters.length) {
+    const acc = this._accumulateConnectedCenters(connector.hostElement, connector.toConnector);
+
+    if (acc.count === 0) {
       return this._mediator.execute(
         new CalculateConnectableSideByInternalPositionRequest(connector),
       );
     }
 
-    const avg = this._calculateAveragePoint(targetCenters);
+    const avgX = acc.sumX / acc.count;
+    const avgY = acc.sumY / acc.count;
 
-    return this._determineSide(selfCenter, avg);
+    const mask = this._toSideMask(CALCULATE_SIDES[mode]);
+
+    return this._determineSide(selfCenter.x, selfCenter.y, avgX, avgY, mask);
   }
 
   /**
-   * Extracts the gravity centers of connected connectors, excluding the current connector.
-   *
-   * @param selfHost - The host element of the current connector.
-   * @param connected - The list of connected connectors.
-   * @returns {Array<{x: number, y: number}>} - An array of gravity center coordinates.
+   * Accumulates sum of gravity centers and count, excluding the current host.
+   * Single pass, minimal allocations.
    */
-  private _getConnectedCenters(
+  private _accumulateConnectedCenters(
     selfHost: HTMLElement | SVGElement,
-    connected: FConnectorBase[],
-  ): { x: number; y: number }[] {
-    return (connected ?? [])
-      .map((c) => c?.hostElement)
-      .filter((el): el is HTMLElement | SVGElement => !!el && el !== selfHost)
-      .map((el) => RectExtensions.fromElement(el).gravityCenter);
+    connected: FConnectorBase[] | null | undefined,
+  ): { sumX: number; sumY: number; count: number } {
+    let sumX = 0;
+    let sumY = 0;
+    let count = 0;
+
+    if (connected && connected.length) {
+      for (let i = 0; i < connected.length; i++) {
+        const el = connected[i]?.hostElement as HTMLElement | SVGElement | undefined;
+        if (!el || el === selfHost) continue;
+
+        const c = RectExtensions.fromElement(el).gravityCenter;
+        sumX += c.x;
+        sumY += c.y;
+        count++;
+      }
+    }
+
+    return { sumX, sumY, count };
   }
 
   /**
-   * Calculates the average point (center of mass) from a set of points.
-   *
-   * @param points - An array of point objects with x and y coordinates.
-   * @returns {{x: number, y: number}} - The average x and y coordinate.
+   * Converts allowed sides array to a compact bit mask.
+   * If not provided or empty -> all sides allowed.
    */
-  private _calculateAveragePoint(points: IPoint[]): IPoint {
-    const sum = points.reduce((result: IPoint, p: IPoint) => {
-      result.x += p.x;
-      result.y += p.y;
+  private _toSideMask(allowed?: EFConnectableSide[]): SideMask {
+    if (!allowed || allowed.length === 0) return SideMask.ALL;
 
-      return result;
-    }, PointExtensions.initialize());
+    let mask = SideMask.NONE;
+    for (let i = 0; i < allowed.length; i++) {
+      switch (allowed[i]) {
+        case EFConnectableSide.LEFT:
+          mask |= SideMask.LEFT;
+          break;
+        case EFConnectableSide.RIGHT:
+          mask |= SideMask.RIGHT;
+          break;
+        case EFConnectableSide.TOP:
+          mask |= SideMask.TOP;
+          break;
+        case EFConnectableSide.BOTTOM:
+          mask |= SideMask.BOTTOM;
+          break;
+      }
+    }
 
-    return {
-      x: sum.x / points.length,
-      y: sum.y / points.length,
-    };
+    return mask || SideMask.ALL;
   }
 
   /**
-   * Determines the connectable side of the current connector relative to the
-   * average position of its connected connectors.
-   *
-   * @param self - The gravity center of the current connector.
-   * @param avg - The average gravity center of connected connectors.
-   * @returns {EFConnectableSide} - The chosen side (LEFT, RIGHT, TOP, BOTTOM).
+   * Determines final side using ideal side first; if disallowed, picks best fallback.
+   * Inputs are numbers to avoid object wrappers on hot path.
    */
   private _determineSide(
-    self: { x: number; y: number },
-    avg: { x: number; y: number },
+    selfX: number,
+    selfY: number,
+    avgX: number,
+    avgY: number,
+    allowedMask: SideMask,
   ): EFConnectableSide {
-    const dx = avg.x - self.x;
-    const dy = avg.y - self.y;
-    const snapEps = 2; // px — hysteresis threshold to avoid side-flipping near diagonals
+    const dx = avgX - selfX;
+    const dy = avgY - selfY;
 
-    if (Math.abs(dx) - Math.abs(dy) > snapEps) {
+    const ideal = this._pickIdealSide(dx, dy);
+
+    if (this._isAllowed(ideal, allowedMask)) {
+      return ideal;
+    }
+
+    return this._pickFallbackSide(dx, dy, allowedMask, ideal);
+  }
+
+  /**
+   * Picks the "ideal" side based on vector (dx, dy) with hysteresis.
+   */
+  private _pickIdealSide(dx: number, dy: number): EFConnectableSide {
+    const ax = dx < 0 ? -dx : dx;
+    const ay = dy < 0 ? -dy : dy;
+
+    if (ax - ay > SNAP_EPS) {
       return dx < 0 ? EFConnectableSide.LEFT : EFConnectableSide.RIGHT;
     }
-    if (Math.abs(dy) - Math.abs(dx) > snapEps) {
+    if (ay - ax > SNAP_EPS) {
       return dy < 0 ? EFConnectableSide.TOP : EFConnectableSide.BOTTOM;
     }
 
-    // When differences are nearly equal, prefer vertical orientation for stability
     return dy < 0 ? EFConnectableSide.TOP : EFConnectableSide.BOTTOM;
+  }
+
+  /**
+   * Quick membership check via bit mask.
+   */
+  private _isAllowed(side: EFConnectableSide, mask: SideMask): boolean {
+    switch (side) {
+      case EFConnectableSide.LEFT:
+        return (mask & SideMask.LEFT) !== 0;
+      case EFConnectableSide.RIGHT:
+        return (mask & SideMask.RIGHT) !== 0;
+      case EFConnectableSide.TOP:
+        return (mask & SideMask.TOP) !== 0;
+      case EFConnectableSide.BOTTOM:
+        return (mask & SideMask.BOTTOM) !== 0;
+      default:
+        return true;
+    }
+  }
+
+  /**
+   * Picks the best available side from allowed mask by maximizing directional score.
+   * No intermediate objects, constant-time operations.
+   */
+  private _pickFallbackSide(
+    dx: number,
+    dy: number,
+    allowedMask: SideMask,
+    ideal: EFConnectableSide,
+  ): EFConnectableSide {
+    let bestSide: EFConnectableSide = ideal;
+    let bestScore = -Infinity;
+
+    if (allowedMask & SideMask.RIGHT) {
+      const s = dx;
+      if (s > bestScore) {
+        bestScore = s;
+        bestSide = EFConnectableSide.RIGHT;
+      }
+    }
+    if (allowedMask & SideMask.LEFT) {
+      const s = -dx;
+      if (s > bestScore) {
+        bestScore = s;
+        bestSide = EFConnectableSide.LEFT;
+      }
+    }
+    if (allowedMask & SideMask.BOTTOM) {
+      const s = dy;
+      if (s > bestScore) {
+        bestScore = s;
+        bestSide = EFConnectableSide.BOTTOM;
+      }
+    }
+    if (allowedMask & SideMask.TOP) {
+      const s = -dy;
+      if (s > bestScore) {
+        bestScore = s;
+        bestSide = EFConnectableSide.TOP;
+      }
+    }
+
+    return bestSide;
   }
 }
