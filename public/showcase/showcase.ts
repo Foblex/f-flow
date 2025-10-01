@@ -28,4 +28,15 @@ export const SHOWCASE: IShowcaseItem[] = [
       { text: 'Sources', url: 'https://github.com/Foblex/f-flow' },
     ],
   },
+  {
+    name: 'Multi Agent AI Orchestration (EpicStaff)',
+    tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
+    description: 'Open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
+    imageUrl: './showcase/images/epicstaff.png', 
+    links: [
+      { text: 'Website', url: 'https://www.epicstaff.ai/' },
+      { text: 'Sources', url: 'https://github.com/EpicStaff/EpicStaff' },
+
+    ]
+  }
 ];
