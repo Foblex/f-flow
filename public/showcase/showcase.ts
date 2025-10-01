@@ -30,8 +30,8 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'Multi Agent AI Orchestration (EpicStaff)',
-    description: 'This is an open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
-    tags: ['AI Automation','Multi-Agent Systems','Open Source'],
+    tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
+    description: 'Open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
     imageUrl: './showcase/images/epicstaff.png', 
     links: [
       { text: 'Website', url: 'https://www.epicstaff.ai/' },
