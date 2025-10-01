@@ -68,6 +68,7 @@ module.exports = tseslint.config(
           ignoreProperties: true,
         },
       ],
+      '@typescript-eslint/prefer-for-of': 'off',
 
       'padding-line-between-statements': [
         'error',

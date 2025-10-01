@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateNodeConnectorsConnectableSidesRequest } from './calculate-node-connectors-connectable-sides-request';
 import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
-import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions';
+import {
+  CALCULATE_MODES,
+  CalculateConnectableSideByConnectedPositionsRequest,
+  TCalculateMode,
+} from './calculate-connectable-side-by-connected-positions';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position';
 
 /**
@@ -50,8 +54,11 @@ export class CalculateNodeConnectorsConnectableSides
    */
   private _updateConnectedTargets(source: FConnectorBase): void {
     source.toConnector.forEach((target) => {
-      if (target.userFConnectableSide === EFConnectableSide.CALCULATE) {
-        target.fConnectableSide = this._resolveSideByConnectedPositions(target);
+      if (CALCULATE_MODES.includes(target.userFConnectableSide)) {
+        target.fConnectableSide = this._resolveSideByConnectedPositions(
+          target,
+          target.userFConnectableSide as TCalculateMode,
+        );
       }
     });
   }
@@ -69,8 +76,8 @@ export class CalculateNodeConnectorsConnectableSides
       return this._resolveSideByInternalPosition(connector);
     }
 
-    if (preference === EFConnectableSide.CALCULATE) {
-      return this._resolveSideByConnectedPositions(connector);
+    if (CALCULATE_MODES.includes(preference)) {
+      return this._resolveSideByConnectedPositions(connector, preference as TCalculateMode);
     }
 
     // Explicit side set by the user
@@ -93,11 +100,15 @@ export class CalculateNodeConnectorsConnectableSides
    * Delegates to `CalculateConnectableSideByConnectedPositionsRequest`.
    *
    * @param connector - Current connector.
+   * @param mode - Calculation mode (all, horizontal only, vertical only).
    * @returns {EFConnectableSide}
    */
-  private _resolveSideByConnectedPositions(connector: FConnectorBase): EFConnectableSide {
+  private _resolveSideByConnectedPositions(
+    connector: FConnectorBase,
+    mode: TCalculateMode,
+  ): EFConnectableSide {
     return this._mediator.execute(
-      new CalculateConnectableSideByConnectedPositionsRequest(connector),
+      new CalculateConnectableSideByConnectedPositionsRequest(connector, mode),
     );
   }
 }
