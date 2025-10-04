@@ -13,8 +13,8 @@ import { FitToChildNodesAndGroups } from './fit-to-child-nodes-and-groups';
 import {
   CalculateConnectableSideByConnectedPositions,
   CalculateConnectableSideByInternalPosition,
-  CalculateNodeConnectorsConnectableSides,
-} from './calculate-node-connectors-connectable-sides';
+  CalculateConnectorsConnectableSides,
+} from './calculate-connectors-connectable-sides';
 
 /**
  * This file exports all the node-related executions that can be used in the F-Flow domain.
@@ -28,7 +28,7 @@ export const F_NODE_FEATURES = [
 
   CalculateInputConnections,
 
-  CalculateNodeConnectorsConnectableSides,
+  CalculateConnectorsConnectableSides,
 
   CalculateNodesBoundingBox,
 

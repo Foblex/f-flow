@@ -6,7 +6,7 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 import { FResizeChannel } from '../../../reactivity';
 import { FitToChildNodesAndGroupsRequest } from '../fit-to-child-nodes-and-groups';
 import { IsDragStartedRequest } from '../../f-draggable';
-import { CalculateNodeConnectorsConnectableSidesRequest } from '../calculate-node-connectors-connectable-sides';
+import { CalculateConnectorsConnectableSidesRequest } from '../calculate-connectors-connectable-sides';
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
@@ -32,9 +32,7 @@ export class UpdateNodeWhenStateOrSizeChanged
         this._mediator.execute<void>(new NotifyDataChangedRequest());
 
         if (!this._isDragging()) {
-          this._mediator.execute<void>(
-            new CalculateNodeConnectorsConnectableSidesRequest(nodeOrGroup),
-          );
+          this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
 
           this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
         }

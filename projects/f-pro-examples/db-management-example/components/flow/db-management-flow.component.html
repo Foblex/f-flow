@@ -7,11 +7,11 @@
         (fCreateConnection)="createConnection($event)"
         (fSelectionChange)="selectionChanged($event)">
   <f-background>
-    <f-circle-pattern></f-circle-pattern>
+    <f-circle-pattern/>
   </f-background>
-  <f-line-alignment></f-line-alignment>
+  <f-line-alignment/>
   <f-canvas fZoom (fCanvasChange)="canvasChanged($event)">
-    <f-connection-for-create fBehavior="floating"
+    <f-connection-for-create fBehavior="fixed"
                              fType="straight">
       <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
         <circle cx="5" cy="5" r="2" stroke="none"></circle>
@@ -76,9 +76,9 @@
     }
 
   </f-canvas>
-  <f-selection-area></f-selection-area>
-  <f-minimap [fMinSize]="2000"></f-minimap>
+  <f-selection-area/>
+  <f-minimap [fMinSize]="2000"/>
 </f-flow>
-<db-management-toolbar></db-management-toolbar>
-<db-management-context-menu #menu="menuComponent"></db-management-context-menu>
+<db-management-toolbar/>
+<db-management-context-menu #menu="menuComponent"/>
 

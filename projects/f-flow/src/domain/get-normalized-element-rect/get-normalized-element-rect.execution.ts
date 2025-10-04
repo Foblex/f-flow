@@ -9,9 +9,10 @@ import {
   ISize,
   SizeExtensions,
   ITransformModel,
-  RectExtensions, IRect,
+  RectExtensions,
+  IRect,
 } from '@foblex/2d';
-import { GetNormalizedPointRequest } from "../get-normalized-point";
+import { GetNormalizedPointRequest } from '../get-normalized-point';
 
 /**
  * Execution that retrieves the normalized rectangle of an element.
@@ -20,8 +21,9 @@ import { GetNormalizedPointRequest } from "../get-normalized-point";
  */
 @Injectable()
 @FExecutionRegister(GetNormalizedElementRectRequest)
-export class GetNormalizedElementRectExecution implements IExecution<GetNormalizedElementRectRequest, IRect> {
-
+export class GetNormalizedElementRectExecution
+  implements IExecution<GetNormalizedElementRectRequest, IRect>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
@@ -33,25 +35,13 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
     const systemRect = this._getElementRoundedRect(request);
     const position = this._normalizePosition(systemRect);
     const unscaledSize = this._unscaleSize(systemRect);
-    const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect)
+    const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect);
 
     const offsetSize = this._getOffsetSize(request.element, unscaledSize);
 
     return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 
-  // BrowserWindow
-  // +--------------------------------+
-  // |                                |
-  // |     Element                    |
-  // |     (x: 100, y: 50)            |
-  // |     +--------+                 |
-  // |     |        |                 |
-  // |     |        |                 |
-  // |     +--------+                 |
-  // |                                |
-  // +--------------------------------+
-  // This data of the element is relative to the browser window, not the canvas, with all transformations applied.
   private _getElementRoundedRect(request: GetNormalizedElementRectRequest): IRoundedRect {
     return RoundedRect.fromRect(RectExtensions.fromElement(request.element));
   }
@@ -61,17 +51,26 @@ export class GetNormalizedElementRectExecution implements IExecution<GetNormaliz
   }
 
   private _unscaleSize(rect: IRoundedRect): ISize {
-    return SizeExtensions.initialize(rect.width / this._transform.scale, rect.height / this._transform.scale);
+    return SizeExtensions.initialize(
+      rect.width / this._transform.scale,
+      rect.height / this._transform.scale,
+    );
   }
 
   private _getUnscaledRect(position: IPoint, size: ISize, rect: IRoundedRect): IRoundedRect {
     return new RoundedRect(
-      position.x, position.y, size.width, size.height,
-      rect.radius1, rect.radius2, rect.radius3, rect.radius4,
-    )
+      position.x,
+      position.y,
+      size.width,
+      size.height,
+      rect.radius1,
+      rect.radius2,
+      rect.radius3,
+      rect.radius4,
+    );
   }
 
   private _getOffsetSize(element: HTMLElement | SVGElement, size: ISize): ISize {
-    return SizeExtensions.offsetFromElement(element) || size
+    return SizeExtensions.offsetFromElement(element) || size;
   }
 }

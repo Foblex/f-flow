@@ -59,18 +59,17 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
       RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y),
     );
     this.fData = {
-      fOutputOrOutletId: this._fOutputOrOutlet.fId,
+      fOutputOrOutletId: this._fOutputOrOutlet.fId(),
     };
   }
 
   public prepareDragSequence(): void {
-    this._getAndMarkCanBeConnectedInputs();
-    this._initializeSnapConnection();
-    this._initializeConnectionForCreate();
-
     this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(
       new GetConnectorAndRectRequest(this._fOutputOrOutlet),
     );
+    this._getAndMarkCanBeConnectedInputs();
+    this._initializeSnapConnection();
+    this._initializeConnectionForCreate();
 
     this._connection.show();
     this.onPointerMove(PointExtensions.initialize());
@@ -84,7 +83,10 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private _getAndMarkCanBeConnectedInputs(): void {
     this._canBeConnectedInputs = this._mediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(this._fOutputOrOutlet),
+      new GetAllCanBeConnectedInputsAndRectsRequest(
+        this._fOutputOrOutlet,
+        this._fOutputWithRect.fRect.gravityCenter,
+      ),
     );
 
     this._mediator.execute(
@@ -106,15 +108,15 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   }
 
   public onPointerMove(difference: IPoint): void {
-    const fClosestInput = this._findClosestInput(difference);
+    const closestInput = this._findClosestInput(difference);
 
     this._drawConnectionForCreate(
       this._toConnectorRect.addPoint(difference),
-      fClosestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP,
+      closestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP,
     );
 
     if (this._snapConnection) {
-      this._drawSnapConnection(this._getClosestInputForSnapConnection(fClosestInput));
+      this._drawSnapConnection(this._getClosestInputForSnapConnection(closestInput));
     }
   }
 

@@ -4,6 +4,6 @@ export * from './from-outlet-preparation';
 
 export * from './from-output-preparation';
 
-export * from './f-create-connection-preparation.execution';
+export * from './create-connection-preparation';
 
-export * from './f-create-connection-preparation.request';
+export * from './create-connection-preparation-request';

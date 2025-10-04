@@ -55,7 +55,10 @@ export class FReassignTargetDragHandler implements IFReassignHandler {
 
   public markConnectableConnector(): void {
     this._connectableConnectors = this._mediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(this._sourceConnector),
+      new GetAllCanBeConnectedInputsAndRectsRequest(
+        this._sourceConnector,
+        this._sourceConnectorRect.gravityCenter,
+      ),
     );
 
     this._mediator.execute(
