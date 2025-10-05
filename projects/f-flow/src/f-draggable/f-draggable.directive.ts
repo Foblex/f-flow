@@ -40,6 +40,7 @@ import {
   FEventTrigger,
   FTriggerEvent,
   InitializeDragSequenceRequest,
+  LogExecutionTime,
   OnPointerMoveRequest,
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
@@ -241,6 +242,7 @@ export class FDraggableDirective
     super.subscribe(this._browser.document);
   }
 
+  @LogExecutionTime('FDraggableDirective.onPointerDown')
   public override onPointerDown(event: IPointerEvent): boolean {
     if (isDragBlocker(event.targetElement)) {
       return false;
@@ -272,6 +274,7 @@ export class FDraggableDirective
     return isMouseLeftOrTouch;
   }
 
+  @LogExecutionTime('FDraggableDirective.prepareDragSequence')
   protected override prepareDragSequence(event: IPointerEvent) {
     this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
 
@@ -294,6 +297,7 @@ export class FDraggableDirective
     this._mediator.execute<void>(new PrepareDragSequenceRequest());
   }
 
+  @LogExecutionTime('FDraggableDirective.onSelect')
   protected override onSelect(event: Event): void {
     this._mediator.execute<void>(new PreventDefaultIsExternalItemRequest(event));
   }
@@ -302,6 +306,7 @@ export class FDraggableDirective
     this._mediator.execute<void>(new OnPointerMoveRequest(event));
   }
 
+  @LogExecutionTime('FDraggableDirective.onPointerUp')
   public override onPointerUp(event: IPointerEvent): void {
     this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
 

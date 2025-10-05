@@ -1,7 +1,6 @@
 import { AddNodeToStore } from './add-node-to-store';
 import { RemoveNodeFromStore } from './remove-node-from-store';
 import { UpdateNodeWhenStateOrSizeChanged } from './update-node-when-state-or-size-changed';
-import { GetNodes } from './get-nodes';
 import { CalculateNodesBoundingBox } from './calculate-nodes-bounding-box';
 import { CalculateNodesBoundingBoxNormalizedPosition } from './calculate-nodes-bounding-box-normalized-position';
 import { GetNodePadding } from './get-node-padding';
@@ -41,8 +40,6 @@ export const F_NODE_FEATURES = [
   GetChildNodeIds,
 
   GetNodePadding,
-
-  GetNodes,
 
   GetParentNodes,
 

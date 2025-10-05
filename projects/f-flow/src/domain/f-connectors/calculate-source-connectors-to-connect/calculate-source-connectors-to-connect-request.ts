@@ -1,8 +1,8 @@
 import { FNodeInputBase } from '../../../f-connectors';
 import { IPoint } from '@foblex/2d';
 
-export class GetAllCanBeConnectedSourceConnectorsAndRectsRequest {
-  static readonly fToken = Symbol('GetAllCanBeConnectedSourceConnectorsAndRectsRequest');
+export class CalculateSourceConnectorsToConnectRequest {
+  static readonly fToken = Symbol('CalculateSourceConnectorsToConnectRequest');
 
   constructor(
     public readonly targetConnector: FNodeInputBase,

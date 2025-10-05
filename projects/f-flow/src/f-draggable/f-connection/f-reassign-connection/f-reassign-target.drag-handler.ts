@@ -2,7 +2,7 @@ import { FMediator } from '@foblex/mediator';
 import {
   CalculateConnectionLineByBehaviorRequest,
   CalculateClosestConnectorRequest,
-  GetAllCanBeConnectedInputsAndRectsRequest,
+  CalculateTargetConnectorsToConnectRequest,
   IClosestConnector,
   IConnectorAndRect,
   MarkConnectableConnectorsRequest,
@@ -55,7 +55,7 @@ export class FReassignTargetDragHandler implements IFReassignHandler {
 
   public markConnectableConnector(): void {
     this._connectableConnectors = this._mediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(
+      new CalculateTargetConnectorsToConnectRequest(
         this._sourceConnector,
         this._sourceConnectorRect.gravityCenter,
       ),

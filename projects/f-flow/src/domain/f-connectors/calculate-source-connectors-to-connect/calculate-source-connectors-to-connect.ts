@@ -1,7 +1,12 @@
-import { GetAllCanBeConnectedSourceConnectorsAndRectsRequest } from './get-all-can-be-connected-source-connectors-and-rects.request';
+import { CalculateSourceConnectorsToConnectRequest } from './calculate-source-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { EFConnectableSide, FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../../../f-connectors';
+import {
+  EFConnectableSide,
+  FConnectorBase,
+  FNodeInputBase,
+  FNodeOutputBase,
+} from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
@@ -14,9 +19,9 @@ import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } 
  * Source - Output or Outlet connectors.
  */
 @Injectable()
-@FExecutionRegister(GetAllCanBeConnectedSourceConnectorsAndRectsRequest)
-export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
-  implements IExecution<GetAllCanBeConnectedSourceConnectorsAndRectsRequest, IConnectorAndRect[]>
+@FExecutionRegister(CalculateSourceConnectorsToConnectRequest)
+export class CalculateSourceConnectorsToConnect
+  implements IExecution<CalculateSourceConnectorsToConnectRequest, IConnectorAndRect[]>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -28,8 +33,8 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
   public handle({
     targetConnector,
     pointerPosition,
-  }: GetAllCanBeConnectedSourceConnectorsAndRectsRequest): IConnectorAndRect[] {
-    const result = this._getCanBeConnectedSourceConnectors(targetConnector).map((x) => {
+  }: CalculateSourceConnectorsToConnectRequest): IConnectorAndRect[] {
+    const result = this._getConnectableSources(targetConnector).map((x) => {
       return this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(x));
     });
 
@@ -40,7 +45,7 @@ export class GetAllCanBeConnectedSourceConnectorsAndRectsExecution
     return result;
   }
 
-  private _getCanBeConnectedSourceConnectors(targetConnector: FNodeInputBase): FConnectorBase[] {
+  private _getConnectableSources(targetConnector: FNodeInputBase): FConnectorBase[] {
     return this._sourceConnectors.filter((x) => {
       let result = x.canBeConnected;
       if (result && x.hasConnectionLimits) {

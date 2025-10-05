@@ -1,4 +1,4 @@
-import { GetAllCanBeConnectedInputsAndRectsRequest } from './get-all-can-be-connected-inputs-and-rects.request';
+import { CalculateTargetConnectorsToConnectRequest } from './calculate-target-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import {
@@ -18,9 +18,9 @@ import { IPoint } from '@foblex/2d';
  * Execution that retrieves all input connectors that can be connected to a given output or outlet connector,
  */
 @Injectable()
-@FExecutionRegister(GetAllCanBeConnectedInputsAndRectsRequest)
-export class GetAllCanBeConnectedInputsAndRectsExecution
-  implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]>
+@FExecutionRegister(CalculateTargetConnectorsToConnectRequest)
+export class CalculateTargetConnectorsToConnect
+  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorAndRect[]>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -32,7 +32,7 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
   public handle({
     sourceConnector,
     pointerPosition,
-  }: GetAllCanBeConnectedInputsAndRectsRequest): IConnectorAndRect[] {
+  }: CalculateTargetConnectorsToConnectRequest): IConnectorAndRect[] {
     const result = this._getCanBeConnectedInputs(sourceConnector).map((x) => {
       return this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(x));
     });

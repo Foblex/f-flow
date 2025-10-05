@@ -8,9 +8,9 @@ export * from './calculate-closest-connector';
 
 export * from './find-connectable-connector-using-priority-and-position';
 
-export * from './get-all-can-be-connected-inputs-and-rects';
+export * from './calculate-target-connectors-to-connect';
 
-export * from './get-all-can-be-connected-source-connectors-and-rects';
+export * from './calculate-source-connectors-to-connect';
 
 export * from './get-connector-and-rect';
 

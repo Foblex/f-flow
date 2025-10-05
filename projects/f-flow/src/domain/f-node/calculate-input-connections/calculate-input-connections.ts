@@ -15,15 +15,31 @@ export class CalculateInputConnections
 {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: CalculateInputConnectionsRequest): FConnectionBase[] {
-    return this._calculateConnections(new Set(this._calculateConnectors(request.fNode)));
+  public handle({ nodeOrGroup }: CalculateInputConnectionsRequest): FConnectionBase[] {
+    const ids = this._collectInputIds(nodeOrGroup);
+
+    return this._collectConnections(ids);
   }
 
-  private _calculateConnectors(fNode: FNodeBase): string[] {
-    return this._store.fInputs.filter((x) => fNode.isContains(x.hostElement)).map((x) => x.fId());
+  private _collectInputIds(nodeOrGroup: FNodeBase): Set<string> {
+    const ids = new Set<string>();
+    for (const connector of this._store.fInputs) {
+      if (nodeOrGroup.isContains(connector.hostElement)) {
+        ids.add(connector.fId());
+      }
+    }
+
+    return ids;
   }
 
-  private _calculateConnections(ids: Set<string>): FConnectionBase[] {
-    return this._store.fConnections.filter((x) => ids.has(x.fInputId()));
+  private _collectConnections(ids: Set<string>): FConnectionBase[] {
+    const result: FConnectionBase[] = [];
+    for (const conn of this._store.fConnections) {
+      if (ids.has(conn.fInputId())) {
+        result.push(conn);
+      }
+    }
+
+    return result;
   }
 }

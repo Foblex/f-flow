@@ -19,8 +19,8 @@ export class CalculateConnectorsConnectableSides
   /**
    * Orchestrates side calculation for all connectors of the given node.
    */
-  public handle({ node }: CalculateConnectorsConnectableSidesRequest): void {
-    const connectors = node.connectors;
+  public handle({ nodeOrGroup }: CalculateConnectorsConnectableSidesRequest): void {
+    const connectors = nodeOrGroup.connectors;
     const len = connectors.length;
 
     for (let i = 0; i < len; i++) {
@@ -59,9 +59,12 @@ export class CalculateConnectorsConnectableSides
     const mode = connector.userFConnectableSide;
 
     if (mode === EFConnectableSide.AUTO) {
-      return this._mediator.execute(
+      const result = this._mediator.execute<EFConnectableSide>(
         new CalculateConnectableSideByInternalPositionRequest(connector),
       );
+      console.log('AUTO resolved to', result);
+
+      return result;
     }
 
     if (isCalculateMode(mode)) {
