@@ -6,6 +6,6 @@ export function isValidEventTrigger(event: FTriggerEvent, fTrigger: FEventTrigge
   return fTrigger(event);
 }
 
-export function defaultEventTrigger(event: FTriggerEvent): boolean {
+export function defaultEventTrigger(_event: FTriggerEvent): boolean {
   return true;
 }

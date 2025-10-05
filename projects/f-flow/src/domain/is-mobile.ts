@@ -1,4 +1,7 @@
 export function isMobile(): boolean {
-  // @ts-ignore
-  return /android|iPad|iPhone|iPod/i.test(navigator.userAgent || navigator.vendor || window[ 'opera' ])
+  return /android|iPad|iPhone|iPod/i.test(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    navigator.userAgent || navigator.vendor || window['opera'],
+  );
 }

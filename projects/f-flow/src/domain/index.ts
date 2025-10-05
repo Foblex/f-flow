@@ -23,6 +23,7 @@ export * from './f-zoom';
 export * from './get-deep-children-nodes-and-groups';
 
 export * from './get-normalized-connector-rect';
+
 export * from './get-normalized-element-rect';
 
 export * from './get-normalized-point';
@@ -48,4 +49,3 @@ export * from './log-execution-time';
 export * from './providers';
 
 export * from './transition-end';
-
