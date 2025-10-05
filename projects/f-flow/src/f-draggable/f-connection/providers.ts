@@ -2,8 +2,8 @@ import {
   FCreateConnectionDragHandlerPreparationExecution,
   FCreateConnectionFinalizeExecution,
   FCreateConnectionFromOutletPreparationExecution,
-  FCreateConnectionFromOutputPreparationExecution,
-  FCreateConnectionPreparationExecution,
+  CreateConnectionFromOutputPreparation,
+  CreateConnectionPreparation,
   GetFirstConnectableOutputExecution,
 } from './f-create-connection';
 import {
@@ -12,7 +12,6 @@ import {
 } from './f-reassign-connection';
 
 export const CONNECTIONS_PROVIDERS = [
-
   FCreateConnectionFinalizeExecution,
 
   FCreateConnectionDragHandlerPreparationExecution,
@@ -21,9 +20,9 @@ export const CONNECTIONS_PROVIDERS = [
 
   GetFirstConnectableOutputExecution,
 
-  FCreateConnectionFromOutputPreparationExecution,
+  CreateConnectionFromOutputPreparation,
 
-  FCreateConnectionPreparationExecution,
+  CreateConnectionPreparation,
 
   FReassignConnectionFinalizeExecution,
 

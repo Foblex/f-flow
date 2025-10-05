@@ -2,7 +2,7 @@ import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedPointRequest } from './get-normalized-point-request';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 
 /**
  * Execution that retrieves the normalized point of a position.
@@ -12,7 +12,6 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 @Injectable()
 @FExecutionRegister(GetNormalizedPointRequest)
 export class GetNormalizedPointExecution implements IExecution<GetNormalizedPointRequest, IPoint> {
-
   private readonly _store = inject(FComponentsStore);
 
   private get _transform(): ITransformModel {
@@ -37,6 +36,10 @@ export class GetNormalizedPointExecution implements IExecution<GetNormalizedPoin
   // +------------------------------------------+
   // Transform from the browser window to the canvas coordinates:
   public handle(request: GetNormalizedPointRequest): IPoint {
+    if (!this._store.flowHost) {
+      return request.position;
+    }
+
     return Point.fromPoint(request.position)
       .elementTransform(this._store.flowHost)
       .sub(this._transform.scaledPosition)

@@ -2,7 +2,7 @@ export * from './add-node-to-store';
 
 export * from './calculate-input-connections';
 
-export * from './calculate-node-connectors-connectable-sides';
+export * from './calculate-connectors-connectable-sides';
 
 export * from './calculate-nodes-bounding-box';
 
@@ -15,8 +15,6 @@ export * from './fit-to-child-nodes-and-groups';
 export * from './get-child-node-ids';
 
 export * from './get-node-padding';
-
-export * from './get-nodes';
 
 export * from './get-parent-nodes';
 

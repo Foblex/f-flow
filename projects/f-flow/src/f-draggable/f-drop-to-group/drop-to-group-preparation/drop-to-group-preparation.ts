@@ -4,19 +4,21 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
-import { GetChildNodeIdsRequest, GetNormalizedElementRectRequest, GetParentNodesRequest } from '../../../domain';
+import {
+  GetChildNodeIdsRequest,
+  GetNormalizedElementRectRequest,
+  GetParentNodesRequest,
+} from '../../../domain';
 import { FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeDropToGroupDragHandler } from '../f-node-drop-to-group.drag-handler';
 import { MoveSummaryDragHandler } from '../../f-node-move';
-import { FExternalItemDragHandler } from "../../../f-external-item";
-import { SortContainersForDropByLayerRequest } from "../sort-containers-for-drop-by-layer";
+import { FExternalItemDragHandler } from '../../../f-external-item';
+import { SortContainersForDropByLayerRequest } from '../sort-containers-for-drop-by-layer';
 
 @Injectable()
 @FExecutionRegister(DropToGroupPreparationRequest)
-export class DropToGroupPreparation
-  implements IExecution<DropToGroupPreparationRequest, void> {
-
+export class DropToGroupPreparation implements IExecution<DropToGroupPreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);
@@ -31,16 +33,17 @@ export class DropToGroupPreparation
   }
 
   private get _canvasPosition(): IPoint {
-    return PointExtensions.sum(this._canvasTransform.position, this._canvasTransform.scaledPosition)
+    return PointExtensions.sum(
+      this._canvasTransform.position,
+      this._canvasTransform.scaledPosition,
+    );
   }
 
   public handle({ event }: DropToGroupPreparationRequest): void {
     if (!this._canPrepareDropToGroup()) {
       return;
     }
-    const _dragTarget = this._allNodesAndGroups.find((x) =>
-      x.isContains(event.targetElement),
-    );
+    const _dragTarget = this._allNodesAndGroups.find((x) => x.isContains(event.targetElement));
 
     if (!_dragTarget && !this._isExternalItemDragHandler()) {
       throw new Error('Drag target node not found');
@@ -52,16 +55,17 @@ export class DropToGroupPreparation
 
     if (_dragTarget) {
       // We can drop items only to children of direct parent
-      const childIds = this._mediator.execute<string[]>(new GetChildNodeIdsRequest(_dragTarget.fParentId()));
+      const childIds = this._mediator.execute<string[]>(
+        new GetChildNodeIdsRequest(_dragTarget.fParentId()),
+      );
       if (childIds.length) {
-        targetRects = targetRects.filter(t => childIds.includes(t.node.fId()));
+        targetRects = targetRects.filter((t) => childIds.includes(t.node.fId()));
       }
     }
 
-    this._dragContext.draggableItems.push(new FNodeDropToGroupDragHandler(
-      this._injector,
-      targetRects,
-    ));
+    this._dragContext.draggableItems.push(
+      new FNodeDropToGroupDragHandler(this._injector, targetRects),
+    );
   }
 
   private _canPrepareDropToGroup(): boolean {
@@ -69,13 +73,11 @@ export class DropToGroupPreparation
   }
 
   private _isNodeDragHandler(): boolean {
-    return this._dragContext.draggableItems
-      .some((x) => x instanceof MoveSummaryDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof MoveSummaryDragHandler);
   }
 
   private _isExternalItemDragHandler(): boolean {
-    return this._dragContext.draggableItems
-      .some((x) => x instanceof FExternalItemDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof FExternalItemDragHandler);
   }
 
   private _collectGroupingTargetRects(): INodeWithRect[] {
@@ -85,16 +87,20 @@ export class DropToGroupPreparation
     const draggedNodes = this._draggedNodesWithParents(dragged);
 
     return this._eligibleTargets(draggedNodes, draggingGroup).map((node) => {
-      const rect = this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(node.hostElement));
+      const rect = this._mediator.execute<IRect>(
+        new GetNormalizedElementRectRequest(node.hostElement),
+      );
 
       return { node, rect: this._toCanvasRect(rect) };
     });
   }
 
   private _draggedNodes(): FNodeBase[] {
-    return this._dragContext.draggableItems
-      .find((x) => x instanceof MoveSummaryDragHandler)
-      ?.allDraggedNodeHandlers.map((x) => x.nodeOrGroup) || [];
+    return (
+      this._dragContext.draggableItems
+        .find((x) => x instanceof MoveSummaryDragHandler)
+        ?.allDraggedNodeHandlers.map((x) => x.nodeOrGroup) || []
+    );
   }
 
   /**
@@ -112,9 +118,9 @@ export class DropToGroupPreparation
   }
 
   private _eligibleTargets(dragged: FNodeBase[], draggingGroup: boolean): FNodeBase[] {
-    const nonDragged = this._allNodesAndGroups.filter(x => !dragged.includes(x));
+    const nonDragged = this._allNodesAndGroups.filter((x) => !dragged.includes(x));
 
-    return draggingGroup ? nonDragged.filter(x => x instanceof FGroupDirective) : nonDragged;
+    return draggingGroup ? nonDragged.filter((x) => x instanceof FGroupDirective) : nonDragged;
   }
 
   private _toCanvasRect(rect: IRect): IRect {

@@ -1,11 +1,12 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
   Input,
   OnDestroy,
   QueryList,
-  ViewChildren
+  ViewChildren,
 } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
 import { ETableColumnType, ITableViewModel } from '../../domain';
@@ -21,7 +22,7 @@ import { DbManagementTableHeaderComponent } from './components';
 @Component({
   selector: 'db-management-table',
   templateUrl: './db-management-table.component.html',
-  styleUrls: [ './db-management-table.component.scss' ],
+  styleUrls: ['./db-management-table.component.scss'],
   standalone: true,
   imports: [
     FFlowModule,
@@ -37,10 +38,9 @@ import { DbManagementTableHeaderComponent } from './components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.has-errors]': '!form.valid',
-  }
+  },
 })
 export class DbManagementTableComponent implements AfterViewInit, OnDestroy {
-
   @Input({ required: true })
   public viewModel!: ITableViewModel;
 
@@ -60,19 +60,20 @@ export class DbManagementTableComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private selectionService: SelectionService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   public ngAfterViewInit(): void {
     this.subscribeToSelectionServiceSelectionChanges();
   }
 
   private subscribeToSelectionServiceSelectionChanges(): void {
-    this.selectionService.selection$.pipe(takeUntil(this.destroy), debounceTime(5)).subscribe((x) => {
-      const column = this.columns.find((c) => c.column.id === x.column);
-      this.selectColumn(column);
-    });
+    this.selectionService.selection$
+      .pipe(takeUntil(this.destroy), debounceTime(5))
+      .subscribe((x) => {
+        const column = this.columns.find((c) => c.column.id === x.column);
+        this.selectColumn(column);
+      });
   }
 
   private selectColumn(column?: DbManagementTableColumnComponent): void {

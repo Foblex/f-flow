@@ -19,7 +19,7 @@ import {
   AddNodeToStoreRequest,
   UpdateNodeWhenStateOrSizeChangedRequest,
   RemoveNodeFromStoreRequest,
-  CalculateNodeConnectorsConnectableSidesRequest,
+  CalculateConnectorsConnectableSidesRequest,
 } from '../domain';
 import { FMediator } from '@foblex/mediator';
 
@@ -142,7 +142,7 @@ export class FGroupDirective
   }
 
   private _calculateNodeConnectorsConnectableSides(): void {
-    this._mediator.execute<void>(new CalculateNodeConnectorsConnectableSidesRequest(this));
+    this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(this));
   }
 
   public ngAfterViewInit(): void {

@@ -58,7 +58,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
     alias: 'fOutputConnectableSide',
     transform: (value: unknown) => castToEnum(value, 'fOutputConnectableSide', EFConnectableSide),
   })
-  public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
+  public override userFConnectableSide = EFConnectableSide.AUTO;
 
   @Input()
   public override isSelfConnectable: boolean = true;

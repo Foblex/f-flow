@@ -25,7 +25,7 @@ import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-c
 import {
   FCreateConnectionEvent,
   FCreateConnectionFinalizeRequest,
-  FCreateConnectionPreparationRequest,
+  CreateConnectionPreparationRequest,
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
@@ -259,7 +259,7 @@ export class FDraggableDirective
     );
 
     this._mediator.execute<void>(
-      new FCreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
+      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
     );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));

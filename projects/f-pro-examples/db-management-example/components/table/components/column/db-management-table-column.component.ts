@@ -3,8 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter, Input,
-  Output
+  Input,
 } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
 import { ETableColumnKey, ITableColumn } from '../../../../domain';
@@ -14,21 +13,17 @@ import { SelectionService } from '../../../../domain/selection.service';
 @Component({
   selector: 'db-management-table-column',
   templateUrl: './db-management-table-column.component.html',
-  styleUrls: [ './db-management-table-column.component.scss' ],
+  styleUrls: ['./db-management-table-column.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    FFlowModule,
-    MatIcon
-  ],
+  imports: [FFlowModule, MatIcon],
   host: {
     'tabindex': '-1',
     '[class.selected]': 'isSelected',
     '(contextmenu)': 'emitSelectionChangeEvent($event)',
-  }
+  },
 })
 export class DbManagementTableColumnComponent {
-
   @Input({ required: true })
   public column!: ITableColumn;
 
@@ -46,9 +41,8 @@ export class DbManagementTableColumnComponent {
   constructor(
     private elementRef: ElementRef,
     private selectionService: SelectionService,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-  }
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   public select(isSelected: boolean): void {
     this.isSelected = isSelected;

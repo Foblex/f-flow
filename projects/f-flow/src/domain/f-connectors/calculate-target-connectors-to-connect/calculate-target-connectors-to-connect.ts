@@ -1,7 +1,8 @@
-import { GetAllCanBeConnectedInputsAndRectsRequest } from './get-all-can-be-connected-inputs-and-rects.request';
+import { CalculateTargetConnectorsToConnectRequest } from './calculate-target-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import {
+  EFConnectableSide,
   FConnectorBase,
   FNodeInputBase,
   FNodeOutletBase,
@@ -10,14 +11,16 @@ import {
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorAndRect } from '../i-connector-and-rect';
 import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
+import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
+import { IPoint } from '@foblex/2d';
 
 /**
  * Execution that retrieves all input connectors that can be connected to a given output or outlet connector,
  */
 @Injectable()
-@FExecutionRegister(GetAllCanBeConnectedInputsAndRectsRequest)
-export class GetAllCanBeConnectedInputsAndRectsExecution
-  implements IExecution<GetAllCanBeConnectedInputsAndRectsRequest, IConnectorAndRect[]>
+@FExecutionRegister(CalculateTargetConnectorsToConnectRequest)
+export class CalculateTargetConnectorsToConnect
+  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorAndRect[]>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -27,11 +30,18 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
   }
 
   public handle({
-    outputOrOutlet,
-  }: GetAllCanBeConnectedInputsAndRectsRequest): IConnectorAndRect[] {
-    return this._getCanBeConnectedInputs(outputOrOutlet).map((x) => {
-      return this._mediator.execute(new GetConnectorAndRectRequest(x));
+    sourceConnector,
+    pointerPosition,
+  }: CalculateTargetConnectorsToConnectRequest): IConnectorAndRect[] {
+    const result = this._getCanBeConnectedInputs(sourceConnector).map((x) => {
+      return this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(x));
     });
+
+    setTimeout(() => {
+      this._calculateConnectableSides(result, pointerPosition);
+    });
+
+    return result;
   }
 
   private _getCanBeConnectedInputs(
@@ -58,5 +68,29 @@ export class GetAllCanBeConnectedInputsAndRectsExecution
     outputOrOutlet: FConnectorBase,
   ): FConnectorBase[] {
     return targetConnectors.filter(({ fNodeId }) => outputOrOutlet.fNodeId !== fNodeId);
+  }
+
+  private _calculateConnectableSides(
+    connectors: IConnectorAndRect[],
+    pointerPosition: IPoint,
+  ): void {
+    connectors.forEach((x) => {
+      if (isCalculateMode(x.fConnector.userFConnectableSide)) {
+        x.fConnector.fConnectableSide = this._calculateByConnectedPositions(
+          x.fConnector,
+          pointerPosition,
+        );
+      }
+    });
+  }
+
+  /** Delegates to the connected-positions calculation execution. */
+  private _calculateByConnectedPositions(
+    connector: FConnectorBase,
+    pointerPosition: IPoint,
+  ): EFConnectableSide {
+    return this._mediator.execute(
+      new CalculateConnectableSideByConnectedPositionsRequest(connector, pointerPosition),
+    );
   }
 }

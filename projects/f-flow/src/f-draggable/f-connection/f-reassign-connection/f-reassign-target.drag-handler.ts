@@ -2,7 +2,7 @@ import { FMediator } from '@foblex/mediator';
 import {
   CalculateConnectionLineByBehaviorRequest,
   CalculateClosestConnectorRequest,
-  GetAllCanBeConnectedInputsAndRectsRequest,
+  CalculateTargetConnectorsToConnectRequest,
   IClosestConnector,
   IConnectorAndRect,
   MarkConnectableConnectorsRequest,
@@ -55,7 +55,10 @@ export class FReassignTargetDragHandler implements IFReassignHandler {
 
   public markConnectableConnector(): void {
     this._connectableConnectors = this._mediator.execute<IConnectorAndRect[]>(
-      new GetAllCanBeConnectedInputsAndRectsRequest(this._sourceConnector),
+      new CalculateTargetConnectorsToConnectRequest(
+        this._sourceConnector,
+        this._sourceConnectorRect.gravityCenter,
+      ),
     );
 
     this._mediator.execute(
@@ -114,15 +117,15 @@ export class FReassignTargetDragHandler implements IFReassignHandler {
     );
   }
 
-  private _drawSnapConnection(fClosestConnector: IClosestConnector | undefined): void {
+  private _drawSnapConnection(closestConnector: IClosestConnector | undefined): void {
     const snapConnection = this._snapConnection!;
-    if (fClosestConnector) {
-      const line = this._getLineToClosestTargetConnector(fClosestConnector, snapConnection);
+    if (closestConnector) {
+      const line = this._getLineToClosestTargetConnector(closestConnector, snapConnection);
       snapConnection.show();
       snapConnection.setLine(
         line,
         this._sourceConnector.fConnectableSide,
-        fClosestConnector.fConnector.fConnectableSide,
+        closestConnector.fConnector.fConnectableSide,
       );
       snapConnection.redraw();
     } else {

@@ -15,15 +15,31 @@ export class CalculateOutputConnections
 {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: CalculateOutputConnectionsRequest): FConnectionBase[] {
-    return this._calculateConnections(new Set(this._calculateConnectors(request.fNode)));
+  public handle({ nodeOrGroup }: CalculateOutputConnectionsRequest): FConnectionBase[] {
+    const ids = this._collectOutputIds(nodeOrGroup);
+
+    return this._collectConnections(ids);
   }
 
-  private _calculateConnectors(fNode: FNodeBase): string[] {
-    return this._store.fOutputs.filter((x) => fNode.isContains(x.hostElement)).map((x) => x.fId());
+  private _collectOutputIds(nodeOrGroup: FNodeBase): Set<string> {
+    const ids = new Set<string>();
+    for (const connector of this._store.fOutputs) {
+      if (nodeOrGroup.isContains(connector.hostElement)) {
+        ids.add(connector.fId());
+      }
+    }
+
+    return ids;
   }
 
-  private _calculateConnections(ids: Set<string>): FConnectionBase[] {
-    return this._store.fConnections.filter((x) => ids.has(x.fOutputId()));
+  private _collectConnections(ids: Set<string>): FConnectionBase[] {
+    const result: FConnectionBase[] = [];
+    for (const conn of this._store.fConnections) {
+      if (ids.has(conn.fOutputId())) {
+        result.push(conn);
+      }
+    }
+
+    return result;
   }
 }

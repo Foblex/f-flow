@@ -10,4 +10,6 @@ export * from './features/notify-transform-changed';
 
 export * from './f-components-store';
 
+export * from './f-connectors-store';
+
 export * from './providers';
