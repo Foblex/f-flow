@@ -59,12 +59,9 @@ export class CalculateConnectorsConnectableSides
     const mode = connector.userFConnectableSide;
 
     if (mode === EFConnectableSide.AUTO) {
-      const result = this._mediator.execute<EFConnectableSide>(
+      return this._mediator.execute<EFConnectableSide>(
         new CalculateConnectableSideByInternalPositionRequest(connector),
       );
-      console.log('AUTO resolved to', result);
-
-      return result;
     }
 
     if (isCalculateMode(mode)) {

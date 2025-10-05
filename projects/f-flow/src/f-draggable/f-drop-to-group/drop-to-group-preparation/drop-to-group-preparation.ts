@@ -8,7 +8,6 @@ import {
   GetChildNodeIdsRequest,
   GetNormalizedElementRectRequest,
   GetParentNodesRequest,
-  LogExecutionTime,
 } from '../../../domain';
 import { FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
@@ -40,7 +39,6 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     );
   }
 
-  @LogExecutionTime('DropToGroupPreparation')
   public handle({ event }: DropToGroupPreparationRequest): void {
     if (!this._canPrepareDropToGroup()) {
       return;

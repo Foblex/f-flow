@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FNodeMovePreparationRequest } from './f-node-move-preparation.request';
-import { ITransformModel, Point } from '@foblex/2d';
+import { Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
@@ -9,7 +9,6 @@ import { CreateDragModelFromSelectionRequest } from '../create-drag-model-from-s
 import {
   FEventTrigger,
   isValidEventTrigger,
-  LogExecutionTime,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
@@ -36,7 +35,6 @@ export class FNodeMovePreparationExecution
 
   private _fNode: FNodeBase | undefined;
 
-  @LogExecutionTime('FNodeMovePreparationExecution')
   public handle({ event, fTrigger }: FNodeMovePreparationRequest): void {
     if (!this._isValid(event) || !this._isValidTrigger(event, fTrigger)) {
       return;
@@ -78,7 +76,6 @@ export class FNodeMovePreparationExecution
   }
 
   //We drag nodes from selection model
-  @LogExecutionTime('_calculateDraggedItems')
   private _calculateDraggedItems(fNode: FNodeBase): MoveSummaryDragHandler {
     let result: MoveSummaryDragHandler;
     if (!fNode.fSelectionDisabled()) {
@@ -96,7 +93,6 @@ export class FNodeMovePreparationExecution
     return result;
   }
 
-  @LogExecutionTime('_dragModelFromSelection')
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): MoveSummaryDragHandler {
     return this._mediator.execute(
       new CreateDragModelFromSelectionRequest(nodeWithDisabledSelection),

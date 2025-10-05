@@ -5,7 +5,6 @@ import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer.
 import { FDraggableDataContext } from '../../../f-draggable';
 import { UpdateItemAndChildrenLayersRequest } from '../../update-item-and-children-layers';
 import { FNodeBase } from '../../../f-node';
-import { LogExecutionTime } from '../../log-execution-time';
 
 /**
  * Execution that selects a node and updates its layer along with its children.
@@ -20,7 +19,6 @@ export class SelectAndUpdateNodeLayerExecution
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _mediator = inject(FMediator);
 
-  @LogExecutionTime('SelectAndUpdateNodeLayerExecution')
   public handle({ nodeOrGroup }: SelectAndUpdateNodeLayerRequest): void {
     this._selectNodeIfNotSelected(nodeOrGroup);
 
