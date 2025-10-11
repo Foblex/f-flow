@@ -198,6 +198,13 @@ export const EXAMPLES_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
+        'connection-connectable-side',
+        () =>
+          import(
+            '../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'
+          ),
+      ),
+      defineLazyComponent(
         'dagre-layout',
         () => import('../../projects/f-examples/advanced/dagre-layout/dagre-layout'),
       ),
@@ -773,6 +780,24 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2024-10-03 01:32:33'),
+    },
+    {
+      link: 'connection-connectable-side',
+      text: 'Connection Connectable Side',
+      pageTitle:
+        'Angular Diagram Connections – Control Connection Sides (Top, Right, Bottom, Left, Calculate)',
+      description:
+        'Control how connections attach to nodes by defining start and end sides (top, right, bottom, left) or using automatic calculation modes. Demonstrates manual side switching and dynamic side determination for Angular diagrams.',
+      image: './previews/examples/connection-connectable-side.light.png',
+      image_dark: './previews/examples/connection-connectable-side.dark.png',
+      image_width: 1596,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2025-10-11 14:17:29'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
   ]);
 }

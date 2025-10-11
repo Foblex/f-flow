@@ -1,15 +1,12 @@
 import { GetIntersections, ILine, IPoint, IRoundedRect } from '@foblex/2d';
-import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior-request';
+import { CalculateBehaviorRequest } from '../models/calculate-behavior-request';
 
 /**
  * Floating behavior calculates the connection line
  * It constructs a line between the intersections of the connectors rectangles and line from the centers of the connector rectangles
  * @param payload
  */
-export function floatingBehavior({
-  sourceRect,
-  targetRect,
-}: CalculateConnectionLineByBehaviorRequest): ILine {
+export function floatingBehavior({ sourceRect, targetRect }: CalculateBehaviorRequest): ILine {
   return _getIntersectionsLine(
     _fromRoundedRectIntersections(sourceRect, targetRect),
     _toRoundedRectIntersections(sourceRect, targetRect),

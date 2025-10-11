@@ -1,11 +1,13 @@
 <f-flow fDraggable (fLoaded)="loaded()">
   <f-canvas>
     <f-connection fOutputId="1" fInputId="2" fBehavior="fixed" fType="segment" />
+    <f-connection fOutputId="1" fInputId="3" fBehavior="fixed" fType="segment" />
+    <f-connection fOutputId="1" fInputId="4" fBehavior="fixed" fType="segment" />
 
     <div
       fNode
       fDragHandle
-      [fNodePosition]="{ x: 0, y: 0 }"
+      [fNodePosition]="{ x: 250, y: 0 }"
       fNodeOutput
       fOutputId="1"
       [fOutputConnectableSide]="node1Side()"
@@ -16,12 +18,32 @@
     <div
       fNode
       fDragHandle
-      [fNodePosition]="{ x: 150, y: 150 }"
+      [fNodePosition]="{ x: 0, y: 150 }"
       fNodeInput
       fInputId="2"
       [fInputConnectableSide]="node2Side()"
     >
       <b>{{ node2Side() }}</b> connectable side
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 250, y: 300 }"
+      fNodeInput
+      fInputId="3"
+      [fInputConnectableSide]="node3Side()"
+    >
+      <b>{{ node3Side() }}</b> connectable side
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 500, y: 150 }"
+      fNodeInput
+      fInputId="4"
+      [fInputConnectableSide]="node4Side()"
+    >
+      <b>{{ node4Side() }}</b> connectable side
     </div>
   </f-canvas>
 </f-flow>

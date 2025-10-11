@@ -9,22 +9,26 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(GetParentNodesRequest)
-export class GetParentNodes
-  implements IExecution<GetParentNodesRequest, FNodeBase[]> {
-
+export class GetParentNodes implements IExecution<GetParentNodesRequest, FNodeBase[]> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: GetParentNodesRequest): FNodeBase[] {
-    return this._getParentNodes(request.fNode, new Set<string>(), []);
+  public handle({ nodeOrGroup }: GetParentNodesRequest): FNodeBase[] {
+    return this._getParentNodes(nodeOrGroup, new Set<string>(), []);
   }
 
-  private _getParentNodes(fNode: FNodeBase, visited: Set<string>, result: FNodeBase[]): FNodeBase[] {
-    if (visited.has(fNode.fId())) {
-      throw new Error('Circular reference detected in the node hierarchy. Node id: ' + fNode.fId());
+  private _getParentNodes(
+    nodeOrGroup: FNodeBase,
+    visited: Set<string>,
+    result: FNodeBase[],
+  ): FNodeBase[] {
+    if (visited.has(nodeOrGroup.fId())) {
+      throw new Error(
+        'Circular reference detected in the node hierarchy. Node id: ' + nodeOrGroup.fId(),
+      );
     }
-    visited.add(fNode.fId());
+    visited.add(nodeOrGroup.fId());
 
-    const parent = this._store.fNodes.find((x) => x.fId() === fNode.fParentId());
+    const parent = this._store.fNodes.find((x) => x.fId() === nodeOrGroup.fParentId());
     if (!parent) {
       return result;
     }

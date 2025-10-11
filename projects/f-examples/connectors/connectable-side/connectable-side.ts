@@ -16,6 +16,8 @@ export class ConnectableSide {
 
   protected readonly node1Side = signal(EFConnectableSide.CALCULATE);
   protected readonly node2Side = signal(EFConnectableSide.TOP);
+  protected readonly node3Side = signal(EFConnectableSide.RIGHT);
+  protected readonly node4Side = signal(EFConnectableSide.BOTTOM);
 
   protected loaded(): void {
     this._canvas()?.resetScaleAndCenter(false);
@@ -24,6 +26,8 @@ export class ConnectableSide {
   protected switchSides(): void {
     this.node1Side.update((x) => this._updateSide(x));
     this.node2Side.update((x) => this._updateSide(x));
+    this.node3Side.update((x) => this._updateSide(x));
+    this.node4Side.update((x) => this._updateSide(x));
   }
 
   private _updateSide(currentSide: EFConnectableSide): EFConnectableSide {

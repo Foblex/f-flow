@@ -1,6 +1,6 @@
 import { ILine, IPoint, IRect } from '@foblex/2d';
-import { CalculateConnectionLineByBehaviorRequest } from './calculate-connection-line-by-behavior-request';
-import { EFConnectableSide } from '../../../f-connectors';
+import { EFConnectableSide } from '../../../../f-connectors';
+import { CalculateBehaviorRequest } from '../models/calculate-behavior-request';
 
 /**
  * Fixed outbound behavior calculates the connection line
@@ -12,7 +12,7 @@ export function fixedOutboundBehavior({
   sourceConnectableSide,
   targetRect,
   targetConnectableSide,
-}: CalculateConnectionLineByBehaviorRequest): ILine {
+}: CalculateBehaviorRequest): ILine {
   return {
     point1: _getPosition(
       sourceRect,

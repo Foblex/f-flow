@@ -51,6 +51,7 @@
 /examples/connection-center
 /examples/connection-content
 /examples/custom-connections
+/examples/connection-connectable-side
 
 /examples/add-node-from-palette
 /examples/selection-area

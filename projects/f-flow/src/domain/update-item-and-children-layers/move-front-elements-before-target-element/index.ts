@@ -1,3 +1,3 @@
-export * from './move-front-elements-before-target-element.execution';
+export * from './move-front-elements-before-target-element';
 
-export * from './move-front-elements-before-target-element.request';
+export * from './move-front-elements-before-target-element-request';

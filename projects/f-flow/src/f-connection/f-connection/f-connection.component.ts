@@ -10,7 +10,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { EFConnectionBehavior, EFConnectionType } from '../common';
+import { EFConnectionBehavior, EFConnectionConnectableSide, EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 //TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
@@ -76,6 +76,18 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
   public override fDraggingDisabled = input(false, {
     alias: 'fReassignDisabled',
     transform: booleanAttribute,
+  });
+
+  public override fInputSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fInputSide', EFConnectionConnectableSide);
+    },
+  });
+
+  public override fOutputSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fOutputSide', EFConnectionConnectableSide);
+    },
   });
 
   public override get boundingElement(): HTMLElement | SVGElement {

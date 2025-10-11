@@ -103,7 +103,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
 
   private _drawConnection(newPoint: IPoint, fSide: EFConnectableSide): void {
     const line = this._calculateNewLine(newPoint, fSide);
-    this._connection.setLine(line, fSide, this._targetConnectorAndRect.fConnector.fConnectableSide);
+    this._connection.setLine(line);
     this._connection.redraw();
   }
 
@@ -112,7 +112,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
       new CalculateConnectionLineByBehaviorRequest(
         roundedRectFromPoint(sourcePoint),
         this._targetConnectorAndRect.fRect,
-        this._connection.fBehavior,
+        this._connection,
         fSide,
         this._targetConnectorAndRect.fConnector.fConnectableSide,
       ),
@@ -124,11 +124,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     if (fClosestConnector) {
       const line = this._getLineToClosestSourceConnector(fClosestConnector, snapConnection);
       snapConnection.show();
-      snapConnection.setLine(
-        line,
-        fClosestConnector.fConnector.fConnectableSide,
-        this._targetConnector.fConnectableSide,
-      );
+      snapConnection.setLine(line);
       snapConnection.redraw();
     } else {
       snapConnection.hide();
@@ -143,7 +139,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
       new CalculateConnectionLineByBehaviorRequest(
         fClosestInput.fRect,
         this._targetConnectorAndRect.fRect,
-        snapConnection.fBehavior,
+        snapConnection,
         fClosestInput.fConnector.fConnectableSide,
         this._targetConnector.fConnectableSide,
       ),

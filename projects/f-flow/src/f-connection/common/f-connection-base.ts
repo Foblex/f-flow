@@ -33,6 +33,7 @@ import {
 } from '../../mixins';
 import { FConnectionCenterDirective } from '../f-connection-center';
 import { ConnectionContentLayoutEngine, FConnectionContent } from '../f-connection-content';
+import { EFConnectionConnectableSide } from './e-f-connection-connectable-side';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
@@ -69,7 +70,7 @@ export abstract class FConnectionBase
 
   public abstract fOffset: number;
 
-  public path: string = '';
+  protected path: string = '';
 
   public line = LineExtensions.initialize();
 
@@ -113,6 +114,18 @@ export abstract class FConnectionBase
     descendants: true,
   });
 
+  public readonly fInputSide: Signal<EFConnectionConnectableSide> = signal(
+    EFConnectionConnectableSide.DEFAULT,
+  );
+
+  private _sourceSide = EFConnectableSide.AUTO;
+
+  public readonly fOutputSide: Signal<EFConnectionConnectableSide> = signal(
+    EFConnectionConnectableSide.DEFAULT,
+  );
+
+  private _targetSide = EFConnectableSide.AUTO;
+
   private _penultimatePoint = PointExtensions.initialize();
   private _secondPoint = PointExtensions.initialize();
 
@@ -130,13 +143,10 @@ export abstract class FConnectionBase
     return (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element);
   }
 
-  public setLine(
-    { point1, point2 }: ILine,
-    sourceSide: EFConnectableSide,
-    targetSide: EFConnectableSide,
-  ): void {
+  public setLine({ point1, point2 }: ILine): void {
     this.line = LineExtensions.initialize(point1, point2);
-    const pathResult = this._getPathResult(point1, sourceSide, point2, targetSide);
+
+    const pathResult = this._getPathResult(point1, point2);
 
     this.path = pathResult.path;
     this._penultimatePoint = pathResult.penultimatePoint || point1;
@@ -154,18 +164,20 @@ export abstract class FConnectionBase
     return Array.from(this.fConnectionContents()?.values() ?? []);
   }
 
-  private _getPathResult(
-    source: IPoint,
-    sourceSide: EFConnectableSide,
-    target: IPoint,
-    targetSide: EFConnectableSide,
-  ) {
+  private _getPathResult(source: IPoint, target: IPoint) {
     const radius = this.fRadius > 0 ? this.fRadius : 0;
     const offset = this.fOffset > 0 ? this.fOffset : 1;
 
     return this._connectionFactory.handle({
       type: this.fType,
-      payload: { source, sourceSide, target, targetSide, radius, offset },
+      payload: {
+        source,
+        sourceSide: this._sourceSide,
+        target,
+        targetSide: this._targetSide,
+        radius,
+        offset,
+      },
     });
   }
 
@@ -188,5 +200,19 @@ export abstract class FConnectionBase
     this.fDragHandleEnd().redraw(this._penultimatePoint, this.line.point2);
     this.fDragHandleStart()?.redraw(this._secondPoint, this.line.point1);
     this.fTextComponent().redraw(this.line);
+  }
+
+  /**
+   * Applies the resolved sides to the connection. Don't call this method directly; it's used internally.
+   *
+   * @param sourceSide The resolved side for the source element.
+   * @param targetSide The resolved side for the target element.
+   */
+  public _applyResolvedSidesToConnection(
+    sourceSide: EFConnectableSide,
+    targetSide: EFConnectableSide,
+  ): void {
+    this._sourceSide = sourceSide;
+    this._targetSide = targetSide;
   }
 }

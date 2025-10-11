@@ -8,12 +8,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveNodeFromStoreRequest)
-export class RemoveNodeFromStore
-  implements IExecution<RemoveNodeFromStoreRequest, void> {
-
+export class RemoveNodeFromStore implements IExecution<RemoveNodeFromStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveNodeFromStoreRequest): void {
-    this._store.removeComponent(this._store.fNodes, request.fComponent);
+  public handle({ instance }: RemoveNodeFromStoreRequest): void {
+    this._store.removeComponent(this._store.fNodes, instance);
   }
 }

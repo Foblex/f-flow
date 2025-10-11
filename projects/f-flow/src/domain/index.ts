@@ -48,4 +48,6 @@ export * from './log-execution-time';
 
 export * from './providers';
 
+export * from './drag-rect-cache';
+
 export * from './transition-end';

@@ -8,11 +8,12 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveLineAlignmentFromStoreRequest)
-export class RemoveLineAlignmentFromStoreExecution implements IExecution<RemoveLineAlignmentFromStoreRequest, void> {
-
+export class RemoveLineAlignmentFromStore
+  implements IExecution<RemoveLineAlignmentFromStoreRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveLineAlignmentFromStoreRequest): void {
+  public handle(_request: RemoveLineAlignmentFromStoreRequest): void {
     this._store.fLineAlignment = undefined;
   }
 }

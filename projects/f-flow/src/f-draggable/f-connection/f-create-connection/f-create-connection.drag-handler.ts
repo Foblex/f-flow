@@ -125,13 +125,13 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
       new CalculateConnectionLineByBehaviorRequest(
         this._fOutputWithRect.fRect,
         toConnectorRect,
-        this._connection.fBehavior,
+        this._connection,
         this._fOutputWithRect.fConnector.fConnectableSide,
         fSide,
       ),
     );
 
-    this._connection.setLine(line, this._fOutputWithRect.fConnector.fConnectableSide, fSide);
+    this._connection.setLine(line);
     this._connection.redraw();
   }
 
@@ -141,17 +141,13 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
         new CalculateConnectionLineByBehaviorRequest(
           this._fOutputWithRect.fRect,
           fClosestInput.fRect,
-          this._snapConnection!.fBehavior,
+          this._snapConnection!,
           this._fOutputWithRect.fConnector.fConnectableSide,
           fClosestInput.fConnector.fConnectableSide,
         ),
       );
       this._snapConnection?.show();
-      this._snapConnection?.setLine(
-        line,
-        this._fOutputWithRect.fConnector.fConnectableSide,
-        fClosestInput.fConnector.fConnectableSide,
-      );
+      this._snapConnection?.setLine(line);
       this._snapConnection?.redraw();
     } else {
       this._snapConnection?.hide();
