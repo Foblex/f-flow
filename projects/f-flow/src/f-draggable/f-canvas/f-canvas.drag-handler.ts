@@ -4,16 +4,14 @@ import { FComponentsStore } from '../../f-storage';
 import { Injector } from '@angular/core';
 
 export class FCanvasDragHandler implements IFDragHandler {
-
   public fEventType = 'canvas-move';
 
   private readonly _store: FComponentsStore;
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
 
-  constructor(
-    _injector: Injector,
-  ) {
+  constructor(_injector: Injector) {
     this._store = _injector.get(FComponentsStore);
+    this._store.fCanvas?.hostElement.classList.add('canvas-dragging');
   }
 
   public prepareDragSequence(): void {
@@ -27,5 +25,6 @@ export class FCanvasDragHandler implements IFDragHandler {
 
   public onPointerUp(): void {
     this._store.fCanvas!.emitCanvasChangeEvent();
+    this._store.fCanvas?.hostElement.classList.remove('canvas-dragging');
   }
 }

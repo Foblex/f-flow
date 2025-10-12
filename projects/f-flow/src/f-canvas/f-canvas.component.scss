@@ -7,4 +7,9 @@
   top: 0;
   transform-origin: 0 0;
   pointer-events: none;
+
+  &.canvas-dragging {
+    will-change: transform;
+    transform: translateZ(0);
+  }
 }
