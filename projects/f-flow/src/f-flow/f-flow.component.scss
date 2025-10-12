@@ -21,11 +21,11 @@
 
   .f-node,
   .f-group {
-    position: absolute;
+    position: absolute !important;
     transform-origin: center;
     user-select: none;
     pointer-events: all;
-    left: 0;
-    top: 0;
+    left: 0 !important;
+    top: 0 !important;
   }
 }
