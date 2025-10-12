@@ -23,7 +23,7 @@ export class FConnectionFactory {
 
     [EFConnectionType.SEGMENT]: new FSegmentPathBuilder(),
 
-    ...(inject(F_CONNECTION_BUILDERS) || {}),
+    ...(inject(F_CONNECTION_BUILDERS, { optional: true }) || {}),
   };
 
   public handle(request: IFConnectionFactoryRequest): IFConnectionBuilderResponse {
