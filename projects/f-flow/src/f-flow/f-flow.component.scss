@@ -28,4 +28,11 @@
     left: 0 !important;
     top: 0 !important;
   }
+
+  &.f-dragging {
+    .f-canvas {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+  }
 }
