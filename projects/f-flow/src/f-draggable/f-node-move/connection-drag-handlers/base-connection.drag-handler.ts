@@ -77,7 +77,7 @@ export class BaseConnectionDragHandler {
       new CalculateConnectionLineByBehaviorRequest(
         RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
         RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
-        this.fConnection.fBehavior,
+        this.fConnection,
         this._fOutputWithRect.fConnector.fConnectableSide,
         this._fInputWithRect.fConnector.fConnectableSide,
       ),
@@ -85,11 +85,7 @@ export class BaseConnectionDragHandler {
   }
 
   private _redrawConnection(line: ILine): void {
-    this.fConnection.setLine(
-      line,
-      this._fOutputWithRect.fConnector.fConnectableSide,
-      this._fInputWithRect.fConnector.fConnectableSide,
-    );
+    this.fConnection.setLine(line);
     this.fConnection.redraw();
   }
 

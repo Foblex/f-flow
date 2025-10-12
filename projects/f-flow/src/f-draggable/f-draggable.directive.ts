@@ -42,6 +42,7 @@ import {
   InitializeDragSequenceRequest,
   OnPointerMoveRequest,
   PrepareDragSequenceRequest,
+  DragRectCache,
   RemoveDndFromStoreRequest,
 } from '../domain';
 import {
@@ -327,6 +328,7 @@ export class FDraggableDirective
   }
 
   protected override finalizeDragSequence(): void {
+    DragRectCache.invalidateAll();
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._result.clear();

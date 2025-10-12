@@ -7,7 +7,7 @@ import { RemoveConnectionFromStoreExecution } from './remove-connection-from-sto
 import { RemoveSnapConnectionFromStoreExecution } from './remove-snap-connection-from-store';
 import { AddConnectionMarkerToStoreExecution } from './add-connection-marker-to-store';
 import { RemoveConnectionMarkerFromStoreExecution } from './remove-connection-marker-from-store';
-import { RedrawConnectionsExecution } from './redraw-connections';
+import { RedrawConnections } from './redraw-connections';
 import { CalculateConnectionLineByBehavior } from './calculate-connection-line-by-behavior';
 
 /**
@@ -26,7 +26,7 @@ export const F_CONNECTION_FEATURES = [
 
   CalculateConnectionLineByBehavior,
 
-  RedrawConnectionsExecution,
+  RedrawConnections,
 
   RemoveConnectionForCreateFromStoreExecution,
 

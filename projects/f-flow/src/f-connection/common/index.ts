@@ -14,6 +14,8 @@ export * from './f-connection-base';
 
 export * from './e-f-connection-behavior';
 
+export * from './e-f-connection-connectable-side';
+
 export * from './e-f-connection-type';
 
 export * from './f-connection-identifiers';

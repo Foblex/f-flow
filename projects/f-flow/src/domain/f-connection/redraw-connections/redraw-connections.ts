@@ -8,6 +8,7 @@ import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
+import { DragRectCache } from '../../drag-rect-cache';
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -16,7 +17,7 @@ import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connecto
  */
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)
-export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsRequest, void> {
+export class RedrawConnections implements IExecution<RedrawConnectionsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -34,6 +35,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
     this._store.fConnections.forEach((x) => {
       this._setupConnection(this._getOutput(x.fOutputId()), this._getInput(x.fInputId()), x);
     });
+    DragRectCache.invalidateAll();
   }
 
   private _getOutput(id: string): FConnectorBase {
@@ -71,7 +73,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
 
     this._setMarkers(fConnection);
 
-    fConnection.setLine(line, fOutput.fConnectableSide, fInput.fConnectableSide);
+    fConnection.setLine(line);
 
     fConnection.initialize();
     fConnection.isSelected() ? fConnection.markAsSelected() : null;
@@ -90,7 +92,7 @@ export class RedrawConnectionsExecution implements IExecution<RedrawConnectionsR
         this._mediator.execute<IRoundedRect>(
           new GetNormalizedConnectorRectRequest(input.hostElement),
         ),
-        connection.fBehavior,
+        connection,
         output.fConnectableSide,
         input.fConnectableSide,
       ),

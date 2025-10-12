@@ -1,0 +1,48 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-canvas>
+    <f-connection
+      fOutputId="1"
+      fInputId="2"
+      fBehavior="fixed"
+      fType="bezier"
+      [fOutputSide]="connection1SourceSide()"
+      [fInputSide]="connection1TargetSide()"
+    >
+      <div fConnectionContent position="0.2" align="along">{{ connection1SourceSide()}}</div>
+      <div fConnectionContent position="0.8" align="along">{{ connection1TargetSide()}}</div>
+    </f-connection>
+    <f-connection
+      fOutputId="1"
+      fInputId="3"
+      fBehavior="fixed"
+      fType="bezier"
+      [fOutputSide]="connection2SourceSide()"
+      [fInputSide]="connection2TargetSide()"
+    >
+      <div fConnectionContent position="0.2" align="along">{{ connection2SourceSide()}}</div>
+      <div fConnectionContent position="0.8" align="along">{{ connection2TargetSide()}}</div>
+    </f-connection>
+    <f-connection
+      fOutputId="1"
+      fInputId="4"
+      fBehavior="fixed"
+      fType="bezier"
+      [fOutputSide]="connection3SourceSide()"
+      [fInputSide]="connection3TargetSide()"
+    >
+      <div fConnectionContent position="0.2" align="along">{{ connection3SourceSide()}}</div>
+      <div fConnectionContent position="0.8" align="along">{{ connection3TargetSide()}}</div>
+    </f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 250, y: 0 }" fNodeOutput fOutputId="1">Node1</div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }" fNodeInput fInputId="2">Node2</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 250, y: 300 }" fNodeInput fInputId="3">Node3</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 500, y: 150 }" fNodeInput fInputId="4">Node4</div>
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <button class="f-button" (click)="switchSides()" [disabled]="calculateSides()">
+    Switch Sides
+  </button>
+</div>

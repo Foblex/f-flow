@@ -8,11 +8,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddLineAlignmentToStoreRequest)
-export class AddLineAlignmentToStoreExecution implements IExecution<AddLineAlignmentToStoreRequest, void> {
-
+export class AddLineAlignmentToStore implements IExecution<AddLineAlignmentToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddLineAlignmentToStoreRequest): void {
-    this._store.fLineAlignment = request.fComponent;
+  public handle({ instance }: AddLineAlignmentToStoreRequest): void {
+    this._store.fLineAlignment = instance;
   }
 }

@@ -12,8 +12,9 @@ import { NotifyTransformChangedRequest } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(EmitSelectionChangeEventRequest)
-export class EmitSelectionChangeEventExecution implements IExecution<EmitSelectionChangeEventRequest, void> {
-
+export class EmitSelectionChangeEventExecution
+  implements IExecution<EmitSelectionChangeEventRequest, void>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -23,10 +24,8 @@ export class EmitSelectionChangeEventExecution implements IExecution<EmitSelecti
 
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  public handle(request: EmitSelectionChangeEventRequest): void {
-    if (
-      !this._dragContext.isSelectedChanged
-    ) {
+  public handle(_request: EmitSelectionChangeEventRequest): void {
+    if (!this._dragContext.isSelectedChanged) {
       return;
     }
 

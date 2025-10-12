@@ -1,10 +1,14 @@
 import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
 import {
-  MoveFrontElementsBeforeTargetElementExecution,
+  MoveFrontElementsBeforeTargetElement,
   UpdateItemAndChildrenLayersExecution,
 } from './update-item-and-children-layers';
 import { GetNormalizedPointExecution } from './get-normalized-point';
-import { SortItemLayersExecution, SortItemsByParentExecution, SortNodeLayersExecution } from './sort-item-layers';
+import {
+  SortItemLayersExecution,
+  SortItemsByParentExecution,
+  SortNodeLayersExecution,
+} from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
 import { GetElementRoundedRectExecution } from './get-element-rounded-rect';
 import { F_SELECTION_FEATURES } from './f-selection';
@@ -17,7 +21,7 @@ import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
 import { F_LINE_ALIGNMENT_FEATURES } from './f-line-alignment';
 import { F_ZOOM_FEATURES } from './f-zoom';
-import { GetNormalizedConnectorRectExecution } from "./get-normalized-connector-rect";
+import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
 
 /**
  * This module provides a collection of common providers for the FFlow domain.
@@ -26,7 +30,6 @@ import { GetNormalizedConnectorRectExecution } from "./get-normalized-connector-
  * and various utility executions.
  */
 export const COMMON_PROVIDERS = [
-
   ...F_CANVAS_FEATURES,
 
   ...F_CONNECTION_FEATURES,
@@ -65,5 +68,5 @@ export const COMMON_PROVIDERS = [
 
   UpdateItemAndChildrenLayersExecution,
 
-  MoveFrontElementsBeforeTargetElementExecution,
+  MoveFrontElementsBeforeTargetElement,
 ];

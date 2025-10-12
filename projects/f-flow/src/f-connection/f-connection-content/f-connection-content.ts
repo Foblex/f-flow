@@ -1,8 +1,18 @@
-import { Directive, effect, ElementRef, inject, Injector, input, OnInit, untracked } from '@angular/core';
+import {
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  Injector,
+  input,
+  OnInit,
+  untracked,
+} from '@angular/core';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { FMediator } from '@foblex/mediator';
 import { castToEnum } from '@foblex/utils';
 import { IPolylineContent, PolylineContentAlign } from './polyline-content-engine';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 /**
  * Directive for placing custom user content (text, icons, buttons, etc.)
@@ -56,8 +66,12 @@ export class FConnectionContent implements OnInit, IPolylineContent {
    * - `1` — at the end of the connection,
    * - `0.5` — at the middle of the connection (default).
    */
-  public readonly position = input<number, number>(0.5, {
-    transform: (v) => (v < 0 ? 0 : v > 1 ? 1 : v),
+  public readonly position = input<number, unknown>(0.5, {
+    transform: (x) => {
+      const v = coerceNumberProperty(x);
+
+      return v < 0 ? 0 : v > 1 ? 1 : v;
+    },
   });
 
   /**
@@ -68,7 +82,9 @@ export class FConnectionContent implements OnInit, IPolylineContent {
    * - Negative values shift it to the left.
    * - Default: `0` (no shift).
    */
-  public readonly offset = input<number>(0);
+  public readonly offset = input<number, unknown>(0, {
+    transform: (x) => coerceNumberProperty(x),
+  });
 
   /**
    * Controls the orientation (rotation) of the content relative to the connection.

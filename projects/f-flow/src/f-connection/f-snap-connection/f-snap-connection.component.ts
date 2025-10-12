@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
   Input,
   numberAttribute,
   OnChanges,
@@ -10,7 +11,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { EFConnectionBehavior } from '../common';
+import { EFConnectionBehavior, EFConnectionConnectableSide } from '../common';
 import { EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
@@ -62,6 +63,18 @@ export class FSnapConnectionComponent
 
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
+
+  public override fInputSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fInputSide', EFConnectionConnectableSide);
+    },
+  });
+
+  public override fOutputSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fOutputSide', EFConnectionConnectableSide);
+    },
+  });
 
   public override get boundingElement(): HTMLElement | SVGElement {
     return this.fPath().hostElement;

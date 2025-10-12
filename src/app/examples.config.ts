@@ -148,10 +148,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connection-types',
-        () =>
-          import(
-            '../../projects/f-examples/connections/connection-types/connection-types.component'
-          ),
+        () => import('../../projects/f-examples/connections/connection-types/connection-types'),
       ),
       defineLazyComponent(
         'custom-connection-type',
@@ -195,6 +192,13 @@ export const EXAMPLES_CONFIGURATION = {
         () =>
           import(
             '../../projects/f-examples/connections/custom-connections/custom-connections.component'
+          ),
+      ),
+      defineLazyComponent(
+        'connection-connectable-side',
+        () =>
+          import(
+            '../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'
           ),
       ),
       defineLazyComponent(
@@ -667,15 +671,21 @@ function connectionGroup() {
     },
     {
       link: 'connection-types',
-      text: 'Connection Types (Straight, Bezier, Step)',
+      pageTitle:
+        'Different Connection types in Foblex Flow Charts – Straight, Segment, Bezier, Adaptive Curve',
+      text: 'Connection Types (Straight, Segment, Bezier, Adaptive Curve)',
       description:
-        'Compare edge types for Angular diagrams: straight, bezier, step. Code samples, when to use which, and visuals.',
+        'Explore different connection types in Angular diagrams: straight, segment, bezier, and adaptive curve. Learn how to adjust offset and radius, and discover when each type works best. Includes visuals and a guide for creating custom connection types.',
       image: './previews/examples/connection-types.light.png',
       image_dark: './previews/examples/connection-types.dark.png',
-      image_width: 791,
-      image_height: 600,
+      image_width: 1596,
+      image_height: 1200,
       image_type: 'image/png',
-      date: new Date('2024-10-02 20:12:01'),
+      date: new Date('2025-10-12 20:12:01'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
     {
       link: 'custom-connection-type',
@@ -773,6 +783,24 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2024-10-03 01:32:33'),
+    },
+    {
+      link: 'connection-connectable-side',
+      text: 'Connection Connectable Side',
+      pageTitle:
+        'Angular Diagram Connections – Control Connection Sides (Top, Right, Bottom, Left, Calculate)',
+      description:
+        'Control how connections attach to nodes by defining start and end sides (top, right, bottom, left) or using automatic calculation modes. Demonstrates manual side switching and dynamic side determination for Angular diagrams.',
+      image: './previews/examples/connection-connectable-side.light.png',
+      image_dark: './previews/examples/connection-connectable-side.dark.png',
+      image_width: 1596,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2025-10-11 14:17:29'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
   ]);
 }

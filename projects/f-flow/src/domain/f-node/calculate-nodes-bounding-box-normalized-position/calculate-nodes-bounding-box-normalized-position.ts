@@ -13,8 +13,8 @@ import { FNodeBase } from '../../../f-node';
 @Injectable()
 @FExecutionRegister(CalculateNodesBoundingBoxNormalizedPositionRequest)
 export class CalculateNodesBoundingBoxNormalizedPosition
-  implements IExecution<CalculateNodesBoundingBoxNormalizedPositionRequest, IRect | null> {
-
+  implements IExecution<CalculateNodesBoundingBoxNormalizedPositionRequest, IRect | null>
+{
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateNodesBoundingBoxNormalizedPositionRequest): IRect | null {
@@ -28,6 +28,6 @@ export class CalculateNodesBoundingBoxNormalizedPosition
   }
 
   private _getElementRect(fNode: FNodeBase, rect: IRect): IRect {
-    return RectExtensions.initialize(fNode._position.x, fNode._position.y, rect.width, rect.height)
+    return RectExtensions.initialize(fNode._position.x, fNode._position.y, rect.width, rect.height);
   }
 }
