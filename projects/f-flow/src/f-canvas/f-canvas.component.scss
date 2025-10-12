@@ -7,4 +7,6 @@
   top: 0;
   transform-origin: 0 0;
   pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
 }

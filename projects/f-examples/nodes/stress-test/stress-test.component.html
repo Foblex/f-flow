@@ -1,7 +1,7 @@
-@if (columns) {
+@if (columns()) {
   <f-flow fDraggable (fLoaded)="loaded()">
     <f-canvas fZoom>
-      @for (column of columns; track column; let cIndex = $index) {
+      @for (column of columns(); track column; let cIndex = $index) {
         <div
           fNode
           *ngFor="let node of column; let rIndex = index"
@@ -13,4 +13,14 @@
       }
     </f-canvas>
   </f-flow>
+  <div class="examples-toolbar">
+    <mat-form-field>
+      <mat-label>Number</mat-label>
+      <mat-select [(value)]="totalNodes">
+        @for (option of totals; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 }

@@ -18,4 +18,14 @@
     transform-origin: 50% 50%;
     will-change: transform;
   }
+
+  .f-node,
+  .f-group {
+    position: absolute;
+    transform-origin: center;
+    user-select: none;
+    pointer-events: all;
+    left: 0;
+    top: 0;
+  }
 }

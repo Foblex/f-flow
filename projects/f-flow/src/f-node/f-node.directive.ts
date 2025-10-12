@@ -110,12 +110,6 @@ export class FNodeDirective
   }
 
   public ngOnInit(): void {
-    this.setStyle('position', 'absolute');
-    this.setStyle('transform-origin', 'center');
-    this.setStyle('user-select', 'none');
-    this.setStyle('pointer-events', 'all');
-    this.setStyle('left', '0');
-    this.setStyle('top', '0');
     super.redraw();
 
     this._mediator.execute<void>(new AddNodeToStoreRequest(this));
