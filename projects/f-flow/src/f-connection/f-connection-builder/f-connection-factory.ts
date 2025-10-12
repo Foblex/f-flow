@@ -1,35 +1,35 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IFConnectionBuilder } from './i-f-connection-builder';
-import { EFConnectionType, FBezierPathBuilder, FSegmentPathBuilder, FStraightPathBuilder } from '../common';
-import { F_CONNECTION_BUILDERS, IFConnectionBuilders } from './f-connection-builders';
+import {
+  AdaptiveCurveBuilder,
+  EFConnectionType,
+  FBezierPathBuilder,
+  FSegmentPathBuilder,
+  FStraightPathBuilder,
+} from '../common';
+import { F_CONNECTION_BUILDERS } from './f-connection-builders';
 import { IFConnectionFactoryRequest } from './i-f-connection-factory-request';
 import { IFConnectionBuilderResponse } from './i-f-connection-builder-response';
 import { IMap } from '../../domain';
 
 @Injectable()
 export class FConnectionFactory {
+  private readonly _builders: IMap<IFConnectionBuilder> = {
+    [EFConnectionType.STRAIGHT]: new FStraightPathBuilder(),
 
-  private readonly builders: IMap<IFConnectionBuilder> = {
+    [EFConnectionType.BEZIER]: new FBezierPathBuilder(),
 
-    [ EFConnectionType.STRAIGHT ]: new FStraightPathBuilder(),
+    [EFConnectionType.ADAPTIVE_CURVE]: new AdaptiveCurveBuilder(),
 
-    [ EFConnectionType.BEZIER ]: new FBezierPathBuilder(),
+    [EFConnectionType.SEGMENT]: new FSegmentPathBuilder(),
 
-    [ EFConnectionType.SEGMENT ]: new FSegmentPathBuilder(),
-  }
-
-  constructor(
-    @Optional() @Inject(F_CONNECTION_BUILDERS) builders: IFConnectionBuilders,
-  ) {
-    if (builders) {
-      this.builders = { ...this.builders, ...builders };
-    }
-  }
+    ...(inject(F_CONNECTION_BUILDERS) || {}),
+  };
 
   public handle(request: IFConnectionFactoryRequest): IFConnectionBuilderResponse {
-    const builder = this.builders[ request.type ];
+    const builder = this._builders[request.type];
     if (!builder) {
-      throw new Error(`FConnectionBuilder not found for type ${ request.type }`);
+      throw new Error(`FConnectionBuilder not found for type ${request.type}`);
     }
 
     return builder.handle(request.payload);
