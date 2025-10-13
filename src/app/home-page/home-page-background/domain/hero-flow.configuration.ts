@@ -9,7 +9,7 @@ export const HERO_FLOW_CONFIGURATION: IHeroFlowConfiguration = {
       to: EFConnectableSide.AUTO,
       from: EFConnectableSide.TOP,
       large: true,
-      text: 'Angular 12+'
+      text: 'Angular 15+'
     },
     {
       uid: '2',

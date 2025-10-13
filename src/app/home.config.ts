@@ -18,7 +18,7 @@ export const HOME_CONFIGURATION = {
       headline: 'Foblex Flow',
       tagline1: 'Built with Angular',
       tagline2: 'Flow-Chart Library',
-      subDescription: 'Supports Angular 12+, SSR, and Composition API.',
+      subDescription: 'Supports Angular 15+, SSR, and Composition API.',
     }),
     provideBackground(HomePageBackgroundComponent),
     provideImage(HomePageImageComponent),

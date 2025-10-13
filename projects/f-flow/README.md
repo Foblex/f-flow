@@ -16,7 +16,7 @@
 ## Welcome to Foblex Flow
 
 Foblex Flow is an [Angular](https://angular.dev/) library built to simplify the creation and management of dynamic, interactive flows.
-Whether you're developing complex systems or lightweight visualizations, Foblex Flow provides a robust set of tools to help automate node manipulation and inter-node connections with ease. It's fully compatible with Angular 12+, Server-Side Rendering (SSR), and the Composition API.
+Whether you're developing complex systems or lightweight visualizations, Foblex Flow provides a robust set of tools to help automate node manipulation and inter-node connections with ease. It's fully compatible with Angular 15+, Server-Side Rendering (SSR), and the Composition API.
 
 ### Examples
 
