@@ -32,7 +32,7 @@ It provides a robust, fully Angular-native foundation to create, customize, and 
 - 🧠 **Event-driven architecture** — React to user interaction via clean APIs
 - 🎨 **Customizable Templates** — Use your own components for nodes and connections
 - 🖱 **Drag, Zoom, Pan** — Smooth canvas navigation for large graphs
-- ⚙️ **SSR + Angular Compatibility** — Works with Angular 12+, SSR, Standalone Components, and Composition API
+- ⚙️ **SSR + Angular Compatibility** — Works with Angular 15+, SSR, Standalone Components, and Composition API
 
 ---
 
