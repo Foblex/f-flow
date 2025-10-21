@@ -7,7 +7,7 @@ import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
-import { IPointerEvent } from "../../drag-toolkit";
+import { IPointerEvent } from '../../drag-toolkit';
 
 /**
  * Implements the functionality for selecting elements in a graphical interface.
@@ -50,7 +50,6 @@ import { IPointerEvent } from "../../drag-toolkit";
 @Injectable()
 @FExecutionRegister(FSingleSelectRequest)
 export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
-
   private readonly _fMediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
@@ -80,12 +79,18 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
   }
 
   private _getNodeOrGroup(targetElement: HTMLElement): FNodeBase | undefined {
-    return this._store.fNodes.find((x) => (x).isContains(targetElement));
+    return this._store.fNodes.find((x) => x.isContains(targetElement));
   }
 
   private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {
-    return this._store.fConnections
-      .find(c => c.isContains(element) || c.fConnectionCenter()?.nativeElement?.contains(element));
+    return this._store.fConnections.find(
+      (c) =>
+        c.isContains(element) ||
+        c.fConnectionCenter()?.nativeElement?.contains(element) ||
+        Array.from(c.fConnectionContents()?.values() ?? []).some((content) =>
+          content.hostElement?.contains(element),
+        ),
+    );
   }
 
   private _updateItemAndChildrenLayers(fItem?: ISelectable): void {
