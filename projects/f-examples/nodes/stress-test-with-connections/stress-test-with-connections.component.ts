@@ -1,62 +1,62 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import {
   EFConnectableSide,
   EFConnectionBehavior,
   EFConnectionType,
   EFMarkerType,
   FCanvasComponent,
-  FFlowComponent,
   FFlowModule,
   FZoomDirective,
 } from '@foblex/flow';
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'stress-test-with-connections',
   styleUrls: ['./stress-test-with-connections.component.scss'],
   templateUrl: './stress-test-with-connections.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect, FZoomDirective],
 })
-export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit {
-  @ViewChild(FFlowComponent, { static: false })
-  public fFlow!: FFlowComponent;
+export class StressTestWithConnectionsComponent {
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: false })
-  public fCanvas!: FCanvasComponent;
-
-  public counts: number[] = [25, 50, 75, 100, 150];
-  public count = 25;
-
-  public behaviors: string[] = [
+  protected readonly eMarkerType = EFMarkerType;
+  protected readonly counts = [25, 50, 75, 100, 150];
+  protected readonly behaviors: string[] = [
     EFConnectionBehavior.FIXED,
     EFConnectionBehavior.FIXED_CENTER,
     EFConnectionBehavior.FLOATING,
   ];
-  public behavior = EFConnectionBehavior.FLOATING;
-
-  public types: string[] = [
+  protected readonly types: string[] = [
     EFConnectionType.STRAIGHT,
     EFConnectionType.SEGMENT,
     EFConnectionType.BEZIER,
+    EFConnectionType.ADAPTIVE_CURVE,
   ];
-  public type = EFConnectionType.STRAIGHT;
 
-  public nodes: { id: number; position: IPoint; side: EFConnectableSide }[] = [];
+  protected readonly count = signal(50);
+  protected readonly behavior = signal(EFConnectionBehavior.FLOATING);
+  protected readonly type = signal(EFConnectionType.STRAIGHT);
 
-  public onLoaded(): void {
-    this.fCanvas?.fitToScreen(PointExtensions.initialize(20, 20), false);
-  }
+  protected readonly nodes = computed(() => {
+    const count = this.count();
 
-  public ngOnInit(): void {
-    this.nodes = this._generateNodes(this.count);
-  }
+    return untracked(() => this._generateNodes(count));
+  });
 
-  public ngAfterViewInit(): void {
-    this.fFlow.reset();
+  protected loaded(): void {
+    this._canvas()?.fitToScreen(PointExtensions.initialize(20, 20), false);
   }
 
   private _generateNodes(
@@ -114,11 +114,5 @@ export class StressTestWithConnectionsComponent implements OnInit, AfterViewInit
     }
 
     return result;
-  }
-
-  protected readonly eMarkerType = EFMarkerType;
-
-  public onSelectionChange(event: MatSelectChange): void {
-    this.nodes = this._generateNodes(event.value);
   }
 }

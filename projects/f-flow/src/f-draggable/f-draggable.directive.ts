@@ -3,12 +3,10 @@ import {
   booleanAttribute,
   ContentChildren,
   Directive,
-  ElementRef,
   EventEmitter,
   inject,
   input,
   Input,
-  NgZone,
   numberAttribute,
   OnDestroy,
   OnInit,
@@ -58,7 +56,7 @@ import {
   F_BEFORE_MAIN_PLUGIN,
   IFDragAndDropPlugin,
 } from './i-f-drag-and-drop-plugin';
-import { BrowserService, EOperationSystem, PlatformService } from '@foblex/platform';
+import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
@@ -130,12 +128,9 @@ export class FDraggableDirective
   extends FDraggableBase
   implements OnInit, AfterViewInit, OnDestroy
 {
-  public readonly hostElement = inject(ElementRef).nativeElement;
-
   private readonly _result = inject(FDragHandlerResult);
   private readonly _mediator = inject(FMediator);
   private readonly _platform = inject(PlatformService);
-  private readonly _browser = inject(BrowserService);
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
@@ -230,16 +225,12 @@ export class FDraggableDirective
   @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
-  constructor() {
-    super(inject(NgZone, { optional: true }));
-  }
-
   public ngOnInit(): void {
     this._mediator.execute<void>(new AddDndToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
-    super.subscribe(this._browser.document);
+    super.subscribe();
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
