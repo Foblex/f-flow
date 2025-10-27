@@ -1,21 +1,34 @@
-<f-flow fDraggable
-        (fLoaded)="onInitialized()">
+<f-flow fDraggable (fLoaded)="onInitialized()">
   <f-canvas fZoom>
-    @for (item of viewModel; track item.id) {
-      <f-connection *ngIf="item.nextMatchId" [fReassignDisabled]="true"
-                    [fSelectionDisabled]="true"
-                    fBehavior="fixed_center"
-                    fType="segment"
-                    [fOutputId]="item.id" [fInputId]="item.nextMatchId">
-      </f-connection>
-    }
+    <ng-container ngProjectAs="[fConnections]">
+      @for (item of viewModel; track item.id) {
+        @if (item.nextMatchId) {
+          <f-connection
+            [fReassignDisabled]="true"
+            [fSelectionDisabled]="true"
+            fBehavior="fixed_center"
+            fType="segment"
+            [fOutputId]="item.id"
+            [fInputId]="item.nextMatchId"
+          />
+        }
+      }
+    </ng-container>
 
     @for (item of viewModel; track item.id) {
-      <div fNode [fNodeId]="item.id" [fNodePosition]="item.position!"
-           fDragHandle
-           fNodeOutput [fOutputId]="item.id" fOutputConnectableSide="right"
-           fNodeInput [fInputId]="item.id" fInputConnectableSide="left"
-           [fNodeDraggingDisabled]="true">
+      <div
+        fNode
+        [fNodeId]="item.id"
+        [fNodePosition]="item.position!"
+        fDragHandle
+        fNodeOutput
+        [fOutputId]="item.id"
+        fOutputConnectableSide="right"
+        fNodeInput
+        [fInputId]="item.id"
+        fInputConnectableSide="left"
+        [fNodeDraggingDisabled]="true"
+      >
         <div class="header" [class]="item.color">
           <div class="title">{{ item.competitionPhase }}</div>
           <div class="date">{{ item.date | date }}</div>
@@ -32,4 +45,3 @@
     }
   </f-canvas>
 </f-flow>
-

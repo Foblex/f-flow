@@ -1,6 +1,6 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fDraggable (fLoaded)="loaded()">
   <f-canvas fZoom>
-    @for (node of nodes; track node.position; let index = $index) {
+    @for (node of nodes(); track node.id) {
       <div
         fNode
         [fNodePosition]="node.position"
@@ -24,14 +24,16 @@
       Move me
     </div>
 
-    @for (node of nodes; track node.position; let index = $index) {
+    @for (node of nodes(); track node.position; let index = $index) {
       <f-connection
-        [fType]="type"
-        [fBehavior]="behavior"
+        [fType]="type()"
+        [fBehavior]="behavior()"
         fOutputId="0"
         [fInputId]="node.id"
         fReassignDisabled="true"
         fSelectionDisabled="true"
+        fOutputSide="calculate"
+        fInputSide="calculate"
       >
         <svg
           viewBox="0 0 700 700"
@@ -67,7 +69,7 @@
 <div class="examples-toolbar">
   <mat-form-field>
     <mat-label>Number</mat-label>
-    <mat-select [(value)]="count" (selectionChange)="onSelectionChange($event)">
+    <mat-select [(value)]="count">
       @for (option of counts; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
       }
@@ -82,7 +84,7 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Select Background</mat-label>
+    <mat-label>Type</mat-label>
     <mat-select [(value)]="type">
       @for (option of types; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>

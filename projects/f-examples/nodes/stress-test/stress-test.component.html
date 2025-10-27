@@ -1,19 +1,44 @@
 @if (columns()) {
   <f-flow fDraggable (fLoaded)="loaded()">
     <f-canvas fZoom>
-      @for (column of columns(); track column; let cIndex = $index) {
-        <div
-          fNode
-          *ngFor="let node of column; let rIndex = index"
-          [fNodePosition]="{ x: 120 * cIndex, y: rIndex * 120 }"
-          fDragHandle
-        >
-          Node
-        </div>
-      }
+      <ng-container ngProjectAs="[fNodes]">
+        @for (column of columns(); track column; let cIndex = $index) {
+          @for (node of column; track node; let rIndex = $index) {
+            <div
+              fNode
+              [fNodePosition]="{ x: 120 * cIndex, y: rIndex * 120 }"
+              fDragHandle
+              fNodeInput
+              [fInputId]="node"
+              fNodeOutput
+              [fOutputId]="node"
+            >
+              Node
+            </div>
+          }
+        }
+      </ng-container>
+
+      <ng-container ngProjectAs="[fConnections]">
+        @if (showConnections()) {
+          @for (connection of connections(); track connection) {
+            <f-connection
+              fType="adaptive-curve"
+              fBehavior="fixed"
+              [fInputId]="connection.target"
+              [fOutputId]="connection.source"
+              fInputSide="calculate"
+              fOutputSide="calculate"
+            />
+          }
+        }
+      </ng-container>
     </f-canvas>
   </f-flow>
   <div class="examples-toolbar">
+    <f-checkbox [checked]="showConnections()" (change)="toggleConnections()"
+      >Show Connections</f-checkbox
+    >
     <mat-form-field>
       <mat-label>Number</mat-label>
       <mat-select [(value)]="totalNodes">

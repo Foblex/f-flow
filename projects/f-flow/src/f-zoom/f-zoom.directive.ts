@@ -2,23 +2,26 @@ import {
   AfterViewInit,
   booleanAttribute,
   Directive,
+  effect,
   inject,
+  Injector,
+  input,
   Input,
   numberAttribute,
-  OnChanges,
   OnDestroy,
   OnInit,
-  Renderer2,
-  SimpleChanges,
-} from "@angular/core";
+  untracked,
+} from '@angular/core';
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FMediator } from '@foblex/mediator';
 import {
-  AddZoomToStoreRequest, defaultEventTrigger,
+  AddZoomToStoreRequest,
+  defaultEventTrigger,
   Deprecated,
   FEventTrigger,
   GetCanvasRequest,
-  GetFlowHostElementRequest, isValidEventTrigger,
+  GetFlowHostElementRequest,
+  isValidEventTrigger,
   RemoveZoomFromStoreRequest,
   ResetZoomRequest,
   SetZoomRequest,
@@ -27,25 +30,24 @@ import { FCanvasBase } from '../f-canvas';
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
+import { EventExtensions } from '../drag-toolkit';
 
 @Directive({
-  selector: "f-canvas[fZoom]",
+  selector: 'f-canvas[fZoom]',
   exportAs: 'fComponent',
   standalone: true,
   host: {
     'class': 'f-zoom f-component',
   },
-  providers: [ { provide: F_ZOOM, useExisting: FZoomDirective } ],
+  providers: [{ provide: F_ZOOM, useExisting: FZoomDirective }],
 })
-export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, OnDestroy {
+  private readonly _mediator = inject(FMediator);
+  private readonly _injector = inject(Injector);
 
-  private _fMediator = inject(FMediator);
-  private _rendered = inject(Renderer2);
+  private _triggersListener = EventExtensions.emptyListener();
 
-  private _triggersListener: (() => void)[] = [];
-
-  @Input({ alias: 'fZoom', transform: booleanAttribute })
-  public isEnabled: boolean = false;
+  public readonly isEnabled = input(false, { alias: 'fZoom', transform: booleanAttribute });
 
   @Input()
   public fWheelTrigger: FEventTrigger = defaultEventTrigger;
@@ -65,40 +67,48 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   @Input({ alias: 'fZoomDblClickStep', transform: numberAttribute })
   public override dblClickStep: number = 0.5;
 
-  private get _fHost(): HTMLElement {
-    return this._fMediator.execute(new GetFlowHostElementRequest());
+  private get _hostElement(): HTMLElement {
+    return this._mediator.execute(new GetFlowHostElementRequest());
   }
 
-  private get _fCanvas(): FCanvasBase {
-    return this._fMediator.execute(new GetCanvasRequest());
+  private get _canvas(): FCanvasBase {
+    return this._mediator.execute(new GetCanvasRequest());
   }
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddZoomToStoreRequest(this));
+    this._mediator.execute(new AddZoomToStoreRequest(this));
   }
 
   public ngAfterViewInit(): void {
-    this._listenTriggers();
+    this._listenZoomEnabledChanges();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes[ 'isEnabled' ]) {
-      this._listenTriggers();
-    }
+  private _listenZoomEnabledChanges(): void {
+    effect(
+      () => {
+        this.isEnabled();
+        untracked(() => this._listenTriggers());
+      },
+      { injector: this._injector },
+    );
   }
 
   private _listenTriggers(): void {
-    if (!this._fHost) {
+    if (!this._hostElement) {
       return;
     }
 
     this._disposeListeners();
-    if (!this.isEnabled) {
+    if (!this.isEnabled()) {
       return;
     }
+    this._listen('wheel', this._onWheel, EventExtensions.activeListener());
+    this._listen('dblclick', this._onDoubleClick);
 
-    this._triggersListener.push(this._rendered.listen(this._fHost, 'wheel', this._onWheel));
-    this._triggersListener.push(this._rendered.listen(this._fHost, 'dblclick', this._onDoubleClick));
+    this._triggersListener = () => {
+      this._unlisten('wheel', this._onWheel, EventExtensions.activeListener());
+      this._unlisten('dblclick', this._onDoubleClick);
+    };
   }
 
   private _onWheel = (event: WheelEvent) => {
@@ -119,7 +129,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       this._calculateDirection(event.deltaY),
       false,
     );
-  }
+  };
 
   private _normalizeWheelStep(deltaY: number): number {
     const intensity = Math.abs(deltaY) / 100;
@@ -145,12 +155,17 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
     this.setZoom(
       PointExtensions.initialize(event.clientX, event.clientY),
-      this.dblClickStep, EFZoomDirection.ZOOM_IN, true,
+      this.dblClickStep,
+      EFZoomDirection.ZOOM_IN,
+      true,
     );
-  }
+  };
 
   private _getToCenterPosition(position: IPoint | undefined, rect: IRect): IPoint {
-    return PointExtensions.initialize(position?.x || rect.gravityCenter.x, position?.y || rect.gravityCenter.y);
+    return PointExtensions.initialize(
+      position?.x || rect.gravityCenter.x,
+      position?.y || rect.gravityCenter.y,
+    );
   }
 
   public zoomIn(position?: IPoint): void {
@@ -163,15 +178,15 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _onZoomToCenter(direction: EFZoomDirection, position?: IPoint): void {
     this.setZoom(
-      this._getToCenterPosition(position, RectExtensions.fromElement(this._fHost)),
-      this.step, direction, false,
+      this._getToCenterPosition(position, RectExtensions.fromElement(this._hostElement)),
+      this.step,
+      direction,
+      false,
     );
   }
 
   public setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean) {
-    this._fMediator.execute(
-      new SetZoomRequest(position, step, direction, animated),
-    );
+    this._mediator.execute(new SetZoomRequest(position, step, direction, animated));
   }
 
   /**
@@ -183,20 +198,36 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   public getZoomValue(): number {
-    return this._fCanvas.transform.scale || 1;
+    return this._canvas.transform.scale || 1;
   }
 
   public reset(): void {
-    this._fMediator.execute(new ResetZoomRequest());
+    this._mediator.execute(new ResetZoomRequest());
   }
 
   private _disposeListeners(): void {
-    this._triggersListener.forEach((listener) => listener());
-    this._triggersListener = [];
+    this._triggersListener();
+    this._triggersListener = EventExtensions.emptyListener();
   }
 
   public ngOnDestroy(): void {
     this._disposeListeners();
-    this._fMediator.execute(new RemoveZoomFromStoreRequest());
+    this._mediator.execute(new RemoveZoomFromStoreRequest());
+  }
+
+  private _listen<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => unknown,
+    options?: boolean | AddEventListenerOptions,
+  ): void {
+    this._hostElement.addEventListener(type, listener, options);
+  }
+
+  private _unlisten<K extends keyof HTMLElementEventMap>(
+    type: K,
+    listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => unknown,
+    options?: boolean | AddEventListenerOptions,
+  ): void {
+    this._hostElement.removeEventListener(type, listener, options);
   }
 }

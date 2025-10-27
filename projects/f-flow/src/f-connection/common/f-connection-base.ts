@@ -98,7 +98,7 @@ export abstract class FConnectionBase
 
   public readonly fSelection = viewChild.required(FConnectionSelectionComponent);
 
-  public readonly fTextComponent = viewChild.required<IConnectionText>(CONNECTION_TEXT);
+  public readonly fTextComponent = viewChild<IConnectionText>(CONNECTION_TEXT);
 
   public abstract fText: string;
 
@@ -199,7 +199,7 @@ export abstract class FConnectionBase
     this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this._penultimatePoint, this.line.point2);
     this.fDragHandleStart()?.redraw(this._secondPoint, this.line.point1);
-    this.fTextComponent().redraw(this.line);
+    this.fTextComponent()?.redraw(this.line);
   }
 
   /**

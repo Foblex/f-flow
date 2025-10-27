@@ -1,13 +1,15 @@
-import { EventEmitter, InputSignalWithTransform } from '@angular/core';
+import { ElementRef, EventEmitter, inject, InputSignalWithTransform } from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './f-drop-to-group';
-import { DragAndDropBase, ICanRunOutsideAngular } from '../drag-toolkit';
+import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './f-node-move';
 
 export abstract class FDraggableBase extends DragAndDropBase {
+  public readonly hostElement = inject(ElementRef).nativeElement;
+
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
@@ -33,8 +35,4 @@ export abstract class FDraggableBase extends DragAndDropBase {
   public abstract fDragStarted: EventEmitter<FDragStartedEvent>;
 
   public abstract fDragEnded: EventEmitter<void>;
-
-  protected constructor(ngZone: ICanRunOutsideAngular | null) {
-    super(ngZone || undefined);
-  }
 }
