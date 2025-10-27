@@ -6,10 +6,15 @@
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
     },
+    "add": {
+      "description": "Installs @foblex/flow and its dependencies (alias for Nx users)",
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json"
+    },
     "ng-update": {
       "description": "Updates @foblex/flow to the latest version",
       "factory": "./ng-update/index#ngUpdate",
       "schema": "./ng-update/schema.json"
-    },
+    }
   }
 }
