@@ -2,6 +2,59 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.9.5](https://github.com/foblex/flow/compare/v17.8.0...v17.9.5) (2025-10-27)
+
+### Features
+
+- **Connection Connectable Side**
+  - Added connectable-side calculation modes (manual & automatic).
+  - Updated documentation and example to demonstrate both connection-side strategies.
+    ([00b4d56](https://github.com/foblex/flow/commit/00b4d56cd9bdb64e2b31ea352fc1420f924a4f28),
+    [7def789](https://github.com/foblex/flow/commit/7def789fc1312f1667c2822ec21655fb4c85f96a),
+    [8180976](https://github.com/foblex/flow/commit/818097663f42e9eb3662d76a8c059da0ab6c1a87))
+
+- **Connection Rendering Improvements**
+  - Introduced `AdaptiveCurveBuilder` and updated connection type examples.
+    ([0f1448a](https://github.com/foblex/flow/commit/0f1448af8d48b2e70d4d76ed24e409f2573d125b))
+
+- **Performance Enhancements**
+  - Improved performance for large-scale node dragging and stress testing scenarios.
+    ([0fc9da4](https://github.com/foblex/flow/commit/0fc9da40f711e15b5d4439f69403642d914ccbf3))
+
+- **Examples / Documentation**
+  - Enhanced 404 fallback page routing and rendering behavior.
+    ([72cfdc5](https://github.com/foblex/flow/commit/72cfdc5b6bf017713036f8b52b588d04f00b3b51))
+
+### Bug Fixes
+
+- **Rendering Stability**
+  - Optimized connection rendering and recalculation logic for smoother updates.
+  - Fixed Safari macOS issue where connection paths could render partially clipped.
+  - Improved zoom performance by reducing unnecessary layout thrashing.
+    ([e6a7321](https://github.com/foblex/flow/commit/e6a732125be2db2bc09e817c7dd1744ae22a2016))
+
+- **Canvas Drag Handling**
+  - Added / restored `will-change` and `transform` properties for smoother dragging.
+    ([f40a1ec](https://github.com/foblex/flow/commit/f40a1ec32ba99c90fa6d792cacc031899f8eeb1d),
+    [3800230](https://github.com/foblex/flow/commit/38002304df6e48d87f902b5b6331d17177951489))
+
+- **Node Positioning**
+  - Enforced absolute layout positioning for nodes and groups.
+    ([b03a611](https://github.com/foblex/flow/commit/b03a6115bd82c0b4ce45ffafed083cb45d4a858f))
+
+- **Content Selection Behavior**
+  - Fixed unintended selection inside connections.
+    ([633ff5f](https://github.com/foblex/flow/commit/633ff5f892a80e6d1c5e7a3c7414d7d44debfef4))
+
+### Documentation
+
+- Updated supported Angular version from 12 to 15 in documentation.
+  ([467c8e4](https://github.com/foblex/flow/commit/467c8e4d418a53b34e0f92b29739f070d1fb3fe6))
+
+- Improved `FNodeInputDirective` documentation.
+  ([8ef88e1](https://github.com/foblex/flow/commit/8ef88e15ffed51e9c19a671601ba5e7ab2d4852b),
+  [d72a91f](https://github.com/foblex/flow/commit/d72a91facc9b0b7b31a51f54a8fa0bf5707e4c1f))
+
 ## [17.8.0](https://github.com/foblex/flow/compare/v17.7.0...v17.8.0) (2025-09-15)
 
 ### Features
