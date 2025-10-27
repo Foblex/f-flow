@@ -11,12 +11,11 @@
 
 ::ng-deep {
   .f-connection-content {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     pointer-events: all;
     transform-origin: 50% 50%;
-    will-change: transform;
   }
 
   .f-node,
@@ -27,5 +26,18 @@
     pointer-events: all;
     left: 0 !important;
     top: 0 !important;
+  }
+
+  .f-group {
+    z-index: 1;
+  }
+
+  .f-connection-center,
+  .f-connection-content {
+    z-index: 2;
+  }
+
+  .f-node {
+    z-index: 3;
   }
 }
