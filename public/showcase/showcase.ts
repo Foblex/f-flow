@@ -14,6 +14,17 @@ export const SHOWCASE: IShowcaseItem[] = [
     ],
   },
   {
+    name: 'Multi Agent AI Orchestration (EpicStaff)',
+    tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
+    description:
+      'Open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
+    imageUrl: './showcase/images/epicstaff-dark.png',
+    links: [
+      { text: 'Website', url: 'https://www.epicstaff.ai/' },
+      { text: 'Sources', url: 'https://github.com/EpicStaff/EpicStaff' },
+    ],
+  },
+  {
     name: 'DB Management System',
     tags: ['No Code', 'Open Source', 'Dev Tools'],
     description:
@@ -29,14 +40,19 @@ export const SHOWCASE: IShowcaseItem[] = [
     ],
   },
   {
-    name: 'Multi Agent AI Orchestration (EpicStaff)',
-    tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
+    name: 'ProcessMIX',
+    tags: ['Low-Code', 'Business Rules Engine', 'Decision Automation'],
     description:
-      'Open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
-    imageUrl: './showcase/images/epicstaff-dark.png',
-    links: [
-      { text: 'Website', url: 'https://www.epicstaff.ai/' },
-      { text: 'Sources', url: 'https://github.com/EpicStaff/EpicStaff' },
-    ],
+      'Low-code/no-code platform that enables businesses to automate decision-making and build complex workflows visually. It provides a powerful rules engine and integration tools to connect with external systems, allowing teams to design, test, and deploy processes rapidly.',
+    imageUrl: './showcase/images/processmix.dark.png',
+    links: [{ text: 'Website', url: 'https://processmix.com/' }],
+  },
+  {
+    name: 'Luware Nimbus',
+    tags: ['Omnichannel Contact Center', 'Microsoft Teams Integration', 'Intelligent Routing'],
+    description:
+      'Cloud-based SaaS contact-center solution built natively for Microsoft Teams. It unifies internal helpdesks, branch offices and global contact centres into one intelligent hub, enabling omni-channel communication (voice, chat, email, tasks) and routing to the right agents based on skills, priority or context. ',
+    imageUrl: './showcase/images/luware-nimbus.light.png',
+    links: [{ text: 'Website', url: 'https://luware.com/products/nimbus' }],
   },
 ];
