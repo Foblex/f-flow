@@ -13,3 +13,8 @@
     transform: translateZ(0);
   }
 }
+
+.f-connections-container {
+  position: absolute;
+  z-index: 2;
+}
