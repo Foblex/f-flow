@@ -2,7 +2,6 @@ import { IPoint } from '@foblex/2d';
 import { EFConnectableSide } from '../../f-connectors';
 
 export interface IFConnectionBuilderRequest {
-
   source: IPoint;
 
   sourceSide: EFConnectableSide;
@@ -14,4 +13,6 @@ export interface IFConnectionBuilderRequest {
   radius: number;
 
   offset: number;
+
+  controlPoints?: IPoint[];
 }

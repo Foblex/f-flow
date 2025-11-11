@@ -69,6 +69,9 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
+  @Input()
+  public override fControlPoints: { x: number; y: number }[] = [];
+
   public override fSelectionDisabled = input(false, { transform: booleanAttribute });
 
   public override fReassignableStart = input(false, { transform: booleanAttribute });

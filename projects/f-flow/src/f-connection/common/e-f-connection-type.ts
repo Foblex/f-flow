@@ -6,4 +6,6 @@ export enum EFConnectionType {
   BEZIER = 'bezier',
 
   ADAPTIVE_CURVE = 'adaptive-curve',
+
+  CUSTOM_PATH = 'custom-path',
 }

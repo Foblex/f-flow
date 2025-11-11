@@ -1,0 +1,99 @@
+<f-flow fDraggable (fLoaded)="onLoaded()">
+  <f-canvas>
+    <!-- Example 1: Simple L-shaped path with one control point -->
+    <f-connection
+      fType="custom-path"
+      fOutputId="1"
+      fInputId="2"
+      [fControlPoints]="controlPoints1"
+      [fRadius]="8"
+    >
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 50, y: 50 }"
+      fNodeOutput
+      fOutputId="1"
+      fOutputConnectableSide="right"
+      class="f-node"
+    >
+      <div class="f-node-content">Node A</div>
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 350, y: 50 }"
+      fNodeInput
+      fInputId="2"
+      fInputConnectableSide="left"
+      class="f-node"
+    >
+      <div class="f-node-content">Node B</div>
+    </div>
+
+    <!-- Example 2: Z-shaped path with multiple control points -->
+    <f-connection
+      fType="custom-path"
+      fOutputId="3"
+      fInputId="4"
+      [fControlPoints]="controlPoints2"
+      [fRadius]="10"
+    >
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 50, y: 200 }"
+      fNodeOutput
+      fOutputId="3"
+      fOutputConnectableSide="right"
+      class="f-node"
+    >
+      <div class="f-node-content">Node C</div>
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 350, y: 300 }"
+      fNodeInput
+      fInputId="4"
+      fInputConnectableSide="left"
+      class="f-node"
+    >
+      <div class="f-node-content">Node D</div>
+    </div>
+
+    <!-- Example 3: Complex industrial-style path -->
+    <f-connection
+      fType="custom-path"
+      fOutputId="5"
+      fInputId="6"
+      [fControlPoints]="controlPoints3"
+      [fRadius]="12"
+    >
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 50, y: 400 }"
+      fNodeOutput
+      fOutputId="5"
+      fOutputConnectableSide="right"
+      class="f-node"
+    >
+      <div class="f-node-content">Source</div>
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 350, y: 550 }"
+      fNodeInput
+      fInputId="6"
+      fInputConnectableSide="left"
+      class="f-node"
+    >
+      <div class="f-node-content">Target</div>
+    </div>
+  </f-canvas>
+</f-flow>

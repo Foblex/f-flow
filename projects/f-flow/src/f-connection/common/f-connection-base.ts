@@ -70,6 +70,8 @@ export abstract class FConnectionBase
 
   public abstract fOffset: number;
 
+  public abstract fControlPoints: IPoint[];
+
   protected path: string = '';
 
   public line = LineExtensions.initialize();
@@ -177,6 +179,7 @@ export abstract class FConnectionBase
         targetSide: this._targetSide,
         radius,
         offset,
+        controlPoints: this.fControlPoints,
       },
     });
   }
