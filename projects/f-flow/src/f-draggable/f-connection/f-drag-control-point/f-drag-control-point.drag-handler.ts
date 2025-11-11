@@ -9,7 +9,7 @@ export class FDragControlPointDragHandler implements IFDragHandler {
   public fEventType = 'drag-control-point';
   public fData: unknown;
 
-  private readonly _result: FDragHandlerResult<any>;
+  private readonly _result: FDragHandlerResult<unknown>;
   private readonly _store: FComponentsStore;
   private readonly _startPosition: IPoint;
 
