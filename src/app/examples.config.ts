@@ -158,6 +158,13 @@ export const EXAMPLES_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
+        'custom-path-control-points',
+        () =>
+          import(
+            '../../projects/f-examples/connections/custom-path-control-points/custom-path-control-points.component'
+          ),
+      ),
+      defineLazyComponent(
         'connection-behaviours',
         () =>
           import(
@@ -698,6 +705,22 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2024-10-02 20:12:01'),
+    },
+    {
+      link: 'custom-path-control-points',
+      text: 'Custom Path with Control Points',
+      description:
+        'Create custom connection paths with multiple control points for industrial diagrams like P&ID, circuit diagrams, or process flows. Manually position paths with precise control.',
+      image: './previews/examples/custom-path-control-points.light.png',
+      image_dark: './previews/examples/custom-path-control-points.dark.png',
+      image_width: 791,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2025-11-11 11:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'connection-behaviours',
