@@ -68,6 +68,29 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public connectors: FConnectorBase[] = [];
 
+  /**
+   * Reference to the designated children area element.
+   * When set, this element's bounds relative to the parent node will be used
+   * instead of the node's padding to calculate children boundaries.
+   */
+  private _childrenArea: IHasHostElement | null = null;
+
+  /**
+   * Returns the children area element if set.
+   */
+  public get childrenArea(): IHasHostElement | null {
+    return this._childrenArea;
+  }
+
+  /**
+   * Sets the children area element.
+   * @param area The children area directive instance, or null to remove.
+   */
+  public setChildrenArea(area: IHasHostElement | null): void {
+    this._childrenArea = area;
+    this.refresh();
+  }
+
   protected positionChanges(): void {
     effect(
       () => {

@@ -1,3 +1,5 @@
+export * from './f-children-area';
+
 export * from './f-resize-handle';
 
 export * from './f-rotate-handle';
