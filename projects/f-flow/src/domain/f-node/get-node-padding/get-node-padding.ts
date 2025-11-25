@@ -32,11 +32,7 @@ export class GetNodePadding
   }
 
   private _getChildrenAreaOffset(node: FNodeBase, _nodeRect: IRect): [ number, number, number, number ] {
-    const childrenArea = node.childrenArea;
-    if (!childrenArea) {
-      return [ 0, 0, 0, 0 ];
-    }
-    const childrenAreaElement = childrenArea.hostElement;
+    const childrenAreaElement = node.childrenArea!.hostElement;
     const childrenAreaRect = childrenAreaElement.getBoundingClientRect();
     const nodeElementRect = node.hostElement.getBoundingClientRect();
 

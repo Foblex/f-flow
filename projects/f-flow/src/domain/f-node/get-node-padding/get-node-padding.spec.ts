@@ -118,7 +118,7 @@ describe('GetNodePadding', () => {
     hostElement.remove();
   });
 
-  it('should return [0, 0, 0, 0] when childrenArea is set but null', () => {
+  it('should use CSS padding when childrenArea is null', () => {
     const mockNode = createMockNode({
       includePadding: true,
       childrenArea: null,
