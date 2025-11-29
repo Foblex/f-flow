@@ -1,15 +1,23 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
-  @if (background === 'circle') {
-    <f-background>
-      <f-circle-pattern></f-circle-pattern>
-    </f-background>
-  } @else if (background === 'rect') {
-    <f-background>
-      <f-rect-pattern></f-rect-pattern>
-    </f-background>
+<f-flow fDraggable (fLoaded)="loaded()">
+  @switch (background()) {
+    @case ('circle') {
+      <f-background>
+        <f-circle-pattern />
+      </f-background>
+    }
+    @case ('rect') {
+      <f-background>
+        <f-rect-pattern />
+      </f-background>
+    }
+    @case ('custom') {
+      <f-background>
+        <custom-background-example />
+      </f-background>
+    }
   }
-  <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
+  <f-canvas fZoom>
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating" />
     <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>
       <div fNodeOutput fOutputId="output1" class="right"></div>
       I'm a node
