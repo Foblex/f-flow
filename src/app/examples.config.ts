@@ -883,13 +883,17 @@ function extensionGroup() {
       link: 'background',
       text: 'Background',
       description:
-        'Add background shapes and frames to structure the canvas. Layering and styling patterns in Angular.',
+        'Add SVG background patterns to the flow diagrams in Angular, using built-in rect and circle presets or a fully custom pattern for complex, branded backgrounds.',
       image: './previews/examples/background-example.light.png',
       image_dark: './previews/examples/background-example.dark.png',
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2024-10-06 14:49:44'),
+      date: new Date('2025-11-29 14:49:44'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
   ]);
 }

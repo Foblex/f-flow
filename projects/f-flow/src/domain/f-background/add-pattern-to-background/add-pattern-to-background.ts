@@ -13,9 +13,7 @@ let uniqueId = 0;
  */
 @Injectable()
 @FExecutionRegister(AddPatternToBackgroundRequest)
-export class AddPatternToBackgroundExecution
-  implements IExecution<AddPatternToBackgroundRequest, void>
-{
+export class AddPatternToBackground implements IExecution<AddPatternToBackgroundRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);
 
@@ -24,21 +22,32 @@ export class AddPatternToBackgroundExecution
   }
 
   public handle(request: AddPatternToBackgroundRequest): void {
-    const children = request.fPattern?.hostElement.getElementsByTagName('pattern') || [];
-    const pattern = children.length ? children[0] : undefined;
-    if (pattern) {
-      const defs = createSVGElement('defs', this._browser);
-      pattern.id = 'f-background-pattern-' + uniqueId++;
-      request.fPattern?.hostElement.remove();
-      defs.appendChild(pattern);
+    const patterns = this._getPatterns(request.fPattern?.hostElement);
+    if (!patterns?.length) {
+      return;
+    }
+    const defs = createSVGElement('defs', this._browser);
+    request.fPattern?.hostElement.remove();
+
+    patterns.forEach((pattern) => {
+      defs.append(pattern);
+    });
+
+    if (patterns.length) {
       this._backgroundElement?.firstChild?.appendChild(defs);
+      patterns[patterns.length - 1].id = 'f-background-pattern-' + uniqueId++;
+      const lastPatternId = patterns[patterns.length - 1].id;
       const rect = createSVGElement('rect', this._browser);
-      rect.setAttribute('fill', 'url(#' + pattern.id + ')');
+      rect.setAttribute('fill', 'url(#' + lastPatternId + ')');
       rect.setAttribute('width', '100%');
       rect.setAttribute('height', '100%');
       this._backgroundElement.firstChild?.appendChild(rect);
       const transform = this._store.fCanvas?.transform || TransformModelExtensions.default();
       request.fPattern?.setTransform(transform);
     }
+  }
+
+  private _getPatterns(element?: HTMLElement | SVGElement | undefined): SVGPatternElement[] {
+    return Array.from(element?.getElementsByTagName('pattern') || []);
   }
 }

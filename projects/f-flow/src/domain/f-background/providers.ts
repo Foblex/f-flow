@@ -1,4 +1,4 @@
-import { AddPatternToBackgroundExecution } from './add-pattern-to-background';
+import { AddPatternToBackground } from './add-pattern-to-background';
 import { AddBackgroundToStoreExecution } from './add-background-to-store';
 import { RemoveBackgroundFromStoreExecution } from './remove-background-from-store';
 import { SetBackgroundTransformExecution } from './set-background-transform';
@@ -8,10 +8,9 @@ import { SetBackgroundTransformExecution } from './set-background-transform';
  * It includes executions for adding, removing, and setting the background in the FComponentsStore.
  */
 export const F_BACKGROUND_FEATURES = [
-
   AddBackgroundToStoreExecution,
 
-  AddPatternToBackgroundExecution,
+  AddPatternToBackground,
 
   RemoveBackgroundFromStoreExecution,
 
