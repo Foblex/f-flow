@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow",
-  "version": "17.9.8",
+  "version": "17.9.81",
   "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -41,7 +41,7 @@
     "@angular/core": ">=15.0.0",
     "@foblex/platform": "1.0.4",
     "@foblex/mediator": "1.1.3",
-    "@foblex/2d": "1.2.1",
+    "@foblex/2d": "1.2.2",
     "@foblex/utils": "1.1.1"
   },
   "dependencies": {
