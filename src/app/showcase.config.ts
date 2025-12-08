@@ -38,6 +38,11 @@ export const SHOWCASE_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/services',
+          active: '/services',
+          text: 'Services',
+        },
       ]),
       provideHeaderMediaLinks([
         { icon: 'github', link: 'https://github.com/Foblex/m-render' },

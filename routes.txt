@@ -1,5 +1,6 @@
 /
 /membership
+/services
 /docs/intro
 /docs/get-started
 /docs/f-flow-component
