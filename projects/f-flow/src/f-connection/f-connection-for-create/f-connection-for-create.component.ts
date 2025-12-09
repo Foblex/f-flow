@@ -64,6 +64,8 @@ export class FConnectionForCreateComponent
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
+  public override fControlPoints: { x: number; y: number }[] = [];
+
   public override fInputSide = input(EFConnectionConnectableSide.DEFAULT, {
     transform: (x) => {
       return castToEnum(x, 'fInputSide', EFConnectionConnectableSide);
