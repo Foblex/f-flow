@@ -24,40 +24,98 @@
 }
 
 .headline {
-  font-size: 48px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 16px;
   color: var(--primary-text);
 
   @media (min-width: 768px) {
-    font-size: 64px;
+    font-size: 52px;
   }
 }
 
 .tagline {
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.5;
-  margin: 0;
+  line-height: 1.6;
+  margin: 0 auto 32px;
+  max-width: 800px;
   color: var(--secondary-text);
 
   @media (min-width: 768px) {
     font-size: 20px;
+    margin-bottom: 40px;
   }
 }
 
-// Services Section
-.services {
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+// Section Styles
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 16px;
+  color: var(--primary-text);
+
+  @media (min-width: 768px) {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+}
+
+.section-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 40px;
+  color: var(--secondary-text);
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 48px;
+  }
+}
+
+.section-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  color: var(--secondary-text);
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+}
+
+// Services Overview Section
+.services-overview {
+  margin-bottom: 80px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 100px;
+  }
+}
+
+.services-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
-  margin-bottom: 80px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
-    margin-bottom: 100px;
   }
 }
 
@@ -65,15 +123,9 @@
   padding: 32px;
   border-radius: 8px;
   background-color: var(--card-background, rgba(255, 255, 255, 0.05));
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
+  border: 1px solid var(--divider-color, rgba(255, 255, 255, 0.1));
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: 768px) {
     padding: 40px;
@@ -81,47 +133,185 @@
 }
 
 .service-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.3;
-  margin: 0 0 16px;
+  margin: 0 0 8px;
   color: var(--primary-text);
+}
+
+.service-duration {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 16px;
+  color: var(--primary-1, #3b82f6);
 }
 
 .service-description {
   font-size: 16px;
-  font-weight: 400;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  color: var(--secondary-text);
+}
+
+.service-outcomes {
+  margin: 0 0 24px;
+  padding-left: 20px;
+  color: var(--secondary-text);
+
+  li {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.btn-service {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-1, #3b82f6);
+  background-color: transparent;
+  border: 1px solid var(--primary-1, #3b82f6);
+  border-radius: 4px;
+  text-decoration: none;
+  text-align: center;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
+  margin-top: auto;
+
+  &:hover {
+    background-color: var(--primary-1, #3b82f6);
+    color: #fff;
+  }
+}
+
+// Pricing Section
+.pricing-section {
+  margin-bottom: 80px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 100px;
+  }
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+.pricing-card {
+  padding: 28px;
+  border-radius: 8px;
+  background-color: var(--card-background, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--divider-color, rgba(255, 255, 255, 0.1));
+
+  @media (min-width: 768px) {
+    padding: 32px;
+  }
+}
+
+.pricing-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 6px;
+  color: var(--primary-text);
+}
+
+.pricing-duration {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 12px;
+  color: var(--primary-1, #3b82f6);
+}
+
+.pricing-amount {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  color: var(--primary-text);
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+}
+
+.pricing-rationale {
+  font-size: 15px;
   line-height: 1.6;
   margin: 0;
   color: var(--secondary-text);
 }
 
-// Call to Action Section
-.cta {
-  text-align: center;
-  padding: 48px 24px;
+// Templates Section
+.templates-section {
+  margin-bottom: 80px;
+  padding: 48px 32px;
   border-radius: 8px;
   background-color: var(--card-background, rgba(255, 255, 255, 0.03));
+  text-align: center;
+
+  @media (min-width: 768px) {
+    padding: 64px 48px;
+    margin-bottom: 100px;
+  }
+}
+
+// Contact Footer
+.contact-footer {
+  padding: 48px 32px;
+  border-radius: 8px;
+  background-color: var(--card-background, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--divider-color, rgba(255, 255, 255, 0.1));
+  text-align: center;
 
   @media (min-width: 768px) {
     padding: 64px 48px;
   }
 }
 
-.cta-text {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0 0 24px;
+.footer-title {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 16px;
   color: var(--primary-text);
 
   @media (min-width: 768px) {
-    font-size: 24px;
-    margin-bottom: 32px;
+    font-size: 36px;
+    margin-bottom: 20px;
   }
 }
 
-.cta-button {
+.footer-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 auto 32px;
+  max-width: 700px;
+  color: var(--secondary-text);
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+}
+
+// Button Styles
+.btn-primary {
   display: inline-block;
   padding: 12px 32px;
   font-size: 16px;
@@ -132,15 +322,46 @@
   text-decoration: none;
   transition:
     background-color 0.25s,
-    transform 0.25s;
+    transform 0.15s;
 
   &:hover {
     background-color: var(--primary-2, #2563eb);
-    transform: scale(1.05);
+    transform: translateY(-1px);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    padding: 14px 40px;
+    font-size: 18px;
+  }
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-1, #3b82f6);
+  background-color: transparent;
+  border: 1px solid var(--primary-1, #3b82f6);
+  border-radius: 4px;
+  text-decoration: none;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    transform 0.15s;
+
+  &:hover {
+    background-color: var(--primary-1, #3b82f6);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   @media (min-width: 768px) {
