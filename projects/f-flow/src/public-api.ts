@@ -28,6 +28,8 @@ export * from './f-storage';
 
 export * from './f-zoom';
 
+export * from './internals';
+
 export * from './mixins';
 
 export * from './reactivity';
