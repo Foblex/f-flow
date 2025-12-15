@@ -4,6 +4,7 @@ import {
   AdaptiveCurveBuilder,
   EFConnectionType,
   FBezierPathBuilder,
+  FCustomPathBuilder,
   FSegmentPathBuilder,
   FStraightPathBuilder,
 } from '../common';
@@ -22,6 +23,8 @@ export class FConnectionFactory {
     [EFConnectionType.ADAPTIVE_CURVE]: new AdaptiveCurveBuilder(),
 
     [EFConnectionType.SEGMENT]: new FSegmentPathBuilder(),
+
+    [EFConnectionType.CUSTOM_PATH]: new FCustomPathBuilder(),
 
     ...(inject(F_CONNECTION_BUILDERS, { optional: true }) || {}),
   };

@@ -70,6 +70,8 @@ export abstract class FConnectionBase
 
   public abstract fOffset: number;
 
+  public abstract fControlPoints: IPoint[];
+
   protected path: string = '';
 
   public line = LineExtensions.initialize();
@@ -128,6 +130,11 @@ export abstract class FConnectionBase
 
   private _penultimatePoint = PointExtensions.initialize();
   private _secondPoint = PointExtensions.initialize();
+  private _pathPoints: IPoint[] = [];
+
+  public get pathPoints(): IPoint[] {
+    return this._pathPoints;
+  }
 
   protected constructor() {
     super(inject(ElementRef<HTMLElement>).nativeElement);
@@ -151,6 +158,7 @@ export abstract class FConnectionBase
     this.path = pathResult.path;
     this._penultimatePoint = pathResult.penultimatePoint || point1;
     this._secondPoint = pathResult.secondPoint || point2;
+    this._pathPoints = pathResult.points || [];
 
     new ConnectionContentLayoutEngine().layout(this.line, pathResult, this._contents());
 
@@ -177,6 +185,7 @@ export abstract class FConnectionBase
         targetSide: this._targetSide,
         radius,
         offset,
+        controlPoints: this.fControlPoints,
       },
     });
   }
