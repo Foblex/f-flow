@@ -33,6 +33,9 @@ import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../drag-toolkit';
 
 const PINCH_NORMALIZATION_FACTOR = 100;
+const PINCH_MOVEMENT_THRESHOLD = 0.5;
+const NORMALIZED_MIN = 0.1;
+const NORMALIZED_MAX = 1;
 
 @Directive({
   selector: 'f-canvas[fZoom]',
@@ -144,7 +147,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _normalizeWheelStep(deltaY: number): number {
     const intensity = Math.abs(deltaY) / 100;
-    const normalized = Math.max(0.1, Math.min(intensity, 1));
+    const normalized = Math.max(NORMALIZED_MIN, Math.min(intensity, NORMALIZED_MAX));
 
     return this.step * normalized;
   }
@@ -164,7 +167,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   };
 
   private _onTouchMove = (event: TouchEvent) => {
-    if (event.touches.length !== 2 || this._pinchDistance == null) {
+    if (event.touches.length !== 2 || this._pinchDistance === null) {
       return;
     }
 
@@ -176,7 +179,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
     const currentDistance = this._getTouchDistance(event.touches);
     const delta = currentDistance - this._pinchDistance;
-    if (Math.abs(delta) < 0.5) {
+    if (Math.abs(delta) < PINCH_MOVEMENT_THRESHOLD) {
       return;
     }
 
@@ -244,7 +247,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _normalizePinchStep(delta: number): number {
     const intensity = Math.abs(delta) / PINCH_NORMALIZATION_FACTOR;
-    const normalized = Math.max(0.1, Math.min(intensity, 1));
+    const normalized = Math.max(NORMALIZED_MIN, Math.min(intensity, NORMALIZED_MAX));
 
     return this.step * normalized;
   }
