@@ -158,7 +158,11 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _onTouchStart = (event: TouchEvent) => {
-    if (event.touches.length !== 2 || this._isLockedContext(event.target)) {
+    if (event.touches.length !== 2) {
+      return;
+    }
+
+    if (this._isLockedContext(event.target)) {
       this._resetPinch();
 
       return;
@@ -227,7 +231,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _getTouchDistance(touches: TouchList): number {
-    if (touches.length < 2) {
+    if (touches.length !== 2) {
       return 0;
     }
 
@@ -241,7 +245,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _getTouchCenter(touches: TouchList): IPoint {
-    if (touches.length < 2) {
+    if (touches.length !== 2) {
       return PointExtensions.initialize();
     }
 
