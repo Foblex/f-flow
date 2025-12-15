@@ -35,6 +35,7 @@ import { EventExtensions } from '../drag-toolkit';
 // Align pinch distance scaling with wheel delta normalization (wheel delta typically changes in ~100 unit steps)
 // to keep zoom sensitivity consistent between touch and mouse interactions.
 const PINCH_NORMALIZATION_FACTOR = 100;
+const PINCH_NORMALIZATION_RATIO = 1 / PINCH_NORMALIZATION_FACTOR;
 const PINCH_MOVEMENT_THRESHOLD = 0.5;
 const NORMALIZED_MIN = 0.1;
 const NORMALIZED_MAX = 1;
@@ -274,7 +275,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _normalizePinchStep(delta: number): number {
-    const intensity = Math.abs(delta) / PINCH_NORMALIZATION_FACTOR;
+    const intensity = Math.abs(delta) * PINCH_NORMALIZATION_RATIO;
 
     return this.step * this._normalizeIntensity(intensity);
   }
@@ -284,7 +285,11 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _isLockedContext(target: EventTarget | null): boolean {
-    return target instanceof HTMLElement && !!target.closest('[fLockedContext]');
+    if (!(target instanceof HTMLElement)) {
+      return false;
+    }
+
+    return !!target.closest('[fLockedContext]');
   }
 
   private _normalizeIntensity(intensity: number): number {
