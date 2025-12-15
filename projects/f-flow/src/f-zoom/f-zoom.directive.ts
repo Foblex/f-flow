@@ -32,6 +32,8 @@ import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../drag-toolkit';
 
+const PINCH_NORMALIZATION_FACTOR = 100;
+
 @Directive({
   selector: 'f-canvas[fZoom]',
   exportAs: 'fComponent',
@@ -152,7 +154,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _onTouchStart = (event: TouchEvent) => {
-    if (event.touches.length !== 2 || (event.target as HTMLElement)?.closest('[fLockedContext]')) {
+    if (event.touches.length !== 2 || this._isLockedContext(event.target)) {
       this._resetPinch();
 
       return;
@@ -166,8 +168,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
-    const targetElement = event.target as HTMLElement;
-    if (targetElement?.closest('[fLockedContext]')) {
+    if (this._isLockedContext(event.target)) {
       this._resetPinch();
 
       return;
@@ -175,7 +176,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
     const currentDistance = this._getTouchDistance(event.touches);
     const delta = currentDistance - this._pinchDistance;
-    if (delta === 0) {
+    if (Math.abs(delta) < 0.5) {
       return;
     }
 
@@ -242,7 +243,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _normalizePinchStep(delta: number): number {
-    const intensity = Math.abs(delta) / 100;
+    const intensity = Math.abs(delta) / PINCH_NORMALIZATION_FACTOR;
     const normalized = Math.max(0.1, Math.min(intensity, 1));
 
     return this.step * normalized;
@@ -250,6 +251,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _resetPinch(): void {
     this._pinchDistance = null;
+  }
+
+  private _isLockedContext(target: EventTarget | null): boolean {
+    return !!(target as HTMLElement | null)?.closest('[fLockedContext]');
   }
 
   public zoomIn(position?: IPoint): void {
