@@ -46,6 +46,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private readonly _injector = inject(Injector);
 
   private _triggersListener = EventExtensions.emptyListener();
+  private _pinchDistance: number | null = null;
 
   public readonly isEnabled = input(false, { alias: 'fZoom', transform: booleanAttribute });
 
@@ -104,10 +105,18 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     }
     this._listen('wheel', this._onWheel, EventExtensions.activeListener());
     this._listen('dblclick', this._onDoubleClick);
+    this._listen('touchstart', this._onTouchStart, EventExtensions.activeListener());
+    this._listen('touchmove', this._onTouchMove, EventExtensions.activeListener());
+    this._listen('touchend', this._onTouchEnd);
+    this._listen('touchcancel', this._onTouchEnd);
 
     this._triggersListener = () => {
       this._unlisten('wheel', this._onWheel, EventExtensions.activeListener());
       this._unlisten('dblclick', this._onDoubleClick);
+      this._unlisten('touchstart', this._onTouchStart, EventExtensions.activeListener());
+      this._unlisten('touchmove', this._onTouchMove, EventExtensions.activeListener());
+      this._unlisten('touchend', this._onTouchEnd);
+      this._unlisten('touchcancel', this._onTouchEnd);
     };
   }
 
@@ -142,6 +151,50 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     return deltaY > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
   }
 
+  private _onTouchStart = (event: TouchEvent) => {
+    if (event.touches.length !== 2 || (event.target as HTMLElement)?.closest('[fLockedContext]')) {
+      this._resetPinch();
+
+      return;
+    }
+
+    this._pinchDistance = this._getTouchDistance(event.touches);
+  };
+
+  private _onTouchMove = (event: TouchEvent) => {
+    if (event.touches.length !== 2 || this._pinchDistance == null) {
+      return;
+    }
+
+    const targetElement = event.target as HTMLElement;
+    if (targetElement?.closest('[fLockedContext]')) {
+      this._resetPinch();
+
+      return;
+    }
+
+    const currentDistance = this._getTouchDistance(event.touches);
+    const delta = currentDistance - this._pinchDistance;
+    if (delta === 0) {
+      return;
+    }
+
+    event.preventDefault();
+
+    this.setZoom(
+      this._getTouchCenter(event.touches),
+      this._normalizePinchStep(delta),
+      delta > 0 ? EFZoomDirection.ZOOM_IN : EFZoomDirection.ZOOM_OUT,
+      false,
+    );
+
+    this._pinchDistance = currentDistance;
+  };
+
+  private _onTouchEnd = () => {
+    this._resetPinch();
+  };
+
   private _onDoubleClick = (event: MouseEvent) => {
     if (!isValidEventTrigger(event, this.fDblClickTrigger)) {
       return;
@@ -166,6 +219,37 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       position?.x || rect.gravityCenter.x,
       position?.y || rect.gravityCenter.y,
     );
+  }
+
+  private _getTouchDistance(touches: TouchList): number {
+    const firstTouch = touches[0];
+    const secondTouch = touches[1];
+
+    return Math.hypot(
+      secondTouch.clientX - firstTouch.clientX,
+      secondTouch.clientY - firstTouch.clientY,
+    );
+  }
+
+  private _getTouchCenter(touches: TouchList): IPoint {
+    const firstTouch = touches[0];
+    const secondTouch = touches[1];
+
+    return PointExtensions.initialize(
+      (firstTouch.clientX + secondTouch.clientX) / 2,
+      (firstTouch.clientY + secondTouch.clientY) / 2,
+    );
+  }
+
+  private _normalizePinchStep(delta: number): number {
+    const intensity = Math.abs(delta) / 100;
+    const normalized = Math.max(0.1, Math.min(intensity, 1));
+
+    return this.step * normalized;
+  }
+
+  private _resetPinch(): void {
+    this._pinchDistance = null;
   }
 
   public zoomIn(position?: IPoint): void {
