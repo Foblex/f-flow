@@ -32,6 +32,7 @@ import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../drag-toolkit';
 
+// Align pinch distance scaling with wheel delta normalization to keep zoom sensitivity consistent.
 const PINCH_NORMALIZATION_FACTOR = 100;
 const PINCH_MOVEMENT_THRESHOLD = 0.5;
 const NORMALIZED_MIN = 0.1;
@@ -226,6 +227,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _getTouchDistance(touches: TouchList): number {
+    if (touches.length < 2) {
+      return 0;
+    }
+
     const firstTouch = touches[0];
     const secondTouch = touches[1];
 
@@ -236,6 +241,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _getTouchCenter(touches: TouchList): IPoint {
+    if (touches.length < 2) {
+      return PointExtensions.initialize();
+    }
+
     const firstTouch = touches[0];
     const secondTouch = touches[1];
 
