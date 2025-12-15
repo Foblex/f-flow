@@ -232,6 +232,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _getTouchDistance(touches: TouchList): number {
     if (touches.length !== 2) {
+      // Callers guard for pinch-ready touch events; return neutral distance if the check is bypassed.
       return 0;
     }
 
@@ -246,6 +247,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _getTouchCenter(touches: TouchList): IPoint {
     if (touches.length !== 2) {
+      // Callers guard for pinch-ready touch events; return neutral center if the check is bypassed.
       return PointExtensions.initialize();
     }
 
