@@ -148,9 +148,8 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _normalizeWheelStep(deltaY: number): number {
     const intensity = Math.abs(deltaY) / 100;
-    const normalized = Math.max(NORMALIZED_MIN, Math.min(intensity, NORMALIZED_MAX));
 
-    return this.step * normalized;
+    return this.step * this._normalizeIntensity(intensity);
   }
 
   private _calculateDirection(deltaY: number): number {
@@ -168,7 +167,12 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
-    this._pinchDistance = this._getTouchDistance(event.touches);
+    const touchDistance = this._getTouchDistance(event.touches);
+    if (touchDistance === null) {
+      return;
+    }
+
+    this._pinchDistance = touchDistance;
   };
 
   private _onTouchMove = (event: TouchEvent) => {
@@ -183,6 +187,14 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     }
 
     const currentDistance = this._getTouchDistance(event.touches);
+    const touchCenter = this._getTouchCenter(event.touches);
+
+    if (currentDistance === null || touchCenter === null) {
+      this._resetPinch();
+
+      return;
+    }
+
     const delta = currentDistance - this._pinchDistance;
     if (Math.abs(delta) < PINCH_MOVEMENT_THRESHOLD) {
       return;
@@ -191,7 +203,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     event.preventDefault();
 
     this.setZoom(
-      this._getTouchCenter(event.touches),
+      touchCenter,
       this._normalizePinchStep(delta),
       delta > 0 ? EFZoomDirection.ZOOM_IN : EFZoomDirection.ZOOM_OUT,
       false,
@@ -230,10 +242,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     );
   }
 
-  private _getTouchDistance(touches: TouchList): number {
+  private _getTouchDistance(touches: TouchList): number | null {
     if (touches.length !== 2) {
       // Callers guard for pinch-ready touch events; return neutral distance if the check is bypassed.
-      return 0;
+      return null;
     }
 
     const firstTouch = touches[0];
@@ -245,10 +257,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     );
   }
 
-  private _getTouchCenter(touches: TouchList): IPoint {
+  private _getTouchCenter(touches: TouchList): IPoint | null {
     if (touches.length !== 2) {
       // Callers guard for pinch-ready touch events; return neutral center if the check is bypassed.
-      return PointExtensions.initialize();
+      return null;
     }
 
     const firstTouch = touches[0];
@@ -262,9 +274,8 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _normalizePinchStep(delta: number): number {
     const intensity = Math.abs(delta) / PINCH_NORMALIZATION_FACTOR;
-    const normalized = Math.max(NORMALIZED_MIN, Math.min(intensity, NORMALIZED_MAX));
 
-    return this.step * normalized;
+    return this.step * this._normalizeIntensity(intensity);
   }
 
   private _resetPinch(): void {
@@ -273,6 +284,10 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _isLockedContext(target: EventTarget | null): boolean {
     return !!(target as HTMLElement | null)?.closest('[fLockedContext]');
+  }
+
+  private _normalizeIntensity(intensity: number): number {
+    return Math.max(NORMALIZED_MIN, Math.min(intensity, NORMALIZED_MAX));
   }
 
   public zoomIn(position?: IPoint): void {
