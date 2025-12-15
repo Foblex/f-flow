@@ -32,7 +32,8 @@ import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../drag-toolkit';
 
-// Align pinch distance scaling with wheel delta normalization to keep zoom sensitivity consistent.
+// Align pinch distance scaling with wheel delta normalization (wheel delta typically changes in ~100 unit steps)
+// to keep zoom sensitivity consistent between touch and mouse interactions.
 const PINCH_NORMALIZATION_FACTOR = 100;
 const PINCH_MOVEMENT_THRESHOLD = 0.5;
 const NORMALIZED_MIN = 0.1;
@@ -244,7 +245,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _getTouchDistance(touches: TouchList): number | null {
     if (touches.length !== 2) {
-      // Callers guard for pinch-ready touch events; return neutral distance if the check is bypassed.
+      // Callers guard for pinch-ready touch events; null marks an invalid touch configuration.
       return null;
     }
 
@@ -259,7 +260,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _getTouchCenter(touches: TouchList): IPoint | null {
     if (touches.length !== 2) {
-      // Callers guard for pinch-ready touch events; return neutral center if the check is bypassed.
+      // Callers guard for pinch-ready touch events; null marks an invalid touch configuration.
       return null;
     }
 
@@ -283,7 +284,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _isLockedContext(target: EventTarget | null): boolean {
-    return !!(target as HTMLElement | null)?.closest('[fLockedContext]');
+    return target instanceof HTMLElement && !!target.closest('[fLockedContext]');
   }
 
   private _normalizeIntensity(intensity: number): number {
