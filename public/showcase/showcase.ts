@@ -25,6 +25,18 @@ export const SHOWCASE: IShowcaseItem[] = [
     ],
   },
   {
+    name: 'AI Low Code Platform',
+    tags: ['AI Automation', 'Low Code', 'Open Source'],
+    description:
+      'Open Source low-code platform that enables users to create AI-powered applications and workflows with minimal coding.',
+    imageUrl: './showcase/images/ai-low-code.light.png',
+    imageUrlDark: './showcase/images/ai-low-code.dark.png',
+    links: [
+      { text: 'Demo', url: 'https://foblex.github.io/Building-AI-Low-Code-Platform5/' },
+      { text: 'Sources', url: 'https://github.com/Foblex/Building-AI-Low-Code-Platform5' },
+    ],
+  },
+  {
     name: 'DB Management System',
     tags: ['No Code', 'Open Source', 'Dev Tools'],
     description:
