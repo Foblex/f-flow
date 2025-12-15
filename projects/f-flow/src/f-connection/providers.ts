@@ -1,6 +1,10 @@
 import {
-  FConnectionDragHandleEndComponent, FConnectionDragHandleStartComponent,
-  FConnectionGradientComponent, FConnectionPathComponent, FConnectionSelectionComponent,
+  FConnectionDragHandleEndComponent,
+  FConnectionDragHandleStartComponent,
+  FConnectionDragHandleControlPointComponent,
+  FConnectionGradientComponent,
+  FConnectionPathComponent,
+  FConnectionSelectionComponent,
   FConnectionTextComponent,
   FConnectionTextPathDirective,
 } from './common';
@@ -16,6 +20,7 @@ export const F_CONNECTION_PROVIDERS = [
   FConnectionTextPathDirective,
   FConnectionDragHandleStartComponent,
   FConnectionDragHandleEndComponent,
+  FConnectionDragHandleControlPointComponent,
   FConnectionGradientComponent,
   FConnectionPathComponent,
   FConnectionSelectionComponent,

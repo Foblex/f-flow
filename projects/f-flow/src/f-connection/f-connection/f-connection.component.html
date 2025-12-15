@@ -10,6 +10,11 @@
         <circle f-connection-drag-handle-start r="8"></circle>
       }
       <circle f-connection-drag-handle-end r="8"></circle>
+      @if (fType === 'custom-path' && !fDraggingDisabled()) {
+        @for (point of controlPointsToRender(); track $index) {
+          <circle f-connection-drag-handle-control-point r="8" [index]="$index"></circle>
+        }
+      }
     </g>
     @if (fText) {
       <text f-connection-text></text>

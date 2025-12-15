@@ -29,7 +29,7 @@ describe('FCustomPathBuilder', () => {
     expect(response.path).toContain('M0 0');
     expect(response.path).toContain('L100.0002 100.0002');
     expect(response.connectionCenter).toBeDefined();
-    expect(response.points).toHaveLength(2);
+    expect(response.points?.length).toBe(2);
   });
 
   it('should create a path with one control point', () => {
@@ -49,7 +49,7 @@ describe('FCustomPathBuilder', () => {
     expect(response.path).toContain('M0 0');
     expect(response.path).toContain('L50 0');
     expect(response.path).toContain('L100.0002 100.0002');
-    expect(response.points).toHaveLength(3);
+    expect(response.points?.length).toBe(3);
     expect(response.points).toEqual([
       { x: 0, y: 0 },
       { x: 50, y: 0 },
@@ -75,7 +75,7 @@ describe('FCustomPathBuilder', () => {
     const response: IFConnectionBuilderResponse = builder.handle(request);
 
     expect(response.path).toBeDefined();
-    expect(response.points).toHaveLength(5);
+    expect(response.points?.length).toBe(5);
     expect(response.points).toEqual([
       { x: 0, y: 0 },
       { x: 50, y: 0 },

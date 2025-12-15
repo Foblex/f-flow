@@ -27,6 +27,7 @@ import {
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
+  FDragControlPointPreparationRequest,
 } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
@@ -245,6 +246,10 @@ export class FDraggableDirective
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
     this._mediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
+
+    this._mediator.execute<void>(
+      new FDragControlPointPreparationRequest(event, this.fReassignConnectionTrigger),
+    );
 
     this._mediator.execute<void>(
       new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
