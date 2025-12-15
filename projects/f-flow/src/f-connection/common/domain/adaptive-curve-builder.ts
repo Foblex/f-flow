@@ -10,6 +10,8 @@ import {
   IFConnectionBuilderResponse,
 } from '../../f-connection-builder';
 
+const RENDERING_OFFSET = 0.0002; // Prevents SVG rendering artifacts at path endpoints;
+
 /**
  * AdaptiveCurveBuilder
  *
@@ -184,7 +186,7 @@ export class AdaptiveCurveBuilder implements IFConnectionBuilder {
     const c1 = AdaptiveCurveBuilder._softControl(sourceSide, p0, p3, h0);
     const c2 = AdaptiveCurveBuilder._softControl(targetSide, p3, p0, h3);
 
-    const path = `M ${p0.x} ${p0.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${p3.x + 0.0002} ${p3.y + 0.0002}`;
+    const path = `M ${p0.x} ${p0.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${p3.x + RENDERING_OFFSET} ${p3.y + RENDERING_OFFSET}`;
 
     const connectionCenter = new CalculateConnectionCenterHandler().handle(
       new CalculateConnectionCenterRequest([p0, c1, c2, p3]),

@@ -15,6 +15,8 @@ import {
 } from '../../f-connection-builder';
 import { IMap } from '../../../domain';
 
+const RENDERING_OFFSET = 0.0002; // Prevents SVG rendering artifacts at path endpoints;
+
 const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
   [EFConnectableSide.LEFT]: PointExtensions.initialize(-1, 0),
 
@@ -76,7 +78,7 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     const directionAccessor = direction.x !== 0 ? 'x' : 'y';
     const currentDirection = direction[directionAccessor];
 
-    let points: IPoint[] = [];
+    let points: IPoint[];
     const sourceGapOffset = PointExtensions.initialize();
     const targetGapOffset = PointExtensions.initialize();
 
@@ -182,7 +184,7 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
       if (i > 0 && i < points.length - 1) {
         segment = this._getBend(points[i - 1], p, points[i + 1], borderRadius);
       } else if (i === points.length - 1) {
-        segment = this._buildLastLineSegment(i, p);
+        segment = this._buildLastLineSegment(p);
       } else {
         segment = this._buildMoveOrLineSegment(i, p);
       }
@@ -217,7 +219,7 @@ export class FSegmentPathBuilder implements IFConnectionBuilder {
     return `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`;
   }
 
-  private _buildLastLineSegment(index: number, point: IPoint): string {
-    return `L${point.x + 0.0002} ${point.y + 0.0002}`;
+  private _buildLastLineSegment(point: IPoint): string {
+    return `L${point.x + RENDERING_OFFSET} ${point.y + RENDERING_OFFSET}`;
   }
 }

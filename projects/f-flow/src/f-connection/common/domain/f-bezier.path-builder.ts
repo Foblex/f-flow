@@ -10,6 +10,8 @@ import {
   IFConnectionBuilderResponse,
 } from '../../f-connection-builder';
 
+const RENDERING_OFFSET = 0.0002; // Prevents SVG rendering artifacts at path endpoints;
+
 export class FBezierPathBuilder implements IFConnectionBuilder {
   private static _getConnectorOffset(distance: number, offset: number): number {
     if (distance >= offset) {
@@ -52,7 +54,7 @@ export class FBezierPathBuilder implements IFConnectionBuilder {
 
     const targetAnglePoint = FBezierPathBuilder._getAnglePoint(targetSide, target, source, offset);
 
-    const path = `M ${source.x} ${source.y} C ${sourceAnglePoint.x} ${sourceAnglePoint.y}, ${targetAnglePoint.x} ${targetAnglePoint.y}, ${target.x + 0.0002} ${target.y + 0.0002}`;
+    const path = `M ${source.x} ${source.y} C ${sourceAnglePoint.x} ${sourceAnglePoint.y}, ${targetAnglePoint.x} ${targetAnglePoint.y}, ${target.x + RENDERING_OFFSET} ${target.y + RENDERING_OFFSET}`;
 
     const connectionCenter = new CalculateConnectionCenterHandler().handle(
       new CalculateConnectionCenterRequest([source, sourceAnglePoint, targetAnglePoint, target]),
