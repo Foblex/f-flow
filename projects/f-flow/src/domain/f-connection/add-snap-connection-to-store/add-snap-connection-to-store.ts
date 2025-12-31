@@ -8,11 +8,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddSnapConnectionToStoreRequest)
-export class AddSnapConnectionToStoreExecution implements IExecution<AddSnapConnectionToStoreRequest, void> {
-
+export class AddSnapConnectionToStore implements IExecution<AddSnapConnectionToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddSnapConnectionToStoreRequest): void {
-    this._store.fSnapConnection = request.fConnection;
+  public handle({ connection }: AddSnapConnectionToStoreRequest): void {
+    this._store.fSnapConnection = connection;
   }
 }

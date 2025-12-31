@@ -8,11 +8,12 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveConnectionForCreateFromStoreRequest)
-export class RemoveConnectionForCreateFromStoreExecution implements IExecution<RemoveConnectionForCreateFromStoreRequest, void> {
-
+export class RemoveConnectionForCreateFromStore
+  implements IExecution<RemoveConnectionForCreateFromStoreRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveConnectionForCreateFromStoreRequest): void {
+  public handle(_request: RemoveConnectionForCreateFromStoreRequest): void {
     this._store.fTempConnection = undefined;
   }
 }

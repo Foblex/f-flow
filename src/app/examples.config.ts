@@ -702,38 +702,6 @@ function connectionGroup() {
       date: new Date('2024-10-06 14:49:44'),
     },
     {
-      link: 'connection-text',
-      text: 'Connection Text',
-      description:
-        'Add labels to connections with smart placement and scaling. Centered or offset text — Angular example.',
-      image: './previews/examples/connection-text.light.png',
-      image_dark: './previews/examples/connection-text.dark.png',
-      image_width: 781,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-01-31 17:16:33'),
-      badge: {
-        text: 'Deprecated',
-        type: 'danger',
-      },
-    },
-    {
-      link: 'connection-center',
-      text: 'Connection Center',
-      description:
-        'Place centered widgets (badges/buttons) on edges. Interaction patterns and Angular code.',
-      image: './previews/examples/connection-center.light.png',
-      image_dark: './previews/examples/connection-center.dark.png',
-      image_width: 781,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-01-31 18:23:26'),
-      badge: {
-        text: 'Deprecated',
-        type: 'danger',
-      },
-    },
-    {
       link: 'connection-content',
       text: 'Connection Content',
       pageTitle: 'Angular Diagram Example – Connection Content on Edges',

@@ -8,11 +8,12 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveSnapConnectionFromStoreRequest)
-export class RemoveSnapConnectionFromStoreExecution implements IExecution<RemoveSnapConnectionFromStoreRequest, void> {
-
+export class RemoveSnapConnectionFromStore
+  implements IExecution<RemoveSnapConnectionFromStoreRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveSnapConnectionFromStoreRequest): void {
+  public handle(_request: RemoveSnapConnectionFromStoreRequest): void {
     this._store.fSnapConnection = undefined;
   }
 }

@@ -1,3 +1,3 @@
-export * from './create-connection-markers.execution';
+export * from './create-connection-markers';
 
 export * from './create-connection-markers-request';

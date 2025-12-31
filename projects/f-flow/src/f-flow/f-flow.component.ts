@@ -1,7 +1,14 @@
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
-  Component, DestroyRef, ElementRef, inject, input, OnDestroy, OnInit, output,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  output,
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
@@ -13,13 +20,15 @@ import {
   SelectAllRequest,
   SelectRequest,
   IFFlowState,
-  GetFlowStateRequest, RemoveFlowFromStoreRequest, AddFlowToStoreRequest, SortItemLayersRequest, ICurrentSelection,
+  GetFlowStateRequest,
+  RemoveFlowFromStoreRequest,
+  AddFlowToStoreRequest,
+  SortItemLayersRequest,
+  ICurrentSelection,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import {
-  FDraggableDataContext,
-} from '../f-draggable';
+import { FDraggableDataContext } from '../f-draggable';
 import { FConnectionFactory } from '../f-connection';
 import {
   NotifyDataChangedRequest,
@@ -30,7 +39,7 @@ import {
 import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
-import { FChannelHub } from '../reactivity';
+import { FChannelHub, takeOne } from '../reactivity';
 
 let uniqueId = 0;
 
@@ -41,7 +50,7 @@ let uniqueId = 0;
   standalone: true,
   host: {
     '[attr.id]': 'fId()',
-    class: "f-component f-flow",
+    class: 'f-component f-flow',
   },
   providers: [
     FMediator,
@@ -55,9 +64,8 @@ let uniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
-
   private readonly _destroyRef = inject(DestroyRef);
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _browserService = inject(BrowserService);
   private readonly _elementReference = inject(ElementRef);
 
@@ -72,7 +80,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _isLoaded: boolean = false;
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddFlowToStoreRequest(this));
+    this._mediator.execute(new AddFlowToStoreRequest(this));
   }
 
   public ngAfterContentInit(): void {
@@ -84,21 +92,21 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   private _listenCountChanges(): void {
-    this._fMediator.execute<FChannelHub>(
-      new ListenCountChangesRequest(),
-    ).listen(this._destroyRef, () => {
-      this._fMediator.execute(new SortItemLayersRequest())
-    });
+    this._mediator
+      .execute<FChannelHub>(new ListenCountChangesRequest())
+      .listen(this._destroyRef, () => {
+        this._mediator.execute(new SortItemLayersRequest());
+      });
   }
 
   private _listenDataChanges(): void {
-    this._fMediator.execute<FChannelHub>(
-      new ListenDataChangesRequest(),
-    ).listen(this._destroyRef, () => {
-      this._fMediator.execute(new RedrawConnectionsRequest());
+    this._mediator
+      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .listen(this._destroyRef, () => {
+        this._mediator.execute(new RedrawConnectionsRequest());
 
-      this._emitLoaded();
-    });
+        this._emitLoaded();
+      });
   }
 
   private _emitLoaded(): void {
@@ -109,7 +117,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this._fMediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new NotifyDataChangedRequest());
   }
 
   public reset(): void {
@@ -117,25 +125,30 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public getNodesBoundingBox(): IRect | null {
-    return this._fMediator.execute<IRect | null>(new CalculateNodesBoundingBoxNormalizedPositionRequest());
+    return this._mediator.execute<IRect | null>(
+      new CalculateNodesBoundingBoxNormalizedPositionRequest(),
+    );
   }
 
   public getSelection(): ICurrentSelection {
-    return this._fMediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
   public getPositionInFlow(position: IPoint): IRect {
-    return this._fMediator.execute(new GetNormalizedPointRequest(position));
+    return this._mediator.execute(new GetNormalizedPointRequest(position));
   }
 
   public getState(): IFFlowState {
-    return this._fMediator.execute(new GetFlowStateRequest());
+    return this._mediator.execute(new GetFlowStateRequest());
   }
 
   public selectAll(): void {
-    setTimeout(() => {
-      this._fMediator.execute<void>(new SelectAllRequest());
-    });
+    this._mediator
+      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .pipe(takeOne())
+      .listen(this._destroyRef, () => {
+        this._mediator.execute<void>(new SelectAllRequest());
+      });
   }
 
   /**
@@ -151,16 +164,19 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
    * triggering a `fSelectionChange` event on the next user interaction.
    */
   public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
-    setTimeout(() => {
-      this._fMediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
-    });
+    this._mediator
+      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .pipe(takeOne())
+      .listen(this._destroyRef, () => {
+        this._mediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
+      });
   }
 
   public clearSelection(): void {
-    this._fMediator.execute<void>(new ClearSelectionRequest());
+    this._mediator.execute<void>(new ClearSelectionRequest());
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute(new RemoveFlowFromStoreRequest());
+    this._mediator.execute(new RemoveFlowFromStoreRequest());
   }
 }

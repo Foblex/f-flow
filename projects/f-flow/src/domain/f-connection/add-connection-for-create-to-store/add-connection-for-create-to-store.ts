@@ -8,11 +8,12 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddConnectionForCreateToStoreRequest)
-export class AddConnectionForCreateToStoreExecution implements IExecution<AddConnectionForCreateToStoreRequest, void> {
-
+export class AddConnectionForCreateToStore
+  implements IExecution<AddConnectionForCreateToStoreRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddConnectionForCreateToStoreRequest): void {
-    this._store.fTempConnection = request.fConnection;
+  public handle({ connection }: AddConnectionForCreateToStoreRequest): void {
+    this._store.fTempConnection = connection;
   }
 }
