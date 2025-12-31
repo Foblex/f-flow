@@ -62,8 +62,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-to-connect',
-        () =>
-          import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component'),
+        () => import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect'),
       ),
       defineLazyComponent(
         'drag-to-reassign',

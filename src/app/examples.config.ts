@@ -111,8 +111,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-to-connect',
-        () =>
-          import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component'),
+        () => import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect'),
       ),
       defineLazyComponent(
         'drag-to-reassign',
@@ -136,7 +135,7 @@ export const EXAMPLES_CONFIGURATION = {
         'assign-node-to-connection-on-drop',
         () =>
           import(
-            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component'
+            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'
           ),
       ),
       defineLazyComponent(

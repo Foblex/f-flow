@@ -1,13 +1,13 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
+<f-flow fDraggable (fLoaded)="loaded()" (fCreateConnection)="createConnection($event)">
   <f-canvas>
     <f-connection-for-create />
 
-    @for (connection of connections; track connection.inputId) {
-      <f-connection
-        [fReassignDisabled]="true"
-        [fOutputId]="connection.outputId"
-        [fInputId]="connection.inputId"
-      />
+    @for (connection of connections(); track $index) {
+    <f-connection
+      [fReassignDisabled]="true"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+    />
     }
 
     <div
