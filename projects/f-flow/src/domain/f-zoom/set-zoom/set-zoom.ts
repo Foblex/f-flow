@@ -14,20 +14,20 @@ import { IsDragStartedRequest } from '../../f-draggable';
  */
 @Injectable()
 @FExecutionRegister(SetZoomRequest)
-export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
+export class SetZoom implements IExecution<SetZoomRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow?.hostElement!;
+  private get _flowHost(): HTMLElement {
+    return this._store.fFlow?.hostElement as HTMLElement;
   }
 
-  private get _fCanvas(): FCanvasBase {
-    return this._store.fCanvas!;
+  private get _canvas(): FCanvasBase {
+    return this._store.fCanvas as FCanvasBase;
   }
 
-  private get _fZoomComponent(): FZoomBase {
-    return this._store.fComponents[F_ZOOM_TAG]! as FZoomBase;
+  private get _zoomComponent(): FZoomBase {
+    return this._store.fComponents[F_ZOOM_TAG] as FZoomBase;
   }
 
   private get _isDragStarted(): boolean {
@@ -35,22 +35,22 @@ export class SetZoomExecution implements IExecution<SetZoomRequest, void> {
   }
 
   public handle(request: SetZoomRequest): void {
-    if (this._isDragStarted || !this._fZoomComponent) {
+    if (this._isDragStarted || !this._zoomComponent) {
       return;
     }
 
-    const result = this._fCanvas.transform.scale + request.step * request.direction;
+    const result = this._canvas.transform.scale + request.step * request.direction;
 
-    this._fCanvas.setScale(this._clamp(result), this._castPositionToFlow(request.position));
-    request.animate ? this._fCanvas.redrawWithAnimation() : this._fCanvas.redraw();
-    this._fCanvas.emitCanvasChangeEvent();
+    this._canvas.setScale(this._clamp(result), this._castPositionToFlow(request.position));
+    request.animate ? this._canvas.redrawWithAnimation() : this._canvas.redraw();
+    this._canvas.emitCanvasChangeEvent();
   }
 
   private _clamp(value: number): number {
-    return Math.max(this._fZoomComponent.minimum, Math.min(value, this._fZoomComponent.maximum));
+    return Math.max(this._zoomComponent.minimum, Math.min(value, this._zoomComponent.maximum));
   }
 
   private _castPositionToFlow(position: IPoint): IPoint {
-    return Point.fromPoint(position).elementTransform(this._fHost);
+    return Point.fromPoint(position).elementTransform(this._flowHost);
   }
 }

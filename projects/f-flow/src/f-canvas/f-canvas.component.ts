@@ -32,8 +32,9 @@ import {
   transitionEnd,
   UpdateScaleRequest,
 } from '../domain';
-import { NotifyTransformChangedRequest } from '../f-storage';
+import { ListenDataChangesRequest, NotifyTransformChangedRequest } from '../f-storage';
 import { FFlowBase } from '../f-flow';
+import { FChannelHub, takeOne } from '../reactivity';
 
 /**
  * Component representing a canvas in the F-Flow framework.
@@ -144,7 +145,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * @param animated - If true, the centering will be animated; otherwise, it will be instantaneous.
    */
   public centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void {
-    setTimeout(() => this._mediator.execute(new CenterGroupOrNodeRequest(groupOrNodeId, animated)));
+    this._afterRedraw(() => {
+      this._mediator.execute(new CenterGroupOrNodeRequest(groupOrNodeId, animated));
+    });
   }
 
   /**
@@ -156,7 +159,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     padding: IPoint = PointExtensions.initialize(),
     animated: boolean = true,
   ): void {
-    setTimeout(() => this._mediator.execute(new FitToFlowRequest(padding, animated)));
+    this._afterRedraw(() => {
+      this._mediator.execute(new FitToFlowRequest(padding, animated));
+    });
   }
 
   /**
@@ -167,7 +172,9 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * This is useful for providing a smooth user experience when resetting the view.
    */
   public resetScaleAndCenter(animated: boolean = true): void {
-    setTimeout(() => this._mediator.execute(new ResetScaleAndCenterRequest(animated)));
+    this._afterRedraw(() => {
+      this._mediator.execute(new ResetScaleAndCenterRequest(animated));
+    });
   }
 
   /**
@@ -198,5 +205,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this._mediator.execute(new RemoveCanvasFromStoreRequest());
+  }
+
+  private _afterRedraw(callback: () => void): void {
+    this._mediator
+      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .pipe(takeOne())
+      .listen(this.destroyRef, callback);
   }
 }

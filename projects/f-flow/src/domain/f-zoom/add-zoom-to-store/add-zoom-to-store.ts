@@ -9,14 +9,12 @@ import { F_ZOOM_TAG } from '../f-zoom-tag';
  */
 @Injectable()
 @FExecutionRegister(AddZoomToStoreRequest)
-export class AddZoomToStoreExecution
-  implements IExecution<AddZoomToStoreRequest, void> {
-
+export class AddZoomToStore implements IExecution<AddZoomToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddZoomToStoreRequest): void {
+  public handle({ component }: AddZoomToStoreRequest): void {
     this._store.fComponents = {
-      [F_ZOOM_TAG]: request.fComponent,
+      [F_ZOOM_TAG]: component,
     };
   }
 }

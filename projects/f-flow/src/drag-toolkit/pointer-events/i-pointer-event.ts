@@ -7,6 +7,14 @@ export abstract class IPointerEvent {
     return this._target || (this.originalEvent.target as HTMLElement);
   }
 
+  public get touchEvent(): TouchEvent {
+    return this._event as TouchEvent;
+  }
+
+  public get touches(): TouchList {
+    return this.touchEvent.touches;
+  }
+
   protected constructor(
     private readonly _event: MouseEvent | TouchEvent,
     private _target?: HTMLElement,

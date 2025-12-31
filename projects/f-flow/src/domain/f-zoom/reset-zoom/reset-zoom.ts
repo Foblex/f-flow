@@ -9,17 +9,16 @@ import { FCanvasBase } from '../../../f-canvas';
  */
 @Injectable()
 @FExecutionRegister(ResetZoomRequest)
-export class ResetZoomExecution implements IExecution<ResetZoomRequest, void> {
-
+export class ResetZoom implements IExecution<ResetZoomRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  private get _fCanvas(): FCanvasBase {
-    return this._store.fCanvas!;
+  private get _canvas(): FCanvasBase {
+    return this._store.fCanvas as FCanvasBase;
   }
 
-  public handle(request: ResetZoomRequest): void {
-    this._fCanvas.resetScale();
-    this._fCanvas.redraw();
-    this._fCanvas.emitCanvasChangeEvent();
+  public handle(_request: ResetZoomRequest): void {
+    this._canvas.resetScale();
+    this._canvas.redraw();
+    this._canvas.emitCanvasChangeEvent();
   }
 }

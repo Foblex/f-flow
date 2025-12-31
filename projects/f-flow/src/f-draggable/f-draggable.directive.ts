@@ -67,6 +67,7 @@ import {
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
+import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -244,6 +245,8 @@ export class FDraggableDirective
 
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
+    this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
+
     this._mediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
 
     this._mediator.execute<void>(
@@ -314,6 +317,8 @@ export class FDraggableDirective
     this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
+
+    this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
 
     this._mediator.execute<void>(new EndDragSequenceRequest());
   }
