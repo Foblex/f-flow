@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { F_CONNECTION_PROVIDERS } from './f-connection';
+import { F_CONNECTION_IMPORTS_EXPORTS, F_CONNECTION_PROVIDERS } from './f-connection';
 import { F_NODE_PROVIDERS } from './f-node';
 import { F_BACKGROUND_PROVIDERS } from './f-backgroud';
 import { F_CONNECTORS_PROVIDERS } from './f-connectors';
@@ -32,6 +32,8 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
 
+    ...F_CONNECTION_IMPORTS_EXPORTS,
+
     CommonModule,
   ],
   exports: [
@@ -40,6 +42,8 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_BACKGROUND_PROVIDERS,
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
+
+    ...F_CONNECTION_IMPORTS_EXPORTS,
 
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
@@ -52,5 +56,4 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     FDraggableDirective,
   ],
 })
-export class FFlowModule {
-}
+export class FFlowModule {}

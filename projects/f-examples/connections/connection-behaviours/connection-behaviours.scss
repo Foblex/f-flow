@@ -1,4 +1,4 @@
-@use "../../flow-common";
+@use '../../flow-common';
 
 ::ng-deep f-flow {
   @include flow-common.connection;
@@ -6,6 +6,5 @@
 
 .f-node {
   @include flow-common.node;
+  opacity: 0.8;
 }
-
-@include flow-common.examples-toolbar;

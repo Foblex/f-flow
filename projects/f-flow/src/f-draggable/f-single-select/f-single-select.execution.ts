@@ -86,7 +86,6 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
     return this._store.fConnections.find(
       (c) =>
         c.isContains(element) ||
-        c.fConnectionCenter()?.nativeElement?.contains(element) ||
         Array.from(c.fConnectionContents()?.values() ?? []).some((content) =>
           content.hostElement?.contains(element),
         ),

@@ -12,7 +12,7 @@ import {
   OnInit,
   output,
   viewChild,
-} from "@angular/core";
+} from '@angular/core';
 import { F_CANVAS, FCanvasBase } from './f-canvas-base';
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import { FCanvasChangeEvent } from './domain';
@@ -20,7 +20,6 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
-  Deprecated,
   FitToFlowRequest,
   GetFlowRequest,
   InputCanvasPositionRequest,
@@ -53,13 +52,10 @@ import { FFlowBase } from '../f-flow';
   host: {
     'class': 'f-component f-canvas',
   },
-  providers: [
-    { provide: F_CANVAS, useExisting: FCanvasComponent },
-  ],
+  providers: [{ provide: F_CANVAS, useExisting: FCanvasComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
-
   private readonly _mediator = inject(FMediator);
   private readonly _elementReference = inject(ElementRef);
   private readonly _injector = inject(Injector);
@@ -68,18 +64,23 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
   public override fCanvasChange = output<FCanvasChangeEvent>();
 
-  public readonly position = input<IPoint, IPoint | null | undefined>(PointExtensions.initialize(), { transform: PointExtensions.castToPoint });
+  public readonly position = input<IPoint, IPoint | null | undefined>(
+    PointExtensions.initialize(),
+    { transform: PointExtensions.castToPoint },
+  );
   public readonly scale = input<number, unknown>(1, { transform: numberAttribute });
   public readonly debounceTime = input<number, unknown>(0, { transform: numberAttribute });
-  public override debounce = computed(() => this.debounceTime() < 0 ? 0 : this.debounceTime());
+  public override debounce = computed(() => (this.debounceTime() < 0 ? 0 : this.debounceTime()));
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
   }
 
-  public override fGroupsContainer = viewChild.required<ElementRef<HTMLElement>>('fGroupsContainer');
+  public override fGroupsContainer =
+    viewChild.required<ElementRef<HTMLElement>>('fGroupsContainer');
   public override fNodesContainer = viewChild.required<ElementRef<HTMLElement>>('fNodesContainer');
-  public override fConnectionsContainer = viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
+  public override fConnectionsContainer =
+    viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
 
   public get flowId(): string {
     return this._flowId!;
@@ -94,15 +95,21 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   private _positionChange(): void {
-    effect(() => {
-      this._mediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
-    }, { injector: this._injector });
+    effect(
+      () => {
+        this._mediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
+      },
+      { injector: this._injector },
+    );
   }
 
   private _scaleChange(): void {
-    effect(() => {
-      this._mediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
-    }, { injector: this._injector });
+    effect(
+      () => {
+        this._mediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
+      },
+      { injector: this._injector },
+    );
   }
 
   /**
@@ -110,7 +117,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public override redraw(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
-    this.hostElement.setAttribute("style", `transform: ${TransformModelExtensions.toString(this.transform)}`);
+    this.hostElement.setAttribute(
+      'style',
+      `transform: ${TransformModelExtensions.toString(this.transform)}`,
+    );
     this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
@@ -121,7 +131,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public override redrawWithAnimation(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
-    this.hostElement.setAttribute("style", `transition: transform ${isMobile() ? 80 : 150}ms ease-in-out; transform: ${TransformModelExtensions.toString(this.transform)}`);
+    this.hostElement.setAttribute(
+      'style',
+      `transition: transform ${isMobile() ? 80 : 150}ms ease-in-out; transform: ${TransformModelExtensions.toString(this.transform)}`,
+    );
     transitionEnd(this.hostElement, () => this.redraw());
   }
 
@@ -139,7 +152,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * @param padding - paddings from the bounds of the canvas
    * @param animated - If true, the fit will be animated; otherwise, it will be instantaneous.
    */
-  public fitToScreen(padding: IPoint = PointExtensions.initialize(), animated: boolean = true): void {
+  public fitToScreen(
+    padding: IPoint = PointExtensions.initialize(),
+    animated: boolean = true,
+  ): void {
     setTimeout(() => this._mediator.execute(new FitToFlowRequest(padding, animated)));
   }
 
@@ -162,14 +178,6 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   /**
-   *  @deprecated Method "setZoom" is deprecated. Use "setScale" instead. This method will be removed in version 18.0.0.`,
-   */
-  @Deprecated('setScale')
-  public setZoom(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
-    this.setScale(scale, toPosition);
-  }
-
-  /**
    * Sets the scale of the canvas to a specified value.
    * This method is used to zoom in or out of the canvas,
    * allowing users to adjust the view of the canvas content.
@@ -178,14 +186,6 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public override setScale(scale: number, toPosition: IPoint = PointExtensions.initialize()): void {
     this._mediator.execute(new UpdateScaleRequest(scale, toPosition));
-  }
-
-  /**
-   *  @deprecated Method "resetZoom" is deprecated. Use "resetScale" instead. This method will be removed in version 18.0.0.`,
-   */
-  @Deprecated('resetScale')
-  public resetZoom(): void {
-    this.resetScale();
   }
 
   /**

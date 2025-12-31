@@ -8,15 +8,9 @@
       <circle f-connection-drag-handle-start r="8"></circle>
       <circle f-connection-drag-handle-end r="8"></circle>
     </g>
-    <text f-connection-text></text>
   </g>
-  <ng-content></ng-content>
+  <ng-content />
 </svg>
-@if (fConnectionCenters().length) {
-  <div #fConnectionCenter class="f-connection-center">
-    <ng-content select="[fConnectionCenter]"></ng-content>
-  </div>
-}
 
 @if (fConnectionContents().length) {
   <ng-content select="[fConnectionContent]"></ng-content>

@@ -13,7 +13,6 @@ import { EFConnectionBehavior } from './e-f-connection-behavior';
 import { EFConnectionType } from './e-f-connection-type';
 import { IHasConnectionColor } from './i-has-connection-color';
 import { IHasConnectionFromTo } from './i-has-connection-from-to';
-import { IHasConnectionText } from './i-has-connection-text';
 import { CONNECTION_PATH, IConnectionPath } from './f-path';
 import { CONNECTION_GRADIENT, IConnectionGradient } from './f-gradient';
 import {
@@ -21,7 +20,6 @@ import {
   FConnectionDragHandleStartComponent,
 } from './f-drag-handle';
 import { FConnectionSelectionComponent } from './f-selection';
-import { CONNECTION_TEXT, IConnectionText } from './f-connection-text';
 import { EFConnectableSide } from '../../f-connectors';
 import { FConnectionFactory } from '../f-connection-builder';
 import { IHasHostElement } from '../../i-has-host-element';
@@ -31,7 +29,6 @@ import {
   mixinChangeSelection,
   mixinChangeVisibility,
 } from '../../mixins';
-import { FConnectionCenterDirective } from '../f-connection-center';
 import { ConnectionContentLayoutEngine, FConnectionContent } from '../f-connection-content';
 import { EFConnectionConnectableSide } from './e-f-connection-connectable-side';
 
@@ -51,8 +48,7 @@ export abstract class FConnectionBase
     ISelectable,
     ICanChangeVisibility,
     IHasConnectionColor,
-    IHasConnectionFromTo,
-    IHasConnectionText
+    IHasConnectionFromTo
 {
   private readonly _connectionFactory = inject(FConnectionFactory);
 
@@ -98,18 +94,6 @@ export abstract class FConnectionBase
 
   public readonly fSelection = viewChild.required(FConnectionSelectionComponent);
 
-  public readonly fTextComponent = viewChild<IConnectionText>(CONNECTION_TEXT);
-
-  public abstract fText: string;
-
-  public abstract fTextStartOffset: string;
-
-  public readonly fConnectionCenter = viewChild<ElementRef<HTMLDivElement>>('fConnectionCenter');
-
-  public readonly fConnectionCenters = contentChildren(FConnectionCenterDirective, {
-    descendants: true,
-  });
-
   public readonly fConnectionContents = contentChildren(FConnectionContent, {
     descendants: true,
   });
@@ -153,11 +137,6 @@ export abstract class FConnectionBase
     this._secondPoint = pathResult.secondPoint || point2;
 
     new ConnectionContentLayoutEngine().layout(this.line, pathResult, this._contents());
-
-    this.fConnectionCenter()?.nativeElement?.setAttribute(
-      'style',
-      this._createTransformString(pathResult.connectionCenter),
-    );
   }
 
   private _contents(): FConnectionContent[] {
@@ -181,10 +160,6 @@ export abstract class FConnectionBase
     });
   }
 
-  private _createTransformString(position: IPoint, rotate: number = 0): string {
-    return `position: absolute; pointer-events: all; transform: translate(-50%, -50%) rotate(${rotate}deg); left: ${position.x}px; top: ${position.y}px`;
-  }
-
   public override markChildrenAsSelected(): void {
     this.fPath().select();
   }
@@ -199,7 +174,6 @@ export abstract class FConnectionBase
     this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this._penultimatePoint, this.line.point2);
     this.fDragHandleStart()?.redraw(this._secondPoint, this.line.point1);
-    this.fTextComponent()?.redraw(this.line);
   }
 
   /**

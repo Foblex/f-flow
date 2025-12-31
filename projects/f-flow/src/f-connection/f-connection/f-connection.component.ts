@@ -41,14 +41,6 @@ let uniqueId = 0;
 export class FConnectionComponent extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
   public override fId = input<string>(`f-connection-${uniqueId++}`, { alias: 'fConnectionId' });
 
-  /** @deprecated [fText] is deprecated and will be removed in v18.0.0. Use FConnectionContent directive instead. */
-  @Input()
-  public override fText: string = '';
-
-  /** @deprecated [fTextStartOffset] is deprecated and will be removed in v18.0.0. Use FConnectionContent directive instead. */
-  @Input()
-  public override fTextStartOffset: string = '';
-
   public override fOutputId = input<string, unknown>('', {
     transform: (value) => stringAttribute(value) || '',
   });

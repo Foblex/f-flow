@@ -4,13 +4,13 @@ import { FCheckboxComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'drag-to-reassign',
-  styleUrls: ['./drag-to-reassign.component.scss'],
-  templateUrl: './drag-to-reassign.component.html',
+  styleUrls: ['./drag-to-reassign.scss'],
+  templateUrl: './drag-to-reassign.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule, FCheckboxComponent],
 })
-export class DragToReassignComponent {
+export class DragToReassign {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
   protected readonly reassignableStart = signal(false);

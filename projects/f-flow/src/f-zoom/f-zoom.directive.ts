@@ -17,7 +17,6 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddZoomToStoreRequest,
   defaultEventTrigger,
-  Deprecated,
   FEventTrigger,
   GetCanvasRequest,
   GetFlowHostElementRequest,
@@ -187,14 +186,6 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   public setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean) {
     this._mediator.execute(new SetZoomRequest(position, step, direction, animated));
-  }
-
-  /**
-   *  @deprecated Method "getScale" is deprecated. Use "getZoomValue" instead. This method will be removed in version 18.0.0.`,
-   */
-  @Deprecated('getZoomValue')
-  public getScale(): number {
-    return this.getZoomValue();
   }
 
   public getZoomValue(): number {

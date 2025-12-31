@@ -1,13 +1,13 @@
 <f-flow fDraggable (fLoaded)="loaded()" (fReassignConnection)="reassignConnection($event)">
   <f-canvas>
     @for (connection of connections(); track connection.id) {
-      <f-connection
-        fBehavior="floating"
-        [fReassignableStart]="reassignableStart()"
-        [fConnectionId]="connection.id"
-        [fOutputId]="connection.source"
-        [fInputId]="connection.target"
-      />
+    <f-connection
+      fBehavior="floating"
+      [fReassignableStart]="reassignableStart()"
+      [fConnectionId]="connection.id"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+    />
     }
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1">Output</div>

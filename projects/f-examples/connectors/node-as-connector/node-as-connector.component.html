@@ -1,14 +1,11 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
   <f-canvas>
-
-    <f-connection [fReassignDisabled]="true"
-                  fOutputId="1" fInputId="2"
-                  fBehavior="floating"
-                  fText="I'm a connection between two nodes">
+    <f-connection [fReassignDisabled]="true" fOutputId="1" fInputId="2" fBehavior="floating">
     </f-connection>
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="1">I'm node</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 400 }" fNodeInput fInputId="2">I'm node</div>
-
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 400 }" fNodeInput fInputId="2">
+      I'm node
+    </div>
   </f-canvas>
 </f-flow>

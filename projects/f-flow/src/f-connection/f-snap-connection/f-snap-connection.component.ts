@@ -41,10 +41,6 @@ export class FSnapConnectionComponent
 {
   public override fId = signal<string>(`f-snap-connection-${uniqueId++}`);
 
-  public override fText: string = '';
-
-  public override fTextStartOffset: string = '';
-
   @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
 

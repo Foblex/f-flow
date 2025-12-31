@@ -1,5 +1,5 @@
-import { CalculateConnectionCenterHandler } from './calculate-connection-center.handler';
-import { CalculateConnectionCenterRequest } from './calculate-connection-center-request';
+import { CalculateConnectionCenterHandler } from '@foblex/flow';
+import { CalculateConnectionCenterRequest } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 
 describe('CalculateConnectionCenterHandler', () => {

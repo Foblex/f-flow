@@ -44,10 +44,6 @@ export class FConnectionForCreateComponent
 {
   public override fId = signal<string>(`f-connection-for-create-${uniqueId++}`);
 
-  public override fText: string = '';
-
-  public override fTextStartOffset: string = '';
-
   public override fOutputId = signal('');
 
   public override fInputId = signal('');

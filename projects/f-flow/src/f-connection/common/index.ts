@@ -1,7 +1,5 @@
 export * from './domain';
 
-export * from './f-connection-text';
-
 export * from './f-drag-handle';
 
 export * from './f-gradient';
@@ -23,5 +21,3 @@ export * from './f-connection-identifiers';
 export * from './i-has-connection-color';
 
 export * from './i-has-connection-from-to';
-
-export * from './i-has-connection-text';

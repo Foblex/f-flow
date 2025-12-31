@@ -116,10 +116,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-to-reassign',
-        () =>
-          import(
-            '../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component'
-          ),
+        () => import('../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign'),
       ),
       defineLazyComponent(
         'create-node-on-connection-drop',
@@ -161,7 +158,7 @@ export const EXAMPLES_CONFIGURATION = {
         'connection-behaviours',
         () =>
           import(
-            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component'
+            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
           ),
       ),
       defineLazyComponent(
@@ -171,18 +168,7 @@ export const EXAMPLES_CONFIGURATION = {
             '../../projects/f-examples/connections/connection-markers/connection-markers.component'
           ),
       ),
-      defineLazyComponent(
-        'connection-text',
-        () =>
-          import('../../projects/f-examples/connections/connection-text/connection-text.component'),
-      ),
-      defineLazyComponent(
-        'connection-center',
-        () =>
-          import(
-            '../../projects/f-examples/connections/connection-center/connection-center.component'
-          ),
-      ),
+
       defineLazyComponent(
         'connection-content',
         () => import('../../projects/f-examples/connections/connection-content/connection-content'),
@@ -238,13 +224,6 @@ export const EXAMPLES_CONFIGURATION = {
         () =>
           import(
             '../../projects/f-examples/extensions/background-example/background-example.component'
-          ),
-      ),
-      defineLazyComponent(
-        'vp-flow',
-        () =>
-          import(
-            '../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component'
           ),
       ),
       defineLazyComponent(
