@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FSingleSelectRequest } from './f-single-select.request';
+import { SingleSelectRequest } from './single-select-request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { FConnectionBase } from '../../f-connection';
 import { FComponentsStore } from '../../f-storage';
@@ -48,14 +48,18 @@ import { IPointerEvent } from '../../drag-toolkit';
  */
 
 @Injectable()
-@FExecutionRegister(FSingleSelectRequest)
-export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, void> {
-  private readonly _fMediator = inject(FMediator);
+@FExecutionRegister(SingleSelectRequest)
+export class SingleSelect implements IExecution<SingleSelectRequest, void> {
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  public handle(request: FSingleSelectRequest): void {
-    if (!this._isValid(request)) {
+  private get _flowHost(): HTMLElement {
+    return this._store.flowHost;
+  }
+
+  public handle(request: SingleSelectRequest): void {
+    if (!this._isValid(request.event)) {
       return;
     }
 
@@ -66,12 +70,12 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
     this._isMultiSelect(request) ? this._multiSelect(fItem) : this._singleSelect(fItem);
   }
 
-  private _isValid(request: FSingleSelectRequest): boolean {
-    return this._isEventInFlowBounds(request.event) && this._dragContext.isEmpty();
+  private _isValid(event: IPointerEvent): boolean {
+    return this._isEventInFlowBounds(event) && this._dragContext.isEmpty();
   }
 
   private _isEventInFlowBounds(event: IPointerEvent): boolean {
-    return this._store.fFlow!.hostElement.contains(event.targetElement);
+    return this._flowHost.contains(event.targetElement);
   }
 
   private _getItemToSelect(event: IPointerEvent): ISelectable | undefined {
@@ -94,14 +98,17 @@ export class FSingleSelectExecution implements IExecution<FSingleSelectRequest, 
 
   private _updateItemAndChildrenLayers(fItem?: ISelectable): void {
     if (fItem) {
-      this._fMediator.execute<void>(
-        new UpdateItemAndChildrenLayersRequest(fItem, fItem.hostElement.parentElement!),
+      this._mediator.execute<void>(
+        new UpdateItemAndChildrenLayersRequest(
+          fItem,
+          fItem.hostElement.parentElement as HTMLElement,
+        ),
       );
     }
   }
 
-  private _isMultiSelect(request: FSingleSelectRequest): boolean {
-    return isValidEventTrigger(request.event.originalEvent, request.fMultiSelectTrigger);
+  private _isMultiSelect({ event, trigger }: SingleSelectRequest): boolean {
+    return isValidEventTrigger(event.originalEvent, trigger);
   }
 
   private _singleSelect(fItem?: ISelectable): void {
