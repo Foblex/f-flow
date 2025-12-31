@@ -40,7 +40,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-handle',
-        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle.component'),
+        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle'),
       ),
       defineLazyComponent(
         'resize-handle',

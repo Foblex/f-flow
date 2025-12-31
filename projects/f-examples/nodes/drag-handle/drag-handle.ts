@@ -1,29 +1,24 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
-import {
-  FCanvasComponent,
-  FFlowModule, FMoveNodesEvent
-} from '@foblex/flow';
-import {IPoint} from "@foblex/2d";
+import { FCanvasComponent, FFlowModule, FMoveNodesEvent } from '@foblex/flow';
+import { IPoint } from '@foblex/2d';
 
 @Component({
   selector: 'drag-handle',
-  styleUrls: [ './drag-handle.component.scss' ],
-  templateUrl: './drag-handle.component.html',
+  styleUrls: ['./drag-handle.scss'],
+  templateUrl: './drag-handle.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-  ]
+  imports: [FFlowModule],
 })
-export class DragHandleComponent {
-  protected readonly fCanvas = viewChild(FCanvasComponent);
+export class DragHandle {
+  private readonly _canvas = viewChild(FCanvasComponent);
 
   /**
    * Triggered after the <f-flow> component is fully loaded.
    * Resets the canvas scale and centers the view without animation.
    */
-  protected onLoaded(): void {
-    this.fCanvas()?.resetScaleAndCenter(false);
+  protected loaded(): void {
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   /**
@@ -32,7 +27,7 @@ export class DragHandleComponent {
    *
    * @param event - Node movement event containing affected nodes and delta.
    */
-  protected onMoveNodes(event: FMoveNodesEvent): void {
+  protected moveNodes(event: FMoveNodesEvent): void {
     // Handle node movement.
   }
 
@@ -41,7 +36,7 @@ export class DragHandleComponent {
    *
    * @param position - The new position of the node.
    */
-  protected onNodePositionChange(position: IPoint): void {
+  protected positionChanged(position: IPoint): void {
     // Handle node position change.
   }
 }

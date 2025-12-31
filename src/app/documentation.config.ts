@@ -148,11 +148,8 @@ export const DOCUMENTATION_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
-        'node-with-drag-handle-example',
-        () =>
-          import(
-            '../../projects/f-guides-examples/node/node-with-drag-handle-example/node-with-drag-handle-example.component'
-          ),
+        'drag-handle',
+        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle'),
       ),
     ]),
     provideTableOfContent({
