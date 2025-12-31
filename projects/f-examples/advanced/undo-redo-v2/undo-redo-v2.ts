@@ -1,20 +1,30 @@
 import {
   ChangeDetectionStrategy,
-  Component, computed, effect, inject, Injectable, Injector,
-  OnInit, signal, untracked,
+  Component,
+  computed,
+  effect,
+  inject,
+  Injectable,
+  Injector,
+  OnInit,
+  signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 import {
   EFMarkerType,
   FCanvasChangeEvent,
   FCanvasComponent,
-  FCreateConnectionEvent, FFlowComponent,
-  FFlowModule, FMoveNodesEvent,
-  FReassignConnectionEvent, FSelectionChangeEvent
+  FCreateConnectionEvent,
+  FFlowComponent,
+  FFlowModule,
+  FMoveNodesEvent,
+  FReassignConnectionEvent,
+  FSelectionChangeEvent,
 } from '@foblex/flow';
-import {IPoint} from '@foblex/2d';
-import {Mutator} from "@foblex/mutator";
-import {generateGuid} from "@foblex/utils";
+import { IPoint } from '@foblex/2d';
+import { Mutator } from '@foblex/mutator';
+import { generateGuid } from '@foblex/utils';
 
 interface INode {
   id: string;
@@ -34,41 +44,40 @@ interface IState {
   selection?: {
     nodes: string[];
     connections: string[];
-  },
+  };
   transform?: {
     position: IPoint;
     scale: number;
-  }
+  };
 }
 
 @Injectable()
-class FlowState extends Mutator<IState> {
-}
+class FlowState extends Mutator<IState> {}
 
 const DEFAULT_STATE: IState = {
   nodes: {
     ['node1']: {
       id: 'node1',
-      position: {x: 0, y: 200},
+      position: { x: 0, y: 200 },
       text: 'Node 1',
     },
     ['node2']: {
       id: 'node2',
-      position: {x: 200, y: 200},
+      position: { x: 200, y: 200 },
       text: 'Node 2',
-    }
+    },
   },
   connections: {
     ['connection1']: {
       id: 'connection1',
       source: 'node1-output-0',
       target: 'node2-input-1',
-    }
+    },
   },
   transform: {
-    position: {x: 0, y: 0},
+    position: { x: 0, y: 0 },
     scale: 1,
-  }
+  },
 };
 
 @Component({
@@ -78,9 +87,7 @@ const DEFAULT_STATE: IState = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [FlowState],
-  imports: [
-    FFlowModule
-  ]
+  imports: [FFlowModule],
 })
 export class UndoRedoV2 implements OnInit {
   protected readonly state = inject(FlowState);
@@ -112,10 +119,13 @@ export class UndoRedoV2 implements OnInit {
   }
 
   private _listenStateChanges(): void {
-    effect(() => {
-      this.state.changes();
-      untracked(() => this._applyChanges());
-    }, {injector: this._injector});
+    effect(
+      () => {
+        this.state.changes();
+        untracked(() => this._applyChanges());
+      },
+      { injector: this._injector },
+    );
   }
 
   private _applyChanges(): void {
@@ -133,7 +143,7 @@ export class UndoRedoV2 implements OnInit {
     }
   }
 
-  private _applySelectionChanges({selection}: IState): void {
+  private _applySelectionChanges({ selection }: IState): void {
     this._flow()?.select(selection?.nodes || [], selection?.connections || [], false);
   }
 
@@ -149,11 +159,12 @@ export class UndoRedoV2 implements OnInit {
   private _ifCanvasChangedFromInitialReCenterUpdateInitialState(event: FCanvasChangeEvent): void {
     if (this._isChangeAfterLoadedResetAndCenter) {
       this._isChangeAfterLoadedResetAndCenter = false;
-      this.state.patchBase({transform: {...event}});
+      this.state.patchBase({ transform: { ...event } });
+
       return;
     }
     this.state.update({
-      transform: createTransformObject(event)
+      transform: createTransformObject(event),
     });
   }
 
@@ -162,8 +173,8 @@ export class UndoRedoV2 implements OnInit {
       const connection = createConnectionObject(event);
       this.state.create({
         connections: {
-          [connection.id]: connection
-        }
+          [connection.id]: connection,
+        },
       });
     }
   }
@@ -172,15 +183,15 @@ export class UndoRedoV2 implements OnInit {
     if (event.newTargetId) {
       this.state.update({
         connections: {
-          [event.connectionId]: {target: event.newTargetId}
-        }
+          [event.connectionId]: { target: event.newTargetId },
+        },
       });
     }
   }
 
   protected moveNodes(event: FMoveNodesEvent): void {
     this.state.update({
-      nodes: createMoveNodesChangeObject(event.fNodes)
+      nodes: createMoveNodesChangeObject(event.fNodes),
     });
   }
 
@@ -189,23 +200,23 @@ export class UndoRedoV2 implements OnInit {
       selection: {
         nodes: [...event.fNodeIds],
         connections: [...event.fConnectionIds],
-      }
+      },
     });
   }
 }
 
-function createTransformObject({position, scale}: FCanvasChangeEvent) {
-  return {position, scale};
+function createTransformObject({ position, scale }: FCanvasChangeEvent) {
+  return { position, scale };
 }
 
-function createConnectionObject({fOutputId, fInputId}: FCreateConnectionEvent) {
+function createConnectionObject({ fOutputId, fInputId }: FCreateConnectionEvent) {
   return {
-    id: generateGuid(), source: fOutputId, target: fInputId!
-  }
+    id: generateGuid(),
+    source: fOutputId,
+    target: fInputId!,
+  };
 }
 
-function createMoveNodesChangeObject(nodes: { id: string; position: IPoint; }[]) {
-  return Object.fromEntries(
-    nodes.map(({id, position}) => [id, {position}])
-  );
+function createMoveNodesChangeObject(nodes: { id: string; position: IPoint }[]) {
+  return Object.fromEntries(nodes.map(({ id, position }) => [id, { position }]));
 }

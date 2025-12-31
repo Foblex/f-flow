@@ -6,9 +6,7 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(ListenCountChangesRequest)
-export class ListenCountChangesExecution
-  implements IExecution<ListenCountChangesRequest, FChannelHub>
-{
+export class ListenCountChanges implements IExecution<ListenCountChangesRequest, FChannelHub> {
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: ListenCountChangesRequest): FChannelHub {

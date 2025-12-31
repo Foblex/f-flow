@@ -1,15 +1,18 @@
 import { FChannelOperator } from './types';
 
-export function notifyOnStart(): FChannelOperator {
+export function takeOne(): FChannelOperator {
   return (callback) => {
+    let taken = false;
     let teardown: (() => void) | null = null;
 
     return {
       setTeardown: (t) => (teardown = t),
-      callback,
-      onSubscribe: (finalCallback) => {
-        if (!teardown) return;
-        finalCallback();
+      callback: () => {
+        if (taken) return;
+        taken = true;
+
+        callback();
+        teardown?.();
       },
     };
   };
