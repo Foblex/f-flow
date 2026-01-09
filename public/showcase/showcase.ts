@@ -14,6 +14,17 @@ export const SHOWCASE: IShowcaseItem[] = [
     ],
   },
   {
+    name: 'Agents Platform (XpertAI)',
+    tags: ['AI', 'No Code', 'Open Source'],
+    description:
+      'An Multi agents and data analysis platform for enterprises to make business decisions.',
+    imageUrl: './showcase/images/xpertai-light.png',
+    links: [
+      { text: 'Website', url: 'https://xpertai.cn/en/' },
+      { text: 'Sources', url: 'https://github.com/xpert-ai/xpert' },
+    ],
+  },
+  {
     name: 'Multi Agent AI Orchestration (EpicStaff)',
     tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
     description:
