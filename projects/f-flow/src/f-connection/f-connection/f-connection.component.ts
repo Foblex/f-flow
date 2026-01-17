@@ -2,6 +2,7 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   input,
   Input,
@@ -9,8 +10,14 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  viewChildren,
 } from '@angular/core';
-import { EFConnectionBehavior, EFConnectionConnectableSide, EFConnectionType } from '../common';
+import {
+  EFConnectionBehavior,
+  EFConnectionConnectableSide,
+  EFConnectionType,
+  FConnectionDragHandleControlPointComponent,
+} from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
 import { F_CONNECTION } from '../common/f-connection.injection-token';
 //TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
@@ -69,6 +76,9 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
   @Input()
   public override fType: EFConnectionType | string = EFConnectionType.STRAIGHT;
 
+  @Input()
+  public override fControlPoints: { x: number; y: number }[] = [];
+
   public override fSelectionDisabled = input(false, { transform: booleanAttribute });
 
   public override fReassignableStart = input(false, { transform: booleanAttribute });
@@ -95,6 +105,37 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
   }
 
   private readonly _mediator = inject(FMediator);
+
+  public readonly fDragHandleControlPoints = viewChildren(
+    FConnectionDragHandleControlPointComponent,
+  );
+
+  public readonly controlPointsToRender = computed(() => {
+    // Only render control points for custom-path connections
+    if (this.fType !== EFConnectionType.CUSTOM_PATH) {
+      return [];
+    }
+    return this.fControlPoints;
+  });
+
+  public override redraw(): void {
+    super.redraw();
+    // Redraw control point handles for custom-path connections
+    if (this.fType === EFConnectionType.CUSTOM_PATH) {
+      this._redrawControlPointHandles();
+    }
+  }
+
+  private _redrawControlPointHandles(): void {
+    const handles = this.fDragHandleControlPoints();
+    const controlPoints = this.fControlPoints;
+
+    handles.forEach((handle, index) => {
+      if (index < controlPoints.length) {
+        handle.redraw(controlPoints[index]);
+      }
+    });
+  }
 
   public ngOnInit(): void {
     this._mediator.execute(new AddConnectionToStoreRequest(this));
