@@ -27,7 +27,7 @@ export class UpdateNodeWhenStateOrSizeChanged
     const { hostElement, stateChanges } = nodeOrGroup;
 
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
-      .pipe(notifyOnStart(), debounceTime(10))
+      .pipe(notifyOnStart(), debounceTime(1))
       .listen(destroyRef, () => {
         this._mediator.execute<void>(new NotifyDataChangedRequest());
 

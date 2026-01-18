@@ -1,27 +1,28 @@
-import {
-  FConnectionDragHandleEndComponent,
-  FConnectionDragHandleStartComponent,
-  FConnectionGradientComponent,
-  FConnectionPathComponent,
-  FConnectionSelectionComponent,
-} from './common';
 import { FConnectionComponent } from './f-connection';
 import { FConnectionForCreateComponent } from './f-connection-for-create';
-import { FMarkerDirective } from './f-marker';
 import { FSnapConnectionComponent } from './f-snap-connection';
-import { FConnectionContent } from './f-connection-content';
+import {
+  FConnectionContent,
+  FConnectionControlPoints,
+  FConnectionDragHandleEnd,
+  FConnectionDragHandleStart,
+  FConnectionGradient,
+  FConnectionMarker,
+  FConnectionPath,
+  FConnectionSelection,
+} from '../f-connection-v2';
 
 export const F_CONNECTION_PROVIDERS = [
-  FConnectionDragHandleStartComponent,
-  FConnectionDragHandleEndComponent,
-  FConnectionGradientComponent,
-  FConnectionPathComponent,
-  FConnectionSelectionComponent,
+  FConnectionDragHandleStart,
+  FConnectionDragHandleEnd,
+  FConnectionGradient,
+  FConnectionPath,
+  FConnectionSelection,
+  FConnectionMarker,
 
   FConnectionComponent,
   FConnectionForCreateComponent,
-  FMarkerDirective,
   FSnapConnectionComponent,
 ];
 
-export const F_CONNECTION_IMPORTS_EXPORTS = [FConnectionContent];
+export const F_CONNECTION_IMPORTS_EXPORTS = [FConnectionContent, FConnectionControlPoints];

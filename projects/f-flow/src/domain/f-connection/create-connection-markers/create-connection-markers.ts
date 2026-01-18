@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
-import { FConnectionBase, FMarkerBase } from '../../../f-connection';
+import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 import { normalizeDomElementId } from '@foblex/utils';
 import { FComponentsStore } from '../../../f-storage';
+import { FConnectionMarkerBase } from '../../../f-connection-v2';
 
 /**
  * Execution that creates connection markers for a given connection.
@@ -39,7 +40,7 @@ export class CreateConnectionMarkers implements IExecution<CreateConnectionMarke
     this._makeSafariCompatible(connection);
   }
 
-  public _findConnectionMarkers(connection: FConnectionBase): FMarkerBase[] {
+  public _findConnectionMarkers(connection: FConnectionBase): FConnectionMarkerBase[] {
     return this._store.fMarkers.filter((x) => connection.hostElement.contains(x.hostElement));
   }
 
@@ -50,7 +51,7 @@ export class CreateConnectionMarkers implements IExecution<CreateConnectionMarke
 }
 
 function createMarkerElement(
-  marker: FMarkerBase,
+  marker: FConnectionMarkerBase,
   connectionId: string,
   browser: BrowserService,
 ): SVGElement {

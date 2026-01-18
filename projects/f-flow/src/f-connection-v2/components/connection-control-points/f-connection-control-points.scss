@@ -1,0 +1,11 @@
+:host {
+  pointer-events: all;
+  position: absolute;
+}
+
+svg {
+  display: block;
+  vertical-align: middle;
+  position: absolute;
+  overflow: visible;
+}

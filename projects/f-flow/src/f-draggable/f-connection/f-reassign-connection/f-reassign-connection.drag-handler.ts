@@ -10,6 +10,7 @@ import { Injector } from '@angular/core';
 import { IFReassignHandler, roundedRectFromPoint } from './i-f-reassign-handler';
 import { FReassignTargetDragHandler } from './f-reassign-target.drag-handler';
 import { FReassignSourceDragHandler } from './f-reassign-source.drag-handler';
+import { ConnectionBehaviourBuilder } from '../../../f-connection-v2';
 
 export class FReassignConnectionDragHandler implements IFDragHandler {
   public fEventType = 'reassign-connection';
@@ -17,6 +18,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
 
   private readonly _result: FDragHandlerResult<IFReassignConnectionDragResult>;
   private readonly _mediator: FMediator;
+  private readonly _connectionBehaviour: ConnectionBehaviourBuilder;
   private readonly _store: FComponentsStore;
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
@@ -62,6 +64,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   ) {
     this._result = _injector.get(FDragHandlerResult);
     this._mediator = _injector.get(FMediator);
+    this._connectionBehaviour = _injector.get(ConnectionBehaviourBuilder);
     this._store = _injector.get(FComponentsStore);
 
     this.fData = {
@@ -76,6 +79,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _sourceDragHandler(): FReassignSourceDragHandler {
     return new FReassignSourceDragHandler(
       this._mediator,
+      this._connectionBehaviour,
       this._connection,
       this._sourceConnectorAndRect,
       this._targetConnectorAndRect,
@@ -85,6 +89,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private _targetDragHandler(): FReassignTargetDragHandler {
     return new FReassignTargetDragHandler(
       this._mediator,
+      this._connectionBehaviour,
       this._connection,
       this._sourceConnectorAndRect,
       this._targetConnectorAndRect,

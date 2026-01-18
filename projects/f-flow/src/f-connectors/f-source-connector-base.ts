@@ -1,6 +1,8 @@
 import { FConnectorBase } from './f-connector-base';
 import { FNodeInputBase } from './f-node-input';
+import { Directive } from '@angular/core';
 
+@Directive()
 export abstract class FSourceConnectorBase extends FConnectorBase {
   public abstract canBeConnectedInputs: string[];
 

@@ -1,9 +1,9 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position-request';
-import { EFConnectableSide } from '../../../../f-connectors';
 import { RectExtensions } from '@foblex/2d';
 import { IsDragStartedRequest } from '../../../f-draggable';
+import { EFConnectableSide } from '../../../../f-connection-v2';
 
 /**
  * Injection token for configuring the side detection tolerance (in pixels).

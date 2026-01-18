@@ -1,14 +1,13 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { MoveDragHandler } from './move-drag-handler';
-import { Injector } from "@angular/core";
-import { SnapLinesDragHandler } from "./create-snap-lines/snap-lines.drag-handler";
-import { ISnapResult } from "../../f-line-alignment";
+import { Injector } from '@angular/core';
+import { SnapLinesDragHandler } from './create-snap-lines/snap-lines.drag-handler';
+import { ISnapResult } from '../../f-line-alignment';
 
 export class MoveSummaryDragHandler implements IFDragHandler {
-
   public readonly fEventType = 'move-node';
-  public readonly fData: any;
+  public readonly fData: unknown;
 
   private _lineAlignment: SnapLinesDragHandler | null = null;
 

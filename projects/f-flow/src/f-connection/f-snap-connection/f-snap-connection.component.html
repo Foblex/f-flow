@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg">
   <defs #defs></defs>
+  <ng-content />
   <g class="f-connection-group">
     <linearGradient fConnectionGradient></linearGradient>
     <path fConnectionSelection [attr.d]="path"></path>
@@ -9,7 +10,6 @@
       <circle f-connection-drag-handle-end r="8"></circle>
     </g>
   </g>
-  <ng-content />
 </svg>
 
 @if (fConnectionContents().length) {

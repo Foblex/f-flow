@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EFConnectableSide } from '../f-connectors';
+import { EFConnectableSide } from '../f-connection-v2';
 
 @Injectable()
 export class FConnectorsStore {

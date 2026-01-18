@@ -11,20 +11,20 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { EFConnectionBehavior, EFConnectionConnectableSide } from '../common';
-import { EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
-//TODO: Need to deal with cyclic dependencies, since in some cases an error occurs when importing them ../common
-// TypeError: Class extends value undefined is not a constructor or null
-// at f-connection-for-create.component.ts:34:11
-import { FConnectionBase } from '../common/f-connection-base';
+import { FConnectionBase } from '../models';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
   AddConnectionForCreateToStoreRequest,
   RemoveConnectionForCreateFromStoreRequest,
 } from '../../domain';
+import {
+  EFConnectionBehavior,
+  EFConnectionConnectableSide,
+  EFConnectionType,
+  F_INJECTABLE_CONNECTION,
+} from '../../f-connection-v2';
 
 let uniqueId = 0;
 
@@ -36,7 +36,7 @@ let uniqueId = 0;
   host: {
     class: 'f-component f-connection f-connection-for-create',
   },
-  providers: [{ provide: F_CONNECTION, useExisting: FConnectionForCreateComponent }],
+  providers: [{ provide: F_INJECTABLE_CONNECTION, useExisting: FConnectionForCreateComponent }],
 })
 export class FConnectionForCreateComponent
   extends FConnectionBase

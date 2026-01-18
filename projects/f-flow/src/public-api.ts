@@ -7,6 +7,7 @@ export * from './domain';
 export * from './drag-toolkit';
 
 export * from './f-connection';
+export * from './f-connection-v2';
 
 export * from './f-connectors';
 

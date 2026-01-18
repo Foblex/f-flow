@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <g>
+    @for (candidate of candidates(); track $index) {
+    <circle
+      [attr.r]="radius()"
+      class="f-control-point"
+      [attr.fill]="'red'"
+      [attr.cx]="candidate.point.x"
+      [attr.cy]="candidate.point.y"
+      (click)="addPivotFromCandidateOrdered(candidate)"
+    ></circle>
+    } @for (candidate of userPivots(); track $index) {
+    <circle
+      [attr.r]="6"
+      class="f-control-point"
+      [attr.fill]="'green'"
+      [attr.cx]="candidate.point.x"
+      [attr.cy]="candidate.point.y"
+    ></circle>
+    }
+  </g>
+</svg>

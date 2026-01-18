@@ -2,7 +2,6 @@ import { CalculateTargetConnectorsToConnectRequest } from './calculate-target-co
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import {
-  EFConnectableSide,
   FConnectorBase,
   FNodeInputBase,
   FNodeOutletBase,
@@ -13,6 +12,7 @@ import { IConnectorAndRect } from '../i-connector-and-rect';
 import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
 import { IPoint } from '@foblex/2d';
+import { EFConnectableSide } from '../../../f-connection-v2';
 
 /**
  * Execution that retrieves all input connectors that can be connected to a given output or outlet connector,

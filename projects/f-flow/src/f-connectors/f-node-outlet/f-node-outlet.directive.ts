@@ -10,10 +10,10 @@ import {
 } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE } from '../../f-node';
-import { EFConnectableSide } from '../e-f-connectable-side';
 import { FMediator } from '@foblex/mediator';
 import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
 import { stringAttribute } from '../../utils';
+import { EFConnectableSide } from '../../f-connection-v2';
 
 let uniqueId = 0;
 

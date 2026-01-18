@@ -29,7 +29,6 @@ import {
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../f-draggable';
-import { FConnectionFactory } from '../f-connection';
 import {
   NotifyDataChangedRequest,
   F_STORAGE_PROVIDERS,
@@ -40,6 +39,11 @@ import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
 import { FChannelHub, takeOne } from '../reactivity';
+import {
+  ConnectionBehaviourBuilder,
+  ConnectionLineBuilder,
+  F_CONNECTION_V2_DRAG_PROVIDERS,
+} from '../f-connection-v2';
 
 let uniqueId = 0;
 
@@ -56,9 +60,11 @@ let uniqueId = 0;
     FMediator,
     ...F_STORAGE_PROVIDERS,
     FDraggableDataContext,
-    FConnectionFactory,
+    ConnectionLineBuilder,
+    ConnectionBehaviourBuilder,
     ...COMMON_PROVIDERS,
     ...F_DRAGGABLE_PROVIDERS,
+    ...F_CONNECTION_V2_DRAG_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,6 @@
 export * from './clear-selection';
 
-export * from './get-can-be-selected-items';
+export * from './calculate-selectable-items';
 
 export * from './get-current-selection';
 

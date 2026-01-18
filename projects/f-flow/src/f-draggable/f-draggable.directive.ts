@@ -68,6 +68,7 @@ import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-n
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
+import { MoveControlPointFinalizeRequest } from '../f-connection-v2';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -146,6 +147,9 @@ export class FDraggableDirective
 
   @Input()
   public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
+
+  @Input()
+  public fMoveControlPointTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input()
   public fNodeResizeTrigger: FEventTrigger = defaultEventTrigger;
@@ -257,6 +261,14 @@ export class FDraggableDirective
       new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
     );
 
+    this._mediator.execute<void>(
+      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
+    );
+
+    // this._mediator.execute<void>(
+    //   new MoveControlPointPreparationRequest(event, this.fMoveControlPointTrigger),
+    // );
+
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
 
     const isMouseLeftOrTouch = event.isMouseLeftButton();
@@ -319,6 +331,8 @@ export class FDraggableDirective
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
+
+    this._mediator.execute<void>(new MoveControlPointFinalizeRequest(event));
 
     this._mediator.execute<void>(new EndDragSequenceRequest());
   }

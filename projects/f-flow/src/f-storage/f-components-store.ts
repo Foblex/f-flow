@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FConnectionBase, FMarkerBase } from '../f-connection';
+import { FConnectionBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
 import { FBackgroundBase } from '../f-backgroud';
@@ -9,6 +9,7 @@ import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
 import { IMap } from '../domain';
+import { FConnectionMarkerBase } from '../f-connection-v2';
 
 @Injectable()
 export class FComponentsStore {
@@ -19,7 +20,7 @@ export class FComponentsStore {
   public readonly countChanges$ = new FChannel();
 
   public get flowHost(): HTMLElement {
-    return this.fFlow?.hostElement!;
+    return this.fFlow?.hostElement as HTMLElement;
   }
 
   public fComponents: IMap<unknown> = {};
@@ -38,7 +39,7 @@ export class FComponentsStore {
 
   public fSnapConnection: FConnectionBase | undefined;
 
-  public fMarkers: FMarkerBase[] = [];
+  public fMarkers: FConnectionMarkerBase[] = [];
 
   public fOutputs: FConnectorBase[] = [];
 

@@ -23,8 +23,4 @@ export const F_CSS_CLASS = {
 
     CONNECTABLE: 'f-connector-connectable',
   },
-
-  CONNECTION: {
-    DRAG_HANDLE: 'f-connection-drag-handle',
-  },
 };

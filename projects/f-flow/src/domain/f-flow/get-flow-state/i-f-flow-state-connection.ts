@@ -1,7 +1,6 @@
-import { EFConnectionBehavior, EFConnectionType } from '../../../f-connection';
+import { EFConnectionBehavior, EFConnectionType } from '../../../f-connection-v2';
 
 export interface IFFlowStateConnection {
-
   id: string;
 
   fOutputId: string;

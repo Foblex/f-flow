@@ -1,4 +1,4 @@
-import { EFConnectableSide } from '../../../../f-connectors';
+import { EFConnectableSide } from '../../../../f-connection-v2';
 
 /**
  * Checks if the given side is one of the calculate modes.

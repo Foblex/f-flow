@@ -2,13 +2,16 @@ import { ILine, IRoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
-import { CalculateConnectionLineByBehaviorRequest } from '../calculate-connection-line-by-behavior';
 import { FConnectorBase } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
 import { DragRectCache } from '../../drag-rect-cache';
+import {
+  ConnectionBehaviourBuilder,
+  ConnectionBehaviourBuilderRequest,
+} from '../../../f-connection-v2';
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -20,6 +23,7 @@ import { DragRectCache } from '../../drag-rect-cache';
 export class RedrawConnections implements IExecution<RedrawConnectionsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
+  private readonly _connectionBehaviour = inject(ConnectionBehaviourBuilder);
 
   public handle(_request: RedrawConnectionsRequest): void {
     this._resetConnectors();
@@ -86,8 +90,8 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     target: FConnectorBase,
     connection: FConnectionBase,
   ): ILine {
-    return this._mediator.execute(
-      new CalculateConnectionLineByBehaviorRequest(
+    return this._connectionBehaviour.handle(
+      new ConnectionBehaviourBuilderRequest(
         this._calculateConnectorRect(source),
         this._calculateConnectorRect(target),
         connection,

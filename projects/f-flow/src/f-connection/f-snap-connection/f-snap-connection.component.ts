@@ -11,17 +11,20 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { EFConnectionBehavior, EFConnectionConnectableSide } from '../common';
-import { EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
-import { FConnectionBase } from '../common/f-connection-base';
+import { FConnectionBase } from '../models';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
   AddSnapConnectionToStoreRequest,
   RemoveSnapConnectionFromStoreRequest,
 } from '../../domain';
+import {
+  EFConnectionBehavior,
+  EFConnectionConnectableSide,
+  EFConnectionType,
+  F_INJECTABLE_CONNECTION,
+} from '../../f-connection-v2';
 
 let uniqueId = 0;
 
@@ -33,7 +36,7 @@ let uniqueId = 0;
   host: {
     class: 'f-component f-connection f-snap-connection',
   },
-  providers: [{ provide: F_CONNECTION, useExisting: FSnapConnectionComponent }],
+  providers: [{ provide: F_INJECTABLE_CONNECTION, useExisting: FSnapConnectionComponent }],
 })
 export class FSnapConnectionComponent
   extends FConnectionBase

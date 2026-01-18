@@ -8,8 +8,6 @@ export * from './add-snap-connection-to-store';
 
 export * from './create-connection-markers';
 
-export * from './calculate-connection-line-by-behavior';
-
 export * from './redraw-connections';
 
 export * from './remove-connection-for-create-from-store';
