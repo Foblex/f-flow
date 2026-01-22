@@ -1,7 +1,7 @@
 import { IPoint } from '@foblex/2d';
 import {
+  buildConnectionAnchors,
   buildCurveCandidates,
-  calculateUserAnchorPoints,
   createMultiCubicPath,
   ICubicSegment,
   sampleMultiCubicUniform,
@@ -22,7 +22,7 @@ export class CalculateBezierCurveData implements IFConnectionBuilder {
     offset,
     pivots,
   }: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
-    const anchors = [source, ...calculateUserAnchorPoints(pivots), target];
+    const anchors = buildConnectionAnchors(source, target, pivots);
 
     const segments: ICubicSegment[] = [];
 

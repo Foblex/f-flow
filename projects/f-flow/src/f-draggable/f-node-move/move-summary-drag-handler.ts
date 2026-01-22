@@ -7,7 +7,7 @@ import { ISnapResult } from '../../f-line-alignment';
 
 export class MoveSummaryDragHandler implements IFDragHandler {
   public readonly fEventType = 'move-node';
-  public readonly fData: unknown;
+  public readonly fData: any;
 
   private _lineAlignment: SnapLinesDragHandler | null = null;
 

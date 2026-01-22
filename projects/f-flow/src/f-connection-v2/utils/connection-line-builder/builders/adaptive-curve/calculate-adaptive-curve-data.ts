@@ -1,7 +1,7 @@
 import { IPoint } from '@foblex/2d';
 import {
+  buildConnectionAnchors,
   buildCurveCandidates,
-  calculateUserAnchorPoints,
   createMultiCubicPath,
   ICubicSegment,
   sampleMultiCubicUniform,
@@ -92,7 +92,7 @@ export class CalculateAdaptiveCurveData implements IFConnectionBuilder {
     const { source, sourceSide, target, targetSide, offset, pivots } = req;
     const clampedOffset = Math.max(0, offset ?? 0);
 
-    const anchors = [source, ...calculateUserAnchorPoints(pivots), target];
+    const anchors = buildConnectionAnchors(source, target, pivots);
 
     const segments: ICubicSegment[] = [];
 

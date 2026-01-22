@@ -1,9 +1,9 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { IMap } from '../../../../../domain';
 import {
+  buildConnectionAnchors,
   buildPolylineCandidatesForChain,
   calculateCenterBetweenPoints,
-  calculateUserAnchorPoints,
   mergePointChains,
 } from '../utils';
 import { createSegmentLinePath } from './create-segment-line-path';
@@ -50,7 +50,7 @@ export class CalculateSegmentLineData implements IFConnectionBuilder {
   public handle(request: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
     const { source, sourceSide, target, targetSide, pivots, offset, radius } = request;
 
-    const anchors = [source, ...calculateUserAnchorPoints(pivots), target];
+    const anchors = buildConnectionAnchors(source, target, pivots);
 
     const chains: IPoint[][] = [];
     const candidates: IControlPointCandidate[] = [];
