@@ -1,66 +1,46 @@
 import {
-  IFConnectionBuilderResponse,
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
+  IFConnectionBuilderResponse,
 } from '../../models';
 import { buildConnectionAnchors } from '../utils';
-import { IPoint } from '@foblex/2d';
 import { IControlPointCandidate } from '../../../../components';
+
+const EPS = 0.0002;
 
 export class CalculateStraightLineData implements IFConnectionBuilder {
   public handle(request: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
     const anchors = buildConnectionAnchors(request.source, request.target, request.pivots);
 
-    const segmentPaths: string[] = [];
+    const n = anchors.length;
 
-    for (let i = 0; i < anchors.length - 1; i++) {
+    const p0 = anchors[0];
+    let d = `M ${p0.x} ${p0.y}`;
+
+    const candidates: IControlPointCandidate[] = new Array(n - 1);
+
+    for (let i = 0; i < n - 1; i++) {
       const a = anchors[i];
       const b = anchors[i + 1];
 
-      const path = createStraightSegmentPath(a, b, i === anchors.length - 2);
-      segmentPaths.push(path);
-    }
+      const isLast = i === n - 2;
+      const bx = isLast ? b.x + EPS : b.x;
+      const by = isLast ? b.y + EPS : b.y;
 
-    const d = joinSegmentPaths(segmentPaths);
+      d += ` L ${bx} ${by}`;
+
+      candidates[i] = {
+        point: { x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5 },
+        chainIndex: i,
+      };
+    }
 
     return {
       path: d,
-      candidates: buildSegmentCandidates(anchors),
+      candidates,
       points: anchors,
       secondPoint: anchors[1] ?? request.target,
-      penultimatePoint: anchors[anchors.length - 2] ?? request.source,
+      penultimatePoint: anchors[n - 2] ?? request.source,
     };
   }
-}
-
-function createStraightSegmentPath(a: IPoint, b: IPoint, isLast: boolean): string {
-  const x = isLast ? b.x + 0.0002 : b.x;
-  const y = isLast ? b.y + 0.0002 : b.y;
-
-  return `M ${a.x} ${a.y} L ${x} ${y}`;
-}
-
-function buildSegmentCandidates(anchors: IPoint[]): IControlPointCandidate[] {
-  const out: IControlPointCandidate[] = [];
-  for (let i = 0; i < anchors.length - 1; i++) {
-    const a = anchors[i];
-    const b = anchors[i + 1];
-    out.push({
-      point: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
-      chainIndex: i,
-      kind: 'mid-segment',
-    });
-  }
-
-  return out;
-}
-
-function joinSegmentPaths(segments: string[]): string {
-  let d = segments[0];
-
-  for (let i = 1; i < segments.length; i++) {
-    d += ' ' + segments[i];
-  }
-
-  return d;
 }

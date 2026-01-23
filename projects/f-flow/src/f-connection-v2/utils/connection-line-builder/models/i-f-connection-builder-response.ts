@@ -10,7 +10,7 @@ export interface IFConnectionBuilderResponse {
 
   secondPoint: IPoint;
 
-  points?: IPoint[];
+  points: IPoint[];
 
-  candidates?: IControlPointCandidate[];
+  candidates: IControlPointCandidate[];
 }

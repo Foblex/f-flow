@@ -19,5 +19,5 @@ import {
 export class FConnectionControlPoints extends FConnectionControlPointsBase {
   public override readonly candidates = signal<IControlPointCandidate[]>([]);
 
-  public override readonly radius = signal<number>(8);
+  public override readonly radius = signal<number>(4);
 }

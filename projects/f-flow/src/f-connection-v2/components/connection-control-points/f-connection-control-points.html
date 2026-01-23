@@ -3,19 +3,18 @@
     @for (candidate of candidates(); track $index) {
     <circle
       [attr.r]="radius()"
-      class="f-control-point"
+      class="f-candidate"
       [attr.fill]="'red'"
       [attr.cx]="candidate.point.x"
       [attr.cy]="candidate.point.y"
-      (click)="addPivotFromCandidateOrdered(candidate)"
     ></circle>
-    } @for (candidate of userPivots(); track $index) {
+    } @for (point of pivots(); track $index) {
     <circle
-      [attr.r]="6"
-      class="f-control-point"
+      [attr.r]="radius()"
+      class="f-point"
       [attr.fill]="'green'"
-      [attr.cx]="candidate.point.x"
-      [attr.cy]="candidate.point.y"
+      [attr.cx]="point.x"
+      [attr.cy]="point.y"
     ></circle>
     }
   </g>

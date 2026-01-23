@@ -1,53 +1,64 @@
 import { IPoint } from '@foblex/2d';
 
-export function createSegmentLinePath(points: IPoint[], borderRadius: number): string {
-  let path = '';
-  for (let i = 0; i < points.length; i++) {
-    const p = points[i];
-    let segment = '';
+const EPS = 1e-6;
+const END_EPS = 0.0002;
+const MIN_VISIBLE = 0.75;
 
-    if (i > 0 && i < points.length - 1) {
-      segment = getBend(points[i - 1], p, points[i + 1], borderRadius);
-    } else if (i === points.length - 1) {
-      segment = buildLastLineSegment(p);
-    } else {
-      segment = buildMoveOrLineSegment(i, p);
-    }
-    path += segment;
+export function createSegmentLinePath(points: IPoint[], borderRadius: number): string {
+  const n = points.length;
+  const parts: string[] = [];
+  parts.push(`M ${points[0].x} ${points[0].y}`);
+
+  for (let i = 1; i < n - 1; i++) {
+    parts.push(getBend(points[i - 1], points[i], points[i + 1], borderRadius));
   }
 
-  return path;
+  const last = points[n - 1];
+  parts.push(`L ${last.x + END_EPS} ${last.y + END_EPS}`);
+
+  return parts.join(' ');
 }
 
 function getBend(a: IPoint, b: IPoint, c: IPoint, size: number): string {
-  const bendSize = Math.min(distance(a, b) / 2, distance(b, c) / 2, size);
-  const { x, y } = b;
+  const x = b.x;
+  const y = b.y;
 
-  if ((a.x === x && x === c.x) || (a.y === y && y === c.y)) {
-    return `L${x} ${y}`;
+  if (size <= 0) {
+    return `L ${x} ${y}`;
   }
 
-  if (a.y === y) {
+  const collinearX = Math.abs(a.x - x) <= EPS && Math.abs(x - c.x) <= EPS;
+  const collinearY = Math.abs(a.y - y) <= EPS && Math.abs(y - c.y) <= EPS;
+  if (collinearX || collinearY) {
+    return `L ${x} ${y}`;
+  }
+
+  const ab = Math.hypot(x - a.x, y - a.y);
+  const bc = Math.hypot(c.x - x, c.y - y);
+
+  const bendSize = Math.min(ab * 0.5, bc * 0.5, size);
+
+  if (bendSize < MIN_VISIBLE) {
+    return `L ${x} ${y}`;
+  }
+
+  const incomingHorizontal = Math.abs(a.y - y) <= EPS;
+
+  if (incomingHorizontal) {
     const xDir = a.x < c.x ? -1 : 1;
     const yDir = a.y < c.y ? 1 : -1;
 
-    return `L ${x + bendSize * xDir},${y}Q ${x},${y} ${x},${y + bendSize * yDir}`;
+    const lx = x + bendSize * xDir;
+    const qy = y + bendSize * yDir;
+
+    return `L ${lx} ${y} Q ${x} ${y} ${x} ${qy}`;
   }
 
   const xDir = a.x < c.x ? 1 : -1;
   const yDir = a.y < c.y ? -1 : 1;
 
-  return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
-}
+  const ly = y + bendSize * yDir;
+  const qx = x + bendSize * xDir;
 
-function distance(a: IPoint, b: IPoint): number {
-  return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
-}
-
-function buildMoveOrLineSegment(index: number, point: IPoint): string {
-  return `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`;
-}
-
-function buildLastLineSegment(point: IPoint): string {
-  return `L${point.x + 0.0002} ${point.y + 0.0002}`;
+  return `L ${x} ${ly} Q ${x} ${y} ${qx} ${y}`;
 }

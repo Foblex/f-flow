@@ -1,6 +1,5 @@
 import { IPoint } from '@foblex/2d';
-import { IControlPointCandidate } from '../../../../components';
-import { cubicBezierAtT, sampleCubicBezierUniform } from './sample-cubic-bezier-uniform';
+import { sampleCubicBezierUniform } from './sample-cubic-bezier-uniform';
 
 export interface ICubicSegment {
   p0: IPoint;
@@ -38,47 +37,8 @@ export function sampleMultiCubicUniform(
     const s = segments[i];
     const pts = sampleCubicBezierUniform([s.p0, s.c1, s.c2, s.p3], samplesPerSegment);
 
-    if (i > 0) pts.shift(); // убрать дубль стыка
+    if (i > 0) pts.shift();
     out.push(...pts);
-  }
-
-  return out;
-}
-
-export function buildCurveCandidates(segments: ICubicSegment[]): IControlPointCandidate[] {
-  const res: IControlPointCandidate[] = [];
-
-  for (const s of segments) {
-    // “центральная” точка — лучшая для UX
-    res.push({
-      point: cubicBezierAtT(s.p0, s.c1, s.c2, s.p3, 0.5),
-      chainIndex: s.chainIndex,
-      kind: 'curve-mid',
-    });
-
-    // ещё две точки (чтобы можно было добавлять pivot более гибко)
-    for (const t of [0.25, 0.75]) {
-      res.push({
-        point: cubicBezierAtT(s.p0, s.c1, s.c2, s.p3, t),
-        chainIndex: s.chainIndex,
-        kind: 'curve-sample',
-      });
-    }
-  }
-
-  return uniqueCandidates(res);
-}
-
-function uniqueCandidates(list: IControlPointCandidate[]): IControlPointCandidate[] {
-  const out: IControlPointCandidate[] = [];
-  const key = (p: IPoint) => `${p.x.toFixed(2)}:${p.y.toFixed(2)}`;
-
-  const seen = new Set<string>();
-  for (const c of list) {
-    const k = `${c.chainIndex}:${c.kind ?? ''}:${key(c.point)}`;
-    if (seen.has(k)) continue;
-    seen.add(k);
-    out.push(c);
   }
 
   return out;

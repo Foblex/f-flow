@@ -68,7 +68,10 @@ import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-n
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
-import { MoveControlPointFinalizeRequest } from '../f-connection-v2';
+import {
+  MoveControlPointFinalizeRequest,
+  MoveControlPointPreparationRequest,
+} from '../f-connection-v2';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -265,9 +268,9 @@ export class FDraggableDirective
       new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
     );
 
-    // this._mediator.execute<void>(
-    //   new MoveControlPointPreparationRequest(event, this.fMoveControlPointTrigger),
-    // );
+    this._mediator.execute<void>(
+      new MoveControlPointPreparationRequest(event, this.fMoveControlPointTrigger),
+    );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
 

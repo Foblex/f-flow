@@ -90,11 +90,11 @@ export abstract class FConnectionBase
 
   public readonly fSelection = viewChild.required(F_CONNECTION_SELECTION);
 
-  public readonly fConnectionContents = contentChildren(F_CONNECTION_CONTENT, {
+  public readonly fContents = contentChildren(F_CONNECTION_CONTENT, {
     descendants: true,
   });
 
-  public readonly fConnectionControlPoints = contentChild(F_CONNECTION_CONTROL_POINTS);
+  public readonly fControlPoints = contentChild(F_CONNECTION_CONTROL_POINTS);
 
   public readonly fInputSide: Signal<EFConnectionConnectableSide> = signal(
     EFConnectionConnectableSide.DEFAULT,
@@ -136,13 +136,13 @@ export abstract class FConnectionBase
     this.path = path;
     this._penultimatePoint = penultimatePoint || point1;
     this._secondPoint = secondPoint || point2;
-    this.fConnectionControlPoints()?.candidates.set(candidates || []);
+    this.fControlPoints()?.candidates.set(candidates || []);
 
     new ConnectionContentLayoutEngine().layout(points || [], this._contents());
   }
 
   private _contents(): FConnectionContentBase[] {
-    return Array.from(this.fConnectionContents()?.values() ?? []);
+    return Array.from(this.fContents()?.values() ?? []);
   }
 
   private _getPathResult(source: IPoint, target: IPoint) {
@@ -155,7 +155,7 @@ export abstract class FConnectionBase
         targetSide: this._targetSide,
         radius: this.fRadius,
         offset: this.fOffset,
-        pivots: this.fConnectionControlPoints()?.pivots() || [],
+        pivots: this.fControlPoints()?.pivots() || [],
       },
     });
   }

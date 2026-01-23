@@ -3,13 +3,13 @@ import { MoveControlPointPreparationRequest } from './move-control-point-prepara
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { MoveControlPointHandler } from '../move-control-point-handler';
-import { isExistingControlPoint } from './is-existing-control-point';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../../f-draggable';
 import { FConnectionBase } from '../../../../f-connection';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FCanvasBase } from '../../../../f-canvas';
 import { calculatePointerInFlow } from '../../../../utils';
+import { findConnectionWithControlPoint } from '../../../components';
 
 @Injectable()
 @FExecutionRegister(MoveControlPointPreparationRequest)
@@ -20,8 +20,6 @@ export class MoveControlPointPreparation
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
-
-  private _connection: FConnectionBase | undefined;
 
   private get _canvas(): FCanvasBase {
     return this._store.fCanvas as FCanvasBase;
@@ -42,7 +40,8 @@ export class MoveControlPointPreparation
   public handle(request: MoveControlPointPreparationRequest): void {
     const position = calculatePointerInFlow(request.event, this._flowHost, this._transform);
 
-    if (!this._isValid(position) || !this._isValidTrigger(request)) {
+    const pick = this._pickControlPoint(position);
+    if (!pick || !this._isValidTrigger(request)) {
       return;
     }
 
@@ -51,33 +50,27 @@ export class MoveControlPointPreparation
       .elementTransform(this._flowHost)
       .div(this._transform.scale);
 
-    this._dragContext.draggableItems = [
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      new MoveControlPointHandler(this._injector, this._connection!, position),
-    ];
+    this._dragContext.draggableItems = [new MoveControlPointHandler(this._injector, pick)];
 
-    setTimeout(() => this._updateConnectionLayer());
+    queueMicrotask(() => this._updateConnectionLayer(pick.connection));
   }
 
-  private _isValid(position: IPoint): boolean {
-    return this._dragContext.isEmpty() && !!this._calculateConnectionsFromPoint(position);
-  }
+  private _pickControlPoint(position: IPoint) {
+    if (!this._dragContext.isEmpty()) {
+      return undefined;
+    }
 
-  private _calculateConnectionsFromPoint(position: IPoint): FConnectionBase | undefined {
-    this._connection = this._connections.find((x) => isExistingControlPoint(x, position));
-
-    return this._connection;
+    return findConnectionWithControlPoint(this._connections, position);
   }
 
   private _isValidTrigger(request: MoveControlPointPreparationRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 
-  private _updateConnectionLayer(): void {
+  private _updateConnectionLayer(connection: FConnectionBase): void {
     this._mediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this._connection!,
+        connection,
         this._canvas.fConnectionsContainer().nativeElement,
       ),
     );

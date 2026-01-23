@@ -90,7 +90,7 @@ export class SingleSelect implements IExecution<SingleSelectRequest, void> {
     return this._store.fConnections.find(
       (c) =>
         c.isContains(element) ||
-        Array.from(c.fConnectionContents()?.values() ?? []).some((content) =>
+        Array.from(c.fContents()?.values() ?? []).some((content) =>
           content.hostElement?.contains(element),
         ),
     );

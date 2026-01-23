@@ -1,14 +1,7 @@
-import {
-  computed,
-  ElementRef,
-  inject,
-  InjectionToken,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
-import { IControlPoint, IControlPointCandidate } from './i-control-point';
-import { IPoint } from '@foblex/2d';
+import { ElementRef, inject, InjectionToken, signal, Signal, WritableSignal } from '@angular/core';
+import { IControlPointCandidate } from './i-control-point-candidate';
+import { IControlPoint } from './i-control-point';
+import { IPoint, PointExtensions } from '@foblex/2d';
 
 export const F_CONNECTION_CONTROL_POINTS = new InjectionToken<FConnectionControlPointsBase>(
   'F_CONNECTION_CONTROL_POINTS',
@@ -17,79 +10,32 @@ export const F_CONNECTION_CONTROL_POINTS = new InjectionToken<FConnectionControl
 export abstract class FConnectionControlPointsBase {
   public readonly hostElement = inject(ElementRef<SVGElement>).nativeElement;
 
-  public readonly points = signal<IPoint[]>([]);
   public abstract candidates: WritableSignal<IControlPointCandidate[]>;
 
-  private readonly _pivots = signal<IControlPoint[]>([]);
-
-  public pivots(): IControlPoint[] {
-    return this._pivots();
-  }
-
-  public readonly userPivots: Signal<IControlPoint[]> = computed(() =>
-    this._pivots().filter((p) => p.userDefined),
-  );
-
-  private _dragPivotId: string | null = null;
+  public readonly pivots = signal<IControlPoint[]>([]);
 
   public abstract radius: Signal<number>;
 
-  public addPivotFromCandidateOrdered(candidate: IControlPointCandidate): IControlPoint {
-    const pivot: IControlPoint = {
-      id: uid(),
-      userDefined: true,
-      point: { x: candidate.point.x, y: candidate.point.y },
-    };
+  private _activeIndex: number = 0;
 
-    const current = this._pivots().slice();
+  public insert(candidate: IControlPointCandidate): void {
+    const current = this.pivots().slice();
 
-    const idx = Math.max(0, Math.min(candidate.chainIndex, current.length));
+    this._activeIndex = Math.max(0, Math.min(candidate.chainIndex, current.length));
 
-    current.splice(idx, 0, pivot);
-    this._pivots.set(current);
-
-    return pivot;
+    current.splice(this._activeIndex, 0, { ...candidate.point });
+    this.pivots.set(current);
   }
 
-  public startDragPivot(pivotId: string): void {
-    this._dragPivotId = pivotId;
+  public select(pivot: IPoint): void {
+    this._activeIndex = this.pivots().findIndex((x) => PointExtensions.isEqual(pivot, x));
   }
 
-  public dragPivotTo(point: IPoint): void {
-    if (!this._dragPivotId) return;
+  public move(point: IPoint): void {
+    this.pivots.update((x) => {
+      x[this._activeIndex] = point;
 
-    const pivots = this._pivots().slice();
-    const idx = pivots.findIndex((p) => p.id === this._dragPivotId);
-    if (idx === -1) return;
-
-    const prev = pivots[idx];
-
-    pivots[idx] = {
-      ...prev,
-      userDefined: true,
-      point: { x: point.x, y: point.y },
-    };
-
-    this._pivots.set(pivots);
+      return x;
+    });
   }
-
-  public endDragPivot(): void {
-    this._dragPivotId = null;
-  }
-
-  public startDragCandidate(candidate: IControlPointCandidate): string {
-    const pivot = this.addPivotFromCandidateOrdered(candidate);
-    this.startDragPivot(pivot.id!);
-
-    return pivot.id!;
-  }
-
-  public removePivot(pivotId: string): void {
-    this._pivots.set(this._pivots().filter((p) => p.id !== pivotId));
-  }
-}
-
-function uid(): string {
-  // простой id, без crypto
-  return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }

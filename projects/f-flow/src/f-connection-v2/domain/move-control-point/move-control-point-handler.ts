@@ -1,32 +1,53 @@
-import { IPoint } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { IPoint, PointExtensions } from '@foblex/2d';
 import { Injector } from '@angular/core';
 import { FDragHandlerResult, IFDragHandler } from '../../../f-draggable';
 import { FConnectionBase } from '../../../f-connection';
 import { IMoveControlPointResult } from './i-move-control-point-result';
-import { FComponentsStore } from '../../../f-storage';
+import { ConnectionWithControlPoint, FConnectionControlPointsBase } from '../../components';
 
 export class MoveControlPointHandler implements IFDragHandler {
-  public fEventType = 'move-control-point';
+  public fEventType = 'move-connection-control-point';
   public fData: unknown;
 
   private readonly _result: FDragHandlerResult<IMoveControlPointResult>;
-  private readonly _mediator: FMediator;
-  private readonly _store: FComponentsStore;
+
+  private _point: IPoint | undefined;
+
+  private get _fControlPoints(): FConnectionControlPointsBase {
+    return this._pick.connection.fControlPoints() as FConnectionControlPointsBase;
+  }
+
+  private get _connection(): FConnectionBase {
+    return this._pick.connection;
+  }
 
   constructor(
     readonly _injector: Injector,
-    private readonly _connection: FConnectionBase,
-    private readonly _position: IPoint,
+    private readonly _pick: ConnectionWithControlPoint<FConnectionBase>,
   ) {
     this._result = _injector.get(FDragHandlerResult);
-    this._mediator = _injector.get(FMediator);
-    this._store = _injector.get(FComponentsStore);
   }
 
-  public prepareDragSequence(): void {}
+  public prepareDragSequence(): void {
+    if (this._pick.candidate) {
+      this._point = { ...this._pick.candidate.point };
+      this._fControlPoints.insert(this._pick.candidate);
+    } else {
+      this._point = { ...this._pick.pivot };
+      this._fControlPoints.select(this._pick.pivot);
+    }
+    this._redrawConnection();
+  }
 
-  public onPointerMove(_difference: IPoint): void {}
+  public onPointerMove(_difference: IPoint): void {
+    this._fControlPoints.move(PointExtensions.sum(this._point!, _difference));
+    this._redrawConnection();
+  }
 
   public onPointerUp(): void {}
+
+  private _redrawConnection(): void {
+    this._connection.setLine(this._connection.line);
+    this._connection.redraw();
+  }
 }
