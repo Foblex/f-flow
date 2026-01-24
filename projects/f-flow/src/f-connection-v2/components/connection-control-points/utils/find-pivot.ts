@@ -3,7 +3,7 @@ import { FConnectionControlPointsBase } from '../models';
 import { Signal } from '@angular/core';
 import { isPointerInsidePoint } from './is-pointer-inside-point';
 
-export function findPivotPoint(
+export function findPivot(
   connection: { fControlPoints: Signal<FConnectionControlPointsBase | undefined> },
   position: IPoint,
 ): IPoint | undefined {

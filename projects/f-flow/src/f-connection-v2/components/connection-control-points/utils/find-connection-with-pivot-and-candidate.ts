@@ -1,9 +1,9 @@
 import { IPoint } from '@foblex/2d';
 import { Signal } from '@angular/core';
 
-import { FConnectionControlPointsBase, IControlPointCandidate } from '../models';
-import { findCandidatePoint } from './find-candidate-point';
-import { findPivotPoint } from './find-pivot-point';
+import { FConnectionControlPointsBase, IPivotCandidate } from '../models';
+import { findPivotCandidate } from './find-pivot-candidate';
+import { findPivot } from './find-pivot';
 
 type ConnectionWithPivot<T> = {
   connection: T;
@@ -13,7 +13,7 @@ type ConnectionWithPivot<T> = {
 
 type ConnectionWithCandidate<T> = {
   connection: T;
-  candidate: IControlPointCandidate;
+  candidate: IPivotCandidate;
   pivot?: never;
 };
 
@@ -23,17 +23,17 @@ export type HasControlPoints = {
   fControlPoints: Signal<FConnectionControlPointsBase | undefined>;
 };
 
-export function findConnectionWithControlPoint<T extends HasControlPoints>(
+export function findConnectionWithPivotAndCandidate<T extends HasControlPoints>(
   connections: readonly T[],
   position: IPoint,
 ): ConnectionWithControlPoint<T> | undefined {
   for (const connection of connections) {
-    const pivot = findPivotPoint(connection, position);
+    const pivot = findPivot(connection, position);
     if (pivot) {
       return { connection, pivot };
     }
 
-    const candidate = findCandidatePoint(connection, position);
+    const candidate = findPivotCandidate(connection, position);
     if (candidate) {
       return { connection, candidate };
     }

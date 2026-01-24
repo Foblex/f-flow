@@ -12,7 +12,6 @@ import {
   signal,
 } from '@angular/core';
 import { NotifyDataChangedRequest } from '../../f-storage';
-import { FConnectionBase } from '../models';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -23,7 +22,8 @@ import {
   EFConnectionBehavior,
   EFConnectionConnectableSide,
   EFConnectionType,
-  F_INJECTABLE_CONNECTION,
+  F_CONNECTION_COMPONENTS_PARENT,
+  FConnectionBase,
 } from '../../f-connection-v2';
 
 let uniqueId = 0;
@@ -36,7 +36,9 @@ let uniqueId = 0;
   host: {
     class: 'f-component f-connection f-connection-for-create',
   },
-  providers: [{ provide: F_INJECTABLE_CONNECTION, useExisting: FConnectionForCreateComponent }],
+  providers: [
+    { provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FConnectionForCreateComponent },
+  ],
 })
 export class FConnectionForCreateComponent
   extends FConnectionBase

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { normalizeDomElementId } from '@foblex/utils';
 import { F_CONNECTION_PATH, FConnectionPathBase } from './models';
 import { createConnectionDomIdentifier, createGradientDomUrl } from '../../utils';
-import { F_INJECTABLE_CONNECTION } from '../../models';
+import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 
 @Component({
   selector: 'path[f-connection-path]',
@@ -23,7 +23,7 @@ import { F_INJECTABLE_CONNECTION } from '../../models';
   ],
 })
 export class FConnectionPath extends FConnectionPathBase {
-  private readonly _connection = inject(F_INJECTABLE_CONNECTION);
+  private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
 
   public get fPathId(): string {
     return this._connection.fId();

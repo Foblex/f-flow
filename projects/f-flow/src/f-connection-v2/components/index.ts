@@ -4,4 +4,4 @@ export * from './connection-marker';
 export * from './connection-gradient';
 export * from './connection-path';
 export * from './connection-selection';
-export * from './drag-handles';
+export * from './connection-drag-handles';

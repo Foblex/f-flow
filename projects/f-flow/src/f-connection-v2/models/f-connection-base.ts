@@ -16,13 +16,10 @@ import {
   mixinChangeSelection,
   mixinChangeVisibility,
 } from '../../mixins';
+import { ConnectionLineBuilder, EFConnectionBehavior, EFConnectionConnectableSide } from '../utils';
+import { EFConnectableSide, EFConnectionType } from '../enums';
 import {
   ConnectionContentLayoutEngine,
-  ConnectionLineBuilder,
-  EFConnectableSide,
-  EFConnectionBehavior,
-  EFConnectionConnectableSide,
-  EFConnectionType,
   F_CONNECTION_CONTENT,
   F_CONNECTION_CONTROL_POINTS,
   F_CONNECTION_DRAG_HANDLE_END,
@@ -31,7 +28,7 @@ import {
   F_CONNECTION_PATH,
   F_CONNECTION_SELECTION,
   FConnectionContentBase,
-} from '../../f-connection-v2';
+} from '../components';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(

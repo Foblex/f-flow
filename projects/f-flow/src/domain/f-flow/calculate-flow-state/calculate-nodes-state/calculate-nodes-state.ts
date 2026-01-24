@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { GetFlowStateNodesRequest } from './get-flow-state-nodes-request';
+import { CalculateNodesStateRequest } from './calculate-nodes-state-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
@@ -9,15 +9,15 @@ import { IFFlowStateConnector } from '../i-f-flow-state-connector';
  * Execution that retrieves the state of Flow nodes, including their position, size, inputs, outputs, and selection status.
  */
 @Injectable()
-@FExecutionRegister(GetFlowStateNodesRequest)
-export class GetFlowStateNodesExecution
-  implements IExecution<GetFlowStateNodesRequest, IFFlowStateNode[]>
+@FExecutionRegister(CalculateNodesStateRequest)
+export class CalculateNodesState
+  implements IExecution<CalculateNodesStateRequest, IFFlowStateNode[]>
 {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: GetFlowStateNodesRequest): IFFlowStateNode[] {
+  public handle({ component }: CalculateNodesStateRequest): IFFlowStateNode[] {
     return this._store.fNodes
-      .filter((x) => x instanceof request.type)
+      .filter((x) => x instanceof component)
       .map((x) => {
         return {
           id: x.fId(),

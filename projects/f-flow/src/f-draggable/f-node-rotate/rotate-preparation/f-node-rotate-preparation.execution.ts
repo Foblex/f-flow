@@ -18,7 +18,7 @@ import {
   SourceConnectionDragHandler,
   TargetConnectionDragHandler,
 } from '../../f-node-move';
-import { FConnectionBase } from '../../../f-connection';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(FNodeRotatePreparationRequest)
@@ -94,7 +94,7 @@ export class FNodeRotatePreparationExecution
   }[] {
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(this._fNode!))
-      .map((x: FConnectionBase) => {
+      .map((x) => {
         const connector = this._store.fInputs.find((y) => y.fId() === x.fInputId())?.hostElement;
 
         if (!connector) {
@@ -115,7 +115,7 @@ export class FNodeRotatePreparationExecution
   }[] {
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(this._fNode!))
-      .map((x: FConnectionBase) => {
+      .map((x) => {
         const connector = this._store.fOutputs.find((y) => y.fId() === x.fOutputId())?.hostElement;
 
         if (!connector) {

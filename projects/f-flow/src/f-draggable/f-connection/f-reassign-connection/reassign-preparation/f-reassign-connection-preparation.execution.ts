@@ -5,7 +5,6 @@ import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FConnectionBase } from '../../../../f-connection';
 import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-handler';
 import {
   isDragHandleEnd,
@@ -13,6 +12,7 @@ import {
 } from './is-pointer-inside-start-or-end-drag-handles';
 import { calculatePointerInFlow } from '../../../../utils';
 import { FCanvasBase } from '../../../../f-canvas';
+import { FConnectionBase } from '../../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(FReassignConnectionPreparationRequest)

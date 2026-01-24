@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { F_CONNECTION_SELECTION, FConnectionSelectionBase } from './models';
 import { createConnectionSelectionDomIdentifier } from '../../utils';
-import { F_INJECTABLE_CONNECTION } from '../../models';
+import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 
 @Component({
   selector: 'path[fConnectionSelection]',
@@ -20,7 +20,7 @@ import { F_INJECTABLE_CONNECTION } from '../../models';
   ],
 })
 export class FConnectionSelection extends FConnectionSelectionBase {
-  private readonly _connection = inject(F_INJECTABLE_CONNECTION);
+  private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
 
   public get connectionForSelectionId(): string {
     return createConnectionSelectionDomIdentifier(

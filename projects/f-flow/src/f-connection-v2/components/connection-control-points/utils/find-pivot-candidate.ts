@@ -1,12 +1,12 @@
 import { Signal } from '@angular/core';
 import { IPoint } from '@foblex/2d';
 import { isPointerInsidePoint } from './is-pointer-inside-point';
-import { FConnectionControlPointsBase, IControlPointCandidate } from '../models';
+import { FConnectionControlPointsBase, IPivotCandidate } from '../models';
 
-export function findCandidatePoint(
+export function findPivotCandidate(
   connection: { fControlPoints: Signal<FConnectionControlPointsBase | undefined> },
   position: IPoint,
-): IControlPointCandidate | undefined {
+): IPivotCandidate | undefined {
   const component = connection.fControlPoints();
   const radius = component?.radius() || 8;
 

@@ -1,9 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  F_CONNECTION_CONTROL_POINTS,
-  FConnectionControlPointsBase,
-  IControlPointCandidate,
-} from './models';
+import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import { F_CONNECTION_CONTROL_POINTS, FConnectionControlPointsBase } from './models';
+import { IPoint } from '@foblex/2d';
 
 @Component({
   selector: 'f-connection-control-points',
@@ -17,7 +14,6 @@ import {
   providers: [{ provide: F_CONNECTION_CONTROL_POINTS, useExisting: FConnectionControlPoints }],
 })
 export class FConnectionControlPoints extends FConnectionControlPointsBase {
-  public override readonly candidates = signal<IControlPointCandidate[]>([]);
-
-  public override readonly radius = signal<number>(4);
+  public override readonly radius = input<number>(4);
+  public override readonly pivots = model<IPoint[]>([]);
 }

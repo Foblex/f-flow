@@ -1,10 +1,10 @@
-export * from './get-flow-state-connections';
+export * from './calculate-connections-state';
 
-export * from './get-flow-state-nodes';
+export * from './calculate-nodes-state';
 
-export * from './get-flow-state.execution';
+export * from './calculate-flow-state';
 
-export * from './get-flow-state.request';
+export * from './calculate-flow-state-request';
 
 export * from './i-f-flow-state';
 

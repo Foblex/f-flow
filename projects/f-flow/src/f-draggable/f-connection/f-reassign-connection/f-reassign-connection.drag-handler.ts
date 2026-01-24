@@ -1,6 +1,6 @@
 import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
 import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
-import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
+import { FSnapConnectionComponent } from '../../../f-connection';
 import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
 import { IPoint } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -10,7 +10,7 @@ import { Injector } from '@angular/core';
 import { IFReassignHandler, roundedRectFromPoint } from './i-f-reassign-handler';
 import { FReassignTargetDragHandler } from './f-reassign-target.drag-handler';
 import { FReassignSourceDragHandler } from './f-reassign-source.drag-handler';
-import { ConnectionBehaviourBuilder } from '../../../f-connection-v2';
+import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../f-connection-v2';
 
 export class FReassignConnectionDragHandler implements IFDragHandler {
   public fEventType = 'reassign-connection';

@@ -20,7 +20,7 @@ import {
   SelectAllRequest,
   SelectRequest,
   IFFlowState,
-  GetFlowStateRequest,
+  CalculateFlowStateRequest,
   RemoveFlowFromStoreRequest,
   AddFlowToStoreRequest,
   SortItemLayersRequest,
@@ -145,7 +145,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public getState(): IFFlowState {
-    return this._mediator.execute(new GetFlowStateRequest());
+    return this._mediator.execute(new CalculateFlowStateRequest());
   }
 
   public selectAll(): void {

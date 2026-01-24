@@ -1,4 +1,4 @@
-import { FConnectionBase } from '../../../f-connection';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 export class RemoveConnectionFromStoreRequest {
   static readonly fToken = Symbol('RemoveConnectionFromStoreRequest');

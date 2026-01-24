@@ -4,7 +4,7 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { buildConnectionAnchors } from '../utils';
-import { IControlPointCandidate } from '../../../../components';
+import { IPivotCandidate } from '../../../../components';
 
 const EPS = 0.0002;
 
@@ -17,7 +17,7 @@ export class CalculateStraightLineData implements IFConnectionBuilder {
     const p0 = anchors[0];
     let d = `M ${p0.x} ${p0.y}`;
 
-    const candidates: IControlPointCandidate[] = new Array(n - 1);
+    const candidates: IPivotCandidate[] = new Array(n - 1);
 
     for (let i = 0; i < n - 1; i++) {
       const a = anchors[i];

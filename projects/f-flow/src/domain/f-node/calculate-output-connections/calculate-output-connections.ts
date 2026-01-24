@@ -3,7 +3,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { CalculateOutputConnectionsRequest } from './calculate-output-connections-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
-import { FConnectionBase } from '../../../f-connection';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 /**
  * Execution that calculates output connections for a given FNode.

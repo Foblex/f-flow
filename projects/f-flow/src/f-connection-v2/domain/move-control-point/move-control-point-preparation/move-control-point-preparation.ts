@@ -5,11 +5,11 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { MoveControlPointHandler } from '../move-control-point-handler';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../../f-draggable';
-import { FConnectionBase } from '../../../../f-connection';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FCanvasBase } from '../../../../f-canvas';
 import { calculatePointerInFlow } from '../../../../utils';
-import { findConnectionWithControlPoint } from '../../../components';
+import { findConnectionWithPivotAndCandidate } from '../../../components';
+import { FConnectionBase } from '../../../models';
 
 @Injectable()
 @FExecutionRegister(MoveControlPointPreparationRequest)
@@ -60,7 +60,7 @@ export class MoveControlPointPreparation
       return undefined;
     }
 
-    return findConnectionWithControlPoint(this._connections, position);
+    return findConnectionWithPivotAndCandidate(this._connections, position);
   }
 
   private _isValidTrigger(request: MoveControlPointPreparationRequest): boolean {

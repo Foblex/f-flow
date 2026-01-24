@@ -2,11 +2,11 @@ import { InjectionToken, Signal } from '@angular/core';
 import { EFConnectableSide } from '../enums';
 import { EFConnectionBehavior, EFConnectionConnectableSide } from '../utils';
 
-export const F_INJECTABLE_CONNECTION = new InjectionToken<FInjectableConnectionBase>(
-  'F_INJECTABLE_CONNECTION',
+export const F_CONNECTION_COMPONENTS_PARENT = new InjectionToken<FConnectionComponentsParent>(
+  'F_CONNECTION_COMPONENTS_PARENT',
 );
 
-export abstract class FInjectableConnectionBase {
+export abstract class FConnectionComponentsParent {
   public abstract fId: Signal<string>;
 
   public abstract fOutputId: Signal<string>;

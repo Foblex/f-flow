@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FConnectorBase } from '../../../f-connectors';
-import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
@@ -11,6 +10,7 @@ import { DragRectCache } from '../../drag-rect-cache';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
+  FConnectionBase,
 } from '../../../f-connection-v2';
 
 /**

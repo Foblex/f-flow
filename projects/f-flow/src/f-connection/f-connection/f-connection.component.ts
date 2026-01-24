@@ -11,7 +11,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { NotifyDataChangedRequest } from '../../f-storage';
-import { FConnectionBase } from '../models';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
@@ -20,7 +19,8 @@ import {
   EFConnectionBehavior,
   EFConnectionConnectableSide,
   EFConnectionType,
-  F_INJECTABLE_CONNECTION,
+  F_CONNECTION_COMPONENTS_PARENT,
+  FConnectionBase,
 } from '../../f-connection-v2';
 
 let uniqueId = 0;
@@ -37,7 +37,7 @@ let uniqueId = 0;
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled()',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled()',
   },
-  providers: [{ provide: F_INJECTABLE_CONNECTION, useExisting: FConnectionComponent }],
+  providers: [{ provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FConnectionComponent }],
 })
 export class FConnectionComponent extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
   public override fId = input<string>(`f-connection-${uniqueId++}`, { alias: 'fConnectionId' });

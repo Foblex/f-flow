@@ -3,11 +3,11 @@ import { IRect, ITransformModel, RectExtensions } from '@foblex/2d';
 import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
 import { CalculateSelectableItemsRequest } from './calculate-selectable-items-request';
 import { FNodeBase } from '../../../f-node';
-import { FConnectionBase } from '../../../f-connection';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 /**
  * Execution that retrieves elements that can be selected in the Flow, along with their bounding rectangles.

@@ -1,9 +1,9 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { Injector } from '@angular/core';
 import { FDragHandlerResult, IFDragHandler } from '../../../f-draggable';
-import { FConnectionBase } from '../../../f-connection';
 import { IMoveControlPointResult } from './i-move-control-point-result';
 import { ConnectionWithControlPoint, FConnectionControlPointsBase } from '../../components';
+import { FConnectionBase } from '../../models';
 
 export class MoveControlPointHandler implements IFDragHandler {
   public fEventType = 'move-connection-control-point';

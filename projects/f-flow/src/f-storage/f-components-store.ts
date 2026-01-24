@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FConnectionBase } from '../f-connection';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
 import { FBackgroundBase } from '../f-backgroud';
@@ -9,7 +8,7 @@ import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
 import { IMap } from '../domain';
-import { FConnectionMarkerBase } from '../f-connection-v2';
+import { FConnectionBase, FConnectionMarkerBase } from '../f-connection-v2';
 
 @Injectable()
 export class FComponentsStore {

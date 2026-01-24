@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ILine, Point } from '@foblex/2d';
 import { F_CONNECTION_GRADIENT, FConnectionGradientBase } from './models';
-import { F_INJECTABLE_CONNECTION } from '../../models';
+import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 import { createGradientDomIdentifier } from '../../utils';
 
 @Component({
@@ -15,7 +15,7 @@ import { createGradientDomIdentifier } from '../../utils';
   providers: [{ provide: F_CONNECTION_GRADIENT, useExisting: FConnectionGradient }],
 })
 export class FConnectionGradient extends FConnectionGradientBase {
-  private readonly _connection = inject(F_INJECTABLE_CONNECTION);
+  private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
 
   public get gradientId(): string {
     return createGradientDomIdentifier(

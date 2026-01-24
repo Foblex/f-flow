@@ -8,7 +8,7 @@ import {
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
 import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
-import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
+import { FSnapConnectionComponent } from '../../../f-connection';
 import { ILine, IPoint, IRoundedRect, RoundedRect } from '@foblex/2d';
 import {
   IFReassignHandler,
@@ -19,6 +19,7 @@ import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
+  FConnectionBase,
 } from '../../../f-connection-v2';
 
 export class FReassignTargetDragHandler implements IFReassignHandler {

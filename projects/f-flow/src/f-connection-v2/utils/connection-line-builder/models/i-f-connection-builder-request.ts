@@ -1,6 +1,5 @@
 import { IPoint } from '@foblex/2d';
 import { EFConnectableSide } from '../../../enums';
-import { IControlPoint } from '../../../components';
 
 export interface IFConnectionBuilderRequest {
   source: IPoint;
@@ -15,5 +14,5 @@ export interface IFConnectionBuilderRequest {
 
   offset: number;
 
-  pivots: IControlPoint[];
+  pivots: IPoint[];
 }

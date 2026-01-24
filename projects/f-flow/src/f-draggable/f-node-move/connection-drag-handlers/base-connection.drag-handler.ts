@@ -3,11 +3,11 @@ import { FMediator } from '@foblex/mediator';
 import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
-import { FConnectionBase } from '../../../f-connection';
 import { Injector } from '@angular/core';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
+  FConnectionBase,
 } from '../../../f-connection-v2';
 
 export class BaseConnectionDragHandler {

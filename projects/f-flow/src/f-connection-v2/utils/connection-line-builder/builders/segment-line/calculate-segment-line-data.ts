@@ -14,7 +14,7 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { EFConnectableSide } from '../../../../enums';
-import { IControlPointCandidate } from '../../../../components';
+import { IPivotCandidate } from '../../../../components';
 import { buildCornerMidPointsAndApplyOffsets } from './build-corner-mid-points-and-apply-offsets';
 
 const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
@@ -42,7 +42,7 @@ export class CalculateSegmentLineData implements IFConnectionBuilder {
     const anchors = buildConnectionAnchors(source, target, pivots);
 
     const chains: IPoint[][] = [];
-    const candidates: IControlPointCandidate[] = [];
+    const candidates: IPivotCandidate[] = [];
 
     for (let i = 0; i < anchors.length - 1; i++) {
       const a = anchors[i];
