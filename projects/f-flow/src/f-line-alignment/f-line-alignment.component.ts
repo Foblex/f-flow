@@ -1,40 +1,37 @@
-import { Component, ElementRef, inject, input, numberAttribute, OnDestroy, OnInit } from '@angular/core';
-import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
 import {
-  RemoveLineAlignmentFromStoreRequest,
-  AddLineAlignmentToStoreRequest,
-} from '../domain';
+  Component,
+  ElementRef,
+  inject,
+  input,
+  numberAttribute,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
+import { RemoveLineAlignmentFromStoreRequest, AddLineAlignmentToStoreRequest } from '../domain';
 import { FMediator } from '@foblex/mediator';
 
 @Component({
-  selector: "f-line-alignment",
-  template: "",
-  styleUrls: [ "./f-line-alignment.component.scss" ],
-  exportAs: "fComponent",
+  selector: 'f-line-alignment',
+  template: '',
+  styleUrls: ['./f-line-alignment.component.scss'],
+  exportAs: 'fComponent',
   host: {
     'class': 'f-line-alignment f-component',
   },
-  providers: [
-    { provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent },
-  ],
+  providers: [{ provide: F_LINE_ALIGNMENT, useExisting: FLineAlignmentComponent }],
 })
-export class FLineAlignmentComponent
-  extends FLineAlignmentBase implements OnInit, OnDestroy {
+export class FLineAlignmentComponent extends FLineAlignmentBase implements OnInit, OnDestroy {
+  public override readonly fAlignThreshold = input(10, { transform: numberAttribute });
 
-  public override fAlignThreshold = input<number, unknown>(10, { transform: numberAttribute });
-
-  private readonly _fMediator = inject(FMediator);
-  private readonly _elementReference = inject(ElementRef);
-
-  public override get hostElement(): HTMLElement {
-    return this._elementReference.nativeElement;
-  }
+  private readonly _mediator = inject(FMediator);
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddLineAlignmentToStoreRequest(this));
+    this._mediator.execute(new AddLineAlignmentToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this._fMediator.execute(new RemoveLineAlignmentFromStoreRequest());
+    this._mediator.execute(new RemoveLineAlignmentFromStoreRequest());
   }
 }

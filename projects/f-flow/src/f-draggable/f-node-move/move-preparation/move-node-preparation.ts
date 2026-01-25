@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FNodeMovePreparationRequest } from './f-node-move-preparation.request';
+import { MoveNodePreparationRequest } from './move-node-preparation-request';
 import { Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -17,35 +17,35 @@ import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
 import { IPointerEvent } from '../../../drag-toolkit';
 
 @Injectable()
-@FExecutionRegister(FNodeMovePreparationRequest)
-export class FNodeMovePreparationExecution
-  implements IExecution<FNodeMovePreparationRequest, void>
-{
+@FExecutionRegister(MoveNodePreparationRequest)
+export class MoveNodePreparation implements IExecution<MoveNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  private get _scale(): number {
-    return this._store.fCanvas?.transform.scale || 1;
-  }
-
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
-  }
-
-  private _fNode: FNodeBase | undefined;
-
-  public handle({ event, fTrigger }: FNodeMovePreparationRequest): void {
-    if (!this._isValid(event) || !this._isValidTrigger(event, fTrigger)) {
+  public handle({ event, fTrigger }: MoveNodePreparationRequest): void {
+    if (
+      !this._dragContext.isEmpty() ||
+      !this._isDragHandle(event.targetElement) ||
+      !this._isValidTrigger(event, fTrigger)
+    ) {
       return;
     }
 
-    const summaryDragHandler = this._calculateDraggedItems(this._fNode!);
+    const node = this._findDraggableNode(event.targetElement);
+    if (!node) {
+      return;
+    }
 
-    this._dragContext.onPointerDownScale = this._scale;
+    const scale = this._store.fCanvas?.transform.scale ?? 1;
+    const flowHost = this._store.flowHost;
+
+    const summaryDragHandler = this._buildDragHandler(node);
+
+    this._dragContext.onPointerDownScale = scale;
     this._dragContext.onPointerDownPosition = Point.fromPoint(event.getPosition())
-      .elementTransform(this._fHost)
-      .div(this._scale);
+      .elementTransform(flowHost)
+      .div(scale);
     this._dragContext.draggableItems = [summaryDragHandler];
 
     if (this._store.fLineAlignment) {
@@ -53,22 +53,18 @@ export class FNodeMovePreparationExecution
     }
   }
 
-  private _isValid(event: IPointerEvent): boolean {
-    return (
-      this._dragContext.isEmpty() &&
-      this._isDragHandleElement(event.targetElement) &&
-      !!this._getNode(event.targetElement)
-    );
-  }
-
-  private _isDragHandleElement(element: HTMLElement): boolean {
+  private _isDragHandle(element: HTMLElement): boolean {
     return isClosestElementHasClass(element, '.f-drag-handle');
   }
 
-  private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._store.fNodes.find((x) => x.isContains(element) && !x.fDraggingDisabled());
+  private _findDraggableNode(target: HTMLElement): FNodeBase | undefined {
+    for (const node of this._store.fNodes) {
+      if (!node.fDraggingDisabled() && node.isContains(target)) {
+        return node;
+      }
+    }
 
-    return this._fNode;
+    return undefined;
   }
 
   private _isValidTrigger(event: IPointerEvent, fTrigger: FEventTrigger): boolean {
@@ -76,21 +72,22 @@ export class FNodeMovePreparationExecution
   }
 
   //We drag nodes from selection model
-  private _calculateDraggedItems(fNode: FNodeBase): MoveSummaryDragHandler {
-    let result: MoveSummaryDragHandler;
-    if (!fNode.fSelectionDisabled()) {
+  private _buildDragHandler(node: FNodeBase): MoveSummaryDragHandler {
+    if (!node.fSelectionDisabled()) {
       // Need to select node before drag
-      setTimeout(() => {
-        this._mediator.execute(new SelectAndUpdateNodeLayerRequest(fNode));
-      });
+      this._selectBeforeDrag(node);
 
-      result = this._dragModelFromSelection();
-    } else {
-      // User can drag node that can't be selected
-      result = this._dragModelFromSelection(fNode);
+      return this._dragModelFromSelection();
     }
 
-    return result;
+    // User can drag node that can't be selected
+    return this._dragModelFromSelection(node);
+  }
+
+  private _selectBeforeDrag(node: FNodeBase): void {
+    queueMicrotask(() => {
+      this._mediator.execute<void>(new SelectAndUpdateNodeLayerRequest(node));
+    });
   }
 
   private _dragModelFromSelection(nodeWithDisabledSelection?: FNodeBase): MoveSummaryDragHandler {

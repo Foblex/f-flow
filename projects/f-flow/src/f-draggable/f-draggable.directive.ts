@@ -18,7 +18,7 @@ import { FDraggableBase } from './f-draggable-base';
 import {
   FMoveNodesEvent,
   FNodeMoveFinalizeRequest,
-  FNodeMovePreparationRequest,
+  MoveNodePreparationRequest,
 } from './f-node-move';
 import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
@@ -293,7 +293,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
-    this._mediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
+    this._mediator.execute<void>(new MoveNodePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._mediator.execute<void>(
       new FExternalItemPreparationRequest(event, this.fExternalItemTrigger),

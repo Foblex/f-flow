@@ -1,12 +1,9 @@
-import { Directive, InjectionToken, InputSignalWithTransform } from '@angular/core';
-import { IHasHostElement } from '../i-has-host-element';
+import { Directive, InjectionToken, Signal } from '@angular/core';
 
 export const F_LINE_ALIGNMENT = new InjectionToken<FLineAlignmentBase>('F_LINE_ALIGNMENT');
 
 @Directive()
-export abstract class FLineAlignmentBase implements IHasHostElement {
-
+export abstract class FLineAlignmentBase {
   public abstract hostElement: HTMLElement;
-
-  public abstract fAlignThreshold: InputSignalWithTransform<number, unknown>;
+  public abstract fAlignThreshold: Signal<number>;
 }
