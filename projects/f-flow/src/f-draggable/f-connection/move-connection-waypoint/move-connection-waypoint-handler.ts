@@ -34,7 +34,7 @@ export class MoveConnectionWaypointHandler implements IFDragHandler {
 
   public prepareDragSequence(): void {
     if (this._pick.candidate) {
-      this._point = { ...this._pick.candidate.point };
+      this._point = { ...this._pick.candidate };
       this._waypointsComponent.insert(this._pick.candidate);
     } else {
       this._point = { ...this._pick.waypoint };

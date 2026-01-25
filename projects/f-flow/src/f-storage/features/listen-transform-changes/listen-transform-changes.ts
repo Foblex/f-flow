@@ -1,4 +1,4 @@
-import { ListenTransformChangesRequest } from './listen-transform-changes.request';
+import { ListenTransformChangesRequest } from './listen-transform-changes-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../index';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
@@ -6,7 +6,7 @@ import { FChannelHub } from '../../../reactivity';
 
 @Injectable()
 @FExecutionRegister(ListenTransformChangesRequest)
-export class ListenTransformChangesExecution
+export class ListenTransformChanges
   implements IExecution<ListenTransformChangesRequest, FChannelHub>
 {
   private readonly _store = inject(FComponentsStore);

@@ -1,13 +1,13 @@
 import { IPoint } from '@foblex/2d';
 import { Signal } from '@angular/core';
 
-import { FConnectionWaypointsBase, IWaypointCandidate } from '../models';
+import { FConnectionWaypointsBase } from '../models';
 import { findWaypointCandidate } from './find-waypoint-candidate';
 import { findExistingWaypoint } from './find-existing-waypoint';
 
 export type WaypointPick<T> =
   | { connection: T; waypoint: IPoint; candidate?: never }
-  | { connection: T; candidate: IWaypointCandidate; waypoint?: never };
+  | { connection: T; candidate: IPoint; waypoint?: never };
 
 type HasWaypoints = {
   fWaypoints: Signal<FConnectionWaypointsBase | undefined>;

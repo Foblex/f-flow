@@ -20,7 +20,7 @@ describe('CalculateBezierCurveData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 0,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const res: IFConnectionBuilderResponse = builder.handle(request);
@@ -35,7 +35,6 @@ describe('CalculateBezierCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 
   it('builds cubic path for a simple vertical connection (no pivots)', () => {
@@ -46,7 +45,7 @@ describe('CalculateBezierCurveData', () => {
       targetSide: EFConnectableSide.TOP,
       radius: 0,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
@@ -58,7 +57,6 @@ describe('CalculateBezierCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 
   it('builds multi-segment cubic path when pivots are present', () => {
@@ -69,7 +67,7 @@ describe('CalculateBezierCurveData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 0,
       offset: 20,
-      pivots: [
+      waypoints: [
         { x: 50, y: 50 }, // pivot 1
       ],
     };
@@ -86,8 +84,6 @@ describe('CalculateBezierCurveData', () => {
     // candidates: typically 1 per segment
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(2);
-    expect(res.candidates[0].chainIndex).toBe(0);
-    expect(res.candidates[1].chainIndex).toBe(1);
   });
 
   it('handles diagonal connection and returns stable endpoints/control points', () => {
@@ -98,7 +94,7 @@ describe('CalculateBezierCurveData', () => {
       targetSide: EFConnectableSide.BOTTOM,
       radius: 0,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
@@ -111,6 +107,5 @@ describe('CalculateBezierCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 });

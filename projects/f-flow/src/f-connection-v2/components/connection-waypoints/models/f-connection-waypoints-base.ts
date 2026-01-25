@@ -1,5 +1,4 @@
 import { ElementRef, inject, InjectionToken, ModelSignal, signal, Signal } from '@angular/core';
-import { IWaypointCandidate } from './i-waypoint-candidate';
 import { IPoint, PointExtensions } from '@foblex/2d';
 
 export const F_CONNECTION_WAYPOINTS = new InjectionToken<FConnectionWaypointsBase>(
@@ -9,27 +8,27 @@ export const F_CONNECTION_WAYPOINTS = new InjectionToken<FConnectionWaypointsBas
 export abstract class FConnectionWaypointsBase {
   public readonly hostElement = inject(ElementRef<SVGElement>).nativeElement;
 
-  public readonly candidates = signal<IWaypointCandidate[]>([]);
+  public readonly candidates = signal<IPoint[]>([]);
 
   public abstract waypoints: ModelSignal<IPoint[]>;
   public abstract radius: Signal<number>;
   public abstract visibility: Signal<boolean>;
 
-  protected _activeIndex = signal(-1)
+  private _activeIndex = 0;
   private _pivots: IPoint[] = [];
 
-  public insert(candidate: IWaypointCandidate): void {
+  public insert(candidate: IPoint): void {
     const current = this.waypoints().slice();
 
-    this._activeIndex.set(Math.max(0, Math.min(candidate.chainIndex, current.length)));
+    this._activeIndex = Math.max(0, Math.min(this.candidates().indexOf(candidate), current.length));
 
-    current.splice(this._activeIndex(), 0, { ...candidate.point });
+    current.splice(this._activeIndex, 0, { ...candidate });
     this.waypoints.set(current);
     this._pivots = current;
   }
 
   public select(pivot: IPoint): void {
-    this._activeIndex.set(this.waypoints().findIndex((x) => PointExtensions.isEqual(pivot, x)));
+    this._activeIndex = this.waypoints().findIndex((x) => PointExtensions.isEqual(pivot, x));
     this._pivots = this.waypoints();
   }
 
@@ -41,15 +40,13 @@ export abstract class FConnectionWaypointsBase {
     const current = this.waypoints().slice();
     current.splice(index, 1);
     this.waypoints.set(current);
-    this._activeIndex.set(-1);
   }
 
   public move(point: IPoint): void {
-    this._pivots[this._activeIndex()] = { ...point };
+    this._pivots[this._activeIndex] = { ...point };
   }
 
   public update(): void {
     this.waypoints.set([...this._pivots]);
-   // this._activeIndex.set(-1);
   }
 }

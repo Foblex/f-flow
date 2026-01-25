@@ -4,7 +4,7 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { buildConnectionAnchors } from '../utils';
-import { IWaypointCandidate } from '../../../../components';
+import { IPoint } from '@foblex/2d';
 
 const EPS = 0.0002;
 
@@ -17,7 +17,7 @@ export class CalculateStraightLineData implements IFConnectionBuilder {
     const p0 = anchors[0];
     let d = `M ${p0.x} ${p0.y}`;
 
-    const candidates: IWaypointCandidate[] = new Array(n - 1);
+    const candidates: IPoint[] = new Array(n - 1);
 
     for (let i = 0; i < n - 1; i++) {
       const a = anchors[i];
@@ -29,10 +29,7 @@ export class CalculateStraightLineData implements IFConnectionBuilder {
 
       d += ` L ${bx} ${by}`;
 
-      candidates[i] = {
-        point: { x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5 },
-        chainIndex: i,
-      };
+      candidates[i] = { x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5 };
     }
 
     return {

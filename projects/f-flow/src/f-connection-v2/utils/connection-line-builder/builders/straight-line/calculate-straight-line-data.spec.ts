@@ -20,7 +20,7 @@ describe('CalculateStraightLineData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 0,
       offset: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const response: IFConnectionBuilderResponse = builder.handle(request);
@@ -35,11 +35,8 @@ describe('CalculateStraightLineData', () => {
     expect(response.secondPoint).toEqual({ x: 100, y: 0 });
     expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
 
-    expect(response.candidates!.length).toBe(1);
-    expect(response.candidates![0]).toEqual({
-      point: { x: 50, y: 0 },
-      chainIndex: 0,
-    });
+    expect(response.candidates.length).toBe(1);
+    expect(response.candidates[0]).toEqual({ x: 50, y: 0 });
   });
 
   it('should build a straight path for a vertical connection', () => {
@@ -50,7 +47,7 @@ describe('CalculateStraightLineData', () => {
       targetSide: EFConnectableSide.TOP,
       radius: 0,
       offset: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const response: IFConnectionBuilderResponse = builder.handle(request);
@@ -65,11 +62,8 @@ describe('CalculateStraightLineData', () => {
     expect(response.secondPoint).toEqual({ x: 0, y: 100 });
     expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
 
-    expect(response.candidates!.length).toBe(1);
-    expect(response.candidates![0]).toEqual({
-      point: { x: 0, y: 50 },
-      chainIndex: 0,
-    });
+    expect(response.candidates.length).toBe(1);
+    expect(response.candidates[0]).toEqual({ x: 0, y: 50 });
   });
 
   it('should build a straight path for a diagonal connection', () => {
@@ -80,7 +74,7 @@ describe('CalculateStraightLineData', () => {
       targetSide: EFConnectableSide.BOTTOM,
       radius: 0,
       offset: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const response: IFConnectionBuilderResponse = builder.handle(request);
@@ -95,11 +89,8 @@ describe('CalculateStraightLineData', () => {
     expect(response.secondPoint).toEqual({ x: 100, y: 100 });
     expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
 
-    expect(response.candidates!.length).toBe(1);
-    expect(response.candidates![0]).toEqual({
-      point: { x: 50, y: 50 },
-      chainIndex: 0,
-    });
+    expect(response.candidates.length).toBe(1);
+    expect(response.candidates[0]).toEqual({ x: 50, y: 50 });
   });
 
   it('should support pivots and build multi-segment straight path', () => {
@@ -110,7 +101,7 @@ describe('CalculateStraightLineData', () => {
       targetSide: EFConnectableSide.BOTTOM,
       radius: 0,
       offset: 0,
-      pivots: [
+      waypoints: [
         { x: 60, y: 20 },
         { x: 60, y: 90 },
       ],
@@ -130,9 +121,9 @@ describe('CalculateStraightLineData', () => {
     expect(response.secondPoint).toEqual({ x: 60, y: 20 });
     expect(response.penultimatePoint).toEqual({ x: 60, y: 90 });
 
-    expect(response.candidates!.length).toBe(3);
-    expect(response.candidates![0]).toEqual({ point: { x: 35, y: 20 }, chainIndex: 0 });
-    expect(response.candidates![1]).toEqual({ point: { x: 60, y: 55 }, chainIndex: 1 });
-    expect(response.candidates![2]).toEqual({ point: { x: 85, y: 105 }, chainIndex: 2 });
+    expect(response.candidates.length).toBe(3);
+    expect(response.candidates[0]).toEqual({ x: 35, y: 20 });
+    expect(response.candidates[1]).toEqual({ x: 60, y: 55 });
+    expect(response.candidates[2]).toEqual({ x: 85, y: 105 });
   });
 });

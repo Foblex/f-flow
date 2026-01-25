@@ -17,7 +17,6 @@ class OffsetStraightBuilder implements IFConnectionBuilder {
 
     return {
       path,
-      connectionCenter: { x: 0, y: 0 },
       penultimatePoint: PointExtensions.initialize(target.x - 20, target.y),
       secondPoint: PointExtensions.initialize(source.x + 20, source.y),
       points: [
@@ -39,7 +38,6 @@ class CircleConnectionBuilder implements IFConnectionBuilder {
 
     return {
       path,
-      connectionCenter: { x: 0, y: 0 },
       penultimatePoint: d,
       secondPoint: d,
       points: [source, d, target],

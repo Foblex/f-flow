@@ -1,12 +1,9 @@
 import { ICubicSegment } from './multi-cubic';
-import { IWaypointCandidate } from '../../../../components';
 import { cubicBezierAtT } from './sample-cubic-bezier-uniform';
+import { IPoint } from '@foblex/2d';
 
-export function calculateCurveCandidates(segments: ICubicSegment[]): IWaypointCandidate[] {
+export function calculateCurveCandidates(segments: ICubicSegment[]): IPoint[] {
   return segments.map((s) => {
-    return {
-      point: cubicBezierAtT(s.p0, s.c1, s.c2, s.p3, 0.5),
-      chainIndex: s.chainIndex,
-    };
+    return cubicBezierAtT(s.p0, s.c1, s.c2, s.p3, 0.5);
   });
 }

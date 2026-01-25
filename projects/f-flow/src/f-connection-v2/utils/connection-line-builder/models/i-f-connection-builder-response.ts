@@ -1,10 +1,7 @@
 import { IPoint } from '@foblex/2d';
-import { IWaypointCandidate } from '../../../components';
 
 export interface IFConnectionBuilderResponse {
   path: string;
-
-  connectionCenter?: IPoint;
 
   penultimatePoint: IPoint;
 
@@ -12,5 +9,5 @@ export interface IFConnectionBuilderResponse {
 
   points: IPoint[];
 
-  candidates: IWaypointCandidate[];
+  candidates: IPoint[];
 }

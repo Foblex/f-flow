@@ -2,13 +2,11 @@ import {
   contentChild,
   contentChildren,
   Directive,
-  effect,
   ElementRef,
   inject,
   input,
   signal,
   Signal,
-  untracked,
   viewChild,
 } from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
@@ -20,17 +18,19 @@ import {
 } from '../../mixins';
 import { ConnectionLineBuilder, EFConnectionBehavior, EFConnectionConnectableSide } from '../utils';
 import { EFConnectableSide, EFConnectionType } from '../enums';
+import { F_CONNECTION_PATH } from './connection-path';
+import { F_CONNECTION_GRADIENT } from './connection-gradient';
+import {
+  F_CONNECTION_DRAG_HANDLE_END,
+  F_CONNECTION_DRAG_HANDLE_START,
+} from './connection-drag-handles';
+import { F_CONNECTION_SELECTION } from './connection-selection';
 import {
   ConnectionContentLayoutEngine,
   F_CONNECTION_CONTENT,
-  F_CONNECTION_DRAG_HANDLE_END,
-  F_CONNECTION_DRAG_HANDLE_START,
-  F_CONNECTION_GRADIENT,
-  F_CONNECTION_PATH,
-  F_CONNECTION_SELECTION,
-  F_CONNECTION_WAYPOINTS,
   FConnectionContentBase,
-} from '../components';
+} from './connection-content';
+import { F_CONNECTION_WAYPOINTS } from './connection-waypoints';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
@@ -112,17 +112,6 @@ export abstract class FConnectionBase
 
   protected constructor() {
     super(inject(ElementRef<HTMLElement>).nativeElement);
-    this._listenWaypointsChanges();
-  }
-
-  private _listenWaypointsChanges(): void {
-    effect(() => {
-      this.fWaypoints();
-      untracked(() => {
-        this.setLine(this.line);
-        this.redraw();
-      });
-    });
   }
 
   public initialize(): void {

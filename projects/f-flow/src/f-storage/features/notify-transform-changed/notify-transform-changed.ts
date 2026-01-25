@@ -1,11 +1,11 @@
-import { NotifyTransformChangedRequest } from './notify-transform-changed.request';
+import { NotifyTransformChangedRequest } from './notify-transform-changed-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-components-store';
 
 @Injectable()
 @FExecutionRegister(NotifyTransformChangedRequest)
-export class NotifyTransformChangedExecution
+export class NotifyTransformChanged
   implements IExecution<NotifyTransformChangedRequest, void>
 {
   private readonly _store = inject(FComponentsStore);

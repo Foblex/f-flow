@@ -5,8 +5,8 @@
         <circle
           [attr.r]="radius()"
           class="f-candidate"
-          [attr.cx]="candidate.point.x"
-          [attr.cy]="candidate.point.y"
+          [attr.cx]="candidate.x"
+          [attr.cy]="candidate.y"
         ></circle>
       }
       @for (point of waypoints(); track $index) {

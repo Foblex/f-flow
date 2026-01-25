@@ -1,5 +1,4 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { IMap } from '../../../../../domain';
 import {
   buildConnectionAnchors,
   calculateCenterBetweenPoints,
@@ -14,10 +13,9 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { EFConnectableSide } from '../../../../enums';
-import { IWaypointCandidate } from '../../../../components';
 import { buildCornerMidPointsAndApplyOffsets } from './build-corner-mid-points-and-apply-offsets';
 
-const CONNECTOR_SIDE_POINT: IMap<IPoint> = {
+const CONNECTOR_SIDE_POINT: Record<string, IPoint> = {
   [EFConnectableSide.LEFT]: PointExtensions.initialize(-1, 0),
 
   [EFConnectableSide.RIGHT]: PointExtensions.initialize(1, 0),
@@ -42,7 +40,7 @@ export class CalculateSegmentLineData implements IFConnectionBuilder {
     const anchors = buildConnectionAnchors(source, target, waypoints);
 
     const chains: IPoint[][] = [];
-    const candidates: IWaypointCandidate[] = [];
+    const candidates: IPoint[] = [];
 
     for (let i = 0; i < anchors.length - 1; i++) {
       const a = anchors[i];
@@ -51,7 +49,7 @@ export class CalculateSegmentLineData implements IFConnectionBuilder {
       const points = this._getPathPoints(a, sourceSide, b, targetSide, offset ?? 0);
 
       chains.push(points);
-      candidates.push(...calculatePolylineCandidates(points, i));
+      candidates.push(...calculatePolylineCandidates(points));
     }
 
     const polyline = normalizePolyline(mergePointChains(chains));

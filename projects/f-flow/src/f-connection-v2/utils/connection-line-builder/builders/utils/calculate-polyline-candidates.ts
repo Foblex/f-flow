@@ -1,22 +1,20 @@
 import { IPoint } from '@foblex/2d';
-import { IWaypointCandidate } from '../../../../components';
 
 export function calculatePolylineCandidates(
   polyline: IPoint[],
-  chainIndex: number,
-): IWaypointCandidate[] {
+): IPoint[] {
   if (polyline.length < 2) {
     throw new Error('Polylines must be at least two points');
   }
 
   const total = polylineTotalLength(polyline);
   if (total <= 0) {
-    return [{ point: { ...polyline[0] }, chainIndex }];
+    return [{ ...polyline[0] }];
   }
 
   const mid = pointAtPolylineLength(polyline, total / 2);
 
-  return [{ point: mid, chainIndex }];
+  return [mid];
 }
 
 function polylineTotalLength(points: IPoint[]): number {

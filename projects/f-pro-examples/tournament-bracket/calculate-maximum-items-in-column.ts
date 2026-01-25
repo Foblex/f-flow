@@ -1,8 +1,7 @@
-import { IMap } from '@foblex/flow';
 import { ITournamentBracketItem } from './i-tournament-bracket-item';
 
-export function calculateMaximumItemsInColumn(columns: IMap<number>, items: ITournamentBracketItem[]): number {
-  const result: IMap<number> = {};
+export function calculateMaximumItemsInColumn(columns: Record<string, number>, items: ITournamentBracketItem[]): number {
+  const result: Record<string, number> = {};
 
   Object.entries(columns).forEach((value: [ phase: string, columnIndex: number ]) => {
     if (!result[ value[ 1 ] ]) {

@@ -7,7 +7,6 @@ import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
-import { IMap } from '../domain';
 import { FConnectionBase, FConnectionMarkerBase } from '../f-connection-v2';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class FComponentsStore {
     return this.fFlow?.hostElement as HTMLElement;
   }
 
-  public fComponents: IMap<unknown> = {};
+  public fComponents: Record<string, unknown> = {};
 
   public fFlow: FFlowBase | undefined;
 

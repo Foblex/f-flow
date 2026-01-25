@@ -46,7 +46,7 @@ describe('CalculateAdaptiveCurveData', () => {
       targetSide: EFConnectableSide.LEFT,
       offset: 20,
       radius: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
@@ -59,7 +59,6 @@ describe('CalculateAdaptiveCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 
   it('builds a cubic path for a vertical connection (BOTTOM -> TOP)', () => {
@@ -70,7 +69,7 @@ describe('CalculateAdaptiveCurveData', () => {
       targetSide: EFConnectableSide.TOP,
       offset: 20,
       radius: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
@@ -83,7 +82,6 @@ describe('CalculateAdaptiveCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 
   it('builds a cubic path for a diagonal connection', () => {
@@ -94,7 +92,7 @@ describe('CalculateAdaptiveCurveData', () => {
       targetSide: EFConnectableSide.BOTTOM,
       offset: 20,
       radius: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
@@ -107,7 +105,6 @@ describe('CalculateAdaptiveCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(1);
-    expect(res.candidates[0].chainIndex).toBe(0);
   });
 
   it('builds multi-segment cubic path when pivots exist', () => {
@@ -118,7 +115,7 @@ describe('CalculateAdaptiveCurveData', () => {
       targetSide: EFConnectableSide.LEFT,
       offset: 20,
       radius: 0,
-      pivots: [{ x: 50, y: 50 }],
+      waypoints: [{ x: 50, y: 50 }],
     };
 
     const res = builder.handle(request);
@@ -133,8 +130,6 @@ describe('CalculateAdaptiveCurveData', () => {
 
     expect(res.candidates).toBeDefined();
     expect(res.candidates.length).toBe(2);
-    expect(res.candidates[0].chainIndex).toBe(0);
-    expect(res.candidates[1].chainIndex).toBe(1);
   });
 
   it('ensures handles are not degenerate for typical input', () => {
@@ -145,7 +140,7 @@ describe('CalculateAdaptiveCurveData', () => {
       targetSide: EFConnectableSide.TOP,
       offset: 16,
       radius: 0,
-      pivots: [],
+      waypoints: [],
     };
 
     const res = builder.handle(request);
