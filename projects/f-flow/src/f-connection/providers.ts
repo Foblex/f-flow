@@ -3,7 +3,7 @@ import { FConnectionForCreateComponent } from './f-connection-for-create';
 import { FSnapConnectionComponent } from './f-snap-connection';
 import {
   FConnectionContent,
-  FConnectionControlPoints,
+  FConnectionWaypoints,
   FConnectionDragHandleEnd,
   FConnectionDragHandleStart,
   FConnectionGradient,
@@ -25,4 +25,4 @@ export const F_CONNECTION_PROVIDERS = [
   FSnapConnectionComponent,
 ];
 
-export const F_CONNECTION_IMPORTS_EXPORTS = [FConnectionContent, FConnectionControlPoints];
+export const F_CONNECTION_IMPORTS_EXPORTS = [FConnectionContent, FConnectionWaypoints];

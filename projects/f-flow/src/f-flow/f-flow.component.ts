@@ -42,7 +42,6 @@ import { FChannelHub, takeOne } from '../reactivity';
 import {
   ConnectionBehaviourBuilder,
   ConnectionLineBuilder,
-  F_CONNECTION_V2_DRAG_PROVIDERS,
 } from '../f-connection-v2';
 
 let uniqueId = 0;
@@ -64,7 +63,6 @@ let uniqueId = 0;
     ConnectionBehaviourBuilder,
     ...COMMON_PROVIDERS,
     ...F_DRAGGABLE_PROVIDERS,
-    ...F_CONNECTION_V2_DRAG_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

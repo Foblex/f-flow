@@ -1,20 +1,19 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { MoveControlPointPreparationRequest } from './move-control-point-preparation-request';
+import { MoveConnectionWaypointPreparationRequest } from './move-connection-waypoint-preparation-request';
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { MoveControlPointHandler } from '../move-control-point-handler';
+import { MoveConnectionWaypointHandler } from '../move-connection-waypoint-handler';
 import { FComponentsStore } from '../../../../f-storage';
-import { FDraggableDataContext } from '../../../../f-draggable';
+import { FDraggableDataContext, RemoveConnectionWaypointRequest } from '../../../../f-draggable';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FCanvasBase } from '../../../../f-canvas';
 import { calculatePointerInFlow } from '../../../../utils';
-import { findConnectionWithPivotAndCandidate } from '../../../components';
-import { FConnectionBase } from '../../../models';
+import { FConnectionBase, pickWaypoint } from '../../../../f-connection-v2';
 
 @Injectable()
-@FExecutionRegister(MoveControlPointPreparationRequest)
-export class MoveControlPointPreparation
-  implements IExecution<MoveControlPointPreparationRequest, void>
+@FExecutionRegister(MoveConnectionWaypointPreparationRequest)
+export class MoveConnectionWaypointPreparation
+  implements IExecution<MoveConnectionWaypointPreparationRequest, void>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -37,7 +36,7 @@ export class MoveControlPointPreparation
     return this._store.fConnections;
   }
 
-  public handle(request: MoveControlPointPreparationRequest): void {
+  public handle(request: MoveConnectionWaypointPreparationRequest): void {
     const position = calculatePointerInFlow(request.event, this._flowHost, this._transform);
 
     const pick = this._pickControlPoint(position);
@@ -50,7 +49,11 @@ export class MoveControlPointPreparation
       .elementTransform(this._flowHost)
       .div(this._transform.scale);
 
-    this._dragContext.draggableItems = [new MoveControlPointHandler(this._injector, pick)];
+    if (request.event.isMouseRightButton()) {
+      this._mediator.execute(new RemoveConnectionWaypointRequest(pick));
+    } else {
+      this._dragContext.draggableItems = [new MoveConnectionWaypointHandler(this._injector, pick)];
+    }
 
     queueMicrotask(() => this._updateConnectionLayer(pick.connection));
   }
@@ -60,10 +63,10 @@ export class MoveControlPointPreparation
       return undefined;
     }
 
-    return findConnectionWithPivotAndCandidate(this._connections, position);
+    return pickWaypoint(this._connections, position);
   }
 
-  private _isValidTrigger(request: MoveControlPointPreparationRequest): boolean {
+  private _isValidTrigger(request: MoveConnectionWaypointPreparationRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 

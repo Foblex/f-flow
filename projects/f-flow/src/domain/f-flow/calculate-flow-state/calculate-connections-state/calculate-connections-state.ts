@@ -27,7 +27,7 @@ export class CalculateConnectionsState
       fType: x.fType,
       fBehavior: x.fBehavior,
       isSelected: x.isSelected(),
-      pivots: x.fControlPoints()?.pivots() || [],
+      waypoints: x.fWaypoints()?.waypoints() || [],
       fInputSide: x.fInputSide(),
       fOutputSide: x.fOutputSide(),
     };

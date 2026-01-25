@@ -1,5 +1,5 @@
 :host {
-  pointer-events: all;
+  pointer-events: none;
   position: absolute;
 }
 
@@ -8,4 +8,8 @@ svg {
   vertical-align: middle;
   position: absolute;
   overflow: visible;
+}
+
+circle {
+  pointer-events: visible;
 }

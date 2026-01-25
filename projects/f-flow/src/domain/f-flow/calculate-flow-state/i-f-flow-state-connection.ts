@@ -18,7 +18,7 @@ export interface IFFlowStateConnection {
 
   isSelected: boolean;
 
-  pivots: IPoint[];
+  waypoints: IPoint[];
 
   fInputSide: EFConnectionConnectableSide;
 

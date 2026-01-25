@@ -1,15 +1,20 @@
 import {
+  CreateConnectionFromOutputPreparation,
+  CreateConnectionPreparation,
   FCreateConnectionDragHandlerPreparationExecution,
   FCreateConnectionFinalizeExecution,
   FCreateConnectionFromOutletPreparationExecution,
-  CreateConnectionFromOutputPreparation,
-  CreateConnectionPreparation,
   GetFirstConnectableOutputExecution,
 } from './f-create-connection';
 import {
   FReassignConnectionFinalizeExecution,
   FReassignConnectionPreparationExecution,
 } from './f-reassign-connection';
+import {
+  MoveConnectionWaypointFinalize,
+  MoveConnectionWaypointPreparation,
+  RemoveConnectionWaypoint,
+} from './move-connection-waypoint';
 
 export const CONNECTIONS_PROVIDERS = [
   FCreateConnectionFinalizeExecution,
@@ -27,4 +32,10 @@ export const CONNECTIONS_PROVIDERS = [
   FReassignConnectionFinalizeExecution,
 
   FReassignConnectionPreparationExecution,
+
+  MoveConnectionWaypointPreparation,
+
+  MoveConnectionWaypointFinalize,
+
+  RemoveConnectionWaypoint,
 ];

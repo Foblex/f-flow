@@ -10,6 +10,7 @@ import {
   numberAttribute,
   OnDestroy,
   OnInit,
+  output,
   Output,
   QueryList,
 } from '@angular/core';
@@ -21,18 +22,21 @@ import {
 } from './f-node-move';
 import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
+  CreateConnectionPreparationRequest,
   FCreateConnectionEvent,
   FCreateConnectionFinalizeRequest,
-  CreateConnectionPreparationRequest,
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
+  MoveConnectionWaypointFinalizeRequest,
+  MoveConnectionWaypointPreparationRequest,
 } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,
+  DragRectCache,
   EmitSelectionChangeEventRequest,
   EndDragSequenceRequest,
   FEventTrigger,
@@ -40,7 +44,6 @@ import {
   InitializeDragSequenceRequest,
   OnPointerMoveRequest,
   PrepareDragSequenceRequest,
-  DragRectCache,
   RemoveDndFromStoreRequest,
 } from '../domain';
 import {
@@ -60,18 +63,15 @@ import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
-  FDropToGroupEvent,
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
+  FDropToGroupEvent,
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
-import {
-  MoveControlPointFinalizeRequest,
-  MoveControlPointPreparationRequest,
-} from '../f-connection-v2';
+import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -151,6 +151,8 @@ export class FDraggableDirective
   @Input()
   public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
 
+  public fConnectionWaypointsTrigger = input<FEventTrigger>(defaultEventTrigger);
+
   @Input()
   public fMoveControlPointTrigger: FEventTrigger = defaultEventTrigger;
 
@@ -190,6 +192,8 @@ export class FDraggableDirective
 
   @Output()
   public override fCreateConnection = new EventEmitter<FCreateConnectionEvent>();
+
+  public override fConnectionWaypointsChanged = output<FConnectionWaypointsChangedEvent>();
 
   @Output()
   public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
@@ -269,7 +273,7 @@ export class FDraggableDirective
     );
 
     this._mediator.execute<void>(
-      new MoveControlPointPreparationRequest(event, this.fMoveControlPointTrigger),
+      new MoveConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
@@ -335,7 +339,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
 
-    this._mediator.execute<void>(new MoveControlPointFinalizeRequest(event));
+    this._mediator.execute<void>(new MoveConnectionWaypointFinalizeRequest(event));
 
     this._mediator.execute<void>(new EndDragSequenceRequest());
   }

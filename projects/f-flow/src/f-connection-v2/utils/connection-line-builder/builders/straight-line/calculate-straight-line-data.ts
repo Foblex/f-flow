@@ -4,20 +4,20 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { buildConnectionAnchors } from '../utils';
-import { IPivotCandidate } from '../../../../components';
+import { IWaypointCandidate } from '../../../../components';
 
 const EPS = 0.0002;
 
 export class CalculateStraightLineData implements IFConnectionBuilder {
   public handle(request: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
-    const anchors = buildConnectionAnchors(request.source, request.target, request.pivots);
+    const anchors = buildConnectionAnchors(request.source, request.target, request.waypoints);
 
     const n = anchors.length;
 
     const p0 = anchors[0];
     let d = `M ${p0.x} ${p0.y}`;
 
-    const candidates: IPivotCandidate[] = new Array(n - 1);
+    const candidates: IWaypointCandidate[] = new Array(n - 1);
 
     for (let i = 0; i < n - 1; i++) {
       const a = anchors[i];

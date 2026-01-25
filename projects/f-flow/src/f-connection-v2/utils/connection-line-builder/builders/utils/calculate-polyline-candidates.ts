@@ -1,10 +1,10 @@
 import { IPoint } from '@foblex/2d';
-import { IPivotCandidate } from '../../../../components';
+import { IWaypointCandidate } from '../../../../components';
 
 export function calculatePolylineCandidates(
   polyline: IPoint[],
   chainIndex: number,
-): IPivotCandidate[] {
+): IWaypointCandidate[] {
   if (polyline.length < 2) {
     throw new Error('Polylines must be at least two points');
   }

@@ -3,7 +3,7 @@ import { IPoint } from '@foblex/2d';
 export function buildConnectionAnchors(
   source: IPoint,
   target: IPoint,
-  pivots?: IPoint[],
+  waypoints?: IPoint[],
 ): IPoint[] {
-  return [source, ...(pivots ?? []), target];
+  return [source, ...(waypoints ?? []), target];
 }

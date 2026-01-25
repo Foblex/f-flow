@@ -2,17 +2,19 @@ import {
   contentChild,
   contentChildren,
   Directive,
+  effect,
   ElementRef,
   inject,
   input,
   signal,
   Signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
 import {
-  ISelectable,
   ICanChangeVisibility,
+  ISelectable,
   mixinChangeSelection,
   mixinChangeVisibility,
 } from '../../mixins';
@@ -21,12 +23,12 @@ import { EFConnectableSide, EFConnectionType } from '../enums';
 import {
   ConnectionContentLayoutEngine,
   F_CONNECTION_CONTENT,
-  F_CONNECTION_CONTROL_POINTS,
   F_CONNECTION_DRAG_HANDLE_END,
   F_CONNECTION_DRAG_HANDLE_START,
   F_CONNECTION_GRADIENT,
   F_CONNECTION_PATH,
   F_CONNECTION_SELECTION,
+  F_CONNECTION_WAYPOINTS,
   FConnectionContentBase,
 } from '../components';
 
@@ -91,7 +93,7 @@ export abstract class FConnectionBase
     descendants: true,
   });
 
-  public readonly fControlPoints = contentChild(F_CONNECTION_CONTROL_POINTS);
+  public readonly fWaypoints = contentChild(F_CONNECTION_WAYPOINTS);
 
   public readonly fInputSide: Signal<EFConnectionConnectableSide> = signal(
     EFConnectionConnectableSide.DEFAULT,
@@ -110,6 +112,17 @@ export abstract class FConnectionBase
 
   protected constructor() {
     super(inject(ElementRef<HTMLElement>).nativeElement);
+    this._listenWaypointsChanges();
+  }
+
+  private _listenWaypointsChanges(): void {
+    effect(() => {
+      this.fWaypoints();
+      untracked(() => {
+        this.setLine(this.line);
+        this.redraw();
+      });
+    });
   }
 
   public initialize(): void {
@@ -119,7 +132,11 @@ export abstract class FConnectionBase
   }
 
   public isContains(element: HTMLElement | SVGElement): boolean {
-    return (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element);
+    return (
+      (this.hostElement.firstChild?.lastChild as HTMLElement).contains(element) ||
+      Array.from(this.fContents()?.values() ?? []).some((x) => x.hostElement?.contains(element)) ||
+      this.fWaypoints()?.hostElement?.contains(element)
+    );
   }
 
   public setLine({ point1, point2 }: ILine): void {
@@ -133,7 +150,7 @@ export abstract class FConnectionBase
     this.path = path;
     this._penultimatePoint = penultimatePoint || point1;
     this._secondPoint = secondPoint || point2;
-    this.fControlPoints()?.candidates.set(candidates || []);
+    this.fWaypoints()?.candidates.set(candidates || []);
 
     new ConnectionContentLayoutEngine().layout(points || [], this._contents());
   }
@@ -152,7 +169,7 @@ export abstract class FConnectionBase
         targetSide: this._targetSide,
         radius: this.fRadius,
         offset: this.fOffset,
-        pivots: this.fControlPoints()?.pivots() || [],
+        waypoints: this.fWaypoints()?.waypoints() || [],
       },
     });
   }

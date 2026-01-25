@@ -1,5 +1,5 @@
 import { IPoint } from '@foblex/2d';
-import { IPivotCandidate } from '../../../components';
+import { IWaypointCandidate } from '../../../components';
 
 export interface IFConnectionBuilderResponse {
   path: string;
@@ -12,5 +12,5 @@ export interface IFConnectionBuilderResponse {
 
   points: IPoint[];
 
-  candidates: IPivotCandidate[];
+  candidates: IWaypointCandidate[];
 }

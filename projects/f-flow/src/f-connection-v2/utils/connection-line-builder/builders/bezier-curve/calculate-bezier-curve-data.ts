@@ -7,9 +7,9 @@ import {
   sampleMultiCubicUniform,
 } from '../utils';
 import {
-  IFConnectionBuilderResponse,
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
+  IFConnectionBuilderResponse,
 } from '../../models';
 import { EFConnectableSide } from '../../../../enums';
 
@@ -20,9 +20,9 @@ export class CalculateBezierCurveData implements IFConnectionBuilder {
     target,
     targetSide,
     offset,
-    pivots,
+    waypoints,
   }: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
-    const anchors = buildConnectionAnchors(source, target, pivots);
+    const anchors = buildConnectionAnchors(source, target, waypoints);
 
     const segments: ICubicSegment[] = [];
 

@@ -92,11 +92,11 @@ export class CalculateAdaptiveCurveData implements IFConnectionBuilder {
     target,
     targetSide,
     offset,
-    pivots,
+    waypoints,
   }: IFConnectionBuilderRequest): IFConnectionBuilderResponse {
     const clampedOffset = Math.max(0, offset ?? 0);
 
-    const anchors = buildConnectionAnchors(source, target, pivots);
+    const anchors = buildConnectionAnchors(source, target, waypoints);
 
     const segments: ICubicSegment[] = [];
 

@@ -27,7 +27,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 10,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const response = builder.handle(request);
@@ -48,7 +48,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.TOP,
       radius: 10,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const response = builder.handle(request);
@@ -69,7 +69,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.BOTTOM,
       radius: 10,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const response = builder.handle(request);
@@ -88,7 +88,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 10,
       offset: 30,
-      pivots: [],
+      waypoints: [],
     };
 
     const response = builder.handle(request);
@@ -107,7 +107,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 10,
       offset: 20,
-      pivots: [],
+      waypoints: [],
     };
 
     const response = builder.handle(request);
@@ -131,7 +131,7 @@ describe('CalculateSegmentLineData', () => {
       targetSide: EFConnectableSide.LEFT,
       radius: 10,
       offset: 20,
-      pivots: [{ x: 100, y: 100 }], // один pivot
+      waypoints: [{ x: 100, y: 100 }], // один pivot
     };
 
     const response = builder.handle(request);

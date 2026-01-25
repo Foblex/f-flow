@@ -14,5 +14,5 @@ export interface IFConnectionBuilderRequest {
 
   offset: number;
 
-  pivots: IPoint[];
+  waypoints: IPoint[];
 }
