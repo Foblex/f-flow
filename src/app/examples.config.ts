@@ -148,7 +148,8 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connection-waypoints',
-        () => import('../../projects/f-examples/connections/connection-waypoints/connection-waypoints'),
+        () =>
+          import('../../projects/f-examples/connections/connection-waypoints/connection-waypoints'),
       ),
       defineLazyComponent(
         'custom-connection-type',
@@ -166,10 +167,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connection-markers',
-        () =>
-          import(
-            '../../projects/f-examples/connections/connection-markers/connection-markers.component'
-          ),
+        () => import('../../projects/f-examples/connections/connection-markers/connection-markers'),
       ),
 
       defineLazyComponent(
@@ -585,7 +583,7 @@ function connectionGroup() {
       image_width: 806,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2025-08-23 16:04:08')
+      date: new Date('2025-08-23 16:04:08'),
     },
     {
       link: 'create-node-on-connection-drop',
