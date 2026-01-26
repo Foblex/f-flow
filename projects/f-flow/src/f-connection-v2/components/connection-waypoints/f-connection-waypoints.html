@@ -12,7 +12,7 @@
       @for (point of waypoints(); track $index) {
         <circle
           [attr.r]="radius()"
-          (contextmenu)="$event.preventDefault();"
+          (contextmenu)="remove($index, $event)"
           class="f-waypoint"
           [attr.cx]="point.x"
           [attr.cy]="point.y"

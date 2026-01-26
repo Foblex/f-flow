@@ -13,7 +13,6 @@ import {
 import {
   MoveConnectionWaypointFinalize,
   MoveConnectionWaypointPreparation,
-  RemoveConnectionWaypoint,
 } from './move-connection-waypoint';
 
 export const CONNECTIONS_PROVIDERS = [
@@ -36,6 +35,4 @@ export const CONNECTIONS_PROVIDERS = [
   MoveConnectionWaypointPreparation,
 
   MoveConnectionWaypointFinalize,
-
-  RemoveConnectionWaypoint,
 ];

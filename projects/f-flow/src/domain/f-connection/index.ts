@@ -16,6 +16,8 @@ export * from './remove-connection-from-store';
 
 export * from './remove-connection-marker-from-store';
 
+export * from './remove-connection-waypoint';
+
 export * from './remove-snap-connection-from-store';
 
 export * from './providers';

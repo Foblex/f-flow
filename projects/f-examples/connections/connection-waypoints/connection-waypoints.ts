@@ -38,7 +38,7 @@ export class ConnectionWaypoints {
   protected readonly waypointsOn = signal(true);
 
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(false);
+    this._canvas()?.fitToScreen({ x: 100, y: 100 }, false);
   }
 
   protected changed({ connectionId, waypoints }: FConnectionWaypointsChangedEvent): void {
@@ -53,4 +53,3 @@ export class ConnectionWaypoints {
     this.waypointsOn.update((x) => !x);
   }
 }
-

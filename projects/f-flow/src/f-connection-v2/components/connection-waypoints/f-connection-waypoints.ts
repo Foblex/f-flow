@@ -16,6 +16,8 @@ import { F_CONNECTION_WAYPOINTS, FConnectionWaypointsBase } from './models';
 import { IPoint } from '@foblex/2d';
 import { NotifyDataChangedRequest } from '../../../f-storage';
 import { FMediator } from '@foblex/mediator';
+import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
+import { RemoveConnectionWaypointRequest } from '../../../domain';
 
 @Component({
   selector: 'f-connection-waypoints',
@@ -31,6 +33,7 @@ import { FMediator } from '@foblex/mediator';
 export class FConnectionWaypoints extends FConnectionWaypointsBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
   private readonly _injector = inject(Injector);
+  private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
 
   public override readonly radius = input(4, {
     transform: numberAttribute,
@@ -59,6 +62,12 @@ export class FConnectionWaypoints extends FConnectionWaypointsBase implements On
 
   private _notifyDataChanged(): void {
     this._mediator.execute(new NotifyDataChangedRequest());
+  }
+
+  protected remove(index: number, event: MouseEvent): void {
+    this._mediator.execute(new RemoveConnectionWaypointRequest(index, this._connection.fId()));
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   public ngOnDestroy(): void {

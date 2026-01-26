@@ -4,7 +4,7 @@ import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { MoveConnectionWaypointHandler } from '../move-connection-waypoint-handler';
 import { FComponentsStore } from '../../../../f-storage';
-import { FDraggableDataContext, RemoveConnectionWaypointRequest } from '../../../../f-draggable';
+import { FDraggableDataContext } from '../../../../f-draggable';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
 import { FCanvasBase } from '../../../../f-canvas';
 import { calculatePointerInFlow } from '../../../../utils';
@@ -48,12 +48,7 @@ export class MoveConnectionWaypointPreparation
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._flowHost)
       .div(this._transform.scale);
-
-    if (request.event.isMouseRightButton()) {
-      this._mediator.execute(new RemoveConnectionWaypointRequest(pick));
-    } else {
-      this._dragContext.draggableItems = [new MoveConnectionWaypointHandler(this._injector, pick)];
-    }
+    this._dragContext.draggableItems = [new MoveConnectionWaypointHandler(this._injector, pick)];
 
     queueMicrotask(() => this._updateConnectionLayer(pick.connection));
   }

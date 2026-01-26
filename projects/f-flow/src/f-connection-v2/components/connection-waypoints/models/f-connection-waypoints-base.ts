@@ -15,7 +15,7 @@ export abstract class FConnectionWaypointsBase {
   public abstract visibility: Signal<boolean>;
 
   private _activeIndex = 0;
-  private _pivots: IPoint[] = [];
+  private _waypoints: IPoint[] = [];
 
   public insert(candidate: IPoint): void {
     const current = this.waypoints().slice();
@@ -24,29 +24,19 @@ export abstract class FConnectionWaypointsBase {
 
     current.splice(this._activeIndex, 0, { ...candidate });
     this.waypoints.set(current);
-    this._pivots = current;
+    this._waypoints = current;
   }
 
-  public select(pivot: IPoint): void {
-    this._activeIndex = this.waypoints().findIndex((x) => PointExtensions.isEqual(pivot, x));
-    this._pivots = this.waypoints();
-  }
-
-  public remove(pivot: IPoint): void {
-    const index = this.waypoints().findIndex((x) => PointExtensions.isEqual(pivot, x));
-    if (index === -1) {
-      throw new Error('Waypoint to delete not found');
-    }
-    const current = this.waypoints().slice();
-    current.splice(index, 1);
-    this.waypoints.set(current);
+  public select(waypoint: IPoint): void {
+    this._activeIndex = this.waypoints().findIndex((x) => PointExtensions.isEqual(waypoint, x));
+    this._waypoints = this.waypoints();
   }
 
   public move(point: IPoint): void {
-    this._pivots[this._activeIndex] = { ...point };
+    this._waypoints[this._activeIndex] = { ...point };
   }
 
   public update(): void {
-    this.waypoints.set([...this._pivots]);
+    this.waypoints.set([...this._waypoints]);
   }
 }
