@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.0.0](https://github.com/foblex/flow/compare/v17.9.5...v18.0.0) (2026-01-26)
+
+### Highlights
+
+- **Connection Waypoints (new feature)** — interactive waypoint editing for connections with candidate points and drag-and-drop.
+- **Pinch-to-zoom (new feature)** — smooth multi-touch zoom for trackpads and touch devices.
+- **Control Flow + Content Projection compatibility** — improved support for `@if/@for` rendering by extending projection slots for nodes/connections.
+- **Custom Backgrounds** — richer SVG pattern support plus a new example for advanced backgrounds.
+
+### Features
+
+- **zoom:** add pinch-to-zoom support for touch/trackpad gestures ([5dfeeb5](https://github.com/foblex/flow/commit/5dfeeb5f16dcf9dfbcf4ee38dfea22ded1c37f83))
+- **connection:** introduce **waypoints** with candidates + drag-to-add / drag-to-move interactions and demo example ([19772df](https://github.com/foblex/flow/commit/19772df7649e66b4115bd6a057613d3fa25faeec), [229d6e3](https://github.com/foblex/flow/commit/229d6e3b773a64a1e55654c373e3b556a8d38c8e))
+- **connection:** add anchors utility and refactor connection builders + candidate generation ([3276baf](https://github.com/foblex/flow/commit/3276baf8405eec062022b285524e3c641d901424), [b18109a](https://github.com/foblex/flow/commit/b18109a2c26fdac7aa8e5980fb5bbd791d3a4b42))
+- **canvas:** improve content projection for Angular Control Flow usage (`@if/@for`) by supporting grouped slots (`[fNodes]`, `[fConnections]`) ([b18109a](https://github.com/foblex/flow/commit/b18109a2c26fdac7aa8e5980fb5bbd791d3a4b42))
+- **background:** support custom/complex SVG patterns + add a dedicated example ([29e28c8](https://github.com/foblex/flow/commit/29e28c81faf9da5189d9bf108323f4f4deb9387d))
+- **showcase:** add AI Low Code Platform entry and links ([6013ee7](https://github.com/foblex/flow/commit/6013ee7c23f5d88d8861027b56618b4bffc9fce2), [dd84ae8](https://github.com/foblex/flow/commit/dd84ae8730d8296a56d47ce5fb4966cc4de55e4b))
+
+### Improvements
+
+- Refactored multiple connection/interaction modules to improve readability, maintainability and internal consistency.
+- Candidate/waypoint handling is now more predictable across all connection types.
+
+### Documentation
+
+- fix url to custom-connection-type component in guide ([a6421ac](https://github.com/foblex/flow/commit/a6421aca5fd3ba2576a7f155e5ad8b06c5af9ed7))
+
+### ⚠️ Breaking Changes
+
+#### 1) Custom connection builders: `IFConnectionBuilderResponse` updated
+
+If you implemented a custom connection type / builder, the response interface changed:
+
+- `connectionCenter` was **removed**
+- `points` is now **required** (was optional)
+- `candidates` was **added**
+
+✅ **Note:** you don’t have to calculate or return `points` or `candidates` yourself.  
+If you don’t support them, return empty arrays.
+
+```ts
+export interface IFConnectionBuilderResponse {
+  path: string;
+  penultimatePoint: IPoint;
+  secondPoint: IPoint;
+  points: IPoint[];      // can be []
+  candidates: IPoint[];  // can be []
+}
+```
+
+#### 2) FConnection API cleanup: removed deprecated inputs
+
+Deprecated connection inputs were removed from FConnectionComponent:
+
+- `fText` - removed (use FConnectionContent instead)
+- `fTextStartOffset` - removed (use FConnectionContent instead)
+
+Removed legacy directive:
+
+- [fConnectionCenter] - removed (use FConnectionContent instead)
+
+#### 3) FCanvas API cleanup
+
+Removed deprecated zoom aliases from FCanvasComponent:
+
+- setZoom(...) - removed → use setScale(...)
+- resetZoom() - removed → use resetScale()
+
 ### [17.9.5](https://github.com/foblex/flow/compare/v17.8.0...v17.9.5) (2025-10-27)
 
 ### Features
