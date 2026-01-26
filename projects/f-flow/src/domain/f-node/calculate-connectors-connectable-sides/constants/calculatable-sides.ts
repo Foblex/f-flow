@@ -1,4 +1,4 @@
-import { EFConnectableSide } from '../../../../f-connectors';
+import { EFConnectableSide } from '../../../../f-connection-v2';
 
 export const CALCULATABLE_SIDES = {
   [EFConnectableSide.CALCULATE]: [

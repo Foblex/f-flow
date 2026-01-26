@@ -1,6 +1,6 @@
-import { EFConnectableSide } from './e-f-connectable-side';
 import { IHasHostElement } from '../i-has-host-element';
 import { Signal } from '@angular/core';
+import { EFConnectableSide } from '../f-connection-v2/enums/e-f-connectable-side';
 
 export abstract class FConnectorBase implements IHasHostElement {
   public abstract fId: Signal<string>;

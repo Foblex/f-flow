@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions-request';
-import { EFConnectableSide, FConnectorBase } from '../../../../f-connectors';
+import { FConnectorBase } from '../../../../f-connectors';
 import { IPoint, IRoundedRect } from '@foblex/2d';
 import { determineSide } from '../utils';
 import { CALCULATABLE_SIDES } from '../constants';
 import { TCalculateMode } from '../models';
 import { GetNormalizedElementRectRequest } from '../../../get-normalized-element-rect';
+import { EFConnectableSide } from '../../../../f-connection-v2';
 
 /**
  * Execution that calculates the connectable side for a connector

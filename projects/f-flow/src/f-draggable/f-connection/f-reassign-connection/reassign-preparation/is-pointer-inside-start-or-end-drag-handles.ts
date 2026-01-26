@@ -1,20 +1,28 @@
-import { IPoint } from "@foblex/2d";
-import { FConnectionBase } from "../../../../f-connection";
+import { IPoint } from '@foblex/2d';
+import { FConnectionBase } from '../../../../f-connection-v2';
 
-export function isPointerInsideStartOrEndDragHandles(connection: FConnectionBase, position: IPoint): boolean {
+export function isPointerInsideStartOrEndDragHandles(
+  connection: FConnectionBase,
+  position: IPoint,
+): boolean {
   return isDragHandleEnd(connection, position) || isDragHandleStart(connection, position);
 }
 
 export function isDragHandleEnd(connection: FConnectionBase, position: IPoint): boolean {
-  return connection.fDragHandleEnd()?.point
-    && _isPointInsideCircle(position, connection.fDragHandleEnd().point)
-    && !connection.fDraggingDisabled();
+  return (
+    connection.fDragHandleEnd()?.point &&
+    _isPointInsideCircle(position, connection.fDragHandleEnd().point) &&
+    !connection.fDraggingDisabled()
+  );
 }
 
 export function isDragHandleStart(connection: FConnectionBase, position: IPoint): boolean {
-  return !!connection.fDragHandleStart()?.point
-    && _isPointInsideCircle(position, connection.fDragHandleStart()!.point)
-    && !connection.fDraggingDisabled() && connection.fReassignableStart();
+  return (
+    !!connection.fDragHandleStart()?.point &&
+    _isPointInsideCircle(position, connection.fDragHandleStart()!.point) &&
+    !connection.fDraggingDisabled() &&
+    connection.fReassignableStart()
+  );
 }
 
 function _isPointInsideCircle(point: IPoint, circleCenter: IPoint): boolean {

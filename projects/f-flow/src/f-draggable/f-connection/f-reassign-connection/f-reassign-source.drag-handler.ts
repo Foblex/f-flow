@@ -1,6 +1,5 @@
 import { FMediator } from '@foblex/mediator';
 import {
-  CalculateConnectionLineByBehaviorRequest,
   CalculateClosestConnectorRequest,
   CalculateSourceConnectorsToConnectRequest,
   IClosestConnector,
@@ -8,18 +7,20 @@ import {
   MarkConnectableConnectorsRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
-import {
-  EFConnectableSide,
-  FNodeInputDirective,
-  FNodeOutputDirective,
-} from '../../../f-connectors';
-import { FConnectionBase, FSnapConnectionComponent } from '../../../f-connection';
+import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
+import { FSnapConnectionComponent } from '../../../f-connection';
 import { ILine, IPoint, RoundedRect } from '@foblex/2d';
 import {
   IFReassignHandler,
   isClosestConnectorInsideSnapThreshold,
   roundedRectFromPoint,
 } from './i-f-reassign-handler';
+import {
+  ConnectionBehaviourBuilder,
+  ConnectionBehaviourBuilderRequest,
+  EFConnectableSide,
+  FConnectionBase,
+} from '../../../f-connection-v2';
 
 export class FReassignSourceDragHandler implements IFReassignHandler {
   private _connectableConnectors: IConnectorAndRect[] = [];
@@ -38,6 +39,7 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
 
   constructor(
     private readonly _mediator: FMediator,
+    private readonly _connectionBehaviour: ConnectionBehaviourBuilder,
     private readonly _connection: FConnectionBase,
     private readonly _sourceConnectorAndRect: IConnectorAndRect,
     private readonly _targetConnectorAndRect: IConnectorAndRect,
@@ -108,8 +110,8 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
   }
 
   private _calculateNewLine(sourcePoint: IPoint, fSide: EFConnectableSide): ILine {
-    return this._mediator.execute<ILine>(
-      new CalculateConnectionLineByBehaviorRequest(
+    return this._connectionBehaviour.handle(
+      new ConnectionBehaviourBuilderRequest(
         roundedRectFromPoint(sourcePoint),
         this._targetConnectorAndRect.fRect,
         this._connection,
@@ -135,8 +137,8 @@ export class FReassignSourceDragHandler implements IFReassignHandler {
     fClosestInput: IClosestConnector,
     snapConnection: FSnapConnectionComponent,
   ): ILine {
-    return this._mediator.execute<ILine>(
-      new CalculateConnectionLineByBehaviorRequest(
+    return this._connectionBehaviour.handle(
+      new ConnectionBehaviourBuilderRequest(
         fClosestInput.fRect,
         this._targetConnectorAndRect.fRect,
         snapConnection,

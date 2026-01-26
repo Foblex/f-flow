@@ -1,0 +1,45 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+
+  .f-connection {
+    .f-connection-waypoints {
+      circle {
+        vector-effect: non-scaling-stroke;
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: transform 120ms ease, stroke 120ms ease, fill 120ms ease;
+      }
+
+      .f-candidate {
+        fill: var(--node-background-color);
+        stroke: #30a46c;
+        stroke-width: 2;
+        cursor: pointer;
+
+        &:hover {
+          stroke: #298459;
+          transform: scale(1.1);
+        }
+      }
+
+      .f-waypoint {
+        fill: var(--node-background-color);
+        stroke: var(--minimap-node-selected-color);
+        stroke-width: 2;
+        cursor: grab;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+@include flow-common.examples-toolbar;

@@ -8,6 +8,4 @@ export * from './f-connector-base';
 
 export * from './f-source-connector-base';
 
-export * from './e-f-connectable-side';
-
 export * from './providers';

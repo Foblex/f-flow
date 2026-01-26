@@ -1,3 +1,3 @@
-export * from './notify-transform-changed.execution';
+export * from './notify-transform-changed';
 
-export * from './notify-transform-changed.request';
+export * from './notify-transform-changed-request';

@@ -1,3 +1,3 @@
-export * from './notify-data-changed.execution';
+export * from './notify-data-changed';
 
 export * from './notify-data-changed-request';

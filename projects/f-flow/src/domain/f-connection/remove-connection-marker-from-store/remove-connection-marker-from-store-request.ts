@@ -1,10 +1,7 @@
-import { FMarkerBase } from '../../../f-connection';
+import { FConnectionMarkerBase } from '../../../f-connection-v2';
 
 export class RemoveConnectionMarkerFromStoreRequest {
   static readonly fToken = Symbol('RemoveConnectionMarkerFromStoreRequest');
 
-  constructor(
-    public fComponent: FMarkerBase,
-  ) {
-  }
+  constructor(public readonly component: FConnectionMarkerBase) {}
 }

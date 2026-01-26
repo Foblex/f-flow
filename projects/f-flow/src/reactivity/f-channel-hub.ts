@@ -3,7 +3,6 @@ import { FChannelListener, FChannelOperator } from './types';
 import { DestroyRef } from '@angular/core';
 
 export class FChannelHub {
-
   private readonly _channels: FChannel[] = [];
 
   private _operators: FChannelOperator[] = [];
@@ -20,18 +19,41 @@ export class FChannelHub {
   }
 
   public listen(destroyRef: DestroyRef, callback: FChannelListener): void {
-    let modifiedCallback = callback;
+    let current = callback;
 
-    this._operators.forEach(operator => {
-      modifiedCallback = operator(modifiedCallback);
-    });
+    const cleanups: (() => void)[] = [];
+    const onSubscribes: ((finalCb: FChannelListener) => void)[] = [];
+    const teardownSetters: ((teardown: () => void) => void)[] = [];
 
-    const unsubscribeCallbacks = this._channels.map(channel =>
-      channel.listen(() => modifiedCallback()),
-    );
+    for (const operator of [...this._operators].reverse()) {
+      const res = operator(current);
+      current = res.callback;
 
-    destroyRef.onDestroy(() => {
-      unsubscribeCallbacks.forEach(unsubscribe => unsubscribe());
-    });
+      if (res.cleanup) cleanups.push(res.cleanup);
+      if (res.onSubscribe) onSubscribes.push(res.onSubscribe);
+      if (res.setTeardown) teardownSetters.push(res.setTeardown);
+    }
+
+    const unsubs = this._channels.map((ch) => ch.listen(() => current()));
+
+    let tornDown = false;
+    const teardown = () => {
+      if (tornDown) return;
+      tornDown = true;
+
+      unsubs.forEach((u) => u());
+      cleanups.forEach((c) => c());
+    };
+
+    teardownSetters
+      .slice()
+      .reverse()
+      .forEach((set) => set(teardown));
+    onSubscribes
+      .slice()
+      .reverse()
+      .forEach((fn) => fn(current));
+
+    destroyRef.onDestroy(teardown);
   }
 }

@@ -1,0 +1,32 @@
+<f-flow fDraggable (fLoaded)="loaded()" (fCreateConnection)="createConnection($event)">
+  <f-canvas>
+    <f-connection-for-create />
+
+    @for (connection of connections(); track $index) {
+    <f-connection
+      [fReassignDisabled]="true"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+    />
+    }
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 24, y: 24 }"
+      fNodeOutput
+      fOutputConnectableSide="right"
+    >
+      drag me
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 244, y: 24 }"
+      fNodeInput
+      fInputConnectableSide="left"
+    >
+      to me
+    </div>
+  </f-canvas>
+</f-flow>

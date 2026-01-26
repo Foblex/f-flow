@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" style="display: block; vertical-align: middle;">
+<svg xmlns="http://www.w3.org/2000/svg">
   <defs #defs></defs>
   <ng-content />
   <g class="f-connection-group">
@@ -11,17 +11,10 @@
       }
       <circle f-connection-drag-handle-end r="8"></circle>
     </g>
-    @if (fText) {
-      <text f-connection-text></text>
-    }
   </g>
 </svg>
-@if (fConnectionCenters().length) {
-  <div #fConnectionCenter class="f-connection-center">
-    <ng-content select="[fConnectionCenter]" />
-  </div>
-}
+<ng-content select="f-connection-waypoints" />
 
-@if (fConnectionContents().length) {
+@if (fContents().length) {
   <ng-content select="[fConnectionContent]" />
 }

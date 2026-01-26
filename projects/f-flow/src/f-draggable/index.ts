@@ -14,7 +14,9 @@ export * from './f-node-resize';
 
 export * from './f-node-rotate';
 
-export * from './f-single-select';
+export * from './single-select';
+
+export * from './pinch-to-zoom';
 
 export * from './f-drag-blocker.directive';
 
@@ -31,5 +33,3 @@ export * from './i-f-drag-and-drop-plugin';
 export * from './is-drag-blocker';
 
 export * from './providers';
-
-

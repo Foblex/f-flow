@@ -11,13 +11,13 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
-import { EFConnectableSide } from '../e-f-connectable-side';
 import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddInputToStoreRequest, F_CSS_CLASS, RemoveInputFromStoreRequest } from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 import { stringAttribute } from '../../utils';
+import { EFConnectableSide } from '../../f-connection-v2';
 
 let uniqueId = 0;
 

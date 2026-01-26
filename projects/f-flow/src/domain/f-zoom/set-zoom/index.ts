@@ -1,3 +1,3 @@
-export * from './set-zoom.execution';
+export * from './set-zoom';
 
 export * from './set-zoom-request';

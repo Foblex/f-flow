@@ -2,7 +2,7 @@
  * Converts allowed sides array to a compact bit mask.
  * If not provided or empty -> all sides allowed.
  */
-import { EFConnectableSide } from '../../../../f-connectors';
+import { EFConnectableSide } from '../../../../f-connection-v2';
 
 const SNAP_EPS = 2;
 

@@ -6,8 +6,8 @@ import { FComponentsStore } from '../../../f-storage';
 import { FNodeIntersectedWithConnections } from '../../index';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
-import { FConnectionBase } from '../../../f-connection';
 import { GetNormalizedConnectorRectRequest } from '../../../domain';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(IsConnectionUnderNodeRequest)

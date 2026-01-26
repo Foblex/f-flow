@@ -1,4 +1,10 @@
-import { ElementRef, EventEmitter, inject, InputSignalWithTransform } from '@angular/core';
+import {
+  ElementRef,
+  EventEmitter,
+  inject,
+  InputSignalWithTransform,
+  OutputEmitterRef,
+} from '@angular/core';
 import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
@@ -6,6 +12,7 @@ import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './f-drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './f-node-move';
+import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 
 export abstract class FDraggableBase extends DragAndDropBase {
   public readonly hostElement = inject(ElementRef).nativeElement;
@@ -23,6 +30,8 @@ export abstract class FDraggableBase extends DragAndDropBase {
   public abstract fReassignConnection: EventEmitter<FReassignConnectionEvent>;
 
   public abstract fCreateConnection: EventEmitter<FCreateConnectionEvent>;
+
+  public abstract fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;
 
   public abstract fDropToGroup: EventEmitter<FDropToGroupEvent>;
 

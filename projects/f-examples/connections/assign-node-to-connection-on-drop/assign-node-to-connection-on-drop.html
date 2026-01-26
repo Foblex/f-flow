@@ -1,0 +1,25 @@
+<f-flow
+  fDraggable
+  (fLoaded)="loaded()"
+  fEmitOnNodeIntersect
+  (fNodeIntersectedWithConnections)="nodeIntersectedWithConnection($event)"
+>
+  <f-canvas>
+    @for (connection of connections(); track $index) {
+    <f-connection
+      [fReassignDisabled]="false"
+      fBehavior="floating"
+      [fConnectionId]="connection.id"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+    >
+    </f-connection>
+    } @for (node of nodes; track node.id) {
+    <div fNode [fNodeId]="node.id" fDragHandle [fNodePosition]="node.position">
+      <div fNodeInput [fInputId]="node.id" class="left"></div>
+      <div fNodeOutput [fOutputId]="node.id" class="right"></div>
+      @if (node.connected) { I'm connected node } @else { Drag me to connection }
+    </div>
+    }
+  </f-canvas>
+</f-flow>

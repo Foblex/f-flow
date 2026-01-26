@@ -3,12 +3,12 @@ import { CreateInputConnectionHandlerAndSetToNodeHandlerRequest } from './create
 import { FComponentsStore } from '../../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
-import { FConnectionBase } from '../../../../f-connection';
 import {
   BaseConnectionDragHandler,
   SourceTargetConnectionDragHandler,
   TargetConnectionDragHandler,
 } from '../../connection-drag-handlers';
+import { FConnectionBase } from '../../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(CreateInputConnectionHandlerAndSetToNodeHandlerRequest)

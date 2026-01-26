@@ -1,0 +1,12 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+  @include flow-common.connection-visible-drag-handle;
+}
+
+.f-node {
+  @include flow-common.node;
+}
+
+@include flow-common.examples-toolbar;

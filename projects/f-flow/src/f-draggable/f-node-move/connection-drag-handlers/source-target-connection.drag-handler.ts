@@ -1,10 +1,9 @@
 import { BaseConnectionDragHandler } from './base-connection.drag-handler';
-import { FConnectionBase } from '../../../f-connection';
 import { IPoint } from '@foblex/2d';
 import { Injector } from '@angular/core';
+import { FConnectionBase } from '../../../f-connection-v2';
 
 export class SourceTargetConnectionDragHandler extends BaseConnectionDragHandler {
-
   private readonly _callTracker = new Map<string, boolean>();
 
   constructor(injector: Injector, fConnection: FConnectionBase) {
@@ -28,4 +27,3 @@ export class SourceTargetConnectionDragHandler extends BaseConnectionDragHandler
     }
   }
 }
-

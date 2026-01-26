@@ -11,10 +11,10 @@ import {
   provideHeaderSearch,
   provideLanguage,
   provideLogo,
-  provideNavigation,
-  provideTitle,
-  provideTableOfContent,
   provideMeta,
+  provideNavigation,
+  provideTableOfContent,
+  provideTitle,
 } from '@foblex/m-render';
 
 export const EXAMPLES_CONFIGURATION = {
@@ -40,7 +40,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-handle',
-        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle.component'),
+        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle'),
       ),
       defineLazyComponent(
         'resize-handle',
@@ -111,15 +111,11 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-to-connect',
-        () =>
-          import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect.component'),
+        () => import('../../projects/f-examples/connections/drag-to-connect/drag-to-connect'),
       ),
       defineLazyComponent(
         'drag-to-reassign',
-        () =>
-          import(
-            '../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component'
-          ),
+        () => import('../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign'),
       ),
       defineLazyComponent(
         'create-node-on-connection-drop',
@@ -139,7 +135,7 @@ export const EXAMPLES_CONFIGURATION = {
         'assign-node-to-connection-on-drop',
         () =>
           import(
-            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component'
+            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'
           ),
       ),
       defineLazyComponent(
@@ -149,6 +145,11 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'connection-types',
         () => import('../../projects/f-examples/connections/connection-types/connection-types'),
+      ),
+      defineLazyComponent(
+        'connection-waypoints',
+        () =>
+          import('../../projects/f-examples/connections/connection-waypoints/connection-waypoints'),
       ),
       defineLazyComponent(
         'custom-connection-type',
@@ -161,28 +162,14 @@ export const EXAMPLES_CONFIGURATION = {
         'connection-behaviours',
         () =>
           import(
-            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours.component'
+            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
           ),
       ),
       defineLazyComponent(
         'connection-markers',
-        () =>
-          import(
-            '../../projects/f-examples/connections/connection-markers/connection-markers.component'
-          ),
+        () => import('../../projects/f-examples/connections/connection-markers/connection-markers'),
       ),
-      defineLazyComponent(
-        'connection-text',
-        () =>
-          import('../../projects/f-examples/connections/connection-text/connection-text.component'),
-      ),
-      defineLazyComponent(
-        'connection-center',
-        () =>
-          import(
-            '../../projects/f-examples/connections/connection-center/connection-center.component'
-          ),
-      ),
+
       defineLazyComponent(
         'connection-content',
         () => import('../../projects/f-examples/connections/connection-content/connection-content'),
@@ -238,13 +225,6 @@ export const EXAMPLES_CONFIGURATION = {
         () =>
           import(
             '../../projects/f-examples/extensions/background-example/background-example.component'
-          ),
-      ),
-      defineLazyComponent(
-        'vp-flow',
-        () =>
-          import(
-            '../../projects/f-pro-examples/visual-programming/components/flow/vp-flow.component'
           ),
       ),
       defineLazyComponent(
@@ -452,10 +432,6 @@ function nodesGroup() {
       image_height: 1198,
       image_type: 'image/png',
       date: new Date('2025-08-23 16:04:08'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'drag-to-group',
@@ -469,10 +445,6 @@ function nodesGroup() {
       image_height: 1208,
       image_type: 'image/png',
       date: new Date('2025-08-23 16:04:08'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'stress-test',
@@ -565,10 +537,6 @@ function connectorGroup() {
       image_height: 1200,
       image_type: 'image/png',
       date: new Date('2025-09-13 15:04:46'),
-      badge: {
-        text: 'New',
-        type: 'success',
-      },
     },
     {
       link: 'connectable-side',
@@ -616,10 +584,6 @@ function connectionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-08-23 16:04:08'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'create-node-on-connection-drop',
@@ -682,10 +646,6 @@ function connectionGroup() {
       image_height: 1200,
       image_type: 'image/png',
       date: new Date('2025-10-12 20:12:01'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'custom-connection-type',
@@ -724,38 +684,6 @@ function connectionGroup() {
       date: new Date('2024-10-06 14:49:44'),
     },
     {
-      link: 'connection-text',
-      text: 'Connection Text',
-      description:
-        'Add labels to connections with smart placement and scaling. Centered or offset text — Angular example.',
-      image: './previews/examples/connection-text.light.png',
-      image_dark: './previews/examples/connection-text.dark.png',
-      image_width: 781,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-01-31 17:16:33'),
-      badge: {
-        text: 'Deprecated',
-        type: 'danger',
-      },
-    },
-    {
-      link: 'connection-center',
-      text: 'Connection Center',
-      description:
-        'Place centered widgets (badges/buttons) on edges. Interaction patterns and Angular code.',
-      image: './previews/examples/connection-center.light.png',
-      image_dark: './previews/examples/connection-center.dark.png',
-      image_width: 781,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-01-31 18:23:26'),
-      badge: {
-        text: 'Deprecated',
-        type: 'danger',
-      },
-    },
-    {
       link: 'connection-content',
       text: 'Connection Content',
       pageTitle: 'Angular Diagram Example – Connection Content on Edges',
@@ -767,6 +695,24 @@ function connectionGroup() {
       image_height: 1204,
       image_type: 'image/png',
       date: new Date('2025-09-15 18:23:26'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
+    },
+    {
+      link: 'connection-waypoints',
+      pageTitle:
+        'Connection Waypoints in Foblex Flow – Add and Drag Waypoints for Any Connection Type',
+      text: 'Connection Waypoints',
+      description:
+        'Learn how to control connection routing with Waypoints in Angular diagrams. Add waypoints from candidates, drag them to reshape connections, and bind waypoint data via [(waypoints)]. Works with straight, segment, bezier, and adaptive-curve connections.',
+      image: './previews/examples/connection-waypoints.light.png',
+      image_dark: './previews/examples/connection-waypoints.dark.png',
+      image_width: 1570,
+      image_height: 1202,
+      image_type: 'image/png',
+      date: new Date('2026-01-25 12:00:00'),
       badge: {
         text: 'New',
         type: 'success',
@@ -871,13 +817,17 @@ function extensionGroup() {
       link: 'zoom',
       text: 'Zoom',
       description:
-        'Add zoom controls and wheel zoom with sensible limits. Smooth UX and performance tips for Angular diagrams.',
+        'Zoom your canvas via mouse wheel, double click, buttons, and pinch-to-zoom (trackpad/touchscreen) with smooth limits and responsive UX.',
       image: './previews/examples/zoom.light.png',
       image_dark: './previews/examples/zoom.dark.png',
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2024-10-06 13:57:22'),
+      date: new Date('2026-01-25 00:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
     {
       link: 'background',

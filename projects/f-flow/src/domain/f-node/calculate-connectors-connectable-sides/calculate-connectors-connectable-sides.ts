@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CalculateConnectorsConnectableSidesRequest } from './calculate-connectors-connectable-sides-request';
-import { EFConnectableSide, FConnectorBase } from '../../../f-connectors';
+import { FConnectorBase } from '../../../f-connectors';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position';
 import { isCalculateMode } from './utils';
+import { EFConnectableSide } from '../../../f-connection-v2';
 
 /**
  * Execution that calculates connectable sides for all connectors of a node.

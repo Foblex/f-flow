@@ -10,6 +10,7 @@ import {
   numberAttribute,
   OnDestroy,
   OnInit,
+  output,
   Output,
   QueryList,
 } from '@angular/core';
@@ -17,22 +18,25 @@ import { FDraggableBase } from './f-draggable-base';
 import {
   FMoveNodesEvent,
   FNodeMoveFinalizeRequest,
-  FNodeMovePreparationRequest,
+  MoveNodePreparationRequest,
 } from './f-node-move';
 import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
 import {
+  CreateConnectionPreparationRequest,
   FCreateConnectionEvent,
   FCreateConnectionFinalizeRequest,
-  CreateConnectionPreparationRequest,
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
+  MoveConnectionWaypointFinalizeRequest,
+  MoveConnectionWaypointPreparationRequest,
 } from './f-connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,
+  DragRectCache,
   EmitSelectionChangeEventRequest,
   EndDragSequenceRequest,
   FEventTrigger,
@@ -40,7 +44,6 @@ import {
   InitializeDragSequenceRequest,
   OnPointerMoveRequest,
   PrepareDragSequenceRequest,
-  DragRectCache,
   RemoveDndFromStoreRequest,
 } from '../domain';
 import {
@@ -49,7 +52,7 @@ import {
   FExternalItemPreparationRequest,
   PreventDefaultIsExternalItemRequest,
 } from '../f-external-item';
-import { FSingleSelectRequest } from './f-single-select';
+import { SingleSelectRequest } from './single-select';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './f-node-resize';
 import {
   F_AFTER_MAIN_PLUGIN,
@@ -60,13 +63,15 @@ import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
 import { FDragHandlerResult } from './f-drag-handler';
 import {
-  FDropToGroupEvent,
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
+  FDropToGroupEvent,
 } from './f-drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
+import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
+import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -146,6 +151,11 @@ export class FDraggableDirective
   @Input()
   public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
 
+  public fConnectionWaypointsTrigger = input<FEventTrigger>(defaultEventTrigger);
+
+  @Input()
+  public fMoveControlPointTrigger: FEventTrigger = defaultEventTrigger;
+
   @Input()
   public fNodeResizeTrigger: FEventTrigger = defaultEventTrigger;
 
@@ -182,6 +192,8 @@ export class FDraggableDirective
 
   @Output()
   public override fCreateConnection = new EventEmitter<FCreateConnectionEvent>();
+
+  public override fConnectionWaypointsChanged = output<FConnectionWaypointsChangedEvent>();
 
   @Output()
   public override fDropToGroup = new EventEmitter<FDropToGroupEvent>();
@@ -244,7 +256,9 @@ export class FDraggableDirective
 
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
-    this._mediator.execute<void>(new FSingleSelectRequest(event, this.fMultiSelectTrigger));
+    this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
+
+    this._mediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
 
     this._mediator.execute<void>(
       new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
@@ -252,6 +266,14 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(
       new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
+    );
+
+    this._mediator.execute<void>(
+      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
+    );
+
+    this._mediator.execute<void>(
+      new MoveConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
@@ -271,7 +293,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
-    this._mediator.execute<void>(new FNodeMovePreparationRequest(event, this.fNodeMoveTrigger));
+    this._mediator.execute<void>(new MoveNodePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._mediator.execute<void>(
       new FExternalItemPreparationRequest(event, this.fExternalItemTrigger),
@@ -314,6 +336,10 @@ export class FDraggableDirective
     this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
+
+    this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
+
+    this._mediator.execute<void>(new MoveConnectionWaypointFinalizeRequest(event));
 
     this._mediator.execute<void>(new EndDragSequenceRequest());
   }

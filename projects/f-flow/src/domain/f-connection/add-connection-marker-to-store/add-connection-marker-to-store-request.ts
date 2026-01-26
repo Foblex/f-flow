@@ -1,10 +1,7 @@
-import { FMarkerBase } from '../../../f-connection';
+import { FConnectionMarkerBase } from '../../../f-connection-v2';
 
 export class AddConnectionMarkerToStoreRequest {
   static readonly fToken = Symbol('AddConnectionMarkerToStoreRequest');
 
-  constructor(
-    public fComponent: FMarkerBase,
-  ) {
-  }
+  constructor(public readonly component: FConnectionMarkerBase) {}
 }

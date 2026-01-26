@@ -1,1 +1,1 @@
-export * from './f-canvas-change.event';
+export * from './f-canvas-change-event';

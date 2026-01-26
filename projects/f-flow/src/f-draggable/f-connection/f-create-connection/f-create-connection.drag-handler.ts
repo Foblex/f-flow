@@ -2,7 +2,6 @@ import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
 import {
   CalculateClosestConnectorRequest,
   CalculateTargetConnectorsToConnectRequest,
-  CalculateConnectionLineByBehaviorRequest,
   GetConnectorAndRectRequest,
   IConnectorAndRect,
   IClosestConnector,
@@ -10,19 +9,17 @@ import {
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
 import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../../../f-connection';
-import { EFConnectableSide, FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
+import { FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
-import {
-  RoundedRect,
-  ILine,
-  IPoint,
-  PointExtensions,
-  RectExtensions,
-  IRoundedRect,
-} from '@foblex/2d';
+import { RoundedRect, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { IFCreateConnectionDragResult } from './i-f-create-connection-drag-result';
 import { Injector } from '@angular/core';
+import {
+  ConnectionBehaviourBuilder,
+  ConnectionBehaviourBuilderRequest,
+  EFConnectableSide,
+} from '../../../f-connection-v2';
 
 export class FCreateConnectionDragHandler implements IFDragHandler {
   public fEventType = 'create-connection';
@@ -30,6 +27,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private readonly _result: FDragHandlerResult<IFCreateConnectionDragResult>;
   private readonly _mediator: FMediator;
+  private readonly _connectionBehaviour: ConnectionBehaviourBuilder;
   private readonly _store: FComponentsStore;
 
   private readonly _toConnectorRect = new RoundedRect();
@@ -53,6 +51,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   ) {
     this._result = _injector.get(FDragHandlerResult);
     this._mediator = _injector.get(FMediator);
+    this._connectionBehaviour = _injector.get(ConnectionBehaviourBuilder);
     this._store = _injector.get(FComponentsStore);
 
     this._toConnectorRect = RoundedRect.fromRect(
@@ -121,8 +120,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   }
 
   private _drawConnectionForCreate(toConnectorRect: IRoundedRect, fSide: EFConnectableSide): void {
-    const line = this._mediator.execute<ILine>(
-      new CalculateConnectionLineByBehaviorRequest(
+    const line = this._connectionBehaviour.handle(
+      new ConnectionBehaviourBuilderRequest(
         this._fOutputWithRect.fRect,
         toConnectorRect,
         this._connection,
@@ -137,8 +136,8 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
 
   private _drawSnapConnection(fClosestInput: IClosestConnector | undefined): void {
     if (fClosestInput) {
-      const line = this._mediator.execute<ILine>(
-        new CalculateConnectionLineByBehaviorRequest(
+      const line = this._connectionBehaviour.handle(
+        new ConnectionBehaviourBuilderRequest(
           this._fOutputWithRect.fRect,
           fClosestInput.fRect,
           this._snapConnection!,

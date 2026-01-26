@@ -11,8 +11,6 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FReassignConnectionPreparationRequest } from '../../f-reassign-connection';
 import { isValidEventTrigger } from '../../../../domain';
 import { IPointerEvent } from '../../../../drag-toolkit';
-// import { IPoint } from '@foblex/2d';
-// import { BrowserService } from '@foblex/platform';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionPreparationRequest)
@@ -22,7 +20,6 @@ export class CreateConnectionPreparation
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
-  // private readonly _browser = inject(BrowserService);
 
   private _node: FNodeBase | undefined;
 
@@ -30,10 +27,6 @@ export class CreateConnectionPreparation
     if (!this._isValid(request) || !this._isValidTrigger(request)) {
       return;
     }
-    // const elements = this._elementsFromPoint(request.event.getPosition());
-    //
-    // const outlet = this._findOutlet(elements);
-    // const output = this._findOutput(elements);
 
     if (isNodeOutlet(request.event.targetElement)) {
       this._mediator.execute<void>(
@@ -63,16 +56,4 @@ export class CreateConnectionPreparation
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
-
-  // private _elementsFromPoint(position: IPoint): HTMLElement[] {
-  //   return this._browser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
-  // }
-  //
-  // private _findOutlet(elements: HTMLElement[]): HTMLElement | undefined {
-  //   return elements.find((el) => isNodeOutlet(el));
-  // }
-  //
-  // private _findOutput(elements: HTMLElement[]): HTMLElement | undefined {
-  //   return elements.find((el) => isNodeOutput(el));
-  // }
 }

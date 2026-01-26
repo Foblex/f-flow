@@ -1,5 +1,4 @@
 import { ITournamentBracketItem } from './i-tournament-bracket-item';
-import { IMap } from '@foblex/flow';
 import { getPhasesByColumnIndex } from './get-phases-by-column-index';
 import { getItemsInPhase } from './get-items-in-phase';
 import { PointExtensions } from '@foblex/2d';
@@ -12,7 +11,7 @@ export class TournamentBracket {
     private nodeWidth: number,
     private nodeHeight: number,
     private verticalGap: number,
-    private horizontalGap: number
+    private horizontalGap: number,
   ) {
   }
 
@@ -70,7 +69,7 @@ export class TournamentBracket {
   }
 }
 
-export const BRACKET_COLUMNS: IMap<number> = {
+export const BRACKET_COLUMNS: Record<string, number> = {
   [ 'space1' ]: 0,
   [ 'UB Quarterfinal'.toLowerCase() ]: 1,
   [ 'space2' ]: 2,

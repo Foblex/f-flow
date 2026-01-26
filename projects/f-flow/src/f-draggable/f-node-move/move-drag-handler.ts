@@ -2,14 +2,13 @@ import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { IFDragHandler } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
-import { F_CSS_CLASS, GetNormalizedElementRectRequest } from "../../domain";
-import { Injector } from "@angular/core";
-import { IDragLimits } from "./create-drag-model-from-selection";
-import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from "./constraint";
-import { FMediator } from "@foblex/mediator";
+import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../domain';
+import { Injector } from '@angular/core';
+import { IDragLimits } from './create-drag-model-from-selection';
+import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from './constraint';
+import { FMediator } from '@foblex/mediator';
 
 export class MoveDragHandler implements IFDragHandler {
-
   public readonly fEventType = 'move-node';
 
   private readonly _startPosition = PointExtensions.initialize();
@@ -29,7 +28,9 @@ export class MoveDragHandler implements IFDragHandler {
     public fSourceHandlers: BaseConnectionDragHandler[] = [],
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
-    this._startRect = _injector.get(FMediator).execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement))
+    this._startRect = _injector
+      .get(FMediator)
+      .execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
     this._startPosition = { ...nodeOrGroup._position };
   }
 
@@ -37,21 +38,23 @@ export class MoveDragHandler implements IFDragHandler {
     this._limits = limits;
     this._pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
 
-    this._applyConstraints = (difference: IPoint) => {
+    this._applyConstraints = (difference) => {
       const summary = this._pipeline.apply(difference);
       this._applySoftExpansions(summary.soft);
 
       return summary.hardDifference;
-    }
+    };
   }
 
-  private _applySoftExpansions(
-    softResults: IConstraintResult[],
-  ): void {
+  private _applySoftExpansions(softResults: IConstraintResult[]): void {
     this._lastSoftResults = softResults;
     this._lastSoftResults.forEach((result, index) => {
       const softLimit = this._limits!.soft[index];
-      const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
+      const expandedRect = expandRectFromBaseline(
+        softLimit.boundingRect,
+        result.overflow,
+        result.edges,
+      );
       this._commitParentRect(softLimit.nodeOrGroup, expandedRect);
     });
   }
@@ -63,7 +66,12 @@ export class MoveDragHandler implements IFDragHandler {
   }
 
   public getLastRect(): IRect {
-    return RectExtensions.initialize(this._lastPosition.x, this._lastPosition.y, this._startRect.width, this._startRect.height);
+    return RectExtensions.initialize(
+      this._lastPosition.x,
+      this._lastPosition.y,
+      this._startRect.width,
+      this._startRect.height,
+    );
   }
 
   public prepareDragSequence(): void {
@@ -87,7 +95,7 @@ export class MoveDragHandler implements IFDragHandler {
       this._applySoftExpansions(summary.soft);
 
       return summary.hardDifference;
-    }
+    };
   }
 
   private _nodeOrGroupNewPosition(difference: IPoint): IPoint {
@@ -110,7 +118,11 @@ export class MoveDragHandler implements IFDragHandler {
   private _emitEventIfNodeExpanded(): void {
     this._lastSoftResults.forEach((result, index) => {
       const softLimit = this._limits!.soft[index];
-      const expandedRect = expandRectFromBaseline(softLimit.boundingRect, result.overflow, result.edges);
+      const expandedRect = expandRectFromBaseline(
+        softLimit.boundingRect,
+        result.overflow,
+        result.edges,
+      );
       if (result.overflow.x || result.overflow.y) {
         softLimit.nodeOrGroup.sizeChange.emit(expandedRect);
       }

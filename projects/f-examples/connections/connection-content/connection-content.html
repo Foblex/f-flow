@@ -33,6 +33,17 @@
         Any Content
       </div>
     </f-connection>
+    <f-connection
+      [fReassignDisabled]="true"
+      fOutputId="7"
+      fInputId="8"
+      fBehavior="fixed"
+      fType="adaptive-curve"
+    >
+      <div fConnectionContent [position]="position()" [align]="align()" [offset]="offset()">
+        Any Content
+      </div>
+    </f-connection>
     <div
       fNode
       fDragHandle
@@ -92,6 +103,26 @@
       fInputConnectableSide="top"
     >
       Node 6
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 450 }"
+      fNodeOutput
+      fOutputId="7"
+      fOutputConnectableSide="bottom"
+    >
+      Node 7
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 450 }"
+      fNodeInput
+      fInputId="8"
+      fInputConnectableSide="top"
+    >
+      Node 8
     </div>
   </f-canvas>
 </f-flow>

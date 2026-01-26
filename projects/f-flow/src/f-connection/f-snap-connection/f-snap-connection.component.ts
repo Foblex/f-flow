@@ -11,17 +11,20 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { EFConnectionBehavior, EFConnectionConnectableSide } from '../common';
-import { EFConnectionType } from '../common';
 import { NotifyDataChangedRequest } from '../../f-storage';
-import { F_CONNECTION } from '../common/f-connection.injection-token';
-import { FConnectionBase } from '../common/f-connection-base';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
   AddSnapConnectionToStoreRequest,
   RemoveSnapConnectionFromStoreRequest,
 } from '../../domain';
+import {
+  EFConnectionBehavior,
+  EFConnectionConnectableSide,
+  EFConnectionType,
+  F_CONNECTION_COMPONENTS_PARENT,
+  FConnectionBase,
+} from '../../f-connection-v2';
 
 let uniqueId = 0;
 
@@ -33,17 +36,13 @@ let uniqueId = 0;
   host: {
     class: 'f-component f-connection f-snap-connection',
   },
-  providers: [{ provide: F_CONNECTION, useExisting: FSnapConnectionComponent }],
+  providers: [{ provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FSnapConnectionComponent }],
 })
 export class FSnapConnectionComponent
   extends FConnectionBase
   implements AfterViewInit, OnInit, OnChanges, OnDestroy
 {
   public override fId = signal<string>(`f-snap-connection-${uniqueId++}`);
-
-  public override fText: string = '';
-
-  public override fTextStartOffset: string = '';
 
   @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;

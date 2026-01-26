@@ -47,8 +47,6 @@
 /examples/custom-connection-type
 /examples/connection-behaviours
 /examples/connection-markers
-/examples/connection-text
-/examples/connection-center
 /examples/connection-content
 /examples/custom-connections
 /examples/connection-connectable-side

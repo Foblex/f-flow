@@ -1,0 +1,19 @@
+import { inject, Injectable } from '@angular/core';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { RemoveConnectionMarkerFromStoreRequest } from './remove-connection-marker-from-store-request';
+import { FComponentsStore } from '../../../f-storage';
+
+/**
+ * Execution that removes a connection marker from the FComponentsStore.
+ */
+@Injectable()
+@FExecutionRegister(RemoveConnectionMarkerFromStoreRequest)
+export class RemoveConnectionMarkerFromStore
+  implements IExecution<RemoveConnectionMarkerFromStoreRequest, void>
+{
+  private readonly _store = inject(FComponentsStore);
+
+  public handle({ component }: RemoveConnectionMarkerFromStoreRequest): void {
+    this._store.removeComponent(this._store.fMarkers, component);
+  }
+}
