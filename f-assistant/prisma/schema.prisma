@@ -1,0 +1,46 @@
+// Prisma schema for storing draft jobs and context chunks
+// SQLite database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Draft {
+  id           String   @id @default(cuid())
+  sourceType   String
+  sourceUrl    String
+  sourceNumber Int
+  author       String
+  title        String
+  draftId      String
+  tone         String
+  text         String
+  citations    String   // JSON string
+  createdAt    DateTime @default(now())
+}
+
+model Job {
+  id           String   @id @default(cuid())
+  status       String
+  sourceUrl    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  payload      String   // JSON string
+}
+
+model SourceChunk {
+  id        String   @id @default(cuid())
+  source    String
+  kind      String
+  path      String
+  ref       String?
+  lines     String?
+  content   String
+  embedding String?
+  createdAt DateTime @default(now())
+}
