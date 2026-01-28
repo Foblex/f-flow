@@ -1,6 +1,4 @@
-export interface ISnapCoordinate {
-
-  value: number | undefined;
-
-  distance: number | undefined;
+export interface IMagneticAxisResult {
+  value?: number;
+  distance?: number;
 }

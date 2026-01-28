@@ -48,6 +48,7 @@
 /examples/connection-behaviours
 /examples/connection-markers
 /examples/connection-content
+/examples/connection-waypoints
 /examples/custom-connections
 /examples/connection-connectable-side
 
