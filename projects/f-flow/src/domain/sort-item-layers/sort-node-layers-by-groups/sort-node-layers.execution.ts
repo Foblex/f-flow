@@ -43,7 +43,7 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
   }
 
   private _getGroups(): FNodeBase[] {
-    return this._store.fNodes
+    return this._store.nodes.getAll<FNodeBase>()
       .filter((x) => this._fGroupsContainer.contains(x.hostElement));
   }
 

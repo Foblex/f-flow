@@ -1,24 +1,24 @@
 import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';
 import { BaseConnectionDragHandler } from '../f-node-move';
-import {
-  calculateDifferenceAfterRotation,
-} from './calculate-difference-after-rotation';
+import { calculateDifferenceAfterRotation } from './calculate-difference-after-rotation';
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { FMediator } from '@foblex/mediator';
 import { Injector } from '@angular/core';
+import { INodeRotateEventData } from './i-node-rotate-event-data';
 
-export class FNodeRotateDragHandler implements IFDragHandler {
+export class FNodeRotateDragHandler extends FDragHandlerBase<INodeRotateEventData> {
+  protected readonly type = 'node-rotate';
+  protected override data() {
+    return { fNodeId: this._fNode.fId() };
+  }
 
   private readonly _store: FComponentsStore;
   private readonly _mediator: FMediator;
   private readonly _dragContext: FDraggableDataContext;
-
-  public fEventType = 'node-rotate';
-  public fData: any;
 
   private _initialRotationToX: number = 0;
   private readonly _startRotation: number = 0;
@@ -27,39 +27,40 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   private _fNodeRect!: IRect;
 
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
 
   constructor(
     _injector: Injector,
     private _fNode: FNodeBase,
     private _fSourceHandlers: {
-      connection: BaseConnectionDragHandler,
-      connector: IPoint,
+      connection: BaseConnectionDragHandler;
+      connector: IPoint;
     }[],
     private _fTargetHandlers: {
-      connection: BaseConnectionDragHandler,
-      connector: IPoint,
+      connection: BaseConnectionDragHandler;
+      connector: IPoint;
     }[],
   ) {
+    super();
     this._startRotation = this._fNode._rotate;
-    this.fData = {
-      fNodeId: _fNode.fId(),
-    };
 
     this._store = _injector.get(FComponentsStore);
     this._mediator = _injector.get(FMediator);
     this._dragContext = _injector.get(FDraggableDataContext);
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._fNodeRect = this._getOriginalNodeRect();
     this._onDownPoint = this._calculateDownPoint();
-    this._initialRotationToX = this._calculateAngleBetweenVectors(this._onDownPoint) - this._startRotation;
+    this._initialRotationToX =
+      this._calculateAngleBetweenVectors(this._onDownPoint) - this._startRotation;
   }
 
   private _getOriginalNodeRect(): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(this._fNode!.hostElement));
+    return this._mediator.execute<IRect>(
+      new GetNormalizedElementRectRequest(this._fNode!.hostElement),
+    );
   }
 
   private _calculateDownPoint(): IPoint {
@@ -70,10 +71,13 @@ export class FNodeRotateDragHandler implements IFDragHandler {
   }
 
   private _calculateAngleBetweenVectors(position: IPoint): number {
-    return Math.atan2(
-      position.y - this._fNodeRect.gravityCenter.y,
-      position.x - this._fNodeRect.gravityCenter.x,
-    ) * (180 / Math.PI);
+    return (
+      Math.atan2(
+        position.y - this._fNodeRect.gravityCenter.y,
+        position.x - this._fNodeRect.gravityCenter.x,
+      ) *
+      (180 / Math.PI)
+    );
   }
 
   public onPointerMove(difference: IPoint): void {
@@ -84,7 +88,7 @@ export class FNodeRotateDragHandler implements IFDragHandler {
     this._fSourceHandlers.forEach((x) => {
       x.connection.setSourceDifference(
         this._calculateDifferenceAfterRotation(x.connector, rotation),
-      )
+      );
     });
     this._fTargetHandlers.forEach((x) => {
       x.connection.setTargetDifference(
@@ -103,10 +107,10 @@ export class FNodeRotateDragHandler implements IFDragHandler {
       position,
       rotation - this._startRotation,
       this._fNodeRect.gravityCenter,
-    )
+    );
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._fNode.rotate.set(this._fNode._rotate);
   }
 }

@@ -2,12 +2,12 @@ import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from 
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
 import { CalculateSelectableItemsRequest, ICanBeSelectedElementAndRect } from '../../domain';
 import { FMediator } from '@foblex/mediator';
-import { FDraggableDataContext, IFDragHandler } from '../../f-draggable';
+import { FDraggableDataContext, FDragHandlerBase } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
 import { ISelectable } from '../../mixins';
 
-export class SelectionAreaDragHandle implements IFDragHandler {
-  public readonly fEventType = 'selection-area';
+export class SelectionAreaDragHandle extends FDragHandlerBase<unknown> {
+  protected readonly type = 'selection-area';
 
   private _canBeSelected: ICanBeSelectedElementAndRect[] = [];
   private _selectedByMove: ISelectable[] = [];
@@ -25,9 +25,11 @@ export class SelectionAreaDragHandle implements IFDragHandler {
     private _selectionArea: FSelectionAreaBase,
     private _dragContext: FDraggableDataContext,
     private _mediator: FMediator,
-  ) {}
+  ) {
+    super();
+  }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._canBeSelected = this._mediator.execute(new CalculateSelectableItemsRequest());
 
     this._selectionArea.show();
@@ -39,7 +41,7 @@ export class SelectionAreaDragHandle implements IFDragHandler {
     );
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     const currentPoint = Point.fromPoint(difference).add(this._dragContext.onPointerDownPosition);
 
     const point = this._getMinimumPoint(this._dragContext.onPointerDownPosition, currentPoint);
@@ -69,7 +71,7 @@ export class SelectionAreaDragHandle implements IFDragHandler {
     return PointExtensions.initialize(Math.min(point1.x, point2.x), Math.min(point1.y, point2.y));
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._selectionArea.hide();
     this._dragContext.selectedItems.push(...this._selectedByMove);
     if (this._selectedByMove.length > 0) {

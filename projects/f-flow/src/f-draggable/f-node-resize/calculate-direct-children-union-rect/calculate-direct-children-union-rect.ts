@@ -15,7 +15,7 @@ export class CalculateDirectChildrenUnionRect
   private readonly _store = inject(FComponentsStore);
 
   private get _allNodesAndGroups(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   public handle({ nodeOrGroup, paddings }: CalculateDirectChildrenUnionRectRequest): IRect | null {

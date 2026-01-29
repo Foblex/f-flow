@@ -11,7 +11,8 @@ import { FComponentsStore } from '../../../f-storage';
 export class AddNodeToStore implements IExecution<AddNodeToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: AddNodeToStoreRequest): void {
-    this._store.addComponent(this._store.fNodes, request.nodeOrGroup);
+  public handle({ nodeOrGroup }: AddNodeToStoreRequest): void {
+    this._store.nodes.add(nodeOrGroup);
+    this._store.countChanged();
   }
 }

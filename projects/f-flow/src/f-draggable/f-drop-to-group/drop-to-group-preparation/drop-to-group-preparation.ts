@@ -25,7 +25,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   private readonly _injector = inject(Injector);
 
   private get _allNodesAndGroups(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   private get _canvasTransform(): ITransformModel {

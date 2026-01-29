@@ -40,7 +40,7 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   }
 
   private getNode(id: string): FNodeBase | undefined {
-    return this._store.fNodes.find((x) => x.fId() === id);
+    return this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === id);
   }
 
   private getNodeRect(fNode: FNodeBase): IRect {
@@ -48,6 +48,6 @@ export class CenterGroupOrNodeExecution implements IExecution<CenterGroupOrNodeR
   }
 
   private getFlowRect(): IRect {
-    return RectExtensions.fromElement(this._store.fFlow!.hostElement);
+    return RectExtensions.fromElement(this._store.flowHost);
   }
 }

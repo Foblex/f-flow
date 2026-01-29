@@ -1,4 +1,4 @@
-import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
+import { FDragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
 import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
@@ -11,10 +11,13 @@ import { IFReassignHandler, roundedRectFromPoint } from './i-f-reassign-handler'
 import { FReassignTargetDragHandler } from './f-reassign-target.drag-handler';
 import { FReassignSourceDragHandler } from './f-reassign-source.drag-handler';
 import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../f-connection-v2';
+import { IMagneticGuidesResult } from './i-reassign-connection-event-data';
 
-export class FReassignConnectionDragHandler implements IFDragHandler {
-  public fEventType = 'reassign-connection';
-  public fData: unknown;
+export class FReassignConnectionDragHandler extends FDragHandlerBase<IMagneticGuidesResult> {
+  protected readonly type = 'reassign-connection';
+  protected override data() {
+    return { fConnectionId: this._connection.fId() };
+  }
 
   private readonly _result: FDragHandlerResult<IFReassignConnectionDragResult>;
   private readonly _mediator: FMediator;
@@ -22,7 +25,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
   private readonly _store: FComponentsStore;
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.fSnapConnection as FSnapConnectionComponent;
+    return this._store.connections.getForSnap<FSnapConnectionComponent>();
   }
 
   private get _sourceConnector(): FNodeOutputDirective {
@@ -62,14 +65,11 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     private _connection: FConnectionBase,
     private _isTargetDragHandle: boolean,
   ) {
+    super();
     this._result = _injector.get(FDragHandlerResult);
     this._mediator = _injector.get(FMediator);
     this._connectionBehaviour = _injector.get(ConnectionBehaviourBuilder);
     this._store = _injector.get(FComponentsStore);
-
-    this.fData = {
-      fConnectionId: this._connection.fId(),
-    };
 
     this._reassignHandler = this._isTargetDragHandle
       ? this._targetDragHandler()
@@ -96,7 +96,7 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     );
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._reassignHandler.markConnectableConnector();
     this._reassignHandler.initializeSnapConnection(this._snapConnection);
 
@@ -109,11 +109,11 @@ export class FReassignConnectionDragHandler implements IFDragHandler {
     });
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     this._reassignHandler.onPointerMove(difference);
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._reassignHandler.onPointerUp();
   }
 }

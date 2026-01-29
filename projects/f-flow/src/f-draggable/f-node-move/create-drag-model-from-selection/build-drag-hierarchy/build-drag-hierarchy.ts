@@ -1,48 +1,51 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { BuildDragHierarchyRequest } from "./build-drag-hierarchy-request";
-import { MoveDragHandler } from "../../move-drag-handler";
-import { BuildDragHierarchyResponse } from "./build-drag-hierarchy-response";
-import { FNodeBase } from "../../../../f-node";
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { BuildDragHierarchyRequest } from './build-drag-hierarchy-request';
+import { MoveDragHandler } from '../../move-drag-handler';
+import { BuildDragHierarchyResponse } from './build-drag-hierarchy-response';
+import { FNodeBase } from '../../../../f-node';
 
 @Injectable()
 @FExecutionRegister(BuildDragHierarchyRequest)
 export class BuildDragHierarchy
-  implements IExecution<BuildDragHierarchyRequest, BuildDragHierarchyResponse> {
-
+  implements IExecution<BuildDragHierarchyRequest, BuildDragHierarchyResponse>
+{
   private readonly _injector = inject(Injector);
-  private readonly _mediator = inject(FMediator);
 
-  public handle({ selectedNodesAndGroupsWithChildren }: BuildDragHierarchyRequest): BuildDragHierarchyResponse {
-    const byId = this._createHandlersMap(selectedNodesAndGroupsWithChildren);
-    const roots = this._linkParentsAndCollectRoots(selectedNodesAndGroupsWithChildren, byId);
+  public handle({ items }: BuildDragHierarchyRequest): BuildDragHierarchyResponse {
+    const handlersById = this._buildHandlersById(items);
+    const roots = this._buildRoots(items, handlersById); // roots are handlers without parents in the selection
 
-    return new BuildDragHierarchyResponse(roots, Array.from(byId.values()));
+    return new BuildDragHierarchyResponse(roots, Array.from(handlersById.values()));
   }
 
-  private _createHandlersMap(
-    selectedNodesAndGroupsWithChildren: FNodeBase[],
-  ): Map<string, MoveDragHandler> {
-    const byId = new Map<string, MoveDragHandler>();
-    for (const item of selectedNodesAndGroupsWithChildren) {
-      byId.set(item.fId(), new MoveDragHandler(this._injector, item));
+  private _buildHandlersById(items: FNodeBase[]): Map<string, MoveDragHandler> {
+    const map = new Map<string, MoveDragHandler>();
+
+    for (const item of items) {
+      map.set(item.fId(), new MoveDragHandler(this._injector, item));
     }
 
-    return byId;
+    return map;
   }
 
-  private _linkParentsAndCollectRoots(
-    selectedNodesAndGroupsWithChildren: FNodeBase[],
-    byId: Map<string, MoveDragHandler>,
+  private _buildRoots(
+    items: FNodeBase[],
+    handlersById: Map<string, MoveDragHandler>,
   ): MoveDragHandler[] {
     const roots: MoveDragHandler[] = [];
 
-    for (const item of selectedNodesAndGroupsWithChildren) {
-      const handler = byId.get(item.fId())!;
-      const parentId = item.fParentId();
+    for (const item of items) {
+      const handler = handlersById.get(item.fId());
+      if (!handler) {
+        continue;
+      }
 
-      if (parentId && byId.has(parentId)) {
-        byId.get(parentId)!.childrenNodeAndGroups.push(handler);
+      const parentId = item.fParentId();
+      const parentHandler = parentId ? handlersById.get(parentId) : undefined;
+
+      if (parentHandler) {
+        parentHandler.childrenNodeAndGroups.push(handler);
       } else {
         roots.push(handler);
       }

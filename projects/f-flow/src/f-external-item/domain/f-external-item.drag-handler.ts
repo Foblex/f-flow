@@ -6,7 +6,7 @@ import {
   FExternalItemCreatePreviewRequest,
   IFExternalItemDragResult,
 } from '../../f-external-item';
-import { FDragHandlerResult, IFDragHandler } from '../../f-draggable';
+import { FDragHandlerBase, FDragHandlerResult } from '../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { FMediator } from '@foblex/mediator';
 import { Injector } from '@angular/core';
@@ -14,10 +14,11 @@ import { FComponentsStore } from "../../f-storage";
 import { GetNormalizedElementRectRequest } from "../../domain";
 import { infinityMinMax } from "../../utils";
 
-export class FExternalItemDragHandler implements IFDragHandler {
-
-  public fEventType = 'external-item';
-  public fData: any;
+export class FExternalItemDragHandler extends FDragHandlerBase<unknown> {
+  protected readonly type = 'external-item';
+  protected override data() {
+    return { fData: this._fExternalItem.fData };
+  }
 
   private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult>;
   private readonly _mediator: FMediator;
@@ -48,11 +49,11 @@ export class FExternalItemDragHandler implements IFDragHandler {
     injector: Injector,
     private _fExternalItem: FExternalItemBase,
   ) {
+    super();
     this._store = injector.get(FComponentsStore);
     this._fResult = injector.get(FDragHandlerResult);
     this._mediator = injector.get(FMediator);
     this._browser = injector.get(BrowserService);
-    this.fData = { fData: _fExternalItem.fData };
     this._initializeConstraints(injector);
     this._fItemHostDisplay = this._fItemHost.style.display;
   }
@@ -70,7 +71,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     );
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._onPointerDownRect = this._getExternalItemRect();
 
     this._createAndAppendPreview();
@@ -120,7 +121,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     return RectExtensions.initialize(offsetLeft, offsetTop, rect.width, rect.height);
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
 
     const differenceWithRestrictions = Point.fromPoint(this._applyConstraints(difference))
       .mult(this._transform.scale);
@@ -129,7 +130,7 @@ export class FExternalItemDragHandler implements IFDragHandler {
     this._preview!.style.transform = setTransform(position);
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._body.removeChild(this._preview!);
 
     this._placeholder!.parentElement!.replaceChild(this._fItemHost, this._placeholder!);

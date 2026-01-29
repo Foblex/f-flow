@@ -31,15 +31,15 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
+    return this._store.flowHost;
   }
 
   private get _fNodes(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
-  private get _fSnapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.fSnapConnection as FSnapConnectionComponent;
+  private get _snapConnection(): FSnapConnectionComponent | undefined {
+    return this._store.connections.getForSnap<FSnapConnectionComponent>();
   }
 
   public handle(
@@ -96,7 +96,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   private _isSnapConnectionEnabledAndHasClosestConnector(
     request: FindConnectableConnectorUsingPriorityAndPositionRequest,
   ): IClosestConnector | undefined {
-    if (!this._fSnapConnection) {
+    if (!this._snapConnection) {
       return undefined;
     }
 
@@ -111,7 +111,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   private _isValidClosestInput(closestConnector: IClosestConnector | undefined): boolean {
-    return !!closestConnector && closestConnector.distance < this._fSnapConnection!.fSnapThreshold;
+    return !!closestConnector && closestConnector.distance < this._snapConnection!.fSnapThreshold;
   }
 
   //if node placed in position and fConnectOnNode is true, return the first connectable connector of the node

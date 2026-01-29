@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { IPoint, Point } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { calculateTouchCenter, calculateTouchDistance } from './utils';
 import { IPointerEvent } from '../../drag-toolkit';
 import { PINCH_MOVEMENT_THRESHOLD } from './constants';
@@ -9,13 +9,13 @@ import { F_ZOOM_TAG } from '../../domain';
 import { FComponentsStore } from '../../f-storage';
 import { FCanvasBase } from '../../f-canvas';
 
-export class PinchToZoomHandler implements IFDragHandler {
+export class PinchToZoomHandler extends FDragHandlerBase<unknown> {
+  protected readonly type = 'pinch-to-zoom';
+
   private readonly _store: FComponentsStore;
 
-  public readonly fEventType = 'pinch-to-zoom';
-
   private get _flowHost(): HTMLElement {
-    return this._store.fFlow?.hostElement as HTMLElement;
+    return this._store.flowHost;
   }
 
   private get _canvas(): FCanvasBase {
@@ -33,10 +33,11 @@ export class PinchToZoomHandler implements IFDragHandler {
     _injector: Injector,
     private _touches: TouchList,
   ) {
+    super();
     this._store = _injector.get(FComponentsStore);
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     const d = calculateTouchDistance(this._touches);
     if (d == null) return;
 
@@ -44,7 +45,7 @@ export class PinchToZoomHandler implements IFDragHandler {
     this._pinchStartScale = this._canvas.transform.scale;
   }
 
-  public onPointerMove(_: IPoint, event: IPointerEvent): void {
+  public override onPointerMove(_: IPoint, event: IPointerEvent): void {
     if (
       event.touches.length !== 2 ||
       this._pinchStartDistance == null ||
@@ -87,7 +88,7 @@ export class PinchToZoomHandler implements IFDragHandler {
     this._pinchStartDistance = null;
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._resetPinch();
     this._canvas.emitCanvasChangeEvent();
   }

@@ -14,6 +14,8 @@ export * from './create-snap-lines/snap-lines.drag-handler';
 
 export * from './f-move-nodes.event';
 
+export * from './i-node-move-summary-event-data';
+
 export * from './move-drag-handler';
 
 export * from './providers';

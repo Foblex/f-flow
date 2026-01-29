@@ -16,7 +16,7 @@ export class FitToChildNodesAndGroups
   private readonly _store = inject(FComponentsStore);
 
   private get _nodes(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   public handle({ nodeOrGroup }: FitToChildNodesAndGroupsRequest): void {

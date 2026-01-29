@@ -3,6 +3,7 @@ import { CalculateNodesBoundingBoxRequest } from './calculate-nodes-bounding-box
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FNodeBase } from '../../../f-node';
 
 /**
  * Execution that calculates the bounding box of all nodes in the FComponentsStore.
@@ -20,6 +21,6 @@ export class CalculateNodesBoundingBox
   }
 
   private _nodesRects(): IRect[] {
-    return this._store.fNodes.map((x) => RectExtensions.fromElement(x.hostElement));
+    return this._store.nodes.getAll<FNodeBase>().map((x) => RectExtensions.fromElement(x.hostElement));
   }
 }

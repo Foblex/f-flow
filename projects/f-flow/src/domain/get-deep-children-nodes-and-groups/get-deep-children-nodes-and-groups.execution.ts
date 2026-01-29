@@ -25,7 +25,7 @@ export class GetDeepChildrenNodesAndGroupsExecution
     }
     visited.add(fId);
 
-    const directChildren = this._store.fNodes.filter((x) => x.fParentId() === fId);
+    const directChildren = this._store.nodes.getAll<FNodeBase>().filter((x) => x.fParentId() === fId);
 
     return directChildren.reduce((result, x) => {
       return result.concat(this._getChildrenNodes(x.fId(), visited));

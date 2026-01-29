@@ -8,5 +8,7 @@ export * from './f-create-connection.drag-handler';
 
 export * from './f-create-connection.event';
 
+export * from './i-create-connection-event-data';
+
 export * from './i-f-create-connection-drag-result';
 

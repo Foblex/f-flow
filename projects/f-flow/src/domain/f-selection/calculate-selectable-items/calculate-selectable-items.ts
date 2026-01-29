@@ -21,11 +21,11 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
   private readonly _dragContext = inject(FDraggableDataContext);
 
   private get _nodes(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   private get _connections(): FConnectionBase[] {
-    return this._store.fConnections;
+    return this._store.connections.getAll<FConnectionBase>();
   }
 
   private get _transform(): ITransformModel {

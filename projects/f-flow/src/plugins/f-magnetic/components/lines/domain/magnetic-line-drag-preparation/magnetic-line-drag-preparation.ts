@@ -34,17 +34,17 @@ export class MagneticLineDragPreparation
     const instance = this._getMagneticLinesInstance();
     this._renderer = this._renderer || this._createRenderer(instance);
 
-    const scheduleRenderer = new MagneticLinesScheduleRenderer(
-      instance.threshold(),
-      this._transform,
-      this._renderer,
-      this._store.flowHost.getBoundingClientRect() as ISize,
-      this._collectNotDraggedNodeRects(this._allDraggedNodes(handler)),
-    );
+    // const scheduleRenderer = new MagneticLinesScheduleRenderer(
+    //   instance.threshold(),
+    //   this._transform,
+    //   this._renderer,
+    //   this._store.flowHost.getBoundingClientRect() as ISize,
+    //   this._collectNotDraggedNodeRects(this._allDraggedNodes(handler)),
+    // );
   }
 
   private _isDragContextHasMoveNode(): boolean {
-    return this._dragContext.draggableItems.some((x) => x.fEventType === 'move-node');
+    return this._dragContext.draggableItems.some((x) => x.getEvent().fEventType === 'move-node');
   }
 
   private _getMagneticLinesInstance(): FMagneticLinesBase {
@@ -68,6 +68,6 @@ export class MagneticLineDragPreparation
   }
 
   private _calculateNotDraggedNodes(draggedNodes: FNodeBase[]): FNodeBase[] {
-    return this._store.fNodes.filter((x) => !draggedNodes.includes(x));
+    return this._store.nodes.getAll<FNodeBase>().filter((x) => !draggedNodes.includes(x));
   }
 }

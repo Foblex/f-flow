@@ -21,7 +21,7 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
   }
 
   private get _fNodes(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   private get _fCanvas(): FCanvasBase {

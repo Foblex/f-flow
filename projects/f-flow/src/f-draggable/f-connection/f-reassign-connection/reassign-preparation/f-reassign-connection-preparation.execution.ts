@@ -39,7 +39,7 @@ export class FReassignConnectionPreparationExecution
   }
 
   private get _connections(): FConnectionBase[] {
-    return this._store.fConnections;
+    return this._store.connections.getAll<FConnectionBase>();
   }
 
   public handle(request: FReassignConnectionPreparationRequest): void {

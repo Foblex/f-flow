@@ -4,6 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
+import { FNodeBase } from '../../../f-node';
 
 /**
  * Execution that resets the scale of the canvas and centers the nodes and groups inside the flow.
@@ -26,8 +27,8 @@ export class ResetScaleAndCenterExecution implements IExecution<ResetScaleAndCen
     }
     this._oneToOneCentering(
       fNodesRect,
-      RectExtensions.fromElement(this._store.fFlow!.hostElement),
-      this._store.fNodes.map((x) => x._position),
+      RectExtensions.fromElement(this._store.flowHost),
+      this._store.nodes.getAll<FNodeBase>().map((x) => x._position),
     );
 
     this._fMediator.execute(new RedrawCanvasWithAnimationRequest(request.animated));

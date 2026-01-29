@@ -1,4 +1,4 @@
-export interface IMagneticAxisResult {
+export interface ISnapCoordinate {
   value?: number;
   distance?: number;
 }

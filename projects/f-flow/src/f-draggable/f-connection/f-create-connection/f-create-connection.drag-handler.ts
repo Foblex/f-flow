@@ -1,17 +1,17 @@
-import { FDragHandlerResult, IFDragHandler } from '../../f-drag-handler';
+import { FDragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
 import {
   CalculateClosestConnectorRequest,
   CalculateTargetConnectorsToConnectRequest,
   GetConnectorAndRectRequest,
-  IConnectorAndRect,
   IClosestConnector,
+  IConnectorAndRect,
   MarkConnectableConnectorsRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
 import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../../../f-connection';
 import { FNodeOutletBase, FNodeOutputBase } from '../../../f-connectors';
 import { FMediator } from '@foblex/mediator';
-import { RoundedRect, IPoint, PointExtensions, RectExtensions, IRoundedRect } from '@foblex/2d';
+import { IPoint, IRoundedRect, PointExtensions, RectExtensions, RoundedRect } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { IFCreateConnectionDragResult } from './i-f-create-connection-drag-result';
 import { Injector } from '@angular/core';
@@ -20,10 +20,13 @@ import {
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
 } from '../../../f-connection-v2';
+import { ICreateConnectionEventData } from './i-create-connection-event-data';
 
-export class FCreateConnectionDragHandler implements IFDragHandler {
-  public fEventType = 'create-connection';
-  public fData: unknown;
+export class FCreateConnectionDragHandler extends FDragHandlerBase<ICreateConnectionEventData> {
+  protected readonly type = 'create-connection';
+  protected override data() {
+    return { fOutputOrOutletId: this._fOutputOrOutlet.fId() };
+  }
 
   private readonly _result: FDragHandlerResult<IFCreateConnectionDragResult>;
   private readonly _mediator: FMediator;
@@ -33,11 +36,11 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
   private readonly _toConnectorRect = new RoundedRect();
 
   private get _connection(): FConnectionForCreateComponent {
-    return this._store.fTempConnection as FConnectionForCreateComponent;
+    return this._store.connections.getForCreate<FConnectionForCreateComponent>() as FConnectionForCreateComponent;
   }
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.fSnapConnection as FSnapConnectionComponent;
+    return this._store.connections.getForSnap<FSnapConnectionComponent>();
   }
 
   private _fOutputWithRect!: IConnectorAndRect;
@@ -49,6 +52,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     private _fOutputOrOutlet: FNodeOutputBase | FNodeOutletBase,
     _onPointerDownPosition: IPoint,
   ) {
+    super();
     this._result = _injector.get(FDragHandlerResult);
     this._mediator = _injector.get(FMediator);
     this._connectionBehaviour = _injector.get(ConnectionBehaviourBuilder);
@@ -57,12 +61,9 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._toConnectorRect = RoundedRect.fromRect(
       RectExtensions.initialize(_onPointerDownPosition.x, _onPointerDownPosition.y),
     );
-    this.fData = {
-      fOutputOrOutletId: this._fOutputOrOutlet.fId(),
-    };
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(
       new GetConnectorAndRectRequest(this._fOutputOrOutlet),
     );
@@ -106,7 +107,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
     this._connection.initialize();
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     const closestInput = this._findClosestInput(difference);
 
     this._drawConnectionForCreate(
@@ -170,7 +171,7 @@ export class FCreateConnectionDragHandler implements IFDragHandler {
       : undefined;
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._connection.redraw();
     this._connection.hide();
     this._snapConnection?.hide();

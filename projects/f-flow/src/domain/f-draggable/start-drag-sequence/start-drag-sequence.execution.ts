@@ -29,9 +29,7 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
   }
 
   private _emitDragStarted(): void {
-    this._store.fDraggable?.fDragStarted?.emit({
-      fEventType: this._dragContext.draggableItems[0].fEventType,
-      fData: { ...this._dragContext.draggableItems[0].fData },
-    });
+    const event = this._dragContext.draggableItems[0].getEvent();
+    this._store.fDraggable?.fDragStarted?.emit({ ...event });
   }
 }

@@ -25,10 +25,6 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
     return this._store.fCanvas!.transform;
   }
 
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
-  }
-
   private _nodeOrGroup: FNodeBase | undefined;
 
   public handle(request: NodeResizePreparationRequest): void {
@@ -40,7 +36,7 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
 
     this._dragContext.onPointerDownScale = this._transform.scale;
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this._fHost).div(this._transform.scale);
+      .elementTransform(this._store.flowHost).div(this._transform.scale);
 
     this._dragContext.draggableItems = [
       new NodeResizeDragHandler(
@@ -64,7 +60,7 @@ export class NodeResizePreparation implements IExecution<NodeResizePreparationRe
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._nodeOrGroup = this._store.fNodes.find(x => x.isContains(element));
+    this._nodeOrGroup = this._store.nodes.getAll<FNodeBase>().find(x => x.isContains(element));
 
     return this._nodeOrGroup;
   }

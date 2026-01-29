@@ -34,7 +34,7 @@ export class CalculateOutputConnections
 
   private _collectConnections(ids: Set<string>): FConnectionBase[] {
     const result: FConnectionBase[] = [];
-    for (const conn of this._store.fConnections) {
+    for (const conn of this._store.connections.getAll<FConnectionBase>()) {
       if (ids.has(conn.fOutputId())) {
         result.push(conn);
       }

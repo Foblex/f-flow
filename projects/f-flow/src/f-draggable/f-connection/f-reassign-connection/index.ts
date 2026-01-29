@@ -15,3 +15,5 @@ export * from './f-reassign-connection.event';
 export * from './i-f-reassign-connection-drag-result';
 
 export * from './i-f-reassign-handler';
+
+export * from './i-reassign-connection-event-data';

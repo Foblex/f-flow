@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';
@@ -8,13 +8,13 @@ import { F_CSS_CLASS } from '../../domain';
 
 const _DEBOUNCE_TIME = 1;
 
-export class FNodeDropToGroupDragHandler implements IFDragHandler {
+export class FNodeDropToGroupDragHandler extends FDragHandlerBase<unknown> {
+  protected readonly type = 'move-node-to-parent';
+
   private readonly _store: FComponentsStore;
 
-  public fEventType = 'move-node-to-parent';
-
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
 
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
@@ -26,11 +26,12 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
     injector: Injector,
     private _containersForDrop: INodeWithRect[],
   ) {
+    super();
     this._store = injector.get(FComponentsStore);
     this._onPointerDownPosition = injector.get(FDraggableDataContext).onPointerDownPosition;
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._containersForDrop.forEach(({ node }) => {
       node.hostElement.classList.add(F_CSS_CLASS.GROUPING.DROP_ACTIVE);
     });
@@ -53,7 +54,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
     return this._containersForDrop.find((x) => RectExtensions.isIncludePoint(x.rect, point));
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     if (this._debounceTimer) {
       clearTimeout(this._debounceTimer);
     }
@@ -72,7 +73,7 @@ export class FNodeDropToGroupDragHandler implements IFDragHandler {
     this.fNodeWithRect = null;
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._unmarkIncludeNode();
     this._containersForDrop.forEach(({ node }) => {
       node.hostElement.classList.remove(F_CSS_CLASS.GROUPING.DROP_ACTIVE);

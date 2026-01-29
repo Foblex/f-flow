@@ -39,8 +39,8 @@ describe('SelectExecution', () => {
     const mockNode = { fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') };
     const mockConnection = { fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') };
 
-    fComponentsStore.fNodes = [mockNode] as any;
-    fComponentsStore.fConnections = [mockConnection] as any;
+    fComponentsStore.nodes.addMultiple([mockNode]);
+    fComponentsStore.connections.add(mockConnection);
     fDraggableDataContext.selectedItems = [];
 
     fMediator.execute(new SelectRequest(['node1'], ['conn1']));
@@ -52,8 +52,6 @@ describe('SelectExecution', () => {
   });
 
   it('should not select non-existing nodes and connections', () => {
-    fComponentsStore.fNodes = [] as any;
-    fComponentsStore.fConnections = [] as any;
     fDraggableDataContext.selectedItems = [];
 
     fMediator.execute(new SelectRequest(['nonexistentNode'], ['nonexistentConnection']));

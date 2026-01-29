@@ -17,7 +17,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   private readonly _injector = inject(Injector);
 
   private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
+    return this._store.flowHost;
   }
 
   public handle(request: FCanvasMovePreparationRequest): void {
@@ -44,7 +44,7 @@ export class FCanvasMovePreparationExecution implements IExecution<FCanvasMovePr
   }
 
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this._store.fNodes
+    let result = this._store.nodes.getAll<FNodeBase>()
       .find(x => x.isContains(targetElement));
     if (result && result.fDraggingDisabled()) {
       result = undefined;

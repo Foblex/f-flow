@@ -24,7 +24,7 @@ export class RemoveConnectionWaypoint implements IExecution<RemoveConnectionWayp
   }
 
   private _findConnection(id: string): FConnectionBase {
-    const result = this._store.fConnections.find((x) => x.fId() === id);
+    const result = this._store.connections.getAll<FConnectionBase>().find((x) => x.fId() === id);
     if (!result) {
       throw new Error(`Cannot find connection with id ${id}`);
     }

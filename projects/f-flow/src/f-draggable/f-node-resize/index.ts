@@ -14,6 +14,8 @@ export * from './resize-finalize';
 
 export * from './resize-preparation';
 
+export * from './i-node-resize-event-data';
+
 export * from './node-resize.drag-handler';
 
 export * from './providers';

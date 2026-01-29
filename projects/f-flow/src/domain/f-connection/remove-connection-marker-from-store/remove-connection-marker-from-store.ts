@@ -13,7 +13,8 @@ export class RemoveConnectionMarkerFromStore
 {
   private readonly _store = inject(FComponentsStore);
 
-  public handle({ component }: RemoveConnectionMarkerFromStoreRequest): void {
-    this._store.removeComponent(this._store.fMarkers, component);
+  public handle({ instance }: RemoveConnectionMarkerFromStoreRequest): void {
+    this._store.connectionMarkers.remove(instance);
+    this._store.countChanged();
   }
 }

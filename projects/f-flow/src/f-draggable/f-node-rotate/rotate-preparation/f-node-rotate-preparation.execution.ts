@@ -35,7 +35,7 @@ export class FNodeRotatePreparationExecution
   }
 
   private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
+    return this._store.flowHost;
   }
 
   private _fNode: FNodeBase | undefined;
@@ -75,7 +75,7 @@ export class FNodeRotatePreparationExecution
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._store.fNodes.find((x) => x.isContains(element));
+    this._fNode = this._store.nodes.getAll<FNodeBase>().find((x) => x.isContains(element));
 
     return this._fNode;
   }

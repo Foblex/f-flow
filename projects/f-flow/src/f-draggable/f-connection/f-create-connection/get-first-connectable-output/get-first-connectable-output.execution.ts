@@ -11,14 +11,14 @@ import { FExecutionRegister } from '@foblex/mediator';
 export class GetFirstConnectableOutputExecution
   implements IHandler<GetFirstConnectableOutputRequest, FConnectorBase | undefined> {
 
-  private readonly _fComponentStore = inject(FComponentsStore);
+  private readonly _store = inject(FComponentsStore);
 
   private get _fNodes(): FNodeBase[] {
-    return this._fComponentStore.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   private get _fOutputs(): FConnectorBase[] {
-    return this._fComponentStore.fOutputs;
+    return this._store.fOutputs;
   }
 
   private _fNode: FNodeBase | undefined;

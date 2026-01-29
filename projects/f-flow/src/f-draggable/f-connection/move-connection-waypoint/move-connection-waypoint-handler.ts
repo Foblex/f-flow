@@ -1,6 +1,6 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { Injector } from '@angular/core';
-import { IFDragHandler } from '../../../f-draggable';
+import { FDragHandlerBase } from '../../../f-draggable';
 import {
   FConnectionBase,
   FConnectionWaypointsBase,
@@ -9,9 +9,8 @@ import {
 } from '../../../f-connection-v2';
 import { FComponentsStore } from '../../../f-storage';
 
-export class MoveConnectionWaypointHandler implements IFDragHandler {
-  public fEventType = 'move-connection-waypoint';
-  public fData: unknown;
+export class MoveConnectionWaypointHandler extends FDragHandlerBase<unknown> {
+  protected readonly type = 'move-connection-waypoint';
 
   private readonly _store: FComponentsStore;
 
@@ -29,10 +28,11 @@ export class MoveConnectionWaypointHandler implements IFDragHandler {
     readonly _injector: Injector,
     private readonly _pick: WaypointPick<FConnectionBase>,
   ) {
+    super();
     this._store = this._injector.get(FComponentsStore);
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     if (this._pick.candidate) {
       this._point = { ...this._pick.candidate };
       this._waypointsComponent.insert(this._pick.candidate);
@@ -48,7 +48,7 @@ export class MoveConnectionWaypointHandler implements IFDragHandler {
     this._redrawConnection();
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._waypointsComponent.update();
     this._store.fDraggable?.fConnectionWaypointsChanged.emit(this._eventFromPick());
   }

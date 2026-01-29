@@ -4,6 +4,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnector } from '../i-f-flow-state-connector';
+import { FNodeBase } from '../../../../f-node';
 
 /**
  * Execution that retrieves the state of Flow nodes, including their position, size, inputs, outputs, and selection status.
@@ -16,7 +17,7 @@ export class CalculateNodesState
   private readonly _store = inject(FComponentsStore);
 
   public handle({ component }: CalculateNodesStateRequest): IFFlowStateNode[] {
-    return this._store.fNodes
+    return this._store.nodes.getAll<FNodeBase>()
       .filter((x) => x instanceof component)
       .map((x) => {
         return {

@@ -16,10 +16,6 @@ export class FCreateConnectionDragHandlerPreparationExecution
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
-  }
-
   private get _transform(): ITransformModel {
     return this._store.fCanvas!.transform;
   }
@@ -27,7 +23,7 @@ export class FCreateConnectionDragHandlerPreparationExecution
   public handle(request: FCreateConnectionDragHandlerPreparationRequest): void {
     this._dragContext.onPointerDownScale = this._transform.scale;
     const positionRelativeToFlowComponent = Point.fromPoint(request.onPointerDownPosition)
-      .elementTransform(this._fHost).div(this._transform.scale);
+      .elementTransform(this._store.flowHost).div(this._transform.scale);
     this._dragContext.onPointerDownPosition = positionRelativeToFlowComponent;
 
     const positionRelativeToCanvasComponent = Point.fromPoint(positionRelativeToFlowComponent).mult(this._transform.scale)

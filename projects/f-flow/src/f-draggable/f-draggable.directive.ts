@@ -60,8 +60,8 @@ import {
   IFDragAndDropPlugin,
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
-import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDragHandlerResult } from './f-drag-handler';
+import { FNodeIntersectedWithConnections } from './domain';
+import { FDragHandlerResult, FDragStartedEvent } from './f-drag-handler';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,

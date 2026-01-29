@@ -4,6 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { CalculateNodesBoundingBoxRequest, RedrawCanvasWithAnimationRequest } from '../../../domain';
+import { FNodeBase } from '../../../f-node';
 
 /**
  * Fits all nodes and groups to the flow by scaling and positioning them
@@ -28,8 +29,8 @@ export class FitToFlowExecution implements IExecution<FitToFlowRequest, void> {
 
     this.fitToParent(
       fNodesRect,
-      RectExtensions.fromElement(this._store.fFlow!.hostElement),
-      this._store.fNodes.map((x) => x._position),
+      RectExtensions.fromElement(this._store.flowHost),
+      this._store.nodes.getAll<FNodeBase>().map((x) => x._position),
       request.toCenter,
     );
 

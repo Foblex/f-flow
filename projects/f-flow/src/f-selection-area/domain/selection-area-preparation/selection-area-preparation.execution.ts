@@ -9,15 +9,12 @@ import { isValidEventTrigger } from '../../../domain';
 
 @Injectable()
 @FExecutionRegister(SelectionAreaPreparationRequest)
-export class SelectionAreaPreparationExecution implements IExecution<SelectionAreaPreparationRequest, void> {
-
-  private _fMediator = inject(FMediator);
-  private _store = inject(FComponentsStore);
-  private _dragContext = inject(FDraggableDataContext);
-
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
-  }
+export class SelectionAreaPreparationExecution
+  implements IExecution<SelectionAreaPreparationRequest, void>
+{
+  private readonly _mediator = inject(FMediator);
+  private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   public handle(request: SelectionAreaPreparationRequest): void {
     if (!this._isValid(request)) {
@@ -25,17 +22,23 @@ export class SelectionAreaPreparationExecution implements IExecution<SelectionAr
     }
     this._dragContext.draggableItems = [
       new SelectionAreaDragHandle(
-        this._store, request.fSelectionArea, this._dragContext, this._fMediator,
+        this._store,
+        request.fSelectionArea,
+        this._dragContext,
+        this._mediator,
       ),
     ];
 
     this._dragContext.onPointerDownScale = 1;
-    this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this._fHost);
+    this._dragContext.onPointerDownPosition = Point.fromPoint(
+      request.event.getPosition(),
+    ).elementTransform(this._store.flowHost);
   }
 
   private _isValid(request: SelectionAreaPreparationRequest): boolean {
-    return this._dragContext.isEmpty()
-      && isValidEventTrigger(request.event.originalEvent, request.fTrigger);
+    return (
+      this._dragContext.isEmpty() &&
+      isValidEventTrigger(request.event.originalEvent, request.fTrigger)
+    );
   }
 }

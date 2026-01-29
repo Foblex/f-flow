@@ -1,5 +1,5 @@
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
 import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../domain';
@@ -8,8 +8,8 @@ import { IDragLimits } from './create-drag-model-from-selection';
 import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from './constraint';
 import { FMediator } from '@foblex/mediator';
 
-export class MoveDragHandler implements IFDragHandler {
-  public readonly fEventType = 'move-node';
+export class MoveDragHandler extends FDragHandlerBase<unknown> {
+  protected readonly type = 'move-node';
 
   private readonly _startPosition = PointExtensions.initialize();
   private readonly _startRect = RectExtensions.initialize();
@@ -28,6 +28,7 @@ export class MoveDragHandler implements IFDragHandler {
     public fSourceHandlers: BaseConnectionDragHandler[] = [],
     public fTargetHandlers: BaseConnectionDragHandler[] = [],
   ) {
+    super();
     this._startRect = _injector
       .get(FMediator)
       .execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
@@ -74,7 +75,7 @@ export class MoveDragHandler implements IFDragHandler {
     );
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this.childrenNodeAndGroups.forEach((x) => x.prepareDragSequence());
     this.nodeOrGroup.hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
   }
@@ -108,7 +109,7 @@ export class MoveDragHandler implements IFDragHandler {
     this.nodeOrGroup.redraw();
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerUp());
     this.nodeOrGroup.position.set(this.nodeOrGroup._position);
     this.nodeOrGroup.hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);

@@ -13,7 +13,8 @@ export class AddConnectionMarkerToStore
 {
   private readonly _store = inject(FComponentsStore);
 
-  public handle({ component }: AddConnectionMarkerToStoreRequest): void {
-    this._store.addComponent(this._store.fMarkers, component);
+  public handle({ instance }: AddConnectionMarkerToStoreRequest): void {
+    this._store.connectionMarkers.add(instance);
+    this._store.countChanged();
   }
 }

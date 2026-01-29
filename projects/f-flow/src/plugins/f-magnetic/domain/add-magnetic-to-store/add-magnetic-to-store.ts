@@ -9,6 +9,6 @@ export class AddMagneticToStore implements IExecution<AddMagneticToStoreRequest,
   private readonly _store = inject(FComponentsStore);
 
   public handle({ instance, name }: AddMagneticToStoreRequest): void {
-    this._store.fComponents[name] = instance;
+    this._store.plugins.add(name, instance);
   }
 }

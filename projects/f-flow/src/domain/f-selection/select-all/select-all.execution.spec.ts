@@ -38,8 +38,8 @@ describe('SelectAllExecution', () => {
     const mockNode = { fId: 'node1', markAsSelected: jasmine.createSpy('markAsSelected') };
     const mockConnection = { fId: 'conn1', markAsSelected: jasmine.createSpy('markAsSelected') };
 
-    fComponentsStore.fNodes = [mockNode] as any;
-    fComponentsStore.fConnections = [mockConnection] as any;
+    fComponentsStore.nodes.add(mockNode);
+    fComponentsStore.connections.add(mockConnection);
     fDraggableDataContext.selectedItems = [];
 
     fMediator.execute(new SelectAllRequest());
@@ -51,8 +51,6 @@ describe('SelectAllExecution', () => {
   });
 
   it('should handle empty nodes and connections arrays', () => {
-    fComponentsStore.fNodes = [] as any;
-    fComponentsStore.fConnections = [] as any;
     fDraggableDataContext.selectedItems = [];
 
     fMediator.execute(new SelectAllRequest());

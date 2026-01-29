@@ -15,7 +15,7 @@ export class GetChildNodeIds
   private readonly _store = inject(FComponentsStore);
 
   private get _allNodesAndGroups(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll<FNodeBase>();
   }
 
   public handle(request: GetChildNodeIdsRequest): string[] {

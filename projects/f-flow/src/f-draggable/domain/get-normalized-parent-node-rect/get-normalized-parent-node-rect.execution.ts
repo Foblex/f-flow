@@ -26,7 +26,7 @@ export class GetNormalizedParentNodeRectExecution
   }
 
   private _getNode(fId?: string | null): FNodeBase | undefined {
-    return this._store.fNodes.find((x) => x.fId() === fId);
+    return this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === fId);
   }
   //   Parent Node
   // +----------------------------------------+

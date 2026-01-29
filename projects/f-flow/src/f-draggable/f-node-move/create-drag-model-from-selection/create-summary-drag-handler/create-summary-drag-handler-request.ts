@@ -4,8 +4,8 @@ export class CreateSummaryDragHandlerRequest {
   static readonly fToken = Symbol('CreateSummaryDragHandlerRequest');
 
   constructor(
-    public readonly roots: MoveDragHandler[],
-    public readonly list: MoveDragHandler[],
+    public readonly dragRoots: MoveDragHandler[],
+    public readonly participant: MoveDragHandler[],
   ) {
   }
 }

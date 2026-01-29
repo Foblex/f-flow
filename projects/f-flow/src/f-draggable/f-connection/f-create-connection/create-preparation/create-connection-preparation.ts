@@ -44,13 +44,13 @@ export class CreateConnectionPreparation
   }
 
   private _getNode(event: IPointerEvent): FNodeBase | undefined {
-    this._node = this._store.fNodes.find((n) => n.isContains(event.targetElement));
+    this._node = this._store.nodes.getAll<FNodeBase>().find((n) => n.isContains(event.targetElement));
 
     return this._node;
   }
 
   private _isValidConditions(): boolean {
-    return this._dragContext.isEmpty() && !!this._store.fTempConnection;
+    return this._dragContext.isEmpty() && !!this._store.connections.getForSnap();
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {

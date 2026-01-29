@@ -9,6 +9,6 @@ export class RemoveMagneticFromStore implements IExecution<RemoveMagneticFromSto
   private readonly _store = inject(FComponentsStore);
 
   public handle({ name }: RemoveMagneticFromStoreRequest): void {
-    this._store.fComponents[name] = undefined;
+    this._store.plugins.remove(name);
   }
 }

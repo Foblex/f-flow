@@ -1,13 +1,16 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { MoveDragHandler } from './move-drag-handler';
 import { Injector } from '@angular/core';
 import { SnapLinesDragHandler } from './create-snap-lines/snap-lines.drag-handler';
 import { ISnapResult } from '../../f-line-alignment';
+import { INodeMoveSummaryEventData } from './i-node-move-summary-event-data';
 
-export class MoveSummaryDragHandler implements IFDragHandler {
-  public readonly fEventType = 'move-node';
-  public readonly fData: any;
+export class MoveSummaryDragHandler extends FDragHandlerBase<INodeMoveSummaryEventData> {
+  protected readonly type = 'move-node';
+  protected override data() {
+    return { fNodeIds: this.allDraggedNodeHandlers.map((x) => x.nodeOrGroup.fId()) };
+  }
 
   private _lineAlignment: SnapLinesDragHandler | null = null;
 
@@ -16,9 +19,7 @@ export class MoveSummaryDragHandler implements IFDragHandler {
     public allDraggedNodeHandlers: MoveDragHandler[],
     public rootHandlers: MoveDragHandler[],
   ) {
-    this.fData = {
-      fNodeIds: allDraggedNodeHandlers.map((x) => x.nodeOrGroup.fId()),
-    };
+    super();
   }
 
   public setLineAlignment(handler: SnapLinesDragHandler): void {
@@ -31,16 +32,16 @@ export class MoveSummaryDragHandler implements IFDragHandler {
     return this._lineAlignment?.findClosestAlignment(this._unionRect());
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this.rootHandlers.forEach((x) => x.prepareDragSequence());
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     this.rootHandlers.forEach((x) => x.onPointerMove(difference));
     this._lineAlignment?.drawGuidesFor(this._unionRect());
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this.rootHandlers.forEach((x) => x.onPointerUp());
     this._lineAlignment?.clearGuides();
     requestAnimationFrame(() => this._refreshDraggedNodes());

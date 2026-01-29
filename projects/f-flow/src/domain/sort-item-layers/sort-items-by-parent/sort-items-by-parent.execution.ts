@@ -33,7 +33,7 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getItemsOfContainer(): FNodeBase[] {
-    return this._store.fNodes
+    return this._store.nodes.getAll<FNodeBase>()
       .filter((x) => this._fItemsContainer.contains(x.hostElement));
   }
 

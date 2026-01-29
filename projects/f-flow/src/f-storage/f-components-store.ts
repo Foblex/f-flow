@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
 import { FBackgroundBase } from '../f-backgroud';
-import { FNodeBase } from '../f-node';
 import { FConnectorBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
-import { FConnectionBase, FConnectionMarkerBase } from '../f-connection-v2';
+import { FConnectionStore } from './f-connection-store';
+import { FConnectionMarkerStore } from './f-connection-marker-store';
+import { FNodeStore } from './f-node-store';
+import { FPluginsStore } from './f-plugins-store';
+import { ITransformModel } from '@foblex/2d';
 
 @Injectable()
 export class FComponentsStore {
@@ -29,15 +32,14 @@ export class FComponentsStore {
 
   public fBackground: FBackgroundBase | undefined;
 
-  public fNodes: FNodeBase[] = [];
+  public get transform(): ITransformModel {
+    return this.fCanvas?.transform as ITransformModel;
+  }
 
-  public fConnections: FConnectionBase[] = [];
-
-  public fTempConnection: FConnectionBase | undefined;
-
-  public fSnapConnection: FConnectionBase | undefined;
-
-  public fMarkers: FConnectionMarkerBase[] = [];
+  public readonly nodes = new FNodeStore();
+  public readonly connections = new FConnectionStore();
+  public readonly connectionMarkers = new FConnectionMarkerStore();
+  public readonly plugins = new FPluginsStore();
 
   public fOutputs: FConnectorBase[] = [];
 

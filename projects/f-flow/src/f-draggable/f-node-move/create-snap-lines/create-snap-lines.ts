@@ -58,6 +58,6 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
   }
 
   private _calculateNotDraggedNodes(allDraggedNodes: FNodeBase[]): FNodeBase[] {
-    return this._store.fNodes.filter((x) => !allDraggedNodes.includes(x));
+    return this._store.nodes.getAll<FNodeBase>().filter((x) => !allDraggedNodes.includes(x));
   }
 }

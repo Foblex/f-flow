@@ -19,7 +19,7 @@ export class SetZoom implements IExecution<SetZoomRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
   private get _flowHost(): HTMLElement {
-    return this._store.fFlow?.hostElement as HTMLElement;
+    return this._store.flowHost;
   }
 
   private get _canvas(): FCanvasBase {

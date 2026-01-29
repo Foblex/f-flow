@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { IsConnectionUnderNodeRequest } from '../../domain';
-import { ISnapResult, ISnapCoordinate } from '../../../f-line-alignment';
+import { ISnapCoordinate, ISnapResult } from '../../../f-line-alignment';
 import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes.event';
@@ -87,12 +87,12 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _createMoveNodesEvent(): FMoveNodesEvent {
-    const eventNodes = this._summaryHandler?.fData.fNodeIds.map((id: string) => {
+    const eventNodes = this._summaryHandler?.getEvent().fData?.fNodeIds.map((id: string) => {
       return {
         id,
-        position: this._store.fNodes.find((x) => x.fId() === id)?._position,
+        position: this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === id)?._position as IPoint,
       };
-    });
+    }) || [];
 
     return new FMoveNodesEvent(eventNodes);
   }

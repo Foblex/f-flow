@@ -1,5 +1,5 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { IFDragHandler } from '../f-drag-handler';
+import { FDragHandlerBase } from '../f-drag-handler';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
 import { CalculateResizeLimitsRequest } from './calculate-resize-limits';
@@ -9,11 +9,13 @@ import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-const
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { Injector } from '@angular/core';
 import { IResizeConstraint } from "./constraint";
+import { INodeResizeEventData } from './i-node-resize-event-data';
 
-export class NodeResizeDragHandler implements IFDragHandler {
-
-  public readonly fEventType = 'node-resize';
-  public readonly fData: any;
+export class NodeResizeDragHandler extends FDragHandlerBase<INodeResizeEventData> {
+  protected readonly type = 'node-resize';
+  protected override data() {
+    return { fNodeId: this._nodeOrGroup.fId() };
+  }
 
   private readonly _mediator: FMediator;
 
@@ -25,13 +27,11 @@ export class NodeResizeDragHandler implements IFDragHandler {
     private _nodeOrGroup: FNodeBase,
     private _handleType: EFResizeHandleType,
   ) {
-    this.fData = {
-      fNodeId: _nodeOrGroup.fId(),
-    };
+    super();
     this._mediator = injector.get(FMediator);
   }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._originalRect = this._getOriginalNodeRect();
     this._constraints = this._calculateResizeLimits();
   }
@@ -46,7 +46,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
     );
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     this._applyResizeChanges(this._newRect(difference));
   }
 
@@ -80,7 +80,7 @@ export class NodeResizeDragHandler implements IFDragHandler {
     );
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._nodeOrGroup.sizeChange.emit(this._getNewRect());
     requestAnimationFrame(() => this._nodeOrGroup.refresh());
   }

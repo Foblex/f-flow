@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
+import { FConnectionBase } from '../../../f-connection-v2';
+import { FNodeBase } from '../../../f-node';
 
 /**
  * Execution that handles the selection of nodes and connections in the FFlow.
@@ -21,7 +23,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     this._dragContext.selectedItems = [];
 
     request.nodes.forEach((key) => {
-      const node = this._store.fNodes.find((x) => x.fId() === key);
+      const node = this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === key);
       if(node) {
         node.markAsSelected();
         this._dragContext.selectedItems.push(node);
@@ -29,7 +31,7 @@ export class SelectExecution implements IExecution<SelectRequest, void> {
     });
 
     request.connections.forEach((key) => {
-      const connection = this._store.fConnections.find((x) => x.fId() === key);
+      const connection = this._store.connections.getAll<FConnectionBase>().find((x) => x.fId() === key);
       if(connection) {
         connection.markAsSelected();
         this._dragContext.selectedItems.push(connection);
