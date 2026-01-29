@@ -1,9 +1,9 @@
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
-import { FDragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { Injector } from '@angular/core';
 
-export class FCanvasDragHandler extends FDragHandlerBase<unknown> {
+export class FCanvasDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'canvas-move';
 
   private readonly _store: FComponentsStore;

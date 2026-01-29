@@ -1,6 +1,6 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { Injector } from '@angular/core';
-import { FDragHandlerBase } from '../../../f-draggable';
+import { DragHandlerBase } from '../../../f-draggable';
 import {
   FConnectionBase,
   FConnectionWaypointsBase,
@@ -9,7 +9,7 @@ import {
 } from '../../../f-connection-v2';
 import { FComponentsStore } from '../../../f-storage';
 
-export class MoveConnectionWaypointHandler extends FDragHandlerBase<unknown> {
+export class MoveConnectionWaypointHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-connection-waypoint';
 
   private readonly _store: FComponentsStore;

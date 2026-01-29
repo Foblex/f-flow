@@ -31,8 +31,6 @@ export * from './f-zoom';
 
 export * from './mixins';
 
-// export * from './plugins';
-
 export * from './reactivity';
 
 export * from './utils';

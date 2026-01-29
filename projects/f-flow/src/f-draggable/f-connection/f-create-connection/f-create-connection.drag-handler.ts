@@ -1,4 +1,4 @@
-import { FDragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
+import { DragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
 import {
   CalculateClosestConnectorRequest,
   CalculateTargetConnectorsToConnectRequest,
@@ -22,7 +22,7 @@ import {
 } from '../../../f-connection-v2';
 import { ICreateConnectionEventData } from './i-create-connection-event-data';
 
-export class FCreateConnectionDragHandler extends FDragHandlerBase<ICreateConnectionEventData> {
+export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnectionEventData> {
   protected readonly type = 'create-connection';
   protected override data() {
     return { fOutputOrOutletId: this._fOutputOrOutlet.fId() };

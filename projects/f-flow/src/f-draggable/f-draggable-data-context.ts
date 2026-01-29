@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Point } from '@foblex/2d';
-import { IDragHandler } from './f-drag-handler';
+import { DragHandlerBase } from './f-drag-handler';
 import { ISelectable } from '../mixins';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class FDraggableDataContext {
 
   public onPointerDownPosition: Point = new Point(0, 0);
 
-  public draggableItems: IDragHandler<unknown>[] = [];
+  public draggableItems: DragHandlerBase<unknown>[] = [];
 
   public reset(): void {
     this.draggableItems = [];

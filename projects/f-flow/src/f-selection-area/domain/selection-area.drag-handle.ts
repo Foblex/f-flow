@@ -2,11 +2,11 @@ import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from 
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../f-storage';
 import { CalculateSelectableItemsRequest, ICanBeSelectedElementAndRect } from '../../domain';
 import { FMediator } from '@foblex/mediator';
-import { FDraggableDataContext, FDragHandlerBase } from '../../f-draggable';
+import { FDraggableDataContext, DragHandlerBase } from '../../f-draggable';
 import { FSelectionAreaBase } from '../f-selection-area-base';
 import { ISelectable } from '../../mixins';
 
-export class SelectionAreaDragHandle extends FDragHandlerBase<unknown> {
+export class SelectionAreaDragHandle extends DragHandlerBase<unknown> {
   protected readonly type = 'selection-area';
 
   private _canBeSelected: ICanBeSelectedElementAndRect[] = [];

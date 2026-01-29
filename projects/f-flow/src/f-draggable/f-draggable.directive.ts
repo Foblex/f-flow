@@ -61,7 +61,7 @@ import {
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FNodeIntersectedWithConnections } from './domain';
-import { FDragHandlerResult, FDragStartedEvent } from './f-drag-handler';
+import { DragHandlerInjector, FDragHandlerResult } from './f-drag-handler';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
@@ -72,6 +72,7 @@ import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
 import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
+import { FDragStartedEvent } from './domain/f-drag-started-event';
 
 // ┌──────────────────────────────┐
 // │        Angular Realm         │
@@ -127,7 +128,7 @@ import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 @Directive({
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
-  providers: [FDragHandlerResult],
+  providers: [FDragHandlerResult, DragHandlerInjector],
 })
 export class FDraggableDirective
   extends FDraggableBase
@@ -237,6 +238,8 @@ export class FDraggableDirective
   @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
+  private readonly _dragHandlerInjector = inject(DragHandlerInjector);
+
   public ngOnInit(): void {
     this._mediator.execute<void>(new AddDndToStoreRequest(this));
   }
@@ -249,6 +252,7 @@ export class FDraggableDirective
     if (isDragBlocker(event.targetElement)) {
       return false;
     }
+    this._dragHandlerInjector.create();
 
     this._result.clear();
 
@@ -349,6 +353,8 @@ export class FDraggableDirective
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._result.clear();
+
+    this._dragHandlerInjector.destroy();
   }
 
   public ngOnDestroy(): void {

@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { FDragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../f-drag-handler';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';
@@ -8,7 +8,7 @@ import { F_CSS_CLASS } from '../../domain';
 
 const _DEBOUNCE_TIME = 1;
 
-export class FNodeDropToGroupDragHandler extends FDragHandlerBase<unknown> {
+export class FNodeDropToGroupDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-node-to-parent';
 
   private readonly _store: FComponentsStore;

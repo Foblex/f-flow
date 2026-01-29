@@ -1,5 +1,5 @@
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
-import { FDragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
 import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../domain';
@@ -8,7 +8,7 @@ import { IDragLimits } from './create-drag-model-from-selection';
 import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from './constraint';
 import { FMediator } from '@foblex/mediator';
 
-export class MoveDragHandler extends FDragHandlerBase<unknown> {
+export class MoveDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-node';
 
   private readonly _startPosition = PointExtensions.initialize();

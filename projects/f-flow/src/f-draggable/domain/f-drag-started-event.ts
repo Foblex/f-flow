@@ -1,7 +1,6 @@
-export class FDragStartedEvent {
+export class FDragStartedEvent<T = unknown> {
   constructor(
-    public fEventType: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public fData?: any,
+    public readonly fEventType: string,
+    public readonly fData?: T,
   ) {}
 }

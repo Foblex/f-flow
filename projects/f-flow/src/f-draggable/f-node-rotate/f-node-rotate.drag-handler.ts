@@ -1,5 +1,5 @@
 import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
-import { FDragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../f-drag-handler';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';
@@ -10,7 +10,7 @@ import { FMediator } from '@foblex/mediator';
 import { Injector } from '@angular/core';
 import { INodeRotateEventData } from './i-node-rotate-event-data';
 
-export class FNodeRotateDragHandler extends FDragHandlerBase<INodeRotateEventData> {
+export class FNodeRotateDragHandler extends DragHandlerBase<INodeRotateEventData> {
   protected readonly type = 'node-rotate';
   protected override data() {
     return { fNodeId: this._fNode.fId() };

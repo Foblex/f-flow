@@ -1,4 +1,4 @@
-import { FDragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
+import { DragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
 import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
@@ -13,7 +13,7 @@ import { FReassignSourceDragHandler } from './f-reassign-source.drag-handler';
 import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../f-connection-v2';
 import { IMagneticGuidesResult } from './i-reassign-connection-event-data';
 
-export class FReassignConnectionDragHandler extends FDragHandlerBase<IMagneticGuidesResult> {
+export class FReassignConnectionDragHandler extends DragHandlerBase<IMagneticGuidesResult> {
   protected readonly type = 'reassign-connection';
   protected override data() {
     return { fConnectionId: this._connection.fId() };

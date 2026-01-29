@@ -1,9 +1,8 @@
-import { IDragHandler } from './i-drag-handler';
-import { FDragStartedEvent } from './f-drag-started-event';
 import { IPoint } from '@foblex/2d';
 import { IPointerEvent } from '../../drag-toolkit';
+import { FDragStartedEvent } from '../domain/f-drag-started-event';
 
-export abstract class FDragHandlerBase<TData> implements IDragHandler<TData> {
+export abstract class DragHandlerBase<TData> {
   protected abstract readonly type: string;
 
   protected data(): TData | undefined {

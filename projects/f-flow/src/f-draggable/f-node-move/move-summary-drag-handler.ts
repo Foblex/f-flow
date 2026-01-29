@@ -1,12 +1,12 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { FDragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../f-drag-handler';
 import { MoveDragHandler } from './move-drag-handler';
 import { Injector } from '@angular/core';
 import { SnapLinesDragHandler } from './create-snap-lines/snap-lines.drag-handler';
 import { ISnapResult } from '../../f-line-alignment';
 import { INodeMoveSummaryEventData } from './i-node-move-summary-event-data';
 
-export class MoveSummaryDragHandler extends FDragHandlerBase<INodeMoveSummaryEventData> {
+export class MoveSummaryDragHandler extends DragHandlerBase<INodeMoveSummaryEventData> {
   protected readonly type = 'move-node';
   protected override data() {
     return { fNodeIds: this.allDraggedNodeHandlers.map((x) => x.nodeOrGroup.fId()) };
