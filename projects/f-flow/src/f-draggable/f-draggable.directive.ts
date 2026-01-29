@@ -20,7 +20,7 @@ import {
   FNodeMoveFinalizeRequest,
   MoveNodePreparationRequest,
 } from './f-node-move';
-import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
+import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
   CreateConnectionPreparationRequest,
   FCreateConnectionEvent,
@@ -305,7 +305,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DropToGroupPreparationRequest(event));
 
-    this._mediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
+    this._mediator.execute<void>(new DragCanvasPreparationRequest(event, this.fCanvasMoveTrigger));
 
     this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
 
@@ -337,7 +337,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new DragCanvasFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 

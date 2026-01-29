@@ -1,17 +1,17 @@
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
-import { FComponentsStore } from '../../f-storage';
-import { Injector } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { DragHandlerBase } from '../../f-drag-handler';
+import { FComponentsStore } from '../../../f-storage';
 
-export class FCanvasDragHandler extends DragHandlerBase<unknown> {
+@Injectable()
+export class DragCanvasHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'canvas-move';
 
-  private readonly _store: FComponentsStore;
+  private readonly _store = inject(FComponentsStore);
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();
 
-  constructor(_injector: Injector) {
+  constructor() {
     super();
-    this._store = _injector.get(FComponentsStore);
     this._store.fCanvas?.hostElement.classList.add('canvas-dragging');
   }
 

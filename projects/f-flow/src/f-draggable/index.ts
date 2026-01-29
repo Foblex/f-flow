@@ -1,6 +1,6 @@
 export * from './domain';
 
-export * from './f-canvas';
+export * from './drag-canvas';
 
 export * from './f-connection';
 

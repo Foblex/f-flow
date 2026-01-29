@@ -1,4 +1,4 @@
-import { CANVAS_PROVIDERS } from './f-canvas';
+import { DRAG_CANVAS_PROVIDERS } from './drag-canvas';
 import { CONNECTIONS_PROVIDERS } from './f-connection';
 import { SINGLE_SELECT_PROVIDERS } from './single-select';
 import { NODE_PROVIDERS } from './f-node-move';
@@ -12,7 +12,7 @@ import { NODE_ROTATE_PROVIDERS } from './f-node-rotate';
 import { PINCH_TO_ZOOM_PROVIDERS } from './pinch-to-zoom';
 
 export const F_DRAGGABLE_PROVIDERS = [
-  ...CANVAS_PROVIDERS,
+  ...DRAG_CANVAS_PROVIDERS,
 
   ...CONNECTIONS_PROVIDERS,
 

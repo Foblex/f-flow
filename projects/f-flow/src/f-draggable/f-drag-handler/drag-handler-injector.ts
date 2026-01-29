@@ -7,6 +7,7 @@ import {
   ProviderToken,
   StaticProvider,
 } from '@angular/core';
+import { DragCanvasHandler } from '../drag-canvas';
 
 export const F_DRAG_HANDLERS = new InjectionToken<(Provider | StaticProvider)[]>('F_PLUGINS');
 
@@ -28,7 +29,12 @@ export class DragHandlerInjector {
 
   public create(): void {
     this._dragInjector = Injector.create({
-      providers: this._injector.get(F_DRAG_HANDLERS),
+      providers: [
+        {
+          provide: DragCanvasHandler,
+          useClass: DragCanvasHandler,
+        },
+      ],
       parent: this._injector,
     });
   }
