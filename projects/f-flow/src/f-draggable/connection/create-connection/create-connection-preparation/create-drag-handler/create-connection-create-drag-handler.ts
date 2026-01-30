@@ -1,9 +1,10 @@
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, IHandler } from '@foblex/mediator';
-import { inject, Injectable, Injector } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CreateConnectionCreateDragHandlerRequest } from './create-connection-create-drag-handler-request';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FDraggableDataContext } from '../../../../f-draggable-data-context';
+import { DragHandlerInjector } from '../../../../f-drag-handler';
 import { CreateConnectionHandler } from '../../create-connection-handler';
 
 @Injectable()
@@ -13,24 +14,25 @@ export class CreateConnectionCreateDragHandler
 {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
-  private readonly _injector = inject(Injector);
+  private readonly _dragInjector = inject(DragHandlerInjector);
 
   private get _transform(): ITransformModel {
     return this._store.transform;
   }
 
-  public handle(request: CreateConnectionCreateDragHandlerRequest): void {
+  public handle({ source, eventPosition }: CreateConnectionCreateDragHandlerRequest): void {
     this._dragContext.onPointerDownScale = this._transform.scale;
 
-    const pointerDownInFlowSpace = this._toFlowSpace(request.eventPosition);
+    const pointerDownInFlowSpace = this._toFlowSpace(eventPosition);
     this._dragContext.onPointerDownPosition = pointerDownInFlowSpace;
 
     // 2) Convert to canvas-local space for connection creation handler
     const pointerDownInCanvasSpace = this._toCanvasSpace(pointerDownInFlowSpace);
 
-    this._dragContext.draggableItems = [
-      new CreateConnectionHandler(this._injector, request.source, pointerDownInCanvasSpace),
-    ];
+    const handler = this._dragInjector.get(CreateConnectionHandler);
+    handler.initialize(source, pointerDownInCanvasSpace);
+
+    this._dragContext.draggableItems = [handler];
   }
 
   /**

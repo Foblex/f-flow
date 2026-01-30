@@ -1,8 +1,10 @@
 import { IConnectorRectRef } from './i-connector-rect-ref';
+import { FConnectorBase } from '../../f-connectors';
 
 /**
  * Interface that describes the closest connector to a point.
  */
-export interface IClosestConnectorRef extends IConnectorRectRef {
+export interface IClosestConnectorRef<TConnector extends FConnectorBase = FConnectorBase>
+  extends IConnectorRectRef<TConnector> {
   distance: number;
 }
