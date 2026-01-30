@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { FComponentsStore } from '../../f-storage';
 import { INodeWithRect } from '../domain';
 import { FDraggableDataContext } from '../f-draggable-data-context';

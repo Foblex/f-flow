@@ -1,5 +1,5 @@
 import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';

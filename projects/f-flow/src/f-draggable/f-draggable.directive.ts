@@ -61,7 +61,7 @@ import {
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FNodeIntersectedWithConnections } from './domain';
-import { DragHandlerInjector, FDragHandlerResult } from './f-drag-handler';
+import { DragHandlerInjector, FDragHandlerResult } from './infrastructure';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,

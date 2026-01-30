@@ -12,7 +12,7 @@ import {
   DragConnectionWaypointPreparation,
 } from './drag-connection-waypoint';
 
-export const CONNECTIONS_PROVIDERS = [
+export const DRAG_CONNECTIONS_PROVIDERS = [
   CreateConnectionFinalize,
 
   CreateConnectionCreateDragHandler,

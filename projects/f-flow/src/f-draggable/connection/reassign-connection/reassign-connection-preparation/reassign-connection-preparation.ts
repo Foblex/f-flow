@@ -12,7 +12,7 @@ import {
 import { calculatePointerInFlow } from '../../../../utils';
 import { FCanvasBase } from '../../../../f-canvas';
 import { FConnectionBase } from '../../../../f-connection-v2';
-import { DragHandlerInjector } from '../../../f-drag-handler';
+import { DragHandlerInjector } from '../../../infrastructure';
 import { ReassignConnectionHandler } from '../reassign-connection-handler';
 
 @Injectable()

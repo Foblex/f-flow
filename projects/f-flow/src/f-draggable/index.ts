@@ -4,7 +4,7 @@ export * from './drag-canvas';
 
 export * from './connection';
 
-export * from './f-drag-handler';
+export * from './infrastructure';
 
 export * from './f-drop-to-group';
 

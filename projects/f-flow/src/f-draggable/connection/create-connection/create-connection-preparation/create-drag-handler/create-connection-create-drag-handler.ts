@@ -4,7 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { CreateConnectionCreateDragHandlerRequest } from './create-connection-create-drag-handler-request';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FDraggableDataContext } from '../../../../f-draggable-data-context';
-import { DragHandlerInjector } from '../../../../f-drag-handler';
+import { DragHandlerInjector } from '../../../../infrastructure';
 import { CreateConnectionHandler } from '../../create-connection-handler';
 
 @Injectable()

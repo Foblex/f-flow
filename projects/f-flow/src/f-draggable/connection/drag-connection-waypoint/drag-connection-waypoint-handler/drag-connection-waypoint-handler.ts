@@ -1,6 +1,6 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { DragHandlerBase } from '../../../f-drag-handler';
+import { DragHandlerBase } from '../../../infrastructure';
 import { FComponentsStore } from '../../../../f-storage';
 import {
   FConnectionBase,

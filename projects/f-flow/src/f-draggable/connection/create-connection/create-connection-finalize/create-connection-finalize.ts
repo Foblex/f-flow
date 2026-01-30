@@ -13,7 +13,7 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { ResolveConnectableOutputForOutletRequest } from '../resolve-connectable-output-for-outlet';
 import { FCreateConnectionEvent } from '../f-create-connection-event';
 import { CreateConnectionHandler } from '../create-connection-handler';
-import { FDragHandlerResult } from '../../../f-drag-handler';
+import { FDragHandlerResult } from '../../../infrastructure';
 import { ICreateConnectionDragResult } from '../i-create-connection-drag-result';
 import { IPointerEvent } from '../../../../drag-toolkit';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from '../../../../domain';

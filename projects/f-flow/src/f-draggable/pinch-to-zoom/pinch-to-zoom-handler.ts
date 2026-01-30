@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { IPoint, Point } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { calculateTouchCenter, calculateTouchDistance } from './utils';
 import { IPointerEvent } from '../../drag-toolkit';
 import { PINCH_MOVEMENT_THRESHOLD } from './constants';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Point } from '@foblex/2d';
-import { DragHandlerBase } from './f-drag-handler';
+import { DragHandlerBase } from './infrastructure';
 import { ISelectable } from '../mixins';
 
 @Injectable()

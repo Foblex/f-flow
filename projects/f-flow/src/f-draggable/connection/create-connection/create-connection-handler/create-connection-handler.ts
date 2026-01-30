@@ -2,7 +2,7 @@ import { FMediator } from '@foblex/mediator';
 import { IPoint, IRoundedRect, PointExtensions, RectExtensions, RoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { FNodeOutletBase, FNodeOutputBase } from '../../../../f-connectors';
-import { DragHandlerBase, FDragHandlerResult } from '../../../f-drag-handler';
+import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';
 import { ICreateConnectionEventData } from '../i-create-connection-event-data';
 import {
   ConnectionBehaviourBuilder,

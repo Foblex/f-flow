@@ -1,5 +1,5 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { EFResizeHandleType, FNodeBase } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
 import { CalculateResizeLimitsRequest } from './calculate-resize-limits';

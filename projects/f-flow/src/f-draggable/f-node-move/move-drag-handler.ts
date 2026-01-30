@@ -1,5 +1,5 @@
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { BaseConnectionDragHandler } from './connection-drag-handlers';
 import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../domain';

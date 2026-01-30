@@ -1,5 +1,5 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
-import { DragHandlerBase } from '../f-drag-handler';
+import { DragHandlerBase } from '../infrastructure';
 import { MoveDragHandler } from './move-drag-handler';
 import { Injector } from '@angular/core';
 import { SnapLinesDragHandler } from './create-snap-lines/snap-lines.drag-handler';

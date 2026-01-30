@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FDragHandlerResult<T> {
-
   private _data: T | undefined;
 
   public setData(data: Partial<T>): void {

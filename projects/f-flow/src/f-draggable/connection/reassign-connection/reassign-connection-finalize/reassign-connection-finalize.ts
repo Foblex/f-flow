@@ -10,7 +10,7 @@ import {
   FindConnectableConnectorUsingPriorityAndPositionRequest,
   IConnectorRectRef,
 } from '../../../../domain';
-import { FDragHandlerResult } from '../../../f-drag-handler';
+import { FDragHandlerResult } from '../../../infrastructure';
 import { IPointerEvent } from '../../../../drag-toolkit';
 import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-result';
 import { ReassignConnectionHandler } from '../reassign-connection-handler';
