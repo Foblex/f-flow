@@ -2,7 +2,7 @@ export * from './domain';
 
 export * from './drag-canvas';
 
-export * from './f-connection';
+export * from './connection';
 
 export * from './f-drag-handler';
 

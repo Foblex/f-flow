@@ -1,5 +1,5 @@
 import { DRAG_CANVAS_PROVIDERS } from './drag-canvas';
-import { CONNECTIONS_PROVIDERS } from './f-connection';
+import { CONNECTIONS_PROVIDERS } from './connection';
 import { SINGLE_SELECT_PROVIDERS } from './single-select';
 import { NODE_PROVIDERS } from './f-node-move';
 import { NODE_RESIZE_PROVIDERS } from './f-node-resize';

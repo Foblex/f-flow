@@ -5,7 +5,7 @@ import {
   InputSignalWithTransform,
   OutputEmitterRef,
 } from '@angular/core';
-import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
+import { FCreateConnectionEvent, FReassignConnectionEvent } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { FNodeIntersectedWithConnections } from './domain';

@@ -24,13 +24,13 @@ import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-
 import {
   CreateConnectionPreparationRequest,
   FCreateConnectionEvent,
-  FCreateConnectionFinalizeRequest,
+  CreateConnectionFinalizeRequest,
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
   MoveConnectionWaypointFinalizeRequest,
   MoveConnectionWaypointPreparationRequest,
-} from './f-connection';
+} from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -325,7 +325,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event));
 
     this._mediator.execute<void>(new NodeResizeFinalizeRequest(event));
 
