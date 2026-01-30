@@ -24,14 +24,12 @@ export class FReassignConnectionPreparationExecution
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
 
-  private _connection: FConnectionBase | undefined;
-
   private get _canvas(): FCanvasBase {
     return this._store.fCanvas as FCanvasBase;
   }
 
   private get _transform(): ITransformModel {
-    return this._canvas.transform as ITransformModel;
+    return this._store.transform;
   }
 
   private get _flowHost(): HTMLElement {
@@ -43,48 +41,50 @@ export class FReassignConnectionPreparationExecution
   }
 
   public handle(request: FReassignConnectionPreparationRequest): void {
-    const position = calculatePointerInFlow(request.event, this._flowHost, this._transform);
-
-    if (!this._isValid(position) || !this._isValidTrigger(request)) {
+    if (!this._dragContext.isEmpty() || !this._isValidTrigger(request)) {
       return;
     }
 
+    const pointerInFlow = calculatePointerInFlow(request.event, this._flowHost, this._transform);
+    const connection = this._findConnectionAt(pointerInFlow);
+
+    if (!connection) {
+      return;
+    }
+
+    this._capturePointerDown(request);
+    this._startDrag(connection, pointerInFlow);
+
+    queueMicrotask(() => this._bringToFront(connection));
+  }
+
+  private _findConnectionAt(pointerInFlow: IPoint): FConnectionBase | undefined {
+    return this._connections.find((c) => isPointerInsideStartOrEndDragHandles(c, pointerInFlow));
+  }
+
+  private _capturePointerDown(request: FReassignConnectionPreparationRequest): void {
     this._dragContext.onPointerDownScale = this._transform.scale;
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
       .elementTransform(this._flowHost)
       .div(this._transform.scale);
+  }
+
+  private _startDrag(connection: FConnectionBase, pointerInFlow: IPoint): void {
+    const isEndHandle = isDragHandleEnd(connection, pointerInFlow);
 
     this._dragContext.draggableItems = [
-      new FReassignConnectionDragHandler(
-        this._injector,
-        this._connection!,
-        isDragHandleEnd(this._connection!, position),
-      ),
+      new FReassignConnectionDragHandler(this._injector, connection, isEndHandle),
     ];
-
-    setTimeout(() => this._updateConnectionLayer());
-  }
-
-  private _isValid(position: IPoint): boolean {
-    return this._dragContext.isEmpty() && !!this._calculateConnectionsFromPoint(position);
-  }
-
-  private _calculateConnectionsFromPoint(position: IPoint): FConnectionBase | undefined {
-    this._connection = this._connections.find((x) =>
-      isPointerInsideStartOrEndDragHandles(x, position),
-    );
-
-    return this._connection;
   }
 
   private _isValidTrigger(request: FReassignConnectionPreparationRequest): boolean {
     return isValidEventTrigger(request.event.originalEvent, request.fTrigger);
   }
 
-  private _updateConnectionLayer(): void {
+  private _bringToFront(connection: FConnectionBase): void {
     this._mediator.execute<void>(
       new UpdateItemAndChildrenLayersRequest(
-        this._connection!,
+        connection,
         this._canvas.fConnectionsContainer().nativeElement,
       ),
     );

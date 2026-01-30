@@ -5,7 +5,7 @@ import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FReassignConnectionDragHandler } from '../f-reassign-connection.drag-handler';
 import { FDraggableBase } from '../../../f-draggable-base';
-import { FReassignConnectionEvent } from '../f-reassign-connection.event';
+import { FReassignConnectionEvent } from '../f-reassign-connection-event';
 import { FConnectorBase } from '../../../../f-connectors';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from '../../../../domain';
 import { FDragHandlerResult } from '../../../f-drag-handler';
@@ -82,17 +82,16 @@ export class FReassignConnectionFinalizeExecution
     event: IPointerEvent,
     fConnector?: FConnectorBase,
   ): FReassignConnectionEvent {
-    const fConnection = this._dragResult.getData().fConnection;
+    const connection = this._dragResult.getData().fConnection;
 
     const isTargetDragHandle = this._dragResult.getData().isTargetDragHandle;
 
     return new FReassignConnectionEvent(
-      fConnection.fId(),
-      !isTargetDragHandle,
-      isTargetDragHandle,
-      fConnection.fOutputId(),
+      connection.fId(),
+      isTargetDragHandle ? 'target' : 'source',
+      connection.fOutputId(),
       !isTargetDragHandle ? fConnector?.fId() : undefined,
-      fConnection.fInputId(),
+      connection.fInputId(),
       isTargetDragHandle ? fConnector?.fId() : undefined,
       event.getPosition(),
     );
