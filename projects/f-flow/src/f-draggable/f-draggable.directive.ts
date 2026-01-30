@@ -26,8 +26,8 @@ import {
   FCreateConnectionEvent,
   CreateConnectionFinalizeRequest,
   FReassignConnectionEvent,
-  FReassignConnectionFinalizeRequest,
-  FReassignConnectionPreparationRequest,
+  ReassignConnectionFinalizeRequest,
+  ReassignConnectionPreparationRequest,
   DragConnectionWaypointFinalizeRequest,
   DragConnectionWaypointPreparationRequest,
 } from './connection';
@@ -265,7 +265,7 @@ export class FDraggableDirective
     this._mediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
 
     this._mediator.execute<void>(
-      new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
+      new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
     );
 
     this._mediator.execute<void>(
@@ -323,7 +323,7 @@ export class FDraggableDirective
   public override onPointerUp(event: IPointerEvent): void {
     this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._mediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
 
     this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event));
 

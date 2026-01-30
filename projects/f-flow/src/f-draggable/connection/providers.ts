@@ -6,10 +6,7 @@ import {
   CreateConnectionFromOutletPreparation,
   ResolveConnectableOutputForOutlet,
 } from './create-connection';
-import {
-  FReassignConnectionFinalizeExecution,
-  FReassignConnectionPreparationExecution,
-} from './f-reassign-connection';
+import { ReassignConnectionFinalize, ReassignConnectionPreparation } from './reassign-connection';
 import {
   DragConnectionWaypointFinalize,
   DragConnectionWaypointPreparation,
@@ -28,9 +25,9 @@ export const CONNECTIONS_PROVIDERS = [
 
   CreateConnectionPreparation,
 
-  FReassignConnectionFinalizeExecution,
+  ReassignConnectionFinalize,
 
-  FReassignConnectionPreparationExecution,
+  ReassignConnectionPreparation,
 
   DragConnectionWaypointPreparation,
 

@@ -27,7 +27,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   private readonly _browser = inject(BrowserService);
 
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
 
   private get _fHost(): HTMLElement {
