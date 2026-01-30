@@ -14,7 +14,11 @@ import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddInputToStoreRequest, F_CSS_CLASS, RemoveInputFromStoreRequest } from '../../domain';
+import {
+  AddConnectorToStoreRequest,
+  F_CSS_CLASS,
+  RemoveConnectorFromStoreRequest,
+} from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 import { stringAttribute } from '../../utils';
 import { EFConnectableSide } from '../../f-connection-v2';
@@ -73,7 +77,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
   }
 
   public ngOnInit() {
-    this._mediator.execute(new AddInputToStoreRequest(this));
+    this._mediator.execute(new AddConnectorToStoreRequest(this));
     this._node.addConnector(this);
   }
 
@@ -103,6 +107,6 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
 
   public ngOnDestroy(): void {
     this._node.removeConnector(this);
-    this._mediator.execute(new RemoveInputFromStoreRequest(this));
+    this._mediator.execute(new RemoveConnectorFromStoreRequest(this));
   }
 }

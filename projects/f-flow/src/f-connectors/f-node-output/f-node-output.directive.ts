@@ -10,11 +10,15 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FNodeOutputBase, F_NODE_OUTPUT } from './f-node-output-base';
+import { F_NODE_OUTPUT, FNodeOutputBase } from './f-node-output-base';
 import { F_NODE } from '../../f-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { AddOutputToStoreRequest, F_CSS_CLASS, RemoveOutputFromStoreRequest } from '../../domain';
+import {
+  AddConnectorToStoreRequest,
+  F_CSS_CLASS,
+  RemoveConnectorFromStoreRequest,
+} from '../../domain';
 import { FConnectorBase } from '../f-connector-base';
 import { stringAttribute } from '../../utils';
 import { EFConnectableSide } from '../../f-connection-v2';
@@ -75,7 +79,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   }
 
   public ngOnInit() {
-    this._mediator.execute(new AddOutputToStoreRequest(this));
+    this._mediator.execute(new AddConnectorToStoreRequest(this));
     this._node.addConnector(this);
   }
 
@@ -105,6 +109,6 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
 
   public ngOnDestroy(): void {
     this._node.removeConnector(this);
-    this._mediator.execute(new RemoveOutputFromStoreRequest(this));
+    this._mediator.execute(new RemoveConnectorFromStoreRequest(this));
   }
 }

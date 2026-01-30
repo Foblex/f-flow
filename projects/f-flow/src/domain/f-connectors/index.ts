@@ -1,8 +1,4 @@
-export * from './add-input-to-store';
-
-export * from './add-outlet-to-store';
-
-export * from './add-output-to-store';
+export * from './add-connector-to-store';
 
 export * from './calculate-closest-connector';
 
@@ -16,11 +12,7 @@ export * from './get-connector-rect-reference';
 
 export * from './mark-connectable-connectors';
 
-export * from './remove-input-from-store';
-
-export * from './remove-outlet-from-store';
-
-export * from './remove-output-from-store';
+export * from './remove-connector-from-store';
 
 export * from './unmark-connectable-connectors';
 
