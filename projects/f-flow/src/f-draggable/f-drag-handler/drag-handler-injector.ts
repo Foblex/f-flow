@@ -8,6 +8,7 @@ import {
   StaticProvider,
 } from '@angular/core';
 import { DragCanvasHandler } from '../drag-canvas';
+import { DragConnectionWaypointHandler } from '../connection';
 
 export const F_DRAG_HANDLERS = new InjectionToken<(Provider | StaticProvider)[]>('F_PLUGINS');
 
@@ -33,6 +34,10 @@ export class DragHandlerInjector {
         {
           provide: DragCanvasHandler,
           useClass: DragCanvasHandler,
+        },
+        {
+          provide: DragConnectionWaypointHandler,
+          useClass: DragConnectionWaypointHandler,
         },
       ],
       parent: this._injector,

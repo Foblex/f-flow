@@ -28,8 +28,8 @@ import {
   FReassignConnectionEvent,
   FReassignConnectionFinalizeRequest,
   FReassignConnectionPreparationRequest,
-  MoveConnectionWaypointFinalizeRequest,
-  MoveConnectionWaypointPreparationRequest,
+  DragConnectionWaypointFinalizeRequest,
+  DragConnectionWaypointPreparationRequest,
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
@@ -277,7 +277,7 @@ export class FDraggableDirective
     );
 
     this._mediator.execute<void>(
-      new MoveConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
+      new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
@@ -343,7 +343,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
 
-    this._mediator.execute<void>(new MoveConnectionWaypointFinalizeRequest(event));
+    this._mediator.execute<void>(new DragConnectionWaypointFinalizeRequest(event));
 
     this._mediator.execute<void>(new EndDragSequenceRequest());
   }

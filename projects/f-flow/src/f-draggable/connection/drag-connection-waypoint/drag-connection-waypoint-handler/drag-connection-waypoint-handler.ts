@@ -1,42 +1,40 @@
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { Injector } from '@angular/core';
-import { DragHandlerBase } from '../../../f-draggable';
+import { inject, Injectable } from '@angular/core';
+import { DragHandlerBase } from '../../../f-drag-handler';
+import { FComponentsStore } from '../../../../f-storage';
 import {
   FConnectionBase,
   FConnectionWaypointsBase,
   FConnectionWaypointsChangedEvent,
   WaypointPick,
-} from '../../../f-connection-v2';
-import { FComponentsStore } from '../../../f-storage';
+} from '../../../../f-connection-v2';
 
-export class MoveConnectionWaypointHandler extends DragHandlerBase<unknown> {
+@Injectable()
+export class DragConnectionWaypointHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-connection-waypoint';
 
-  private readonly _store: FComponentsStore;
+  private readonly _store = inject(FComponentsStore);
 
   private _point: IPoint | undefined;
+  private _pick: WaypointPick<FConnectionBase> | undefined;
 
   private get _waypointsComponent(): FConnectionWaypointsBase {
-    return this._pick.connection.fWaypoints() as FConnectionWaypointsBase;
+    return this._pick?.connection.fWaypoints() as FConnectionWaypointsBase;
   }
 
   private get _connection(): FConnectionBase {
-    return this._pick.connection;
+    return this._pick?.connection as FConnectionBase;
   }
 
-  constructor(
-    readonly _injector: Injector,
-    private readonly _pick: WaypointPick<FConnectionBase>,
-  ) {
-    super();
-    this._store = this._injector.get(FComponentsStore);
+  public setPick(pick: WaypointPick<FConnectionBase>): void {
+    this._pick = pick;
   }
 
   public override prepareDragSequence(): void {
-    if (this._pick.candidate) {
+    if (this._pick?.candidate) {
       this._point = { ...this._pick.candidate };
       this._waypointsComponent.insert(this._pick.candidate);
-    } else {
+    } else if (this._pick?.waypoint) {
       this._point = { ...this._pick.waypoint };
       this._waypointsComponent.select(this._pick.waypoint);
     }
@@ -60,8 +58,8 @@ export class MoveConnectionWaypointHandler extends DragHandlerBase<unknown> {
 
   private _eventFromPick(): FConnectionWaypointsChangedEvent {
     return new FConnectionWaypointsChangedEvent(
-      this._pick.connection.fId(),
-      this._pick.connection.fWaypoints()?.waypoints() || [],
+      this._connection.fId(),
+      this._connection.fWaypoints()?.waypoints() || [],
     );
   }
 }
