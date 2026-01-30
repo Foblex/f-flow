@@ -1,5 +1,5 @@
 import { DragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
-import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
+import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../domain';
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { FNodeInputDirective, FNodeOutputDirective } from '../../../f-connectors';
 import { IPoint } from '@foblex/2d';
@@ -46,15 +46,15 @@ export class FReassignConnectionDragHandler extends DragHandlerBase<IMagneticGui
     return result as FNodeInputDirective;
   }
 
-  private get _sourceConnectorAndRect(): IConnectorAndRect {
-    return this._mediator.execute<IConnectorAndRect>(
-      new GetConnectorAndRectRequest(this._sourceConnector),
+  private get _sourceConnectorAndRect(): IConnectorRectRef {
+    return this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(this._sourceConnector),
     );
   }
 
-  private get _targetConnectorAndRect(): IConnectorAndRect {
-    return this._mediator.execute<IConnectorAndRect>(
-      new GetConnectorAndRectRequest(this._targetConnector),
+  private get _targetConnectorAndRect(): IConnectorRectRef {
+    return this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(this._targetConnector),
     );
   }
 

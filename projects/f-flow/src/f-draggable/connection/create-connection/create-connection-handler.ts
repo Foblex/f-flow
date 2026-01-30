@@ -2,9 +2,9 @@ import { DragHandlerBase, FDragHandlerResult } from '../../f-drag-handler';
 import {
   CalculateClosestConnectorRequest,
   CalculateTargetConnectorsToConnectRequest,
-  GetConnectorAndRectRequest,
-  IClosestConnector,
-  IConnectorAndRect,
+  GetConnectorRectReferenceRequest,
+  IClosestConnectorRef,
+  IConnectorRectRef,
   MarkConnectableConnectorsRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../domain';
@@ -22,7 +22,7 @@ import {
 } from '../../../f-connection-v2';
 import { ICreateConnectionEventData } from './i-create-connection-event-data';
 
-export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnectionEventData> {
+export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEventData> {
   protected readonly type = 'create-connection';
   protected override data() {
     return { fOutputOrOutletId: this._fOutputOrOutlet.fId() };
@@ -43,9 +43,9 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
     return this._store.connections.getForSnap<FSnapConnectionComponent>();
   }
 
-  private _fOutputWithRect!: IConnectorAndRect;
+  private _fOutputWithRect!: IConnectorRectRef;
 
-  private _canBeConnectedInputs: IConnectorAndRect[] = [];
+  private _canBeConnectedInputs: IConnectorRectRef[] = [];
 
   constructor(
     _injector: Injector,
@@ -64,8 +64,8 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
   }
 
   public override prepareDragSequence(): void {
-    this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(
-      new GetConnectorAndRectRequest(this._fOutputOrOutlet),
+    this._fOutputWithRect = this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(this._fOutputOrOutlet),
     );
     this._getAndMarkCanBeConnectedInputs();
     this._initializeSnapConnection();
@@ -82,15 +82,15 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
   }
 
   private _getAndMarkCanBeConnectedInputs(): void {
-    this._canBeConnectedInputs = this._mediator.execute<IConnectorAndRect[]>(
+    this._canBeConnectedInputs = this._mediator.execute<IConnectorRectRef[]>(
       new CalculateTargetConnectorsToConnectRequest(
         this._fOutputOrOutlet,
-        this._fOutputWithRect.fRect.gravityCenter,
+        this._fOutputWithRect.rect.gravityCenter,
       ),
     );
 
     this._mediator.execute(
-      new MarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector)),
+      new MarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.connector)),
     );
   }
 
@@ -112,7 +112,7 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
 
     this._drawConnectionForCreate(
       this._toConnectorRect.addPoint(difference),
-      closestInput?.fConnector.fConnectableSide || EFConnectableSide.TOP,
+      closestInput?.connector.fConnectableSide || EFConnectableSide.TOP,
     );
 
     if (this._snapConnection) {
@@ -123,10 +123,10 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
   private _drawConnectionForCreate(toConnectorRect: IRoundedRect, fSide: EFConnectableSide): void {
     const line = this._connectionBehaviour.handle(
       new ConnectionBehaviourBuilderRequest(
-        this._fOutputWithRect.fRect,
+        this._fOutputWithRect.rect,
         toConnectorRect,
         this._connection,
-        this._fOutputWithRect.fConnector.fConnectableSide,
+        this._fOutputWithRect.connector.fConnectableSide,
         fSide,
       ),
     );
@@ -135,15 +135,15 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
     this._connection.redraw();
   }
 
-  private _drawSnapConnection(fClosestInput: IClosestConnector | undefined): void {
+  private _drawSnapConnection(fClosestInput: IClosestConnectorRef | undefined): void {
     if (fClosestInput) {
       const line = this._connectionBehaviour.handle(
         new ConnectionBehaviourBuilderRequest(
-          this._fOutputWithRect.fRect,
-          fClosestInput.fRect,
+          this._fOutputWithRect.rect,
+          fClosestInput.rect,
           this._snapConnection!,
-          this._fOutputWithRect.fConnector.fConnectableSide,
-          fClosestInput.fConnector.fConnectableSide,
+          this._fOutputWithRect.connector.fConnectableSide,
+          fClosestInput.connector.fConnectableSide,
         ),
       );
       this._snapConnection?.show();
@@ -154,8 +154,8 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
     }
   }
 
-  private _findClosestInput(difference: IPoint): IClosestConnector | undefined {
-    return this._mediator.execute<IClosestConnector | undefined>(
+  private _findClosestInput(difference: IPoint): IClosestConnectorRef | undefined {
+    return this._mediator.execute<IClosestConnectorRef | undefined>(
       new CalculateClosestConnectorRequest(
         this._toConnectorRect.addPoint(difference),
         this._canBeConnectedInputs,
@@ -164,8 +164,8 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
   }
 
   private _getClosestInputForSnapConnection(
-    fClosestInput: IClosestConnector | undefined,
-  ): IClosestConnector | undefined {
+    fClosestInput: IClosestConnectorRef | undefined,
+  ): IClosestConnectorRef | undefined {
     return fClosestInput && fClosestInput.distance < this._snapConnection!.fSnapThreshold
       ? fClosestInput
       : undefined;
@@ -177,7 +177,7 @@ export class FCreateConnectionDragHandler extends DragHandlerBase<ICreateConnect
     this._snapConnection?.hide();
 
     this._mediator.execute(
-      new UnmarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.fConnector)),
+      new UnmarkConnectableConnectorsRequest(this._canBeConnectedInputs.map((x) => x.connector)),
     );
   }
 }

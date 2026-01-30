@@ -12,7 +12,7 @@ import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { ResolveConnectableOutputForOutletRequest } from '../resolve-connectable-output-for-outlet';
 import { FCreateConnectionEvent } from '../f-create-connection-event';
-import { FCreateConnectionDragHandler } from '../f-create-connection.drag-handler';
+import { CreateConnectionHandler } from '../create-connection-handler';
 import { FDragHandlerResult } from '../../../f-drag-handler';
 import { ICreateConnectionDragResult } from '../i-create-connection-drag-result';
 import { IPointerEvent } from '../../../../drag-toolkit';
@@ -28,8 +28,8 @@ export class CreateConnectionFinalize implements IHandler<CreateConnectionFinali
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  private get _dragHandler(): FCreateConnectionDragHandler {
-    return this._dragContext.draggableItems[0] as FCreateConnectionDragHandler;
+  private get _dragHandler(): CreateConnectionHandler {
+    return this._dragContext.draggableItems[0] as CreateConnectionHandler;
   }
 
   public handle(request: CreateConnectionFinalizeRequest): void {
@@ -41,7 +41,7 @@ export class CreateConnectionFinalize implements IHandler<CreateConnectionFinali
   }
 
   private _isValid(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof FCreateConnectionDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof CreateConnectionHandler);
   }
 
   private _getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {

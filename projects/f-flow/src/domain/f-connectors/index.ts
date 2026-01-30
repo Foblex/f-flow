@@ -12,7 +12,7 @@ export * from './calculate-target-connectors-to-connect';
 
 export * from './calculate-source-connectors-to-connect';
 
-export * from './get-connector-and-rect';
+export * from './get-connector-rect-reference';
 
 export * from './mark-connectable-connectors';
 
@@ -24,8 +24,8 @@ export * from './remove-output-from-store';
 
 export * from './unmark-connectable-connectors';
 
-export * from './i-closest-connector';
+export * from './i-closest-connector-ref';
 
-export * from './i-connector-and-rect';
+export * from './i-connector-rect-ref';
 
 export * from './providers';

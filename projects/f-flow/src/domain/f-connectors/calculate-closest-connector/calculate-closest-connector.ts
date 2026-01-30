@@ -1,33 +1,31 @@
 import { CalculateClosestConnectorRequest } from './calculate-closest-connector-request';
 import { Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { IPoint } from '@foblex/2d';
-import { IClosestConnector } from '../i-closest-connector';
-import { IConnectorAndRect } from '../index';
+import { IPoint, IRect } from '@foblex/2d';
+import { IClosestConnectorRef } from '../i-closest-connector-ref';
+import { IConnectorRectRef } from '../index';
 
 /**
- * Execution that finds the closest connector to a given point.
- * It calculates the distance from the point to each connector's rectangle
- * and returns the closest one along with its distance.
+ * Finds the closest connector rect to the given point.
  */
 @Injectable()
 @FExecutionRegister(CalculateClosestConnectorRequest)
 export class CalculateClosestConnector
-  implements IExecution<CalculateClosestConnectorRequest, IClosestConnector | undefined>
+  implements IExecution<CalculateClosestConnectorRequest, IClosestConnectorRef | undefined>
 {
   public handle({
     position,
-    connectors,
-  }: CalculateClosestConnectorRequest): IClosestConnector | undefined {
-    let result: IConnectorAndRect | undefined;
+    connectorRefs,
+  }: CalculateClosestConnectorRequest): IClosestConnectorRef | undefined {
+    let result: IConnectorRectRef | undefined;
     let minDistance = Infinity;
 
-    for (const element of connectors) {
-      const distance = this._distanceToRectangle(position, element);
+    for (const ref of connectorRefs) {
+      const distance = this._distanceToRect(position, ref.rect);
 
       if (distance < minDistance) {
         minDistance = distance;
-        result = element;
+        result = ref;
       }
     }
 
@@ -39,17 +37,9 @@ export class CalculateClosestConnector
       : undefined;
   }
 
-  private _distanceToRectangle(point: IPoint, inputWithRect: IConnectorAndRect): number {
-    const closestX = this._clamp(
-      point.x,
-      inputWithRect.fRect.x,
-      inputWithRect.fRect.x + inputWithRect.fRect.width,
-    );
-    const closestY = this._clamp(
-      point.y,
-      inputWithRect.fRect.y,
-      inputWithRect.fRect.y + inputWithRect.fRect.height,
-    );
+  private _distanceToRect(point: IPoint, { x, y, width, height }: IRect): number {
+    const closestX = this._clamp(point.x, x, x + width);
+    const closestY = this._clamp(point.y, y, y + height);
 
     const dx = point.x - closestX;
     const dy = point.y - closestY;

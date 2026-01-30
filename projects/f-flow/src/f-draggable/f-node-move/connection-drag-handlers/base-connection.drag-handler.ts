@@ -1,6 +1,6 @@
 import { ILine, IPoint, PointExtensions, RoundedRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { GetConnectorAndRectRequest, IConnectorAndRect } from '../../../domain';
+import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { Injector } from '@angular/core';
@@ -15,8 +15,8 @@ export class BaseConnectionDragHandler {
   private readonly _store: FComponentsStore;
   private readonly _connectionBehaviour: ConnectionBehaviourBuilder;
 
-  private _fOutputWithRect!: IConnectorAndRect;
-  private _fInputWithRect!: IConnectorAndRect;
+  private _fOutputWithRect!: IConnectorRectRef;
+  private _fInputWithRect!: IConnectorRectRef;
 
   private get _fOutput(): FConnectorBase {
     const result = this._store.fOutputs.find((x) => x.fId() === this.fConnection.fOutputId());
@@ -54,11 +54,11 @@ export class BaseConnectionDragHandler {
   }
 
   private _initialize(): void {
-    this._fOutputWithRect = this._mediator.execute<IConnectorAndRect>(
-      new GetConnectorAndRectRequest(this._fOutput),
+    this._fOutputWithRect = this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(this._fOutput),
     );
-    this._fInputWithRect = this._mediator.execute<IConnectorAndRect>(
-      new GetConnectorAndRectRequest(this._fInput),
+    this._fInputWithRect = this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(this._fInput),
     );
   }
 
@@ -77,11 +77,11 @@ export class BaseConnectionDragHandler {
   private _recalculateConnection(): ILine {
     return this._connectionBehaviour.handle(
       new ConnectionBehaviourBuilderRequest(
-        RoundedRect.fromRoundedRect(this._fOutputWithRect.fRect).addPoint(this._sourceDifference),
-        RoundedRect.fromRoundedRect(this._fInputWithRect.fRect).addPoint(this._targetDifference),
+        RoundedRect.fromRoundedRect(this._fOutputWithRect.rect).addPoint(this._sourceDifference),
+        RoundedRect.fromRoundedRect(this._fInputWithRect.rect).addPoint(this._targetDifference),
         this.fConnection,
-        this._fOutputWithRect.fConnector.fConnectableSide,
-        this._fInputWithRect.fConnector.fConnectableSide,
+        this._fOutputWithRect.connector.fConnectableSide,
+        this._fInputWithRect.connector.fConnectableSide,
       ),
     );
   }

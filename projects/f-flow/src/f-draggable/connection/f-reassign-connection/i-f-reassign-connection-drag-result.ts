@@ -1,5 +1,5 @@
 import { RoundedRect } from '@foblex/2d';
-import { IConnectorAndRect } from '../../../domain';
+import { IConnectorRectRef } from '../../../domain';
 import { FConnectionBase } from '../../../f-connection-v2';
 
 export interface IFReassignConnectionDragResult {
@@ -11,5 +11,5 @@ export interface IFReassignConnectionDragResult {
 
   fConnection: FConnectionBase;
 
-  connectableConnectors: IConnectorAndRect[];
+  connectableConnectors: IConnectorRectRef[];
 }

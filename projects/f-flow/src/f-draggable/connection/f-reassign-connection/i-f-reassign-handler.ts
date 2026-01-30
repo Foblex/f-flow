@@ -1,9 +1,9 @@
 import { IPoint, RectExtensions, RoundedRect } from '@foblex/2d';
-import { IClosestConnector, IConnectorAndRect } from '../../../domain';
+import { IClosestConnectorRef, IConnectorRectRef } from '../../../domain';
 import { FSnapConnectionComponent } from '../../../f-connection';
 
 export interface IFReassignHandler {
-  getConnectableConnectors(): IConnectorAndRect[];
+  getConnectableConnectors(): IConnectorRectRef[];
 
   markConnectableConnector(): void;
 
@@ -15,9 +15,9 @@ export interface IFReassignHandler {
 }
 
 export function isClosestConnectorInsideSnapThreshold(
-  fClosestConnector: IClosestConnector | undefined,
+  fClosestConnector: IClosestConnectorRef | undefined,
   snapConnection: FSnapConnectionComponent,
-): IClosestConnector | undefined {
+): IClosestConnectorRef | undefined {
   return fClosestConnector && fClosestConnector.distance < snapConnection.fSnapThreshold
     ? fClosestConnector
     : undefined;

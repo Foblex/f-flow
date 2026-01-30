@@ -3,76 +3,78 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
-import { IConnectorAndRect } from '../i-connector-and-rect';
-import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
+import { IConnectorRectRef } from '../i-connector-rect-ref';
+import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
 import { IPoint } from '@foblex/2d';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
 import { EFConnectableSide } from '../../../f-connection-v2';
 
 /**
- * Execution that retrieves all source connectors that can be connected to a given target connector,
- * along with their rectangles.
- * Source - Output or Outlet connectors.
+ * Returns all source connectors (outputs/outlets) that can connect to the given target input,
+ * along with their rect references.
  */
 @Injectable()
 @FExecutionRegister(CalculateSourceConnectorsToConnectRequest)
 export class CalculateSourceConnectorsToConnect
-  implements IExecution<CalculateSourceConnectorsToConnectRequest, IConnectorAndRect[]>
+  implements IExecution<CalculateSourceConnectorsToConnectRequest, IConnectorRectRef[]>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _sourceConnectors(): FNodeOutputBase[] {
+  private get _sources(): FNodeOutputBase[] {
     return this._store.fOutputs as FNodeOutputBase[];
   }
 
   public handle({
-    targetConnector,
-    pointerPosition,
-  }: CalculateSourceConnectorsToConnectRequest): IConnectorAndRect[] {
-    const result = this._getConnectableSources(targetConnector).map((x) => {
-      return this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(x));
-    });
+    target,
+    pointer,
+  }: CalculateSourceConnectorsToConnectRequest): IConnectorRectRef[] {
+    const sources = this._getConnectableSources(target);
 
-    setTimeout(() => {
-      this._calculateConnectableSides(result, pointerPosition);
-    });
+    const refs: IConnectorRectRef[] = [];
+    for (const connector of sources) {
+      refs.push(
+        this._mediator.execute<IConnectorRectRef>(new GetConnectorRectReferenceRequest(connector)),
+      );
+    }
 
-    return result;
+    this._scheduleApplyCalculatedSides(refs, pointer);
+
+    return refs;
   }
 
-  private _getConnectableSources(targetConnector: FNodeInputBase): FConnectorBase[] {
-    return this._sourceConnectors.filter((x) => {
+  private _getConnectableSources(target: FNodeInputBase): FConnectorBase[] {
+    return this._sources.filter((x) => {
       let result = x.canBeConnected;
       if (result && x.hasConnectionLimits) {
-        result = x.canConnectTo(targetConnector);
+        result = x.canConnectTo(target);
       }
 
       return result;
     });
   }
 
-  private _calculateConnectableSides(
-    connectors: IConnectorAndRect[],
-    pointerPosition: IPoint,
+  private _scheduleApplyCalculatedSides(refs: IConnectorRectRef[], pointer: IPoint): void {
+    queueMicrotask(() => this._applyCalculatedConnectableSides(refs, pointer));
+  }
+
+  private _applyCalculatedConnectableSides(
+    refs: readonly IConnectorRectRef[],
+    pointer: IPoint,
   ): void {
-    connectors.forEach((x) => {
-      if (isCalculateMode(x.fConnector.userFConnectableSide)) {
-        x.fConnector.fConnectableSide = this._calculateByConnectedPositions(
-          x.fConnector,
-          pointerPosition,
-        );
-      }
-    });
+    for (const { connector } of refs) {
+      if (!isCalculateMode(connector.userFConnectableSide)) continue;
+      connector.fConnectableSide = this._calculateByConnectedPositions(connector, pointer);
+    }
   }
 
   /** Delegates to the connected-positions calculation execution. */
   private _calculateByConnectedPositions(
     connector: FConnectorBase,
-    pointerPosition: IPoint,
+    pointer: IPoint,
   ): EFConnectableSide {
     return this._mediator.execute(
-      new CalculateConnectableSideByConnectedPositionsRequest(connector, pointerPosition),
+      new CalculateConnectableSideByConnectedPositionsRequest(connector, pointer),
     );
   }
 }

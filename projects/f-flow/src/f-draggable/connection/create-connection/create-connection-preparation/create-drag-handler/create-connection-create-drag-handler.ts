@@ -4,7 +4,7 @@ import { inject, Injectable, Injector } from '@angular/core';
 import { CreateConnectionCreateDragHandlerRequest } from './create-connection-create-drag-handler-request';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FDraggableDataContext } from '../../../../f-draggable-data-context';
-import { FCreateConnectionDragHandler } from '../../f-create-connection.drag-handler';
+import { CreateConnectionHandler } from '../../create-connection-handler';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionCreateDragHandlerRequest)
@@ -29,7 +29,7 @@ export class CreateConnectionCreateDragHandler
     const pointerDownInCanvasSpace = this._toCanvasSpace(pointerDownInFlowSpace);
 
     this._dragContext.draggableItems = [
-      new FCreateConnectionDragHandler(this._injector, request.source, pointerDownInCanvasSpace),
+      new CreateConnectionHandler(this._injector, request.source, pointerDownInCanvasSpace),
     ];
   }
 

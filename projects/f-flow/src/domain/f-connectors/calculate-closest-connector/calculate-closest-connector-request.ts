@@ -1,11 +1,11 @@
 import { IPoint } from '@foblex/2d';
-import { IConnectorAndRect } from '../index';
+import { IConnectorRectRef } from '../index';
 
 export class CalculateClosestConnectorRequest {
   static readonly fToken = Symbol('CalculateClosestConnectorRequest');
 
   constructor(
     public readonly position: IPoint,
-    public readonly connectors: IConnectorAndRect[],
+    public readonly connectorRefs: IConnectorRectRef[],
   ) {}
 }

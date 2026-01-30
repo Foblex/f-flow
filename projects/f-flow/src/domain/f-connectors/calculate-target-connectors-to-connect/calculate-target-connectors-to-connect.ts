@@ -8,89 +8,81 @@ import {
   FNodeOutputBase,
 } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
-import { IConnectorAndRect } from '../i-connector-and-rect';
-import { GetConnectorAndRectRequest } from '../get-connector-and-rect';
+import { IConnectorRectRef } from '../i-connector-rect-ref';
+import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
 import { IPoint } from '@foblex/2d';
 import { EFConnectableSide } from '../../../f-connection-v2';
 
 /**
- * Execution that retrieves all input connectors that can be connected to a given output or outlet connector,
+ * Returns all input connectors that can be connected to the given source (output or outlet),
+ * along with their rect references.
  */
 @Injectable()
 @FExecutionRegister(CalculateTargetConnectorsToConnectRequest)
 export class CalculateTargetConnectorsToConnect
-  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorAndRect[]>
+  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorRectRef[]>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _targetConnectors(): FConnectorBase[] {
-    return this._store.fInputs;
+  private get _targets(): FNodeInputBase[] {
+    return this._store.fInputs as FNodeInputBase[];
   }
 
   public handle({
-    sourceConnector,
-    pointerPosition,
-  }: CalculateTargetConnectorsToConnectRequest): IConnectorAndRect[] {
-    const result = this._getCanBeConnectedInputs(sourceConnector).map((x) => {
-      return this._mediator.execute<IConnectorAndRect>(new GetConnectorAndRectRequest(x));
-    });
+    source,
+    pointer,
+  }: CalculateTargetConnectorsToConnectRequest): IConnectorRectRef[] {
+    const targets = this._getConnectableTargets(source);
 
-    setTimeout(() => {
-      this._calculateConnectableSides(result, pointerPosition);
-    });
-
-    return result;
-  }
-
-  private _getCanBeConnectedInputs(
-    outputOrOutlet: FNodeOutputBase | FNodeOutletBase,
-  ): FConnectorBase[] {
-    let targetConnectors: FConnectorBase[] = [];
-    if (outputOrOutlet.hasConnectionLimits) {
-      targetConnectors = this._targetConnectors.filter((x) =>
-        outputOrOutlet.canConnectTo(x as FNodeInputBase),
+    const refs: IConnectorRectRef[] = [];
+    for (const input of targets) {
+      refs.push(
+        this._mediator.execute<IConnectorRectRef>(new GetConnectorRectReferenceRequest(input)),
       );
-    } else {
-      targetConnectors = this._targetConnectors.filter((x) => x.canBeConnected);
-
-      if (!outputOrOutlet.isSelfConnectable) {
-        targetConnectors = this._filterSelfConnectable(targetConnectors, outputOrOutlet);
-      }
     }
 
-    return targetConnectors;
+    this._scheduleApplyCalculatedSides(refs, pointer);
+
+    return refs;
   }
 
-  private _filterSelfConnectable(
-    targetConnectors: FConnectorBase[],
-    outputOrOutlet: FConnectorBase,
-  ): FConnectorBase[] {
-    return targetConnectors.filter(({ fNodeId }) => outputOrOutlet.fNodeId !== fNodeId);
+  private _getConnectableTargets(source: FNodeOutputBase | FNodeOutletBase): FConnectorBase[] {
+    // 1) Connection limits (strict whitelist)
+    if (source.hasConnectionLimits) {
+      return this._targets.filter((x) => source.canConnectTo(x));
+    }
+
+    // 2) Basic connectable filter
+    let targets = this._targets.filter((x) => x.canBeConnected);
+
+    // 3) Self-connection rule
+    if (!source.isSelfConnectable) {
+      targets = targets.filter((x) => x.fNodeId !== source.fNodeId);
+    }
+
+    return targets;
   }
 
-  private _calculateConnectableSides(
-    connectors: IConnectorAndRect[],
-    pointerPosition: IPoint,
-  ): void {
-    connectors.forEach((x) => {
-      if (isCalculateMode(x.fConnector.userFConnectableSide)) {
-        x.fConnector.fConnectableSide = this._calculateByConnectedPositions(
-          x.fConnector,
-          pointerPosition,
-        );
-      }
-    });
+  private _scheduleApplyCalculatedSides(refs: IConnectorRectRef[], pointer: IPoint): void {
+    queueMicrotask(() => this._applyCalculatedConnectableSides(refs, pointer));
+  }
+
+  private _applyCalculatedConnectableSides(refs: IConnectorRectRef[], pointer: IPoint): void {
+    for (const { connector } of refs) {
+      if (!isCalculateMode(connector.userFConnectableSide)) continue;
+      connector.fConnectableSide = this._calculateByConnectedPositions(connector, pointer);
+    }
   }
 
   /** Delegates to the connected-positions calculation execution. */
   private _calculateByConnectedPositions(
     connector: FConnectorBase,
-    pointerPosition: IPoint,
+    pointer: IPoint,
   ): EFConnectableSide {
     return this._mediator.execute(
-      new CalculateConnectableSideByConnectedPositionsRequest(connector, pointerPosition),
+      new CalculateConnectableSideByConnectedPositionsRequest(connector, pointer),
     );
   }
 }

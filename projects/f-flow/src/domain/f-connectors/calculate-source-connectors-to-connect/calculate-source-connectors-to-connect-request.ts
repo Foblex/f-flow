@@ -5,7 +5,7 @@ export class CalculateSourceConnectorsToConnectRequest {
   static readonly fToken = Symbol('CalculateSourceConnectorsToConnectRequest');
 
   constructor(
-    public readonly targetConnector: FNodeInputBase,
-    public readonly pointerPosition: IPoint,
+    public readonly target: FNodeInputBase,
+    public readonly pointer: IPoint,
   ) {}
 }

@@ -4,7 +4,7 @@ export * from './create-connection-preparation';
 
 export * from './resolve-connectable-output-for-outlet';
 
-export * from './f-create-connection.drag-handler';
+export * from './create-connection-handler';
 
 export * from './f-create-connection-event';
 
