@@ -1,4 +1,5 @@
 export * from './f-connector-registry';
+export * from './f-connection-marker-registry';
 export * from './f-connection-registry';
 export * from './f-node-registry';
 

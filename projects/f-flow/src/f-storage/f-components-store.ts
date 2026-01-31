@@ -6,11 +6,11 @@ import { FNodeInputBase, FNodeOutletBase, FNodeOutputBase } from '../f-connector
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
-import { FConnectionMarkerStore } from './f-connection-marker-store';
 import { ITransformModel } from '@foblex/2d';
 import { FConnectorRegistry } from './f-connector-registry';
 import { FNodeRegistry } from './f-node-registry';
 import { FConnectionRegistry } from './f-connection-registry';
+import { FConnectionMarkerRegistry } from './f-connection-marker-registry';
 
 @Injectable()
 export class FComponentsStore {
@@ -38,7 +38,7 @@ export class FComponentsStore {
 
   public readonly nodes = new FNodeRegistry();
   public readonly connections = new FConnectionRegistry();
-  public readonly connectionMarkers = new FConnectionMarkerStore();
+  public readonly connectionMarkers = new FConnectionMarkerRegistry();
 
   public readonly outputs = new FConnectorRegistry<FNodeOutputBase>('Output');
   public readonly inputs = new FConnectorRegistry<FNodeInputBase>('Input');
