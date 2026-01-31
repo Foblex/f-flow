@@ -27,7 +27,7 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
   private readonly _store = inject(FComponentsStore);
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.connections.getForSnap<FSnapConnectionComponent>();
+    return this._store.connections.getForSnap();
   }
 
   private _connection!: FConnectionBase;

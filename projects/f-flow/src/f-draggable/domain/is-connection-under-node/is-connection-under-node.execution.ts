@@ -55,7 +55,7 @@ export class IsConnectionUnderNodeExecution
     const connectorsId = this._getConnectorsId(connectors);
 
     return this._store.connections
-      .getAll<FConnectionBase>()
+      .getAll()
       .filter((x) => connectorsId.includes(x.fOutputId()))
       .map((x) => x.fId());
   }
@@ -64,7 +64,7 @@ export class IsConnectionUnderNodeExecution
     const connectorsId = this._getConnectorsId(connectors);
 
     return this._store.connections
-      .getAll<FConnectionBase>()
+      .getAll()
       .filter((x) => connectorsId.includes(x.fInputId()))
       .map((x) => x.fId());
   }
@@ -79,7 +79,7 @@ export class IsConnectionUnderNodeExecution
     );
 
     return this._store.connections
-      .getAll<FConnectionBase>()
+      .getAll()
       .filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
   }
 

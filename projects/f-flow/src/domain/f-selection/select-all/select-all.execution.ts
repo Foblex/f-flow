@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
-import { FConnectionBase } from '../../../f-connection-v2';
 
 /**
  * Execution that selects all components in the FComponentsStore.
@@ -24,7 +23,7 @@ export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
       x.markAsSelected();
       this._dragContext.selectedItems.push(x);
     });
-    this._store.connections.getAll<FConnectionBase>().forEach((x) => {
+    this._store.connections.getAll().forEach((x) => {
       x.markAsSelected();
       this._dragContext.selectedItems.push(x);
     });

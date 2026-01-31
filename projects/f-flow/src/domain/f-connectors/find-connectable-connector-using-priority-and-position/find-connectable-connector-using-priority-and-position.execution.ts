@@ -39,7 +39,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.connections.getForSnap<FSnapConnectionComponent>();
+    return this._store.connections.getForSnap();
   }
 
   public handle(

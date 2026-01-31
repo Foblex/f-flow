@@ -25,7 +25,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
   }
 
   private get _connections(): FConnectionBase[] {
-    return this._store.connections.getAll<FConnectionBase>();
+    return this._store.connections.getAll();
   }
 
   private get _transform(): ITransformModel {

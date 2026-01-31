@@ -28,17 +28,17 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   public handle(_request: RedrawConnectionsRequest): void {
     this._resetConnectors();
 
-    const instanceForCreate = this._store.connections.getForCreate<FConnectionBase>();
+    const instanceForCreate = this._store.connections.getForCreate();
     if (instanceForCreate) {
       this._createMarkers(instanceForCreate);
     }
 
-    const instanceForSnap = this._store.connections.getForSnap<FConnectionBase>();
+    const instanceForSnap = this._store.connections.getForSnap();
     if (instanceForSnap) {
       this._createMarkers(instanceForSnap);
     }
 
-    this._store.connections.getAll<FConnectionBase>().forEach((connection) => {
+    this._store.connections.getAll().forEach((connection) => {
       this._setupConnection(
         this._store.outputs.require(connection.fOutputId()),
         this._store.inputs.require(connection.fInputId()),

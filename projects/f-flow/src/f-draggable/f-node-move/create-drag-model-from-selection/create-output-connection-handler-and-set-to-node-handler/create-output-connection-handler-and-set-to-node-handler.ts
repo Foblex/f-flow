@@ -19,7 +19,7 @@ export class CreateOutputConnectionHandlerAndSetToNodeHandler
   private readonly _injector = inject(Injector);
 
   private get _connections(): FConnectionBase[] {
-    return this._store.connections.getAll<FConnectionBase>();
+    return this._store.connections.getAll();
   }
 
   public handle(request: CreateOutputConnectionHandlerAndSetToNodeHandlerRequest): void {

@@ -38,11 +38,11 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
   private readonly _store = inject(FComponentsStore);
 
   private get _connection(): FConnectionForCreateComponent {
-    return this._store.connections.getForCreate<FConnectionForCreateComponent>() as FConnectionForCreateComponent;
+    return this._store.connections.getForCreate() as FConnectionForCreateComponent;
   }
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {
-    return this._store.connections.getForSnap<FSnapConnectionComponent>();
+    return this._store.connections.getForSnap();
   }
 
   private _targets: IConnectorRectRef[] = [];

@@ -35,7 +35,8 @@ export class CalculateInputConnections
 
   private _collectConnections(ids: Set<string>): FConnectionBase[] {
     const result: FConnectionBase[] = [];
-    for (const conn of this._store.connections.getAll<FConnectionBase>()) {
+    const connections = this._store.connections.getAll();
+    for (const conn of connections) {
       if (ids.has(conn.fInputId())) {
         result.push(conn);
       }

@@ -34,7 +34,7 @@ export class ReassignConnectionPreparation
   }
 
   private get _connections(): FConnectionBase[] {
-    return this._store.connections.getAll<FConnectionBase>();
+    return this._store.connections.getAll();
   }
 
   public handle(request: ReassignConnectionPreparationRequest): void {
