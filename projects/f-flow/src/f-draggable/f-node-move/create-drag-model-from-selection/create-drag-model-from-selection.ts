@@ -56,7 +56,7 @@ export class CreateDragModelFromSelection
   }
 
   private _findNode(hostElement: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this._store.nodes.getAll<FNodeBase>().find((n) => n.isContains(hostElement));
+    return this._store.nodes.getAll().find((n) => n.isContains(hostElement));
   }
 
   private _collectSelectedAndAllChildren(selected: FNodeBase[]): FNodeBase[] {

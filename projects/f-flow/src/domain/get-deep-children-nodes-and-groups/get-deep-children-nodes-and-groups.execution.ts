@@ -11,8 +11,8 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 @Injectable()
 @FExecutionRegister(GetDeepChildrenNodesAndGroupsRequest)
 export class GetDeepChildrenNodesAndGroupsExecution
-  implements IExecution<GetDeepChildrenNodesAndGroupsRequest, FNodeBase[]> {
-
+  implements IExecution<GetDeepChildrenNodesAndGroupsRequest, FNodeBase[]>
+{
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: GetDeepChildrenNodesAndGroupsRequest): FNodeBase[] {
@@ -25,7 +25,7 @@ export class GetDeepChildrenNodesAndGroupsExecution
     }
     visited.add(fId);
 
-    const directChildren = this._store.nodes.getAll<FNodeBase>().filter((x) => x.fParentId() === fId);
+    const directChildren = this._store.nodes.getAll().filter((x) => x.fParentId() === fId);
 
     return directChildren.reduce((result, x) => {
       return result.concat(this._getChildrenNodes(x.fId(), visited));

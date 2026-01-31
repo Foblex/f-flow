@@ -30,7 +30,7 @@ export class ResolveConnectableOutputForOutlet
   private _findOwnerNode(outlet: FNodeOutletBase): FNodeBase | undefined {
     const host = outlet.hostElement;
 
-    return this._store.nodes.getAll<FNodeBase>().find((n) => n.isContains(host));
+    return this._store.nodes.getAll().find((n) => n.isContains(host));
   }
 
   private _findFirstConnectableOutputInNode(node: FNodeBase): FConnectorBase | undefined {

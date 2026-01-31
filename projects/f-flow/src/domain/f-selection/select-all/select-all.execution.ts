@@ -4,7 +4,6 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { FConnectionBase } from '../../../f-connection-v2';
-import { FNodeBase } from '../../../f-node';
 
 /**
  * Execution that selects all components in the FComponentsStore.
@@ -13,7 +12,6 @@ import { FNodeBase } from '../../../f-node';
 @Injectable()
 @FExecutionRegister(SelectAllRequest)
 export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
-
   private _dragContext = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);
 
@@ -22,7 +20,7 @@ export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
       x.unmarkAsSelected();
     });
     this._dragContext.selectedItems = [];
-    this._store.nodes.getAll<FNodeBase>().forEach((x) => {
+    this._store.nodes.getAll().forEach((x) => {
       x.markAsSelected();
       this._dragContext.selectedItems.push(x);
     });

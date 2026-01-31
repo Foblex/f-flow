@@ -8,9 +8,9 @@ import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
 import { FConnectionStore } from './f-connection-store';
 import { FConnectionMarkerStore } from './f-connection-marker-store';
-import { FNodeStore } from './f-node-store';
 import { ITransformModel } from '@foblex/2d';
 import { FConnectorRegistry } from './f-connector-registry';
+import { FNodeBase } from '../f-node';
 
 @Injectable()
 export class FComponentsStore {
@@ -36,7 +36,7 @@ export class FComponentsStore {
     return this.fCanvas?.transform as ITransformModel;
   }
 
-  public readonly nodes = new FNodeStore();
+  public readonly nodes = new FConnectorRegistry<FNodeBase>('Node');
   public readonly connections = new FConnectionStore();
   public readonly connectionMarkers = new FConnectionMarkerStore();
 

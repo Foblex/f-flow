@@ -75,7 +75,7 @@ export class FNodeRotatePreparationExecution
   }
 
   private _getNode(element: HTMLElement): FNodeBase | undefined {
-    this._fNode = this._store.nodes.getAll<FNodeBase>().find((x) => x.isContains(element));
+    this._fNode = this._store.nodes.getAll().find((x) => x.isContains(element));
 
     return this._fNode;
   }

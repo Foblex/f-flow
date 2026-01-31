@@ -58,7 +58,7 @@ export class MoveNodePreparation implements IExecution<MoveNodePreparationReques
   }
 
   private _findDraggableNode(target: HTMLElement): FNodeBase | undefined {
-    for (const node of this._store.nodes.getAll<FNodeBase>()) {
+    for (const node of this._store.nodes.getAll()) {
       if (!node.fDraggingDisabled() && node.isContains(target)) {
         return node;
       }

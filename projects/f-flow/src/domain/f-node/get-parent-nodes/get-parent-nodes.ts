@@ -28,7 +28,7 @@ export class GetParentNodes implements IExecution<GetParentNodesRequest, FNodeBa
     }
     visited.add(nodeOrGroup.fId());
 
-    const parent = this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === nodeOrGroup.fParentId());
+    const parent = this._store.nodes.get(nodeOrGroup.fParentId() as string);
     if (!parent) {
       return result;
     }

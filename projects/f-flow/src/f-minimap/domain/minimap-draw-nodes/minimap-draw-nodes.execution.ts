@@ -11,8 +11,9 @@ import { FFlowBase } from '../../../f-flow';
 
 @Injectable()
 @FExecutionRegister(MinimapDrawNodesRequest)
-export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesRequest, SVGRectElement[]> {
-
+export class MinimapDrawNodesExecution
+  implements IExecution<MinimapDrawNodesRequest, SVGRectElement[]>
+{
   private readonly _browser = inject(BrowserService);
   private readonly _store = inject(FComponentsStore);
 
@@ -21,7 +22,7 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
   }
 
   private get _fNodes(): FNodeBase[] {
-    return this._store.nodes.getAll<FNodeBase>();
+    return this._store.nodes.getAll();
   }
 
   private get _fCanvas(): FCanvasBase {
@@ -52,7 +53,10 @@ export class MinimapDrawNodesExecution implements IExecution<MinimapDrawNodesReq
   }
 
   private _getNodeRectInFlow(node: FNodeBase): IRect {
-    return RectExtensions.elementTransform(RectExtensions.fromElement(node.hostElement), this._fFlow!.hostElement);
+    return RectExtensions.elementTransform(
+      RectExtensions.fromElement(node.hostElement),
+      this._fFlow!.hostElement,
+    );
   }
 
   private _applyClassList(element: SVGRectElement, node: FNodeBase, isNode: boolean): void {

@@ -44,7 +44,7 @@ export class DragCanvasPreparation implements IExecution<DragCanvasPreparationRe
   }
 
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this._store.nodes.getAll<FNodeBase>().find((x) => x.isContains(targetElement));
+    let result = this._store.nodes.getAll().find((x) => x.isContains(targetElement));
     if (result && result.fDraggingDisabled()) {
       result = undefined;
     }

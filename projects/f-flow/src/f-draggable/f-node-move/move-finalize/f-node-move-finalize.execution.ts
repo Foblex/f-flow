@@ -87,12 +87,13 @@ export class FNodeMoveFinalizeExecution implements IExecution<FNodeMoveFinalizeR
   }
 
   private _createMoveNodesEvent(): FMoveNodesEvent {
-    const eventNodes = this._summaryHandler?.getEvent().fData?.fNodeIds.map((id: string) => {
-      return {
-        id,
-        position: this._store.nodes.getAll<FNodeBase>().find((x) => x.fId() === id)?._position as IPoint,
-      };
-    }) || [];
+    const eventNodes =
+      this._summaryHandler?.getEvent().fData?.fNodeIds.map((id: string) => {
+        return {
+          id,
+          position: this._store.nodes.get(id)?._position as IPoint,
+        };
+      }) || [];
 
     return new FMoveNodesEvent(eventNodes);
   }

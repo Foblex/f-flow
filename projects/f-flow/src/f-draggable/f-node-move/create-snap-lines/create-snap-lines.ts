@@ -14,7 +14,6 @@ import { BrowserService } from '@foblex/platform';
 @Injectable()
 @FExecutionRegister(CreateSnapLinesRequest)
 export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void> {
-
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);
@@ -34,7 +33,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
         this._getFlowHostSize(),
         this._collectNotDraggedNodeRects(this._allDraggedNodes(handler)),
       ),
-    )
+    );
   }
 
   private _allDraggedNodes(handler: MoveSummaryDragHandler): FNodeBase[] {
@@ -42,7 +41,9 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
   }
 
   private _getFlowHostSize(): ISize {
-    return this._mediator.execute<HTMLElement>(new GetFlowHostElementRequest()).getBoundingClientRect();
+    return this._mediator
+      .execute<HTMLElement>(new GetFlowHostElementRequest())
+      .getBoundingClientRect();
   }
 
   private _createLineService(): SnapLineService {
@@ -54,10 +55,10 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
   private _collectNotDraggedNodeRects(allDraggedNodes: FNodeBase[]): IRect[] {
     return this._calculateNotDraggedNodes(allDraggedNodes).map((x) => {
       return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement));
-    })
+    });
   }
 
   private _calculateNotDraggedNodes(allDraggedNodes: FNodeBase[]): FNodeBase[] {
-    return this._store.nodes.getAll<FNodeBase>().filter((x) => !allDraggedNodes.includes(x));
+    return this._store.nodes.getAll().filter((x) => !allDraggedNodes.includes(x));
   }
 }

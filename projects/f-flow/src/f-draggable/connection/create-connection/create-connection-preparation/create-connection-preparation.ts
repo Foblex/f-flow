@@ -43,7 +43,7 @@ export class CreateConnectionPreparation
   }
 
   private _findOwnerNode(target: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this._store.nodes.getAll<FNodeBase>().find((n) => n.isContains(target));
+    return this._store.nodes.getAll().find((n) => n.isContains(target));
   }
 
   private _isValidConditions(): boolean {

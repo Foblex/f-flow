@@ -35,7 +35,7 @@ export class FindConnectableConnectorUsingPriorityAndPositionExecution
   }
 
   private get _fNodes(): FNodeBase[] {
-    return this._store.nodes.getAll<FNodeBase>();
+    return this._store.nodes.getAll();
   }
 
   private get _snapConnection(): FSnapConnectionComponent | undefined {

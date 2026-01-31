@@ -79,7 +79,7 @@ export class SingleSelect implements IExecution<SingleSelectRequest, void> {
   }
 
   private _getNodeOrGroup(targetElement: HTMLElement): FNodeBase | undefined {
-    return this._store.nodes.getAll<FNodeBase>().find((x) => x.isContains(targetElement));
+    return this._store.nodes.getAll().find((x) => x.isContains(targetElement));
   }
 
   private _getConnection(element: HTMLElement | SVGElement): FConnectionBase | undefined {

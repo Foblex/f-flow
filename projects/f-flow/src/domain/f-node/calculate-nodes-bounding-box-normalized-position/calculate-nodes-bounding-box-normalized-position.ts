@@ -18,7 +18,7 @@ export class CalculateNodesBoundingBoxNormalizedPosition
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: CalculateNodesBoundingBoxNormalizedPositionRequest): IRect | null {
-    return RectExtensions.union(this._getNodesRects(request.fNodes || this._store.nodes.getAll<FNodeBase>()));
+    return RectExtensions.union(this._getNodesRects(request.fNodes || this._store.nodes.getAll()));
   }
 
   private _getNodesRects(fNodes: FNodeBase[]): IRect[] {
