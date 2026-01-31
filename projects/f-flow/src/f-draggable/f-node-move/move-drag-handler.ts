@@ -10,6 +10,7 @@ import { FMediator } from '@foblex/mediator';
 
 export class MoveDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-node';
+  protected readonly kind = 'drag-nodes';
 
   private readonly _startPosition = PointExtensions.initialize();
   private readonly _startRect = RectExtensions.initialize();

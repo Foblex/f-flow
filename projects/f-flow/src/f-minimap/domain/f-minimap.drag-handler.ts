@@ -7,6 +7,7 @@ import { FMinimapData } from './f-minimap-data';
 
 export class FMinimapDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'minimap';
+  protected readonly kind = 'minimap';
 
   private _lastDifference: IPoint | null = null;
 

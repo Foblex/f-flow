@@ -55,7 +55,7 @@ export class FReassignConnectionEvent {
     public readonly previousTargetId: string,
     public readonly nextTargetId: string | undefined,
 
-    /** Pointer position where the user dropped the endpoint. */
+    /** Pointer position where the user dropped pointer. */
     public readonly dropPosition: IPoint,
   ) {}
 }

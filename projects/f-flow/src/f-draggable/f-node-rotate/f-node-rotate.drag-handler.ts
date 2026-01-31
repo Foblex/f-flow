@@ -12,6 +12,7 @@ import { INodeRotateEventData } from './i-node-rotate-event-data';
 
 export class FNodeRotateDragHandler extends DragHandlerBase<INodeRotateEventData> {
   protected readonly type = 'node-rotate';
+  protected readonly kind = 'rotate-node';
   protected override data() {
     return { fNodeId: this._fNode.fId() };
   }

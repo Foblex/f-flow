@@ -9,7 +9,7 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 import {
   FDraggableDataContext,
   FDragHandlerResult,
-  FNodeDropToGroupDragHandler,
+  DropToGroupHandler,
 } from '../../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { IFExternalItemDragResult } from '../i-f-external-item-drag-result';
@@ -58,16 +58,14 @@ export class FExternalItemFinalizeExecution
 
   private _getDestinationNodeOrGroupId(): string | undefined {
     const dropToGroupHandler = this._getDropToGroupHandler();
-    const result = dropToGroupHandler.fNodeWithRect?.node.fId();
+    const result = dropToGroupHandler.activeTarget?.node.fId();
     dropToGroupHandler.onPointerUp?.();
 
     return result;
   }
 
-  private _getDropToGroupHandler(): FNodeDropToGroupDragHandler {
-    const result = this._dragContext.draggableItems.find(
-      (x) => x instanceof FNodeDropToGroupDragHandler,
-    );
+  private _getDropToGroupHandler(): DropToGroupHandler {
+    const result = this._dragContext.draggableItems.find((x) => x instanceof DropToGroupHandler);
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }

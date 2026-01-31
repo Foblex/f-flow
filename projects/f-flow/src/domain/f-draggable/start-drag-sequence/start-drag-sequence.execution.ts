@@ -5,6 +5,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { EmitSelectionChangeEventRequest } from '../emit-selection-change-event';
 import { F_CSS_CLASS } from '../../css-cls';
+import { FDragStartedEvent } from '../../../f-draggable/domain/f-drag-started-event';
 
 /**
  * Execution that starts the drag sequence by adding a dragging class to the host element
@@ -30,6 +31,12 @@ export class StartDragSequenceExecution implements IExecution<StartDragSequenceR
 
   private _emitDragStarted(): void {
     const event = this._dragContext.draggableItems[0].getEvent();
-    this._store.fDraggable?.fDragStarted?.emit({ ...event });
+    this._store.fDraggable?.fDragStarted?.emit(
+      new FDragStartedEvent(
+        event.kind,
+        event.data ? { ...event.data } : undefined,
+        event.fEventType,
+      ),
+    );
   }
 }

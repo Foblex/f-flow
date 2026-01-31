@@ -16,6 +16,7 @@ import { infinityMinMax } from '../../utils';
 
 export class FExternalItemDragHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'external-item';
+  protected readonly kind = 'drag-external-item';
   protected override data() {
     return { fData: this._fExternalItem.fData };
   }

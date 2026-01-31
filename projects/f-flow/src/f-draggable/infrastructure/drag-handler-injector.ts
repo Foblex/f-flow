@@ -13,6 +13,7 @@ import {
   DragConnectionWaypointHandler,
   ReassignConnectionHandler,
 } from '../connection';
+import { DropToGroupHandler } from '../drop-to-group';
 
 export const F_DRAG_HANDLERS = new InjectionToken<(Provider | StaticProvider)[]>('F_PLUGINS');
 
@@ -50,6 +51,10 @@ export class DragHandlerInjector {
         {
           provide: ReassignConnectionHandler,
           useClass: ReassignConnectionHandler,
+        },
+        {
+          provide: DropToGroupHandler,
+          useClass: DropToGroupHandler,
         },
       ],
       parent: this._injector,

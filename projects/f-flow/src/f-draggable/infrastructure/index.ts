@@ -1,3 +1,5 @@
+export * from './drag-session';
+
 export * from './drag-handler-base';
 
 export * from './drag-handler-injector';

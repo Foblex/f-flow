@@ -13,6 +13,7 @@ import { INodeResizeEventData } from './i-node-resize-event-data';
 
 export class NodeResizeDragHandler extends DragHandlerBase<INodeResizeEventData> {
   protected readonly type = 'node-resize';
+  protected readonly kind = 'resize-node';
   protected override data() {
     return { fNodeId: this._nodeOrGroup.fId() };
   }

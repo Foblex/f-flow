@@ -12,6 +12,7 @@ import {
 @Injectable()
 export class DragConnectionWaypointHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-connection-waypoint';
+  protected readonly kind = 'drag-connection-waypoint';
 
   private readonly _store = inject(FComponentsStore);
 

@@ -16,6 +16,7 @@ import { IPoint } from '@foblex/2d';
 @Injectable()
 export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnectionEventData> {
   protected readonly type = 'reassign-connection';
+  protected readonly kind = 'reassign-connection';
   protected override data() {
     return { fConnectionId: this._connection.fId() };
   }

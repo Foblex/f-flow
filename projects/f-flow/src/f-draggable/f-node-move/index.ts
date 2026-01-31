@@ -18,9 +18,8 @@ export * from './i-node-move-summary-event-data';
 
 export * from './move-drag-handler';
 
-export * from './providers';
-
 export * from './move-summary-drag-handler';
 
-export * from './constraint/snap-to-grid';
+export * from './providers';
 
+export * from './constraint/snap-to-grid';

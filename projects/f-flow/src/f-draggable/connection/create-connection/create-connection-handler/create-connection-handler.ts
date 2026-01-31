@@ -26,6 +26,7 @@ type FSourceConnector = FNodeOutputBase | FNodeOutletBase;
 @Injectable()
 export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEventData> {
   protected readonly type = 'create-connection';
+  protected readonly kind = 'create-connection';
 
   protected override data() {
     return { fOutputOrOutletId: this._sourceRef.connector.fId() };

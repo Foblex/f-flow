@@ -6,7 +6,7 @@ export * from './connection';
 
 export * from './infrastructure';
 
-export * from './f-drop-to-group';
+export * from './drop-to-group';
 
 export * from './f-node-move';
 

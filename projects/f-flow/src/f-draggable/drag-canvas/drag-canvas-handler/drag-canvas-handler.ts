@@ -6,6 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 @Injectable()
 export class DragCanvasHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'canvas-move';
+  protected readonly kind = 'drag-canvas';
 
   private readonly _store = inject(FComponentsStore);
   private _onPointerDownPosition: IPoint = PointExtensions.initialize();

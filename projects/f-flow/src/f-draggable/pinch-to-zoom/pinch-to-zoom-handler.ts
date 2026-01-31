@@ -11,6 +11,7 @@ import { FCanvasBase } from '../../f-canvas';
 
 export class PinchToZoomHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'pinch-to-zoom';
+  protected readonly kind = 'pinch-to-zoom';
 
   private readonly _store: FComponentsStore;
 

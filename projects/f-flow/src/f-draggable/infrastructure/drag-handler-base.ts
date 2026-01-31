@@ -4,15 +4,14 @@ import { FDragStartedEvent } from '../domain/f-drag-started-event';
 
 export abstract class DragHandlerBase<TData> {
   protected abstract readonly type: string;
+  protected abstract readonly kind: string;
 
   protected data(): TData | undefined {
     return undefined;
   }
 
   public getEvent(): FDragStartedEvent<TData> {
-    const data = this.data();
-
-    return data === undefined ? { fEventType: this.type } : { fEventType: this.type, fData: data };
+    return new FDragStartedEvent(this.kind, this.data(), this.type);
   }
 
   public prepareDragSequence?(): void;

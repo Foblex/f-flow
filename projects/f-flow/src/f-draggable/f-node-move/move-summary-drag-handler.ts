@@ -8,6 +8,8 @@ import { INodeMoveSummaryEventData } from './i-node-move-summary-event-data';
 
 export class MoveSummaryDragHandler extends DragHandlerBase<INodeMoveSummaryEventData> {
   protected readonly type = 'move-node';
+  protected readonly kind = 'drag-nodes';
+
   protected override data() {
     return { fNodeIds: this.allDraggedNodeHandlers.map((x) => x.nodeOrGroup.fId()) };
   }

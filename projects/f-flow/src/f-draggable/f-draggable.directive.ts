@@ -22,14 +22,14 @@ import {
 } from './f-node-move';
 import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
-  CreateConnectionPreparationRequest,
-  FCreateConnectionEvent,
   CreateConnectionFinalizeRequest,
+  CreateConnectionPreparationRequest,
+  DragConnectionWaypointFinalizeRequest,
+  DragConnectionWaypointPreparationRequest,
+  FCreateConnectionEvent,
   FReassignConnectionEvent,
   ReassignConnectionFinalizeRequest,
   ReassignConnectionPreparationRequest,
-  DragConnectionWaypointFinalizeRequest,
-  DragConnectionWaypointPreparationRequest,
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
@@ -61,12 +61,12 @@ import {
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
 import { FNodeIntersectedWithConnections } from './domain';
-import { DragHandlerInjector, FDragHandlerResult } from './infrastructure';
+import { DragHandlerInjector, DragSession, FDragHandlerResult } from './infrastructure';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
   FDropToGroupEvent,
-} from './f-drop-to-group';
+} from './drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
@@ -74,61 +74,10 @@ import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pin
 import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 import { FDragStartedEvent } from './domain/f-drag-started-event';
 
-// ┌──────────────────────────────┐
-// │        Angular Realm         │
-// │                              │
-// │  ┌────────────────────────┐  │
-// │  │  FDraggableDirective   │  │
-// │  └──────────┬─────────────┘  │
-// │             │ extends        │
-// │  ┌──────────▼─────────────┐  │
-// │  │     FDraggableBase     │  │
-// │  └──────────┬─────────────┘  │
-// │             │                │
-// │             │ overrides      │
-// │  ┌──────────▼─────────────┐  │
-// │  │   DragAndDropBase      │  │
-// │  └──────────┬─────────────┘  │
-// │             │                │
-// │      subscribes to           │
-// │             │                │
-// │        ┌────▼────┐           │
-// │        │ Document│           │
-// │        └─────────┘           │
-// │                              │
-// │  ┌────────────────────────┐  │
-// │  │       FMediator        │◄─┬────┐
-// │  └─────┬────────┬─────────┘  │    │
-// │        │        │            │    │
-// │   executes   executes        │    │
-// │   F*Request   F*Event        │    │
-// │        │        │            │    │
-// └────────┴────────┴────────────┴────┘
-//
-//
-// ┌──────────────────────────────────────┐
-// │       Drag & Drop Runtime Layer      │
-// │                                      │
-// │  Events from DOM:                    │
-// │    - mousedown / touchstart          │
-// │    - mousemove / touchmove           │
-// │    - pointerup                       │
-// │                                      │
-// │  ↓ Routed to                         │
-// │                                      │
-// │  ┌──────────────────────────────┐    │
-// │  │     DragAndDropBase          │    │
-// │  └──────────────────────────────┘    │
-// │        ▲             ▲               │
-// │        │             │               │
-// │   checkDrag     onPointerMove        │
-// │   Sequence      + Finalization       │
-// │   To Start                           │
-// └──────────────────────────────────────┘
 @Directive({
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
-  providers: [FDragHandlerResult, DragHandlerInjector],
+  providers: [FDragHandlerResult, DragHandlerInjector, DragSession],
 })
 export class FDraggableDirective
   extends FDraggableBase

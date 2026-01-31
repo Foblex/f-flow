@@ -1,10 +1,9 @@
 import { DropToGroupPreparation } from './drop-to-group-preparation';
 import { DropToGroupFinalize } from './drop-to-group-finalize';
-import { SortContainersForDropByLayer } from './sort-containers-for-drop-by-layer';
+import { SortDropCandidatesByLayer } from './sort-drop-candidates-by-layer';
 
-export const NODE_DROP_TO_GROUP_PROVIDERS = [
-
-  SortContainersForDropByLayer,
+export const DRAG_DROP_TO_GROUP_PROVIDERS = [
+  SortDropCandidatesByLayer,
 
   DropToGroupPreparation,
 

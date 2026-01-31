@@ -9,7 +9,7 @@ import { FCreateConnectionEvent, FReassignConnectionEvent } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { FNodeIntersectedWithConnections } from './domain';
-import { FDropToGroupEvent } from './f-drop-to-group';
+import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './f-node-move';
 import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
