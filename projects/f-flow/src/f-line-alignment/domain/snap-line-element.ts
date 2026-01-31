@@ -27,10 +27,5 @@ export class SnapLineElement {
         this._element.style.setProperty(prop as string, `${value}px`);
       }
     }
-    //
-    //
-    // Object.keys(object).forEach((key: string) => {
-    //   this.element.style[ key ] = object[ key ] + 'px';
-    // });
   }
 }

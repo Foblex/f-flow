@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { NotifyDataChangedRequest } from '../../../f-storage';
-import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
+import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../../../reactivity';
 import { FResizeChannel } from '../../../reactivity';
 import { FitToChildNodesAndGroupsRequest } from '../fit-to-child-nodes-and-groups';
 import { IsDragStartedRequest } from '../../f-draggable';
@@ -27,7 +27,7 @@ export class UpdateNodeWhenStateOrSizeChanged
     const { hostElement, stateChanges } = nodeOrGroup;
 
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
-      .pipe(notifyOnStart(), debounceTime(1))
+      .pipe(notifyOnStart(), debounceAnimationFrame())
       .listen(destroyRef, () => {
         this._mediator.execute<void>(new NotifyDataChangedRequest());
 

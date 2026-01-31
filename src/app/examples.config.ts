@@ -283,6 +283,13 @@ export const EXAMPLES_CONFIGURATION = {
             '../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'
           ),
       ),
+      defineLazyComponent(
+        'ai-low-code-platform',
+        () =>
+          import(
+            '../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'
+          ),
+      ),
     ]),
     provideTableOfContent({
       title: 'In this article',
@@ -950,7 +957,7 @@ function proExamplesGroup() {
   return defineNavigationGroup('Pro Examples', [
     {
       text: 'Visual Programming',
-      link: 'f-visual-programming-flow',
+      link: 'ai-low-code-platform',
       description:
         'Visual programming editor in Angular: create nodes, connect logic and run workflows in an interactive diagram.',
       image: './previews/examples/vp-flow.light.png',

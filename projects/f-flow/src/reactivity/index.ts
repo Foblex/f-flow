@@ -1,3 +1,7 @@
+export * from './debounce-animation-frame';
+
+export * from './debounce-microtask';
+
 export * from './debounce-time';
 
 export * from './f-channel';

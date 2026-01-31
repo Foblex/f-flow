@@ -1,10 +1,10 @@
-# Visual Programming 
+# Visual Programming
 
 ## Example
 
 This example demonstrates how to use the Foblex Flow to create a visual programming interface.
 
-::: ng-component <vp-flow></vp-flow> [height]="600"
+::: ng-component <ai-low-code-platform></ai-low-code-platform> [height]="700"
 :::
 
 ## Possibilities

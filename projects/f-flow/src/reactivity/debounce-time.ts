@@ -6,14 +6,14 @@ export function debounceTime(delay: number): FChannelOperator {
 
     return {
       callback: () => {
-        if (timeoutId) clearTimeout(timeoutId);
+        if (timeoutId !== null) clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
           timeoutId = null;
           callback();
         }, delay);
       },
       cleanup: () => {
-        if (timeoutId) clearTimeout(timeoutId);
+        if (timeoutId !== null) clearTimeout(timeoutId);
         timeoutId = null;
       },
     };
