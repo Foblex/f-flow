@@ -58,12 +58,12 @@ export class CreateConnectionFinalize implements IHandler<CreateConnectionFinali
       : output;
   }
 
-  private _getOutput(): FConnectorBase | undefined {
+  private _getOutput(): FNodeOutputBase | undefined {
     return this._store.outputs.get(this._result.getData().fOutputId);
   }
 
-  private _getOutlet(): FConnectorBase | undefined {
-    return this._store.fOutlets.find((x) => x.fId() === this._result.getData().fOutputId);
+  private _getOutlet(): FNodeOutletBase | undefined {
+    return this._store.outlets.get(this._result.getData().fOutputId);
   }
 
   private _emitEvent(event: IPointerEvent): void {

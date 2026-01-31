@@ -37,9 +37,7 @@ export class CreateConnectionFromOutletPreparation
   }
 
   private _findOutlet(node: FNodeBase): FNodeOutletBase | undefined {
-    return this._store.fOutlets.find((x) => node.isContains(x.hostElement)) as
-      | FNodeOutletBase
-      | undefined;
+    return this._store.outlets.getAll().find((x) => node.isContains(x.hostElement));
   }
 
   private _getOutputs(node: FNodeBase): FConnectorBase[] {

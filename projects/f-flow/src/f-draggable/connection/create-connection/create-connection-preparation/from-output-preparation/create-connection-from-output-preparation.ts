@@ -29,7 +29,7 @@ export class CreateConnectionFromOutputPreparation
   }
 
   private _hasOutlet(node: FNodeBase): boolean {
-    return this._store.fOutlets.some((x) => node.isContains(x.hostElement));
+    return this._store.outlets.getAll().some((x) => node.isContains(x.hostElement));
   }
 
   private _findOutput(target: HTMLElement): FNodeOutputBase | undefined {

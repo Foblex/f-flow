@@ -40,20 +40,12 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
 
     this._store.connections.getAll<FConnectionBase>().forEach((connection) => {
       this._setupConnection(
-        this._getSourceConnector(connection.fOutputId()),
-        this._getTargetConnector(connection.fInputId()),
+        this._store.outputs.require(connection.fOutputId()),
+        this._store.inputs.require(connection.fInputId()),
         connection,
       );
     });
     DragRectCache.invalidateAll();
-  }
-
-  private _getSourceConnector(id: string): FConnectorBase {
-    return this._store.outputs.require(id);
-  }
-
-  private _getTargetConnector(id: string): FConnectorBase {
-    return this._store.inputs.require(id);
   }
 
   private _resetConnectors(): void {
