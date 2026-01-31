@@ -53,17 +53,12 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   }
 
   private _getTargetConnector(id: string): FConnectorBase {
-    const result = this._store.fInputs.find((x) => x.fId() === id);
-    if (!result) {
-      throw new Error(`Target connector with id ${id} not found`);
-    }
-
-    return result;
+    return this._store.inputs.require(id);
   }
 
   private _resetConnectors(): void {
     this._store.outputs.getAll().forEach((x) => x.resetConnected());
-    this._store.fInputs.forEach((x) => x.resetConnected());
+    this._store.inputs.getAll().forEach((x) => x.resetConnected());
   }
 
   private _setupConnection(

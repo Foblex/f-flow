@@ -23,14 +23,7 @@ export class BaseConnectionDragHandler {
   }
 
   private get _fInput(): FConnectorBase {
-    const result = this._store.fInputs.find((x) => x.fId() === this.fConnection.fInputId());
-    if (!result) {
-      throw new Error(
-        this._connectorNotFoundPrefix(`fInput with id ${this.fConnection.fInputId} not found`),
-      );
-    }
-
-    return result;
+    return this._store.inputs.require(this.fConnection.fInputId());
   }
 
   private _sourceDifference = PointExtensions.initialize();

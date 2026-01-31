@@ -95,16 +95,13 @@ export class FNodeRotatePreparationExecution
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(this._fNode!))
       .map((x) => {
-        const connector = this._store.fInputs.find((y) => y.fId() === x.fInputId())?.hostElement;
-
-        if (!connector) {
-          throw new Error(`Connector with id ${x.fInputId()} not found`);
-        }
+        const connectorHost = this._store.inputs.require(x.fInputId())?.hostElement;
 
         return {
           connection: new TargetConnectionDragHandler(this._injector, x),
-          connector: this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(connector))
-            .gravityCenter,
+          connector: this._mediator.execute<IRect>(
+            new GetNormalizedElementRectRequest(connectorHost),
+          ).gravityCenter,
         };
       });
   }

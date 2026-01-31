@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
 import { FBackgroundBase } from '../f-backgroud';
-import { FConnectorBase, FNodeOutputBase } from '../f-connectors';
+import { FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { FLineAlignmentBase } from '../f-line-alignment';
@@ -43,8 +43,7 @@ export class FComponentsStore {
   public readonly plugins = new FPluginsStore();
 
   public readonly outputs = new FConnectorRegistry<FNodeOutputBase>('Output');
-
-  public fInputs: FConnectorBase[] = [];
+  public readonly inputs = new FConnectorRegistry<FNodeInputBase>('Input');
 
   public fOutlets: FConnectorBase[] = [];
 

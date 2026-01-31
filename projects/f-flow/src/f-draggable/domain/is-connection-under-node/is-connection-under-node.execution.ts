@@ -46,7 +46,7 @@ export class IsConnectionUnderNodeExecution
   }
 
   private _getInputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._store.fInputs.filter((x) => {
+    return this._store.inputs.getAll().filter((x) => {
       return fNode.isContains(x.hostElement) && x.canBeConnected;
     });
   }

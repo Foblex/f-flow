@@ -47,7 +47,8 @@ export class CalculateNodesState
   }
 
   private _getInputs(hostElement: HTMLElement): IFFlowStateConnector[] {
-    return this._store.fInputs
+    return this._store.inputs
+      .getAll()
       .filter((x) => hostElement.contains(x.hostElement))
       .map((x) => {
         return {

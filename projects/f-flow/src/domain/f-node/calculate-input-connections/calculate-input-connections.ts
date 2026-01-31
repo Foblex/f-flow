@@ -23,7 +23,8 @@ export class CalculateInputConnections
 
   private _collectInputIds(nodeOrGroup: FNodeBase): Set<string> {
     const ids = new Set<string>();
-    for (const connector of this._store.fInputs) {
+    const connectors = this._store.inputs.getAll();
+    for (const connector of connectors) {
       if (nodeOrGroup.isContains(connector.hostElement)) {
         ids.add(connector.fId());
       }

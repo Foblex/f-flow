@@ -27,7 +27,7 @@ export class CalculateTargetConnectorsToConnect
   private readonly _store = inject(FComponentsStore);
 
   private get _targets(): FNodeInputBase[] {
-    return this._store.fInputs as FNodeInputBase[];
+    return this._store.inputs.getAll();
   }
 
   public handle({

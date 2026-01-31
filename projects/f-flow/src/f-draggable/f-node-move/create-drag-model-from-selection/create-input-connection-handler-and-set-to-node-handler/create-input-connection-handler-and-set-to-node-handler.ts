@@ -35,7 +35,8 @@ export class CreateInputConnectionHandlerAndSetToNodeHandler
   }
 
   private _getNodeInputIds(nodeOrGroup: FNodeBase): string[] {
-    return this._store.fInputs
+    return this._store.inputs
+      .getAll()
       .filter((x) => nodeOrGroup.isContains(x.hostElement))
       .map((x) => x.fId());
   }
