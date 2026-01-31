@@ -31,10 +31,10 @@ export class FNodeRotatePreparationExecution
   private readonly _injector = inject(Injector);
 
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
 
-  private get _fHost(): HTMLElement {
+  private get _flowHost(): HTMLElement {
     return this._store.flowHost;
   }
 
@@ -49,7 +49,7 @@ export class FNodeRotatePreparationExecution
 
     this._dragContext.onPointerDownScale = this._transform.scale;
     this._dragContext.onPointerDownPosition = Point.fromPoint(request.event.getPosition())
-      .elementTransform(this._fHost)
+      .elementTransform(this._flowHost)
       .div(this._transform.scale);
 
     this._dragContext.draggableItems = [
@@ -116,7 +116,7 @@ export class FNodeRotatePreparationExecution
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(this._fNode!))
       .map((x) => {
-        const connector = this._store.fOutputs.find((y) => y.fId() === x.fOutputId())?.hostElement;
+        const connector = this._store.outputs.get(x.fOutputId())?.hostElement;
 
         if (!connector) {
           throw new Error(`Connector with id ${x.fOutputId()} not found`);

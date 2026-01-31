@@ -43,7 +43,7 @@ export class CreateConnectionFromOutletPreparation
   }
 
   private _getOutputs(node: FNodeBase): FConnectorBase[] {
-    return this._store.fOutputs.filter((o) => node.isContains(o.hostElement));
+    return this._store.outputs.getAll().filter((x) => node.isContains(x.hostElement));
   }
 
   private _resolveOutput(outlet: FNodeOutletBase): FNodeOutputBase | undefined {

@@ -22,7 +22,7 @@ export class CalculateSourceConnectorsToConnect
   private readonly _store = inject(FComponentsStore);
 
   private get _sources(): FNodeOutputBase[] {
-    return this._store.fOutputs as FNodeOutputBase[];
+    return this._store.outputs.getAll();
   }
 
   public handle({

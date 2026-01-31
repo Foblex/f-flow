@@ -1,3 +1,5 @@
+export * from './f-connector-registry';
+
 export * from './features/notify-data-changed';
 
 export * from './features/listen-components-data-changed';

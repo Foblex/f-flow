@@ -40,7 +40,7 @@ export class IsConnectionUnderNodeExecution
   }
 
   private _getOutputConnectors(fNode: FNodeBase): FConnectorBase[] {
-    return this._store.fOutputs.filter((x) => {
+    return this._store.outputs.getAll().filter((x) => {
       return fNode.isContains(x.hostElement) && x.canBeConnected;
     });
   }
@@ -54,7 +54,8 @@ export class IsConnectionUnderNodeExecution
   private _getOutputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
 
-    return this._store.connections.getAll<FConnectionBase>()
+    return this._store.connections
+      .getAll<FConnectionBase>()
       .filter((x) => connectorsId.includes(x.fOutputId()))
       .map((x) => x.fId());
   }
@@ -62,7 +63,8 @@ export class IsConnectionUnderNodeExecution
   private _getInputConnectionsId(connectors: FConnectorBase[]): string[] {
     const connectorsId = this._getConnectorsId(connectors);
 
-    return this._store.connections.getAll<FConnectionBase>()
+    return this._store.connections
+      .getAll<FConnectionBase>()
       .filter((x) => connectorsId.includes(x.fInputId()))
       .map((x) => x.fId());
   }
@@ -76,9 +78,9 @@ export class IsConnectionUnderNodeExecution
       new GetNormalizedConnectorRectRequest(fNode.hostElement),
     );
 
-    return this._store.connections.getAll<FConnectionBase>().filter((x) =>
-      this._isConnectionHasIntersectionsWithNode(x, fNodeRect),
-    );
+    return this._store.connections
+      .getAll<FConnectionBase>()
+      .filter((x) => this._isConnectionHasIntersectionsWithNode(x, fNodeRect));
   }
 
   private _isConnectionHasIntersectionsWithNode(

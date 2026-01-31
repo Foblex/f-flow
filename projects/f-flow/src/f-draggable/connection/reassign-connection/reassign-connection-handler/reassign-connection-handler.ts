@@ -8,7 +8,7 @@ import { FComponentsStore } from '../../../../f-storage';
 import { FSnapConnectionComponent } from '../../../../f-connection';
 import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../../domain';
 import { IReassignHandler, rectFromPoint } from './i-reassign-handler';
-import { FNodeInputDirective, FNodeOutputDirective } from '../../../../f-connectors';
+import { FNodeInputDirective } from '../../../../f-connectors';
 import { ReassignConnectionSourceHandler } from './reassign-connection-source-handler';
 import { ReassignConnectionTargetHandler } from './reassign-connection-target-handler';
 import { IPoint } from '@foblex/2d';
@@ -42,11 +42,12 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
     this._connection = connection;
     this._draggedEnd = isTargetDragHandle ? 'target' : 'source';
 
-    const sourceConnector = this._getSourceConnector();
     const targetConnector = this._getTargetConnector();
 
     this._sourceRef = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(sourceConnector),
+      new GetConnectorRectReferenceRequest(
+        this._store.outputs.require(this._connection.fOutputId()),
+      ),
     );
     this._targetRef = this._mediator.execute<IConnectorRectRef>(
       new GetConnectorRectReferenceRequest(targetConnector),
@@ -54,16 +55,6 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
 
     this._reassignHandler =
       this._draggedEnd === 'target' ? this._createTargetHandler() : this._createSourceHandler();
-  }
-
-  private _getSourceConnector(): FNodeOutputDirective {
-    const outputId = this._connection.fOutputId();
-    const found = this._store.fOutputs.find((x) => x.fId() === outputId);
-    if (!found) {
-      throw new Error(`Connection output not found: ${outputId}`);
-    }
-
-    return found as FNodeOutputDirective;
   }
 
   private _getTargetConnector(): FNodeInputDirective {

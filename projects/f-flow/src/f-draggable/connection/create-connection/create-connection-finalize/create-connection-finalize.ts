@@ -59,7 +59,7 @@ export class CreateConnectionFinalize implements IHandler<CreateConnectionFinali
   }
 
   private _getOutput(): FConnectorBase | undefined {
-    return this._store.fOutputs.find((x) => x.fId() === this._result.getData().fOutputId);
+    return this._store.outputs.get(this._result.getData().fOutputId);
   }
 
   private _getOutlet(): FConnectorBase | undefined {

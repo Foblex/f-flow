@@ -33,7 +33,8 @@ export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromS
   }
 
   private _removeOutput(component: FConnectorBase): void {
-    this._store.removeComponent(this._store.fOutputs, component);
+    this._store.outputs.removeById(component.fId());
+    this._store.countChanged();
   }
 
   private _removeOutlet(component: FConnectorBase): void {

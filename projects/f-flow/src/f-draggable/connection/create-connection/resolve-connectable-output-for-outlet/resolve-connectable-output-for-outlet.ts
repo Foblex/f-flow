@@ -34,6 +34,8 @@ export class ResolveConnectableOutputForOutlet
   }
 
   private _findFirstConnectableOutputInNode(node: FNodeBase): FConnectorBase | undefined {
-    return this._store.fOutputs.find((x) => node.isContains(x.hostElement) && x.canBeConnected);
+    return this._store.outputs
+      .getAll()
+      .find((x) => node.isContains(x.hostElement) && x.canBeConnected);
   }
 }

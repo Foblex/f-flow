@@ -84,7 +84,10 @@ export class CreateDragModelFromSelection
   }
 
   private _getNodeOutputIds(fNode: FNodeBase): string[] {
-    return this._store.fOutputs.filter((x) => fNode.fId() === x.fNodeId).map((x) => x.fId());
+    return this._store.outputs
+      .getAll()
+      .filter((x) => fNode.fId() === x.fNodeId)
+      .map((x) => x.fId());
   }
 
   private _getAllInputIds(fNodes: FNodeBase[]): string[] {

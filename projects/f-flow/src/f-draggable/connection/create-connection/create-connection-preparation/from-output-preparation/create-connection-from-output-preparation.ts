@@ -33,9 +33,7 @@ export class CreateConnectionFromOutputPreparation
   }
 
   private _findOutput(target: HTMLElement): FNodeOutputBase | undefined {
-    return this._store.fOutputs.find((o) => o.hostElement.contains(target)) as
-      | FNodeOutputBase
-      | undefined;
+    return this._store.outputs.getAll().find((x) => x.hostElement.contains(target));
   }
 
   private _startDrag(position: IPoint, source: FNodeOutputBase): void {

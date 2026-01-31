@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { AddConnectorToStoreRequest } from './add-connector-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FConnectorBase } from '../../../f-connectors';
+import { FConnectorBase, FNodeOutputBase } from '../../../f-connectors';
 
 /**
  * Execution that adds an InputConnector to the FComponentsStore.
@@ -33,7 +33,8 @@ export class AddConnectorToStore implements IExecution<AddConnectorToStoreReques
   }
 
   private _addOutput(component: FConnectorBase): void {
-    this._store.addComponent(this._store.fOutputs, component);
+    this._store.outputs.add(component as FNodeOutputBase);
+    this._store.countChanged();
   }
 
   private _addOutlet(component: FConnectorBase): void {

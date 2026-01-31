@@ -35,7 +35,8 @@ export class CreateOutputConnectionHandlerAndSetToNodeHandler
   }
 
   private _getNodeOutputIds(nodeOrGroup: FNodeBase): string[] {
-    return this._store.fOutputs
+    return this._store.outputs
+      .getAll()
       .filter((x) => nodeOrGroup.isContains(x.hostElement))
       .map((x) => x.fId());
   }

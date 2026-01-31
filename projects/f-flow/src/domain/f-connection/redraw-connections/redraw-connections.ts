@@ -49,12 +49,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   }
 
   private _getSourceConnector(id: string): FConnectorBase {
-    const result = this._store.fOutputs.find((x) => x.fId() === id);
-    if (!result) {
-      throw new Error(`Source connector with id ${id} not found`);
-    }
-
-    return result;
+    return this._store.outputs.require(id);
   }
 
   private _getTargetConnector(id: string): FConnectorBase {
@@ -67,7 +62,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   }
 
   private _resetConnectors(): void {
-    this._store.fOutputs.forEach((x) => x.resetConnected());
+    this._store.outputs.getAll().forEach((x) => x.resetConnected());
     this._store.fInputs.forEach((x) => x.resetConnected());
   }
 
