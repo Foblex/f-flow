@@ -14,11 +14,12 @@ import {
 import { FNodeBase, isRotateHandle } from '../../../f-node';
 import { FNodeRotateDragHandler } from '../f-node-rotate.drag-handler';
 import {
-  BaseConnectionDragHandler,
-  SourceConnectionDragHandler,
-  TargetConnectionDragHandler,
+  DragNodeConnectionHandlerBase,
+  DragNodeConnectionSourceHandler,
+  DragNodeConnectionTargetHandler,
 } from '../../f-node-move';
 import { FConnectionBase } from '../../../f-connection-v2';
+import { DragHandlerInjector } from '../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(FNodeRotatePreparationRequest)
@@ -29,6 +30,7 @@ export class FNodeRotatePreparationExecution
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _injector = inject(Injector);
+  private readonly _dragInjector = inject(DragHandlerInjector);
 
   private get _transform(): ITransformModel {
     return this._store.transform;
@@ -89,16 +91,18 @@ export class FNodeRotatePreparationExecution
   }
 
   private _calculateInputConnectionsDragHandlers(): {
-    connection: BaseConnectionDragHandler;
+    connection: DragNodeConnectionHandlerBase;
     connector: IPoint;
   }[] {
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(this._fNode!))
       .map((x) => {
         const connectorHost = this._store.inputs.require(x.fInputId())?.hostElement;
+        const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
+        handler.initialize(x);
 
         return {
-          connection: new TargetConnectionDragHandler(this._injector, x),
+          connection: handler,
           connector: this._mediator.execute<IRect>(
             new GetNormalizedElementRectRequest(connectorHost),
           ).gravityCenter,
@@ -107,22 +111,22 @@ export class FNodeRotatePreparationExecution
   }
 
   private _calculateOutputConnectionsDragHandlers(): {
-    connection: BaseConnectionDragHandler;
+    connection: DragNodeConnectionHandlerBase;
     connector: IPoint;
   }[] {
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(this._fNode!))
       .map((x) => {
-        const connector = this._store.outputs.get(x.fOutputId())?.hostElement;
+        const connectorHost = this._store.outputs.require(x.fOutputId())?.hostElement;
 
-        if (!connector) {
-          throw new Error(`Connector with id ${x.fOutputId()} not found`);
-        }
+        const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
+        handler.initialize(x);
 
         return {
-          connection: new SourceConnectionDragHandler(this._injector, x),
-          connector: this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(connector))
-            .gravityCenter,
+          connection: handler,
+          connector: this._mediator.execute<IRect>(
+            new GetNormalizedElementRectRequest(connectorHost),
+          ).gravityCenter,
         };
       });
   }

@@ -5,14 +5,17 @@ import {
   InputSignalWithTransform,
   OutputEmitterRef,
 } from '@angular/core';
-import { FCreateConnectionEvent, FReassignConnectionEvent } from './connection';
+import {
+  FConnectionWaypointsChangedEvent,
+  FCreateConnectionEvent,
+  FReassignConnectionEvent,
+} from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
 import { FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './f-node-move';
-import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 import { FDragStartedEvent } from './domain/f-drag-started-event';
 
 export abstract class FDraggableBase extends DragAndDropBase {

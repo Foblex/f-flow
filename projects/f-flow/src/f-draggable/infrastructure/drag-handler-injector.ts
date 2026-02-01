@@ -1,12 +1,4 @@
-import {
-  inject,
-  Injectable,
-  InjectionToken,
-  Injector,
-  Provider,
-  ProviderToken,
-  StaticProvider,
-} from '@angular/core';
+import { inject, Injectable, Injector, ProviderToken, runInInjectionContext } from '@angular/core';
 import { DragCanvasHandler } from '../drag-canvas';
 import {
   CreateConnectionHandler,
@@ -14,14 +6,20 @@ import {
   ReassignConnectionHandler,
 } from '../connection';
 import { DropToGroupHandler } from '../drop-to-group';
+import {
+  DragNodeConnectionBothSidesHandler,
+  DragNodeConnectionSourceHandler,
+  DragNodeConnectionTargetHandler,
+} from '../f-node-move';
 
-export const F_DRAG_HANDLERS = new InjectionToken<(Provider | StaticProvider)[]>('F_PLUGINS');
+type NoArgsCtor<T> = new () => T;
 
-export function provideHandlers(providers: (Provider | StaticProvider)[]): Provider {
-  return {
-    provide: F_DRAG_HANDLERS,
-    useValue: providers,
-  };
+export interface IDestroyable {
+  destroy(): void;
+}
+
+function isDestroyable(value: unknown): value is IDestroyable {
+  return !!value && typeof (value as IDestroyable).destroy === 'function';
 }
 
 interface IHasDestroy {
@@ -32,6 +30,8 @@ interface IHasDestroy {
 export class DragHandlerInjector {
   private readonly _injector = inject(Injector);
   private _dragInjector: Injector | null = null;
+
+  private _created: unknown[] = [];
 
   public create(): void {
     this._dragInjector = Injector.create({
@@ -56,9 +56,23 @@ export class DragHandlerInjector {
           provide: DropToGroupHandler,
           useClass: DropToGroupHandler,
         },
+        {
+          provide: DragNodeConnectionSourceHandler,
+          useClass: DragNodeConnectionSourceHandler,
+        },
+        {
+          provide: DragNodeConnectionTargetHandler,
+          useClass: DragNodeConnectionTargetHandler,
+        },
+        {
+          provide: DragNodeConnectionBothSidesHandler,
+          useClass: DragNodeConnectionBothSidesHandler,
+        },
       ],
       parent: this._injector,
     });
+
+    this._created = [];
   }
 
   public get<T>(token: ProviderToken<T>): T {
@@ -71,7 +85,26 @@ export class DragHandlerInjector {
     return this._dragInjector.get(token);
   }
 
+  public createInstance<T>(ctor: NoArgsCtor<T>): T {
+    if (!this._dragInjector) {
+      throw new Error('DragHandlerInjector is not created');
+    }
+
+    const instance = runInInjectionContext(this._dragInjector, () => new ctor());
+
+    this._created.push(instance);
+
+    return instance;
+  }
+
   public destroy(): void {
+    for (const x of this._created) {
+      if (isDestroyable(x)) {
+        x.destroy();
+      }
+    }
+    this._created = [];
+
     (this._dragInjector as IHasDestroy)?.destroy?.();
     this._dragInjector = null;
   }

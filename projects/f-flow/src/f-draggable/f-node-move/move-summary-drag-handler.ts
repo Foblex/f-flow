@@ -60,4 +60,8 @@ export class MoveSummaryDragHandler extends DragHandlerBase<INodeMoveSummaryEven
   private _refreshDraggedNodes(): void {
     this.rootHandlers.forEach(({ nodeOrGroup }) => nodeOrGroup.refresh());
   }
+
+  public override destroy(): void {
+    this.rootHandlers.forEach((x) => x.destroy());
+  }
 }

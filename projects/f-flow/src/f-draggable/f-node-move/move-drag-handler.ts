@@ -1,11 +1,15 @@
 import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { DragHandlerBase } from '../infrastructure';
 import { FNodeBase } from '../../f-node';
-import { BaseConnectionDragHandler } from './connection-drag-handlers';
+import { DragNodeConnectionHandlerBase } from './drag-node-dependent-connection-handlers';
 import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../domain';
 import { Injector } from '@angular/core';
-import { IDragLimits } from './create-drag-model-from-selection';
-import { DragConstraintPipeline, expandRectFromBaseline, IConstraintResult } from './constraint';
+import {
+  DragNodeDeltaConstraints,
+  expandRectByOverflow,
+  IDeltaClampResult,
+  IDragNodeDeltaConstraints,
+} from './drag-node-constraint';
 import { FMediator } from '@foblex/mediator';
 
 export class MoveDragHandler extends DragHandlerBase<unknown> {
@@ -17,17 +21,17 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
 
   private _applyConstraints: (difference: IPoint) => IPoint = (difference) => difference;
 
-  private _lastSoftResults: IConstraintResult[] = [];
-  private _pipeline!: DragConstraintPipeline;
-  private _limits: IDragLimits | null = null;
+  private _lastSoftResults: IDeltaClampResult[] = [];
+  private _deltaConstraints!: DragNodeDeltaConstraints;
+  private _limits: IDragNodeDeltaConstraints | null = null;
   private _lastPosition = PointExtensions.initialize();
 
   constructor(
     private readonly _injector: Injector,
     public nodeOrGroup: FNodeBase,
     public childrenNodeAndGroups: MoveDragHandler[] = [],
-    public fSourceHandlers: BaseConnectionDragHandler[] = [],
-    public fTargetHandlers: BaseConnectionDragHandler[] = [],
+    public fSourceHandlers: DragNodeConnectionHandlerBase[] = [],
+    public fTargetHandlers: DragNodeConnectionHandlerBase[] = [],
   ) {
     super();
     this._startRect = _injector
@@ -36,23 +40,27 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
     this._startPosition = { ...nodeOrGroup._position };
   }
 
-  public setLimits(limits: IDragLimits): void {
+  public setLimits(limits: IDragNodeDeltaConstraints): void {
     this._limits = limits;
-    this._pipeline = new DragConstraintPipeline(this._injector, this._startPosition, limits);
+    this._deltaConstraints = new DragNodeDeltaConstraints(
+      this._injector,
+      this._startPosition,
+      limits,
+    );
 
     this._applyConstraints = (difference) => {
-      const summary = this._pipeline.apply(difference);
+      const summary = this._deltaConstraints.apply(difference);
       this._applySoftExpansions(summary.soft);
 
-      return summary.hardDifference;
+      return summary.hardDelta;
     };
   }
 
-  private _applySoftExpansions(softResults: IConstraintResult[]): void {
+  private _applySoftExpansions(softResults: IDeltaClampResult[]): void {
     this._lastSoftResults = softResults;
     this._lastSoftResults.forEach((result, index) => {
       const softLimit = this._limits!.soft[index];
-      const expandedRect = expandRectFromBaseline(
+      const expandedRect = expandRectByOverflow(
         softLimit.boundingRect,
         result.overflow,
         result.edges,
@@ -87,16 +95,16 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
     this.childrenNodeAndGroups.forEach((x) => x.onPointerMove(differenceWithRestrictions));
     this._redraw(this._nodeOrGroupNewPosition(differenceWithRestrictions));
 
-    this.fSourceHandlers.forEach((x) => x.setSourceDifference(differenceWithRestrictions));
-    this.fTargetHandlers.forEach((x) => x.setTargetDifference(differenceWithRestrictions));
+    this.fSourceHandlers.forEach((x) => x.setSourceDelta(differenceWithRestrictions));
+    this.fTargetHandlers.forEach((x) => x.setTargetDelta(differenceWithRestrictions));
   }
 
   public assignFinalConstraints(): void {
     this._applyConstraints = (difference: IPoint) => {
-      const summary = this._pipeline.finalize(difference);
+      const summary = this._deltaConstraints.finalize(difference);
       this._applySoftExpansions(summary.soft);
 
-      return summary.hardDifference;
+      return summary.hardDelta;
     };
   }
 
@@ -120,7 +128,7 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
   private _emitEventIfNodeExpanded(): void {
     this._lastSoftResults.forEach((result, index) => {
       const softLimit = this._limits!.soft[index];
-      const expandedRect = expandRectFromBaseline(
+      const expandedRect = expandRectByOverflow(
         softLimit.boundingRect,
         result.overflow,
         result.edges,
@@ -129,5 +137,10 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
         softLimit.nodeOrGroup.sizeChange.emit(expandedRect);
       }
     });
+  }
+
+  public override destroy(): void {
+    this.fSourceHandlers = []; // Clear references to avoid memory leaks
+    this.fTargetHandlers = []; // Clear references to avoid memory leaks
   }
 }

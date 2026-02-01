@@ -3,7 +3,7 @@ import { DragHandlerBase } from '../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';
-import { BaseConnectionDragHandler } from '../f-node-move';
+import { DragNodeConnectionHandlerBase } from '../f-node-move';
 import { calculateDifferenceAfterRotation } from './calculate-difference-after-rotation';
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { FMediator } from '@foblex/mediator';
@@ -35,11 +35,11 @@ export class FNodeRotateDragHandler extends DragHandlerBase<INodeRotateEventData
     _injector: Injector,
     private _fNode: FNodeBase,
     private _fSourceHandlers: {
-      connection: BaseConnectionDragHandler;
+      connection: DragNodeConnectionHandlerBase;
       connector: IPoint;
     }[],
     private _fTargetHandlers: {
-      connection: BaseConnectionDragHandler;
+      connection: DragNodeConnectionHandlerBase;
       connector: IPoint;
     }[],
   ) {
@@ -87,14 +87,10 @@ export class FNodeRotateDragHandler extends DragHandlerBase<INodeRotateEventData
     this._updateNodeRendering(rotation);
 
     this._fSourceHandlers.forEach((x) => {
-      x.connection.setSourceDifference(
-        this._calculateDifferenceAfterRotation(x.connector, rotation),
-      );
+      x.connection.setSourceDelta(this._calculateDifferenceAfterRotation(x.connector, rotation));
     });
     this._fTargetHandlers.forEach((x) => {
-      x.connection.setTargetDifference(
-        this._calculateDifferenceAfterRotation(x.connector, rotation),
-      );
+      x.connection.setTargetDelta(this._calculateDifferenceAfterRotation(x.connector, rotation));
     });
   }
 

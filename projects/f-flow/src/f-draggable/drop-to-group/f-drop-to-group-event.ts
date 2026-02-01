@@ -1,27 +1,32 @@
 import { IPoint } from '@foblex/2d';
 
 export class FDropToGroupEvent {
+  /** Preferred name: Group (target) id */
+  public readonly targetGroupId: string;
+
+  /** Preferred name: Dropped node ids */
+  public readonly nodeIds: string[];
+
+  /** Preferred name: Pointer drop position */
+  public readonly dropPosition: IPoint;
+
   /** @deprecated Use `targetGroupId` */
-  public get fTargetNode(): string {
-    return this.targetGroupId;
-  }
+  public readonly fTargetNode: string;
 
   /** @deprecated Use `nodeIds` */
-  public get fNodes(): string[] {
-    return this.nodeIds;
-  }
+  public readonly fNodes: string[];
 
   /** @deprecated Use `dropPosition` */
-  public get fDropPosition(): IPoint {
-    return this.dropPosition;
-  }
+  public readonly fDropPosition: IPoint;
 
-  constructor(
-    /** Group (target) id */
-    public readonly targetGroupId: string,
-    /** Dropped node ids */
-    public readonly nodeIds: string[],
-    /** Pointer position where the user dropped pointer. */
-    public readonly dropPosition: IPoint,
-  ) {}
+  constructor(targetGroupId: string, nodeIds: string[], dropPosition: IPoint) {
+    this.targetGroupId = targetGroupId;
+    this.nodeIds = nodeIds;
+    this.dropPosition = dropPosition;
+
+    // legacy aliases (same values / references)
+    this.fTargetNode = targetGroupId;
+    this.fNodes = nodeIds;
+    this.fDropPosition = dropPosition;
+  }
 }

@@ -16,6 +16,13 @@ export class FDraggableDataContext {
   public draggableItems: DragHandlerBase<unknown>[] = [];
 
   public reset(): void {
+    for (const h of this.draggableItems) {
+      try {
+        h.destroy?.();
+      } catch {
+        console.error(`Error while destroying drag handler of type ${h['type']}`);
+      }
+    }
     this.draggableItems = [];
     this.onPointerDownScale = 1;
     this.onPointerDownPosition = new Point(0, 0);

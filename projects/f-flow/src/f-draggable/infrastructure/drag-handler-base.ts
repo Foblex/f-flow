@@ -17,4 +17,6 @@ export abstract class DragHandlerBase<TData> {
   public prepareDragSequence?(): void;
   public abstract onPointerMove(difference: IPoint, event?: IPointerEvent): void;
   public onPointerUp?(): void;
+
+  public destroy?(): void;
 }

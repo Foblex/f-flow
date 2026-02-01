@@ -4,58 +4,83 @@ export type FConnectionEndpoint = 'source' | 'target';
 
 export class FReassignConnectionEvent {
   // -----------------------------
-  // Deprecated compatibility API
+  // Preferred API
+  // -----------------------------
+
+  public readonly connectionId: string;
+
+  /** Which endpoint was reassigned. */
+  public readonly endpoint: FConnectionEndpoint;
+
+  /** Previous and next ids; `next*Id` can be `undefined` if dropped to nowhere. */
+  public readonly previousSourceId: string;
+  public readonly nextSourceId: string | undefined;
+
+  public readonly previousTargetId: string;
+  public readonly nextTargetId: string | undefined;
+
+  /** Pointer position where the user dropped pointer. */
+  public readonly dropPosition: IPoint;
+
+  // -----------------------------
+  // Deprecated compatibility API (keep as FIELDS)
   // -----------------------------
 
   /** @deprecated Use `endpoint === 'source'` */
-  public get isSourceReassign(): boolean {
-    return this.endpoint === 'source';
-  }
+  public readonly isSourceReassign: boolean;
 
   /** @deprecated Use `endpoint === 'target'` */
-  public get isTargetReassign(): boolean {
-    return this.endpoint === 'target';
-  }
+  public readonly isTargetReassign: boolean;
 
   /** @deprecated Use `previousSourceId` */
-  public get oldSourceId(): string {
-    return this.previousSourceId;
-  }
+  public readonly oldSourceId: string;
 
   /** @deprecated Use `nextSourceId` */
-  public get newSourceId(): string | undefined {
-    return this.nextSourceId;
-  }
+  public readonly newSourceId: string | undefined;
 
   /** @deprecated Use `previousTargetId` */
-  public get oldTargetId(): string {
-    return this.previousTargetId;
-  }
+  public readonly oldTargetId: string;
 
   /** @deprecated Use `nextTargetId` */
-  public get newTargetId(): string | undefined {
-    return this.nextTargetId;
-  }
+  public readonly newTargetId: string | undefined;
 
   /** @deprecated Use `dropPosition` */
-  public get dropPoint(): IPoint {
-    return this.dropPosition;
-  }
+  public readonly dropPoint: IPoint;
 
   constructor(
-    public readonly connectionId: string,
+    connectionId: string,
+    endpoint: FConnectionEndpoint,
 
-    /** Which endpoint was reassigned. */
-    public readonly endpoint: FConnectionEndpoint,
+    previousSourceId: string,
+    nextSourceId: string | undefined,
 
-    /** Previous and next ids; `nextId` can be `undefined` if dropped to nowhere. */
-    public readonly previousSourceId: string,
-    public readonly nextSourceId: string | undefined,
+    previousTargetId: string,
+    nextTargetId: string | undefined,
 
-    public readonly previousTargetId: string,
-    public readonly nextTargetId: string | undefined,
+    dropPosition: IPoint,
+  ) {
+    // preferred
+    this.connectionId = connectionId;
+    this.endpoint = endpoint;
 
-    /** Pointer position where the user dropped pointer. */
-    public readonly dropPosition: IPoint,
-  ) {}
+    this.previousSourceId = previousSourceId;
+    this.nextSourceId = nextSourceId;
+
+    this.previousTargetId = previousTargetId;
+    this.nextTargetId = nextTargetId;
+
+    this.dropPosition = dropPosition;
+
+    // legacy aliases (same values / references)
+    this.isSourceReassign = endpoint === 'source';
+    this.isTargetReassign = endpoint === 'target';
+
+    this.oldSourceId = previousSourceId;
+    this.newSourceId = nextSourceId;
+
+    this.oldTargetId = previousTargetId;
+    this.newTargetId = nextTargetId;
+
+    this.dropPoint = dropPosition;
+  }
 }

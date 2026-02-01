@@ -11,19 +11,18 @@ import { F_CSS_CLASS } from '../../css-cls';
 @Injectable()
 @FExecutionRegister(EndDragSequenceRequest)
 export class EndDragSequenceExecution implements IExecution<EndDragSequenceRequest, void> {
-
   private readonly _store = inject(FComponentsStore);
 
   private get _hostElement(): HTMLElement {
     return this._store.fDraggable!.hostElement;
   }
 
-  private _dragContext = inject(FDraggableDataContext);
+  private readonly _dragSession = inject(FDraggableDataContext);
 
-  public handle(request: EndDragSequenceRequest): void {
+  public handle(_request: EndDragSequenceRequest): void {
     this._hostElement.classList.remove(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
 
-    this._dragContext.reset();
+    this._dragSession.reset();
     this._emitDragEnded();
   }
 

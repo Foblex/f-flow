@@ -17,8 +17,8 @@ import {
 import { FDraggableBase } from './f-draggable-base';
 import {
   FMoveNodesEvent,
-  FNodeMoveFinalizeRequest,
-  MoveNodePreparationRequest,
+  DragNodeFinalizeRequest,
+  DragNodePreparationRequest,
 } from './f-node-move';
 import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
@@ -26,6 +26,7 @@ import {
   CreateConnectionPreparationRequest,
   DragConnectionWaypointFinalizeRequest,
   DragConnectionWaypointPreparationRequest,
+  FConnectionWaypointsChangedEvent,
   FCreateConnectionEvent,
   FReassignConnectionEvent,
   ReassignConnectionFinalizeRequest,
@@ -71,7 +72,6 @@ import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-n
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
-import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
 import { FDragStartedEvent } from './domain/f-drag-started-event';
 
 @Directive({
@@ -222,10 +222,6 @@ export class FDraggableDirective
     );
 
     this._mediator.execute<void>(
-      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
-    );
-
-    this._mediator.execute<void>(
       new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
@@ -246,7 +242,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
-    this._mediator.execute<void>(new MoveNodePreparationRequest(event, this.fNodeMoveTrigger));
+    this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._mediator.execute<void>(
       new FExternalItemPreparationRequest(event, this.fExternalItemTrigger),
@@ -280,7 +276,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FNodeRotateFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FNodeMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new DragNodeFinalizeRequest(event));
 
     this._mediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
