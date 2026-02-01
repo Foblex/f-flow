@@ -5,9 +5,9 @@ import { FComponentsStore } from '../../../../f-storage';
 import {
   FConnectionBase,
   FConnectionWaypointsBase,
-  FConnectionWaypointsChangedEvent,
   WaypointPick,
 } from '../../../../f-connection-v2';
+import { FConnectionWaypointsChangedEvent } from '../f-connection-waypoints-changed-event';
 
 @Injectable()
 export class DragConnectionWaypointHandler extends DragHandlerBase<unknown> {

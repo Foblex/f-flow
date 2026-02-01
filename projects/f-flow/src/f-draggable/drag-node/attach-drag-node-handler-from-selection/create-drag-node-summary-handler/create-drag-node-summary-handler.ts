@@ -1,8 +1,8 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateDragNodeSummaryHandlerRequest } from './create-drag-node-summary-handler-request';
-import { MoveSummaryDragHandler } from '../../move-summary-drag-handler';
-import { MoveDragHandler } from '../../move-drag-handler';
+import { DragNodeHandler } from '../../drag-node-handler';
+import { DragNodeItemHandler } from '../../drag-node-item-handler';
 import { FNodeBase } from '../../../../f-node';
 import { BuildDragNodeConstraintsRequest } from '../build-drag-node-constraints';
 import { IDragNodeDeltaConstraints } from '../../drag-node-constraint';
@@ -10,7 +10,7 @@ import { IDragNodeDeltaConstraints } from '../../drag-node-constraint';
 @Injectable()
 @FExecutionRegister(CreateDragNodeSummaryHandlerRequest)
 export class CreateDragNodeSummaryHandler
-  implements IExecution<CreateDragNodeSummaryHandlerRequest, MoveSummaryDragHandler>
+  implements IExecution<CreateDragNodeSummaryHandlerRequest, DragNodeHandler>
 {
   private readonly _injector = inject(Injector);
   private readonly _mediator = inject(FMediator);
@@ -18,13 +18,13 @@ export class CreateDragNodeSummaryHandler
   public handle({
     rootHandlers,
     participants,
-  }: CreateDragNodeSummaryHandlerRequest): MoveSummaryDragHandler {
+  }: CreateDragNodeSummaryHandlerRequest): DragNodeHandler {
     this._applyLimitsToRoots(rootHandlers);
 
-    return new MoveSummaryDragHandler(this._injector, participants, rootHandlers);
+    return new DragNodeHandler(this._injector, participants, rootHandlers);
   }
 
-  private _applyLimitsToRoots(roots: MoveDragHandler[]): void {
+  private _applyLimitsToRoots(roots: DragNodeItemHandler[]): void {
     for (const handler of roots) {
       handler.setLimits(this._calculateLimits(handler.nodeOrGroup));
     }

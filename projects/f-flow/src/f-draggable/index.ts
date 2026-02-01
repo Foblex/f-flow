@@ -8,7 +8,7 @@ export * from './infrastructure';
 
 export * from './drop-to-group';
 
-export * from './f-node-move';
+export * from './drag-node';
 
 export * from './f-node-resize';
 

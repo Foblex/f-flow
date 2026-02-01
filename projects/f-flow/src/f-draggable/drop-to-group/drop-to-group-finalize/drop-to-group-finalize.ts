@@ -4,7 +4,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { FComponentsStore } from '../../../f-storage';
-import { MoveSummaryDragHandler } from '../../f-node-move';
+import { DragNodeHandler } from '../../drag-node';
 import { FDropToGroupEvent } from '../f-drop-to-group-event';
 import { IPointerEvent } from '../../../drag-toolkit';
 
@@ -60,13 +60,11 @@ export class DropToGroupFinalize implements IExecution<DropToGroupFinalizeReques
     return result;
   }
 
-  private _getMoveSummaryHandler(): MoveSummaryDragHandler {
-    const handler = this._dragSession.draggableItems.find(
-      (x) => x instanceof MoveSummaryDragHandler,
-    );
+  private _getMoveSummaryHandler(): DragNodeHandler {
+    const handler = this._dragSession.draggableItems.find((x) => x instanceof DragNodeHandler);
 
     if (!handler) {
-      throw new Error('DropToGroup requires MoveSummaryDragHandler.');
+      throw new Error('DropToGroup requires DragNodeHandler.');
     }
 
     return handler;

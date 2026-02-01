@@ -17,7 +17,7 @@ import {
   DragNodeConnectionHandlerBase,
   DragNodeConnectionSourceHandler,
   DragNodeConnectionTargetHandler,
-} from '../../f-node-move';
+} from '../../drag-node';
 import { FConnectionBase } from '../../../f-connection-v2';
 import { DragHandlerInjector } from '../../infrastructure';
 

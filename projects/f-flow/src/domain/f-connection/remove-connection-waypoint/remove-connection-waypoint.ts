@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { RemoveConnectionWaypointRequest } from './remove-connection-waypoint-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
-import { FConnectionBase, FConnectionWaypointsChangedEvent } from '../../../f-connection-v2';
+import { FConnectionBase } from '../../../f-connection-v2';
+import { FConnectionWaypointsChangedEvent } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(RemoveConnectionWaypointRequest)

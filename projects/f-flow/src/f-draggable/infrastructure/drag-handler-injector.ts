@@ -10,7 +10,7 @@ import {
   DragNodeConnectionBothSidesHandler,
   DragNodeConnectionSourceHandler,
   DragNodeConnectionTargetHandler,
-} from '../f-node-move';
+} from '../drag-node';
 
 type NoArgsCtor<T> = new () => T;
 

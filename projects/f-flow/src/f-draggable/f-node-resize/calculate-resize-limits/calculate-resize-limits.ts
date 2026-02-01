@@ -9,7 +9,7 @@ import { GetNodePaddingRequest, GetParentNodesRequest } from '../../../domain';
 import {
   ReadNodeBoundsWithPaddingsRequest,
   ReadNodeBoundsWithPaddingsResponse,
-} from '../../f-node-move';
+} from '../../drag-node';
 
 @Injectable()
 @FExecutionRegister(CalculateResizeLimitsRequest)

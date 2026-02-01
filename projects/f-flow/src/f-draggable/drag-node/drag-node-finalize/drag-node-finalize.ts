@@ -6,7 +6,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { IsConnectionUnderNodeRequest } from '../../domain';
 import { ISnapCoordinate, ISnapResult } from '../../../f-line-alignment';
-import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { DragNodeHandler } from '../drag-node-handler';
 import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes-event';
 
@@ -17,7 +17,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
 
-  private _dragHandler?: MoveSummaryDragHandler | undefined;
+  private _dragHandler?: DragNodeHandler | undefined;
 
   public handle({ event }: DragNodeFinalizeRequest): void {
     this._dragHandler = this._getDragHandler();
@@ -33,8 +33,8 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     this._emitNodeIntersectIfNeeded(this._dragHandler);
   }
 
-  private _getDragHandler(): MoveSummaryDragHandler | undefined {
-    return this._dragSession.draggableItems.find((x) => x instanceof MoveSummaryDragHandler);
+  private _getDragHandler(): DragNodeHandler | undefined {
+    return this._dragSession.draggableItems.find((x) => x instanceof DragNodeHandler);
   }
 
   private _buildDragDelta(pointerPosition: IPoint): Point {
@@ -61,7 +61,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     return result.value !== undefined && result.value !== null;
   }
 
-  private _finalizeMove(handler: MoveSummaryDragHandler, delta: IPoint): void {
+  private _finalizeMove(handler: DragNodeHandler, delta: IPoint): void {
     // finalize constraints for roots
     for (const root of handler.rootHandlers) {
       root.assignFinalConstraints();
@@ -73,7 +73,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     this._store.fDraggable?.fMoveNodes.emit(this._buildMoveNodesEvent(handler));
   }
 
-  private _buildMoveNodesEvent(handler: MoveSummaryDragHandler): FMoveNodesEvent {
+  private _buildMoveNodesEvent(handler: DragNodeHandler): FMoveNodesEvent {
     // Prefer new event shape: kind/data
     // but keep backward compat: fData
     const dragEvent = handler.getEvent();
@@ -89,7 +89,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     return new FMoveNodesEvent(nodes);
   }
 
-  private _emitNodeIntersectIfNeeded(handler: MoveSummaryDragHandler): void {
+  private _emitNodeIntersectIfNeeded(handler: DragNodeHandler): void {
     if (!this._isDraggedJustOneNode(handler) || !this._store.fDraggable?.fEmitOnNodeIntersect) {
       return;
     }
@@ -99,7 +99,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     queueMicrotask(() => this._mediator.execute(new IsConnectionUnderNodeRequest(nodeOrGroup)));
   }
 
-  private _isDraggedJustOneNode(handler: MoveSummaryDragHandler): boolean {
+  private _isDraggedJustOneNode(handler: DragNodeHandler): boolean {
     return handler.rootHandlers.length === 1;
   }
 }

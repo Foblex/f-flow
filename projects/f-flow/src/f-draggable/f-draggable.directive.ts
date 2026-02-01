@@ -15,11 +15,7 @@ import {
   QueryList,
 } from '@angular/core';
 import { FDraggableBase } from './f-draggable-base';
-import {
-  FMoveNodesEvent,
-  DragNodeFinalizeRequest,
-  DragNodePreparationRequest,
-} from './f-node-move';
+import { FMoveNodesEvent, DragNodeFinalizeRequest, DragNodePreparationRequest } from './drag-node';
 import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
   CreateConnectionFinalizeRequest,

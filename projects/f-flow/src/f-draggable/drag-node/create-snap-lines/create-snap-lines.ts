@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { GetFlowHostElementRequest } from '../../../domain';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
-import { MoveSummaryDragHandler } from '../../index';
+import { DragNodeHandler } from '../../index';
 import { SnapLinesDragHandler } from './snap-lines.drag-handler';
 import { FNodeBase } from '../../../f-node';
 import { SnapLineService } from '../../../f-line-alignment';
@@ -25,7 +25,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
     this._addLineAlignmentDragHandler(summaryHandler);
   }
 
-  private _addLineAlignmentDragHandler(handler: MoveSummaryDragHandler): void {
+  private _addLineAlignmentDragHandler(handler: DragNodeHandler): void {
     handler.setLineAlignment(
       new SnapLinesDragHandler(
         this._injector,
@@ -36,7 +36,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
     );
   }
 
-  private _allDraggedNodes(handler: MoveSummaryDragHandler): FNodeBase[] {
+  private _allDraggedNodes(handler: DragNodeHandler): FNodeBase[] {
     return handler.allDraggedNodeHandlers.map((x) => x.nodeOrGroup);
   }
 

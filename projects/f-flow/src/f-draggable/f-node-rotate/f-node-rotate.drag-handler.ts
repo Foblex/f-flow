@@ -3,7 +3,7 @@ import { DragHandlerBase } from '../infrastructure';
 import { FNodeBase } from '../../f-node';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { FComponentsStore } from '../../f-storage';
-import { DragNodeConnectionHandlerBase } from '../f-node-move';
+import { DragNodeConnectionHandlerBase } from '../drag-node';
 import { calculateDifferenceAfterRotation } from './calculate-difference-after-rotation';
 import { GetNormalizedElementRectRequest } from '../../domain';
 import { FMediator } from '@foblex/mediator';

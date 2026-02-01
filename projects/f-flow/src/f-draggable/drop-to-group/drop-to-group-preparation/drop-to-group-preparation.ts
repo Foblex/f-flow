@@ -12,7 +12,7 @@ import {
 import { FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
-import { MoveSummaryDragHandler } from '../../f-node-move';
+import { DragNodeHandler } from '../../drag-node';
 import { FExternalItemDragHandler } from '../../../f-external-item';
 import { SortDropCandidatesByLayerRequest } from '../sort-drop-candidates-by-layer';
 import { DragHandlerInjector } from '../../infrastructure';
@@ -72,7 +72,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   }
 
   private _hasMoveDrag(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof MoveSummaryDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof DragNodeHandler);
   }
 
   private _hasExternalDrag(): boolean {
@@ -98,9 +98,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   }
 
   private _getDraggedNodes(): FNodeBase[] {
-    const moveHandler = this._dragContext.draggableItems.find(
-      (x) => x instanceof MoveSummaryDragHandler,
-    );
+    const moveHandler = this._dragContext.draggableItems.find((x) => x instanceof DragNodeHandler);
 
     return moveHandler ? moveHandler.allDraggedNodeHandlers.map((h) => h.nodeOrGroup) : [];
   }

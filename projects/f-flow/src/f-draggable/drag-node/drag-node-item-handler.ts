@@ -12,7 +12,7 @@ import {
 } from './drag-node-constraint';
 import { FMediator } from '@foblex/mediator';
 
-export class MoveDragHandler extends DragHandlerBase<unknown> {
+export class DragNodeItemHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-node';
   protected readonly kind = 'drag-nodes';
 
@@ -29,7 +29,7 @@ export class MoveDragHandler extends DragHandlerBase<unknown> {
   constructor(
     private readonly _injector: Injector,
     public nodeOrGroup: FNodeBase,
-    public childrenNodeAndGroups: MoveDragHandler[] = [],
+    public childrenNodeAndGroups: DragNodeItemHandler[] = [],
     public fSourceHandlers: DragNodeConnectionHandlerBase[] = [],
     public fTargetHandlers: DragNodeConnectionHandlerBase[] = [],
   ) {

@@ -13,7 +13,7 @@ import {
 } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
 import { CreateSnapLinesRequest } from '../create-snap-lines';
-import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../../drag-toolkit';
 
 @Injectable()
@@ -78,7 +78,7 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
     return undefined;
   }
 
-  private _createSummaryHandler(node: FNodeBase): MoveSummaryDragHandler {
+  private _createSummaryHandler(node: FNodeBase): DragNodeHandler {
     const nodeWithDisabledSelection = node.fSelectionDisabled() ? node : undefined;
 
     if (!nodeWithDisabledSelection) {

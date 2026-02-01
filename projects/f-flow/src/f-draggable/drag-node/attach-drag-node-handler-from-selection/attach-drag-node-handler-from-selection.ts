@@ -3,14 +3,14 @@ import { AttachDragNodeHandlerFromSelectionRequest } from './attach-drag-node-ha
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { MoveDragHandler } from '../move-drag-handler';
+import { DragNodeItemHandler } from '../drag-node-item-handler';
 import { FNodeBase } from '../../../f-node';
 import { AttachSourceConnectionDragHandlersToNodeRequest } from './attach-source-connection-drag-handlers-to-node';
 import { AttachTargetConnectionDragHandlersToNodeRequest } from './attach-target-connection-drag-handlers-to-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection-handlers';
-import { MoveSummaryDragHandler } from '../move-summary-drag-handler';
+import { DragNodeHandler } from '../drag-node-handler';
 import { CreateDragNodeHierarchyRequest, DragNodeHierarchy } from './create-drag-node-hierarchy';
 import { CreateDragNodeSummaryHandlerRequest } from './create-drag-node-summary-handler';
 
@@ -18,7 +18,7 @@ import { CreateDragNodeSummaryHandlerRequest } from './create-drag-node-summary-
 @Injectable()
 @FExecutionRegister(AttachDragNodeHandlerFromSelectionRequest)
 export class AttachDragNodeHandlerFromSelection
-  implements IExecution<AttachDragNodeHandlerFromSelectionRequest, MoveSummaryDragHandler>
+  implements IExecution<AttachDragNodeHandlerFromSelectionRequest, DragNodeHandler>
 {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -26,7 +26,7 @@ export class AttachDragNodeHandlerFromSelection
 
   public handle({
     nodeWithDisabledSelection,
-  }: AttachDragNodeHandlerFromSelectionRequest): MoveSummaryDragHandler {
+  }: AttachDragNodeHandlerFromSelectionRequest): DragNodeHandler {
     const selected = this._collectSelected(nodeWithDisabledSelection);
     const selectedWithChildren = this._withDeepChildren(selected);
 
@@ -104,7 +104,7 @@ export class AttachDragNodeHandlerFromSelection
   }
 
   private _attachConnectionHandlers(
-    participants: MoveDragHandler[],
+    participants: DragNodeItemHandler[],
     selectedSourceConnectorIds: string[],
     selectedTargetConnectorIds: string[],
   ): void {

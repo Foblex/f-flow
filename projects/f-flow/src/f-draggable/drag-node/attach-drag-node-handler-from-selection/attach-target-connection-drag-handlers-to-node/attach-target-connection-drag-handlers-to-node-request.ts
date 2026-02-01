@@ -1,4 +1,4 @@
-import { MoveDragHandler } from '../../move-drag-handler';
+import { DragNodeItemHandler } from '../../drag-node-item-handler';
 import { DragNodeConnectionHandlerBase } from '../../drag-node-dependent-connection-handlers';
 
 export class AttachTargetConnectionDragHandlersToNodeRequest {
@@ -6,7 +6,7 @@ export class AttachTargetConnectionDragHandlersToNodeRequest {
 
   constructor(
     /** Node move handler we attach connection handlers to. */
-    public readonly dragHandler: MoveDragHandler,
+    public readonly dragHandler: DragNodeItemHandler,
 
     /**
      * Connectors considered "source side" for connections (previously: outputIds).

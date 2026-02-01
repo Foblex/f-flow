@@ -15,7 +15,7 @@ import { FCreateNodeEvent } from '../f-external-item';
 import { FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
-import { FMoveNodesEvent } from './f-node-move';
+import { FMoveNodesEvent } from './drag-node';
 import { FDragStartedEvent } from './domain/f-drag-started-event';
 
 export abstract class FDraggableBase extends DragAndDropBase {

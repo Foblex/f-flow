@@ -14,11 +14,11 @@ export * from './create-snap-lines/snap-lines.drag-handler';
 
 export * from './f-move-nodes-event';
 
-export * from './i-node-move-summary-event-data';
+export * from './i-drag-node-event-data';
 
-export * from './move-drag-handler';
+export * from './drag-node-item-handler';
 
-export * from './move-summary-drag-handler';
+export * from './drag-node-handler';
 
 export * from './providers';
 
