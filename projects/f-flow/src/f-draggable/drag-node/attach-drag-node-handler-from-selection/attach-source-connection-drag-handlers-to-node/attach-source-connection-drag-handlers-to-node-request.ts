@@ -1,5 +1,5 @@
-import { DragNodeItemHandler } from '../../drag-node-item-handler';
 import { DragNodeConnectionHandlerBase } from '../../drag-node-dependent-connection-handlers';
+import { DragNodeItemHandler } from '../../drag-node-handler';
 
 export class AttachSourceConnectionDragHandlersToNodeRequest {
   static readonly fToken = Symbol('AttachSourceConnectionDragHandlersToNodeRequest');

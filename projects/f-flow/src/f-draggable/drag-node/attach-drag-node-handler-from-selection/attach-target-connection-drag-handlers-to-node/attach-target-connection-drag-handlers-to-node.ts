@@ -51,7 +51,7 @@ export class AttachTargetConnectionDragHandlersToNode
       connectionHandler = this._createConnectionHandler(request.sourceIds, connection);
       request.handlerPool.push(connectionHandler);
     }
-    request.dragHandler.fTargetHandlers.push(connectionHandler);
+    request.dragHandler.targetConnectionHandlers.push(connectionHandler);
   }
 
   private _getExistingConnectionHandler(

@@ -1,9 +1,9 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { CreateDragNodeHierarchyRequest } from './create-drag-node-hierarchy-request';
-import { DragNodeItemHandler } from '../../drag-node-item-handler';
 import { DragNodeHierarchy } from './drag-node-hierarchy';
 import { FNodeBase } from '../../../../f-node';
+import { DragNodeItemHandler } from '../../drag-node-handler';
 
 @Injectable()
 @FExecutionRegister(CreateDragNodeHierarchyRequest)
@@ -45,7 +45,7 @@ export class CreateDragNodeHierarchy
       const parentHandler = parentId ? handlerByNodeId.get(parentId) : undefined;
 
       if (parentHandler) {
-        parentHandler.childrenNodeAndGroups.push(handler);
+        parentHandler.children.push(handler);
       } else {
         rootHandlers.push(handler);
       }

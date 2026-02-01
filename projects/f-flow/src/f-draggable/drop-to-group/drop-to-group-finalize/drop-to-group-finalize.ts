@@ -45,7 +45,7 @@ export class DropToGroupFinalize implements IExecution<DropToGroupFinalizeReques
   private _getTopLevelDraggedIds(): string[] {
     const summary = this._getMoveSummaryHandler();
 
-    const dragged = summary.allDraggedNodeHandlers.map((x) => x.nodeOrGroup);
+    const dragged = summary.items.map((x) => x.nodeOrGroup);
 
     const draggedIdSet = new Set(dragged.map((n) => n.fId()));
 

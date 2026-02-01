@@ -8,7 +8,7 @@ import {
   FZoomDirective,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
-import { FDragStartedEvent } from '../../../f-flow/src/f-draggable/domain/f-drag-started-event';
+import { FDragStartedEvent } from '@foblex/flow';
 
 @Component({
   selector: 'drag-start-end-events',

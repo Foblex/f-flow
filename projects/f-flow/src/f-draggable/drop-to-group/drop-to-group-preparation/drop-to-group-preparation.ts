@@ -98,9 +98,9 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   }
 
   private _getDraggedNodes(): FNodeBase[] {
-    const moveHandler = this._dragContext.draggableItems.find((x) => x instanceof DragNodeHandler);
+    const handler = this._dragContext.draggableItems.find((x) => x instanceof DragNodeHandler);
 
-    return moveHandler ? moveHandler.allDraggedNodeHandlers.map((h) => h.nodeOrGroup) : [];
+    return handler ? handler.items.map((h) => h.nodeOrGroup) : [];
   }
 
   private _withParents(nodes: FNodeBase[]): FNodeBase[] {

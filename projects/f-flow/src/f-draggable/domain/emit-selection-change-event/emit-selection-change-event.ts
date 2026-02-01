@@ -1,10 +1,10 @@
-import { EventEmitter, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-request';
-import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
-import { GetCurrentSelectionRequest, ICurrentSelection } from '../../f-selection';
-import { NotifyTransformChangedRequest } from '../../../f-storage';
+import { FComponentsStore, NotifyTransformChangedRequest } from '../../../f-storage';
+import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { GetCurrentSelectionRequest, ICurrentSelection } from '../../../domain';
+import { FSelectionChangeEvent } from '../../f-selection-change-event';
 
 /**
  * Execution that emits a selection change event when the selection changes.
@@ -12,25 +12,18 @@ import { NotifyTransformChangedRequest } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(EmitSelectionChangeEventRequest)
-export class EmitSelectionChangeEventExecution
-  implements IExecution<EmitSelectionChangeEventRequest, void>
-{
+export class EmitSelectionChangeEvent implements IExecution<EmitSelectionChangeEventRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
-
-  private get _fSelectionChange(): EventEmitter<FSelectionChangeEvent> {
-    return this._store.fDraggable!.fSelectionChange;
-  }
-
-  private readonly _dragContext = inject(FDraggableDataContext);
+  private readonly _dragSession = inject(FDraggableDataContext);
 
   public handle(_request: EmitSelectionChangeEventRequest): void {
-    if (!this._dragContext.isSelectedChanged) {
+    if (!this._dragSession.isSelectedChanged) {
       return;
     }
 
     this._emitSelectionChange(this._getSelection());
-    this._dragContext.isSelectedChanged = false;
+    this._dragSession.isSelectedChanged = false;
     this._mediator.execute<void>(new NotifyTransformChangedRequest());
   }
 
@@ -39,7 +32,7 @@ export class EmitSelectionChangeEventExecution
   }
 
   private _emitSelectionChange(selection: ICurrentSelection): void {
-    this._fSelectionChange.emit(
+    this._store.fDraggable?.fSelectionChange.emit(
       new FSelectionChangeEvent(selection.fNodeIds, selection.fGroupIds, selection.fConnectionIds),
     );
   }

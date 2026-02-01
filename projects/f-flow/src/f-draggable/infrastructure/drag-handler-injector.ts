@@ -10,6 +10,7 @@ import {
   DragNodeConnectionBothSidesHandler,
   DragNodeConnectionSourceHandler,
   DragNodeConnectionTargetHandler,
+  DragNodeHandler,
 } from '../drag-node';
 
 type NoArgsCtor<T> = new () => T;
@@ -67,6 +68,10 @@ export class DragHandlerInjector {
         {
           provide: DragNodeConnectionBothSidesHandler,
           useClass: DragNodeConnectionBothSidesHandler,
+        },
+        {
+          provide: DragNodeHandler,
+          useClass: DragNodeHandler,
         },
       ],
       parent: this._injector,

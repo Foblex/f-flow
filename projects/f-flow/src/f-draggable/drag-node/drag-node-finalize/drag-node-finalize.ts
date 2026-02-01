@@ -4,7 +4,7 @@ import { IPoint, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { IsConnectionUnderNodeRequest } from '../../domain';
+import { DetectConnectionsUnderDragNodeRequest } from '../../domain';
 import { ISnapCoordinate, ISnapResult } from '../../../f-line-alignment';
 import { DragNodeHandler } from '../drag-node-handler';
 import { FNodeBase } from '../../../f-node';
@@ -63,8 +63,8 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
 
   private _finalizeMove(handler: DragNodeHandler, delta: IPoint): void {
     // finalize constraints for roots
-    for (const root of handler.rootHandlers) {
-      root.assignFinalConstraints();
+    for (const root of handler.roots) {
+      root.finalizeConstraints();
     }
 
     handler.onPointerMove(delta);
@@ -94,12 +94,14 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
       return;
     }
 
-    const nodeOrGroup = handler.rootHandlers[0].nodeOrGroup as FNodeBase;
+    const nodeOrGroup = handler.roots[0].nodeOrGroup as FNodeBase;
 
-    queueMicrotask(() => this._mediator.execute(new IsConnectionUnderNodeRequest(nodeOrGroup)));
+    queueMicrotask(() =>
+      this._mediator.execute(new DetectConnectionsUnderDragNodeRequest(nodeOrGroup)),
+    );
   }
 
   private _isDraggedJustOneNode(handler: DragNodeHandler): boolean {
-    return handler.rootHandlers.length === 1;
+    return handler.roots.length === 1;
   }
 }

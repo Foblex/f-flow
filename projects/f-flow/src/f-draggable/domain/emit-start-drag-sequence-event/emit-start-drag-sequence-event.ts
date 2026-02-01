@@ -1,29 +1,29 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { StartDragSequenceRequest } from './start-drag-sequence-request';
+import { EmitStartDragSequenceEventRequest } from './emit-start-drag-sequence-event-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FDraggableDataContext } from '../../../f-draggable';
-import { EmitSelectionChangeEventRequest } from '../emit-selection-change-event';
-import { F_CSS_CLASS } from '../../css-cls';
-import { FDragStartedEvent } from '../../../f-draggable/domain/f-drag-started-event';
+import {
+  EmitSelectionChangeEventRequest,
+  FDraggableDataContext,
+  FDragStartedEvent,
+} from '../../../f-draggable';
+import { F_CSS_CLASS } from '../../../domain';
 
 /**
  * Execution that starts the drag sequence by adding a dragging class to the host element
  */
 @Injectable()
-@FExecutionRegister(StartDragSequenceRequest)
-export class StartDragSequenceExecution implements IExecution<StartDragSequenceRequest, void> {
+@FExecutionRegister(EmitStartDragSequenceEventRequest)
+export class EmitStartDragSequenceEvent
+  implements IExecution<EmitStartDragSequenceEventRequest, void>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  private get _hostElement(): HTMLElement {
-    return this._store.fDraggable!.hostElement;
-  }
-
-  public handle(_request: StartDragSequenceRequest): void {
+  public handle(_request: EmitStartDragSequenceEventRequest): void {
     if (this._dragContext.draggableItems.length > 0) {
-      this._hostElement.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
+      this._store.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
       this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
       this._emitDragStarted();
     }

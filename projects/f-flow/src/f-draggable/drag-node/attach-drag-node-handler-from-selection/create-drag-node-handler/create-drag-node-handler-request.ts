@@ -1,7 +1,7 @@
-import { DragNodeItemHandler } from '../../drag-node-item-handler';
+import { DragNodeItemHandler } from '../../drag-node-handler';
 
-export class CreateDragNodeSummaryHandlerRequest {
-  static readonly fToken = Symbol('CreateDragNodeSummaryHandlerRequest');
+export class CreateDragNodeHandlerRequest {
+  static readonly fToken = Symbol('CreateDragNodeHandlerRequest');
 
   constructor(
     /** Root handlers (handlers without parents in the selection). */

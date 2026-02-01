@@ -3,7 +3,7 @@ import { AttachTargetConnectionDragHandlersToNode } from './attach-target-connec
 import { AttachSourceConnectionDragHandlersToNode } from './attach-source-connection-drag-handlers-to-node';
 import { CreateDragNodeHierarchy } from './create-drag-node-hierarchy';
 import { BuildDragNodeConstraints } from './build-drag-node-constraints';
-import { CreateDragNodeSummaryHandler } from './create-drag-node-summary-handler';
+import { CreateDragNodeHandler } from './create-drag-node-handler';
 import { ReadNodeBoundsWithPaddings } from './read-node-bounds-with-paddings';
 
 export const CREATE_MOVE_NODE_DRAG_MODEL_FROM_SELECTION_PROVIDERS = [
@@ -11,7 +11,7 @@ export const CREATE_MOVE_NODE_DRAG_MODEL_FROM_SELECTION_PROVIDERS = [
 
   BuildDragNodeConstraints,
 
-  CreateDragNodeSummaryHandler,
+  CreateDragNodeHandler,
 
   AttachTargetConnectionDragHandlersToNode,
 

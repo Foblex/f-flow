@@ -1,4 +1,4 @@
-import { DragNodeItemHandler } from '../../drag-node-item-handler';
+import { DragNodeItemHandler } from '../../drag-node-handler';
 
 export class DragNodeHierarchy {
   constructor(

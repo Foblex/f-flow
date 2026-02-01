@@ -2,7 +2,7 @@ export * from './create-drag-node-hierarchy';
 
 export * from './build-drag-node-constraints';
 
-export * from './create-drag-node-summary-handler';
+export * from './create-drag-node-handler';
 
 export * from './read-node-bounds-with-paddings';
 

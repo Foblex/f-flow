@@ -1,6 +1,6 @@
 import { IPoint } from '@foblex/2d';
 import { IPointerEvent } from '../../drag-toolkit';
-import { FDragStartedEvent } from '../domain/f-drag-started-event';
+import { FDragStartedEvent } from '../f-drag-started-event';
 
 export abstract class DragHandlerBase<TData> {
   protected abstract readonly type: string;

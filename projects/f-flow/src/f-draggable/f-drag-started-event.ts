@@ -5,13 +5,12 @@ export class FDragStartedEvent<TData = unknown> {
   /** Payload. */
   public readonly data?: TData;
 
-  /** Old identifier (kept for backward compatibility). */
-  private readonly _legacyKind: string;
-
-  /** @deprecated Use `kind` */
-  public get fEventType(): string {
-    return this._legacyKind;
-  }
+  /**
+   * Legacy identifier.
+   * Kept as own property to preserve Object.keys / hasOwnProperty / spread behavior.
+   * @deprecated Use `kind`
+   */
+  public readonly fEventType: string;
 
   /** @deprecated Use `data` */
   public get fData(): TData | undefined {
@@ -21,6 +20,8 @@ export class FDragStartedEvent<TData = unknown> {
   constructor(kind: string, data?: TData, legacyKind?: string) {
     this.kind = kind;
     this.data = data;
-    this._legacyKind = legacyKind ?? kind;
+
+    // own property (max compatibility)
+    this.fEventType = legacyKind ?? kind;
   }
 }

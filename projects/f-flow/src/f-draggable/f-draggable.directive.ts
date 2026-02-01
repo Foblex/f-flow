@@ -15,7 +15,7 @@ import {
   QueryList,
 } from '@angular/core';
 import { FDraggableBase } from './f-draggable-base';
-import { FMoveNodesEvent, DragNodeFinalizeRequest, DragNodePreparationRequest } from './drag-node';
+import { DragNodeFinalizeRequest, DragNodePreparationRequest, FMoveNodesEvent } from './drag-node';
 import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
   CreateConnectionFinalizeRequest,
@@ -34,8 +34,6 @@ import {
   AddDndToStoreRequest,
   defaultEventTrigger,
   DragRectCache,
-  EmitSelectionChangeEventRequest,
-  EndDragSequenceRequest,
   FEventTrigger,
   FTriggerEvent,
   InitializeDragSequenceRequest,
@@ -57,7 +55,12 @@ import {
   IFDragAndDropPlugin,
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
-import { FNodeIntersectedWithConnections } from './domain';
+import {
+  EmitEndDragSequenceEventRequest,
+  EmitSelectionChangeEventRequest,
+  FNodeConnectionsIntersectionEvent,
+  FNodeIntersectedWithConnections,
+} from './domain';
 import { DragHandlerInjector, DragSession, FDragHandlerResult } from './infrastructure';
 import {
   DropToGroupFinalizeRequest,
@@ -68,7 +71,7 @@ import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-n
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
-import { FDragStartedEvent } from './domain/f-drag-started-event';
+import { FDragStartedEvent } from './f-drag-started-event';
 
 @Directive({
   selector: 'f-flow[fDraggable]',
@@ -120,9 +123,11 @@ export class FDraggableDirective
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
 
+  /** @deprecated Use `fNodeConnectionsIntersection` */
   @Output()
   public override fNodeIntersectedWithConnections =
     new EventEmitter<FNodeIntersectedWithConnections>();
+  public readonly fNodeConnectionsIntersection = output<FNodeConnectionsIntersectionEvent>();
 
   @Input({ transform: booleanAttribute })
   public override fEmitOnNodeIntersect: boolean = false;
@@ -286,7 +291,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DragConnectionWaypointFinalizeRequest(event));
 
-    this._mediator.execute<void>(new EndDragSequenceRequest());
+    this._mediator.execute<void>(new EmitEndDragSequenceEventRequest());
   }
 
   protected override finalizeDragSequence(): void {

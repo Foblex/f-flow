@@ -3,16 +3,15 @@ import { AttachDragNodeHandlerFromSelectionRequest } from './attach-drag-node-ha
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { DragNodeItemHandler } from '../drag-node-item-handler';
 import { FNodeBase } from '../../../f-node';
 import { AttachSourceConnectionDragHandlersToNodeRequest } from './attach-source-connection-drag-handlers-to-node';
 import { AttachTargetConnectionDragHandlersToNodeRequest } from './attach-target-connection-drag-handlers-to-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection-handlers';
-import { DragNodeHandler } from '../drag-node-handler';
+import { DragNodeHandler, DragNodeItemHandler } from '../drag-node-handler';
 import { CreateDragNodeHierarchyRequest, DragNodeHierarchy } from './create-drag-node-hierarchy';
-import { CreateDragNodeSummaryHandlerRequest } from './create-drag-node-summary-handler';
+import { CreateDragNodeHandlerRequest } from './create-drag-node-handler';
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
@@ -44,7 +43,7 @@ export class AttachDragNodeHandlerFromSelection
     );
 
     return this._mediator.execute(
-      new CreateDragNodeSummaryHandlerRequest(hierarchy.rootHandlers, hierarchy.participants),
+      new CreateDragNodeHandlerRequest(hierarchy.rootHandlers, hierarchy.participants),
     );
   }
 

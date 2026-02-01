@@ -12,18 +12,20 @@ import {
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
-import { FNodeIntersectedWithConnections } from './domain';
 import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './drag-node';
-import { FDragStartedEvent } from './domain/f-drag-started-event';
+import { FDragStartedEvent } from './f-drag-started-event';
+import { FNodeConnectionsIntersectionEvent, FNodeIntersectedWithConnections } from './domain';
 
 export abstract class FDraggableBase extends DragAndDropBase {
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
+  /** @deprecated Use `fNodeConnectionsIntersection` */
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
+  public abstract fNodeConnectionsIntersection: OutputEmitterRef<FNodeConnectionsIntersectionEvent>;
 
   public abstract fEmitOnNodeIntersect: boolean;
 

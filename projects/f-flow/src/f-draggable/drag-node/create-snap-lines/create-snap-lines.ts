@@ -37,7 +37,7 @@ export class CreateSnapLines implements IExecution<CreateSnapLinesRequest, void>
   }
 
   private _allDraggedNodes(handler: DragNodeHandler): FNodeBase[] {
-    return handler.allDraggedNodeHandlers.map((x) => x.nodeOrGroup);
+    return handler.items.map((x) => x.nodeOrGroup);
   }
 
   private _getFlowHostSize(): ISize {

@@ -20,6 +20,8 @@ export * from './pinch-to-zoom';
 
 export * from './f-drag-blocker.directive';
 
+export * from './f-drag-started-event';
+
 export * from './f-draggable.directive';
 
 export * from './f-draggable-base';
