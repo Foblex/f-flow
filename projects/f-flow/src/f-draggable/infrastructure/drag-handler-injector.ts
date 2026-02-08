@@ -12,6 +12,7 @@ import {
   DragNodeConnectionTargetHandler,
   DragNodeHandler,
 } from '../drag-node';
+import { PinchToZoomHandler } from '../pinch-to-zoom';
 
 type NoArgsCtor<T> = new () => T;
 
@@ -72,6 +73,10 @@ export class DragHandlerInjector {
         {
           provide: DragNodeHandler,
           useClass: DragNodeHandler,
+        },
+        {
+          provide: PinchToZoomHandler,
+          useClass: PinchToZoomHandler,
         },
       ],
       parent: this._injector,

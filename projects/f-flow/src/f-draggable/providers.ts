@@ -1,6 +1,6 @@
 import { DRAG_CANVAS_PROVIDERS } from './drag-canvas';
 import { DRAG_CONNECTIONS_PROVIDERS } from './connection';
-import { SINGLE_SELECT_PROVIDERS } from './single-select';
+import { DRAG_SELECT_BY_POINTER_PROVIDERS } from './select-by-pointer';
 import { NODE_PROVIDERS } from './drag-node';
 import { NODE_RESIZE_PROVIDERS } from './f-node-resize';
 import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
@@ -18,7 +18,7 @@ export const F_DRAGGABLE_PROVIDERS = [
 
   ...DRAG_AND_DROP_COMMON_PROVIDERS,
 
-  ...SINGLE_SELECT_PROVIDERS,
+  ...DRAG_SELECT_BY_POINTER_PROVIDERS,
 
   ...F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS,
 

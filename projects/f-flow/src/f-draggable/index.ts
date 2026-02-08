@@ -14,7 +14,7 @@ export * from './f-node-resize';
 
 export * from './f-node-rotate';
 
-export * from './single-select';
+export * from './select-by-pointer';
 
 export * from './pinch-to-zoom';
 

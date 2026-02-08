@@ -47,7 +47,7 @@ import {
   FExternalItemPreparationRequest,
   PreventDefaultIsExternalItemRequest,
 } from '../f-external-item';
-import { SingleSelectRequest } from './single-select';
+import { SelectByPointerRequest } from './select-by-pointer';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './f-node-resize';
 import {
   F_AFTER_MAIN_PLUGIN,
@@ -212,7 +212,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
 
-    this._mediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
+    this._mediator.execute<void>(new SelectByPointerRequest(event, this.fMultiSelectTrigger));
 
     this._mediator.execute<void>(
       new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),

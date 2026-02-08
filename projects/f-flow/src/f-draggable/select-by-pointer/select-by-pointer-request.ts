@@ -1,8 +1,8 @@
 import { FEventTrigger } from '../../domain';
 import { IPointerEvent } from '../../drag-toolkit';
 
-export class SingleSelectRequest {
-  static readonly fToken = Symbol('SingleSelectRequest');
+export class SelectByPointerRequest {
+  static readonly fToken = Symbol('SelectByPointerRequest');
 
   constructor(
     public readonly event: IPointerEvent,
