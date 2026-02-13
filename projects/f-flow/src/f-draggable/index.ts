@@ -14,9 +14,9 @@ export * from './f-node-resize';
 
 export * from './f-node-rotate';
 
-export * from './select-by-pointer';
-
 export * from './pinch-to-zoom';
+
+export * from './select-by-pointer';
 
 export * from './f-drag-blocker.directive';
 

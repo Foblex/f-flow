@@ -1,6 +1,6 @@
-import { FIdRegistry } from './f-id-registry';
+import { FIdRegistryBase } from './base';
 import { FNodeBase } from '../f-node';
 
-export class FNodeRegistry extends FIdRegistry<FNodeBase> {
+export class FNodeRegistry extends FIdRegistryBase<FNodeBase> {
   protected readonly kind = 'Node';
 }

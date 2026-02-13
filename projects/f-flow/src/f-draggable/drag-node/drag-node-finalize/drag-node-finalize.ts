@@ -5,10 +5,10 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DetectConnectionsUnderDragNodeRequest } from '../../domain';
-import { ISnapCoordinate, ISnapResult } from '../../../f-line-alignment';
 import { DragNodeHandler } from '../drag-node-handler';
 import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes-event';
+import { IMagneticAxisGuide, IMagneticGuidesResult } from '../magnetic-lines';
 
 @Injectable()
 @FExecutionRegister(DragNodeFinalizeRequest)
@@ -26,7 +26,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     }
 
     const delta = this._buildDragDelta(event.getPosition());
-    const snap = this._dragHandler.findClosestAlignment(delta);
+    const snap = this._dragHandler.calculateMagneticLinesGuides(delta);
     const snappedDelta = this._applySnapToDelta(delta, snap);
 
     this._finalizeMove(this._dragHandler, snappedDelta);
@@ -44,21 +44,21 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
       .sub(this._dragSession.onPointerDownPosition);
   }
 
-  private _applySnapToDelta(delta: IPoint, snap?: ISnapResult): IPoint {
+  private _applySnapToDelta(delta: IPoint, snap?: IMagneticGuidesResult): IPoint {
     if (!snap) {
       // return a copy, because below we will pass it to onPointerMove
       return { x: delta.x, y: delta.y };
     }
 
-    const x = this._hasSnapValue(snap.xResult) ? delta.x - snap.xResult.distance! : delta.x;
-    const y = this._hasSnapValue(snap.yResult) ? delta.y - snap.yResult.distance! : delta.y;
+    const x = this._hasSnapValue(snap.x) ? delta.x - (snap.x.delta || 0) : delta.x;
+    const y = this._hasSnapValue(snap.y) ? delta.y - (snap.y.delta || 0) : delta.y;
 
     return { x, y };
   }
 
-  private _hasSnapValue(result: ISnapCoordinate): boolean {
+  private _hasSnapValue(result: IMagneticAxisGuide): boolean {
     // distance is assumed to exist when value is defined (as in your current logic)
-    return result.value !== undefined && result.value !== null;
+    return result.guide !== undefined && result.guide !== null;
   }
 
   private _finalizeMove(handler: DragNodeHandler, delta: IPoint): void {

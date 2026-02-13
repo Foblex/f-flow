@@ -8,8 +8,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { F_LINE_ALIGNMENT, FLineAlignmentBase } from './f-line-alignment-base';
-import { RemoveLineAlignmentFromStoreRequest, AddLineAlignmentToStoreRequest } from '../domain';
 import { FMediator } from '@foblex/mediator';
+import {
+  INSTANCES,
+  RegisterPluginInstanceRequest,
+  RemovePluginInstanceRequest,
+} from '../f-storage';
 
 @Component({
   selector: 'f-line-alignment',
@@ -25,13 +29,12 @@ export class FLineAlignmentComponent extends FLineAlignmentBase implements OnIni
   public override readonly fAlignThreshold = input(10, { transform: numberAttribute });
 
   private readonly _mediator = inject(FMediator);
-  public readonly hostElement = inject(ElementRef).nativeElement;
 
   public ngOnInit(): void {
-    this._mediator.execute(new AddLineAlignmentToStoreRequest(this));
+    this._mediator.execute(new RegisterPluginInstanceRequest(INSTANCES.MAGNETIC_LINES, this));
   }
 
   public ngOnDestroy(): void {
-    this._mediator.execute(new RemoveLineAlignmentFromStoreRequest());
+    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.MAGNETIC_LINES));
   }
 }

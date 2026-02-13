@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { FMediator } from '@foblex/mediator';
-import { ElementRef, Injector } from '@angular/core';
+import { ElementRef, Injector, signal } from '@angular/core';
 import { FComponentsStore } from '../f-storage';
-import { FDraggableDataContext } from '@foblex/flow';
+import { FConnectionBase, FDraggableDataContext, FNodeBase } from '@foblex/flow';
 
 export class MockElementRef extends ElementRef<HTMLElement> {
   constructor() {
@@ -23,7 +23,21 @@ export function setupTestModule(providers: any[] = [], declarations: any[] = [])
       Injector,
       ...providers,
     ],
-  }).compileComponents();
+  });
 }
 
+export function mockNode(data: Partial<FNodeBase>): FNodeBase {
+  return {
+    fId: data.fId || signal(''),
+    fParentId: data.fParentId ?? signal<string | null>(null),
+    hostElement: data.hostElement || new MockElementRef().nativeElement,
+    ...data,
+  } as FNodeBase;
+}
 
+export function mockConnection(data: Partial<FConnectionBase>): FConnectionBase {
+  return {
+    fId: data.fId || signal(''),
+    ...data,
+  } as FConnectionBase;
+}

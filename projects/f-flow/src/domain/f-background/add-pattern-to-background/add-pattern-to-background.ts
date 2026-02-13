@@ -1,9 +1,9 @@
 import { TransformModelExtensions } from '@foblex/2d';
-import { AddPatternToBackgroundRequest } from './add-pattern-to-background.request';
+import { AddPatternToBackgroundRequest } from './add-pattern-to-background-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { createSVGElement } from '../../../domain';
-import { FComponentsStore } from '../../../f-storage';
+import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { BrowserService } from '@foblex/platform';
 
 let uniqueId = 0;
@@ -18,7 +18,7 @@ export class AddPatternToBackground implements IExecution<AddPatternToBackground
   private readonly _browser = inject(BrowserService);
 
   private get _backgroundElement(): HTMLElement {
-    return this._store.fBackground?.hostElement!;
+    return this._store.instances.get(INSTANCES.BACKGROUND)?.hostElement as HTMLElement;
   }
 
   public handle(request: AddPatternToBackgroundRequest): void {
@@ -41,7 +41,7 @@ export class AddPatternToBackground implements IExecution<AddPatternToBackground
       rect.setAttribute('fill', 'url(#' + lastPatternId + ')');
       rect.setAttribute('width', '100%');
       rect.setAttribute('height', '100%');
-      this._backgroundElement.firstChild?.appendChild(rect);
+      this._backgroundElement?.firstChild?.appendChild(rect);
       const transform = this._store.fCanvas?.transform || TransformModelExtensions.default();
       request.fPattern?.setTransform(transform);
     }

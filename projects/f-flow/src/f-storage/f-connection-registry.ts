@@ -1,8 +1,8 @@
-import { FIdRegistry } from './f-id-registry';
+import { FIdRegistryBase } from './base';
 import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../f-connection';
 import { FConnectionBase } from '../f-connection-v2';
 
-export class FConnectionRegistry extends FIdRegistry<FConnectionBase> {
+export class FConnectionRegistry extends FIdRegistryBase<FConnectionBase> {
   protected readonly kind = 'Connection';
 
   private _instancesForCreate: FConnectionForCreateComponent | undefined;

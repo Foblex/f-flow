@@ -10,10 +10,13 @@ import { ITransformModel } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN } from './domain';
 import { FMediator } from '@foblex/mediator';
 import {
-  AddBackgroundToStoreRequest,
   AddPatternToBackgroundRequest,
-  RemoveBackgroundFromStoreRequest,
 } from '../domain';
+import {
+  INSTANCES,
+  RegisterPluginInstanceRequest,
+  RemovePluginInstanceRequest,
+} from '../f-storage';
 
 @Component({
   selector: "f-background",
@@ -29,7 +32,7 @@ import {
 export class FBackgroundComponent
   extends FBackgroundBase implements OnInit, AfterContentInit, OnDestroy {
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _elementReference = inject(ElementRef);
 
   public override get hostElement(): HTMLElement {
@@ -39,11 +42,11 @@ export class FBackgroundComponent
   protected fBackgroundPattern = contentChild(F_BACKGROUND_PATTERN);
 
   public ngOnInit(): void {
-    this._fMediator.execute(new AddBackgroundToStoreRequest(this));
+    this._mediator.execute(new RegisterPluginInstanceRequest(INSTANCES.BACKGROUND, this));
   }
 
   public ngAfterContentInit(): void {
-    this._fMediator.execute(new AddPatternToBackgroundRequest(this.fBackgroundPattern()));
+    this._mediator.execute(new AddPatternToBackgroundRequest(this.fBackgroundPattern()));
   }
 
   public setTransform(transform: ITransformModel): void {
@@ -51,6 +54,6 @@ export class FBackgroundComponent
   }
 
   public ngOnDestroy() {
-    this._fMediator.execute(new RemoveBackgroundFromStoreRequest(this));
+    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.BACKGROUND));
   }
 }

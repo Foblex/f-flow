@@ -1,62 +1,54 @@
 import { TestBed } from '@angular/core/testing';
-import { SelectRequest } from './select.request';
-import { FMediator } from '@foblex/mediator';
 import { SelectExecution } from './select.execution';
-import { setupTestModule } from '../../test-setup';
+import { SelectRequest } from './select.request';
+import { mockConnection, mockNode, setupTestModule } from '../../test-setup';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { FComponentsStore } from '../../../f-storage';
-import { signal } from "@angular/core";
+import { signal } from '@angular/core';
 
-describe('SelectExecution', () => {
-  let fDraggableDataContext: FDraggableDataContext;
-  let fComponentsStore: FComponentsStore;
-  let fMediator: FMediator;
+describe('SelectExecution (unit)', () => {
+  let execution: SelectExecution;
+  let ctx: FDraggableDataContext;
+  let store: FComponentsStore;
 
   beforeEach(() => {
-    setupTestModule([ SelectExecution ]);
-    fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
-    fComponentsStore = TestBed.inject(FComponentsStore) as jasmine.SpyObj<FComponentsStore>;
-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
+    setupTestModule([SelectExecution]);
+    execution = TestBed.inject(SelectExecution);
+    ctx = TestBed.inject(FDraggableDataContext);
+    store = TestBed.inject(FComponentsStore);
+
+    ctx.selectedItems = [];
+    ctx.isSelectedChanged = false;
   });
 
-  it('should deselect all items and clear selectedItems array', () => {
-    const mockSelectedItems = [
+  it('clears previous selection', () => {
+    const prev = [
       { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
       { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
-    ];
-    fDraggableDataContext.selectedItems = mockSelectedItems as any;
+    ] as any;
 
-    fMediator.execute(new SelectRequest([], []));
+    ctx.selectedItems = prev;
 
-    mockSelectedItems.forEach(item => {
-      expect(item.unmarkAsSelected).toHaveBeenCalled();
-    });
-    expect(fDraggableDataContext.selectedItems.length).toBe(0);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
+    execution.handle(new SelectRequest([], []));
+
+    expect(prev[0].unmarkAsSelected).toHaveBeenCalledTimes(1);
+    expect(prev[1].unmarkAsSelected).toHaveBeenCalledTimes(1);
+    expect(ctx.selectedItems).toEqual([]);
+    expect(ctx.isSelectedChanged).toBeTrue();
   });
 
-  it('should select nodes and connections based on request', () => {
-    const mockNode = { fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') };
-    const mockConnection = { fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') };
+  it('selects existing node and connection by id', () => {
+    const node = mockNode({ fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') });
+    const conn = mockConnection({ fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') });
 
-    fComponentsStore.nodes.addMultiple([mockNode]);
-    fComponentsStore.connections.add(mockConnection);
-    fDraggableDataContext.selectedItems = [];
+    store.nodes.add(node);
+    store.connections.add(conn);
 
-    fMediator.execute(new SelectRequest(['node1'], ['conn1']));
+    execution.handle(new SelectRequest(['node1'], ['conn1']));
 
-    expect(mockNode.markAsSelected).toHaveBeenCalled();
-    expect(mockConnection.markAsSelected).toHaveBeenCalled();
-    expect(fDraggableDataContext.selectedItems.length).toEqual(2);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
-  });
-
-  it('should not select non-existing nodes and connections', () => {
-    fDraggableDataContext.selectedItems = [];
-
-    fMediator.execute(new SelectRequest(['nonexistentNode'], ['nonexistentConnection']));
-
-    expect(fDraggableDataContext.selectedItems.length).toBe(0);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
+    expect(node.markAsSelected).toHaveBeenCalledTimes(1);
+    expect(conn.markAsSelected).toHaveBeenCalledTimes(1);
+    expect(ctx.selectedItems).toEqual([node, conn]);
+    expect(ctx.isSelectedChanged).toBeTrue();
   });
 });

@@ -1,6 +1,6 @@
 export * from './attach-drag-node-handler-from-selection';
 
-export * from './create-snap-lines';
+export * from './magnetic-lines';
 
 export * from './drag-node-constraint';
 

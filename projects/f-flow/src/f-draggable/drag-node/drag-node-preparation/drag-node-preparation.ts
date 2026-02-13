@@ -12,9 +12,9 @@ import {
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
-import { CreateSnapLinesRequest } from '../create-snap-lines';
 import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../../drag-toolkit';
+import { MagneticLinesPreparationRequest } from '../magnetic-lines';
 
 @Injectable()
 @FExecutionRegister(DragNodePreparationRequest)
@@ -24,11 +24,7 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
   private readonly _dragSession = inject(FDraggableDataContext);
 
   public handle({ event, trigger }: DragNodePreparationRequest): void {
-    if (
-      !this._dragSession.isEmpty() ||
-      !this._isDragHandle(event.targetElement) ||
-      !this._isValidTrigger(event, trigger)
-    ) {
+    if (!this._canStartDrag(event, trigger)) {
       return;
     }
 
@@ -37,29 +33,24 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
       return;
     }
 
+    this._storePointerDownContext(event);
+
     // Store pointer-down context for other handlers
-    const scale = this._store.transform.scale ?? 1;
-    const host = this._store.flowHost;
+    this._dragSession.draggableItems = [this._buildDragNodeHandler(node)];
 
-    this._dragSession.onPointerDownScale = scale;
-    this._dragSession.onPointerDownPosition = Point.fromPoint(event.getPosition())
-      .elementTransform(host)
-      .div(scale);
+    this._mediator.execute<void>(new MagneticLinesPreparationRequest());
+  }
 
-    const summaryHandler = this._createSummaryHandler(node);
-    this._dragSession.draggableItems = [summaryHandler];
-
-    if (this._store.fLineAlignment) {
-      this._mediator.execute<void>(new CreateSnapLinesRequest(summaryHandler));
-    }
+  private _canStartDrag(event: IPointerEvent, trigger: FEventTrigger): boolean {
+    return (
+      this._dragSession.isEmpty() &&
+      this._isDragHandle(event.targetElement) &&
+      isValidEventTrigger(event.originalEvent, trigger)
+    );
   }
 
   private _isDragHandle(element: HTMLElement): boolean {
     return isClosestElementHasClass(element, '.f-drag-handle');
-  }
-
-  private _isValidTrigger(event: IPointerEvent, trigger: FEventTrigger): boolean {
-    return isValidEventTrigger(event.originalEvent, trigger);
   }
 
   private _findDraggableNode(target: HTMLElement): FNodeBase | undefined {
@@ -78,18 +69,20 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
     return undefined;
   }
 
-  private _createSummaryHandler(node: FNodeBase): DragNodeHandler {
-    const nodeWithDisabledSelection = node.fSelectionDisabled() ? node : undefined;
+  private _storePointerDownContext(event: IPointerEvent): void {
+    this._dragSession.onPointerDownScale = this._store.transform.scale;
+    this._dragSession.onPointerDownPosition = Point.fromPoint(event.getPosition())
+      .elementTransform(this._store.flowHost)
+      .div(this._store.transform.scale);
+  }
 
-    if (!nodeWithDisabledSelection) {
-      // select before drag (same behavior as before)
+  private _buildDragNodeHandler(node: FNodeBase): DragNodeHandler {
+    if (node.fSelectionDisabled() || !node.isSelected()) {
       queueMicrotask(() => {
         this._mediator.execute<void>(new SelectAndUpdateNodeLayerRequest(node));
       });
     }
 
-    return this._mediator.execute(
-      new AttachDragNodeHandlerFromSelectionRequest(nodeWithDisabledSelection),
-    );
+    return this._mediator.execute(new AttachDragNodeHandlerFromSelectionRequest(node));
   }
 }

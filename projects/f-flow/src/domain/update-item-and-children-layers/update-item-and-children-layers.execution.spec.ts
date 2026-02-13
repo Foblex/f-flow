@@ -84,7 +84,7 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
         node3.hostElement,
       );
 
-    fComponentsStore.nodes.addMultiple([ group1, group2, node1, node2, node3, node4 ]);
+    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
     fMediator.execute(new SortItemLayersRequest());
     fMediator.execute(
       new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),
@@ -121,7 +121,7 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
         node3.hostElement,
       );
 
-    fComponentsStore.nodes.addMultiple([ group1, group2, node1, node2, node3, node4 ]);
+    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
 
     fMediator.execute(
       new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),

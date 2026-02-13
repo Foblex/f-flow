@@ -23,10 +23,8 @@ export class AttachDragNodeHandlerFromSelection
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
 
-  public handle({
-    nodeWithDisabledSelection,
-  }: AttachDragNodeHandlerFromSelectionRequest): DragNodeHandler {
-    const selected = this._collectSelected(nodeWithDisabledSelection);
+  public handle({ nodeOrGroup }: AttachDragNodeHandlerFromSelectionRequest): DragNodeHandler {
+    const selected = this._collectSelected(nodeOrGroup);
     const selectedWithChildren = this._withDeepChildren(selected);
 
     const hierarchy = this._mediator.execute<DragNodeHierarchy>(
@@ -47,7 +45,7 @@ export class AttachDragNodeHandlerFromSelection
     );
   }
 
-  private _collectSelected(nodeWithDisabledSelection?: FNodeBase): FNodeBase[] {
+  private _collectSelected(nodeOrGroup?: FNodeBase): FNodeBase[] {
     const result: FNodeBase[] = [];
 
     for (const item of this._dragSession.selectedItems) {
@@ -57,8 +55,8 @@ export class AttachDragNodeHandlerFromSelection
       }
     }
 
-    if (nodeWithDisabledSelection) {
-      result.push(nodeWithDisabledSelection);
+    if (nodeOrGroup && !result.includes(nodeOrGroup)) {
+      result.push(nodeOrGroup);
     }
 
     return result;

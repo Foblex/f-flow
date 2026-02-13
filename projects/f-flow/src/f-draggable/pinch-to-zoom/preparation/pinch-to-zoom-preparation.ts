@@ -4,8 +4,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IPointerEvent } from '../../../drag-toolkit';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { Point } from '@foblex/2d';
-import { FComponentsStore } from '../../../f-storage';
-import { F_ZOOM_TAG } from '../../../domain';
+import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { PinchToZoomHandler } from '../handler';
 import { DragHandlerInjector } from '../../infrastructure';
 
@@ -36,7 +35,7 @@ export class PinchToZoomPreparation implements IExecution<PinchToZoomPreparation
   }
 
   private _hasZoomComponent(): boolean {
-    return !!this._store.fComponents[F_ZOOM_TAG];
+    return this._store.instances.has(INSTANCES.ZOOM);
   }
 
   private _getHandler(event: IPointerEvent): PinchToZoomHandler {

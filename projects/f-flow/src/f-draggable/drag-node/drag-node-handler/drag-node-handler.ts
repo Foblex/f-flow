@@ -3,8 +3,7 @@ import { DragNodeItemHandler } from './drag-node-item-handler';
 import { Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FDragNodeStartEventData } from '../f-drag-node-start-event-data';
-import { SnapLinesDragHandler } from '../create-snap-lines/snap-lines.drag-handler';
-import { ISnapResult } from '../../../f-line-alignment';
+import { IMagneticGuidesResult, MagneticLinesHandler } from '../magnetic-lines';
 
 @Injectable()
 export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
@@ -15,7 +14,7 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
     return new FDragNodeStartEventData(this.items.map((x) => x.nodeOrGroup.fId()));
   }
 
-  private _lineAlignment: SnapLinesDragHandler | null = null;
+  private _magneticLines: MagneticLinesHandler | null = null;
 
   /** Every dragged item (nodes + groups including deep children) */
   public items!: DragNodeItemHandler[];
@@ -32,17 +31,17 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
     this.roots = roots;
   }
 
-  public setLineAlignment(handler: SnapLinesDragHandler): void {
-    this._lineAlignment = handler;
+  public setMagneticLines(handler: MagneticLinesHandler): void {
+    this._magneticLines = handler;
   }
 
-  public findClosestAlignment(delta: IPoint): ISnapResult | undefined {
+  public calculateMagneticLinesGuides(delta: IPoint): IMagneticGuidesResult | undefined {
     // preview move roots to update their last rects
     for (const root of this.roots) {
       root.onPointerMove(delta);
     }
 
-    return this._lineAlignment?.findClosestAlignment(this._rootsUnionRect());
+    return this._magneticLines?._computeGuides(this._rootsUnionRect());
   }
 
   public override prepareDragSequence(): void {
@@ -56,7 +55,7 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
       root.onPointerMove(delta);
     }
 
-    this._lineAlignment?.drawGuidesFor(this._rootsUnionRect());
+    this._magneticLines?.scheduleRender(this._rootsUnionRect());
   }
 
   public override onPointerUp(): void {
@@ -64,7 +63,7 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
       root.onPointerUp();
     }
 
-    this._lineAlignment?.clearGuides();
+    this._magneticLines?.clearGuides();
     requestAnimationFrame(() => this._refreshDraggedNodes());
   }
 

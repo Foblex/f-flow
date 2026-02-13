@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import { DragHandlerBase } from '../../infrastructure';
-import { FComponentsStore } from '../../../f-storage';
+import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';
 import { FZoomBase } from '../../../f-zoom';
-import { F_ZOOM_TAG } from '../../../domain';
 import { IPointerEvent } from '../../../drag-toolkit';
 
 const PINCH_MOVEMENT_THRESHOLD = 0.5;
@@ -25,7 +24,7 @@ export class PinchToZoomHandler extends DragHandlerBase<unknown> {
   }
 
   private get _zoomComponent(): FZoomBase {
-    return this._store.fComponents[F_ZOOM_TAG] as FZoomBase;
+    return this._store.instances.require(INSTANCES.ZOOM)
   }
 
   private _startDistance: number | null = null;

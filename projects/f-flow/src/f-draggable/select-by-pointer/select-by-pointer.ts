@@ -60,11 +60,11 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
     }
 
     const item = this._resolveSelectable(event.targetElement);
-    if (!item) {
-      this._clearSelection();
-
-      return;
-    }
+    // if (!item) {
+    //   this._clearSelection();
+    //
+    //   return;
+    // }
 
     this._deferRaiseLayerFor(item);
 

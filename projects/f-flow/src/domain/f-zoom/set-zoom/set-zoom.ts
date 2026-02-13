@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SetZoomRequest } from './set-zoom-request';
-import { FComponentsStore } from '../../../f-storage';
-import { F_ZOOM_TAG } from '../f-zoom-tag';
+import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { IPoint, Point } from '@foblex/2d';
 import { FCanvasBase } from '../../../f-canvas';
 import { FZoomBase } from '../../../f-zoom';
@@ -26,8 +25,8 @@ export class SetZoom implements IExecution<SetZoomRequest, void> {
     return this._store.fCanvas as FCanvasBase;
   }
 
-  private get _zoomComponent(): FZoomBase {
-    return this._store.fComponents[F_ZOOM_TAG] as FZoomBase;
+  private get _zoomComponent(): FZoomBase | undefined {
+    return this._store.instances.get(INSTANCES.ZOOM);
   }
 
   private get _isDragStarted(): boolean {
@@ -47,7 +46,7 @@ export class SetZoom implements IExecution<SetZoomRequest, void> {
   }
 
   private _clamp(value: number): number {
-    return Math.max(this._zoomComponent.minimum, Math.min(value, this._zoomComponent.maximum));
+    return Math.max(this._zoomComponent?.minimum || 1, Math.min(value, this._zoomComponent?.maximum || 1));
   }
 
   private _castPositionToFlow(position: IPoint): IPoint {

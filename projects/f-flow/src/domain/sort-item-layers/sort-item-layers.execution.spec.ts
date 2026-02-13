@@ -57,7 +57,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
     const node2 = createNode('node2', createElementWithId('node2'), 'group2');
     fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement, node3.hostElement);
 
-    fComponentsStore.nodes.addMultiple([ group1, group2, node1, node2, node3 ]);
+    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3 ]);
 
     fMediator.execute(new SortItemLayersRequest());
 
@@ -80,7 +80,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
     const node2 = createNode('node2', createElementWithId('node2'));
     fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement);
 
-    fComponentsStore.nodes.addMultiple([ group1, group2, node1, node2 ]);
+    fComponentsStore.nodes.addMany([ group1, group2, node1, node2 ]);
 
     fMediator.execute(new SortItemLayersRequest());
 
@@ -102,7 +102,7 @@ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', (
     const node2 = createNode('node2', createElementWithId('node2'), 'group4');
     fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node2.hostElement, node1.hostElement);
 
-    fComponentsStore.nodes.addMultiple([ group1, group2, node1, node2 ]);
+    fComponentsStore.nodes.addMany([ group1, group2, node1, node2 ]);
 
     fMediator.execute(new SortItemLayersRequest());
 

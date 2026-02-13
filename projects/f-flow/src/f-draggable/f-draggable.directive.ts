@@ -61,7 +61,7 @@ import {
   FNodeConnectionsIntersectionEvent,
   FNodeIntersectedWithConnections,
 } from './domain';
-import { DragHandlerInjector, DragSession, FDragHandlerResult } from './infrastructure';
+import { DragHandlerInjector, FDragHandlerResult } from './infrastructure';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
@@ -76,7 +76,7 @@ import { FDragStartedEvent } from './f-drag-started-event';
 @Directive({
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
-  providers: [FDragHandlerResult, DragHandlerInjector, DragSession],
+  providers: [FDragHandlerResult, DragHandlerInjector],
 })
 export class FDraggableDirective
   extends FDraggableBase
