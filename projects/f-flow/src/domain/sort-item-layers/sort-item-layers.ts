@@ -1,4 +1,4 @@
-import { SortItemLayersRequest } from './sort-item-layers.request';
+import { SortItemLayersRequest } from './sort-item-layers-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { SortNodeLayersRequest } from './sort-node-layers-by-groups';
@@ -15,21 +15,24 @@ import { FCanvasBase } from '../../f-canvas';
  */
 @Injectable()
 @FExecutionRegister(SortItemLayersRequest)
-export class SortItemLayersExecution implements IExecution<SortItemLayersRequest, void> {
-
+export class SortItemLayers implements IExecution<SortItemLayersRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
   private get _fCanvas(): FCanvasBase {
-    return this._store.fCanvas!;
+    return this._store.fCanvas as FCanvasBase;
   }
 
-  public handle(request: SortItemLayersRequest): void {
-    if(!this._store.fCanvas) {
+  public handle(_request: SortItemLayersRequest): void {
+    if (!this._store.fCanvas) {
       return;
     }
-    this._mediator.execute(new SortItemsByParentRequest(this._fCanvas.fGroupsContainer().nativeElement));
+    this._mediator.execute(
+      new SortItemsByParentRequest(this._fCanvas.fGroupsContainer().nativeElement),
+    );
     this._mediator.execute(new SortNodeLayersRequest());
-    this._mediator.execute(new SortItemsByParentRequest(this._fCanvas.fNodesContainer().nativeElement));
+    this._mediator.execute(
+      new SortItemsByParentRequest(this._fCanvas.fNodesContainer().nativeElement),
+    );
   }
 }

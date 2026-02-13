@@ -11,11 +11,11 @@ import {
   MoveFrontElementsBeforeTargetElement,
   nodeFactory,
   registryAddMany,
-  SortItemLayersExecution,
+  SortItemLayers,
   SortItemLayersRequest,
   SortItemsByParentExecution,
   SortNodeLayersExecution,
-  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayers,
   UpdateItemAndChildrenLayersRequest,
 } from '@foblex/flow';
 
@@ -25,15 +25,15 @@ function createNode(id: string, parentId?: string): FNodeBase {
   return nodeFactory().id(id).parent(parentId).host(pure.element('div', { id })).build();
 }
 
-describe('UpdateItemAndChildrenLayersExecution', () => {
+describe('UpdateItemAndChildrenLayers', () => {
   let mediator: MediatorHarness;
   let componentsStore: FComponentsStore;
 
   beforeEach(() => {
     configureDiTest({
       providers: [
-        UpdateItemAndChildrenLayersExecution,
-        SortItemLayersExecution,
+        UpdateItemAndChildrenLayers,
+        SortItemLayers,
         SortItemsByParentExecution,
         SortNodeLayersExecution,
         GetDeepChildrenNodesAndGroupsExecution,

@@ -6,6 +6,5 @@ export class UpdateItemAndChildrenLayersRequest {
   constructor(
     public item: ISelectable,
     public itemContainer: HTMLElement,
-  ) {
-  }
+  ) {}
 }

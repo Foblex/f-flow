@@ -1,11 +1,11 @@
 import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
 import {
   MoveFrontElementsBeforeTargetElement,
-  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayers,
 } from './update-item-and-children-layers';
 import { GetNormalizedPointExecution } from './get-normalized-point';
 import {
-  SortItemLayersExecution,
+  SortItemLayers,
   SortItemsByParentExecution,
   SortNodeLayersExecution,
 } from './sort-item-layers';
@@ -57,13 +57,13 @@ export const COMMON_PROVIDERS = [
 
   GetNormalizedPointExecution,
 
-  SortItemLayersExecution,
+  SortItemLayers,
 
   SortItemsByParentExecution,
 
   SortNodeLayersExecution,
 
-  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayers,
 
   MoveFrontElementsBeforeTargetElement,
 ];

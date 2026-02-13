@@ -11,7 +11,7 @@ import {
   MediatorHarness,
   nodeFactory,
   registryAddMany,
-  SortItemLayersExecution,
+  SortItemLayers,
   SortItemLayersRequest,
   SortItemsByParentExecution,
   SortNodeLayersExecution,
@@ -27,14 +27,14 @@ function createCanvas(): FCanvasBase {
   return canvasFactory().build();
 }
 
-describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', () => {
+describe('SortItemLayers, SortNodeLayersByGroups, SortItemsByParent', () => {
   let mediator: MediatorHarness;
   let componentsStore: FComponentsStore;
 
   beforeEach(() => {
     configureDiTest({
       providers: [
-        SortItemLayersExecution,
+        SortItemLayers,
         SortItemsByParentExecution,
         GetDeepChildrenNodesAndGroupsExecution,
         SortNodeLayersExecution,
