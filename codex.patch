@@ -1,0 +1,1899 @@
+diff --git a/projects/f-flow/src/domain/f-connectors/calculate-closest-connector/calculate-closest-connector.spec.ts b/projects/f-flow/src/domain/f-connectors/calculate-closest-connector/calculate-closest-connector.spec.ts
+index 61875ad8..d8c82c72 100644
+--- a/projects/f-flow/src/domain/f-connectors/calculate-closest-connector/calculate-closest-connector.spec.ts
++++ b/projects/f-flow/src/domain/f-connectors/calculate-closest-connector/calculate-closest-connector.spec.ts
+@@ -1,70 +1,54 @@
+-import { TestBed } from '@angular/core/testing';
+-import { FMediator } from '@foblex/mediator';
+ import { RectExtensions, RoundedRect } from '@foblex/2d';
+-import { setupTestModule } from '../../test-setup';
+-import { FDraggableDataContext } from '@foblex/flow';
+-import { CalculateClosestConnector } from '@foblex/flow';
+-import { CalculateClosestConnectorRequest } from '@foblex/flow';
+-import { FConnectorBase } from '@foblex/flow';
+-import { IClosestConnectorRef } from '@foblex/flow';
+-import { signal } from '@angular/core';
++import { CalculateClosestConnector, CalculateClosestConnectorRequest, connectorFactory, configureDiTest, createMediatorHarness, IClosestConnectorRef, MediatorHarness } from '@foblex/flow';
+ 
+ describe('CalculateClosestConnector', () => {
+-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+-  let fDraggableDataContext: FDraggableDataContext;
+-  let fMediator: FMediator;
++  let mediator: MediatorHarness;
+ 
+   beforeEach(() => {
+-    setupTestModule([CalculateClosestConnector]);
+-    fDraggableDataContext = TestBed.inject(
+-      FDraggableDataContext,
+-    ) as jasmine.SpyObj<FDraggableDataContext>;
+-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
++    configureDiTest({ providers: [CalculateClosestConnector] });
++    mediator = createMediatorHarness();
+   });
+ 
+   it('should return undefined when connectors is empty', () => {
+-    const result = fMediator.execute(new CalculateClosestConnectorRequest({ x: 50, y: 50 }, []));
++    const result = mediator.execute(
++      new CalculateClosestConnectorRequest({ x: 50, y: 50 }, []),
++    );
++
+     expect(result).toBeUndefined();
+   });
+ 
+   it('should return the only element if its distance is less than snapThreshold', () => {
+-    const result = fMediator.execute<IClosestConnectorRef>(
++    const result = mediator.execute<IClosestConnectorRef>(
+       new CalculateClosestConnectorRequest({ x: 10, y: 10 }, [
+         {
+-          connector: {
+-            fId: signal('input1').asReadonly(),
+-          } as FConnectorBase,
++          connector: connectorFactory().id('input1').build(),
+           rect: RoundedRect.fromRect(RectExtensions.initialize(12, 12, 10, 10)),
+         },
+         {
+-          connector: {
+-            fId: signal('input2').asReadonly(),
+-          } as FConnectorBase,
++          connector: connectorFactory().id('input2').build(),
+           rect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
+         },
+       ]),
+     );
++
+     expect(result).toBeDefined();
+     expect(result?.connector.fId()).toBe('input1');
+   });
+ 
+   it('should return 10 if the only element is exactly at snapThreshold distance', () => {
+-    const result = fMediator.execute<IClosestConnectorRef>(
++    const result = mediator.execute<IClosestConnectorRef>(
+       new CalculateClosestConnectorRequest({ x: 0, y: 0 }, [
+         {
+-          connector: {
+-            fId: signal('input1').asReadonly(),
+-          } as FConnectorBase,
++          connector: connectorFactory().id('input1').build(),
+           rect: RoundedRect.fromRect(RectExtensions.initialize(10, 0, 10, 10)),
+         },
+         {
+-          connector: {
+-            fId: signal('input2').asReadonly(),
+-          } as FConnectorBase,
++          connector: connectorFactory().id('input2').build(),
+           rect: RoundedRect.fromRect(RectExtensions.initialize(22, 22, 10, 10)),
+         },
+       ]),
+     );
++
+     expect(result?.distance).toBe(10);
+   });
+ });
+diff --git a/projects/f-flow/src/domain/f-selection/clear-selection/clear-selection.execution.spec.ts b/projects/f-flow/src/domain/f-selection/clear-selection/clear-selection.execution.spec.ts
+index 9d66672a..874815ff 100644
+--- a/projects/f-flow/src/domain/f-selection/clear-selection/clear-selection.execution.spec.ts
++++ b/projects/f-flow/src/domain/f-selection/clear-selection/clear-selection.execution.spec.ts
+@@ -1,40 +1,43 @@
+-import { TestBed } from '@angular/core/testing';
+-import { FMediator } from '@foblex/mediator';
+-import { ClearSelectionRequest } from '@foblex/flow';
+-import { ClearSelectionExecution } from '@foblex/flow';
+-import { setupTestModule } from '../../test-setup';
+-import { ISelectable } from '@foblex/flow';
+-import { FDraggableDataContext } from '@foblex/flow';
+-import { signal } from "@angular/core";
+-
+-export const MOCK_SELECTABLE_ITEM: ISelectable = {
+-  fId: signal('1'),
+-  fSelectionDisabled: signal(false).asReadonly(),
+-  hostElement: document.createElement('svg'),
+-  markAsSelected: jasmine.createSpy('markAsSelected'),
+-  unmarkAsSelected: jasmine.createSpy('unmarkAsSelected'),
+-  isSelected: jasmine.createSpy('isSelected').and.returnValue(true),
+-};
++import {
++  ClearSelectionExecution,
++  ClearSelectionRequest,
++  configureDiTest,
++  createMediatorHarness,
++  createSpy,
++  FDraggableDataContext,
++  injectFromDi,
++  MediatorHarness,
++  selectableFactory,
++} from '@foblex/flow';
+ 
+ describe('ClearSelectionExecution', () => {
+-  let fDraggableDataContext: FDraggableDataContext;
+-  let fMediator: FMediator;
++  let draggableDataContext: FDraggableDataContext;
++  let mediator: MediatorHarness;
+ 
+   beforeEach(() => {
+-    setupTestModule([ ClearSelectionExecution ]);
+-    fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
+-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
++    configureDiTest({ providers: [ClearSelectionExecution] });
++    draggableDataContext = injectFromDi(FDraggableDataContext);
++    mediator = createMediatorHarness();
+   });
+ 
+   it('should deselect all selected items and clear the selectedItems array when clearSelection is called through FMediator', () => {
+-    fDraggableDataContext.selectedItems = [ MOCK_SELECTABLE_ITEM, MOCK_SELECTABLE_ITEM ];
+-    fDraggableDataContext.isSelectedChanged = false;
++    const firstUnmark = createSpy('firstUnmark');
++    const secondUnmark = createSpy('secondUnmark');
++
++    draggableDataContext.selectedItems = [
++      selectableFactory().id('item-1').selected(true).onUnmarkAsSelected(firstUnmark).build(),
++      selectableFactory().id('item-2').selected(true).onUnmarkAsSelected(secondUnmark).build(),
++    ];
++    draggableDataContext.isSelectedChanged = false;
++
++    expect(draggableDataContext.selectedItems.length).toBe(2);
++    expect(draggableDataContext.isSelectedChanged).toBe(false);
+ 
+-    expect(fDraggableDataContext.selectedItems.length).toBe(2);
+-    expect(fDraggableDataContext.isSelectedChanged).toBe(false);
++    mediator.execute<void>(new ClearSelectionRequest());
+ 
+-    fMediator.execute<void>(new ClearSelectionRequest());
+-    expect(fDraggableDataContext.selectedItems.length).toBe(0);
+-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
++    expect(firstUnmark).toHaveBeenCalledTimes(1);
++    expect(secondUnmark).toHaveBeenCalledTimes(1);
++    expect(draggableDataContext.selectedItems.length).toBe(0);
++    expect(draggableDataContext.isSelectedChanged).toBe(true);
+   });
+ });
+diff --git a/projects/f-flow/src/domain/f-selection/get-current-selection/get-current-selection.execution.spec.ts b/projects/f-flow/src/domain/f-selection/get-current-selection/get-current-selection.execution.spec.ts
+index 362f6f6e..6c649000 100644
+--- a/projects/f-flow/src/domain/f-selection/get-current-selection/get-current-selection.execution.spec.ts
++++ b/projects/f-flow/src/domain/f-selection/get-current-selection/get-current-selection.execution.spec.ts
+@@ -1,57 +1,55 @@
+-import { TestBed } from '@angular/core/testing';
+-import { FMediator } from '@foblex/mediator';
+-import { GetCurrentSelectionExecution } from './get-current-selection.execution';
+-import { GetCurrentSelectionRequest } from './get-current-selection.request';
+-import { setupTestModule } from '../../test-setup';
+-import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
++import {
++  configureDiTest,
++  createMediatorHarness,
++  FDraggableDataContext,
++  FSelectionChangeEvent,
++  GetCurrentSelectionExecution,
++  GetCurrentSelectionRequest,
++  injectFromDi,
++  MediatorHarness,
++  selectableFactory,
++} from '@foblex/flow';
+ 
+ describe('GetSelectionExecution', () => {
+-  let fDraggableDataContext: FDraggableDataContext;
+-  let fMediator: FMediator;
++  let draggableDataContext: FDraggableDataContext;
++  let mediator: MediatorHarness;
+ 
+   beforeEach(() => {
+-    setupTestModule([ GetCurrentSelectionExecution ]);
+-    fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
+-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
++    configureDiTest({ providers: [GetCurrentSelectionExecution] });
++    draggableDataContext = injectFromDi(FDraggableDataContext);
++    mediator = createMediatorHarness();
+   });
+ 
+   it('should return correct FSelectionChangeEvent when nodes and connections are selected', () => {
+-    const mockSelectedItems = [
+-      {
+-        hostElement: {
+-          classList: { contains: (className: string) => className === 'f-node' },
+-          dataset: { fNodeId: 'node1' },
+-          id: 'connection1',
+-        },
+-      },
+-      {
+-        hostElement: {
+-          classList: { contains: (className: string) => className === 'f-group' },
+-          dataset: { fGroupId: 'group1' },
+-          id: 'group1',
+-        },
+-      },
+-      {
+-        hostElement: {
+-          classList: { contains: (className: string) => className === 'f-connection' },
+-          dataset: {},
+-          id: 'connection2',
+-        },
+-      },
++    const selectedItems = [
++      selectableFactory()
++        .id('node-item')
++        .className('f-node')
++        .dataset('fNodeId', 'node1')
++        .elementId('connection1')
++        .build(),
++      selectableFactory()
++        .id('group-item')
++        .className('f-group')
++        .dataset('fGroupId', 'group1')
++        .elementId('group1')
++        .build(),
++      selectableFactory().id('connection-item').elementId('connection2').build(),
+     ];
+-    fDraggableDataContext.selectedItems = mockSelectedItems as any;
+ 
+-    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
++    draggableDataContext.selectedItems = selectedItems;
+ 
+-    expect(result.fNodeIds).toEqual([ 'node1' ]);
+-    expect(result.fGroupIds).toEqual([ 'group1' ]);
+-    expect(result.fConnectionIds).toEqual([ 'connection2' ]);
++    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
++
++    expect(result.fNodeIds).toEqual(['node1']);
++    expect(result.fGroupIds).toEqual(['group1']);
++    expect(result.fConnectionIds).toEqual(['connection2']);
+   });
+ 
+   it('should return empty FSelectionChangeEvent when no items are selected', () => {
+-    fDraggableDataContext.selectedItems = [];
++    draggableDataContext.selectedItems = [];
+ 
+-    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
++    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+ 
+     expect(result.fNodeIds).toEqual([]);
+     expect(result.fConnectionIds).toEqual([]);
+diff --git a/projects/f-flow/src/domain/f-selection/providers.ts b/projects/f-flow/src/domain/f-selection/providers.ts
+index 26901f8e..c73a9763 100644
+--- a/projects/f-flow/src/domain/f-selection/providers.ts
++++ b/projects/f-flow/src/domain/f-selection/providers.ts
+@@ -1,7 +1,7 @@
+ import { ClearSelectionExecution } from './clear-selection';
+ import { GetCurrentSelectionExecution } from './get-current-selection';
+ import { SelectExecution } from './select';
+-import { SelectAllExecution } from './select-all';
++import { SelectAll } from './select-all';
+ import { SelectAndUpdateNodeLayer } from './select-and-update-node-layer';
+ import { CalculateSelectableItems } from './calculate-selectable-items';
+ 
+@@ -17,7 +17,7 @@ export const F_SELECTION_FEATURES = [
+ 
+   SelectExecution,
+ 
+-  SelectAllExecution,
++  SelectAll,
+ 
+   SelectAndUpdateNodeLayer,
+ ];
+diff --git a/projects/f-flow/src/domain/f-selection/select-all/index.ts b/projects/f-flow/src/domain/f-selection/select-all/index.ts
+index 73480ee9..c0c52308 100644
+--- a/projects/f-flow/src/domain/f-selection/select-all/index.ts
++++ b/projects/f-flow/src/domain/f-selection/select-all/index.ts
+@@ -1,3 +1,3 @@
+-export * from './select-all.execution';
++export * from './select-all';
+ 
+-export * from './select-all.request';
++export * from './select-all-request';
+diff --git a/projects/f-flow/src/domain/f-selection/select-all/select-all.spec.ts b/projects/f-flow/src/domain/f-selection/select-all/select-all.spec.ts
+index d1477252..4a25a139 100644
+--- a/projects/f-flow/src/domain/f-selection/select-all/select-all.spec.ts
++++ b/projects/f-flow/src/domain/f-selection/select-all/select-all.spec.ts
+@@ -9,18 +9,18 @@ import {
+   MediatorHarness,
+   nodeFactory,
+   registryAdd,
+-  SelectAllExecution,
++  SelectAll,
+   SelectAllRequest,
+   selectableFactory,
+ } from '@foblex/flow';
+ 
+-describe('SelectAllExecution', () => {
++describe('SelectAll', () => {
+   let draggableDataContext: FDraggableDataContext;
+   let componentsStore: FComponentsStore;
+   let mediator: MediatorHarness;
+ 
+   beforeEach(() => {
+-    configureDiTest({ providers: [SelectAllExecution] });
++    configureDiTest({ providers: [SelectAll] });
+     draggableDataContext = injectFromDi(FDraggableDataContext);
+     componentsStore = injectFromDi(FComponentsStore);
+     mediator = createMediatorHarness();
+diff --git a/projects/f-flow/src/domain/f-selection/select-all/select-all.ts b/projects/f-flow/src/domain/f-selection/select-all/select-all.ts
+index 33a28a0d..431e6d94 100644
+--- a/projects/f-flow/src/domain/f-selection/select-all/select-all.ts
++++ b/projects/f-flow/src/domain/f-selection/select-all/select-all.ts
+@@ -1,4 +1,4 @@
+-import { SelectAllRequest } from './select-all.request';
++import { SelectAllRequest } from './select-all-request';
+ import { inject, Injectable } from '@angular/core';
+ import { FExecutionRegister, IExecution } from '@foblex/mediator';
+ import { FComponentsStore } from '../../../f-storage';
+@@ -10,23 +10,23 @@ import { FDraggableDataContext } from '../../../f-draggable';
+  */
+ @Injectable()
+ @FExecutionRegister(SelectAllRequest)
+-export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
+-  private _dragContext = inject(FDraggableDataContext);
++export class SelectAll implements IExecution<SelectAllRequest, void> {
++  private readonly _dragSession = inject(FDraggableDataContext);
+   private readonly _store = inject(FComponentsStore);
+ 
+   public handle(_request: SelectAllRequest): void {
+-    this._dragContext.selectedItems.forEach((x) => {
++    this._dragSession.selectedItems.forEach((x) => {
+       x.unmarkAsSelected();
+     });
+-    this._dragContext.selectedItems = [];
++    this._dragSession.selectedItems = [];
+     this._store.nodes.getAll().forEach((x) => {
+       x.markAsSelected();
+-      this._dragContext.selectedItems.push(x);
++      this._dragSession.selectedItems.push(x);
+     });
+     this._store.connections.getAll().forEach((x) => {
+       x.markAsSelected();
+-      this._dragContext.selectedItems.push(x);
++      this._dragSession.selectedItems.push(x);
+     });
+-    this._dragContext.isSelectedChanged = true;
++    this._dragSession.isSelectedChanged = true;
+   }
+ }
+diff --git a/projects/f-flow/src/domain/f-selection/select/select.execution.spec.ts b/projects/f-flow/src/domain/f-selection/select/select.execution.spec.ts
+index 18c933c9..f29059e3 100644
+--- a/projects/f-flow/src/domain/f-selection/select/select.execution.spec.ts
++++ b/projects/f-flow/src/domain/f-selection/select/select.execution.spec.ts
+@@ -1,54 +1,69 @@
+-import { TestBed } from '@angular/core/testing';
+-import { SelectExecution } from './select.execution';
+-import { SelectRequest } from './select.request';
+-import { mockConnection, mockNode, setupTestModule } from '../../test-setup';
+-import { FDraggableDataContext } from '../../../f-draggable';
+-import { FComponentsStore } from '../../../f-storage';
+-import { signal } from '@angular/core';
++import {
++  connectionFactory,
++  configureDiTest,
++  createSpy,
++  FComponentsStore,
++  FDraggableDataContext,
++  injectFromDi,
++  nodeFactory,
++  registryAdd,
++  SelectExecution,
++  SelectRequest,
++  selectableFactory,
++} from '@foblex/flow';
+ 
+ describe('SelectExecution (unit)', () => {
+   let execution: SelectExecution;
+-  let ctx: FDraggableDataContext;
+-  let store: FComponentsStore;
++  let draggableDataContext: FDraggableDataContext;
++  let componentsStore: FComponentsStore;
+ 
+   beforeEach(() => {
+-    setupTestModule([SelectExecution]);
+-    execution = TestBed.inject(SelectExecution);
+-    ctx = TestBed.inject(FDraggableDataContext);
+-    store = TestBed.inject(FComponentsStore);
++    configureDiTest({ providers: [SelectExecution] });
++    execution = injectFromDi(SelectExecution);
++    draggableDataContext = injectFromDi(FDraggableDataContext);
++    componentsStore = injectFromDi(FComponentsStore);
+ 
+-    ctx.selectedItems = [];
+-    ctx.isSelectedChanged = false;
++    draggableDataContext.selectedItems = [];
++    draggableDataContext.isSelectedChanged = false;
+   });
+ 
+   it('clears previous selection', () => {
+-    const prev = [
+-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
+-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
+-    ] as any;
++    const firstUnmark = createSpy('firstUnmark');
++    const secondUnmark = createSpy('secondUnmark');
+ 
+-    ctx.selectedItems = prev;
++    const previousSelection = [
++      selectableFactory().id('prev-1').onUnmarkAsSelected(firstUnmark).build(),
++      selectableFactory().id('prev-2').onUnmarkAsSelected(secondUnmark).build(),
++    ];
++
++    draggableDataContext.selectedItems = previousSelection;
+ 
+     execution.handle(new SelectRequest([], []));
+ 
+-    expect(prev[0].unmarkAsSelected).toHaveBeenCalledTimes(1);
+-    expect(prev[1].unmarkAsSelected).toHaveBeenCalledTimes(1);
+-    expect(ctx.selectedItems).toEqual([]);
+-    expect(ctx.isSelectedChanged).toBeTrue();
++    expect(firstUnmark).toHaveBeenCalledTimes(1);
++    expect(secondUnmark).toHaveBeenCalledTimes(1);
++    expect(draggableDataContext.selectedItems).toEqual([]);
++    expect(draggableDataContext.isSelectedChanged).toBeTrue();
+   });
+ 
+   it('selects existing node and connection by id', () => {
+-    const node = mockNode({ fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') });
+-    const conn = mockConnection({ fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') });
++    const markNode = createSpy('markNode');
++    const markConnection = createSpy('markConnection');
++
++    const node = nodeFactory().id('node1').onMarkAsSelected(markNode).build();
++    const connection = connectionFactory()
++      .id('conn1')
++      .onMarkAsSelected(markConnection)
++      .build();
+ 
+-    store.nodes.add(node);
+-    store.connections.add(conn);
++    registryAdd(componentsStore.nodes, node);
++    registryAdd(componentsStore.connections, connection);
+ 
+     execution.handle(new SelectRequest(['node1'], ['conn1']));
+ 
+-    expect(node.markAsSelected).toHaveBeenCalledTimes(1);
+-    expect(conn.markAsSelected).toHaveBeenCalledTimes(1);
+-    expect(ctx.selectedItems).toEqual([node, conn]);
+-    expect(ctx.isSelectedChanged).toBeTrue();
++    expect(markNode).toHaveBeenCalledTimes(1);
++    expect(markConnection).toHaveBeenCalledTimes(1);
++    expect(draggableDataContext.selectedItems).toEqual([node, connection]);
++    expect(draggableDataContext.isSelectedChanged).toBeTrue();
+   });
+ });
+diff --git a/projects/f-flow/src/domain/sort-item-layers/sort-item-layers.execution.spec.ts b/projects/f-flow/src/domain/sort-item-layers/sort-item-layers.execution.spec.ts
+index 38f6b23a..05179c6b 100644
+--- a/projects/f-flow/src/domain/sort-item-layers/sort-item-layers.execution.spec.ts
++++ b/projects/f-flow/src/domain/sort-item-layers/sort-item-layers.execution.spec.ts
+@@ -1,115 +1,122 @@
+-import { TestBed } from '@angular/core/testing';
+ import {
++  canvasFactory,
++  configureDiTest,
++  createMediatorHarness,
++  createPureHarness,
+   FCanvasBase,
+   FComponentsStore,
+-  FNodeBase, GetDeepChildrenNodesAndGroupsExecution, SortItemLayersExecution, SortItemLayersRequest, SortItemsByParentExecution,
++  FNodeBase,
++  GetDeepChildrenNodesAndGroupsExecution,
++  injectFromDi,
++  MediatorHarness,
++  nodeFactory,
++  registryAddMany,
++  SortItemLayersExecution,
++  SortItemLayersRequest,
++  SortItemsByParentExecution,
+   SortNodeLayersExecution,
+ } from '@foblex/flow';
+-import { setupTestModule } from '../test-setup';
+-import { FMediator } from '@foblex/mediator';
+-import { signal } from '@angular/core';
+-
+-function createNode(id: string, element: HTMLElement, parentId?: string): FNodeBase {
+-  return {
+-    fId: signal(id).asReadonly(),
+-    fParentId: signal(parentId).asReadonly(),
+-    hostElement: element,
+-  } as FNodeBase;
+-}
+ 
+-function getFCanvasBase(): FCanvasBase {
+-  return {
+-    fGroupsContainer: signal({
+-      nativeElement: document.createElement('div') as HTMLElement,
+-    }).asReadonly(),
+-    fNodesContainer: signal({
+-      nativeElement: document.createElement('div') as HTMLElement,
+-    }).asReadonly(),
+-  } as FCanvasBase;
+-}
++const pure = createPureHarness();
+ 
+-function createElementWithId(id: string): HTMLElement {
+-  const element = document.createElement('div');
+-  element.id = id;
++function createNode(id: string, parentId?: string): FNodeBase {
++  return nodeFactory()
++    .id(id)
++    .parent(parentId)
++    .host(pure.element('div', { id }))
++    .build();
++}
+ 
+-  return element;
++function createCanvas(): FCanvasBase {
++  return canvasFactory().build();
+ }
+ 
+ describe('SortItemLayersExecution, SortNodeLayersByGroups, SortItemsByParent', () => {
+-  let fMediator: FMediator;
+-  let fComponentsStore: FComponentsStore;
++  let mediator: MediatorHarness;
++  let componentsStore: FComponentsStore;
+ 
+   beforeEach(() => {
+-    setupTestModule([ SortItemLayersExecution, SortItemsByParentExecution, GetDeepChildrenNodesAndGroupsExecution, SortNodeLayersExecution ]);
+-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
+-    fComponentsStore = TestBed.inject(FComponentsStore);
++    configureDiTest({
++      providers: [
++        SortItemLayersExecution,
++        SortItemsByParentExecution,
++        GetDeepChildrenNodesAndGroupsExecution,
++        SortNodeLayersExecution,
++      ],
++    });
++
++    mediator = createMediatorHarness();
++    componentsStore = injectFromDi(FComponentsStore);
+   });
+ 
+   it('should sort nodes and groups by parents', () => {
+-    fComponentsStore.fCanvas = getFCanvasBase();
++    const canvas = createCanvas();
++    componentsStore.fCanvas = canvas;
+ 
+-    const group1 = createNode('group1', createElementWithId('group1'), 'group2');
+-    const group2 = createNode('group2', createElementWithId('group2'));
+-    fComponentsStore.fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
++    const group1 = createNode('group1', 'group2');
++    const group2 = createNode('group2');
++    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+ 
+-    const node3 = createNode('node3', createElementWithId('node3'), 'node2');
+-    const node1 = createNode('node1', createElementWithId('node1'), 'group1');
+-    const node2 = createNode('node2', createElementWithId('node2'), 'group2');
+-    fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement, node3.hostElement);
++    const node3 = createNode('node3', 'node2');
++    const node1 = createNode('node1', 'group1');
++    const node2 = createNode('node2', 'group2');
++    canvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement, node3.hostElement);
+ 
+-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3 ]);
++    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3]);
+ 
+-    fMediator.execute(new SortItemLayersRequest());
++    mediator.execute<void>(new SortItemLayersRequest());
+ 
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node2.hostElement);
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node1.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node2.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node1.hostElement);
+ 
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
+   });
+ 
+   it('should do nothing if there are nothing to sort', () => {
+-    fComponentsStore.fCanvas = getFCanvasBase();
++    const canvas = createCanvas();
++    componentsStore.fCanvas = canvas;
+ 
+-    const group1 = createNode('group1', createElementWithId('group1'));
+-    const group2 = createNode('group2', createElementWithId('group2'));
+-    fComponentsStore.fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
++    const group1 = createNode('group1');
++    const group2 = createNode('group2');
++    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+ 
+-    const node1 = createNode('node1', createElementWithId('node1'));
+-    const node2 = createNode('node2', createElementWithId('node2'));
+-    fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement);
++    const node1 = createNode('node1');
++    const node2 = createNode('node2');
++    canvas.fNodesContainer().nativeElement.append(node1.hostElement, node2.hostElement);
+ 
+-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2 ]);
++    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2]);
+ 
+-    fMediator.execute(new SortItemLayersRequest());
++    mediator.execute<void>(new SortItemLayersRequest());
+ 
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node2.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node2.hostElement);
+ 
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group1.hostElement);
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group2.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group1.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group2.hostElement);
+   });
+ 
+   it('should sort nodes and groups by parents and ignore items with mistakes in parent id', () => {
+-    fComponentsStore.fCanvas = getFCanvasBase();
++    const canvas = createCanvas();
++    componentsStore.fCanvas = canvas;
+ 
+-    const group1 = createNode('group1', createElementWithId('group1'), 'node1');
+-    const group2 = createNode('group2', createElementWithId('group2'), 'group1');
+-    fComponentsStore.fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
++    const group1 = createNode('group1', 'node1');
++    const group2 = createNode('group2', 'group1');
++    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+ 
+-    const node1 = createNode('node1', createElementWithId('node1'), 'group3');
+-    const node2 = createNode('node2', createElementWithId('node2'), 'group4');
+-    fComponentsStore.fCanvas.fNodesContainer().nativeElement.append(node2.hostElement, node1.hostElement);
++    const node1 = createNode('node1', 'group3');
++    const node2 = createNode('node2', 'group4');
++    canvas.fNodesContainer().nativeElement.append(node2.hostElement, node1.hostElement);
+ 
+-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2 ]);
++    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2]);
+ 
+-    fMediator.execute(new SortItemLayersRequest());
++    mediator.execute<void>(new SortItemLayersRequest());
+ 
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node2.hostElement);
+-    expect(fComponentsStore.fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node1.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node2.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node1.hostElement);
+ 
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group1.hostElement);
+-    expect(fComponentsStore.fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group2.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group1.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group2.hostElement);
+   });
+ });
+diff --git a/projects/f-flow/src/domain/test-setup.ts b/projects/f-flow/src/domain/test-setup.ts
+deleted file mode 100644
+index e0a2af07..00000000
+--- a/projects/f-flow/src/domain/test-setup.ts
++++ /dev/null
+@@ -1,43 +0,0 @@
+-import { TestBed } from '@angular/core/testing';
+-import { FMediator } from '@foblex/mediator';
+-import { ElementRef, Injector, signal } from '@angular/core';
+-import { FComponentsStore } from '../f-storage';
+-import { FConnectionBase, FDraggableDataContext, FNodeBase } from '@foblex/flow';
+-
+-export class MockElementRef extends ElementRef<HTMLElement> {
+-  constructor() {
+-    super(document.createElement('div'));
+-  }
+-}
+-
+-export function setupTestModule(providers: any[] = [], declarations: any[] = []): void {
+-  TestBed.configureTestingModule({
+-    declarations: [
+-      ...declarations,
+-    ],
+-    providers: [
+-      FMediator,
+-      FComponentsStore,
+-      FDraggableDataContext,
+-      { provide: ElementRef, useClass: MockElementRef },
+-      Injector,
+-      ...providers,
+-    ],
+-  });
+-}
+-
+-export function mockNode(data: Partial<FNodeBase>): FNodeBase {
+-  return {
+-    fId: data.fId || signal(''),
+-    fParentId: data.fParentId ?? signal<string | null>(null),
+-    hostElement: data.hostElement || new MockElementRef().nativeElement,
+-    ...data,
+-  } as FNodeBase;
+-}
+-
+-export function mockConnection(data: Partial<FConnectionBase>): FConnectionBase {
+-  return {
+-    fId: data.fId || signal(''),
+-    ...data,
+-  } as FConnectionBase;
+-}
+diff --git a/projects/f-flow/src/domain/update-item-and-children-layers/update-item-and-children-layers.execution.spec.ts b/projects/f-flow/src/domain/update-item-and-children-layers/update-item-and-children-layers.execution.spec.ts
+index 9697cd40..7fcd01c8 100644
+--- a/projects/f-flow/src/domain/update-item-and-children-layers/update-item-and-children-layers.execution.spec.ts
++++ b/projects/f-flow/src/domain/update-item-and-children-layers/update-item-and-children-layers.execution.spec.ts
+@@ -1,138 +1,116 @@
+-import { TestBed } from '@angular/core/testing';
+-import { setupTestModule } from '../test-setup';
+-import { FMediator } from '@foblex/mediator';
+-import { FNodeBase } from '../../f-node';
+-import { FCanvasBase } from '@foblex/flow';
+-import { FComponentsStore } from '@foblex/flow';
+-import { UpdateItemAndChildrenLayersExecution } from '@foblex/flow';
+ import {
++  canvasFactory,
++  configureDiTest,
++  createMediatorHarness,
++  createPureHarness,
++  FComponentsStore,
++  FNodeBase,
++  GetDeepChildrenNodesAndGroupsExecution,
++  injectFromDi,
++  MediatorHarness,
++  MoveFrontElementsBeforeTargetElement,
++  nodeFactory,
++  registryAddMany,
+   SortItemLayersExecution,
+   SortItemLayersRequest,
+   SortItemsByParentExecution,
+   SortNodeLayersExecution,
++  UpdateItemAndChildrenLayersExecution,
++  UpdateItemAndChildrenLayersRequest,
+ } from '@foblex/flow';
+-import { GetDeepChildrenNodesAndGroupsExecution } from '@foblex/flow';
+-import { MoveFrontElementsBeforeTargetElement } from '@foblex/flow';
+-import { UpdateItemAndChildrenLayersRequest } from '@foblex/flow';
+-import { signal } from '@angular/core';
+ 
+-function createElement(id: string): HTMLElement {
+-  const element = document.createElement('div');
+-  element.id = id;
++const pure = createPureHarness();
+ 
+-  return element;
+-}
+-
+-function createNode(id: string, element: HTMLElement, parentId?: string): FNodeBase {
+-  return {
+-    fId: signal(id).asReadonly(),
+-    fParentId: signal(parentId).asReadonly(),
+-    hostElement: element,
+-  } as FNodeBase;
+-}
+-
+-function createCanvas(): FCanvasBase {
+-  return {
+-    fGroupsContainer: signal({
+-      nativeElement: document.createElement('div') as HTMLElement,
+-    }).asReadonly(),
+-    fNodesContainer: signal({
+-      nativeElement: document.createElement('div') as HTMLElement,
+-    }).asReadonly(),
+-    fConnectionsContainer: signal({
+-      nativeElement: document.createElement('div') as HTMLElement,
+-    }).asReadonly(),
+-  } as FCanvasBase;
++function createNode(id: string, parentId?: string): FNodeBase {
++  return nodeFactory()
++    .id(id)
++    .parent(parentId)
++    .host(pure.element('div', { id }))
++    .build();
+ }
+ 
+ describe('UpdateItemAndChildrenLayersExecution', () => {
+-  let fMediator: FMediator;
+-  let fComponentsStore: FComponentsStore;
++  let mediator: MediatorHarness;
++  let componentsStore: FComponentsStore;
+ 
+   beforeEach(() => {
+-    setupTestModule([
+-      UpdateItemAndChildrenLayersExecution,
+-      SortItemLayersExecution,
+-      SortItemsByParentExecution,
+-      SortNodeLayersExecution,
+-      GetDeepChildrenNodesAndGroupsExecution,
+-      MoveFrontElementsBeforeTargetElement,
+-    ]);
+-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
+-    fComponentsStore = TestBed.inject(FComponentsStore);
++    configureDiTest({
++      providers: [
++        UpdateItemAndChildrenLayersExecution,
++        SortItemLayersExecution,
++        SortItemsByParentExecution,
++        SortNodeLayersExecution,
++        GetDeepChildrenNodesAndGroupsExecution,
++        MoveFrontElementsBeforeTargetElement,
++      ],
++    });
++
++    mediator = createMediatorHarness();
++    componentsStore = injectFromDi(FComponentsStore);
+   });
+ 
+   it('should handle group container', () => {
+-    const fCanvas = createCanvas();
+-    fComponentsStore.fCanvas = fCanvas;
++    const canvas = canvasFactory().build();
++    componentsStore.fCanvas = canvas;
+ 
+-    const group1 = createNode('group1', createElement('group1'), 'group2');
+-    const group2 = createNode('group2', createElement('group2'));
+-    fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
++    const group1 = createNode('group1', 'group2');
++    const group2 = createNode('group2');
++    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+ 
+-    const node4 = createNode('node4', createElement('node4'), 'node2');
+-    const node1 = createNode('node1', createElement('node1'));
+-    const node2 = createNode('node2', createElement('node2'), 'group1');
+-    const node3 = createNode('node3', createElement('node3'));
++    const node4 = createNode('node4', 'node2');
++    const node1 = createNode('node1');
++    const node2 = createNode('node2', 'group1');
++    const node3 = createNode('node3');
+ 
+-    fCanvas
++    canvas
+       .fNodesContainer()
+-      .nativeElement.append(
+-        node4.hostElement,
+-        node1.hostElement,
+-        node2.hostElement,
+-        node3.hostElement,
+-      );
+-
+-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
+-    fMediator.execute(new SortItemLayersRequest());
+-    fMediator.execute(
+-      new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),
++      .nativeElement.append(node4.hostElement, node1.hostElement, node2.hostElement, node3.hostElement);
++
++    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
++
++    mediator.execute<void>(new SortItemLayersRequest());
++    mediator.execute<void>(
++      new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
+     );
+ 
+-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
+-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
+ 
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node4.hostElement);
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node2.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node4.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node2.hostElement);
+   });
+ 
+   it('should handle group container with SortItemLayers', () => {
+-    const fCanvas = createCanvas();
+-    fComponentsStore.fCanvas = fCanvas;
++    const canvas = canvasFactory().build();
++    componentsStore.fCanvas = canvas;
+ 
+-    const group1 = createNode('group1', createElement('group1'), 'group2');
+-    const group2 = createNode('group2', createElement('group2'));
+-    fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
++    const group1 = createNode('group1', 'group2');
++    const group2 = createNode('group2');
++    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+ 
+-    const node4 = createNode('node4', createElement('node4'), 'node2');
+-    const node1 = createNode('node1', createElement('node1'));
+-    const node2 = createNode('node2', createElement('node2'), 'group1');
+-    const node3 = createNode('node3', createElement('node3'));
++    const node4 = createNode('node4', 'node2');
++    const node1 = createNode('node1');
++    const node2 = createNode('node2', 'group1');
++    const node3 = createNode('node3');
+ 
+-    fCanvas
++    canvas
+       .fNodesContainer()
+-      .nativeElement.append(
+-        node4.hostElement,
+-        node1.hostElement,
+-        node2.hostElement,
+-        node3.hostElement,
+-      );
++      .nativeElement.append(node4.hostElement, node1.hostElement, node2.hostElement, node3.hostElement);
+ 
+-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
++    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
+ 
+-    fMediator.execute(
+-      new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),
++    mediator.execute<void>(
++      new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
+     );
+ 
+-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
+-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
++    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
+ 
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node4.hostElement); // node4 is here because we need call SortItemLayers on test Init
+-    expect(fCanvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node2.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node4.hostElement);
++    expect(canvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node2.hostElement);
+   });
+ });
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/adaptive-curve/calculate-adaptive-curve-data.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/adaptive-curve/calculate-adaptive-curve-data.spec.ts
+index 65a61478..785292da 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/adaptive-curve/calculate-adaptive-curve-data.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/adaptive-curve/calculate-adaptive-curve-data.spec.ts
+@@ -1,28 +1,30 @@
++import { IPoint } from '@foblex/2d';
+ import {
+   CalculateAdaptiveCurveData,
++  createPureHarness,
+   EFConnectableSide,
+   IFConnectionBuilderRequest,
+   IFConnectionBuilderResponse,
+ } from '@foblex/flow';
+-import { IPoint } from '@foblex/2d';
+ 
+ describe('CalculateAdaptiveCurveData', () => {
+   let builder: CalculateAdaptiveCurveData;
+ 
++  const pure = createPureHarness();
+   const SAMPLES = 12;
+-  const ONE_SEG_POINTS = SAMPLES + 1; // 13
++  const ONE_SEG_POINTS = SAMPLES + 1;
+ 
+   beforeEach(() => {
+     builder = new CalculateAdaptiveCurveData();
+   });
+ 
+-  function expectFinitePoint(p: IPoint) {
++  function expectFinitePoint(p: IPoint): void {
+     expect(p).toBeDefined();
+     expect(Number.isFinite(p.x)).toBe(true);
+     expect(Number.isFinite(p.y)).toBe(true);
+   }
+ 
+-  function expectPointsArray(resp: IFConnectionBuilderResponse, expectedLen: number) {
++  function expectPointsArray(resp: IFConnectionBuilderResponse, expectedLen: number): void {
+     expect(resp.points).toBeDefined();
+     expect(Array.isArray(resp.points)).toBe(true);
+     expect(resp.points.length).toBe(expectedLen);
+@@ -32,7 +34,7 @@ describe('CalculateAdaptiveCurveData', () => {
+     }
+   }
+ 
+-  function expectCubicPath(resp: IFConnectionBuilderResponse, start: { x: number; y: number }) {
++  function expectCubicPath(resp: IFConnectionBuilderResponse, start: { x: number; y: number }): void {
+     expect(resp.path).toBeDefined();
+     expect(resp.path.startsWith(`M ${start.x} ${start.y}`)).toBe(true);
+     expect(resp.path).toContain(' C ');
+@@ -40,8 +42,8 @@ describe('CalculateAdaptiveCurveData', () => {
+ 
+   it('builds a cubic path for a horizontal connection (RIGHT -> LEFT)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       offset: 20,
+@@ -49,22 +51,22 @@ describe('CalculateAdaptiveCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expectCubicPath(res, request.source);
+-    expectPointsArray(res, ONE_SEG_POINTS);
++    expectCubicPath(result, request.source);
++    expectPointsArray(result, ONE_SEG_POINTS);
+ 
+-    expectFinitePoint(res.secondPoint);
+-    expectFinitePoint(res.penultimatePoint);
++    expectFinitePoint(result.secondPoint);
++    expectFinitePoint(result.penultimatePoint);
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ 
+   it('builds a cubic path for a vertical connection (BOTTOM -> TOP)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 0, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(0, 100),
+       sourceSide: EFConnectableSide.BOTTOM,
+       targetSide: EFConnectableSide.TOP,
+       offset: 20,
+@@ -72,22 +74,22 @@ describe('CalculateAdaptiveCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expectCubicPath(res, request.source);
+-    expectPointsArray(res, ONE_SEG_POINTS);
++    expectCubicPath(result, request.source);
++    expectPointsArray(result, ONE_SEG_POINTS);
+ 
+-    expectFinitePoint(res.secondPoint);
+-    expectFinitePoint(res.penultimatePoint);
++    expectFinitePoint(result.secondPoint);
++    expectFinitePoint(result.penultimatePoint);
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ 
+   it('builds a cubic path for a diagonal connection', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 100),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.BOTTOM,
+       offset: 20,
+@@ -95,47 +97,47 @@ describe('CalculateAdaptiveCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expectCubicPath(res, request.source);
+-    expectPointsArray(res, ONE_SEG_POINTS);
++    expectCubicPath(result, request.source);
++    expectPointsArray(result, ONE_SEG_POINTS);
+ 
+-    expectFinitePoint(res.secondPoint);
+-    expectFinitePoint(res.penultimatePoint);
++    expectFinitePoint(result.secondPoint);
++    expectFinitePoint(result.penultimatePoint);
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ 
+   it('builds multi-segment cubic path when pivots exist', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       offset: 20,
+       radius: 0,
+-      waypoints: [{ x: 50, y: 50 }],
++      waypoints: [pure.point(50, 50)],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expect(res.path).toBeDefined();
+-    expect(res.path.startsWith('M 0 0')).toBe(true);
++    expect(result.path).toBeDefined();
++    expect(result.path.startsWith('M 0 0')).toBe(true);
+ 
+-    expect((res.path.match(/\sC\s/g) ?? []).length).toBe(2);
++    expect((result.path.match(/\sC\s/g) ?? []).length).toBe(2);
+ 
+-    expect(res.points).toBeDefined();
+-    expect(res.points.length).toBeGreaterThan(ONE_SEG_POINTS);
++    expect(result.points).toBeDefined();
++    expect(result.points.length).toBeGreaterThan(ONE_SEG_POINTS);
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(2);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(2);
+   });
+ 
+   it('ensures handles are not degenerate for typical input', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 10, y: 20 },
+-      target: { x: 110, y: 120 },
++      source: pure.point(10, 20),
++      target: pure.point(110, 120),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.TOP,
+       offset: 16,
+@@ -143,16 +145,16 @@ describe('CalculateAdaptiveCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expectFinitePoint(res.secondPoint);
+-    expectFinitePoint(res.penultimatePoint);
++    expectFinitePoint(result.secondPoint);
++    expectFinitePoint(result.penultimatePoint);
+ 
+     expect(
+-      !(res.secondPoint.x === request.source.x && res.secondPoint.y === request.source.y),
++      !(result.secondPoint.x === request.source.x && result.secondPoint.y === request.source.y),
+     ).toBe(true);
+     expect(
+-      !(res.penultimatePoint.x === request.target.x && res.penultimatePoint.y === request.target.y),
++      !(result.penultimatePoint.x === request.target.x && result.penultimatePoint.y === request.target.y),
+     ).toBe(true);
+   });
+ });
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/bezier-curve/calculate-bezier-curve-data.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/bezier-curve/calculate-bezier-curve-data.spec.ts
+index 3b1ca11f..01571920 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/bezier-curve/calculate-bezier-curve-data.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/bezier-curve/calculate-bezier-curve-data.spec.ts
+@@ -1,5 +1,6 @@
+ import {
+   CalculateBezierCurveData,
++  createPureHarness,
+   EFConnectableSide,
+   IFConnectionBuilderRequest,
+   IFConnectionBuilderResponse,
+@@ -7,6 +8,7 @@ import {
+ 
+ describe('CalculateBezierCurveData', () => {
+   let builder: CalculateBezierCurveData;
++  const pure = createPureHarness();
+ 
+   beforeEach(() => {
+     builder = new CalculateBezierCurveData();
+@@ -14,8 +16,8 @@ describe('CalculateBezierCurveData', () => {
+ 
+   it('builds cubic path for a simple horizontal connection (no pivots)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 0,
+@@ -23,24 +25,24 @@ describe('CalculateBezierCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res: IFConnectionBuilderResponse = builder.handle(request);
++    const result: IFConnectionBuilderResponse = builder.handle(request);
+ 
+-    expect(res.path).toBe('M 0 0 C 100 0, 0 0, 100.0002 0.0002');
++    expect(result.path).toBe('M 0 0 C 100 0, 0 0, 100.0002 0.0002');
+ 
+-    expect(res.secondPoint).toEqual({ x: 100, y: 0 });
+-    expect(res.penultimatePoint).toEqual({ x: 0, y: 0 });
++    expect(result.secondPoint).toEqual(pure.point(100, 0));
++    expect(result.penultimatePoint).toEqual(pure.point(0, 0));
+ 
+-    expect(res.points).toBeDefined();
+-    expect(res.points.length).toBeGreaterThan(0);
++    expect(result.points).toBeDefined();
++    expect(result.points.length).toBeGreaterThan(0);
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ 
+   it('builds cubic path for a simple vertical connection (no pivots)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 0, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(0, 100),
+       sourceSide: EFConnectableSide.BOTTOM,
+       targetSide: EFConnectableSide.TOP,
+       radius: 0,
+@@ -48,48 +50,44 @@ describe('CalculateBezierCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expect(res.path).toBe('M 0 0 C 0 100, 0 0, 0.0002 100.0002');
++    expect(result.path).toBe('M 0 0 C 0 100, 0 0, 0.0002 100.0002');
+ 
+-    expect(res.secondPoint).toEqual({ x: 0, y: 100 });
+-    expect(res.penultimatePoint).toEqual({ x: 0, y: 0 });
++    expect(result.secondPoint).toEqual(pure.point(0, 100));
++    expect(result.penultimatePoint).toEqual(pure.point(0, 0));
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ 
+   it('builds multi-segment cubic path when pivots are present', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 0,
+       offset: 20,
+-      waypoints: [
+-        { x: 50, y: 50 }, // pivot 1
+-      ],
++      waypoints: [pure.point(50, 50)],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expect(res.path).toContain('M 0 0');
++    expect(result.path).toContain('M 0 0');
++    expect((result.path.match(/\sC\s/g) ?? []).length).toBe(2);
+ 
+-    expect((res.path.match(/\sC\s/g) ?? []).length).toBe(2);
++    expect(result.points).toBeDefined();
++    expect(result.points.length).toBeGreaterThan(0);
+ 
+-    expect(res.points).toBeDefined();
+-    expect(res.points.length).toBeGreaterThan(0);
+-
+-    // candidates: typically 1 per segment
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(2);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(2);
+   });
+ 
+   it('handles diagonal connection and returns stable endpoints/control points', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 100),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.BOTTOM,
+       radius: 0,
+@@ -97,15 +95,15 @@ describe('CalculateBezierCurveData', () => {
+       waypoints: [],
+     };
+ 
+-    const res = builder.handle(request);
++    const result = builder.handle(request);
+ 
+-    expect(res.path).toContain('M 0 0');
+-    expect(res.path).toContain(' C ');
++    expect(result.path).toContain('M 0 0');
++    expect(result.path).toContain(' C ');
+ 
+-    expect(res.secondPoint).toBeDefined();
+-    expect(res.penultimatePoint).toBeDefined();
++    expect(result.secondPoint).toBeDefined();
++    expect(result.penultimatePoint).toBeDefined();
+ 
+-    expect(res.candidates).toBeDefined();
+-    expect(res.candidates.length).toBe(1);
++    expect(result.candidates).toBeDefined();
++    expect(result.candidates.length).toBe(1);
+   });
+ });
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/segment-line/calculate-segment-line-data.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/segment-line/calculate-segment-line-data.spec.ts
+index 2c4d9b4f..374fc19c 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/segment-line/calculate-segment-line-data.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/segment-line/calculate-segment-line-data.spec.ts
+@@ -1,28 +1,29 @@
++import { CalculateSegmentLineData, createPureHarness, EFConnectableSide } from '@foblex/flow';
+ import { IFConnectionBuilderRequest, IFConnectionBuilderResponse } from '../../models';
+-import { CalculateSegmentLineData, EFConnectableSide } from '@foblex/flow';
+ 
+ describe('CalculateSegmentLineData', () => {
+   let builder: CalculateSegmentLineData;
++  const pure = createPureHarness();
+ 
+   beforeEach(() => {
+     builder = new CalculateSegmentLineData();
+   });
+ 
+-  function expectCommon(response: IFConnectionBuilderResponse) {
++  function expectCommon(response: IFConnectionBuilderResponse): void {
+     expect(response.path).toBeTruthy();
+     expect(response.points).toBeTruthy();
+     expect(Array.isArray(response.points)).toBe(true);
+     expect(response.points.length).toBeGreaterThanOrEqual(2);
+ 
+-    const pts = response.points;
+-    expect(response.secondPoint).toEqual(pts[1]);
+-    expect(response.penultimatePoint).toEqual(pts[pts.length - 2]);
++    const points = response.points;
++    expect(response.secondPoint).toEqual(points[1]);
++    expect(response.penultimatePoint).toEqual(points[points.length - 2]);
+   }
+ 
+   it('builds a path for a horizontal connection (RIGHT -> LEFT)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 10,
+@@ -36,14 +37,13 @@ describe('CalculateSegmentLineData', () => {
+ 
+     expect(response.points[0]).toEqual(request.source);
+     expect(response.points[response.points.length - 1]).toEqual(request.target);
+-
+     expect(response.candidates?.length ?? 0).toBeGreaterThan(0);
+   });
+ 
+   it('builds a path for a vertical connection (BOTTOM -> TOP)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 0, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(0, 100),
+       sourceSide: EFConnectableSide.BOTTOM,
+       targetSide: EFConnectableSide.TOP,
+       radius: 10,
+@@ -57,14 +57,13 @@ describe('CalculateSegmentLineData', () => {
+ 
+     expect(response.points[0]).toEqual(request.source);
+     expect(response.points[response.points.length - 1]).toEqual(request.target);
+-
+     expect(response.candidates?.length ?? 0).toBeGreaterThan(0);
+   });
+ 
+   it('builds a path for a diagonal connection (RIGHT -> BOTTOM)', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 100),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.BOTTOM,
+       radius: 10,
+@@ -75,15 +74,14 @@ describe('CalculateSegmentLineData', () => {
+     const response = builder.handle(request);
+ 
+     expectCommon(response);
+-
+     expect(response.points.length).toBeGreaterThanOrEqual(2);
+     expect(response.candidates?.length ?? 0).toBeGreaterThan(0);
+   });
+ 
+   it('respects offset by introducing gaps near ports', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 50, y: 50 },
++      source: pure.point(0, 0),
++      target: pure.point(50, 50),
+       sourceSide: EFConnectableSide.BOTTOM,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 10,
+@@ -95,14 +93,14 @@ describe('CalculateSegmentLineData', () => {
+ 
+     expectCommon(response);
+ 
+-    const p1 = response.points[1];
+-    expect(p1.x !== request.source.x || p1.y !== request.source.y).toBe(true);
++    const firstInnerPoint = response.points[1];
++    expect(firstInnerPoint.x !== request.source.x || firstInnerPoint.y !== request.source.y).toBe(true);
+   });
+ 
+   it('produces quadratic bends (Q) when radius > 0 and there is at least one corner', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 100),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 10,
+@@ -114,24 +112,24 @@ describe('CalculateSegmentLineData', () => {
+ 
+     expectCommon(response);
+ 
+-    const hasQ = response.path.includes(' Q ') || response.path.includes('Q ');
+-    if (!hasQ) {
+-      const pts = response.points;
+-      const allSameX = pts.every((p) => p.x === pts[0].x);
+-      const allSameY = pts.every((p) => p.y === pts[0].y);
++    const hasQuadraticSegment = response.path.includes(' Q ') || response.path.includes('Q ');
++    if (!hasQuadraticSegment) {
++      const points = response.points;
++      const allSameX = points.every((point) => point.x === points[0].x);
++      const allSameY = points.every((point) => point.y === points[0].y);
+       expect(allSameX || allSameY).toBe(true);
+     }
+   });
+ 
+   it('supports pivots (anchors chain): path starts at source and ends at target', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 200, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(200, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 10,
+       offset: 20,
+-      waypoints: [{ x: 100, y: 100 }], // один pivot
++      waypoints: [pure.point(100, 100)],
+     };
+ 
+     const response = builder.handle(request);
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/straight-line/calculate-straight-line-data.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/straight-line/calculate-straight-line-data.spec.ts
+index 59fba456..fb0980b1 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/straight-line/calculate-straight-line-data.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/straight-line/calculate-straight-line-data.spec.ts
+@@ -1,5 +1,6 @@
+ import {
+   CalculateStraightLineData,
++  createPureHarness,
+   EFConnectableSide,
+   IFConnectionBuilderRequest,
+   IFConnectionBuilderResponse,
+@@ -7,6 +8,7 @@ import {
+ 
+ describe('CalculateStraightLineData', () => {
+   let builder: CalculateStraightLineData;
++  const pure = createPureHarness();
+ 
+   beforeEach(() => {
+     builder = new CalculateStraightLineData();
+@@ -14,8 +16,8 @@ describe('CalculateStraightLineData', () => {
+ 
+   it('should build a straight path for a horizontal connection', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 0 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 0),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.LEFT,
+       radius: 0,
+@@ -26,23 +28,19 @@ describe('CalculateStraightLineData', () => {
+     const response: IFConnectionBuilderResponse = builder.handle(request);
+ 
+     expect(response.path).toBe('M 0 0 L 100.0002 0.0002');
++    expect(response.points).toEqual([pure.point(0, 0), pure.point(100, 0)]);
+ 
+-    expect(response.points).toEqual([
+-      { x: 0, y: 0 },
+-      { x: 100, y: 0 },
+-    ]);
+-
+-    expect(response.secondPoint).toEqual({ x: 100, y: 0 });
+-    expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
++    expect(response.secondPoint).toEqual(pure.point(100, 0));
++    expect(response.penultimatePoint).toEqual(pure.point(0, 0));
+ 
+     expect(response.candidates.length).toBe(1);
+-    expect(response.candidates[0]).toEqual({ x: 50, y: 0 });
++    expect(response.candidates[0]).toEqual(pure.point(50, 0));
+   });
+ 
+   it('should build a straight path for a vertical connection', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 0, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(0, 100),
+       sourceSide: EFConnectableSide.BOTTOM,
+       targetSide: EFConnectableSide.TOP,
+       radius: 0,
+@@ -53,23 +51,19 @@ describe('CalculateStraightLineData', () => {
+     const response: IFConnectionBuilderResponse = builder.handle(request);
+ 
+     expect(response.path).toBe('M 0 0 L 0.0002 100.0002');
++    expect(response.points).toEqual([pure.point(0, 0), pure.point(0, 100)]);
+ 
+-    expect(response.points).toEqual([
+-      { x: 0, y: 0 },
+-      { x: 0, y: 100 },
+-    ]);
+-
+-    expect(response.secondPoint).toEqual({ x: 0, y: 100 });
+-    expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
++    expect(response.secondPoint).toEqual(pure.point(0, 100));
++    expect(response.penultimatePoint).toEqual(pure.point(0, 0));
+ 
+     expect(response.candidates.length).toBe(1);
+-    expect(response.candidates[0]).toEqual({ x: 0, y: 50 });
++    expect(response.candidates[0]).toEqual(pure.point(0, 50));
+   });
+ 
+   it('should build a straight path for a diagonal connection', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 0, y: 0 },
+-      target: { x: 100, y: 100 },
++      source: pure.point(0, 0),
++      target: pure.point(100, 100),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.BOTTOM,
+       radius: 0,
+@@ -80,50 +74,43 @@ describe('CalculateStraightLineData', () => {
+     const response: IFConnectionBuilderResponse = builder.handle(request);
+ 
+     expect(response.path).toBe('M 0 0 L 100.0002 100.0002');
++    expect(response.points).toEqual([pure.point(0, 0), pure.point(100, 100)]);
+ 
+-    expect(response.points).toEqual([
+-      { x: 0, y: 0 },
+-      { x: 100, y: 100 },
+-    ]);
+-
+-    expect(response.secondPoint).toEqual({ x: 100, y: 100 });
+-    expect(response.penultimatePoint).toEqual({ x: 0, y: 0 });
++    expect(response.secondPoint).toEqual(pure.point(100, 100));
++    expect(response.penultimatePoint).toEqual(pure.point(0, 0));
+ 
+     expect(response.candidates.length).toBe(1);
+-    expect(response.candidates[0]).toEqual({ x: 50, y: 50 });
++    expect(response.candidates[0]).toEqual(pure.point(50, 50));
+   });
+ 
+   it('should support pivots and build multi-segment straight path', () => {
+     const request: IFConnectionBuilderRequest = {
+-      source: { x: 10, y: 20 },
+-      target: { x: 110, y: 120 },
++      source: pure.point(10, 20),
++      target: pure.point(110, 120),
+       sourceSide: EFConnectableSide.RIGHT,
+       targetSide: EFConnectableSide.BOTTOM,
+       radius: 0,
+       offset: 0,
+-      waypoints: [
+-        { x: 60, y: 20 },
+-        { x: 60, y: 90 },
+-      ],
++      waypoints: [pure.point(60, 20), pure.point(60, 90)],
+     };
+ 
+     const response: IFConnectionBuilderResponse = builder.handle(request);
+ 
+     expect(response.points).toEqual([
+-      { x: 10, y: 20 },
+-      { x: 60, y: 20 },
+-      { x: 60, y: 90 },
+-      { x: 110, y: 120 },
++      pure.point(10, 20),
++      pure.point(60, 20),
++      pure.point(60, 90),
++      pure.point(110, 120),
+     ]);
+ 
+     expect(response.path).toBe('M 10 20' + ' L 60 20' + ' L 60 90' + ' L 110.0002 120.0002');
+ 
+-    expect(response.secondPoint).toEqual({ x: 60, y: 20 });
+-    expect(response.penultimatePoint).toEqual({ x: 60, y: 90 });
++    expect(response.secondPoint).toEqual(pure.point(60, 20));
++    expect(response.penultimatePoint).toEqual(pure.point(60, 90));
+ 
+     expect(response.candidates.length).toBe(3);
+-    expect(response.candidates[0]).toEqual({ x: 35, y: 20 });
+-    expect(response.candidates[1]).toEqual({ x: 60, y: 55 });
+-    expect(response.candidates[2]).toEqual({ x: 85, y: 105 });
++    expect(response.candidates[0]).toEqual(pure.point(35, 20));
++    expect(response.candidates[1]).toEqual(pure.point(60, 55));
++    expect(response.candidates[2]).toEqual(pure.point(85, 105));
+   });
+ });
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/calculate-center-between-points.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/calculate-center-between-points.spec.ts
+index a0cdc325..365d0258 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/calculate-center-between-points.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/calculate-center-between-points.spec.ts
+@@ -1,15 +1,12 @@
+-import { PointExtensions, IPoint } from '@foblex/2d';
+-import { TestBed } from '@angular/core/testing';
+-import { calculateCenterBetweenPoints } from '@foblex/flow';
++import { PointExtensions } from '@foblex/2d';
++import { calculateCenterBetweenPoints, createPureHarness } from '@foblex/flow';
+ 
+ describe('calculateCenterBetweenPoints', () => {
+-  beforeEach(() => {
+-    TestBed.configureTestingModule({});
+-  });
++  const pure = createPureHarness();
+ 
+   it('should calculate center between two points when target.x > source.x and target.y > source.y', () => {
+-    const source: IPoint = { x: 0, y: 0 };
+-    const target: IPoint = { x: 4, y: 4 };
++    const source = pure.point(0, 0);
++    const target = pure.point(4, 4);
+ 
+     const result = calculateCenterBetweenPoints(source, target);
+ 
+@@ -17,32 +14,36 @@ describe('calculateCenterBetweenPoints', () => {
+   });
+ 
+   it('should calculate center between two points when target.x < source.x and target.y < source.y', () => {
+-    const source: IPoint = { x: 4, y: 4 };
+-    const target: IPoint = { x: 0, y: 0 };
++    const source = pure.point(4, 4);
++    const target = pure.point(0, 0);
++
+     const result = calculateCenterBetweenPoints(source, target);
+ 
+     expect(result).toEqual(PointExtensions.initialize(2, 2));
+   });
+ 
+   it('should calculate center between two points when target.x > source.x and target.y < source.y', () => {
+-    const source: IPoint = { x: 0, y: 4 };
+-    const target: IPoint = { x: 4, y: 0 };
++    const source = pure.point(0, 4);
++    const target = pure.point(4, 0);
++
+     const result = calculateCenterBetweenPoints(source, target);
+ 
+     expect(result).toEqual(PointExtensions.initialize(2, 2));
+   });
+ 
+   it('should calculate center between two points when target.x < source.x and target.y > source.y', () => {
+-    const source: IPoint = { x: 4, y: 0 };
+-    const target: IPoint = { x: 0, y: 4 };
++    const source = pure.point(4, 0);
++    const target = pure.point(0, 4);
++
+     const result = calculateCenterBetweenPoints(source, target);
+ 
+     expect(result).toEqual(PointExtensions.initialize(2, 2));
+   });
+ 
+   it('should calculate center when source and target are the same point', () => {
+-    const source: IPoint = { x: 4, y: 4 };
+-    const target: IPoint = { x: 4, y: 4 };
++    const source = pure.point(4, 4);
++    const target = pure.point(4, 4);
++
+     const result = calculateCenterBetweenPoints(source, target);
+ 
+     expect(result).toEqual(PointExtensions.initialize(4, 4));
+diff --git a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/sample-cubic-bezier-uniform.spec.ts b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/sample-cubic-bezier-uniform.spec.ts
+index c090c96f..a82236ae 100644
+--- a/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/sample-cubic-bezier-uniform.spec.ts
++++ b/projects/f-flow/src/f-connection-v2/utils/connection-line-builder/builders/utils/sample-cubic-bezier-uniform.spec.ts
+@@ -1,18 +1,15 @@
+-import { TestBed } from '@angular/core/testing';
+ import { IPoint } from '@foblex/2d';
+-import { sampleCubicBezierUniform } from '@foblex/flow';
++import { createPureHarness, sampleCubicBezierUniform } from '@foblex/flow';
+ 
+ describe('sampleCubicBezierUniform', () => {
+-  beforeEach(() => {
+-    TestBed.configureTestingModule({});
+-  });
++  const pure = createPureHarness();
+ 
+   it('should return samples + 1 points', () => {
+     const points: IPoint[] = [
+-      { x: 0, y: 0 },
+-      { x: 1, y: 2 },
+-      { x: 3, y: 2 },
+-      { x: 4, y: 0 },
++      pure.point(0, 0),
++      pure.point(1, 2),
++      pure.point(3, 2),
++      pure.point(4, 0),
+     ];
+ 
+     const result = sampleCubicBezierUniform(points, 10);
+@@ -22,10 +19,10 @@ describe('sampleCubicBezierUniform', () => {
+ 
+   it('should include both endpoints', () => {
+     const points: IPoint[] = [
+-      { x: 10, y: 20 },
+-      { x: 15, y: 25 },
+-      { x: 30, y: 5 },
+-      { x: 40, y: 50 },
++      pure.point(10, 20),
++      pure.point(15, 25),
++      pure.point(30, 5),
++      pure.point(40, 50),
+     ];
+ 
+     const result = sampleCubicBezierUniform(points, 8);
+@@ -39,38 +36,38 @@ describe('sampleCubicBezierUniform', () => {
+ 
+   it('should return correct point for a straight line (all control points collinear)', () => {
+     const points: IPoint[] = [
+-      { x: 0, y: 0 }, // p0
+-      { x: 1, y: 0 }, // p1
+-      { x: 3, y: 0 }, // p2
+-      { x: 4, y: 0 }, // p3
++      pure.point(0, 0),
++      pure.point(1, 0),
++      pure.point(3, 0),
++      pure.point(4, 0),
+     ];
+ 
+     const result = sampleCubicBezierUniform(points, 4);
+-    // t = 0.5 for i=2 when samples=4
++
+     expect(result[2].x).toBeCloseTo(2);
+     expect(result[2].y).toBeCloseTo(0);
+   });
+ 
+   it('should return correct midpoint for a symmetric arch', () => {
+     const points: IPoint[] = [
+-      { x: 0, y: 0 }, // p0
+-      { x: 0, y: 2 }, // p1
+-      { x: 4, y: 2 }, // p2
+-      { x: 4, y: 0 }, // p3
++      pure.point(0, 0),
++      pure.point(0, 2),
++      pure.point(4, 2),
++      pure.point(4, 0),
+     ];
+ 
+     const result = sampleCubicBezierUniform(points, 2);
+-    // i=1 => t=0.5
++
+     expect(result[1].x).toBeCloseTo(2);
+     expect(result[1].y).toBeCloseTo(1.5);
+   });
+ 
+   it('should work with default samples value', () => {
+     const points: IPoint[] = [
+-      { x: 0, y: 0 },
+-      { x: 2, y: 3 },
+-      { x: 3, y: 2 },
+-      { x: 5, y: 0 },
++      pure.point(0, 0),
++      pure.point(2, 3),
++      pure.point(3, 2),
++      pure.point(5, 0),
+     ];
+ 
+     const result = sampleCubicBezierUniform(points);
+@@ -83,8 +80,8 @@ describe('sampleCubicBezierUniform', () => {
+   });
+ 
+   it('should clone the first point (do not keep reference)', () => {
+-    const p0: IPoint = { x: 1, y: 1 };
+-    const points: IPoint[] = [p0, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 1 }];
++    const p0: IPoint = pure.point(1, 1);
++    const points: IPoint[] = [p0, pure.point(2, 2), pure.point(3, 2), pure.point(4, 1)];
+ 
+     const result = sampleCubicBezierUniform(points, 3);
+ 
+diff --git a/projects/f-flow/src/f-draggable/drag-node/magnetic-lines/domain/calculate-magnetic-guides.spec.ts b/projects/f-flow/src/f-draggable/drag-node/magnetic-lines/domain/calculate-magnetic-guides.spec.ts
+index 373efd32..8e98e230 100644
+--- a/projects/f-flow/src/f-draggable/drag-node/magnetic-lines/domain/calculate-magnetic-guides.spec.ts
++++ b/projects/f-flow/src/f-draggable/drag-node/magnetic-lines/domain/calculate-magnetic-guides.spec.ts
+@@ -1,34 +1,24 @@
+-import { IRect, PointExtensions } from '@foblex/2d';
+-import { calculateMagneticGuides } from '@foblex/flow';
++import { IRect } from '@foblex/2d';
++import { calculateMagneticGuides, createPureHarness } from '@foblex/flow';
+ 
+ describe('calculateMagneticGuides', () => {
++  const pure = createPureHarness();
+   let elements: IRect[];
+   let target: IRect;
+ 
+   beforeEach(() => {
+     elements = [
+-      { x: 0, y: 0, width: 100, height: 100, gravityCenter: PointExtensions.initialize(50, 50) },
+-      {
+-        x: 200,
+-        y: 200,
+-        width: 100,
+-        height: 100,
+-        gravityCenter: PointExtensions.initialize(250, 250),
+-      },
+-      {
+-        x: 400,
+-        y: 400,
+-        width: 100,
+-        height: 100,
+-        gravityCenter: PointExtensions.initialize(450, 450),
+-      },
++      { x: 0, y: 0, width: 100, height: 100, gravityCenter: pure.point(50, 50) },
++      { x: 200, y: 200, width: 100, height: 100, gravityCenter: pure.point(250, 250) },
++      { x: 400, y: 400, width: 100, height: 100, gravityCenter: pure.point(450, 450) },
+     ];
++
+     target = {
+       x: 150,
+       y: 150,
+       width: 100,
+       height: 100,
+-      gravityCenter: PointExtensions.initialize(200, 200),
++      gravityCenter: pure.point(200, 200),
+     };
+   });
+ 
+@@ -47,12 +37,13 @@ describe('calculateMagneticGuides', () => {
+       y: 0,
+       width: 10,
+       height: 10,
+-      gravityCenter: PointExtensions.initialize(110, 5),
++      gravityCenter: pure.point(110, 5),
+     };
++
+     const result = calculateMagneticGuides(elements, target, 10);
+ 
+-    expect(result.x.guide).toBe(100); // Right side of the first element
+-    expect(result.x.delta).toBeCloseTo(5); // Distance between target.x and element.x + element.width
++    expect(result.x.guide).toBe(100);
++    expect(result.x.delta).toBeCloseTo(5);
+   });
+ 
+   it('should find the nearest top side by Y axis', () => {
+@@ -61,23 +52,24 @@ describe('calculateMagneticGuides', () => {
+       y: 105,
+       width: 10,
+       height: 10,
+-      gravityCenter: PointExtensions.initialize(5, 110),
++      gravityCenter: pure.point(5, 110),
+     };
++
+     const result = calculateMagneticGuides(elements, target, 10);
+ 
+-    expect(result.y.guide).toBe(100); // Bottom side of the first element
+-    expect(result.y.delta).toBeCloseTo(5); // Distance between target.y and element.y + element.height
++    expect(result.y.guide).toBe(100);
++    expect(result.y.delta).toBeCloseTo(5);
+   });
+ 
+   it('should return undefined if no element is within the align threshold by X axis', () => {
+-    const result = calculateMagneticGuides(elements, target, 5); // Smaller threshold
++    const result = calculateMagneticGuides(elements, target, 5);
+ 
+     expect(result.x.guide).toBeUndefined();
+     expect(result.x.delta).toBeUndefined();
+   });
+ 
+   it('should return undefined if no element is within the align threshold by Y axis', () => {
+-    const result = calculateMagneticGuides(elements, target, 5); // Smaller threshold
++    const result = calculateMagneticGuides(elements, target, 5);
+ 
+     expect(result.y.guide).toBeUndefined();
+     expect(result.y.delta).toBeUndefined();
+diff --git a/projects/f-flow/src/public-api.ts b/projects/f-flow/src/public-api.ts
+index 9d4a28ff..523d5280 100644
+--- a/projects/f-flow/src/public-api.ts
++++ b/projects/f-flow/src/public-api.ts
+@@ -35,6 +35,8 @@ export * from './reactivity';
+ 
+ export * from './utils';
+ 
++export * from './testing';
++
+ export * from './f-flow.module';
+ 
+ export * from './i-has-host-element';

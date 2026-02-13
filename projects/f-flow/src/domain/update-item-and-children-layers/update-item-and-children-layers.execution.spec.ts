@@ -1,81 +1,64 @@
-import { TestBed } from '@angular/core/testing';
-import { setupTestModule } from '../test-setup';
-import { FMediator } from '@foblex/mediator';
-import { FNodeBase } from '../../f-node';
-import { FCanvasBase } from '@foblex/flow';
-import { FComponentsStore } from '@foblex/flow';
-import { UpdateItemAndChildrenLayersExecution } from '@foblex/flow';
 import {
+  canvasFactory,
+  configureDiTest,
+  createMediatorHarness,
+  createPureHarness,
+  FComponentsStore,
+  FNodeBase,
+  GetDeepChildrenNodesAndGroupsExecution,
+  injectFromDi,
+  MediatorHarness,
+  MoveFrontElementsBeforeTargetElement,
+  nodeFactory,
+  registryAddMany,
   SortItemLayersExecution,
   SortItemLayersRequest,
   SortItemsByParentExecution,
   SortNodeLayersExecution,
+  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayersRequest,
 } from '@foblex/flow';
-import { GetDeepChildrenNodesAndGroupsExecution } from '@foblex/flow';
-import { MoveFrontElementsBeforeTargetElement } from '@foblex/flow';
-import { UpdateItemAndChildrenLayersRequest } from '@foblex/flow';
-import { signal } from '@angular/core';
 
-function createElement(id: string): HTMLElement {
-  const element = document.createElement('div');
-  element.id = id;
+const pure = createPureHarness();
 
-  return element;
-}
-
-function createNode(id: string, element: HTMLElement, parentId?: string): FNodeBase {
-  return {
-    fId: signal(id).asReadonly(),
-    fParentId: signal(parentId).asReadonly(),
-    hostElement: element,
-  } as FNodeBase;
-}
-
-function createCanvas(): FCanvasBase {
-  return {
-    fGroupsContainer: signal({
-      nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly(),
-    fNodesContainer: signal({
-      nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly(),
-    fConnectionsContainer: signal({
-      nativeElement: document.createElement('div') as HTMLElement,
-    }).asReadonly(),
-  } as FCanvasBase;
+function createNode(id: string, parentId?: string): FNodeBase {
+  return nodeFactory().id(id).parent(parentId).host(pure.element('div', { id })).build();
 }
 
 describe('UpdateItemAndChildrenLayersExecution', () => {
-  let fMediator: FMediator;
-  let fComponentsStore: FComponentsStore;
+  let mediator: MediatorHarness;
+  let componentsStore: FComponentsStore;
 
   beforeEach(() => {
-    setupTestModule([
-      UpdateItemAndChildrenLayersExecution,
-      SortItemLayersExecution,
-      SortItemsByParentExecution,
-      SortNodeLayersExecution,
-      GetDeepChildrenNodesAndGroupsExecution,
-      MoveFrontElementsBeforeTargetElement,
-    ]);
-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
-    fComponentsStore = TestBed.inject(FComponentsStore);
+    configureDiTest({
+      providers: [
+        UpdateItemAndChildrenLayersExecution,
+        SortItemLayersExecution,
+        SortItemsByParentExecution,
+        SortNodeLayersExecution,
+        GetDeepChildrenNodesAndGroupsExecution,
+        MoveFrontElementsBeforeTargetElement,
+      ],
+    });
+
+    mediator = createMediatorHarness();
+    componentsStore = injectFromDi(FComponentsStore);
   });
 
   it('should handle group container', () => {
-    const fCanvas = createCanvas();
-    fComponentsStore.fCanvas = fCanvas;
+    const canvas = canvasFactory().build();
+    componentsStore.fCanvas = canvas;
 
-    const group1 = createNode('group1', createElement('group1'), 'group2');
-    const group2 = createNode('group2', createElement('group2'));
-    fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+    const group1 = createNode('group1', 'group2');
+    const group2 = createNode('group2');
+    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
 
-    const node4 = createNode('node4', createElement('node4'), 'node2');
-    const node1 = createNode('node1', createElement('node1'));
-    const node2 = createNode('node2', createElement('node2'), 'group1');
-    const node3 = createNode('node3', createElement('node3'));
+    const node4 = createNode('node4', 'node2');
+    const node1 = createNode('node1');
+    const node2 = createNode('node2', 'group1');
+    const node3 = createNode('node3');
 
-    fCanvas
+    canvas
       .fNodesContainer()
       .nativeElement.append(
         node4.hostElement,
@@ -84,35 +67,36 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
         node3.hostElement,
       );
 
-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
-    fMediator.execute(new SortItemLayersRequest());
-    fMediator.execute(
-      new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),
+    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
+
+    mediator.execute<void>(new SortItemLayersRequest());
+    mediator.execute<void>(
+      new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
     );
 
-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
+    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
+    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
 
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node4.hostElement);
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node2.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node4.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node2.hostElement);
   });
 
   it('should handle group container with SortItemLayers', () => {
-    const fCanvas = createCanvas();
-    fComponentsStore.fCanvas = fCanvas;
+    const canvas = canvasFactory().build();
+    componentsStore.fCanvas = canvas;
 
-    const group1 = createNode('group1', createElement('group1'), 'group2');
-    const group2 = createNode('group2', createElement('group2'));
-    fCanvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
+    const group1 = createNode('group1', 'group2');
+    const group2 = createNode('group2');
+    canvas.fGroupsContainer().nativeElement.append(group1.hostElement, group2.hostElement);
 
-    const node4 = createNode('node4', createElement('node4'), 'node2');
-    const node1 = createNode('node1', createElement('node1'));
-    const node2 = createNode('node2', createElement('node2'), 'group1');
-    const node3 = createNode('node3', createElement('node3'));
+    const node4 = createNode('node4', 'node2');
+    const node1 = createNode('node1');
+    const node2 = createNode('node2', 'group1');
+    const node3 = createNode('node3');
 
-    fCanvas
+    canvas
       .fNodesContainer()
       .nativeElement.append(
         node4.hostElement,
@@ -121,18 +105,18 @@ describe('UpdateItemAndChildrenLayersExecution', () => {
         node3.hostElement,
       );
 
-    fComponentsStore.nodes.addMany([ group1, group2, node1, node2, node3, node4 ]);
+    registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
 
-    fMediator.execute(
-      new UpdateItemAndChildrenLayersRequest(group1, fCanvas.fGroupsContainer().nativeElement),
+    mediator.execute<void>(
+      new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
     );
 
-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
-    expect(fCanvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
+    expect(canvas.fGroupsContainer().nativeElement.children.item(0)).toEqual(group2.hostElement);
+    expect(canvas.fGroupsContainer().nativeElement.children.item(1)).toEqual(group1.hostElement);
 
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node4.hostElement); // node4 is here because we need call SortItemLayers on test Init
-    expect(fCanvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node2.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(0)).toEqual(node1.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(1)).toEqual(node3.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(2)).toEqual(node4.hostElement);
+    expect(canvas.fNodesContainer().nativeElement.children.item(3)).toEqual(node2.hostElement);
   });
 });

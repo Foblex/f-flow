@@ -1,34 +1,24 @@
-import { IRect, PointExtensions } from '@foblex/2d';
-import { calculateMagneticGuides } from '@foblex/flow';
+import { IRect } from '@foblex/2d';
+import { calculateMagneticGuides, createPureHarness } from '@foblex/flow';
 
 describe('calculateMagneticGuides', () => {
+  const pure = createPureHarness();
   let elements: IRect[];
   let target: IRect;
 
   beforeEach(() => {
     elements = [
-      { x: 0, y: 0, width: 100, height: 100, gravityCenter: PointExtensions.initialize(50, 50) },
-      {
-        x: 200,
-        y: 200,
-        width: 100,
-        height: 100,
-        gravityCenter: PointExtensions.initialize(250, 250),
-      },
-      {
-        x: 400,
-        y: 400,
-        width: 100,
-        height: 100,
-        gravityCenter: PointExtensions.initialize(450, 450),
-      },
+      { x: 0, y: 0, width: 100, height: 100, gravityCenter: pure.point(50, 50) },
+      { x: 200, y: 200, width: 100, height: 100, gravityCenter: pure.point(250, 250) },
+      { x: 400, y: 400, width: 100, height: 100, gravityCenter: pure.point(450, 450) },
     ];
+
     target = {
       x: 150,
       y: 150,
       width: 100,
       height: 100,
-      gravityCenter: PointExtensions.initialize(200, 200),
+      gravityCenter: pure.point(200, 200),
     };
   });
 
@@ -47,12 +37,13 @@ describe('calculateMagneticGuides', () => {
       y: 0,
       width: 10,
       height: 10,
-      gravityCenter: PointExtensions.initialize(110, 5),
+      gravityCenter: pure.point(110, 5),
     };
+
     const result = calculateMagneticGuides(elements, target, 10);
 
-    expect(result.x.guide).toBe(100); // Right side of the first element
-    expect(result.x.delta).toBeCloseTo(5); // Distance between target.x and element.x + element.width
+    expect(result.x.guide).toBe(100);
+    expect(result.x.delta).toBeCloseTo(5);
   });
 
   it('should find the nearest top side by Y axis', () => {
@@ -61,23 +52,24 @@ describe('calculateMagneticGuides', () => {
       y: 105,
       width: 10,
       height: 10,
-      gravityCenter: PointExtensions.initialize(5, 110),
+      gravityCenter: pure.point(5, 110),
     };
+
     const result = calculateMagneticGuides(elements, target, 10);
 
-    expect(result.y.guide).toBe(100); // Bottom side of the first element
-    expect(result.y.delta).toBeCloseTo(5); // Distance between target.y and element.y + element.height
+    expect(result.y.guide).toBe(100);
+    expect(result.y.delta).toBeCloseTo(5);
   });
 
   it('should return undefined if no element is within the align threshold by X axis', () => {
-    const result = calculateMagneticGuides(elements, target, 5); // Smaller threshold
+    const result = calculateMagneticGuides(elements, target, 5);
 
     expect(result.x.guide).toBeUndefined();
     expect(result.x.delta).toBeUndefined();
   });
 
   it('should return undefined if no element is within the align threshold by Y axis', () => {
-    const result = calculateMagneticGuides(elements, target, 5); // Smaller threshold
+    const result = calculateMagneticGuides(elements, target, 5);
 
     expect(result.y.guide).toBeUndefined();
     expect(result.y.delta).toBeUndefined();

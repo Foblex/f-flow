@@ -1,57 +1,55 @@
-import { TestBed } from '@angular/core/testing';
-import { FMediator } from '@foblex/mediator';
-import { GetCurrentSelectionExecution } from './get-current-selection.execution';
-import { GetCurrentSelectionRequest } from './get-current-selection.request';
-import { setupTestModule } from '../../test-setup';
-import { FDraggableDataContext, FSelectionChangeEvent } from '../../../f-draggable';
+import {
+  configureDiTest,
+  createMediatorHarness,
+  FDraggableDataContext,
+  FSelectionChangeEvent,
+  GetCurrentSelectionExecution,
+  GetCurrentSelectionRequest,
+  injectFromDi,
+  MediatorHarness,
+  selectableFactory,
+} from '@foblex/flow';
 
 describe('GetSelectionExecution', () => {
-  let fDraggableDataContext: FDraggableDataContext;
-  let fMediator: FMediator;
+  let draggableDataContext: FDraggableDataContext;
+  let mediator: MediatorHarness;
 
   beforeEach(() => {
-    setupTestModule([ GetCurrentSelectionExecution ]);
-    fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
+    configureDiTest({ providers: [GetCurrentSelectionExecution] });
+    draggableDataContext = injectFromDi(FDraggableDataContext);
+    mediator = createMediatorHarness();
   });
 
   it('should return correct FSelectionChangeEvent when nodes and connections are selected', () => {
-    const mockSelectedItems = [
-      {
-        hostElement: {
-          classList: { contains: (className: string) => className === 'f-node' },
-          dataset: { fNodeId: 'node1' },
-          id: 'connection1',
-        },
-      },
-      {
-        hostElement: {
-          classList: { contains: (className: string) => className === 'f-group' },
-          dataset: { fGroupId: 'group1' },
-          id: 'group1',
-        },
-      },
-      {
-        hostElement: {
-          classList: { contains: (className: string) => className === 'f-connection' },
-          dataset: {},
-          id: 'connection2',
-        },
-      },
+    const selectedItems = [
+      selectableFactory()
+        .id('node-item')
+        .className('f-node')
+        .dataset('fNodeId', 'node1')
+        .elementId('connection1')
+        .build(),
+      selectableFactory()
+        .id('group-item')
+        .className('f-group')
+        .dataset('fGroupId', 'group1')
+        .elementId('group1')
+        .build(),
+      selectableFactory().id('connection-item').elementId('connection2').build(),
     ];
-    fDraggableDataContext.selectedItems = mockSelectedItems as any;
 
-    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    draggableDataContext.selectedItems = selectedItems;
 
-    expect(result.fNodeIds).toEqual([ 'node1' ]);
-    expect(result.fGroupIds).toEqual([ 'group1' ]);
-    expect(result.fConnectionIds).toEqual([ 'connection2' ]);
+    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+
+    expect(result.fNodeIds).toEqual(['node1']);
+    expect(result.fGroupIds).toEqual(['group1']);
+    expect(result.fConnectionIds).toEqual(['connection2']);
   });
 
   it('should return empty FSelectionChangeEvent when no items are selected', () => {
-    fDraggableDataContext.selectedItems = [];
+    draggableDataContext.selectedItems = [];
 
-    const result = fMediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
 
     expect(result.fNodeIds).toEqual([]);
     expect(result.fConnectionIds).toEqual([]);

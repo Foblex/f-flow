@@ -1,4 +1,4 @@
-import { SelectAllRequest } from './select-all.request';
+import { SelectAllRequest } from './select-all-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -10,23 +10,23 @@ import { FDraggableDataContext } from '../../../f-draggable';
  */
 @Injectable()
 @FExecutionRegister(SelectAllRequest)
-export class SelectAllExecution implements IExecution<SelectAllRequest, void> {
-  private _dragContext = inject(FDraggableDataContext);
+export class SelectAll implements IExecution<SelectAllRequest, void> {
+  private readonly _dragSession = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: SelectAllRequest): void {
-    this._dragContext.selectedItems.forEach((x) => {
+    this._dragSession.selectedItems.forEach((x) => {
       x.unmarkAsSelected();
     });
-    this._dragContext.selectedItems = [];
+    this._dragSession.selectedItems = [];
     this._store.nodes.getAll().forEach((x) => {
       x.markAsSelected();
-      this._dragContext.selectedItems.push(x);
+      this._dragSession.selectedItems.push(x);
     });
     this._store.connections.getAll().forEach((x) => {
       x.markAsSelected();
-      this._dragContext.selectedItems.push(x);
+      this._dragSession.selectedItems.push(x);
     });
-    this._dragContext.isSelectedChanged = true;
+    this._dragSession.isSelectedChanged = true;
   }
 }
