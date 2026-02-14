@@ -12,6 +12,7 @@ import { F_FLOW_PROVIDERS } from './f-flow';
 import { F_CANVAS_PROVIDERS } from './f-canvas';
 import { F_ZOOM_PROVIDERS } from './f-zoom';
 import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
+import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,6 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_LINE_ALIGNMENT_PROVIDERS,
     ...F_MINIMAP_PROVIDERS,
     ...F_NODE_PROVIDERS,
-    ...F_SELECTION_AREA_PROVIDERS,
 
     FDragBlockerDirective,
     FDraggableDirective,
@@ -31,6 +31,9 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_BACKGROUND_PROVIDERS,
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
+
+    ...F_SELECTION_AREA_PROVIDERS,
+    ...F_MAGNETIC_LINES_PROVIDERS,
 
     ...F_CONNECTION_IMPORTS_EXPORTS,
 
@@ -43,6 +46,9 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
 
+    ...F_SELECTION_AREA_PROVIDERS,
+    ...F_MAGNETIC_LINES_PROVIDERS,
+
     ...F_CONNECTION_IMPORTS_EXPORTS,
 
     ...F_CONNECTION_PROVIDERS,
@@ -50,7 +56,6 @@ import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
     ...F_LINE_ALIGNMENT_PROVIDERS,
     ...F_MINIMAP_PROVIDERS,
     ...F_NODE_PROVIDERS,
-    ...F_SELECTION_AREA_PROVIDERS,
 
     FDragBlockerDirective,
     FDraggableDirective,

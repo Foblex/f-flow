@@ -18,6 +18,8 @@ export * from './pinch-to-zoom';
 
 export * from './select-by-pointer';
 
+export * from './selection-area';
+
 export * from './f-drag-blocker.directive';
 
 export * from './f-drag-started-event';

@@ -36,7 +36,6 @@ import {
 
 @Directive({
   selector: 'f-canvas[fZoom]',
-  exportAs: 'fComponent',
   standalone: true,
   host: {
     'class': 'f-zoom f-component',

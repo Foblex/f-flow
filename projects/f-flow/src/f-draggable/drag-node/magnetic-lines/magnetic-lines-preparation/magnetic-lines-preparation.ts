@@ -11,9 +11,9 @@ import {
 import { BrowserService } from '@foblex/platform';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { FLineAlignmentBase } from '../../../../f-line-alignment';
 import { FNodeBase } from '../../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../../domain';
+import { FMagneticLinesBase } from '../../../../f-magnetic-lines';
 
 @Injectable()
 @FExecutionRegister(MagneticLinesPreparationRequest)
@@ -55,7 +55,7 @@ export class MagneticLinesPreparation implements IExecution<MagneticLinesPrepara
     return this._store.flowHost.getBoundingClientRect();
   }
 
-  private _createRenderer({ hostElement }: FLineAlignmentBase): MagneticLineRenderer {
+  private _createRenderer({ hostElement }: FMagneticLinesBase): MagneticLineRenderer {
     this._renderer = new MagneticLineRenderer(this._browser, hostElement);
 
     return this._renderer;

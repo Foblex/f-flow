@@ -1,5 +1,7 @@
+import { Signal } from '@angular/core';
+
 export interface FHasId {
-  fId(): string;
+  fId: Signal<string>;
 }
 
 /**

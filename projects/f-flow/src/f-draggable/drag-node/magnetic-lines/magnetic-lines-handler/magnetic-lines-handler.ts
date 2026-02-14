@@ -1,11 +1,7 @@
 import { IRect, ISize, ITransformModel } from '@foblex/2d';
 import { Injector } from '@angular/core';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
-import {
-  calculateMagneticGuides,
-  IMagneticGuidesResult,
-  MagneticLineRenderer,
-} from '../domain';
+import { calculateMagneticGuides, IMagneticGuidesResult, MagneticLineRenderer } from '../domain';
 
 export class MagneticLinesHandler {
   private _timerId: ReturnType<typeof setTimeout> | null = null;
@@ -20,7 +16,7 @@ export class MagneticLinesHandler {
     private _rects: IRect[],
   ) {
     const store = injector.get(FComponentsStore);
-    this._alignThreshold = store.instances.require(INSTANCES.MAGNETIC_LINES).fAlignThreshold();
+    this._alignThreshold = store.instances.require(INSTANCES.MAGNETIC_LINES).threshold();
     this._canvasTransform = store.transform;
   }
 
@@ -29,10 +25,7 @@ export class MagneticLinesHandler {
       clearTimeout(this._timerId);
     }
 
-    this._timerId = setTimeout(
-      () => this._renderGuides(this._computeGuides(_draggedRect)),
-      15,
-    );
+    this._timerId = setTimeout(() => this._renderGuides(this._computeGuides(_draggedRect)), 15);
   }
 
   private _renderGuides(guides: IMagneticGuidesResult): void {

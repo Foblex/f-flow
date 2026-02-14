@@ -13,6 +13,7 @@ import {
   DragNodeHandler,
 } from '../drag-node';
 import { PinchToZoomHandler } from '../pinch-to-zoom';
+import { SelectionAreaHandler } from '../selection-area';
 
 type NoArgsCtor<T> = new () => T;
 
@@ -77,6 +78,10 @@ export class DragHandlerInjector {
         {
           provide: PinchToZoomHandler,
           useClass: PinchToZoomHandler,
+        },
+        {
+          provide: SelectionAreaHandler,
+          useClass: SelectionAreaHandler,
         },
       ],
       parent: this._injector,

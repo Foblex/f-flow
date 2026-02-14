@@ -11,8 +11,9 @@ import { FNodeRegistry } from './f-node-registry';
 import { FConnectionRegistry } from './f-connection-registry';
 import { FConnectionMarkerRegistry } from './f-connection-marker-registry';
 import { fInstanceKey, FSingleRegistryBase } from './base';
-import { FLineAlignmentBase } from '../f-line-alignment';
 import { FZoomBase } from '../f-zoom';
+import { FSelectionAreaBase } from '../f-selection-area';
+import { FMagneticLinesBase } from '../f-magnetic-lines';
 
 @Injectable()
 export class FComponentsStore {
@@ -61,7 +62,7 @@ export class FComponentsStore {
 
 export const INSTANCES = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  MAGNETIC_LINES: fInstanceKey<FLineAlignmentBase>('magnetic-lines'),
+  MAGNETIC_LINES: fInstanceKey<FMagneticLinesBase>('magnetic-lines'),
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   ZOOM: fInstanceKey<FZoomBase>('zoom-controls'),
@@ -69,5 +70,6 @@ export const INSTANCES = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   BACKGROUND: fInstanceKey<FBackgroundBase>('background'),
 
-
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  SELECTION_AREA: fInstanceKey<FSelectionAreaBase>('selection-area'),
 } as const;

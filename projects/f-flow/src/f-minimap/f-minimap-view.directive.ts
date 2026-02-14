@@ -1,4 +1,4 @@
-import { Directive, ElementRef, inject } from "@angular/core";
+import { Directive, ElementRef, inject } from '@angular/core';
 import { IRect, setRectToElement } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
 import { MinimapCalculateViewBoxRequest } from './domain';
@@ -10,13 +10,8 @@ import { MinimapCalculateViewBoxRequest } from './domain';
   },
 })
 export class FMinimapViewDirective {
-
   private readonly _mediator = inject(FMediator);
-  private readonly _elementReference = inject(ElementRef);
-
-  public get hostElement(): SVGGElement {
-    return this._elementReference.nativeElement;
-  }
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
   public redraw(): void {
     setRectToElement(

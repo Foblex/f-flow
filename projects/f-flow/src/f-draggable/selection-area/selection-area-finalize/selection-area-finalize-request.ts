@@ -1,10 +1,6 @@
-import { IPointerEvent } from "../../../drag-toolkit";
+import { IPointerEvent } from '../../../drag-toolkit';
 
 export class SelectionAreaFinalizeRequest {
   static readonly fToken = Symbol('SelectionAreaFinalizeRequest');
-
-  constructor(
-    public event: IPointerEvent,
-  ) {
-  }
+  constructor(public readonly event: IPointerEvent) {}
 }

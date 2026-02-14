@@ -1,23 +1,20 @@
-import {
-  Directive, ElementRef, inject, input,
-} from "@angular/core";
+import { Directive, ElementRef, inject, input } from '@angular/core';
 import { setRectToViewBox } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { FMinimapData, IFMinimapScaleAndViewBox, MinimapCalculateSvgScaleAndViewBoxRequest } from './domain';
+import {
+  FMinimapData,
+  IFMinimapScaleAndViewBox,
+  MinimapCalculateSvgScaleAndViewBoxRequest,
+} from './domain';
 
 @Directive({
   selector: 'svg[fMinimapFlow]',
 })
 export class FMinimapFlowDirective {
-
   public readonly fMinSize = input<number>(1000);
 
   private readonly _mediator = inject(FMediator);
-  private readonly _elementReference = inject(ElementRef);
-
-  public get hostElement(): SVGSVGElement {
-    return this._elementReference.nativeElement;
-  }
+  public readonly hostElement = inject(ElementRef<SVGSVGElement>).nativeElement;
 
   public model: FMinimapData = new FMinimapData(this.hostElement);
 

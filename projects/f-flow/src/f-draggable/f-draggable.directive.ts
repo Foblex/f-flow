@@ -72,6 +72,7 @@ import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
 import { FDragStartedEvent } from './f-drag-started-event';
+import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';
 
 @Directive({
   selector: 'f-flow[fDraggable]',
@@ -208,6 +209,8 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new InitializeDragSequenceRequest());
 
+    this._mediator.execute<void>(new SelectionAreaPreparationRequest(event));
+
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
     this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
@@ -268,6 +271,8 @@ export class FDraggableDirective
 
   public override onPointerUp(event: IPointerEvent): void {
     this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
+
+    this._mediator.execute<void>(new SelectionAreaFinalizeRequest(event));
 
     this._mediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
 
