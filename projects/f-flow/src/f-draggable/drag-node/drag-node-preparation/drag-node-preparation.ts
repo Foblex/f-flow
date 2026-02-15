@@ -15,6 +15,7 @@ import { isClosestElementHasClass } from '@foblex/utils';
 import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../../drag-toolkit';
 import { MagneticLinesPreparationRequest } from '../magnetic-lines';
+import { MagneticRectsPreparationRequest } from '../magnetic-rects';
 
 @Injectable()
 @FExecutionRegister(DragNodePreparationRequest)
@@ -39,6 +40,7 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
     this._dragSession.draggableItems = [this._buildDragNodeHandler(node)];
 
     this._mediator.execute<void>(new MagneticLinesPreparationRequest());
+    this._mediator.execute<void>(new MagneticRectsPreparationRequest());
   }
 
   private _canStartDrag(event: IPointerEvent, trigger: FEventTrigger): boolean {

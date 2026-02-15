@@ -13,6 +13,7 @@ import { F_CANVAS_PROVIDERS } from './f-canvas';
 import { F_ZOOM_PROVIDERS } from './f-zoom';
 import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
 import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
+import { F_MAGNETIC_RECTS_PROVIDERS } from './f-magnetic-rects';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
 
     ...F_SELECTION_AREA_PROVIDERS,
     ...F_MAGNETIC_LINES_PROVIDERS,
+    ...F_MAGNETIC_RECTS_PROVIDERS,
 
     ...F_CONNECTION_IMPORTS_EXPORTS,
 
@@ -48,6 +50,7 @@ import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
 
     ...F_SELECTION_AREA_PROVIDERS,
     ...F_MAGNETIC_LINES_PROVIDERS,
+    ...F_MAGNETIC_RECTS_PROVIDERS,
 
     ...F_CONNECTION_IMPORTS_EXPORTS,
 

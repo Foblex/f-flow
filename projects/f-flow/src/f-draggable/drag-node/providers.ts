@@ -2,11 +2,13 @@ import { CREATE_MOVE_NODE_DRAG_MODEL_FROM_SELECTION_PROVIDERS } from './attach-d
 import { DragNodeFinalize } from './drag-node-finalize';
 import { DragNodePreparation } from './drag-node-preparation';
 import { MagneticLinesPreparation } from './magnetic-lines';
+import { MagneticRectsPreparation } from './magnetic-rects';
 
 export const NODE_PROVIDERS = [
   ...CREATE_MOVE_NODE_DRAG_MODEL_FROM_SELECTION_PROVIDERS,
 
   MagneticLinesPreparation,
+  MagneticRectsPreparation,
 
   DragNodeFinalize,
 

@@ -212,6 +212,14 @@ export const EXAMPLES_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
+        'magnetic-lines',
+        () => import('../../projects/f-examples/extensions/magnetic-lines/magnetic-lines'),
+      ),
+      defineLazyComponent(
+        'magnetic-rects',
+        () => import('../../projects/f-examples/extensions/magnetic-rects/magnetic-rects'),
+      ),
+      defineLazyComponent(
         'zoom',
         () => import('../../projects/f-examples/extensions/zoom/zoom.component'),
       ),
@@ -786,15 +794,54 @@ function extensionGroup() {
     },
     {
       link: 'help-in-positioning',
-      text: 'Help in Positioning',
+      text: 'Help in Positioning (Legacy',
+      pageTitle: 'Angular Diagram Example – Legacy Node Alignment Helpers (Deprecated)',
       description:
-        'Auto-align nodes with guides and snap lines. Spacing, alignment rules and clean UX for Angular diagrams.',
+        'Legacy demo of node alignment helpers: snap lines and basic guides. Kept for reference; use Magnetic Lines and Magnetic Rects for the latest UX.',
       image: './previews/examples/help-in-positioning.light.png',
       image_dark: './previews/examples/help-in-positioning.dark.png',
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-02-09 12:37:27'),
+      badge: {
+        text: 'Deprecated',
+        type: 'danger',
+      },
+    },
+    {
+      link: 'magnetic-lines',
+      text: 'Magnetic Lines',
+      pageTitle: 'Angular Node Editor – Magnetic Snap Lines & Alignment Guides (Foblex Flow)',
+      description:
+        'Magnetic snap lines for Angular diagrams: align nodes by edges and centers while dragging. Clean UX, configurable thresholds, and a ready-to-use Foblex Flow example.',
+      image: './previews/examples/magnetic-lines.light.png',
+      image_dark: './previews/examples/magnetic-lines.dark.png',
+      image_width: 1591,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-02-15 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
+    },
+    {
+      link: 'magnetic-rects',
+      text: 'Magnetic Rects',
+      pageTitle: 'Angular Node Editor – Equal Spacing Guides (Figma-Like) with Magnetic Rects',
+      description:
+        'Figma-like equal spacing for Angular diagrams. Magnetic rectangles visualize gaps and snap nodes to consistent spacing while keeping alignment lines. Includes configurable thresholds and a full Foblex Flow implementation.',
+      image: './previews/examples/magnetic-rects.light.png',
+      image_dark: './previews/examples/magnetic-rects.dark.png',
+      image_width: 1591,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-02-15 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'grid-system',

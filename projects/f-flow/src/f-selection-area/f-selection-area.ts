@@ -31,6 +31,6 @@ export class FSelectionArea extends FSelectionAreaBase implements OnInit, OnDest
   }
 
   public ngOnDestroy(): void {
-    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.ZOOM));
+    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.SELECTION_AREA));
   }
 }

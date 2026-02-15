@@ -14,6 +14,7 @@ import { fInstanceKey, FSingleRegistryBase } from './base';
 import { FZoomBase } from '../f-zoom';
 import { FSelectionAreaBase } from '../f-selection-area';
 import { FMagneticLinesBase } from '../f-magnetic-lines';
+import { FMagneticRectsBase } from '../f-magnetic-rects';
 
 @Injectable()
 export class FComponentsStore {
@@ -63,6 +64,9 @@ export class FComponentsStore {
 export const INSTANCES = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MAGNETIC_LINES: fInstanceKey<FMagneticLinesBase>('magnetic-lines'),
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  MAGNETIC_RECTS: fInstanceKey<FMagneticRectsBase>('magnetic-rects'),
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   ZOOM: fInstanceKey<FZoomBase>('zoom-controls'),

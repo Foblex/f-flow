@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FDragNodeStartEventData } from '../f-drag-node-start-event-data';
 import { IMagneticGuidesResult, MagneticLinesHandler } from '../magnetic-lines';
+import { IMagneticRectsResult, MagneticRectsHandler } from '../magnetic-rects';
 
 @Injectable()
 export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
@@ -15,6 +16,7 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   private _magneticLines: MagneticLinesHandler | null = null;
+  private _magneticRects: MagneticRectsHandler | null = null;
 
   /** Every dragged item (nodes + groups including deep children) */
   public items!: DragNodeItemHandler[];
@@ -35,13 +37,27 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
     this._magneticLines = handler;
   }
 
-  public calculateMagneticLinesGuides(delta: IPoint): IMagneticGuidesResult | undefined {
-    // preview move roots to update their last rects
-    for (const root of this.roots) {
-      root.onPointerMove(delta);
-    }
+  public setMagneticRects(handler: MagneticRectsHandler): void {
+    this._magneticRects = handler;
+  }
 
-    return this._magneticLines?._computeGuides(this._rootsUnionRect());
+  public calculateMagneticLinesGuides(delta: IPoint): IMagneticGuidesResult | undefined {
+    return this.calculateMagneticSnaps(delta).lines;
+  }
+
+  public calculateMagneticSnaps(delta: IPoint): {
+    lines?: IMagneticGuidesResult;
+    rects?: IMagneticRectsResult;
+  } {
+    // preview move roots to update their last rects
+    this._previewRoots(delta);
+
+    const draggedRect = this._rootsUnionRect();
+
+    return {
+      lines: this._magneticLines?._computeGuides(draggedRect),
+      rects: this._magneticRects?._computeRects(draggedRect),
+    };
   }
 
   public override prepareDragSequence(): void {
@@ -51,11 +67,11 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override onPointerMove(delta: IPoint): void {
-    for (const root of this.roots) {
-      root.onPointerMove(delta);
-    }
+    this._previewRoots(delta);
 
-    this._magneticLines?.scheduleRender(this._rootsUnionRect());
+    const draggedRect = this._rootsUnionRect();
+    this._magneticLines?.scheduleRender(draggedRect);
+    this._magneticRects?.scheduleRender(draggedRect);
   }
 
   public override onPointerUp(): void {
@@ -64,7 +80,14 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
     }
 
     this._magneticLines?.clearGuides();
+    this._magneticRects?.clearGuides();
     requestAnimationFrame(() => this._refreshDraggedNodes());
+  }
+
+  private _previewRoots(delta: IPoint): void {
+    for (const root of this.roots) {
+      root.onPointerMove(delta);
+    }
   }
 
   private _rootsUnionRect(): IRect {

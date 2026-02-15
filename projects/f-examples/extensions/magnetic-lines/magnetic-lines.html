@@ -1,0 +1,12 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-magnetic-lines [threshold]="40" />
+  <f-canvas>
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating" />
+    <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle fNodeOutput fOutputId="output1">
+      Node 1
+    </div>
+    <div fNode [fNodePosition]="{ x: 200, y: 100 }" fDragHandle fNodeInput fInputId="input1">
+      Node 2
+    </div>
+  </f-canvas>
+</f-flow>

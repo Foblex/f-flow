@@ -55,6 +55,8 @@
 /examples/add-node-from-palette
 /examples/selection-area
 /examples/help-in-positioning
+/examples/magnetic-lines
+/examples/magnetic-rects
 /examples/grid-system
 /examples/minimap
 /examples/zoom

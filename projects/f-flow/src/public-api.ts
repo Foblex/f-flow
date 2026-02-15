@@ -16,6 +16,8 @@ export * from './f-draggable';
 export * from './f-external-item';
 
 export * from './f-line-alignment';
+export * from './f-magnetic-lines';
+export * from './f-magnetic-rects';
 
 export * from './f-minimap';
 

@@ -9,6 +9,7 @@ import { DragNodeHandler } from '../drag-node-handler';
 import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes-event';
 import { IMagneticAxisGuide, IMagneticGuidesResult } from '../magnetic-lines';
+import { IMagneticRectsResult } from '../magnetic-rects';
 
 @Injectable()
 @FExecutionRegister(DragNodeFinalizeRequest)
@@ -26,8 +27,8 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
     }
 
     const delta = this._buildDragDelta(event.getPosition());
-    const snap = this._dragHandler.calculateMagneticLinesGuides(delta);
-    const snappedDelta = this._applySnapToDelta(delta, snap);
+    const snaps = this._dragHandler.calculateMagneticSnaps(delta);
+    const snappedDelta = this._applySnapToDelta(delta, snaps.lines, snaps.rects);
 
     this._finalizeMove(this._dragHandler, snappedDelta);
     this._emitNodeIntersectIfNeeded(this._dragHandler);
@@ -44,21 +45,41 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
       .sub(this._dragSession.onPointerDownPosition);
   }
 
-  private _applySnapToDelta(delta: IPoint, snap?: IMagneticGuidesResult): IPoint {
-    if (!snap) {
-      // return a copy, because below we will pass it to onPointerMove
-      return { x: delta.x, y: delta.y };
+  private _applySnapToDelta(
+    delta: IPoint,
+    lineSnap?: IMagneticGuidesResult,
+    rectSnap?: IMagneticRectsResult,
+  ): IPoint {
+    let x = delta.x;
+    let y = delta.y;
+
+    if (lineSnap) {
+      x = this._hasLineSnapValue(lineSnap.x) ? delta.x - (lineSnap.x.delta || 0) : x;
+      y = this._hasLineSnapValue(lineSnap.y) ? delta.y - (lineSnap.y.delta || 0) : y;
     }
 
-    const x = this._hasSnapValue(snap.x) ? delta.x - (snap.x.delta || 0) : delta.x;
-    const y = this._hasSnapValue(snap.y) ? delta.y - (snap.y.delta || 0) : delta.y;
+    if (this._hasRectSnapValue(rectSnap)) {
+      if (rectSnap.axis === 'x') {
+        x = delta.x - rectSnap.delta;
+        y = delta.y - (rectSnap.crossDelta ?? 0);
+      } else {
+        y = delta.y - rectSnap.delta;
+        x = delta.x - (rectSnap.crossDelta ?? 0);
+      }
+    }
 
     return { x, y };
   }
 
-  private _hasSnapValue(result: IMagneticAxisGuide): boolean {
+  private _hasLineSnapValue(result: IMagneticAxisGuide): boolean {
     // distance is assumed to exist when value is defined (as in your current logic)
     return result.guide !== undefined && result.guide !== null;
+  }
+
+  private _hasRectSnapValue(
+    result?: IMagneticRectsResult,
+  ): result is IMagneticRectsResult & { axis: 'x' | 'y'; delta: number } {
+    return !!result && result.axis !== undefined && result.delta !== undefined;
   }
 
   private _finalizeMove(handler: DragNodeHandler, delta: IPoint): void {

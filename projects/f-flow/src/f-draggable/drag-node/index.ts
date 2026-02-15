@@ -2,6 +2,8 @@ export * from './attach-drag-node-handler-from-selection';
 
 export * from './magnetic-lines';
 
+export * from './magnetic-rects';
+
 export * from './drag-node-constraint';
 
 export * from './drag-node-dependent-connection-handlers';
