@@ -7,6 +7,9 @@ This example demonstrates how to use the Foblex Flow to create a visual programm
 ::: ng-component <ai-low-code-platform></ai-low-code-platform> [height]="700"
 :::
 
+[Live demo](https://foblex.github.io/Building-AI-Low-Code-Platform5/)
+[Source code](https://github.com/Foblex/Building-AI-Low-Code-Platform5)
+
 ## Possibilities
 
 - Add nodes from the palette to the canvas using the [fExternalItem](./docs/f-external-item-directive) directive.
@@ -19,7 +22,3 @@ This example demonstrates how to use the Foblex Flow to create a visual programm
 - Line alignment using [f-line-alignment](./docs/f-line-alignment-component) component.
 - Select multiple items using the [f-selection](./docs/f-selection-component) component with the `mouse` and by holding down the `Shift key`.
 - Minimap using the [f-minimap](./docs/f-minimap-component) component.
-
-## Source Code
-
-The source code for this example can be found in our [GitHub repository](https://github.com/Foblex/f-flow/tree/main/projects/f-pro-examples) or [StackBlitz](https://stackblitz.com/~/github.com/siarheihuzarevich/foblex-flow-visual-programming-example)

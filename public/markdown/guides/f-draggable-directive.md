@@ -1,45 +1,89 @@
-﻿# Drag and Drop
+# Drag and Drop
 
-**Selector:** [fDraggable]
+## Description
 
-The **FDraggableDirective** enhances a component, typically a flow [f-flow](f-flow-component), with draggable functionality. It allows elements within the flow to be moved and managed interactively.
+`FDraggableDirective` enables user interactions on a flow surface: node drag, canvas pan, connection create/reassign, selection, and drag plugins.
 
-## Inputs
+- **Selector:** `f-flow[fDraggable]`
+- **Class:** `FDraggableDirective`
 
-- `fDraggableDisabled: InputSignal<boolean>;` Determines whether the draggable functionality is disabled. Default: `false`.
+**What you get**
 
-- `vCellSize: InputSignal<number>;` Defines the vertical size of each grid cell. Default: `1`.
+- Unified pointer pipeline for all drag-related interactions.
+- Configurable trigger predicates for each operation.
+- Rich event outputs for selection, move, create/reassign, and plugin results.
 
-- `hCellSize: InputSignal<number>;` Defines the horizontal size of each grid cell. Default: `1`.
+## Why / Use cases
 
-## Outputs
+Use `fDraggable` when users need to manipulate the diagram directly.
 
-- `fSelectionChange: EventEmitter<FSelectionChangeEvent>;` Emits an event when the selection within the flow changes.
+Typical use cases:
 
-- `fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnectionsEvent>;` Emits an event when node is dragged and released over a connection.
+- Workflow editors with drag-to-connect and reassign.
+- Canvas navigation by drag and touch gestures.
+- Advanced editors that react to drag lifecycle events (`fDragStarted`/`fDragEnded`).
 
-- `fCreateNode: EventEmitter<FCreateNodeEvent>;` Emits an event when an external item, marked with the [FExternalItemDirective](f-external-item-directive), is dragged into the flow, allowing for node creation.
+Skip `fDraggable` for strictly read-only diagrams.
 
-- `fReassignConnection: EventEmitter<FReassignConnectionEvent>;` Emits an event when a connection is reassigned to a different [FNodeInputDirective](f-node-input-directive).
+## How it works
 
-- `fCreateConnection: EventEmitter<FCreateConnectionEvent>;` Emits an event when a new connection is created within the flow. To do this you need to pull a connection from [fOutput](f-node-output-directive) to [fInput](f-node-input-directive).
+The directive attaches to `f-flow`, initializes a drag sequence on pointer down, dispatches operation-specific handlers (selection, node move, connection create/reassign, resize/rotate plugins), and finalizes with event emission and cleanup.
 
-- `fDropToGroup: EventEmitter<FDropToGroupEvent>;` Emits an event when a node or group is dropped into a node or group.
+## Configuration (Inputs/Outputs/Methods)
 
-## Properties
+### Inputs
 
-- `isDragStarted: boolean;` Indicates whether a drag operation has started within the flow. This property is used to track the state of drag interactions.
+- `fDraggableDisabled: boolean;` Disables all drag interactions. Default: `false`.
+- `fMultiSelectTrigger: FEventTrigger;` Multi-select trigger (Ctrl/Meta by default).
+- `fReassignConnectionTrigger: FEventTrigger;`
+- `fCreateConnectionTrigger: FEventTrigger;`
+- `fConnectionWaypointsTrigger: InputSignal<FEventTrigger>;`
+- `fMoveControlPointTrigger: FEventTrigger;`
+- `fNodeResizeTrigger: FEventTrigger;`
+- `fNodeRotateTrigger: FEventTrigger;`
+- `fNodeMoveTrigger: FEventTrigger;`
+- `fCanvasMoveTrigger: FEventTrigger;`
+- `fExternalItemTrigger: FEventTrigger;`
+- `fEmitOnNodeIntersect: boolean;` Emit node/connection intersection events. Default: `false`.
+- `vCellSize: InputSignal<number>;` Vertical grid step. Default: `1`.
+- `hCellSize: InputSignal<number>;` Horizontal grid step. Default: `1`.
+- `fCellSizeWhileDragging: InputSignal<boolean>;` Apply cell snapping during drag. Default: `false`.
 
-## Styles
+### Outputs
 
-- `.f-draggable` Applied to the host element to indicate it is draggable.
+- `fSelectionChange: EventEmitter<FSelectionChangeEvent>;`
+- `fNodeConnectionsIntersection: OutputEmitterRef<FNodeConnectionsIntersectionEvent>;`
+- `fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;` Deprecated.
+- `fCreateNode: EventEmitter<FCreateNodeEvent>;`
+- `fMoveNodes: EventEmitter<FMoveNodesEvent>;`
+- `fReassignConnection: EventEmitter<FReassignConnectionEvent>;`
+- `fCreateConnection: EventEmitter<FCreateConnectionEvent>;`
+- `fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;`
+- `fDropToGroup: EventEmitter<FDropToGroupEvent>;`
+- `fDragStarted: EventEmitter<FDragStartedEvent>;`
+- `fDragEnded: EventEmitter<void>;`
 
-- `.f-drag-disabled` Applied when the draggable functionality is disabled.
+### Methods
 
-- `.f-drag-started` Applied when a drag operation begins.
+- No public template API methods.
 
-## Usage
+## Styling
 
-```html
-<f-flow |:|fDraggable|:|></f-flow>
-```
+- `.f-dragging` Active drag state class.
+- `.f-connections-dragging` Active connection drag/reassign state class.
+- `.f-connector-connectable` Marks connectors that are valid current targets.
+
+## Notes / Pitfalls
+
+- The directive must be applied on `f-flow`, not on `f-canvas`.
+- Aggressive custom trigger functions can block expected interactions; test mouse and touch.
+- If you emit large state updates on every drag event, UI can stutter; debounce heavy side effects in your app layer.
+
+## Example
+
+::: ng-component <drag-start-end-events></drag-start-end-events> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::

@@ -1,77 +1,115 @@
-﻿# Input
+# Input
 
-**Selector:** [fNodeInput]
+**Selector:** `[fNodeInput]`  
+**Class:** `FNodeInputDirective`
 
-The **FNodeInputDirective** is a directive that marks an element as an input within a [fNode](f-node-directive). It manages input-specific behaviours, such as allowing multiple connections, handling disabled state, and determining connectability.
+`FNodeInputDirective` marks an element as an **incoming connector** for a node. Inputs are the **targets** that connections can attach to during “drag to connect” and when rendering persisted connections.
 
-## Inputs
+Inputs must live inside a node (`[fNode]`) which is rendered inside [`f-canvas`](f-canvas-component) and [`f-flow`](f-flow-component).
 
-  - `fInputId: InputSignal<string>;` The unique identifier for the directive instance. Automatically generated. Default: `f-node-input-${uniqueId++}`
+## Quick start
 
-  - `fInputMultiple: InputSignal<boolean>` Controls how many connections can be attached to this input connector when using the library’s create or reassign connection features. When true, the input can accept multiple simultaneous incoming connections. When false, the built-in logic will only allow one connection at a time — attempting to add another will either replace or block the existing one, depending on the configured behavior. Default: `true`
+### Input as a port element (recommended for multi-port nodes)
 
-  - `fInputDisabled: InputSignal<boolean>` When true, the input connector is disabled: it cannot accept new incoming connections and is treated as a non-interactive drop target. The UI may render it in a disabled style to reflect its state. Default: `false`
-
-  - `fInputConnectableSide: InputSignal<EFConnectableSide>;` Defines from which side a connection line will enter the input connector (fNodeInput) within a node. This setting controls the exact point on the connector where the connection line attaches, not the node as a whole. Default: `EFConnectableSide.AUTO`
-
-## Styles
-
-  - `.f-component` A general class applied to all F components for shared styling.
-
-  - `.f-node-input` Specific class for styling the node input element.
-
-  - `.f-node-input-disabled` Applied when the input is disabled.
-
-  - `.f-node-input-multiple` Applied when the input allows multiple connections.
-
-  - `.f-node-input-not-connectable` Applied when the input is not connectable.
-
-  - `.f-node-input-connected` Applied when the input is connected, indicating an active connection.
-
-## Usage
+Use a dedicated element when your node has **multiple inputs** or when each port matters visually.
 
 ```html
-<f-flow>
+<f-flow fDraggable>
   <f-canvas>
-    <div fNode>
-      |:|<div fNodeInput></div>|:|
+    <div fNode [fNodePosition]="{ x: 320, y: 80 }">
+      <div fDragHandle class="title">Node</div>
+
+      <div class="port" fNodeInput fInputId="in-1">
+        Input
+      </div>
     </div>
   </f-canvas>
 </f-flow>
 ```
 
-You can also add **fNodeInput** directive to the element containing the [fNode](f-node-directive) directive
+### Input on the node itself (simple nodes)
+
+If your node has **one input** and you want “connect to the node body”, you can apply `fNodeInput` on the host element.
+
 ```html
-<f-flow>
+<f-flow fDraggable>
   <f-canvas>
-    |:|<div fNode fNodeInput></div>|:|
+    <div
+      fNode
+      fNodeInput
+      fInputId="in-1"
+      [fNodePosition]="{ x: 320, y: 80 }"
+    >
+      Node (input on host)
+    </div>
   </f-canvas>
 </f-flow>
 ```
 
-::: info INFO
-The [f-connection](f-connection-component) component takes the border-radius of the component into account when connecting
+## How it works
+
+- The input connector registers under its parent node and becomes a valid **drop target** during connection creation and reassignment.
+- During connection drag, the library evaluates connectability rules such as `disabled`, `multiple`, `category`, and `connectableSide`.
+- The directive toggles state classes (for example `connected` / `not-connectable`) so you can provide clear UX feedback with CSS.
+
+## API
+
+### Inputs
+
+- `fInputId: InputSignal<string>;`  
+  Input identifier. Default: `f-node-input-${uniqueId++}`.  
+  Use a **stable** id if you store graph state and want connections to survive rerenders.
+
+- `fInputCategory: InputSignal<string | undefined>;`  
+  Optional category used for connection validation rules (for example, “data”, “error”, “trigger”).  
+  Categories are just strings — keep them consistent across your app.
+
+- `fInputMultiple: InputSignal<boolean>;`  
+  Default: `true`. When `false`, only one active connection can be attached to this input.
+
+- `fInputDisabled: InputSignal<boolean>;`  
+  Default: `false`. When `true`, the input is not connectable.
+
+- `fInputConnectableSide: EFConnectableSide;`  
+  Default: `auto`. Controls preferred docking side for routing/hit-testing (left/right/top/bottom/auto).  
+  Use a fixed side when you have explicit port placement.
+
+## Styling
+
+- `.f-component` Base class for flow primitives.
+- `.f-node-input` Host class.
+- `.f-node-input-multiple` Applied when multiple incoming links are allowed.
+- `.f-node-input-disabled` Applied when disabled.
+- `.f-node-input-connected` Applied when connected.
+- `.f-node-input-not-connectable` Applied when blocked from connection.
+
+## Notes and pitfalls
+
+- `fInputId` must match connection `fInputId` values **exactly** (case-sensitive).
+- With `fInputMultiple="false"`, the input becomes unavailable after one active connection is attached.
+- If you use `fInputCategory`, make sure your connection rules reference the **same** category strings. Mismatched strings are the most common reason an input becomes “not connectable”.
+- Side settings (`fInputConnectableSide`) affect docking and routing behavior; test with your chosen connection behavior and node template.
+
+## Example
+
+### Connectors inside node
+
+::: ng-component <connector-inside-node></connector-inside-node> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-inside-node/connector-inside-node.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-inside-node/connector-inside-node.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-inside-node/connector-inside-node.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
-## Examples
+### Connectable side (using `fInputConnectableSide`)
 
-#### Node with connectors
-
-This example shows how to use the [fNodeOutput](f-node-output-directive) directive to create a node with an output element that can be connected to an input.
-
-::: ng-component <node-with-connectors></node-with-connectors>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/node-with-connectors/node-with-connectors.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/node-with-connectors/node-with-connectors.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/node-with-connectors/node-with-connectors.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+::: ng-component <connectable-side></connectable-side> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connectable-side/connectable-side.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connectable-side/connectable-side.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connectable-side/connectable-side.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
-#### Different Connectable Side
+## 🙌 Get Involved
 
-Example of how to use the [fOutputConnectableSide](f-node-output-directive) and [fInputConnectableSide](f-node-input-directive) directives to specify the side of the node that can be connected to. Valid values are top, right, bottom, left, and auto from [EFConnectableSide](e-f-connectable-side) enum.
-::: ng-component <connectable-side></connectable-side>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connectable-side/connectable-side.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connectable-side/connectable-side.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connectable-side/connectable-side.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
-:::
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

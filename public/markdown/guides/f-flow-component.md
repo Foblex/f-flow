@@ -1,66 +1,89 @@
-﻿# Flow
+# Flow
 
-**Selector:** f-flow
+**Selector:** `f-flow`  
+**Class:** `FFlowComponent`
 
-The **FFlowComponent** manages the flow of draggable and connectable elements within a visual canvas.  It allows for dynamic creation, positioning, and interaction of elements, supporting features such as element connections, layout calculation, and event handling.  
+`f-flow` is the **required root container** for every diagram in Foblex Flow.  
+All primitives (`f-canvas`, nodes, connectors, connections, and extensions) must be placed under a single `f-flow`.
 
-## Inputs
+## Role in the hierarchy
 
-  - `fFlowId: InputSignal<string>;` The unique identifier for the component instance. Automatically generated. Default: `f-flow-${uniqueId++}`  
+`f-flow` bootstraps the internal runtime and acts as the main integration point for:
 
-## Outputs
+- registration of nodes/connectors/connections,
+- selection and utility APIs,
+- extension components/directives like `fDraggable`, `fZoom`, minimap, magnetic helpers, etc.
 
- - `fLoaded: OutputEmitterRef<void>;` Emits an event when the flow has fully loaded and initialized. 
+> If you render a diagram with Foblex Flow, you always start with `f-flow`.
 
-## Methods
+## What it’s for
 
- - `getNodesBoundingBox(): IRect | null;` Returns the bounding rectangle (`IRect`) that covers **all nodes and groups** on the current canvas.
- 
- - `getSelection(): FSelectionChangeEvent;` Returns the current selection state of the flow.
- 
- - `selectAll(): void;` Selects all items in the flow.
+Use `f-flow` when you need:
 
- - `select(node: string[], connections:[]): void;` Selects the specified nodes and connections in the flow.
- 
- - `clearSelection(): void;` Clears the selection state of all nodes and connections in the flow.
- 
- - `redraw(): void;` Calls the redraw method on all nodes and connections in the flow.
- 
- - `getPositionInFlow(position: IPoint): void;` Returns the position of the point relative to the flow.
+- a predictable place to listen for “ready” (`fLoaded`),
+- imperative APIs for selection, bounding boxes, and exporting the current flow state,
+- a host for extensions like `fDraggable`, minimap, magnetic helpers, etc.
 
- - `getFlowState(): IFFlowState;` Returns all nodes, groups and connections in the flow, including their positions and properties.
+> Foblex Flow is “interaction + rendering infrastructure”.  
+> Your application still owns the **data model** (nodes list, positions, connections, persistence).
 
-## Styles
+## How it works
 
-  - `.f-component` A general class applied to all F components for shared styling.
+`f-flow` registers itself in the internal store, watches data changes, redraws connection layers, and emits `fLoaded` once initial rendering stabilizes. Public methods like `select`, `clearSelection`, and `getState` call into that same store.
 
-  - `.f-flow` Specifically targets the **FFlowComponent**, allowing for unique styling.
+## API
 
-## Usage
+### Inputs
 
-```html
-<f-flow [id]="customId" (fLoaded)="loaded()"></f-flow>
-```
+- `fFlowId: InputSignal<string>;` The unique identifier for the flow instance. Default: `f-flow-${uniqueId++}`
 
-## Examples
+### Outputs
 
-#### Basic Example
-  
-Example of two connected nodes without dragging functionality. The nodes are connected by a connection line from the output of the first node to the input of the second node.
+- `fLoaded: OutputEmitterRef<string>;` Emits once when the first full render is ready. Payload is the current flow id.
+  Typical usage: center the canvas, apply initial zoom, or run any logic that requires all nodes to be registered.
 
-::: ng-component <simple-flow></simple-flow>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/simple-flow/simple-flow.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/simple-flow/simple-flow.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/simple-flow/simple-flow.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+### Methods
+
+- `redraw(): void;` Forces a redraw of nodes and connections.
+
+- `reset(): void;` Resets internal loaded state. Next render will emit `fLoaded` again.
+
+- `getNodesBoundingBox(): IRect | null;` Returns a bounding rectangle that covers **all nodes and groups** in the current flow.
+
+- `getSelection(): ICurrentSelection;` Returns selected node/group/connection ids.
+
+- `getPositionInFlow(position: IPoint): IRect;` Converts a point from the viewport into flow coordinates (relative to the flow).
+
+- `getState(): IFFlowState;` Exports the full flow state: nodes, groups and connections (including their current transforms/positions).
+
+- `selectAll(): void;` Selects all selectable items.
+
+- `select(nodesAndGroups: string[], connections: string[], isSelectedChanged: boolean = true): void;` Selects the specified nodes, groups and connections.
+
+- `clearSelection(): void;` Clears current selection.
+
+> These “imperative” APIs are meant for toolbars, keyboard shortcuts, and integration with external UI (side panels, inspectors, etc.).
+
+## Styling
+
+- `.f-component` Base class for flow primitives.
+- `.f-flow` Host class for the root container.
+- `.f-node`, `.f-group`, `.f-connection` Internal layout classes used by flow rendering.
+
+## Notes / Pitfalls
+
+- `fLoaded` is one-time per internal load cycle; if you call `reset()`, a later render can emit again.
+- Programmatic `select(...)` runs after data-change notification, so call it when ids are already present in the flow.
+
+## Example
+
+::: ng-component <custom-nodes></custom-nodes> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
-#### Adding Dragging Functionality
+## 🙌 Get Involved
 
-Let's add the [fDraggable](f-draggable-directive) directive to the f-flow to enable dragging functionality. Also, we need to add the [fDragHandle](f-drag-handle-directive) directive inside [fNode](f-node-directive) to specify the handle for dragging.
-::: ng-component <draggable-flow></draggable-flow>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/draggable-flow/draggable-flow.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
-:::
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

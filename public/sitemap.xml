@@ -22,6 +22,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://flow.foblex.com/docs/event-system/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/selection-system/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://flow.foblex.com/docs/f-flow-component/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -42,17 +52,17 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/docs/f-node-output-directive/</loc>
+    <loc>https://flow.foblex.com/docs/f-group-directive/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/docs/f-node-input-directive/</loc>
+    <loc>https://flow.foblex.com/docs/f-resize-handle-directive/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/docs/f-node-outlet-directive/</loc>
+    <loc>https://flow.foblex.com/docs/f-rotate-handle-directive/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -72,7 +82,42 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://flow.foblex.com/docs/f-snap-connection-component/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-connection-waypoints-component/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-node-output-directive/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-node-input-directive/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-node-outlet-directive/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/connection-rules/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://flow.foblex.com/docs/f-draggable-directive/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-external-item-directive/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -83,6 +128,21 @@
   </url>
   <url>
     <loc>https://flow.foblex.com/docs/f-background-component/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-selection-area-component/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-magnetic-lines-component/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/docs/f-magnetic-rects-component/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -294,6 +354,3 @@
     <priority>0.9</priority>
   </url>
 </urlset>
-
-
-

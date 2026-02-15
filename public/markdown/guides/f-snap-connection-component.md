@@ -1,40 +1,73 @@
-﻿# Snap Connection
+# Snap Connection
 
-**Selector:**  f-snap-connection
+## Description
 
-It is used to help users create or reassign connections to the nearest input.
+`FSnapConnectionComponent` renders a temporary snapping helper while a connection is being created or reassigned.
 
-## Inputs
+- **Selector:** `f-snap-connection`
+- **Class:** `FSnapConnectionComponent`
 
-  - Similar to the [f-connection](f-connection-component) component
+**What you get**
 
-  - `fSnapThreshold: number;` The distance in pixels at which the connection snaps to the input. Default: `20`.
+- Visual guidance toward nearby valid targets.
+- Configurable snap distance threshold.
+- Same path styling controls as other connection components.
 
-## Styles
+## Why / Use cases
 
-- `.f-connection` Class specific to the connection component, providing styles for connection representation.
+Use `f-snap-connection` when your editor has many potential targets and users need faster, more forgiving connection interactions.
 
-- `.f-snap-connection` Class specific to the snap connection component, providing styles for snap connection representation.
+Typical use cases:
 
-## Usage
+- Dense node graphs where precise pointer placement is difficult.
+- Touch-heavy interactions.
+- Reassign workflows where endpoints frequently change.
 
-Add the `f-snap-connection` component to the [f-canvas](f-canvas-component). Works with [f-connection-for-create](f-connection-for-create-component) or [f-connection](f-connection-component) components.
+Skip it for strict/manual connection placement UX.
 
-```html
-<f-flow |:|fDraggable|:|>
-  <f-canvas>
-    |:|<f-snap-connection></f-snap-connection>|:|
-  </f-canvas>
-</f-flow>
-```
+## How it works
 
-## Examples
+During drag/create/reassign interactions, the helper tracks candidate targets and renders a temporary line that snaps when within `fSnapThreshold`. It is not a persisted graph edge.
 
-The following example shows how to create a connection between two nodes with snap connection.
+## Configuration (Inputs/Outputs/Methods)
 
-::: ng-component <drag-snap-connection></drag-snap-connection>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/drag-snap-connection/drag-snap-connection.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+### Inputs
+
+- `fSnapThreshold: number;` Snap distance in px. Default: `20`.
+- `fRadius: number;` Default: `8`.
+- `fOffset: number;` Default: `12`.
+- `fBehavior: EFConnectionBehavior;` `fixed | fixed_center | floating`. Default: `fixed`.
+- `fType: EFConnectionType | string;` Default: `straight`.
+- `fInputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
+- `fOutputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
+- `fStartColor: InputSignal<string>;` Default: `black`.
+- `fEndColor: InputSignal<string>;` Default: `black`.
+
+### Outputs
+
+- No outputs.
+
+### Methods
+
+- No public template API methods.
+
+## Styling
+
+- `.f-connection` Base connection class.
+- `.f-snap-connection` Snap-helper host class.
+- `.f-connection-path` Helper path element.
+
+## Notes / Pitfalls
+
+- Requires `fDraggable` and is typically used together with `f-connection-for-create`.
+- Very high threshold values can make snapping feel jumpy or surprising.
+- This helper does not create connections by itself; persist links from `fCreateConnection`/`fReassignConnection` handlers.
+
+## Example
+
+::: ng-component <auto-snap></auto-snap> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/auto-snap/auto-snap.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/auto-snap/auto-snap.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/auto-snap/auto-snap.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

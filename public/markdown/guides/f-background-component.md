@@ -1,120 +1,105 @@
-﻿# Background
+# Background
 
-**Selector:** f-background
+## Description
 
-The **FBackgroundComponent** is an Angular component that serves as a background layer for the canvas, providing pattern-based background designs. This component supports dynamic patterns, such as circles and rectangles, which can adapt to transformations like scaling and positioning.
+`FBackgroundComponent` renders an SVG background layer that follows canvas transform. You can plug built-in patterns or provide a custom pattern implementation.
 
-## Standard patterns
+- **Selector:** `f-background`
+- **Class:** `FBackgroundComponent`
 
-#### Circle Pattern
+**What you get**
 
-The **FCirclePatternComponent** creates a circle pattern within the background. It uses the provided color and radius inputs to define the appearance of the circles.
+- Grid/dot-like visual context that tracks pan/zoom.
+- Built-in pattern primitives (`f-circle-pattern`, `f-rect-pattern`).
+- Custom pattern support via `F_BACKGROUND_PATTERN` + `IFBackgroundPattern`.
 
-#### Rect Pattern
+## Why / Use cases
 
-The **FRectPatternComponent** creates a rectangle pattern within the background. It uses vertical and horizontal colors and sizes to define the appearance of the grid lines.
+Use `f-background` to improve spatial orientation in editing surfaces.
 
-#### Custom Pattern
+Typical use cases:
 
-You can also provide a custom pattern by implementing the **IFBackgroundPattern** interface and providing it as **F_BACKGROUND_PATTERN** in the component’s providers array. This interface has a single method,
-**setTransform**, which receives a transformation model and applies the transformation logic to the pattern. The 
-**setTransform** method is called every time the flow component is transformed.
+- Node alignment with visible grid rhythm.
+- Visual depth for large canvases.
+- Branded or domain-specific pattern overlays.
 
-```typescript
-@Component({
-  selector: "custom-pattern",
-  template: ``, // Your custom pattern template
-  providers: [
-    { provide: F_BACKGROUND_PATTERN, useExisting: CustomPattern }
-  ]
-})
-export class CustomPattern implements IFBackgroundPattern {
-  
-  setTransform(transform: ITransformModel): void {
-    // Implement the transformation logic
-  }
-}
-```
+Skip it for print-like diagrams where a plain background is preferred.
 
-## Styles
+## How it works
 
-- `.f-component` A general class applied to all F components for shared styling.
+`f-background` registers as a plugin and receives canvas transform updates. The projected pattern component recalculates SVG pattern attributes (`x/y/width/height` and shape geometry) from that transform.
 
-- `.f-background` Specific class for styling the FBackgroundComponent component.
+## Configuration (Inputs/Outputs/Methods)
 
-## Usage
+### `f-background`
 
-You can easily integrate a circle pattern into your canvas background. The following example demonstrates how to use the f-circle-pattern component within the f-background.
+- **Selector:** `f-background`
+- **Class:** `FBackgroundComponent`
+- **Inputs:** none
+- **Outputs:** none
 
-::: code-group
-```html [circle-pattern]
+### `f-circle-pattern`
 
-<f-flow>
-  |:|<f-background>|:|
-    |:|<f-circle-pattern></f-circle-pattern>|:|
-  |:|</f-background>|:|
-</f-flow>
-```
+- **Selector:** `f-circle-pattern`
+- **Class:** `FCirclePatternComponent`
+- `id: InputSignal<string>;` Default: `f-pattern-${uniqueId++}`.
+- `color: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
+- `radius: InputSignal<number>;` Default: `20`.
 
-```html [rect-pattern]
+### `f-rect-pattern`
 
-<f-flow>
-  |:|<f-background>|:|
-    |:|<f-rect-pattern></f-rect-pattern>|:|
-  |:|</f-background>|:|
-</f-flow>
-```
-:::
+- **Selector:** `f-rect-pattern`
+- **Class:** `FRectPatternComponent`
+- `id: InputSignal<string>;` Default: `f-pattern-${uniqueId++}`.
+- `vColor: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
+- `hColor: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
+- `vSize: InputSignal<number>;` Default: `20`.
+- `hSize: InputSignal<number>;` Default: `20`.
 
-#### Setting Color and Size of the Pattern
+### Custom pattern contract
 
-You can customize the pattern’s appearance by setting the color and size directly through the component’s inputs. This allows for dynamic adjustments to fit various design requirements.
+- Token: `F_BACKGROUND_PATTERN`
+- Interface: `IFBackgroundPattern`
+- Required API: `hostElement` and `setTransform(transform: ITransformModel): void`
 
 ::: code-group
-```html [circle-pattern]
+
+```html [circle]
 <f-flow>
-  |:|<f-background>|:|
-    |:|<f-circle-pattern [color]="'#ff0000'" [radius]="50"></f-circle-pattern>|:|
-  |:|</f-background>|:|
+  <f-background>
+    <f-circle-pattern [radius]="24"></f-circle-pattern>
+  </f-background>
+  <f-canvas></f-canvas>
 </f-flow>
 ```
 
-```html [rect-pattern]
+```html [rect]
 <f-flow>
-  |:|<f-background>|:|
-    |:|<f-rect-pattern [vColor]="'#ff0000'" [hColor]="'#00ff00'" [vSize]="50" [hSize]="30"></f-rect-pattern>|:|
-  |:|</f-background>|:|
+  <f-background>
+    <f-rect-pattern [hSize]="32" [vSize]="32"></f-rect-pattern>
+  </f-background>
+  <f-canvas></f-canvas>
 </f-flow>
 ```
+
 :::
 
-#### Setting Color Through CSS
+## Styling
 
-Alternatively, you can set the color of the patterns through CSS for more centralized styling control. This approach is useful for maintaining a consistent look across multiple components.
+- `.f-component` Base class for flow primitives.
+- `.f-background` Host class for background layer.
 
-::: code-group
-```css [circle-pattern]
-.f-background {
-  circle {
-    fill: #ff0000;
-  }
-}
-```
+## Notes / Pitfalls
 
-```css [rect-pattern]
-.f-background {
-  line {
-    stroke: #ff0000;
-  }
-}
-```
-:::
+- Place `f-background` as a sibling of `f-canvas` under the same `f-flow` so transform sync works correctly.
+- Large, dense SVG patterns can impact rendering on very big canvases.
+- If you provide a custom pattern, ensure `setTransform(...)` handles both scale and translated positions.
 
-## Examples
+## Example
 
-::: ng-component <background-example></background-example>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/background-example/background-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/background-example/background-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/background-example/background-example.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+::: ng-component <background-example></background-example> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/background-example.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/background-example.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/background-example.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

@@ -1,10 +1,18 @@
-﻿# Installing the Library and Rendering Your First Flow
+# Installing and Rendering Your First Flow
 
-In this guide, you’ll learn how to set up **Foblex Flow** in your Angular project and render your first interactive flow — complete with draggable nodes and dynamic connections. **Foblex Flow** is a lightweight, flexible library for building flow-based UIs natively in Angular.
+Build your first interactive diagram in Angular: **install Foblex Flow**, render **two draggable nodes**, and connect them with a **live connection**.
 
-## 🚀 Installation
+## Description
 
-**Foblex Flow** provides a schematic for quick setup. Just run the following command in your Angular project to install and configure everything automatically:
+This guide is the shortest path from installation to a working flow. You will:
+
+- add or update the library in your Angular app,
+- render a minimal flow (`f-flow` + `f-canvas`),
+- place nodes with explicit positions,
+- connect them with `f-connection`,
+- apply small baseline styles you can reuse.
+
+## Install
 
 ::: code-group
 
@@ -18,9 +26,24 @@ ng update @foblex/flow
 
 :::
 
-## 🔧 Basic Flow Example
+## Why / when to use this
 
-Here’s the most minimal working example — a canvas with two nodes and one connection between them:
+Start here if you are:
+
+- evaluating Foblex Flow in an existing Angular application,
+- bootstrapping a workflow / node editor screen,
+- building internal tools with draggable, connected nodes,
+- creating the base layout before adding selection, minimap, alignment, and spacing helpers.
+
+## Minimal flow template
+
+A minimal interactive flow consists of:
+
+1. **`f-flow`** — the root container.
+2. **`fDraggable`** — enables interaction (drag, pointer handling, editor UX pipeline).
+3. **`f-canvas`** — the layer where nodes and connections are rendered.
+4. **Nodes** with `fNode` and explicit positions via `fNodePosition`.
+5. **Connectors** (`fNodeOutput` / `fNodeInput`) + **`f-connection`** that joins matching `fOutputId` and `fInputId`.
 
 ```html
 <f-flow fDraggable>
@@ -52,9 +75,10 @@ Here’s the most minimal working example — a canvas with two nodes and one co
 </f-flow>
 ```
 
-## 🎨 Styling Basics
+## Styling baseline
 
-**Foblex Flow** doesn’t enforce any styling, giving you full design control. Here’s a sample style sheet to help you get started:
+Foblex Flow is intentionally UI-agnostic: it does not enforce a design system.  
+Use this as a practical baseline, then adapt it to your app styles.
 
 ```scss
 .f-flow {
@@ -66,13 +90,11 @@ Here’s the most minimal working example — a canvas with two nodes and one co
   color: rgba(60, 60, 67);
   text-align: center;
   background: #ffffff;
-  border-radius: 2px;
-  border: 0.2px solid rgba(60, 60, 67);
+  border-radius: 6px;
+  border: 1px solid rgba(60, 60, 67, 0.28);
 
   &.f-selected {
-    border-color: #3451b2;
-    // Highlights the border when the node is selected
-    // The f-selected class is automatically added by the library when a node or connection is selected.
+    border-color: var(--connection-color, #3451b2);
   }
 }
 
@@ -80,81 +102,84 @@ Here’s the most minimal working example — a canvas with two nodes and one co
   cursor: move;
 }
 
-::ng-deep {
-  .f-connection {
-    .f-connection-drag-handle {
-      fill: transparent;
-      // By default, this element has a black fill and is used to detect the start of dragging (e.g., onmousedown).
-      // We make it transparent to avoid visual clutter, while keeping it functional.
-    }
+/**
+ * Connection SVG lives inside the component template,
+ * so styling usually goes through ::ng-deep (or global styles).
+ */
+::ng-deep .f-connection {
+  .f-connection-path {
+    stroke: rgba(60, 60, 67, 0.78);
+    stroke-width: 2;
+    fill: none;
+  }
 
-    .f-connection-selection {
-      stroke-width: 10;
-      // This is a pseudo-connection (a copy of the main path) used to make it easier to select the connection.
-      // It's slightly thicker than the actual path (which is often only 1px), making it easier to interact with.
-      // It remains invisible to avoid affecting visual clarity but stays active for user interaction.
-    }
+  /**
+   * Selection overlay makes thin lines easier to click.
+   * Keep it invisible but interactive.
+   */
+  .f-connection-selection {
+    stroke-width: 10;
+  }
 
-    .f-connection-path {
-      stroke: rgba(60, 60, 67);
-      stroke-width: 2;
-    }
+  /**
+   * Drag handle is used for pointer detection.
+   * It can be made transparent to avoid visual clutter.
+   */
+  .f-connection-drag-handle {
+    fill: transparent;
+  }
 
-    &.f-selected {
-      .f-connection-path {
-        stroke: #3451b2;
-      }
-    }
+  &.f-selected .f-connection-path {
+    stroke: var(--connection-color, #3451b2);
   }
 }
 ```
+
+## Explanation
+
+- [`f-flow`](f-flow-component) — root container that provides flow context.
+- [`f-canvas`](f-canvas-component) — viewport/rendering layer for nodes and connections.
+- [`fNode`](f-node-directive) — directive that turns an element into a node.
+- [`fNodeOutput`](f-node-output-directive) / [`fNodeInput`](f-node-input-directive) — connectors that represent connection endpoints.
+- [`f-connection`](f-connection-component) — renders a connection between matching `fOutputId` and `fInputId`.
+
+## Try it yourself
+
+After you get the minimal template working, try:
+
+- moving nodes by changing `[fNodePosition]`,
+- adding more nodes and connections,
+- experimenting with connector sides (`fOutputConnectableSide`, `fInputConnectableSide`),
+- changing the connection look/behavior via `fType` and `fBehavior`,
+- enabling additional UX helpers (selection area, minimap, alignment and spacing).
+
+## Notes / pitfalls
+
+- Nodes and connections must be inside `f-canvas`. Elements outside it will not participate in transform and interaction.
+- `fOutputId` and `fInputId` must match connector ids exactly — otherwise the connection will not render.
+- Always define initial node positions for predictable layout.
+- Keep ids stable across re-renders if your app persists or recalculates the graph.
+
+For custom connection types, see the Examples section: `/examples/custom-connection-type`.
+
+## Next steps
+
+Continue with the API references:
+
+- [`f-flow`](f-flow-component)
+- [`f-canvas`](f-canvas-component)
+- [`fNode`](f-node-directive)
+- [`fNodeOutput`](f-node-output-directive)
+- [`fNodeInput`](f-node-input-directive)
+- [`f-connection`](f-connection-component)
+
+## Example
+
 ---
-::: ng-component <draggable-flow></draggable-flow> [height]="300"
+
+::: ng-component <draggable-flow></draggable-flow> [height]="600"
 :::
-## 🔍 Explanation
-
-- [`<f-flow>`](f-flow-component) — the root component that manages the flow state.
-- [`<f-canvas>`](f-canvas-component) — the layer where nodes and connections are placed.
-- [`fNode`](f-node-directive) — directive representing a node.
-- [`fNodeOutput`](f-node-output-directive) / [`fNodeInput`](f-node-input-directive) — connectors for connections. fNodeOutput is the source, and fNodeInput is the target.
-- [`<f-connection>`](f-connection-component) — the component that renders a connection between two connectors by their fOutputId and fInputId.
-
-⚠️ **Note**: `fOutputId` and `fInputId` may technically match, since they belong to different connector collections. However, this is not recommended, as future versions may unify these into a single fConnector directive where matching IDs would cause conflicts.
-
-## 🧪 Try It Yourself
-
-Enhance your flow with the following:
-
-- Change the `[fNodePosition]` coordinates
-- Add more `fNode` and `f-connection` elements
-- Experiment with connection sides: `fOutputConnectableSide`, `fInputConnectableSide`
-- Modify the connection type or behavior using the `fType` and `fBehaviour` inputs.
-- `fType`: defines the visual style of the connection. Acceptable values from the `EFConnectionType` enum include: `straight`, `bezier`, `segment`. You can also pass a string for a custom connection type.
-
-To create a custom connection type, see [documentation here](./examples/custom-connection-type).
-
-- `fBehavior`: defines the connection behavior, including positioning and flexibility. Acceptable values from `EFConnectionBehavior` include: `fixed`, `fixed_center`, `floating`. Default: `EFConnectionBehavior.FIXED`.
-
-## ⚙️ Customization Notes
-
-- Total freedom in node visuals — use any Angular component, not just `<div>`.
-- Fully SSR-compatible, and works with Angular Signals and standalone components.
-- You define the UI, the flow engine handles interactions.
-
-## 🐞 Common Mistakes
-
-- ❌ Forgot `[fNodePosition] → nodes will not render.
-- ❌ `fOutputId` or `fInputId don’t match the ones set in connectors — connections won’t render.
-- ❌ Placing elements outside [`<f-canvas>`](f-canvas-component) — [`fNode`](f-node-directive) and [`<f-connection>`](f-connection-component) must be within it.
-
-## 🔍 Internals: How It Works
-
-1. Each node is registered with its coordinates and metadata.
-2. Connections reference nodes by their fOutputId and fInputId.
-3. SVG lines are calculated between node anchors and rendered live.
-4. On drag/move, connections automatically reflow and update visually.
 
 ## 🙌 Get Involved
 
-If you find **Foblex Flow** useful — drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
-
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

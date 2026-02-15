@@ -1,53 +1,75 @@
 # Introducing Foblex Flow
 
-A powerful Angular library for building interactive, node-based UIs with full customization and smooth connection handling.
+## Description
 
-## ✍ Overview
+Foblex Flow is an **Angular-native** library for building interactive **node-based editors** and diagram UIs - custom nodes, smooth connections, and production-grade interaction helpers.
 
-Modern applications increasingly rely on visual logic and flow editors — from internal tools to low-code platforms and AI pipelines.
+It’s designed for real products where users edit graphs manually: dragging nodes, connecting ports, selecting multiple items, aligning layouts, and navigating large canvases.
 
-But if you’re using Angular, finding a truly native solution for creating node-based interfaces has been surprisingly difficult.
+**What you get**
 
-**Foblex Flow** bridges that gap. It’s a dedicated Angular library designed to create interactive, dynamic flows with custom nodes and connections.
+- Core primitives for flow rendering: `f-flow`, `f-canvas`, nodes, connectors, and connections.
+- Interaction helpers for editor UX: drag, zoom, selection area, minimap, alignment lines, and equal spacing guides.
+- APIs that fit modern Angular: standalone components, signal-friendly patterns, SSR-aware setups.
 
-## 🔧 What is Foblex Flow?
+## Why / Use cases
 
-**Foblex Flow** is a fully Angular-native library that enables you to:
+Most diagram editors fail not on rendering, but on interaction details: hit-testing, pointer edge cases, snapping, selection UX, and consistent connection behavior.  
+Foblex Flow exists for teams that want these building blocks in Angular **without implementing low-level drag logic, hit-testing, and SVG path rendering from scratch**.
 
--	Dynamically render and connect nodes
--	Freely customize node content and layout
--	Support drag & drop, zooming, snapping, grouping, and alignment
--	Integrate with Angular Signals, SSR, and standalone components
--	Build real-world editors with full state management and interaction logic
+Typical use cases:
 
-## 🤩 Use Cases
+- Workflow and automation builders (internal tools, operations tooling).
+- Low-code/no-code logic editors (rules, conditions, branching).
+- Visual programming tools and AI pipeline designers.
+- Back-office tools where entities and relations are edited as a graph.
 
-**Foblex Flow** is ideal for:
+## Interactive examples
 
--	Workflow and automation builders
--	Logic designers in no-code/low-code platforms
--	Call routing and communication flows
--	Back-office and CRM visual tools
-- Visual programming environments (e.g., AI pipelines, condition blocks)
+Explore live demos built with Foblex Flow:
 
-## 📚 Interactive Examples
+- [Call Flow Editor](https://github.com/Foblex/f-flow-example)
+- [Logic Configuration Tool](https://flow.foblex.com/examples/f-visual-programming-flow)
+- [Database Flow Manager](https://flow.foblex.com/examples/f-db-management-flow)
+- [Examples overview](./examples/overview)
 
-Explore live demos built with **Foblex Flow**:
+You can also browse the source code for all demos in `projects/f-examples/**`.
 
-- 📞 [Call Flow Editor](https://github.com/Foblex/f-flow-example)
-- 🧱 [Logic Configuration Tool](https://flow.foblex.com/examples/f-visual-programming-flow)
-- 🗄 [Database Flow Manager](https://flow.foblex.com/examples/f-db-management-flow)
+## How it works
 
-## 🚀 Key Features
+You compose a flow from primitives: one `f-flow` root, one `f-canvas`, nodes with connectors, and connection components.
 
-- 🔌 Dynamic management of nodes and connections
-- 🧠 Event-driven architecture for interaction and state
-- ✏️ Fully customizable visuals and behavior
-- 🔍 Built-in zooming, panning, snapping, and guides
-- 🧱 Grouping, alignment, and grid snapping
-- 📦 SSR-ready, compatible with standalone components, Angular Signals, and zoneless Angular
+Foblex Flow focuses on **rendering and interaction**. Your application owns the graph model (nodes, connections, metadata) and decides how to update it. The library emits interaction events (drag, selection changes, connection create/reassign) so you can:
+
+- keep business state in your own store (signals, RxJS, NgRx, plain services),
+- persist changes to your backend in a predictable way,
+- apply domain rules (validation, limits, permissions) where they belong.
+
+## Next steps
+
+This page is an overview. Use these guides for exact contracts:
+
+- [Flow](f-flow-component)
+- [Canvas](f-canvas-component)
+- [Node](f-node-directive)
+- [Connection](f-connection-component)
+- [Drag and Drop](f-draggable-directive)
+
+## Notes / Pitfalls
+
+- Use **stable ids** for nodes and connectors to keep connections predictable (`fNodeId`, `fInputId`, `fOutputId`).
+- Style primitives explicitly for production UI - defaults are intentionally minimal.
+- Add advanced helpers (selection area, minimap, alignment/spacing) after base rendering is stable.
+
+## Example
+
+::: ng-component <custom-nodes></custom-nodes> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::
 
 ## 🙌 Get Involved
 
-If you find **Foblex Flow** useful — drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
-
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

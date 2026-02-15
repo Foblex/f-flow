@@ -1,9 +1,5 @@
-import {ChangeDetectionStrategy, Component, signal, viewChild, ViewChild} from '@angular/core';
-import {
-  FCanvasComponent, FFlowComponent,
-  FFlowModule, FSelectionChangeEvent
-} from '@foblex/flow';
-import {FCheckboxComponent} from "@foblex/m-render";
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { FCanvasComponent, FFlowComponent, FFlowModule, FSelectionChangeEvent } from '@foblex/flow';
 
 @Component({
   selector: 'node-selection',
@@ -11,35 +7,29 @@ import {FCheckboxComponent} from "@foblex/m-render";
   templateUrl: './node-selection.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FCheckboxComponent,
-  ]
+  imports: [FFlowModule],
 })
 export class NodeSelectionComponent {
   private readonly _flow = viewChild(FFlowComponent);
   private readonly _canvas = viewChild(FCanvasComponent);
 
-  protected events = signal<string[][]>([]);
+  protected readonly events = signal<string[][]>([]);
 
-  protected onLoaded(): void {
+  protected loaded(): void {
     this._canvas()?.resetScaleAndCenter(false);
   }
 
-  protected onSelectionChange(event: FSelectionChangeEvent): void {
+  protected selectionChanged(event: FSelectionChangeEvent): void {
     this.events.update((x) => {
-      return [
-        ...x,
-        [...event.fNodeIds, ...event.fConnectionIds]
-      ];
+      return [...x, [...event.nodeIds, ...event.connectionIds]];
     });
   }
 
   protected selectNode(): void {
-    this._flow()?.select(['f-node-0'], []);
+    this._flow()?.select(['node1'], []);
   }
 
   protected selectConnection(): void {
-    this._flow()?.select([], ['f-connection-0']);
+    this._flow()?.select([], ['connection1']);
   }
 }

@@ -1,62 +1,110 @@
-﻿# Connection
+# Connection
 
-**Selector:** f-connection
+**Selector:** `f-connection`  
+**Class:** `FConnectionComponent`
 
-The **FConnectionComponent** is a component that represents a connection between nodes in a flow. It allows customization of the connection's appearance and behaviour, including color, type, and interactivity.
+`FConnectionComponent` renders a **connection** (edge) between a source connector (`fOutputId`) and a target connector (`fInputId`).
+In most apps, connections are **persisted** in your own state (array/map) and rendered from that state on each change.
 
-## Inputs
+Connections must be placed inside [`f-canvas`](f-canvas-component) (which itself must be inside [`f-flow`](f-flow-component)).
 
-- `fConnectionId: InputSignal<string>;` The unique identifier for the component instance. Automatically generated. Default: `f-connection-${uniqueId++}`
+## When to use it
 
-- `fReassignDisabled: InputSignal<boolean>;` Indicates whether the connection cannot be reassigned. Default: `false`.
+Use `f-connection` for **existing (persisted) links** in the diagram:
 
-- `fSelectionDisabled: InputSignal<boolean>;` Indicates whether the connection cannot be selected. Default: `false`.
+- render edges from your graph model
+- style edges (type, behavior, colors, markers)
+- allow users to select and/or reassign edges (if enabled)
 
-- `fStartColor: InputSignal<string>;` Sets the color at the start of the connection line. Combined with fEndColor, this produces a gradient from start to end. Default: `black`.
+For the **drag preview** while the user is creating a new link, use
+[`f-connection-for-create`](f-connection-for-create-component) and optionally [`f-snap-connection`](f-snap-connection-component).
 
-- `fEndColor: InputSignal<string>;` Sets the color at the end of the connection line. Use this together with fStartColor to create a two-stop gradient along the connection. Default: `black`.
+## How it works
 
-- `fOutputId: InputSignal<string>;` The identifier of the [FNodeOutputDirective](f-node-output-directive) where the connection starts.
+- The connection resolves its endpoints by `fOutputId` and `fInputId`.
+- It builds an SVG path using the chosen `fType` and `fBehavior`.
+- During interactions the library updates visuals smoothly internally.
+- **Your app typically persists changes on final events** (for example after a reassign drag ends).
 
-- `fInputId: InputSignal<string>;` The identifier of the [FNodeInputDirective](f-node-input-directive) where the connection ends.
+## API
 
-- `fBehavior: InputSignal<EFConnectionBehavior>;` The behaviour of the connection, affecting its positioning and flexibility. Accepts a value from [EFConnectionBehavior]() enum. Default: `EFConnectionBehavior.FIXED`
+### Inputs
 
-- `fType: InputSignal<EFConnectionType | string>;` The visual type of the connection, such as straight, bezier and etc. Accepts a value from [EFConnectionType]() enum or string for custom connection. Default: `EFConnectionType.STRAIGHT`
+- `fConnectionId: InputSignal<string>;`  
+  Connection identifier. Default: `f-connection-${uniqueId++}`.  
+  Use a **stable** id if you want selection state to survive rerenders.
 
-- `fOffset: InputSignal<number>;` Minimum length of the connection before a curve can occur. Default: `12`
+- `fOutputId: InputSignal<string>;`  
+  Source connector id (from `[fNodeOutput]` or `[fNodeOutlet]`).
 
-- `fRadius: InputSignal<number>;` Radius used for curves. Default: `8`
+- `fInputId: InputSignal<string>;`  
+  Target connector id (from `[fNodeInput]`).
 
-## Styles
+- `fReassignDisabled: InputSignal<boolean>;`  
+  Default: `false`.  
+  Disables reassign interaction for this connection.
 
-- `.f-component` A general class applied to all F components for shared styling.
+- `fSelectionDisabled: InputSignal<boolean>;`  
+  Default: `false`.  
+  Disables selecting this connection.
 
-- `.f-connection` Class specific to the connection component, providing styles for connection representation.
+- `fStartColor: InputSignal<string>;`  
+  Default: `black`.  
+  Start color for the path gradient.
 
-- `.f-connection-selection-disabled` Class applied to the connection when `fSelectionDisabled` is `true`.
+- `fEndColor: InputSignal<string>;`  
+  Default: `black`.  
+  End color for the path gradient.
 
-- `.f-connection-reassign-disabled` Class applied to the connection when `fReassignDisabled` is `true.
+- `fBehavior: InputSignal<EFConnectionBehavior>;`  
+  Default: `EFConnectionBehavior.FIXED`.  
+  Controls how the line behaves relative to endpoints (fixed/floating/etc.).  
+  See the example section for behavior presets.
 
-- `.f-selected` Class applied to the connection when it is selected.
+- `fType: InputSignal<EFConnectionType | string>;`  
+  Default: `EFConnectionType.STRAIGHT`.  
+  Controls which path builder is used (straight/bezier/segment/adaptive-curve or custom key).
 
-## Usage
+- `fOffset: InputSignal<number>;`  
+  Default: `12`.  
+  Minimum “straight” length before a curve/turn may appear (depends on type).
 
-Add the `f-connection` component to the [f-canvas](f-canvas-component). Provide the `fOutputId` and `fInputId` inputs to specify the start and end points of the connection.
+- `fRadius: InputSignal<number>;`  
+  Default: `8`.  
+  Radius used for rounded corners (depends on type).
 
-```html
-<f-flow>
-  <f-canvas>
-    |:|<f-connection [fOutputId]="id1" [fInputId]="id2"></f-connection>|:|
-  </f-canvas>
-</f-flow>
-```
+- `fReassignableStart: InputSignal<boolean>;`
+  Default: `false`.
+  Enables reassigning the start endpoint of the connection (output-side) by dragging it, just like end reassign. This feature is available in the library, but disabled by default.
+
+### Outputs
+
+`f-connection` does not emit its own outputs.  
+Creation/reassign events are emitted from `f-flow[fDraggable]` (see [Event System](event-system)).
+
+## Styling
+
+These classes are useful when styling the SVG and interaction affordances:
+
+- `.f-connection` host class
+- `.f-selected` applied when selected
+- `.f-connection-selection-disabled` applied when `fSelectionDisabled = true`
+- `.f-connection-reassign-disabled` applied when `fReassignDisabled = true`
+- `.f-connection-path` main SVG path
+- `.f-connection-selection` invisible hit-path (easier selection)
+- `.f-connection-drag-handle` endpoint drag handle circles
+- `.f-connection-content` projected content container (if you project content)
+
+## Notes and pitfalls
+
+- `fOutputId` / `fInputId` must point to **existing connectors**; otherwise the connection cannot resolve endpoints.
+- If you use a custom `fType`, ensure the corresponding connection type is registered (see the custom type example).
+- Keep `fSelectionDisabled` and `fReassignDisabled` explicit per connection for predictable UX in mixed graphs.
 
 ## Examples
 
-#### Different Connection Types
+### Connection types
 
-Examples of different connection types. The connection type can be set using the `fType` input. Valid values are `straight`, `bezier` and `segment from [EFConnectionType](e-f-connection-type) enum.
 ::: ng-component <connection-types></connection-types> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-types/connection-types.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-types/connection-types.ts
@@ -64,19 +112,17 @@ Examples of different connection types. The connection type can be set using the
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
-#### Different Connection Behaviours
+### Connection behaviors
 
-Examples of different connection behaviours. The connection behaviour can be set using the `fBehavior` input. Valid values are: `fixed`, `fixed_center` and `floating` from [EFConnectionBehaviour](e-f-connection-behaviour) enum.
 ::: ng-component <connection-behaviours></connection-behaviours> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.scss
 :::
 
-#### Custom Connection Type
+### Custom connection type
 
-Examples of providing custom connection types. The connection type can be set using an array of providers.
 ::: ng-component <custom-connection-type></custom-connection-type> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/custom-connection-type/custom-connection-type.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/custom-connection-type/custom-connection-type.component.ts
@@ -84,12 +130,15 @@ Examples of providing custom connection types. The connection type can be set us
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
-#### Drag to Reassign
+### Reassign example
 
-Each connection can be reassigned to another [fNodeInput](f-node-input-directive). The `fReassignDisabled` property can be used to disable this feature. Each connection has a `DragHandle` at the end, drag it to reassign the connection to another [fNodeInput](f-node-input-directive).
 ::: ng-component <drag-to-reassign></drag-to-reassign> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
+
+## 🙌 Get Involved
+
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

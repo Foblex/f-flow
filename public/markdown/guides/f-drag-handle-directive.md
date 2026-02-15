@@ -1,50 +1,79 @@
-﻿# Drag Handle 
+# Drag Handle
 
-**Selector:** [fDragHandle] 
+**Selector:** `[fDragHandle]`  
+**Class:** `FDragHandleDirective`
 
-The **FDragHandle** is a directive that specifies the handle for dragging a node within a flow of elements. It is used in conjunction with the [fNode](f-node-directive) directive to enable dragging functionality.
+`FDragHandleDirective` marks an element as the **only** valid drag start surface for moving a node.
 
-## Styles
-  - `.f-component` A general class applied to all F components for shared styling.
+In Foblex Flow, node dragging is enabled by `fDraggable` on the parent `f-flow`, but **a drag start area must be defined**.  
+The simplest option is to put `fDragHandle` on the node itself (the whole node becomes draggable). For more complex nodes, put it on a header or a dedicated grip.
 
-  - `.f-drag-handle` Class specific to the drag handle directive, providing styles for the drag handle representation.
+## Why it exists
 
-## Usage
+Real nodes often contain interactive UI (buttons, inputs, selects). If the whole node starts dragging from any pixel, you can easily break UX:
 
-#### Node with drag handle
+- clicking a button starts a drag,
+- selecting text becomes hard,
+- inputs lose focus.
 
-We need to add the **fDragHandle** directive inside [fNode](f-node-directive) to specify the handle for dragging.
-This can be any element inside the node that will act as the drag handle.
+`fDragHandle` lets you choose **exactly where dragging can start**.
 
-```html
-<f-flow |:|fDraggable|:|>
-  <f-canvas>
-    <div fNode [fNodePosition]="{ x: 100, y: 200 }">
-      <div |:|fDragHandle|:|>Node</div>
-    </div>
-  </f-canvas>
-</f-flow>
-```
+## Common patterns
 
-#### Disabling Dragging
+### Drag the whole node
 
-This code snippet shows how to disable dragging for a node.
+Put `fDragHandle` on the same element as `fNode`.
 
 ```html
-<f-flow fDraggable>
-  <f-canvas>
-    <div fNode |:|[fNodeDraggingDisabled]="true"|:| [fNodePosition]="{ x: 100, y: 200 }">
-      <div fDragHandle>Node</div>
-    </div>
-  </f-canvas>
-</f-flow>
+<div fNode fDragHandle [fNodePosition]="{ x: 100, y: 200 }">
+  Node
+</div>
 ```
 
-## Examples
+### Drag only a header / grip
 
-#### Node with Drag Handle
+Put `fDragHandle` on a nested element.
 
-This example demonstrates how to use the **fDragHandle** directive to specify the handle for dragging a node.
+```html
+<div fNode [fNodePosition]="{ x: 100, y: 200 }">
+  <div fDragHandle class="node-header">Header (drag here)</div>
+  <button>Button (clickable)</button>
+</div>
+```
+
+### Drag the whole node, but block dragging from specific inner elements
+
+Sometimes you want the whole node draggable, **except** for a specific area (for example, an input or a toolbar).  
+For this use case, use **`fDragBlocker`** on the inner element(s) that must _never_ start a drag.
+
+```html
+<div fNode fDragHandle [fNodePosition]="{ x: 100, y: 200 }">
+  <div class="node-title">Drag anywhere…</div>
+
+  <input fDragBlocker placeholder="…but not from this input" />
+  <button fDragBlocker>And not from this button</button>
+</div>
+```
+
+## How it works
+
+When the user presses down, the drag system checks whether the event target (or one of its parents) has `fDragHandle`.  
+If it does - dragging may start. If it does not - the node will not move.
+
+> This is intentional: it prevents accidental dragging when clicking inside node content.
+
+## Styling
+
+- `.f-component` Base class for flow primitives.
+- `.f-drag-handle` Host class added by the directive.
+
+## Notes / Pitfalls
+
+- `fDragHandle` works only when `fDraggable` is enabled on the parent `f-flow`.
+- A node must contain **at least one** `fDragHandle` to be movable.
+- You can place the handle on a nested element **or on the node element itself**.
+
+## Example
 
 ::: ng-component <drag-handle></drag-handle> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.html
@@ -52,3 +81,7 @@ This example demonstrates how to use the **fDragHandle** directive to specify th
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
+
+## 🙌 Get Involved
+
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
