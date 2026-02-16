@@ -180,6 +180,6 @@ Continue with the API references:
 ::: ng-component <draggable-flow></draggable-flow> [height]="600"
 :::
 
-## 🙌 Get Involved
+## Support Foblex Flow
 
-If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
+If this page helped you build something (or saved you from writing drag+drop and SVG connection logic from scratch), please ⭐ the repo on [GitHub](https://github.com/Foblex/f-flow) — it directly helps the project grow.

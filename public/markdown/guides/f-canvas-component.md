@@ -142,7 +142,3 @@ Listen to `fCanvasChange` to reflect current pan/zoom outside the canvas.
 ```html
 <f-canvas (fCanvasChange)="canvasChanged($event)"></f-canvas>
 ```
-
-## 🙌 Get Involved
-
-If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!
