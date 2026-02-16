@@ -16,7 +16,8 @@ export class CalculateNodesState
   private readonly _store = inject(FComponentsStore);
 
   public handle({ component }: CalculateNodesStateRequest): IFFlowStateNode[] {
-    return this._store.fNodes
+    return this._store.nodes
+      .getAll()
       .filter((x) => x instanceof component)
       .map((x) => {
         return {
@@ -33,7 +34,8 @@ export class CalculateNodesState
   }
 
   private _getOutputs(hostElement: HTMLElement): IFFlowStateConnector[] {
-    return this._store.fOutputs
+    return this._store.outputs
+      .getAll()
       .filter((x) => hostElement.contains(x.hostElement))
       .map((x) => {
         return {
@@ -44,7 +46,8 @@ export class CalculateNodesState
   }
 
   private _getInputs(hostElement: HTMLElement): IFFlowStateConnector[] {
-    return this._store.fInputs
+    return this._store.inputs
+      .getAll()
       .filter((x) => hostElement.contains(x.hostElement))
       .map((x) => {
         return {

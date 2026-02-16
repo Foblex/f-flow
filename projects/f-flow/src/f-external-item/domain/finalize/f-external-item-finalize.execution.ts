@@ -9,7 +9,7 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 import {
   FDraggableDataContext,
   FDragHandlerResult,
-  FNodeDropToGroupDragHandler,
+  DropToGroupHandler,
 } from '../../../f-draggable';
 import { BrowserService } from '@foblex/platform';
 import { IFExternalItemDragResult } from '../i-f-external-item-drag-result';
@@ -22,14 +22,10 @@ export class FExternalItemFinalizeExecution
   private readonly _fResult: FDragHandlerResult<IFExternalItemDragResult> =
     inject(FDragHandlerResult);
 
-  private readonly _fMediator = inject(FMediator);
+  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
-  private readonly _fBrowser = inject(BrowserService);
-
-  private get _fHost(): HTMLElement {
-    return this._store.fFlow!.hostElement;
-  }
+  private readonly _browser = inject(BrowserService);
 
   private get _fCreateNode(): EventEmitter<FCreateNodeEvent> {
     return this._store.fDraggable!.fCreateNode;
@@ -62,16 +58,14 @@ export class FExternalItemFinalizeExecution
 
   private _getDestinationNodeOrGroupId(): string | undefined {
     const dropToGroupHandler = this._getDropToGroupHandler();
-    const result = dropToGroupHandler.fNodeWithRect?.node.fId();
+    const result = dropToGroupHandler.activeTarget?.node.fId();
     dropToGroupHandler.onPointerUp?.();
 
     return result;
   }
 
-  private _getDropToGroupHandler(): FNodeDropToGroupDragHandler {
-    const result = this._dragContext.draggableItems.find(
-      (x) => x instanceof FNodeDropToGroupDragHandler,
-    );
+  private _getDropToGroupHandler(): DropToGroupHandler {
+    const result = this._dragContext.draggableItems.find((x) => x instanceof DropToGroupHandler);
     if (!result) {
       throw new Error('NodeDragToParentDragHandler not found');
     }
@@ -80,7 +74,7 @@ export class FExternalItemFinalizeExecution
   }
 
   private _getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return this._fBrowser.document
+    return this._browser.document
       .elementsFromPoint(position.x, position.y)
       .filter(
         (x) => !x.closest('.f-external-item') && !x.closest('.f-external-item-preview'),
@@ -105,11 +99,11 @@ export class FExternalItemFinalizeExecution
   }
 
   private _isPointerInCanvasRect(elements: HTMLElement[]): boolean {
-    return elements.length ? this._fHost.contains(elements[0]) : false;
+    return elements.length ? this._store.flowHost.contains(elements[0]) : false;
   }
 
   private _getPreviewRect(): IRect {
-    return this._fMediator.execute<IRect>(
+    return this._mediator.execute<IRect>(
       new GetNormalizedElementRectRequest(this._fResult.getData().preview),
     );
   }

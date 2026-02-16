@@ -1,5 +1,6 @@
 import {
   CalculateBezierCurveData,
+  createPureHarness,
   EFConnectableSide,
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse,
@@ -7,6 +8,7 @@ import {
 
 describe('CalculateBezierCurveData', () => {
   let builder: CalculateBezierCurveData;
+  const pure = createPureHarness();
 
   beforeEach(() => {
     builder = new CalculateBezierCurveData();
@@ -14,8 +16,8 @@ describe('CalculateBezierCurveData', () => {
 
   it('builds cubic path for a simple horizontal connection (no pivots)', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 0 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 0),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.LEFT,
       radius: 0,
@@ -23,24 +25,24 @@ describe('CalculateBezierCurveData', () => {
       waypoints: [],
     };
 
-    const res: IFConnectionBuilderResponse = builder.handle(request);
+    const result: IFConnectionBuilderResponse = builder.handle(request);
 
-    expect(res.path).toBe('M 0 0 C 100 0, 0 0, 100.0002 0.0002');
+    expect(result.path).toBe('M 0 0 C 100 0, 0 0, 100.0002 0.0002');
 
-    expect(res.secondPoint).toEqual({ x: 100, y: 0 });
-    expect(res.penultimatePoint).toEqual({ x: 0, y: 0 });
+    expect(result.secondPoint).toEqual(pure.point(100, 0));
+    expect(result.penultimatePoint).toEqual(pure.point(0, 0));
 
-    expect(res.points).toBeDefined();
-    expect(res.points.length).toBeGreaterThan(0);
+    expect(result.points).toBeDefined();
+    expect(result.points.length).toBeGreaterThan(0);
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 
   it('builds cubic path for a simple vertical connection (no pivots)', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 0, y: 100 },
+      source: pure.point(0, 0),
+      target: pure.point(0, 100),
       sourceSide: EFConnectableSide.BOTTOM,
       targetSide: EFConnectableSide.TOP,
       radius: 0,
@@ -48,48 +50,44 @@ describe('CalculateBezierCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expect(res.path).toBe('M 0 0 C 0 100, 0 0, 0.0002 100.0002');
+    expect(result.path).toBe('M 0 0 C 0 100, 0 0, 0.0002 100.0002');
 
-    expect(res.secondPoint).toEqual({ x: 0, y: 100 });
-    expect(res.penultimatePoint).toEqual({ x: 0, y: 0 });
+    expect(result.secondPoint).toEqual(pure.point(0, 100));
+    expect(result.penultimatePoint).toEqual(pure.point(0, 0));
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 
   it('builds multi-segment cubic path when pivots are present', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 0 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 0),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.LEFT,
       radius: 0,
       offset: 20,
-      waypoints: [
-        { x: 50, y: 50 }, // pivot 1
-      ],
+      waypoints: [pure.point(50, 50)],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expect(res.path).toContain('M 0 0');
+    expect(result.path).toContain('M 0 0');
+    expect((result.path.match(/\sC\s/g) ?? []).length).toBe(2);
 
-    expect((res.path.match(/\sC\s/g) ?? []).length).toBe(2);
+    expect(result.points).toBeDefined();
+    expect(result.points.length).toBeGreaterThan(0);
 
-    expect(res.points).toBeDefined();
-    expect(res.points.length).toBeGreaterThan(0);
-
-    // candidates: typically 1 per segment
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(2);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(2);
   });
 
   it('handles diagonal connection and returns stable endpoints/control points', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 100 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 100),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.BOTTOM,
       radius: 0,
@@ -97,15 +95,15 @@ describe('CalculateBezierCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expect(res.path).toContain('M 0 0');
-    expect(res.path).toContain(' C ');
+    expect(result.path).toContain('M 0 0');
+    expect(result.path).toContain(' C ');
 
-    expect(res.secondPoint).toBeDefined();
-    expect(res.penultimatePoint).toBeDefined();
+    expect(result.secondPoint).toBeDefined();
+    expect(result.penultimatePoint).toBeDefined();
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 });

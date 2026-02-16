@@ -2,19 +2,31 @@
 /membership
 /docs/intro
 /docs/get-started
+/docs/event-system
+/docs/selection-system
 /docs/f-flow-component
 /docs/f-canvas-component
 /docs/f-node-directive
 /docs/f-drag-handle-directive
+/docs/f-group-directive
+/docs/f-resize-handle-directive
+/docs/f-rotate-handle-directive
 /docs/f-connection-component
 /docs/f-connection-for-create-component
 /docs/f-connection-marker-directive
+/docs/f-snap-connection-component
+/docs/f-connection-waypoints-component
 /docs/f-node-output-directive
 /docs/f-node-input-directive
 /docs/f-node-outlet-directive
+/docs/connection-rules
 /docs/f-draggable-directive
+/docs/f-external-item-directive
 /docs/f-zoom-directive
 /docs/f-background-component
+/docs/f-selection-area-component
+/docs/f-magnetic-lines-component
+/docs/f-magnetic-rects-component
 /docs/f-line-alignment-component
 /docs/f-minimap-component
 
@@ -48,12 +60,15 @@
 /examples/connection-behaviours
 /examples/connection-markers
 /examples/connection-content
+/examples/connection-waypoints
 /examples/custom-connections
 /examples/connection-connectable-side
 
 /examples/add-node-from-palette
 /examples/selection-area
 /examples/help-in-positioning
+/examples/magnetic-lines
+/examples/magnetic-rects
 /examples/grid-system
 /examples/minimap
 /examples/zoom

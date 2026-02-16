@@ -1,6 +1,4 @@
-export * from './domain';
-
-export * from './f-selection-area.component';
+export * from './f-selection-area';
 
 export * from './f-selection-area-base';
 

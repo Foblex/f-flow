@@ -39,10 +39,7 @@ import { BrowserService } from '@foblex/platform';
 import { COMMON_PROVIDERS } from '../domain';
 import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
 import { FChannelHub, takeOne } from '../reactivity';
-import {
-  ConnectionBehaviourBuilder,
-  ConnectionLineBuilder,
-} from '../f-connection-v2';
+import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 
 let uniqueId = 0;
 
@@ -58,10 +55,10 @@ let uniqueId = 0;
   providers: [
     FMediator,
     ...F_STORAGE_PROVIDERS,
-    FDraggableDataContext,
     ConnectionLineBuilder,
     ConnectionBehaviourBuilder,
     ...COMMON_PROVIDERS,
+    FDraggableDataContext,
     ...F_DRAGGABLE_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],

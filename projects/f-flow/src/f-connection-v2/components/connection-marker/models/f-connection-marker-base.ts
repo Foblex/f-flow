@@ -1,8 +1,12 @@
-import { ElementRef, inject, InjectionToken } from '@angular/core';
+import { ElementRef, inject, InjectionToken, signal } from '@angular/core';
 
 export const F_CONNECTION_MARKER = new InjectionToken('F_CONNECTION_MARKER');
 
+let uniqueId = 0;
+
 export abstract class FConnectionMarkerBase {
+  public readonly fId = signal<string>(`f-marker-${uniqueId++}`);
+
   public readonly hostElement = inject(ElementRef<HTMLElement>).nativeElement;
 
   public abstract width: number;

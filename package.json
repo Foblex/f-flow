@@ -1,5 +1,5 @@
 {
-  "version": "18.0.0",
+  "version": "18.1.0",
   "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
@@ -21,6 +21,7 @@
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
+    "release:bundle": "bash tools/changelog-bundle.sh --base origin/main --lib projects/f-flow",
     "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run",
     "lint": "ng lint",

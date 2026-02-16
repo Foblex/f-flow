@@ -40,7 +40,9 @@ export class CreateConnectionMarkers implements IExecution<CreateConnectionMarke
   }
 
   public _findConnectionMarkers(connection: FConnectionBase): FConnectionMarkerBase[] {
-    return this._store.fMarkers.filter((x) => connection.hostElement.contains(x.hostElement));
+    return this._store.connectionMarkers
+      .getAll()
+      .filter((x) => connection.hostElement.contains(x.hostElement));
   }
 
   // Safari does not support markers on path elements if markers are defined after the path element

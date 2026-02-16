@@ -1,6 +1,3 @@
-import { FSelectionAreaComponent } from './f-selection-area.component';
+import { FSelectionArea } from './f-selection-area';
 
-export const F_SELECTION_AREA_PROVIDERS = [
-
-  FSelectionAreaComponent,
-];
+export const F_SELECTION_AREA_PROVIDERS = [FSelectionArea];

@@ -1,41 +1,47 @@
-import { inject, Injectable, Injector } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PinchToZoomPreparationRequest } from './pinch-to-zoom-preparation-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IPointerEvent } from '../../../drag-toolkit';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { Point } from '@foblex/2d';
-import { PinchToZoomHandler } from '../pinch-to-zoom-handler';
-import { FComponentsStore } from '../../../f-storage';
-import { F_ZOOM_TAG } from '../../../domain';
+import { FComponentsStore, INSTANCES } from '../../../f-storage';
+import { PinchToZoomHandler } from '../handler';
+import { DragHandlerInjector } from '../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(PinchToZoomPreparationRequest)
 export class PinchToZoomPreparation implements IExecution<PinchToZoomPreparationRequest, void> {
-  private readonly _injector = inject(Injector);
+  private readonly _dragInjector = inject(DragHandlerInjector);
   private readonly _store = inject(FComponentsStore);
-  private readonly _dragContext = inject(FDraggableDataContext);
+  private readonly _dragSession = inject(FDraggableDataContext);
 
   public handle({ event }: PinchToZoomPreparationRequest): void {
-    if (!this._isValid(event)) {
+    if (!this._canStart(event)) {
       return;
     }
 
-    this._dragContext.onPointerDownScale = 1;
-    this._dragContext.onPointerDownPosition = new Point();
-
-    this._dragContext.draggableItems = [new PinchToZoomHandler(this._injector, event.touches)];
+    this._dragSession.onPointerDownScale = 1;
+    this._dragSession.onPointerDownPosition = new Point();
+    this._dragSession.draggableItems = [this._getHandler(event)];
   }
 
-  private _isValid(event: IPointerEvent): boolean {
+  private _canStart(event: IPointerEvent): boolean {
     return (
-      this._dragContext.isEmpty() &&
+      this._dragSession.isEmpty() &&
       event.touches?.length === 2 &&
       !event.isEventInLockedContext &&
-      this._isZoomComponent()
+      this._hasZoomComponent()
     );
   }
 
-  private _isZoomComponent(): boolean {
-    return !!this._store.fComponents[F_ZOOM_TAG];
+  private _hasZoomComponent(): boolean {
+    return this._store.instances.has(INSTANCES.ZOOM);
+  }
+
+  private _getHandler(event: IPointerEvent): PinchToZoomHandler {
+    const handler = this._dragInjector.get(PinchToZoomHandler);
+    handler.initialize(event.touches);
+
+    return handler;
   }
 }

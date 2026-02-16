@@ -23,7 +23,8 @@ export class CalculateOutputConnections
 
   private _collectOutputIds(nodeOrGroup: FNodeBase): Set<string> {
     const ids = new Set<string>();
-    for (const connector of this._store.fOutputs) {
+    const connectors = this._store.outputs.getAll();
+    for (const connector of connectors) {
       if (nodeOrGroup.isContains(connector.hostElement)) {
         ids.add(connector.fId());
       }
@@ -34,7 +35,8 @@ export class CalculateOutputConnections
 
   private _collectConnections(ids: Set<string>): FConnectionBase[] {
     const result: FConnectionBase[] = [];
-    for (const conn of this._store.fConnections) {
+    const connections = this._store.connections.getAll();
+    for (const conn of connections) {
       if (ids.has(conn.fOutputId())) {
         result.push(conn);
       }

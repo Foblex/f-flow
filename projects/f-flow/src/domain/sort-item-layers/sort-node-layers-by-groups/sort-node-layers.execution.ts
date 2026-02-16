@@ -15,7 +15,6 @@ import { FCanvasBase } from '../../../f-canvas';
 @Injectable()
 @FExecutionRegister(SortNodeLayersRequest)
 export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest, void> {
-
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
@@ -36,34 +35,32 @@ export class SortNodeLayersExecution implements IExecution<SortNodeLayersRequest
     return Array.from(this._fNodesContainer.children) as HTMLElement[];
   }
 
-  public handle(request: SortNodeLayersRequest): void {
+  public handle(_request: SortNodeLayersRequest): void {
     this._getGroups().forEach((parent: FNodeBase) => {
       this._moveChildrenNodes(this._getSortedChildrenNodes(parent));
     });
   }
 
   private _getGroups(): FNodeBase[] {
-    return this._store.fNodes
-      .filter((x) => this._fGroupsContainer.contains(x.hostElement));
+    return this._store.nodes.getAll().filter((x) => this._fGroupsContainer.contains(x.hostElement));
   }
 
-  private _getSortedChildrenNodes(
-    parent: FNodeBase,
-  ): HTMLElement[] {
+  private _getSortedChildrenNodes(parent: FNodeBase): HTMLElement[] {
     const allElements = this._fNodeElements;
 
-    return this._getChildrenNodes(parent.fId())
-      .sort((a, b) => allElements.indexOf(a) - allElements.indexOf(b));
+    return this._getChildrenNodes(parent.fId()).sort(
+      (a, b) => allElements.indexOf(a) - allElements.indexOf(b),
+    );
   }
 
   private _getChildrenNodes(fId: string): HTMLElement[] {
-    return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
-      .filter((x) => this._fNodesContainer.contains(x.hostElement)).map((x) => x.hostElement);
+    return this._mediator
+      .execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .filter((x) => this._fNodesContainer.contains(x.hostElement))
+      .map((x) => x.hostElement);
   }
 
-  private _moveChildrenNodes(
-    sortedChildrenGroups: HTMLElement[],
-  ): void {
+  private _moveChildrenNodes(sortedChildrenGroups: HTMLElement[]): void {
     const fragment = this._browser.document.createDocumentFragment();
     sortedChildrenGroups.forEach((childGroup: HTMLElement) => {
       fragment.appendChild(childGroup); // Append automatically removes the element from its current position

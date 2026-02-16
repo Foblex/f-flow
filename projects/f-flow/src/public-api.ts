@@ -16,6 +16,8 @@ export * from './f-draggable';
 export * from './f-external-item';
 
 export * from './f-line-alignment';
+export * from './f-magnetic-lines';
+export * from './f-magnetic-rects';
 
 export * from './f-minimap';
 
@@ -34,6 +36,8 @@ export * from './mixins';
 export * from './reactivity';
 
 export * from './utils';
+
+export * from './testing';
 
 export * from './f-flow.module';
 

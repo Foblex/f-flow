@@ -1,0 +1,16 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+
+  .f-magnetic-rects {
+    .f-rect {
+      border: 1px solid var(--connection-color);
+      background-color: var(--selection-area-color);
+    }
+  }
+}
+
+.f-node {
+  @include flow-common.node;
+}

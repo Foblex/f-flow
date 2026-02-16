@@ -16,7 +16,7 @@ export class CalculateConnectionsState
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: CalculateConnectionsStateRequest): IFFlowStateConnection[] {
-    return this._store.fConnections.map(this._mapToConnectionState);
+    return this._store.connections.getAll().map(this._mapToConnectionState);
   }
 
   private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {

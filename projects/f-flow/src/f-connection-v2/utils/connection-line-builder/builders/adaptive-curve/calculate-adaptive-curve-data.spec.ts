@@ -1,28 +1,30 @@
+import { IPoint } from '@foblex/2d';
 import {
   CalculateAdaptiveCurveData,
+  createPureHarness,
   EFConnectableSide,
   IFConnectionBuilderRequest,
   IFConnectionBuilderResponse,
 } from '@foblex/flow';
-import { IPoint } from '@foblex/2d';
 
 describe('CalculateAdaptiveCurveData', () => {
   let builder: CalculateAdaptiveCurveData;
 
+  const pure = createPureHarness();
   const SAMPLES = 12;
-  const ONE_SEG_POINTS = SAMPLES + 1; // 13
+  const ONE_SEG_POINTS = SAMPLES + 1;
 
   beforeEach(() => {
     builder = new CalculateAdaptiveCurveData();
   });
 
-  function expectFinitePoint(p: IPoint) {
+  function expectFinitePoint(p: IPoint): void {
     expect(p).toBeDefined();
     expect(Number.isFinite(p.x)).toBe(true);
     expect(Number.isFinite(p.y)).toBe(true);
   }
 
-  function expectPointsArray(resp: IFConnectionBuilderResponse, expectedLen: number) {
+  function expectPointsArray(resp: IFConnectionBuilderResponse, expectedLen: number): void {
     expect(resp.points).toBeDefined();
     expect(Array.isArray(resp.points)).toBe(true);
     expect(resp.points.length).toBe(expectedLen);
@@ -32,7 +34,10 @@ describe('CalculateAdaptiveCurveData', () => {
     }
   }
 
-  function expectCubicPath(resp: IFConnectionBuilderResponse, start: { x: number; y: number }) {
+  function expectCubicPath(
+    resp: IFConnectionBuilderResponse,
+    start: { x: number; y: number },
+  ): void {
     expect(resp.path).toBeDefined();
     expect(resp.path.startsWith(`M ${start.x} ${start.y}`)).toBe(true);
     expect(resp.path).toContain(' C ');
@@ -40,8 +45,8 @@ describe('CalculateAdaptiveCurveData', () => {
 
   it('builds a cubic path for a horizontal connection (RIGHT -> LEFT)', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 0 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 0),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.LEFT,
       offset: 20,
@@ -49,22 +54,22 @@ describe('CalculateAdaptiveCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expectCubicPath(res, request.source);
-    expectPointsArray(res, ONE_SEG_POINTS);
+    expectCubicPath(result, request.source);
+    expectPointsArray(result, ONE_SEG_POINTS);
 
-    expectFinitePoint(res.secondPoint);
-    expectFinitePoint(res.penultimatePoint);
+    expectFinitePoint(result.secondPoint);
+    expectFinitePoint(result.penultimatePoint);
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 
   it('builds a cubic path for a vertical connection (BOTTOM -> TOP)', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 0, y: 100 },
+      source: pure.point(0, 0),
+      target: pure.point(0, 100),
       sourceSide: EFConnectableSide.BOTTOM,
       targetSide: EFConnectableSide.TOP,
       offset: 20,
@@ -72,22 +77,22 @@ describe('CalculateAdaptiveCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expectCubicPath(res, request.source);
-    expectPointsArray(res, ONE_SEG_POINTS);
+    expectCubicPath(result, request.source);
+    expectPointsArray(result, ONE_SEG_POINTS);
 
-    expectFinitePoint(res.secondPoint);
-    expectFinitePoint(res.penultimatePoint);
+    expectFinitePoint(result.secondPoint);
+    expectFinitePoint(result.penultimatePoint);
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 
   it('builds a cubic path for a diagonal connection', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 100 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 100),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.BOTTOM,
       offset: 20,
@@ -95,47 +100,47 @@ describe('CalculateAdaptiveCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expectCubicPath(res, request.source);
-    expectPointsArray(res, ONE_SEG_POINTS);
+    expectCubicPath(result, request.source);
+    expectPointsArray(result, ONE_SEG_POINTS);
 
-    expectFinitePoint(res.secondPoint);
-    expectFinitePoint(res.penultimatePoint);
+    expectFinitePoint(result.secondPoint);
+    expectFinitePoint(result.penultimatePoint);
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(1);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(1);
   });
 
   it('builds multi-segment cubic path when pivots exist', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 0, y: 0 },
-      target: { x: 100, y: 0 },
+      source: pure.point(0, 0),
+      target: pure.point(100, 0),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.LEFT,
       offset: 20,
       radius: 0,
-      waypoints: [{ x: 50, y: 50 }],
+      waypoints: [pure.point(50, 50)],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expect(res.path).toBeDefined();
-    expect(res.path.startsWith('M 0 0')).toBe(true);
+    expect(result.path).toBeDefined();
+    expect(result.path.startsWith('M 0 0')).toBe(true);
 
-    expect((res.path.match(/\sC\s/g) ?? []).length).toBe(2);
+    expect((result.path.match(/\sC\s/g) ?? []).length).toBe(2);
 
-    expect(res.points).toBeDefined();
-    expect(res.points.length).toBeGreaterThan(ONE_SEG_POINTS);
+    expect(result.points).toBeDefined();
+    expect(result.points.length).toBeGreaterThan(ONE_SEG_POINTS);
 
-    expect(res.candidates).toBeDefined();
-    expect(res.candidates.length).toBe(2);
+    expect(result.candidates).toBeDefined();
+    expect(result.candidates.length).toBe(2);
   });
 
   it('ensures handles are not degenerate for typical input', () => {
     const request: IFConnectionBuilderRequest = {
-      source: { x: 10, y: 20 },
-      target: { x: 110, y: 120 },
+      source: pure.point(10, 20),
+      target: pure.point(110, 120),
       sourceSide: EFConnectableSide.RIGHT,
       targetSide: EFConnectableSide.TOP,
       offset: 16,
@@ -143,16 +148,19 @@ describe('CalculateAdaptiveCurveData', () => {
       waypoints: [],
     };
 
-    const res = builder.handle(request);
+    const result = builder.handle(request);
 
-    expectFinitePoint(res.secondPoint);
-    expectFinitePoint(res.penultimatePoint);
+    expectFinitePoint(result.secondPoint);
+    expectFinitePoint(result.penultimatePoint);
 
     expect(
-      !(res.secondPoint.x === request.source.x && res.secondPoint.y === request.source.y),
+      !(result.secondPoint.x === request.source.x && result.secondPoint.y === request.source.y),
     ).toBe(true);
     expect(
-      !(res.penultimatePoint.x === request.target.x && res.penultimatePoint.y === request.target.y),
+      !(
+        result.penultimatePoint.x === request.target.x &&
+        result.penultimatePoint.y === request.target.y
+      ),
     ).toBe(true);
   });
 });

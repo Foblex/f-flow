@@ -12,7 +12,7 @@ export class AddConnectionToStore implements IExecution<AddConnectionToStoreRequ
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connection }: AddConnectionToStoreRequest): void {
-    this._store.fConnections.push(connection);
+    this._store.connections.add(connection);
     this._store.dataChanged();
   }
 }

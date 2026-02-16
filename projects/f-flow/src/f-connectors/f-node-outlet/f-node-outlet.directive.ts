@@ -11,7 +11,7 @@ import {
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { F_NODE } from '../../f-node';
 import { FMediator } from '@foblex/mediator';
-import { AddOutletToStoreRequest, RemoveOutletFromStoreRequest } from '../../domain';
+import { AddConnectorToStoreRequest, RemoveConnectorFromStoreRequest } from '../../domain';
 import { stringAttribute } from '../../utils';
 import { EFConnectableSide } from '../../f-connection-v2';
 
@@ -62,10 +62,10 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   }
 
   public ngOnInit() {
-    this._mediator.execute(new AddOutletToStoreRequest(this));
+    this._mediator.execute(new AddConnectorToStoreRequest(this));
   }
 
   public ngOnDestroy(): void {
-    this._mediator.execute(new RemoveOutletFromStoreRequest(this));
+    this._mediator.execute(new RemoveConnectorFromStoreRequest(this));
   }
 }

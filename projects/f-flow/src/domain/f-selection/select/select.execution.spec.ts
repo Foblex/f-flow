@@ -1,64 +1,66 @@
-import { TestBed } from '@angular/core/testing';
-import { SelectRequest } from './select.request';
-import { FMediator } from '@foblex/mediator';
-import { SelectExecution } from './select.execution';
-import { setupTestModule } from '../../test-setup';
-import { FDraggableDataContext } from '../../../f-draggable';
-import { FComponentsStore } from '../../../f-storage';
-import { signal } from "@angular/core";
+import {
+  connectionFactory,
+  configureDiTest,
+  createSpy,
+  FComponentsStore,
+  FDraggableDataContext,
+  injectFromDi,
+  nodeFactory,
+  registryAdd,
+  SelectExecution,
+  SelectRequest,
+  selectableFactory,
+} from '@foblex/flow';
 
-describe('SelectExecution', () => {
-  let fDraggableDataContext: FDraggableDataContext;
-  let fComponentsStore: FComponentsStore;
-  let fMediator: FMediator;
+describe('SelectExecution (unit)', () => {
+  let execution: SelectExecution;
+  let draggableDataContext: FDraggableDataContext;
+  let componentsStore: FComponentsStore;
 
   beforeEach(() => {
-    setupTestModule([ SelectExecution ]);
-    fDraggableDataContext = TestBed.inject(FDraggableDataContext) as jasmine.SpyObj<FDraggableDataContext>;
-    fComponentsStore = TestBed.inject(FComponentsStore) as jasmine.SpyObj<FComponentsStore>;
-    fMediator = TestBed.inject(FMediator) as jasmine.SpyObj<FMediator>;
+    configureDiTest({ providers: [SelectExecution] });
+    execution = injectFromDi(SelectExecution);
+    draggableDataContext = injectFromDi(FDraggableDataContext);
+    componentsStore = injectFromDi(FComponentsStore);
+
+    draggableDataContext.selectedItems = [];
+    draggableDataContext.isSelectedChanged = false;
   });
 
-  it('should deselect all items and clear selectedItems array', () => {
-    const mockSelectedItems = [
-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
-      { unmarkAsSelected: jasmine.createSpy('unmarkAsSelected') },
+  it('clears previous selection', () => {
+    const firstUnmark = createSpy('firstUnmark');
+    const secondUnmark = createSpy('secondUnmark');
+
+    const previousSelection = [
+      selectableFactory().id('prev-1').onUnmarkAsSelected(firstUnmark).build(),
+      selectableFactory().id('prev-2').onUnmarkAsSelected(secondUnmark).build(),
     ];
-    fDraggableDataContext.selectedItems = mockSelectedItems as any;
 
-    fMediator.execute(new SelectRequest([], []));
+    draggableDataContext.selectedItems = previousSelection;
 
-    mockSelectedItems.forEach(item => {
-      expect(item.unmarkAsSelected).toHaveBeenCalled();
-    });
-    expect(fDraggableDataContext.selectedItems.length).toBe(0);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
+    execution.handle(new SelectRequest([], []));
+
+    expect(firstUnmark).toHaveBeenCalledTimes(1);
+    expect(secondUnmark).toHaveBeenCalledTimes(1);
+    expect(draggableDataContext.selectedItems).toEqual([]);
+    expect(draggableDataContext.isSelectedChanged).toBeTrue();
   });
 
-  it('should select nodes and connections based on request', () => {
-    const mockNode = { fId: signal('node1'), markAsSelected: jasmine.createSpy('markAsSelected') };
-    const mockConnection = { fId: signal('conn1'), markAsSelected: jasmine.createSpy('markAsSelected') };
+  it('selects existing node and connection by id', () => {
+    const markNode = createSpy('markNode');
+    const markConnection = createSpy('markConnection');
 
-    fComponentsStore.fNodes = [mockNode] as any;
-    fComponentsStore.fConnections = [mockConnection] as any;
-    fDraggableDataContext.selectedItems = [];
+    const node = nodeFactory().id('node1').onMarkAsSelected(markNode).build();
+    const connection = connectionFactory().id('conn1').onMarkAsSelected(markConnection).build();
 
-    fMediator.execute(new SelectRequest(['node1'], ['conn1']));
+    registryAdd(componentsStore.nodes, node);
+    registryAdd(componentsStore.connections, connection);
 
-    expect(mockNode.markAsSelected).toHaveBeenCalled();
-    expect(mockConnection.markAsSelected).toHaveBeenCalled();
-    expect(fDraggableDataContext.selectedItems.length).toEqual(2);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
-  });
+    execution.handle(new SelectRequest(['node1'], ['conn1']));
 
-  it('should not select non-existing nodes and connections', () => {
-    fComponentsStore.fNodes = [] as any;
-    fComponentsStore.fConnections = [] as any;
-    fDraggableDataContext.selectedItems = [];
-
-    fMediator.execute(new SelectRequest(['nonexistentNode'], ['nonexistentConnection']));
-
-    expect(fDraggableDataContext.selectedItems.length).toBe(0);
-    expect(fDraggableDataContext.isSelectedChanged).toBe(true);
+    expect(markNode).toHaveBeenCalledTimes(1);
+    expect(markConnection).toHaveBeenCalledTimes(1);
+    expect(draggableDataContext.selectedItems).toEqual([node, connection]);
+    expect(draggableDataContext.isSelectedChanged).toBeTrue();
   });
 });

@@ -14,6 +14,6 @@ export class RemoveSnapConnectionFromStore
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: RemoveSnapConnectionFromStoreRequest): void {
-    this._store.fSnapConnection = undefined;
+    this._store.connections.removeInstanceForSnap();
   }
 }

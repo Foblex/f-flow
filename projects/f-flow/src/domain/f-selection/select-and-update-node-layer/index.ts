@@ -1,3 +1,3 @@
-export * from './select-and-update-node-layer.execution';
+export * from './select-and-update-node-layer';
 
-export * from './select-and-update-node-layer.request';
+export * from './select-and-update-node-layer-request';

@@ -1,39 +1,67 @@
-﻿# Connection Marker
+# Connection Marker
 
-**Selector:** [fMarker]
+**Selector:** `svg[fMarker]`  
+**Class:** `FConnectionMarker`
 
-The **FMarkerDirective** is a directive that represents a start or end marker for a connection.
+`FConnectionMarker` lets you define custom SVG markers for connection starts and ends.
 
-## Inputs
+## Why / Use cases
 
-  - `type: EFMarkerType;` The type of the marker, either start or end. Accepts a value from [EFMarkerType](e-f-marker-type) enum.
+Use `fMarker` when connection semantics should be visually explicit.
 
-  - `height: number;` The height of the marker.
+Typical use cases:
 
-  - `width: number;` The width of the marker.
+- Distinguish direction or type of edge.
+- Show selected-state marker variants.
+- Match product branding with custom SVG marker geometry.
 
-  - `refX: number;` The x-coordinate of the marker relative to the connection.
+Use default markers if your graph does not need semantic marker styling.
 
-  - `refY: number;` The y-coordinate of the marker relative to the connection.
+## How it works
 
-## Usage
+Each marker registers in the marker store and is hidden in-place. On connection redraw, marker definitions are cloned into connection SVG defs and referenced by marker ids.
 
-```html
-<f-connection [fOutputId]="id1" [fInputId]="id2">
-  <svg fMarker type="f-connection-marker-start" 
-       [height]="height" [width]="width" [refX]="positionX" [refY]="positionY">
-    //svg content
-  </svg> 
-</f-connection>
+## API
+
+### Inputs
+
+- `type: string;` Default: `start`. Marker role (`start` or `end`).
+- `width: number;` Default: `0`. Marker width.
+- `height: number;` Default: `0`. Marker height.
+- `refX: number;` Default: `0`. Reference X coordinate.
+- `refY: number;` Default: `0`. Reference Y coordinate.
+- `orient: string;` Default: `auto`. SVG marker orientation.
+- `markerUnits: string;` Default: `strokeWidth`. SVG marker units (`strokeWidth` or `userSpaceOnUse`).
+
+### Types
+
+#### EFMarkerType
+
+```typescript
+enum EFMarkerType {
+  START = 'start',
+  END = 'end',
+  SELECTED_START = 'selected-start',
+  SELECTED_END = 'selected-end',
+}
 ```
 
-## Examples
+## Styling
 
-Example of how to create a custom connection marker. The marker is created using an SVG element and **fMarker** directive. FMarkerDirective requires the following attributes: `type`, `height`, `width`, `refX`, `refY`. [type] attribute accepted values are from the [EFMarkerType](e-f-marker-type) enum.
-::: ng-component <connection-markers></connection-markers>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-markers/connection-markers.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-markers/connection-markers.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/connection-markers/connection-markers.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+- `.f-component` Base class for flow primitives.
+- `.f-marker` Host class for marker SVG elements.
+
+## Notes / Pitfalls
+
+- Marker dimensions and `refX/refY` must match your SVG path geometry; wrong values make arrowheads appear offset.
+- Use `SELECTED_*` marker types if selected connections need different visuals.
+- Marker components are hidden source definitions; visible marker rendering happens on connection paths.
+
+## Example
+
+::: ng-component <connection-markers></connection-markers> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-markers/connection-markers.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-markers/connection-markers.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-markers/connection-markers.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
-

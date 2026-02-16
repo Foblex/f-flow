@@ -5,21 +5,27 @@ import {
   InputSignalWithTransform,
   OutputEmitterRef,
 } from '@angular/core';
-import { FCreateConnectionEvent, FReassignConnectionEvent } from './f-connection';
+import {
+  FConnectionWaypointsChangedEvent,
+  FCreateConnectionEvent,
+  FReassignConnectionEvent,
+} from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FCreateNodeEvent } from '../f-external-item';
-import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDropToGroupEvent } from './f-drop-to-group';
+import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
-import { FMoveNodesEvent } from './f-node-move';
-import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
+import { FMoveNodesEvent } from './drag-node';
+import { FDragStartedEvent } from './f-drag-started-event';
+import { FNodeConnectionsIntersectionEvent, FNodeIntersectedWithConnections } from './domain';
 
 export abstract class FDraggableBase extends DragAndDropBase {
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
+  /** @deprecated Use `fNodeConnectionsIntersection` */
   public abstract fNodeIntersectedWithConnections: EventEmitter<FNodeIntersectedWithConnections>;
+  public abstract fNodeConnectionsIntersection: OutputEmitterRef<FNodeConnectionsIntersectionEvent>;
 
   public abstract fEmitOnNodeIntersect: boolean;
 

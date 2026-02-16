@@ -14,6 +14,6 @@ export class RemoveConnectionForCreateFromStore
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: RemoveConnectionForCreateFromStoreRequest): void {
-    this._store.fTempConnection = undefined;
+    this._store.connections.removeInstanceForCreate();
   }
 }

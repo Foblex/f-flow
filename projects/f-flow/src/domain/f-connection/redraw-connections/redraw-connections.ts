@@ -28,45 +28,29 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   public handle(_request: RedrawConnectionsRequest): void {
     this._resetConnectors();
 
-    if (this._store.fTempConnection) {
-      this._createMarkers(this._store.fTempConnection);
+    const instanceForCreate = this._store.connections.getForCreate();
+    if (instanceForCreate) {
+      this._createMarkers(instanceForCreate);
     }
 
-    if (this._store.fSnapConnection) {
-      this._createMarkers(this._store.fSnapConnection);
+    const instanceForSnap = this._store.connections.getForSnap();
+    if (instanceForSnap) {
+      this._createMarkers(instanceForSnap);
     }
 
-    this._store.fConnections.forEach((connection) => {
+    this._store.connections.getAll().forEach((connection) => {
       this._setupConnection(
-        this._getSourceConnector(connection.fOutputId()),
-        this._getTargetConnector(connection.fInputId()),
+        this._store.outputs.require(connection.fOutputId()),
+        this._store.inputs.require(connection.fInputId()),
         connection,
       );
     });
     DragRectCache.invalidateAll();
   }
 
-  private _getSourceConnector(id: string): FConnectorBase {
-    const result = this._store.fOutputs.find((x) => x.fId() === id);
-    if (!result) {
-      throw new Error(`Source connector with id ${id} not found`);
-    }
-
-    return result;
-  }
-
-  private _getTargetConnector(id: string): FConnectorBase {
-    const result = this._store.fInputs.find((x) => x.fId() === id);
-    if (!result) {
-      throw new Error(`Target connector with id ${id} not found`);
-    }
-
-    return result;
-  }
-
   private _resetConnectors(): void {
-    this._store.fOutputs.forEach((x) => x.resetConnected());
-    this._store.fInputs.forEach((x) => x.resetConnected());
+    this._store.outputs.getAll().forEach((x) => x.resetConnected());
+    this._store.inputs.getAll().forEach((x) => x.resetConnected());
   }
 
   private _setupConnection(

@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { PrepareDragSequenceRequest } from './prepare-drag-sequence-request';
-import { FDraggableDataContext } from '../../../f-draggable';
-import { StartDragSequenceRequest } from '../start-drag-sequence';
+import { EmitStartDragSequenceEventRequest, FDraggableDataContext } from '../../../f-draggable';
 
 /**
  * Execution that prepares the drag sequence by invoking the prepareDragSequence method on each draggable item.
@@ -17,7 +16,7 @@ export class PrepareDragSequenceExecution implements IExecution<PrepareDragSeque
   public handle(_request: PrepareDragSequenceRequest): void {
     this._callPrepareDragSequence();
 
-    this._mediator.execute<void>(new StartDragSequenceRequest());
+    this._mediator.execute<void>(new EmitStartDragSequenceEventRequest());
   }
 
   private _callPrepareDragSequence(): void {

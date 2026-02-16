@@ -8,11 +8,12 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveCanvasFromStoreRequest)
-export class RemoveCanvasFromStoreExecution implements IExecution<RemoveCanvasFromStoreRequest, void> {
-
+export class RemoveCanvasFromStoreExecution
+  implements IExecution<RemoveCanvasFromStoreRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: RemoveCanvasFromStoreRequest): void {
+  public handle(_request: RemoveCanvasFromStoreRequest): void {
     this._store.fCanvas = undefined;
   }
 }

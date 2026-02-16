@@ -2,41 +2,64 @@
 
 Welcome to the official development roadmap for **Foblex Flow** — an Angular-native library for building powerful, customizable visual flow editors and diagram systems.
 
-This roadmap outlines the core features planned, currently in progress, and already completed.  
-Stay up to date and help shape the future by joining [GitHub Discussions](https://github.com/Foblex/f-flow/discussions).
+This roadmap outlines what’s planned, what’s in progress, and what’s already shipped.  
+Stay up to date and help shape the future via [GitHub Discussions](https://github.com/Foblex/f-flow/discussions).
 
 ---
 
 ## 🚧 Planned
 
-| Feature                                      | Description                                                                                     |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------|
-| 🔍 **Pinch-to-Zoom Support**                | Zoom in/out via pinch gestures for enhanced mobile and touch device usability. [↗](https://github.com/Foblex/f-flow/discussions/127) |
-| 📐 **Grid-Aware Resize Handles**            | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130) |
+| Feature                          | Description                                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 📐 **Grid-Aware Resize Handles** | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130) |
 
 ---
 
 ## 🚧 In Progress
 
-| Feature                                      | Description                                                                                     |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------|
-| 🔄 **Freeform Connections**                 | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88) |
+| Feature                         | Description                                                                                                                                                                                                                                                                                                          |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⚡ **Performance Improvements** | We’re working on reducing unnecessary recalculations during interactions. The goal is to rely more on cached geometry (store measured sizes/rects instead of reading them from DOM repeatedly). We may also explore rendering only what’s visible (virtualization), but the exact approach is still being validated. |
+| 🔄 **Freeform Connections**     | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88)                                                                                                                                                                   |
 
 ---
 
 ## ✅ Recently Completed
 
+### 🧩 Interaction & UX
+
+- 🧲 **Magnetic Alignment (Lines + Rects)** — snap/align helpers while dragging:
+  - **Magnetic Lines** — align by guide lines
+  - **Magnetic Rects** — align by nearby element bounds  
+    Examples: https://flow.foblex.com/examples/magnetic-lines, https://flow.foblex.com/examples/magnetic-rects  
+    Released in **v18.1.0**.
+
+- ✨ **Pinch-to-Zoom Support** — zoom in/out via pinch gestures for trackpads and touch devices.  
+  Discussion: https://github.com/Foblex/f-flow/discussions/127  
+  Example: https://flow.foblex.com/examples/zoom  
+  Released in **v18.0.0**.
+
+- 🧭 **Connection Waypoints (new feature)** — interactive waypoint editing on connections:
+  - drag a **candidate** point to **add** a waypoint
+  - drag an existing waypoint to **move** it
+  - **right-click** a waypoint to **remove** it  
+    Example: https://flow.foblex.com/examples/connection-waypoints  
+    Released in **v18.0.0**.
+
 ### 🔧 Infrastructure & Tooling
+
 - ⏱ **Debounced `fCanvasChange` Event** — reduce noise by configuring `debounceTime` (2025-07-23)
 - 🛠 **Angular Schematics Support** — `ng add` / `ng update` commands for easier setup (2025-05-11)
 
 ### 🧱 UX & Interaction
+
 - ✋ **`fDragBlocker` Directive** — block drag interaction in specific UI areas (2025-07-23)
 - 🔄 **Fully Rotatable Nodes** — rotate any node freely (2025-04-12)
 - ⌨️ **Custom Drag/Zoom Triggers** — define hotkeys and behaviors (2025-02-10)
 - 📤 **DragStart / DragEnd Events** — now emit contextual data (2025-02-07)
 
 ### 🗂 Editor Features
+
 - 🔁 **Connection Reassignment Refactor** — support reassigning both source and target points (2025-07-23)
 - 📬 **`FReassignConnectionEvent` Redesign** — includes both source/target change tracking (2025-07-23)
 - 🧭 **Minimap Refactor** — restructured for flexibility, signal support and better input handling (2025-07-23)

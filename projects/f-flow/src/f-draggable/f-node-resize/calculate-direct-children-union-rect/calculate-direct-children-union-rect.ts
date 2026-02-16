@@ -4,18 +4,18 @@ import { IRect, RectExtensions } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../domain';
-import { FComponentsStore } from "../../../f-storage";
+import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(CalculateDirectChildrenUnionRectRequest)
 export class CalculateDirectChildrenUnionRect
-  implements IExecution<CalculateDirectChildrenUnionRectRequest, IRect | null> {
-
+  implements IExecution<CalculateDirectChildrenUnionRectRequest, IRect | null>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
   private get _allNodesAndGroups(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll();
   }
 
   public handle({ nodeOrGroup, paddings }: CalculateDirectChildrenUnionRectRequest): IRect | null {
@@ -23,8 +23,7 @@ export class CalculateDirectChildrenUnionRect
       this._calculateDirectChildren(nodeOrGroup.fId()).map((x) => this._normalizeRect(x)),
     );
 
-    return childNodeRect ?
-      this._concatRectWithParentPadding(childNodeRect, paddings) : null;
+    return childNodeRect ? this._concatRectWithParentPadding(childNodeRect, paddings) : null;
   }
 
   private _calculateDirectChildren(nodeOrGroupId: string): FNodeBase[] {
@@ -32,10 +31,15 @@ export class CalculateDirectChildrenUnionRect
   }
 
   private _normalizeRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
+    return this._mediator.execute<IRect>(
+      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
+    );
   }
 
-  private _concatRectWithParentPadding(rect: IRect, padding: [number, number, number, number]): IRect {
+  private _concatRectWithParentPadding(
+    rect: IRect,
+    padding: [number, number, number, number],
+  ): IRect {
     return RectExtensions.initialize(
       rect.x - padding[0],
       rect.y - padding[1],

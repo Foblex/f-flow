@@ -15,30 +15,25 @@ import {
   QueryList,
 } from '@angular/core';
 import { FDraggableBase } from './f-draggable-base';
+import { DragNodeFinalizeRequest, DragNodePreparationRequest, FMoveNodesEvent } from './drag-node';
+import { DragCanvasFinalizeRequest, DragCanvasPreparationRequest } from './drag-canvas';
 import {
-  FMoveNodesEvent,
-  FNodeMoveFinalizeRequest,
-  MoveNodePreparationRequest,
-} from './f-node-move';
-import { FCanvasMoveFinalizeRequest, FCanvasMovePreparationRequest } from './f-canvas';
-import {
+  CreateConnectionFinalizeRequest,
   CreateConnectionPreparationRequest,
+  DragConnectionWaypointFinalizeRequest,
+  DragConnectionWaypointPreparationRequest,
+  FConnectionWaypointsChangedEvent,
   FCreateConnectionEvent,
-  FCreateConnectionFinalizeRequest,
   FReassignConnectionEvent,
-  FReassignConnectionFinalizeRequest,
-  FReassignConnectionPreparationRequest,
-  MoveConnectionWaypointFinalizeRequest,
-  MoveConnectionWaypointPreparationRequest,
-} from './f-connection';
+  ReassignConnectionFinalizeRequest,
+  ReassignConnectionPreparationRequest,
+} from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,
   DragRectCache,
-  EmitSelectionChangeEventRequest,
-  EndDragSequenceRequest,
   FEventTrigger,
   FTriggerEvent,
   InitializeDragSequenceRequest,
@@ -52,7 +47,7 @@ import {
   FExternalItemPreparationRequest,
   PreventDefaultIsExternalItemRequest,
 } from '../f-external-item';
-import { SingleSelectRequest } from './single-select';
+import { SelectByPointerRequest } from './select-by-pointer';
 import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './f-node-resize';
 import {
   F_AFTER_MAIN_PLUGIN,
@@ -60,74 +55,29 @@ import {
   IFDragAndDropPlugin,
 } from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
-import { FDragStartedEvent, FNodeIntersectedWithConnections } from './domain';
-import { FDragHandlerResult } from './f-drag-handler';
+import {
+  EmitEndDragSequenceEventRequest,
+  EmitSelectionChangeEventRequest,
+  FNodeConnectionsIntersectionEvent,
+  FNodeIntersectedWithConnections,
+} from './domain';
+import { DragHandlerInjector, FDragHandlerResult } from './infrastructure';
 import {
   DropToGroupFinalizeRequest,
   DropToGroupPreparationRequest,
   FDropToGroupEvent,
-} from './f-drop-to-group';
+} from './drop-to-group';
 import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
-import { FConnectionWaypointsChangedEvent } from '../f-connection-v2';
+import { FDragStartedEvent } from './f-drag-started-event';
+import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';
 
-// ┌──────────────────────────────┐
-// │        Angular Realm         │
-// │                              │
-// │  ┌────────────────────────┐  │
-// │  │  FDraggableDirective   │  │
-// │  └──────────┬─────────────┘  │
-// │             │ extends        │
-// │  ┌──────────▼─────────────┐  │
-// │  │     FDraggableBase     │  │
-// │  └──────────┬─────────────┘  │
-// │             │                │
-// │             │ overrides      │
-// │  ┌──────────▼─────────────┐  │
-// │  │   DragAndDropBase      │  │
-// │  └──────────┬─────────────┘  │
-// │             │                │
-// │      subscribes to           │
-// │             │                │
-// │        ┌────▼────┐           │
-// │        │ Document│           │
-// │        └─────────┘           │
-// │                              │
-// │  ┌────────────────────────┐  │
-// │  │       FMediator        │◄─┬────┐
-// │  └─────┬────────┬─────────┘  │    │
-// │        │        │            │    │
-// │   executes   executes        │    │
-// │   F*Request   F*Event        │    │
-// │        │        │            │    │
-// └────────┴────────┴────────────┴────┘
-//
-//
-// ┌──────────────────────────────────────┐
-// │       Drag & Drop Runtime Layer      │
-// │                                      │
-// │  Events from DOM:                    │
-// │    - mousedown / touchstart          │
-// │    - mousemove / touchmove           │
-// │    - pointerup                       │
-// │                                      │
-// │  ↓ Routed to                         │
-// │                                      │
-// │  ┌──────────────────────────────┐    │
-// │  │     DragAndDropBase          │    │
-// │  └──────────────────────────────┘    │
-// │        ▲             ▲               │
-// │        │             │               │
-// │   checkDrag     onPointerMove        │
-// │   Sequence      + Finalization       │
-// │   To Start                           │
-// └──────────────────────────────────────┘
 @Directive({
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
-  providers: [FDragHandlerResult],
+  providers: [FDragHandlerResult, DragHandlerInjector],
 })
 export class FDraggableDirective
   extends FDraggableBase
@@ -174,9 +124,11 @@ export class FDraggableDirective
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
 
+  /** @deprecated Use `fNodeConnectionsIntersection` */
   @Output()
   public override fNodeIntersectedWithConnections =
     new EventEmitter<FNodeIntersectedWithConnections>();
+  public readonly fNodeConnectionsIntersection = output<FNodeConnectionsIntersectionEvent>();
 
   @Input({ transform: booleanAttribute })
   public override fEmitOnNodeIntersect: boolean = false;
@@ -237,6 +189,8 @@ export class FDraggableDirective
   @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
   private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
 
+  private readonly _dragHandlerInjector = inject(DragHandlerInjector);
+
   public ngOnInit(): void {
     this._mediator.execute<void>(new AddDndToStoreRequest(this));
   }
@@ -249,19 +203,22 @@ export class FDraggableDirective
     if (isDragBlocker(event.targetElement)) {
       return false;
     }
+    this._dragHandlerInjector.create();
 
     this._result.clear();
 
     this._mediator.execute<void>(new InitializeDragSequenceRequest());
 
+    this._mediator.execute<void>(new SelectionAreaPreparationRequest(event));
+
     this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
 
     this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
 
-    this._mediator.execute<void>(new SingleSelectRequest(event, this.fMultiSelectTrigger));
+    this._mediator.execute<void>(new SelectByPointerRequest(event, this.fMultiSelectTrigger));
 
     this._mediator.execute<void>(
-      new FReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
+      new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
     );
 
     this._mediator.execute<void>(
@@ -269,11 +226,7 @@ export class FDraggableDirective
     );
 
     this._mediator.execute<void>(
-      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
-    );
-
-    this._mediator.execute<void>(
-      new MoveConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
+      new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
     this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
@@ -293,7 +246,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
-    this._mediator.execute<void>(new MoveNodePreparationRequest(event, this.fNodeMoveTrigger));
+    this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._mediator.execute<void>(
       new FExternalItemPreparationRequest(event, this.fExternalItemTrigger),
@@ -301,7 +254,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DropToGroupPreparationRequest(event));
 
-    this._mediator.execute<void>(new FCanvasMovePreparationRequest(event, this.fCanvasMoveTrigger));
+    this._mediator.execute<void>(new DragCanvasPreparationRequest(event, this.fCanvasMoveTrigger));
 
     this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
 
@@ -319,29 +272,31 @@ export class FDraggableDirective
   public override onPointerUp(event: IPointerEvent): void {
     this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
 
-    this._mediator.execute<void>(new FReassignConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new SelectionAreaFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FCreateConnectionFinalizeRequest(event));
+    this._mediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
+
+    this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event));
 
     this._mediator.execute<void>(new NodeResizeFinalizeRequest(event));
 
     this._mediator.execute<void>(new FNodeRotateFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FNodeMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new DragNodeFinalizeRequest(event));
 
     this._mediator.execute<void>(new FExternalItemFinalizeRequest(event));
 
     this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FCanvasMoveFinalizeRequest(event));
+    this._mediator.execute<void>(new DragCanvasFinalizeRequest(event));
 
     this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
 
-    this._mediator.execute<void>(new MoveConnectionWaypointFinalizeRequest(event));
+    this._mediator.execute<void>(new DragConnectionWaypointFinalizeRequest(event));
 
-    this._mediator.execute<void>(new EndDragSequenceRequest());
+    this._mediator.execute<void>(new EmitEndDragSequenceEventRequest());
   }
 
   protected override finalizeDragSequence(): void {
@@ -349,6 +304,8 @@ export class FDraggableDirective
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._result.clear();
+
+    this._dragHandlerInjector.destroy();
   }
 
   public ngOnDestroy(): void {

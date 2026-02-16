@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { RemoveConnectionWaypointRequest } from './remove-connection-waypoint-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
-import { FConnectionBase, FConnectionWaypointsChangedEvent } from '../../../f-connection-v2';
+import { FConnectionBase } from '../../../f-connection-v2';
+import { FConnectionWaypointsChangedEvent } from '../../../f-draggable';
 
 @Injectable()
 @FExecutionRegister(RemoveConnectionWaypointRequest)
@@ -10,7 +11,7 @@ export class RemoveConnectionWaypoint implements IExecution<RemoveConnectionWayp
   private readonly _store = inject(FComponentsStore);
 
   public handle({ waypointIndex, connectionId }: RemoveConnectionWaypointRequest): void {
-    const connection = this._findConnection(connectionId);
+    const connection = this._store.connections.require(connectionId);
 
     const current = connection.fWaypoints()?.waypoints().slice();
     if (!current) {
@@ -21,15 +22,6 @@ export class RemoveConnectionWaypoint implements IExecution<RemoveConnectionWayp
     connection.fWaypoints()?.waypoints.set(current);
 
     this._store.fDraggable?.fConnectionWaypointsChanged.emit(this._changeEvent(connection));
-  }
-
-  private _findConnection(id: string): FConnectionBase {
-    const result = this._store.fConnections.find((x) => x.fId() === id);
-    if (!result) {
-      throw new Error(`Cannot find connection with id ${id}`);
-    }
-
-    return result;
   }
 
   private _changeEvent(connection: FConnectionBase): FConnectionWaypointsChangedEvent {

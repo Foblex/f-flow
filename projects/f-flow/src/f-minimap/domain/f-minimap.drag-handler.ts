@@ -1,12 +1,13 @@
 import { IPoint, IRect, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../f-storage';
-import { IFDragHandler } from '../../f-draggable';
+import { DragHandlerBase } from '../../f-draggable';
 import { FMediator } from '@foblex/mediator';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point';
 import { FMinimapData } from './f-minimap-data';
 
-export class FMinimapDragHandler implements IFDragHandler {
-  public fEventType = 'minimap';
+export class FMinimapDragHandler extends DragHandlerBase<unknown> {
+  protected readonly type = 'minimap';
+  protected readonly kind = 'minimap';
 
   private _lastDifference: IPoint | null = null;
 
@@ -17,13 +18,15 @@ export class FMinimapDragHandler implements IFDragHandler {
     private readonly _canvasPosition: IPoint,
     private readonly _eventPoint: IPoint,
     private readonly _minimap: FMinimapData,
-  ) {}
+  ) {
+    super();
+  }
 
-  public prepareDragSequence(): void {
+  public override prepareDragSequence(): void {
     this._store.fCanvas?.hostElement.classList.add('f-scaled-animate');
   }
 
-  public onPointerMove(difference: IPoint): void {
+  public override onPointerMove(difference: IPoint): void {
     if (this._lastDifference && this._isSamePoint(difference, this._lastDifference)) {
       return;
     }
@@ -50,7 +53,7 @@ export class FMinimapDragHandler implements IFDragHandler {
     );
   }
 
-  public onPointerUp(): void {
+  public override onPointerUp(): void {
     this._store.fCanvas?.hostElement.classList.remove('f-scaled-animate');
     this._store.fCanvas?.emitCanvasChangeEvent();
   }

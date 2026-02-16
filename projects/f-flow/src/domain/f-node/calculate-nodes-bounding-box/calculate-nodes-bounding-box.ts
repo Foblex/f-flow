@@ -20,6 +20,6 @@ export class CalculateNodesBoundingBox
   }
 
   private _nodesRects(): IRect[] {
-    return this._store.fNodes.map((x) => RectExtensions.fromElement(x.hostElement));
+    return this._store.nodes.getAll().map((x) => RectExtensions.fromElement(x.hostElement));
   }
 }

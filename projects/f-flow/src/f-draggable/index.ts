@@ -1,24 +1,28 @@
 export * from './domain';
 
-export * from './f-canvas';
+export * from './drag-canvas';
 
-export * from './f-connection';
+export * from './connection';
 
-export * from './f-drag-handler';
+export * from './infrastructure';
 
-export * from './f-drop-to-group';
+export * from './drop-to-group';
 
-export * from './f-node-move';
+export * from './drag-node';
 
 export * from './f-node-resize';
 
 export * from './f-node-rotate';
 
-export * from './single-select';
-
 export * from './pinch-to-zoom';
 
+export * from './select-by-pointer';
+
+export * from './selection-area';
+
 export * from './f-drag-blocker.directive';
+
+export * from './f-drag-started-event';
 
 export * from './f-draggable.directive';
 

@@ -1,11 +1,11 @@
 import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
 import {
   MoveFrontElementsBeforeTargetElement,
-  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayers,
 } from './update-item-and-children-layers';
 import { GetNormalizedPointExecution } from './get-normalized-point';
 import {
-  SortItemLayersExecution,
+  SortItemLayers,
   SortItemsByParentExecution,
   SortNodeLayersExecution,
 } from './sort-item-layers';
@@ -19,7 +19,6 @@ import { F_CONNECTORS_FEATURES } from './f-connectors';
 import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
-import { F_LINE_ALIGNMENT_FEATURES } from './f-line-alignment';
 import { F_ZOOM_FEATURES } from './f-zoom';
 import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
 
@@ -42,8 +41,6 @@ export const COMMON_PROVIDERS = [
 
   ...F_FLOW_FEATURES,
 
-  ...F_LINE_ALIGNMENT_FEATURES,
-
   ...F_NODE_FEATURES,
 
   GetElementRoundedRectExecution,
@@ -60,13 +57,13 @@ export const COMMON_PROVIDERS = [
 
   GetNormalizedPointExecution,
 
-  SortItemLayersExecution,
+  SortItemLayers,
 
   SortItemsByParentExecution,
 
   SortNodeLayersExecution,
 
-  UpdateItemAndChildrenLayersExecution,
+  UpdateItemAndChildrenLayers,
 
   MoveFrontElementsBeforeTargetElement,
 ];

@@ -1,0 +1,13 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-magnetic-rects alignThreshold="40" spacingThreshold="40" />
+  <f-canvas>
+    <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>Node 1</div>
+    <div fNode [fNodePosition]="{ x: 150, y: 0 }" fDragHandle>Node 2</div>
+    <div fNode [fNodePosition]="{ x: 300, y: 0 }" fDragHandle>Node 3</div>
+    <div fNode [fNodePosition]="{ x: 450, y: 0 }" fDragHandle>Node 4</div>
+    <div fNode [fNodePosition]="{ x: 300, y: 150 }" fDragHandle>Node 5</div>
+    <div fNode [fNodePosition]="{ x: 450, y: 150 }" fDragHandle>Node 6</div>
+    <div fNode [fNodePosition]="{ x: 450, y: 300 }" fDragHandle>Node 7</div>
+    <div fNode [fNodePosition]="{ x: 0, y: 300 }" fDragHandle>Node 8</div>
+  </f-canvas>
+</f-flow>

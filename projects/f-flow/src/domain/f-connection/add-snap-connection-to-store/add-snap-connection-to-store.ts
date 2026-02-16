@@ -12,6 +12,6 @@ export class AddSnapConnectionToStore implements IExecution<AddSnapConnectionToS
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connection }: AddSnapConnectionToStoreRequest): void {
-    this._store.fSnapConnection = connection;
+    this._store.connections.addForSnap(connection);
   }
 }

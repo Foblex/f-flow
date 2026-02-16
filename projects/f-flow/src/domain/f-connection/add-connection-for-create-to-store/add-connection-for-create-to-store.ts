@@ -14,6 +14,6 @@ export class AddConnectionForCreateToStore
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connection }: AddConnectionForCreateToStoreRequest): void {
-    this._store.fTempConnection = connection;
+    this._store.connections.addForCreate(connection);
   }
 }

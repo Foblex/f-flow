@@ -10,14 +10,14 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 @Injectable()
 @FExecutionRegister(GetNormalizedParentNodeRectRequest)
 export class GetNormalizedParentNodeRectExecution
-  implements IExecution<GetNormalizedParentNodeRectRequest, IRect> {
-
+  implements IExecution<GetNormalizedParentNodeRectRequest, IRect>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
   public handle({ nodeOrGroup }: GetNormalizedParentNodeRectRequest): IRect {
     let result = RectExtensions.initialize(-Infinity, -Infinity, Infinity, Infinity);
-    const parentNode = this._getNode(nodeOrGroup.fParentId());
+    const parentNode = this._getNode(nodeOrGroup.fParentId() as string);
     if (parentNode) {
       result = this._getParentRect(parentNode);
     }
@@ -25,8 +25,8 @@ export class GetNormalizedParentNodeRectExecution
     return result;
   }
 
-  private _getNode(fId?: string | null): FNodeBase | undefined {
-    return this._store.fNodes.find((x) => x.fId() === fId);
+  private _getNode(fId: string): FNodeBase | undefined {
+    return this._store.nodes.get(fId);
   }
   //   Parent Node
   // +----------------------------------------+
@@ -55,18 +55,22 @@ export class GetNormalizedParentNodeRectExecution
     const padding = this._getNodePadding(nodeOrGroup, rect);
 
     return RectExtensions.initialize(
-      rect.x + padding[ 0 ],
-      rect.y + padding[ 1 ],
-      rect.width - padding[ 0 ] - padding[ 2 ],
-      rect.height - padding[ 1 ] - padding[ 3 ],
+      rect.x + padding[0],
+      rect.y + padding[1],
+      rect.width - padding[0] - padding[2],
+      rect.height - padding[1] - padding[3],
     );
   }
 
   private _getNodeRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
+    return this._mediator.execute<IRect>(
+      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
+    );
   }
 
-  private _getNodePadding(nodeOrGroup: FNodeBase, rect: IRect): [ number, number, number, number ] {
-    return this._mediator.execute<[ number, number, number, number ]>(new GetNodePaddingRequest(nodeOrGroup, rect));
+  private _getNodePadding(nodeOrGroup: FNodeBase, rect: IRect): [number, number, number, number] {
+    return this._mediator.execute<[number, number, number, number]>(
+      new GetNodePaddingRequest(nodeOrGroup, rect),
+    );
   }
 }

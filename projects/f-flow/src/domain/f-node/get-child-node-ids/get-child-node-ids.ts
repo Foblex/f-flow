@@ -9,13 +9,11 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(GetChildNodeIdsRequest)
-export class GetChildNodeIds
-  implements IExecution<GetChildNodeIdsRequest, string[]> {
-
+export class GetChildNodeIds implements IExecution<GetChildNodeIdsRequest, string[]> {
   private readonly _store = inject(FComponentsStore);
 
   private get _allNodesAndGroups(): FNodeBase[] {
-    return this._store.fNodes;
+    return this._store.nodes.getAll();
   }
 
   public handle(request: GetChildNodeIdsRequest): string[] {
@@ -35,7 +33,9 @@ export class GetChildNodeIds
     }
     visited.add(nodeId);
 
-    const children = this._allNodesAndGroups.filter(n => n.fParentId() === nodeId).map((x) => x.fId());
+    const children = this._allNodesAndGroups
+      .filter((n) => n.fParentId() === nodeId)
+      .map((x) => x.fId());
     result.push(...children);
     for (const id of children) {
       this._collectDescendants(id, result, visited);

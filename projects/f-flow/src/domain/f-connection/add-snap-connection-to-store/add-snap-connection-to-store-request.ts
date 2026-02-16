@@ -1,7 +1,7 @@
-import { FConnectionBase } from '../../../f-connection-v2';
+import { FSnapConnectionComponent } from '../../../f-connection';
 
 export class AddSnapConnectionToStoreRequest {
   static readonly fToken = Symbol('AddSnapConnectionToStoreRequest');
 
-  constructor(public readonly connection: FConnectionBase) {}
+  constructor(public readonly connection: FSnapConnectionComponent) {}
 }

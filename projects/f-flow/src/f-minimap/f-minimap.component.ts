@@ -14,7 +14,7 @@ import { FMinimapViewDirective } from './f-minimap-view.directive';
 import { F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
 import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
 import { ListenTransformChangesRequest } from '../f-storage';
-import { debounceTime, FChannelHub, notifyOnStart } from '../reactivity';
+import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../reactivity';
 import { BrowserService } from '@foblex/platform';
 import { IPointerEvent } from '../drag-toolkit';
 
@@ -47,7 +47,7 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
   private _listenTransformChanges(): void {
     this._mediator
       .execute<FChannelHub>(new ListenTransformChangesRequest())
-      .pipe(notifyOnStart(), debounceTime(2))
+      .pipe(notifyOnStart(), debounceAnimationFrame())
       .listen(this._destroyRef, () => {
         this._redraw();
       });

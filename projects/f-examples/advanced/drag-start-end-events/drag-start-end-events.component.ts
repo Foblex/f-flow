@@ -1,47 +1,49 @@
-import {
-  ChangeDetectionStrategy,
-  Component, signal, viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import {
   EFMarkerType,
-  FCanvasComponent, FCreateConnectionEvent, FDragStartedEvent,
-  FFlowModule, FReassignConnectionEvent, FZoomDirective,
+  FCanvasComponent,
+  FCreateConnectionEvent,
+  FFlowModule,
+  FReassignConnectionEvent,
+  FZoomDirective,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
+import { FDragStartedEvent } from '@foblex/flow';
 
 @Component({
   selector: 'drag-start-end-events',
-  styleUrls: [ './drag-start-end-events.component.scss' ],
+  styleUrls: ['./drag-start-end-events.component.scss'],
   templateUrl: './drag-start-end-events.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FZoomDirective,
-  ]
+  imports: [FFlowModule, FZoomDirective],
 })
 export class DragStartEndEventsComponent {
-
   protected fCanvas = viewChild(FCanvasComponent);
 
   protected readonly eMarkerType = EFMarkerType;
 
-  protected events = signal<string[]>([])
+  protected events = signal<string[]>([]);
 
-  protected nodes = [ {
-    id: '1',
-    position: { x: 0, y: 200 },
-    text: 'Node 1',
-  }, {
-    id: '2',
-    position: { x: 200, y: 200 },
-    text: 'Node 2',
-  } ];
-  protected connections = [ {
-    id: '1',
-    source: '1-output-0',
-    target: '2-input-1',
-  } ];
+  protected nodes = [
+    {
+      id: '1',
+      position: { x: 0, y: 200 },
+      text: 'Node 1',
+    },
+    {
+      id: '2',
+      position: { x: 200, y: 200 },
+      text: 'Node 2',
+    },
+  ];
+  protected connections = [
+    {
+      id: '1',
+      source: '1-output-0',
+      target: '2-input-1',
+    },
+  ];
 
   protected onLoaded(): void {
     this.fCanvas()?.resetScaleAndCenter(false);
@@ -49,7 +51,8 @@ export class DragStartEndEventsComponent {
 
   protected onDragStarted(event: FDragStartedEvent): void {
     this.events.update((x) => {
-      x = x.concat(`EVENT: ${ event.fEventType }, DATA: ${ JSON.stringify(event.fData) }`);
+      x = x.concat(`EVENT: ${event.fEventType}, DATA: ${JSON.stringify(event.fData)}`);
+
       return x;
     });
   }
@@ -57,6 +60,7 @@ export class DragStartEndEventsComponent {
   protected onDragEnded(): void {
     this.events.update((x) => {
       x.push(`EVENT: drag-ended`);
+
       return x;
     });
   }

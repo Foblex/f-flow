@@ -1,8 +1,8 @@
 import { ClearSelectionExecution } from './clear-selection';
 import { GetCurrentSelectionExecution } from './get-current-selection';
 import { SelectExecution } from './select';
-import { SelectAllExecution } from './select-all';
-import { SelectAndUpdateNodeLayerExecution } from './select-and-update-node-layer';
+import { SelectAll } from './select-all';
+import { SelectAndUpdateNodeLayer } from './select-and-update-node-layer';
 import { CalculateSelectableItems } from './calculate-selectable-items';
 
 /**
@@ -17,7 +17,7 @@ export const F_SELECTION_FEATURES = [
 
   SelectExecution,
 
-  SelectAllExecution,
+  SelectAll,
 
-  SelectAndUpdateNodeLayerExecution,
+  SelectAndUpdateNodeLayer,
 ];

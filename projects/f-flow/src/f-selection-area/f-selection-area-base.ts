@@ -1,15 +1,14 @@
-import { IRect } from '@foblex/2d';
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, inject } from '@angular/core';
 import { IHasHostElement } from '../i-has-host-element';
+import { FTriggerEvent } from '../domain';
 
 @Directive()
 export abstract class FSelectionAreaBase implements IHasHostElement {
+  public readonly hostElement = inject(ElementRef).nativeElement;
 
-  public abstract hostElement: HTMLElement | SVGElement;
+  public abstract fTrigger: (event: FTriggerEvent) => boolean;
 
-  public abstract hide(): void;
-
-  public abstract show(): void;
-
-  public abstract draw(object: IRect): void;
+  protected initialize(): void {
+    this.hostElement.style.display = 'none';
+  }
 }

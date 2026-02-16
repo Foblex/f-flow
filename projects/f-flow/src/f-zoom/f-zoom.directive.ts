@@ -15,13 +15,10 @@ import {
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
 import { FMediator } from '@foblex/mediator';
 import {
-  AddZoomToStoreRequest,
   defaultEventTrigger,
   FEventTrigger,
   GetCanvasRequest,
-  GetFlowHostElementRequest,
   isValidEventTrigger,
-  RemoveZoomFromStoreRequest,
   ResetZoomRequest,
   SetZoomRequest,
 } from '../domain';
@@ -30,10 +27,15 @@ import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../drag-toolkit';
+import {
+  FComponentsStore,
+  INSTANCES,
+  RegisterPluginInstanceRequest,
+  RemovePluginInstanceRequest,
+} from '../f-storage';
 
 @Directive({
   selector: 'f-canvas[fZoom]',
-  exportAs: 'fComponent',
   standalone: true,
   host: {
     'class': 'f-zoom f-component',
@@ -43,6 +45,7 @@ import { EventExtensions } from '../drag-toolkit';
 export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
   private readonly _injector = inject(Injector);
+  private readonly _store = inject(FComponentsStore);
 
   private _triggersListener = EventExtensions.emptyListener();
 
@@ -66,8 +69,8 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   @Input({ alias: 'fZoomDblClickStep', transform: numberAttribute })
   public override dblClickStep: number = 0.5;
 
-  private get _hostElement(): HTMLElement {
-    return this._mediator.execute(new GetFlowHostElementRequest());
+  private get _flowHost(): HTMLElement {
+    return this._store.flowHost;
   }
 
   private get _canvas(): FCanvasBase {
@@ -75,7 +78,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   public ngOnInit(): void {
-    this._mediator.execute(new AddZoomToStoreRequest(this));
+    this._mediator.execute(new RegisterPluginInstanceRequest(INSTANCES.ZOOM, this));
   }
 
   public ngAfterViewInit(): void {
@@ -93,7 +96,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _listenTriggers(): void {
-    if (!this._hostElement) {
+    if (!this._flowHost) {
       return;
     }
 
@@ -177,7 +180,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   private _onZoomToCenter(direction: EFZoomDirection, position?: IPoint): void {
     this.setZoom(
-      this._getToCenterPosition(position, RectExtensions.fromElement(this._hostElement)),
+      this._getToCenterPosition(position, RectExtensions.fromElement(this._flowHost)),
       this.step,
       direction,
       false,
@@ -203,7 +206,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   public ngOnDestroy(): void {
     this._disposeListeners();
-    this._mediator.execute(new RemoveZoomFromStoreRequest());
+    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.ZOOM));
   }
 
   private _listen<K extends keyof HTMLElementEventMap>(
@@ -211,7 +214,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => unknown,
     options?: boolean | AddEventListenerOptions,
   ): void {
-    this._hostElement.addEventListener(type, listener, options);
+    this._flowHost.addEventListener(type, listener, options);
   }
 
   private _unlisten<K extends keyof HTMLElementEventMap>(
@@ -219,6 +222,6 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => unknown,
     options?: boolean | AddEventListenerOptions,
   ): void {
-    this._hostElement.removeEventListener(type, listener, options);
+    this._flowHost.removeEventListener(type, listener, options);
   }
 }

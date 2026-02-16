@@ -1,6 +1,4 @@
-import {
-  Directive, ElementRef, inject,
-} from "@angular/core";
+import { Directive, ElementRef, inject } from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import { MinimapDrawNodesRequest } from './domain';
 
@@ -8,13 +6,8 @@ import { MinimapDrawNodesRequest } from './domain';
   selector: 'g[fMinimapCanvas]',
 })
 export class FMinimapCanvasDirective {
-
   private readonly _mediator = inject(FMediator);
-  private readonly _elementReference = inject(ElementRef);
-
-  public get hostElement(): SVGGElement {
-    return this._elementReference.nativeElement;
-  }
+  public readonly hostElement = inject(ElementRef<SVGGElement>).nativeElement;
 
   public redraw(): void {
     this._clearCanvas();

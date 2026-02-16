@@ -2,23 +2,24 @@ import { inject, Injectable } from '@angular/core';
 import { PinchToZoomFinalizeRequest } from './pinch-to-zoom-finalize-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeRotateDragHandler, FNodeRotateFinalizeRequest } from '../../f-node-rotate';
+import { PinchToZoomHandler } from '../handler';
 
 @Injectable()
 @FExecutionRegister(PinchToZoomFinalizeRequest)
 export class PinchToZoomFinalize implements IExecution<PinchToZoomFinalizeRequest, void> {
-  private readonly _dragContext = inject(FDraggableDataContext);
+  private readonly _dragSession = inject(FDraggableDataContext);
 
-  public handle(_request: FNodeRotateFinalizeRequest): void {
-    if (!this._isValid()) {
+  public handle(_: PinchToZoomFinalizeRequest): void {
+    if (!this._hasPinchZoomHandler()) {
       return;
     }
-    this._dragContext.draggableItems.forEach((x) => {
-      x.onPointerUp?.();
-    });
+
+    for (const item of this._dragSession.draggableItems) {
+      item.onPointerUp?.();
+    }
   }
 
-  private _isValid(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof FNodeRotateDragHandler);
+  private _hasPinchZoomHandler(): boolean {
+    return this._dragSession.draggableItems.some((x) => x instanceof PinchToZoomHandler);
   }
 }

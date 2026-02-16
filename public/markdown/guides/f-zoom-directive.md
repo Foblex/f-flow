@@ -1,107 +1,82 @@
-﻿# Zoom
+# Zoom
 
-**Selector:** [fZoom]
+**Selector:** `f-canvas[fZoom]`  
+**Class:** `FZoomDirective`
 
-The **FZoomDirective** directive is used to control the zoom of the canvas. It is used in conjunction with the [f-canvas](f-canvas-component) component to provide zoom functionality. Zooming can be done by using the mouse wheel or by double-clicking on the canvas. The zoom level can be reset to the default
+`FZoomDirective` adds wheel, double-click, and **pinch-to-zoom** (multitouch) capabilities, and exposes a small imperative zoom API.
 
-## Inputs
+## Why / Use cases
 
-- `fZoom: boolean;` Enables or disables the zoom functionality.
+Use `fZoom` when your diagram can exceed viewport size and users need fast navigation.
 
-- `fZoomMinimum: number;` The minimum zoom level allowed. Default is 0.1.
+Typical use cases:
 
-- `fZoomMaximum: number;` The maximum zoom level allowed. Default is 4.
+- Large node graphs where pan-only navigation is slow.
+- Editors that provide toolbar zoom buttons.
+- UX with custom wheel/double-click trigger rules.
+- Mobile/touch capabilities with pinch-to-zoom.
 
-- `fZoomStep: number;` The zoom step value. Default is 0.1.
+Skip zoom in constrained UIs where a fixed 1:1 scale is required.
 
-- `fZoomDblClickStep: number;` The zoom step value when double-clicking. Default is 0.5.
+## How it works
 
-## Methods
+The directive registers as a plugin, conditionally attaches wheel/dblclick listeners when `fZoom` is enabled, and delegates scale changes to canvas transform commands.
 
-- `setZoom(point: IPoint, step: number, direction: number, animated: boolean): void;` Sets the zoom level of the [f-canvas](f-canvas-component). Point is the center of the zoom, step is the zoom step, direction is the zoom direction, and animated is whether the zoom should be animated.
+**Pinch to Zoom:**  
+When used in conjunction with [`fDraggable`](f-draggable-directive), `fZoom` automatically enables pinch-to-zoom gestures on touch devices. The zoom level is constrained by `fZoomMinimum` and `fZoomMaximum`.
 
-- `getZoomValue(): number;` Returns the current [f-canvas](f-canvas-component) scale.
+## API
 
-- `zoomIn(point?: IPoint): void;` Zooms in the [f-canvas](f-canvas-component). If a point is provided, the zoom will be centered on that point.
+### Inputs
 
-- `zoomOut(point?: IPoint): void;` Zooms out the [f-canvas](f-canvas-component). If a point is provided, the zoom will be centered on that point.
+- `fZoom: boolean;` Default: `false`. Enables/disables zoom functionality.
+- `fWheelTrigger: FEventTrigger;` Default: `Always`. Predicate for mouse wheel zoom.
+- `fDblClickTrigger: FEventTrigger;` Default: `Always`. Predicate for double-click zoom.
+- `fZoomMinimum: number;` Default: `0.1`. Minimum zoom scale.
+- `fZoomMaximum: number;` Default: `4`. Maximum zoom scale.
+- `fZoomStep: number;` Default: `0.1`. Zoom step for wheel interaction.
+- `fZoomDblClickStep: number;` Default: `0.5`. Zoom step for double-click interaction.
 
-- `reset(): void;` Resets the zoom level to 1.
+### Outputs
 
-## Styles
+- No outputs.
 
-- `.f-component` A general class applied to all F components for shared styling.
+### Methods
 
-- `.f-zoom` Specific class for styling the FZoomDirective component.
+- `zoomIn(position?: IPoint): void;` Zooms in, optionally centering on a specific position.
+- `zoomOut(position?: IPoint): void;` Zooms out, optionally centering on a specific position.
+- `setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean): void;` Sets zoom level manually.
+- `reset(): void;` Resets zoom to default (1) and centers the flow.
+- `getZoomValue(): number;` Returns current zoom scale.
 
-## Usage
+### Types
 
-#### Basic Usage
+#### EFZoomDirection
 
-To enable zoom and pan functionality, set `fZoom` directive to [f-canvas](f-canvas-component) component.
-
-```html
-<f-flow>
-  <f-canvas |:|fZoom|:|>
-    <div fNode></div>
-  </f-canvas>
-</f-flow>
-```
-
-#### Tracking Zoom Changes
-
-To track zoom changes, use the `fCanvasChange` output from fCanvas.
-
-```html
-<f-flow>
-  <f-canvas |:|fZoom|:| |:|(fCanvasChange)|:|="canvasChange($event)">
-    <div fNode></div>
-  </f-canvas>
-</f-flow>
-```
-
-#### Programmatically Controlling Zoom
-
-You can also control the zoom level programmatically by using the methods provided by the directive.
-
-::: code-group
-```html 
-<f-flow>
-  <f-canvas fZoom>
-    /// content
-  </f-canvas>
-</f-flow>
-```
-
-```ts  
-@Component()
-class Component {
-
-  @ViewChild(FZoomDirective, { static: true })
-  public fZoomDirective!: FZoomDirective;
-
-  public zoomIn(): void {
-    this.fZoomDirective.zoomIn();
-  }
-
-  public zoomOut(): void {
-    this.fZoomDirective.zoomOut();
-  }
-
-  public reset(): void {
-    this.fZoomDirective.reset();
-  }
+```typescript
+enum EFZoomDirection {
+  ZOOM_IN = 0,
+  ZOOM_OUT = 1,
 }
 ```
-:::
+
+## Styling
+
+- `.f-component` Base class for flow primitives.
+- `.f-zoom` Host class for the directive.
+
+## Notes / Pitfalls
+
+- `fZoom` only works on `f-canvas` under a valid `f-flow`.
+- **Pinch-to-zoom** requires the flow to be `fDraggable`.
+- If your flow contains locked UI zones (`[fLockedContext]`), wheel/dblclick zoom intentionally ignores them.
+- Very small `fZoomStep` can make wheel zoom feel unresponsive.
 
 ## Example
 
-The following example shows how to enable **zoom** and **pan** functionality in the canvas. Use the **mouse wheel** to **zoom in** and **out**, and **double click** to **zoom in**.
-
-::: ng-component <zoom-example></zoom-example>
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/zoom-example/zoom-example.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/zoom-example/zoom-example.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/zoom-example/zoom-example.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-guides-examples/_flow-common.scss
+::: ng-component <zoom></zoom> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

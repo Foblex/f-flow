@@ -1,3 +1,3 @@
 export * from './add-pattern-to-background';
 
-export * from './add-pattern-to-background.request';
+export * from './add-pattern-to-background-request';

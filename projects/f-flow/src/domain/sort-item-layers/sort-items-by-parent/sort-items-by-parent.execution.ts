@@ -14,7 +14,6 @@ import { BrowserService } from '@foblex/platform';
 @Injectable()
 @FExecutionRegister(SortItemsByParentRequest)
 export class SortItemsByParentExecution implements IExecution<SortItemsByParentRequest, void> {
-
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
@@ -33,13 +32,10 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getItemsOfContainer(): FNodeBase[] {
-    return this._store.fNodes
-      .filter((x) => this._fItemsContainer.contains(x.hostElement));
+    return this._store.nodes.getAll().filter((x) => this._fItemsContainer.contains(x.hostElement));
   }
 
-  private _getSortedChildrenItems(
-    fItem: FNodeBase,
-  ): HTMLElement[] {
+  private _getSortedChildrenItems(fItem: FNodeBase): HTMLElement[] {
     const indexInContainer = this._fItemElements.indexOf(fItem.hostElement);
 
     return this._getChildrenItems(fItem.fId())
@@ -48,14 +44,13 @@ export class SortItemsByParentExecution implements IExecution<SortItemsByParentR
   }
 
   private _getChildrenItems(fId: string): HTMLElement[] {
-    return this._mediator.execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
-      .filter((x) => this._fItemsContainer.contains(x.hostElement)).map((x) => x.hostElement);
+    return this._mediator
+      .execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .filter((x) => this._fItemsContainer.contains(x.hostElement))
+      .map((x) => x.hostElement);
   }
 
-  private _moveChildrenItems(
-    sortedChildrenItems: HTMLElement[],
-    parent: FNodeBase,
-  ): void {
+  private _moveChildrenItems(sortedChildrenItems: HTMLElement[], parent: FNodeBase): void {
     const nextSibling = parent.hostElement.nextElementSibling;
 
     const fragment = this._browser.document.createDocumentFragment();

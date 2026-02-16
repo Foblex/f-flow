@@ -12,6 +12,7 @@ export class RemoveNodeFromStore implements IExecution<RemoveNodeFromStoreReques
   private readonly _store = inject(FComponentsStore);
 
   public handle({ instance }: RemoveNodeFromStoreRequest): void {
-    this._store.removeComponent(this._store.fNodes, instance);
+    this._store.nodes.remove(instance);
+    this._store.countChanged();
   }
 }
