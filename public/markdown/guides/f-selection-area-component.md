@@ -1,17 +1,9 @@
 # Selection Area
 
-## Description
+**Selector:** `f-selection-area`  
+**Class:** `FSelectionArea`
 
 `FSelectionArea` enables rectangle-based multi-select in a flow.
-
-- **Selector:** `f-selection-area`
-- **Class:** `FSelectionArea`
-
-**What you get**
-
-- Drag-to-select for nodes/groups/connections that intersect selection bounds.
-- Configurable trigger predicate for selection gesture start.
-- Native integration with existing selection state/events.
 
 ## Why / Use cases
 
@@ -29,7 +21,7 @@ If your editor is single-select only, this plugin may be unnecessary.
 
 On pointer down, the plugin checks `fTrigger`. If allowed, it shows the selection rectangle host, updates its bounds on move, computes intersections, marks matching elements selected, then finalizes selection on pointer up.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
@@ -44,6 +36,14 @@ Selection changes are emitted by [`fDraggable`](f-draggable-directive) through `
 ### Methods
 
 - No public template API methods.
+
+### Types
+
+#### FEventTrigger
+
+```typescript
+type FEventTrigger = (event: MouseEvent | TouchEvent | WheelEvent) => boolean;
+```
 
 ## Styling
 

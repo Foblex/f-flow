@@ -1,17 +1,9 @@
 # Magnetic Lines
 
-## Description
+**Selector:** `f-magnetic-lines`  
+**Class:** `FMagneticLines`
 
 `FMagneticLines` displays guide lines while dragging nodes to help visual alignment.
-
-- **Selector:** `f-magnetic-lines`
-- **Class:** `FMagneticLines`
-
-**What you get**
-
-- Live horizontal/vertical alignment guides.
-- Configurable alignment threshold.
-- Lightweight helper that integrates with existing drag flow.
 
 ## Why / Use cases
 
@@ -27,11 +19,11 @@ Typical use cases:
 
 The plugin registers in the drag subsystem, computes candidate guide axes against nearby nodes, and renders temporary guide elements during node drag.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `threshold: InputSignal<number>;` Alignment threshold in px. Default: `10`.
+- `threshold: number;` Default: `10`. Distance in pixels within which nodes will snap to the alignment lines.
 
 ### Outputs
 
@@ -61,3 +53,7 @@ The plugin registers in the drag subsystem, computes candidate guide axes agains
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
+
+## 🙌 Get Involved
+
+If you find **Foblex Flow** useful - drop a ⭐ on [GitHub](https://github.com/Foblex/f-flow), join the conversation, and help shape the roadmap!

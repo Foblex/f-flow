@@ -43,28 +43,32 @@ This keeps your data model as the source of truth while interactions stay respon
 
 ### Inputs
 
-- `fResizeHandleType: EFResizeHandleType;` **Required.**  
-  Defines which side/corner the handle represents.
-
-`EFResizeHandleType` values:
-
-- `left`
-- `left-top`
-- `top`
-- `right-top`
-- `right`
-- `right-bottom`
-- `bottom`
-- `left-bottom`
+- `fResizeHandleType: EFResizeHandleType;` **Required.** Defines which side/corner the handle represents.
 
 ### Outputs
 
-The handle directive itself emits nothing.
+- No outputs.
 
-Listen for size commits on the resized element instead:
+### Methods
 
-- `fNodeSizeChange: OutputEmitterRef<IRect>;`
-- `fGroupSizeChange: OutputEmitterRef<IRect>;`
+- No public template API methods.
+
+### Types
+
+#### EFResizeHandleType
+
+```typescript
+enum EFResizeHandleType {
+  LEFT = 'left',
+  LEFT_TOP = 'left-top',
+  TOP = 'top',
+  RIGHT_TOP = 'right-top',
+  RIGHT = 'right',
+  RIGHT_BOTTOM = 'right-bottom',
+  BOTTOM = 'bottom',
+  LEFT_BOTTOM = 'left-bottom',
+}
+```
 
 ## Styling
 

@@ -1,17 +1,9 @@
 # Magnetic Rects
 
-## Description
+**Selector:** `f-magnetic-rects`  
+**Class:** `FMagneticRects`
 
 `FMagneticRects` shows spacing and alignment helper rectangles while dragging nodes.
-
-- **Selector:** `f-magnetic-rects`
-- **Class:** `FMagneticRects`
-
-**What you get**
-
-- Visual hints for equal spacing between nodes.
-- Alignment helpers beyond single-axis guide lines.
-- Separate thresholds for alignment and spacing detection.
 
 ## Why / Use cases
 
@@ -27,12 +19,12 @@ Typical use cases:
 
 During drag, helper calculations detect candidate spacing/alignment relationships and render temporary rectangle overlays to show potential placement matches.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `alignThreshold: InputSignal<number>;` Alignment tolerance in px. Default: `100`.
-- `spacingThreshold: InputSignal<number>;` Spacing tolerance in px. Default: `100`.
+- `alignThreshold: number;` Default: `100`. Distance in pixels to show alignment guides for node edges/centers.
+- `spacingThreshold: number;` Default: `100`. Distance in pixels to show equal spacing guides between nodes.
 
 ### Outputs
 

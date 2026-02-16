@@ -1,22 +1,9 @@
 # External Item
 
-## Description
+**Selector:** `[fExternalItem]`  
+**Class:** `FExternalItemDirective<TData>`
 
 External item directives let you drag items from outside the canvas and create nodes on drop.
-
-- **Selector:** `[fExternalItem]`
-- **Class:** `FExternalItemDirective<TData>`
-
-Additional selectors:
-
-- `ng-template[fExternalItemPreview]` (`FExternalItemPreviewDirective`)
-- `ng-template[fExternalItemPlaceholder]` (`FExternalItemPlaceholderDirective`)
-
-**What you get**
-
-- Palette-to-canvas drag-and-drop.
-- Optional custom preview and placeholder templates.
-- Node creation event with drop rect/data payload.
 
 ## Why / Use cases
 
@@ -32,28 +19,21 @@ Typical use cases:
 
 An element with `fExternalItem` is registered in `FExternalItemService`. During drag, the external-item handler creates preview/placeholder visuals and, on valid drop, emits `fCreateNode` from `fDraggable` with `FCreateNodeEvent`.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
-### Inputs (`[fExternalItem]`)
+### Inputs
 
-- `fExternalItemId: string;` Default: `f-external-item-${uniqueId++}`.
-- `fData: TData | undefined;`
-- `fDisabled: boolean;` Default: `false`.
-- `fPreview: TemplateRef<unknown> | undefined;`
-- `fPreviewMatchSize: boolean;` Default: `true`.
-- `fPlaceholder: TemplateRef<unknown> | undefined;`
+- `fExternalItemId: string;` Unique identifier for the item. Default: Auto-generated `f-external-item-{id}`.
+- `fData: TData;` Data payload associated with the item, passed to `fCreateNode` event on drop.
+- `fDisabled: boolean;` Default: `false`. Disables dragging of this item.
+- `fPreview: TemplateRef<unknown>;` Custom template for the drag preview.
+- `fPreviewMatchSize: boolean;` Default: `true`. If true, the preview element matches the size of the source element.
+- `fPlaceholder: TemplateRef<unknown>;` Custom template for the placeholder shown in the list while dragging.
 
 ### Outputs
 
 - No outputs on the directive itself.
 - Consume on `f-flow[fDraggable]`: `fCreateNode: EventEmitter<FCreateNodeEvent>;`.
-
-`FCreateNodeEvent` payload fields:
-
-- `rect: IRect`
-- `data: TData`
-- `fTargetNode?: string`
-- `fDropPosition?: IPoint`
 
 ### Methods
 

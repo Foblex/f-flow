@@ -64,6 +64,47 @@ Use `f-flow` when you need:
 
 > These “imperative” APIs are meant for toolbars, keyboard shortcuts, and integration with external UI (side panels, inspectors, etc.).
 
+### Types
+
+#### IPoint
+
+```typescript
+interface IPoint {
+  x: number;
+  y: number;
+}
+```
+
+#### IRect
+
+```typescript
+interface IRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+```
+
+#### IFFlowState
+
+```typescript
+interface IFFlowState {
+  nodes: IFNodeState[];
+  groups: IFGroupState[];
+  connections: IFConnectionState[];
+}
+```
+
+#### ICurrentSelection
+
+```typescript
+interface ICurrentSelection {
+  nodes: string[];
+  connections: string[];
+}
+```
+
 ## Styling
 
 - `.f-component` Base class for flow primitives.

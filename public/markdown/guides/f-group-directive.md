@@ -79,47 +79,59 @@ To attach a node to a group, set the node’s `fNodeParentId` to the group’s `
 
 ### Inputs
 
-- `fGroupId: InputSignal<string>;` Group identifier. Default: `f-group-${uniqueId++}`. Use a **stable** id if you want hierarchy/selection to survive rerenders.
-
-- `fGroupParentId: InputSignal<string | null | undefined>;` Parent group/node id (logical hierarchy). Default: `null`.
-
-- `fGroupPosition: ModelSignal<IPoint>;` Group position in **flow coordinates**.
-
-- `fGroupSize: InputSignal<ISize | undefined>;` Optional fixed size. If omitted, the size is measured from content (and can change as content changes).
-
-- `fGroupRotate: ModelSignal<number>;` Default: `0`. Rotation (degrees). Affects group geometry and child bounds.
-
-- `fConnectOnNode: InputSignal<boolean>;` Default: `true`. Allows dropping a connection onto the group body (not directly on an input). The library will choose the first available connectable input (if your template includes connectors).
-
-- `fMinimapClass: InputSignal<string | string[]>;` Extra CSS class(es) applied in the minimap only.
-
-- `fGroupDraggingDisabled: InputSignal<boolean>;` Default: `false`. Locks dragging for this group.
-
-- `fGroupSelectionDisabled: InputSignal<boolean>;` Default: `false`. Prevents selecting this group.
-
-- `fIncludePadding: InputSignal<boolean>;` Default: `true`. When restricting child movement, controls whether the group’s CSS padding is considered part of the “inner bounds”.
-
-- `fAutoExpandOnChildHit: InputSignal<boolean>;` Default: `false`. Container UX: auto-expand a collapsed group when a child is dragged into it.
-
-- `fAutoSizeToFitChildren: InputSignal<boolean>;` Default: `false`. Container UX: resize the group so all children fit inside it.
+- `fGroupId: string;` Group identifier. Default: `f-group-${uniqueId++}`.
+- `fGroupParentId: string | null;` Parent group or node ID.
+- `fGroupPosition: IPoint;` **Model.** Position of the group.
+- `fGroupSize: ISize;` Size of the group.
+- `fGroupRotate: number;` **Model.** Rotation angle in degrees.
+- `fConnectOnNode: boolean;` Default: `true`. Allows dropping connections on the group.
+- `fMinimapClass: string | string[];` CSS class for the minimap representation.
+- `fGroupDraggingDisabled: boolean;` Default: `false`. Disables dragging.
+- `fGroupSelectionDisabled: boolean;` Default: `false`. Disables selection.
+- `fIncludePadding: boolean;` Default: `true`. Include padding in bounds calculation.
+- `fAutoExpandOnChildHit: boolean;` Default: `false`. Expand group when child hits bounds.
+- `fAutoSizeToFitChildren: boolean;` Default: `false`. Auto-resize to fit children.
 
 ### Outputs
 
-> Important: outputs are designed for **state persistence**.  
-> In typical drag flows, you react to the final result (not per-mousemove streaming).
-
-- `fGroupPositionChange: OutputEmitterRef<IPoint>;`  
-  Emits when the final group position is committed by an interaction (for example, after drag ends).
-
-- `fGroupRotateChange: OutputEmitterRef<number>;`  
-  Emits when rotation is committed (after rotate interaction ends).
-
-- `fGroupSizeChange: OutputEmitterRef<IRect>;`  
-  Emits when resize is committed (after resize ends). Payload is the resulting rect.
+- `fGroupPositionChange: OutputEmitterRef<IPoint>;` Emits when position changes.
+- `fGroupRotateChange: OutputEmitterRef<number>;` Emits when rotation changes.
+- `fGroupSizeChange: OutputEmitterRef<IRect>;` Emits when size changes.
 
 ### Methods
 
-- `refresh(): void;` Forces a group refresh for cases where geometry/bounds must be recalculated (for example, after significant DOM/content changes).
+- `refresh(): void;` Force refresh of the group.
+
+### Types
+
+#### IPoint
+
+```typescript
+interface IPoint {
+  x: number;
+  y: number;
+}
+```
+
+#### ISize
+
+```typescript
+interface ISize {
+  width: number;
+  height: number;
+}
+```
+
+#### IRect
+
+```typescript
+interface IRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+```
 
 ## Styling
 

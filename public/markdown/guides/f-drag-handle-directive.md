@@ -55,13 +55,6 @@ For this use case, use **`fDragBlocker`** on the inner element(s) that must _nev
 </div>
 ```
 
-## How it works
-
-When the user presses down, the drag system checks whether the event target (or one of its parents) has `fDragHandle`.  
-If it does - dragging may start. If it does not - the node will not move.
-
-> This is intentional: it prevents accidental dragging when clicking inside node content.
-
 ## Styling
 
 - `.f-component` Base class for flow primitives.

@@ -48,16 +48,15 @@ This matches the overall model of Foblex Flow: the library handles interactive r
 
 ### Inputs
 
-This directive has **no inputs**.
+- No inputs.
 
 ### Outputs
 
-This directive has **no outputs**.
+- No outputs.
 
-Rotation changes are emitted by the rotated element:
+### Methods
 
-- `fNodeRotateChange: OutputEmitterRef<number>;`
-- `fGroupRotateChange: OutputEmitterRef<number>;`
+- No public template API methods.
 
 ## Styling
 

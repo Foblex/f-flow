@@ -1,22 +1,12 @@
 # Line Alignment
 
-## Description
+**Selector:** `f-line-alignment`  
+**Class:** `FLineAlignmentComponent`
 
 `FLineAlignmentComponent` is a legacy alignment helper that shows guide lines while dragging nodes.
 
-- **Selector:** `f-line-alignment`
-- **Class:** `FLineAlignmentComponent`
-
-**What you get**
-
-- Drag-time alignment guideline rendering.
-- Threshold control for when guides appear.
-- Backward-compatible behavior for legacy setups.
-
-::: info DEPRECATED
-`f-line-alignment` is deprecated and will be removed in `v19.0.0`.
-Use [`f-magnetic-lines`](f-magnetic-lines-component) for the supported replacement.
-:::
+> [!WARNING]
+> This component is deprecated and will be removed in `v19.0.0`. Use [`f-magnetic-lines`](f-magnetic-lines-component) instead.
 
 ## Why / Use cases
 
@@ -28,11 +18,11 @@ For new implementations, prefer `f-magnetic-lines` because it is the current API
 
 The component extends magnetic-lines base behavior and registers under the same internal plugin slot (`MAGNETIC_LINES`) with a legacy input alias.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `fAlignThreshold: InputSignal<number>;` Alias input for alignment threshold. Default: `10`.
+- `fAlignThreshold: number;` Default: `10`. Snap distance in pixels. Alias for `threshold`.
 
 ### Outputs
 

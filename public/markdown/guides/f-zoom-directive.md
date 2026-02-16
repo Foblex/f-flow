@@ -1,17 +1,9 @@
 # Zoom
 
-## Description
+**Selector:** `f-canvas[fZoom]`  
+**Class:** `FZoomDirective`
 
-`FZoomDirective` adds wheel/double-click zoom and exposes a small imperative zoom API.
-
-- **Selector:** `f-canvas[fZoom]`
-- **Class:** `FZoomDirective`
-
-**What you get**
-
-- Mouse wheel and double-click zoom handlers.
-- Configurable min/max/step limits.
-- Programmatic zoom control (`zoomIn`, `zoomOut`, `setZoom`, `reset`).
+`FZoomDirective` adds wheel, double-click, and **pinch-to-zoom** (multitouch) capabilities, and exposes a small imperative zoom API.
 
 ## Why / Use cases
 
@@ -22,6 +14,7 @@ Typical use cases:
 - Large node graphs where pan-only navigation is slow.
 - Editors that provide toolbar zoom buttons.
 - UX with custom wheel/double-click trigger rules.
+- Mobile/touch capabilities with pinch-to-zoom.
 
 Skip zoom in constrained UIs where a fixed 1:1 scale is required.
 
@@ -29,17 +22,20 @@ Skip zoom in constrained UIs where a fixed 1:1 scale is required.
 
 The directive registers as a plugin, conditionally attaches wheel/dblclick listeners when `fZoom` is enabled, and delegates scale changes to canvas transform commands.
 
-## Configuration (Inputs/Outputs/Methods)
+**Pinch to Zoom:**  
+When used in conjunction with [`fDraggable`](f-draggable-directive), `fZoom` automatically enables pinch-to-zoom gestures on touch devices. The zoom level is constrained by `fZoomMinimum` and `fZoomMaximum`.
+
+## API
 
 ### Inputs
 
-- `fZoom: InputSignal<boolean>;` Enables/disables listeners.
-- `fWheelTrigger: FEventTrigger;` Wheel trigger predicate.
-- `fDblClickTrigger: FEventTrigger;` Double-click trigger predicate.
-- `fZoomMinimum: number;` Default: `0.1`.
-- `fZoomMaximum: number;` Default: `4`.
-- `fZoomStep: number;` Default: `0.1`.
-- `fZoomDblClickStep: number;` Default: `0.5`.
+- `fZoom: boolean;` Default: `false`. Enables/disables zoom functionality.
+- `fWheelTrigger: FEventTrigger;` Default: `Always`. Predicate for mouse wheel zoom.
+- `fDblClickTrigger: FEventTrigger;` Default: `Always`. Predicate for double-click zoom.
+- `fZoomMinimum: number;` Default: `0.1`. Minimum zoom scale.
+- `fZoomMaximum: number;` Default: `4`. Maximum zoom scale.
+- `fZoomStep: number;` Default: `0.1`. Zoom step for wheel interaction.
+- `fZoomDblClickStep: number;` Default: `0.5`. Zoom step for double-click interaction.
 
 ### Outputs
 
@@ -47,11 +43,22 @@ The directive registers as a plugin, conditionally attaches wheel/dblclick liste
 
 ### Methods
 
-- `setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean): void;`
-- `getZoomValue(): number;`
-- `zoomIn(position?: IPoint): void;`
-- `zoomOut(position?: IPoint): void;`
-- `reset(): void;`
+- `zoomIn(position?: IPoint): void;` Zooms in, optionally centering on a specific position.
+- `zoomOut(position?: IPoint): void;` Zooms out, optionally centering on a specific position.
+- `setZoom(position: IPoint, step: number, direction: EFZoomDirection, animated: boolean): void;` Sets zoom level manually.
+- `reset(): void;` Resets zoom to default (1) and centers the flow.
+- `getZoomValue(): number;` Returns current zoom scale.
+
+### Types
+
+#### EFZoomDirection
+
+```typescript
+enum EFZoomDirection {
+  ZOOM_IN = 0,
+  ZOOM_OUT = 1,
+}
+```
 
 ## Styling
 
@@ -61,6 +68,7 @@ The directive registers as a plugin, conditionally attaches wheel/dblclick liste
 ## Notes / Pitfalls
 
 - `fZoom` only works on `f-canvas` under a valid `f-flow`.
+- **Pinch-to-zoom** requires the flow to be `fDraggable`.
 - If your flow contains locked UI zones (`[fLockedContext]`), wheel/dblclick zoom intentionally ignores them.
 - Very small `fZoomStep` can make wheel zoom feel unresponsive.
 

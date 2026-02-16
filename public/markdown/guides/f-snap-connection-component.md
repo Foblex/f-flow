@@ -1,17 +1,9 @@
 # Snap Connection
 
-## Description
+**Selector:** `f-snap-connection`  
+**Class:** `FSnapConnectionComponent`
 
 `FSnapConnectionComponent` renders a temporary snapping helper while a connection is being created or reassigned.
-
-- **Selector:** `f-snap-connection`
-- **Class:** `FSnapConnectionComponent`
-
-**What you get**
-
-- Visual guidance toward nearby valid targets.
-- Configurable snap distance threshold.
-- Same path styling controls as other connection components.
 
 ## Why / Use cases
 
@@ -29,27 +21,58 @@ Skip it for strict/manual connection placement UX.
 
 During drag/create/reassign interactions, the helper tracks candidate targets and renders a temporary line that snaps when within `fSnapThreshold`. It is not a persisted graph edge.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `fSnapThreshold: number;` Snap distance in px. Default: `20`.
-- `fRadius: number;` Default: `8`.
-- `fOffset: number;` Default: `12`.
-- `fBehavior: EFConnectionBehavior;` `fixed | fixed_center | floating`. Default: `fixed`.
-- `fType: EFConnectionType | string;` Default: `straight`.
-- `fInputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
-- `fOutputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
-- `fStartColor: InputSignal<string>;` Default: `black`.
-- `fEndColor: InputSignal<string>;` Default: `black`.
+- `fSnapThreshold: number;` Default: `20`. Distance in pixels to snap to a connector.
+- `fRadius: number;` Default: `8`. Connection corner radius.
+- `fOffset: number;` Default: `12`. Distance from connector to first bend.
+- `fBehavior: EFConnectionBehavior;` Default: `FIXED`. Defines how the connection handles connector positions.
+- `fType: EFConnectionType;` Default: `STRAIGHT`. Type of the path (segment, straight, bezier).
+- `fInputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for target connection.
+- `fOutputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for source connection.
 
 ### Outputs
 
-- No outputs.
+- No direct outputs.
 
 ### Methods
 
 - No public template API methods.
+
+### Types
+
+#### EFConnectionBehavior
+
+```typescript
+enum EFConnectionBehavior {
+  FIXED = 'fixed',
+  FLOATING = 'floating',
+}
+```
+
+#### EFConnectionType
+
+```typescript
+enum EFConnectionType {
+  SEGMENT = 'segment',
+  STRAIGHT = 'straight',
+  BEZIER = 'bezier',
+}
+```
+
+#### EFConnectionConnectableSide
+
+```typescript
+enum EFConnectionConnectableSide {
+  DEFAULT = 'default',
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+}
+```
 
 ## Styling
 

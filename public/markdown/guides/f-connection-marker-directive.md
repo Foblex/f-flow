@@ -1,17 +1,9 @@
 # Connection Marker
 
-## Description
+**Selector:** `svg[fMarker]`  
+**Class:** `FConnectionMarker`
 
 `FConnectionMarker` lets you define custom SVG markers for connection starts and ends.
-
-- **Selector:** `svg[fMarker]`
-- **Class:** `FConnectionMarker`
-
-**What you get**
-
-- Custom arrowheads, circles, diamonds, or any SVG marker shape.
-- Separate marker definitions for normal and selected states.
-- Full SVG control (`orient`, `markerUnits`, `refX/refY`, dimensions).
 
 ## Why / Use cases
 
@@ -29,25 +21,30 @@ Use default markers if your graph does not need semantic marker styling.
 
 Each marker registers in the marker store and is hidden in-place. On connection redraw, marker definitions are cloned into connection SVG defs and referenced by marker ids.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `type: string;` Marker role. Built-in values are `EFMarkerType.START`, `EFMarkerType.END`, `EFMarkerType.SELECTED_START`, `EFMarkerType.SELECTED_END`.
-- `width: number;`
-- `height: number;`
-- `refX: number;`
-- `refY: number;`
-- `orient: 'auto' | 'auto-start-reverse' | 'calculated' | string;` Default: `auto`.
-- `markerUnits: 'strokeWidth' | 'userSpaceOnUse';` Default: `strokeWidth`.
+- `type: string;` Default: `start`. Marker role (`start` or `end`).
+- `width: number;` Default: `0`. Marker width.
+- `height: number;` Default: `0`. Marker height.
+- `refX: number;` Default: `0`. Reference X coordinate.
+- `refY: number;` Default: `0`. Reference Y coordinate.
+- `orient: string;` Default: `auto`. SVG marker orientation.
+- `markerUnits: string;` Default: `strokeWidth`. SVG marker units (`strokeWidth` or `userSpaceOnUse`).
 
-### Outputs
+### Types
 
-- No outputs.
+#### EFMarkerType
 
-### Methods
-
-- No public template API methods.
+```typescript
+enum EFMarkerType {
+  START = 'start',
+  END = 'end',
+  SELECTED_START = 'selected-start',
+  SELECTED_END = 'selected-end',
+}
+```
 
 ## Styling
 

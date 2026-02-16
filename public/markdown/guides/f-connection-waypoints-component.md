@@ -1,17 +1,9 @@
 # Connection Waypoints
 
-## Description
+**Selector:** `f-connection-waypoints`  
+**Class:** `FConnectionWaypoints`
 
 `FConnectionWaypoints` adds editable intermediate points to a connection path.
-
-- **Selector:** `f-connection-waypoints`
-- **Class:** `FConnectionWaypoints`
-
-**What you get**
-
-- Manual control over connection shape via waypoint points.
-- Two-way binding for waypoint arrays.
-- Drag-time waypoint change notifications from `fDraggable`.
 
 ## Why / Use cases
 
@@ -27,24 +19,17 @@ Typical use cases:
 
 Place `f-connection-waypoints` inside a connection. It stores waypoint coordinates in `waypoints`, renders candidate/active waypoint circles, and updates the bound array during edits. Changes are also emitted through `fConnectionWaypointsChanged` on `fDraggable`.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `radius: InputSignal<number>;` Point radius. Default: `4`.
-- `visibility: InputSignal<boolean>;` Shows/hides waypoint markers. Default: `true`.
+- `radius: number;` Default: `4`. Radius of the waypoint circle.
+- `waypoints: IPoint[];` Two-way binding for waypoint coordinates (x, y).
+- `visibility: boolean;` Default: `true`. Toggles visibility of waypoints.
 
 ### Outputs
 
-- Two-way model binding: `[(waypoints)]="..."`.
-- Global change event from draggable: `fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;`.
-
-### Methods
-
-- `insert(candidate: IPoint): void;`
-- `select(waypoint: IPoint): void;`
-- `move(point: IPoint): void;`
-- `update(): void;`
+- `waypointsChange: EventEmitter<IPoint[]>;` Emitted when waypoints change (two-way binding).
 
 ## Styling
 

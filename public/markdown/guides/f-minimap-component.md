@@ -1,17 +1,9 @@
 # Minimap
 
-## Description
+**Selector:** `f-minimap`  
+**Class:** `FMinimapComponent`
 
 `FMinimapComponent` renders a compact overview of the current flow and supports drag-based viewport navigation.
-
-- **Selector:** `f-minimap`
-- **Class:** `FMinimapComponent`
-
-**What you get**
-
-- Real-time miniature view of node layout.
-- Visible viewport rectangle overlay.
-- Drag-to-pan integration through the main drag plugin.
 
 ## Why / Use cases
 
@@ -29,19 +21,11 @@ A minimap can be unnecessary for very small, fixed-size flows.
 
 The component listens to transform changes, redraws minimap nodes and view box, and participates as a drag plugin (`F_BEFORE_MAIN_PLUGIN`) so pointer interaction in minimap can move the main canvas.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `fMinSize: InputSignal<number>;` Minimum virtual size for minimap scale/viewBox calculation. Default: `1000`.
-
-### Outputs
-
-- No direct outputs.
-
-### Methods
-
-- No public template API methods.
+- `fMinSize: number;` Default: `1000`. Minimum size (width/height) of the minimap coordinate system unless flow content is larger.
 
 ## Styling
 

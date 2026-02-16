@@ -62,6 +62,36 @@ A typical diagram structure is always:
 
 - `centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void;` Centers the viewport on a group or node by id.
 
+### Types
+
+#### IPoint
+
+```typescript
+interface IPoint {
+  x: number;
+  y: number;
+}
+```
+
+#### FCanvasChangeEvent
+
+```typescript
+class FCanvasChangeEvent {
+  transform: ITransformModel;
+  position: IPoint;
+  scale: number;
+}
+```
+
+#### ITransformModel
+
+```typescript
+interface ITransformModel {
+  position: IPoint;
+  scale: number;
+}
+```
+
 ## Styling
 
 - `.f-component` Base class for flow primitives.

@@ -52,19 +52,18 @@ In other words: **Outlet starts the action; Output owns the connection.**
 
 ### Inputs
 
-- `fOutletId: InputSignal<string>;`  
-  Outlet identifier. Default: `f-node-outlet-${uniqueId++}`.  
-  This id is for the outlet itself (UX element) and is not the same thing as fOutputId.
+- `fOutletId: string;` Outlet identifier. Default: `f-node-outlet-${uniqueId++}`.
+- `fOutletDisabled: boolean;` Default: `false`. Disables interactions with the outlet.
+- `isConnectionFromOutlet: boolean;` Default: `false`. If true, connections start from the outlet's edge.
+- `fCanBeConnectedInputs: string[];` List of allowed input IDs or categories.
 
-- `fOutletDisabled: InputSignal<boolean>;`  
-  Default: `false`. Disables starting connection creation from this outlet.
+### Outputs
 
-- `isConnectionFromOutlet: boolean;`  
-  Default: `false`. Controls the **visual origin** of the preview/connection while dragging.  
-  It does not make the outlet a real output, and does not mean fOutputId will become fOutletId.
+- No direct outputs.
 
-- `fCanBeConnectedInputs: string[];`  
-  Optional allow-list of inputs/categories that can be targeted during creation.
+### Methods
+
+- No public template API methods.
 
 ## Styling
 

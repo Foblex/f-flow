@@ -73,27 +73,34 @@ A persisted connection references the output and input by their ids:
 
 ### Inputs
 
-- `fOutputId: InputSignal<string>;`  
-  Output identifier. Default: `f-node-output-${uniqueId++}`.  
-  This id is what you reference from connections via `fOutputId`.
+- `fOutputId: string;` Output identifier. Default: `f-node-output-${uniqueId++}`.
+- `fOutputMultiple: boolean;` Default: `false`. Allows multiple outgoing connections.
+- `fOutputDisabled: boolean;` Default: `false`. Disables connection from this output.
+- `fOutputConnectableSide: EFConnectableSide;` Default: `AUTO`. Preferred side for outgoing connection.
+- `isSelfConnectable: boolean;` Default: `true`. Allows connecting to inputs on the same node.
+- `fCanBeConnectedInputs: string[];` List of allowed input IDs or categories.
 
-- `fOutputMultiple: InputSignal<boolean>;` Default: `false`.  
-  If `false`, the output behaves like a “single port”: once it has an active connection, creating another one from the same output is blocked.
+### Outputs
 
-- `fOutputDisabled: InputSignal<boolean>;` Default: `false`.  
-  Disables connection creation/reassignment from this output.
+- No direct outputs.
 
-- `fOutputConnectableSide: EFConnectableSide;` Default: `auto`.  
-  Controls **where** the connection should attach relative to the node geometry (left/right/top/bottom/auto).  
-  This is mostly a visual + routing hint: it helps keep diagrams readable when nodes have clear “flow direction”.
+### Methods
 
-- `isSelfConnectable: boolean;` Default: `true`.  
-  Controls whether this output can connect back into an input on the **same node**.  
-  Useful for editors where self-loops are either valid (state machines) or should be forbidden (pure pipelines).
+- No public template API methods.
 
-- `fCanBeConnectedInputs: string[];` _(optional)_  
-  Allow-list of targets. Depending on your setup this can be treated as ids or categories (see your “Connection Rules” guide).  
-  Use it to express rules like “this output can connect only to specific inputs / specific categories”.
+### Types
+
+#### EFConnectableSide
+
+```typescript
+enum EFConnectableSide {
+  AUTO = 'auto',
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+}
+```
 
 ## Styling
 

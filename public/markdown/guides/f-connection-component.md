@@ -82,6 +82,27 @@ For the **drag preview** while the user is creating a new link, use
 `f-connection` does not emit its own outputs.  
 Creation/reassign events are emitted from `f-flow[fDraggable]` (see [Event System](event-system)).
 
+### Types
+
+#### EFConnectionBehavior
+
+```typescript
+enum EFConnectionBehavior {
+  FIXED = 'fixed',
+  FLOATING = 'floating',
+}
+```
+
+#### EFConnectionType
+
+```typescript
+enum EFConnectionType {
+  STRAIGHT = 'straight',
+  BEZIER = 'bezier',
+  SEGMENT = 'segment',
+}
+```
+
 ## Styling
 
 These classes are useful when styling the SVG and interaction affordances:

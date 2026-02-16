@@ -1,17 +1,9 @@
 # Create Connection
 
-## Description
+**Selector:** `f-connection-for-create`  
+**Class:** `FConnectionForCreateComponent`
 
 `FConnectionForCreateComponent` is the temporary preview link used while the user drags to create a connection.
-
-- **Selector:** `f-connection-for-create`
-- **Class:** `FConnectionForCreateComponent`
-
-**What you get**
-
-- Visual preview of an in-progress connection.
-- Same line type/behavior options as regular connections.
-- Clean separation between preview UI and persisted edges.
 
 ## Why / Use cases
 
@@ -29,28 +21,51 @@ Do not persist business state from this component directly; use `fCreateConnecti
 
 The component is registered as a special connection instance and controlled by drag logic. During a drag session, internal `fOutputId`/`fInputId` signals update from pointer context; after finalize, the preview is hidden again.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
 ### Inputs
 
-- `fRadius: number;` Default: `8`.
-- `fOffset: number;` Default: `12`.
-- `fBehavior: EFConnectionBehavior;` `fixed | fixed_center | floating`. Default: `fixed`.
-- `fType: EFConnectionType | string;` Default: `straight`.
-- `fInputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
-- `fOutputSide: InputSignal<EFConnectionConnectableSide>;` Default: `default`.
-- `fStartColor: InputSignal<string>;` Default: `black`.
-- `fEndColor: InputSignal<string>;` Default: `black`.
+- `fRadius: number;` Default: `8`. Connection corner radius.
+- `fOffset: number;` Default: `12`. Distance from connector to first bend.
+- `fBehavior: EFConnectionBehavior;` Default: `FIXED`. Defines how the connection handles connector positions.
+- `fType: EFConnectionType;` Default: `STRAIGHT`. Type of the path (segment, straight, bezier).
+- `fInputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for target connection.
+- `fOutputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for source connection.
+- `fStartColor: string;` Default: `black`. Color of the start of the gradient (if used).
+- `fEndColor: string;` Default: `black`. Color of the end of the gradient (if used).
 
-`fOutputId` and `fInputId` are internal runtime signals on this component and are not configured through template inputs.
+### Types
 
-### Outputs
+#### EFConnectionBehavior
 
-- No outputs.
+```typescript
+enum EFConnectionBehavior {
+  FIXED = 'fixed',
+  FLOATING = 'floating',
+}
+```
 
-### Methods
+#### EFConnectionType
 
-- No public template API methods.
+```typescript
+enum EFConnectionType {
+  SEGMENT = 'segment',
+  STRAIGHT = 'straight',
+  BEZIER = 'bezier',
+}
+```
+
+#### EFConnectionConnectableSide
+
+```typescript
+enum EFConnectionConnectableSide {
+  DEFAULT = 'default',
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+}
+```
 
 ## Styling
 

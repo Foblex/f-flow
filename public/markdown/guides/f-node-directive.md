@@ -90,6 +90,37 @@ Place connector directives inside the node and connect them using [`f-connection
 
 - `refresh(): void;` Forces a node refresh for cases where geometry/connector placement must be recalculated (for example, after significant DOM/content changes that affect size/anchors).
 
+### Types
+
+#### IPoint
+
+```typescript
+interface IPoint {
+  x: number;
+  y: number;
+}
+```
+
+#### ISize
+
+```typescript
+interface ISize {
+  width: number;
+  height: number;
+}
+```
+
+#### IRect
+
+```typescript
+interface IRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+```
+
 ## Styling
 
 - `.f-component` Base class for flow primitives.

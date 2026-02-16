@@ -1,17 +1,9 @@
 # Background
 
-## Description
+**Selector:** `f-background`  
+**Class:** `FBackgroundComponent`
 
 `FBackgroundComponent` renders an SVG background layer that follows canvas transform. You can plug built-in patterns or provide a custom pattern implementation.
-
-- **Selector:** `f-background`
-- **Class:** `FBackgroundComponent`
-
-**What you get**
-
-- Grid/dot-like visual context that tracks pan/zoom.
-- Built-in pattern primitives (`f-circle-pattern`, `f-rect-pattern`).
-- Custom pattern support via `F_BACKGROUND_PATTERN` + `IFBackgroundPattern`.
 
 ## Why / Use cases
 
@@ -29,27 +21,25 @@ Skip it for print-like diagrams where a plain background is preferred.
 
 `f-background` registers as a plugin and receives canvas transform updates. The projected pattern component recalculates SVG pattern attributes (`x/y/width/height` and shape geometry) from that transform.
 
-## Configuration (Inputs/Outputs/Methods)
+## API
 
-### `f-background`
+### FBackgroundComponent (`f-background`)
 
-- **Selector:** `f-background`
-- **Class:** `FBackgroundComponent`
 - **Inputs:** none
 - **Outputs:** none
 
-### `f-circle-pattern`
+### FCirclePatternComponent (`f-circle-pattern`)
 
-- **Selector:** `f-circle-pattern`
-- **Class:** `FCirclePatternComponent`
+**Selector:** `f-circle-pattern`
+
 - `id: InputSignal<string>;` Default: `f-pattern-${uniqueId++}`.
 - `color: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
 - `radius: InputSignal<number>;` Default: `20`.
 
-### `f-rect-pattern`
+### FRectPatternComponent (`f-rect-pattern`)
 
-- **Selector:** `f-rect-pattern`
-- **Class:** `FRectPatternComponent`
+**Selector:** `f-rect-pattern`
+
 - `id: InputSignal<string>;` Default: `f-pattern-${uniqueId++}`.
 - `vColor: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
 - `hColor: InputSignal<string>;` Default: `rgba(0,0,0,0.1)`.
@@ -62,27 +52,25 @@ Skip it for print-like diagrams where a plain background is preferred.
 - Interface: `IFBackgroundPattern`
 - Required API: `hostElement` and `setTransform(transform: ITransformModel): void`
 
-::: code-group
+### Types
 
-```html [circle]
-<f-flow>
-  <f-background>
-    <f-circle-pattern [radius]="24"></f-circle-pattern>
-  </f-background>
-  <f-canvas></f-canvas>
-</f-flow>
+#### IFBackgroundPattern
+
+```typescript
+interface IFBackgroundPattern {
+  hostElement: HTMLElement | SVGElement;
+  setTransform(transform: ITransformModel): void;
+}
 ```
 
-```html [rect]
-<f-flow>
-  <f-background>
-    <f-rect-pattern [hSize]="32" [vSize]="32"></f-rect-pattern>
-  </f-background>
-  <f-canvas></f-canvas>
-</f-flow>
-```
+#### ITransformModel
 
-:::
+```typescript
+interface ITransformModel {
+  position: IPoint; // { x: number, y: number }
+  scale: number;
+}
+```
 
 ## Styling
 
