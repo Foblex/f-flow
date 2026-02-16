@@ -9,23 +9,31 @@ Stay up to date and help shape the future via [GitHub Discussions](https://githu
 
 ## 🚧 Planned
 
-| Feature | Description |
-|---|---|
+| Feature                          | Description                                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | 📐 **Grid-Aware Resize Handles** | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130) |
 
 ---
 
 ## 🚧 In Progress
 
-| Feature | Description |
-|---|---|
-| 🔄 **Freeform Connections** | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88) |
+| Feature                         | Description                                                                                                                                                                                                                                                                                                          |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⚡ **Performance Improvements** | We’re working on reducing unnecessary recalculations during interactions. The goal is to rely more on cached geometry (store measured sizes/rects instead of reading them from DOM repeatedly). We may also explore rendering only what’s visible (virtualization), but the exact approach is still being validated. |
+| 🔄 **Freeform Connections**     | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88)                                                                                                                                                                   |
 
 ---
 
 ## ✅ Recently Completed
 
 ### 🧩 Interaction & UX
+
+- 🧲 **Magnetic Alignment (Lines + Rects)** — snap/align helpers while dragging:
+  - **Magnetic Lines** — align by guide lines
+  - **Magnetic Rects** — align by nearby element bounds  
+    Examples: https://flow.foblex.com/examples/magnetic-lines, https://flow.foblex.com/examples/magnetic-rects  
+    Released in **v18.1.0**.
+
 - ✨ **Pinch-to-Zoom Support** — zoom in/out via pinch gestures for trackpads and touch devices.  
   Discussion: https://github.com/Foblex/f-flow/discussions/127  
   Example: https://flow.foblex.com/examples/zoom  
@@ -39,16 +47,19 @@ Stay up to date and help shape the future via [GitHub Discussions](https://githu
     Released in **v18.0.0**.
 
 ### 🔧 Infrastructure & Tooling
+
 - ⏱ **Debounced `fCanvasChange` Event** — reduce noise by configuring `debounceTime` (2025-07-23)
 - 🛠 **Angular Schematics Support** — `ng add` / `ng update` commands for easier setup (2025-05-11)
 
 ### 🧱 UX & Interaction
+
 - ✋ **`fDragBlocker` Directive** — block drag interaction in specific UI areas (2025-07-23)
 - 🔄 **Fully Rotatable Nodes** — rotate any node freely (2025-04-12)
 - ⌨️ **Custom Drag/Zoom Triggers** — define hotkeys and behaviors (2025-02-10)
 - 📤 **DragStart / DragEnd Events** — now emit contextual data (2025-02-07)
 
 ### 🗂 Editor Features
+
 - 🔁 **Connection Reassignment Refactor** — support reassigning both source and target points (2025-07-23)
 - 📬 **`FReassignConnectionEvent` Redesign** — includes both source/target change tracking (2025-07-23)
 - 🧭 **Minimap Refactor** — restructured for flexibility, signal support and better input handling (2025-07-23)
