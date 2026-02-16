@@ -60,11 +60,6 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
     }
 
     const item = this._resolveSelectable(event.targetElement);
-    // if (!item) {
-    //   this._clearSelection();
-    //
-    //   return;
-    // }
 
     this._deferRaiseLayerFor(item);
 
@@ -129,9 +124,8 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
     for (const item of this._dragSession.selectedItems) {
       item.unmarkAsSelected();
     }
-
-    this._dragSession.selectedItems = [];
     this._dragSession.markSelectionAsChanged();
+    this._dragSession.selectedItems = [];
   }
 
   private _select(item: ISelectable): void {

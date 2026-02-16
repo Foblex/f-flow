@@ -17,11 +17,17 @@
       ></div>
       I'm a node
     </div>
-    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fDragHandle>
+    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fDragHandle fNodeId="node2">
       <div fNodeInput fInputConnectableSide="left" class="left" fInputId="input1"></div>
       I'm a node
     </div>
-    <div fNode [fNodePosition]="{ x: 144, y: 154 }" fDragHandle [fNodeSelectionDisabled]="true">
+    <div
+      fNode
+      [fNodePosition]="{ x: 144, y: 154 }"
+      fDragHandle
+      [fNodeSelectionDisabled]="true"
+      fNodeId="node3"
+    >
       <div fNodeInput fInputConnectableSide="top" class="top" fInputId="input2"></div>
       Disabled selection
     </div>

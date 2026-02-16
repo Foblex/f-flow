@@ -5,7 +5,6 @@ describe('Grouping — drag child group into parent and expand parent', () => {
   });
 
   it('drags [data-f-group-id="group3"] inside [data-f-group-id="group2"] and changes parent width', () => {
-
     cy.get('[data-f-group-id="group2"]', { timeout: 2000 })
       .should('exist')
       .then(($parent: JQuery<HTMLElement>) => {
@@ -23,17 +22,16 @@ describe('Grouping — drag child group into parent and expand parent', () => {
 
             cy.wrap($children)
               .first()
-              .trigger('pointerdown', { clientX: fromX, clientY: fromY, button: 0, force: true })
-              .trigger('pointermove', { clientX: fromX + 10, clientY: fromY + 10, force: true })
-              .trigger('pointermove', { clientX: toX, clientY: toY, force: true })
-              .wait(500)
-              .trigger('pointerup',   { clientX: toX, clientY: toY, force: true });
+              .trigger('mousedown', { clientX: fromX, clientY: fromY, button: 0, force: true })
+              .trigger('mousemove', { clientX: fromX + 10, clientY: fromY + 10, force: true })
+              .trigger('mousemove', { clientX: toX, clientY: toY, force: true })
+              .wait(200)
+              .trigger('pointerup', { clientX: toX, clientY: toY, force: true });
 
-            cy.get('[data-f-group-id="group2"]')
-              .then(($parentAfter: JQuery<HTMLElement>) => {
-                const afterWidth = $parentAfter[0].getBoundingClientRect().width;
-                expect(afterWidth).to.not.equal(startWidth);
-              });
+            cy.get('[data-f-group-id="group2"]').should(($parentAfter: JQuery<HTMLElement>) => {
+              const afterWidth = $parentAfter[0].getBoundingClientRect().width;
+              expect(afterWidth).to.be.greaterThan(startWidth);
+            });
           });
       });
   });

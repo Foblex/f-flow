@@ -6,41 +6,45 @@ describe('NodeSelectionComponent', () => {
   });
 
   it('should select a single node via synthetic mouse interaction and emit selection event', () => {
-    cy.get('.f-node.f-drag-handle', {timeout: 2000}).first().then(($node: JQuery<HTMLElement>) => {
-      const rect = $node[0].getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+    cy.get('.f-node.f-drag-handle', { timeout: 2000 })
+      .first()
+      .then(($node: JQuery<HTMLElement>) => {
+        const rect = $node[0].getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-      cy.wrap($node)
-        .trigger('mousedown', {clientX: centerX, clientY: centerY, button: 0, force: true})
-        .trigger('mousemove', {clientX: centerX, clientY: centerY, force: true}) // обязательно
-        .trigger('pointerup', {clientX: centerX, clientY: centerY, force: true});
+        cy.wrap($node)
+          .trigger('mousedown', { clientX: centerX, clientY: centerY, button: 0, force: true })
+          .trigger('mousemove', { clientX: centerX, clientY: centerY, force: true }) // обязательно
+          .trigger('pointerup', { clientX: centerX, clientY: centerY, force: true });
 
-      cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 1);
-      cy.get('.overlay').invoke('text').should('include', 'Selection changed: f-node-0');
-    });
+        cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 1);
+        cy.get('.overlay').invoke('text').should('include', 'Selection changed: node1');
+      });
   });
 
   it('should ignore selection on node with selection disabled', () => {
-    cy.get('.f-node.f-drag-handle').contains('Disabled selection').then(($node: JQuery<HTMLElement>) => {
-      const rect = $node[0].getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+    cy.get('.f-node.f-drag-handle')
+      .contains('Disabled selection')
+      .then(($node: JQuery<HTMLElement>) => {
+        const rect = $node[0].getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-      cy.wrap($node)
-        .trigger('mousedown', {clientX: centerX, clientY: centerY, button: 0, force: true})
-        .trigger('mousemove', {clientX: centerX + 1, clientY: centerY + 1, force: true}) // micro move
-        .trigger('pointerup', {clientX: centerX + 1, clientY: centerY + 1, force: true});
+        cy.wrap($node)
+          .trigger('mousedown', { clientX: centerX, clientY: centerY, button: 0, force: true })
+          .trigger('mousemove', { clientX: centerX + 1, clientY: centerY + 1, force: true }) // micro move
+          .trigger('pointerup', { clientX: centerX + 1, clientY: centerY + 1, force: true });
 
-      cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 0);
-      cy.get('.overlay').invoke('text').should('not.contain', 'input2');
-    });
+        cy.get('.f-node.f-drag-handle.f-selected').should('have.length', 0);
+        cy.get('.overlay').invoke('text').should('not.contain', 'node3');
+      });
   });
 
   it('should sequentially select all nodes and log correct selection events', () => {
     const expectedLogs = [
-      'Selection changed: f-node-0',
-      'Selection changed: f-node-1',
+      'Selection changed: node1',
+      'Selection changed: node2',
       'Selection changed:',
     ];
 
@@ -50,9 +54,9 @@ describe('NodeSelectionComponent', () => {
       const centerY = rect.top + rect.height / 2;
 
       cy.wrap($node)
-        .trigger('mousedown', {clientX: centerX, clientY: centerY, button: 0, force: true})
-        .trigger('mousemove', {clientX: centerX + 1, clientY: centerY + 1, force: true})
-        .trigger('pointerup', {clientX: centerX + 1, clientY: centerY + 1, force: true});
+        .trigger('mousedown', { clientX: centerX, clientY: centerY, button: 0, force: true })
+        .trigger('mousemove', { clientX: centerX + 1, clientY: centerY + 1, force: true })
+        .trigger('pointerup', { clientX: centerX + 1, clientY: centerY + 1, force: true });
 
       cy.wait(100);
     });
