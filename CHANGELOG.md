@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.1.0](https://github.com/foblex/flow/compare/v18.0.0...v18.1.0) (2026-02-16)
+
+### Highlights
+
+- **Magnetic alignment extensions** - added `f-magnetic-lines` and `f-magnetic-rects` plugins with dedicated examples.
+- **Connection interactions reworked** - new create/reassign connection drag flows and updated waypoint drag handlers.
+- **Draggable infrastructure refresh** - unified handler architecture and improved pointer-based selection behavior.
+- **Public API growth** - exported magnetic plugins and testing utilities from `public-api`.
+
+### Features
+
+- **magnetic-lines:** add magnetic line management features ([8a48f35](https://github.com/foblex/flow/commit/8a48f35a))
+- **magnetic-rects:** implement magnetic rects functionality ([7d37007](https://github.com/foblex/flow/commit/7d370075))
+- **drag-handler:** add `kind` property support in handlers ([1a642fd](https://github.com/foblex/flow/commit/1a642fdb))
+- **examples:** add AI low-code platform example ([4ad841b](https://github.com/foblex/flow/commit/4ad841b5))
+
+### Improvements
+
+- Refactored storage internals to registries (`FConnectorRegistry`, connection/node/marker registries) for more consistent component lifecycle handling ([6b40453](https://github.com/foblex/flow/commit/6b404536), [be42f88](https://github.com/foblex/flow/commit/be42f88d), [13a2b32](https://github.com/foblex/flow/commit/13a2b32f), [05d8bf6](https://github.com/foblex/flow/commit/05d8bf67), [8988370](https://github.com/foblex/flow/commit/8988370c))
+- Reworked selection and selection-area flow to improve pointer handling and interaction predictability ([ba716d2](https://github.com/foblex/flow/commit/ba716d28), [4158d34](https://github.com/foblex/flow/commit/4158d340))
+- Performed broad naming and structure cleanup for draggable/connection modules to improve maintainability ([3af7539](https://github.com/foblex/flow/commit/3af75392), [3253671](https://github.com/foblex/flow/commit/3253671b), [9ecf603](https://github.com/foblex/flow/commit/9ecf6034), [989ba17](https://github.com/foblex/flow/commit/989ba17e), [cb5b883](https://github.com/foblex/flow/commit/cb5b883d), [dd58542](https://github.com/foblex/flow/commit/dd585426))
+- Extended public API exports with `f-magnetic-lines`, `f-magnetic-rects`, and `testing` modules ([08a864c](https://github.com/foblex/flow/commit/08a864cf))
+
+### Documentation
+
+- Updated multiple guides/components docs for consistency and removed outdated sections ([99af791](https://github.com/foblex/flow/commit/99af7915), [83d8882](https://github.com/foblex/flow/commit/83d8882e))
+- Updated draggable-flow demo docs/layout for better responsiveness and clearer interaction examples ([1115ecf](https://github.com/foblex/flow/commit/1115ecf8))`
+
 ## [18.0.0](https://github.com/foblex/flow/compare/v17.9.5...v18.0.0) (2026-01-26)
 
 ### Highlights
