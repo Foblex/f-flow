@@ -7,4 +7,104 @@ ogType: "article"
 twitterCard: "summary_large_image"
 ---
 
-<p>Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders — all with a focus on interactive UX and clean APIs.</p><p>Today I’m shipping <strong>v18.0.0</strong>, and it’s a big one. The headline features are <strong>Connection Waypoints</strong> and <strong>Pinch-to-Zoom</strong>, plus a few important improvements for real-world Angular apps.</p><h3>Connection Waypoints — editable paths for any connection type</h3><p>Until now, a connection path was mostly a <strong>builder decision</strong> (straight / segment / bezier / adaptive curve).</p><p>In v18 you can <strong>edit the connection route</strong> by adding and moving <strong>waypoints</strong></p><p>What it feels like in the editor</p><ul><li><strong>Drag a candidate point</strong> to create a new waypoint (drag-to-add).</li><li><strong>Drag an existing waypoint </strong>to adjust the route (drag-to-move).</li><li><strong>Right click</strong> a waypoint to remove it (simple and fast, no extra selection state).</li></ul><p>Waypoints are not a separate connection type — they work <strong>on top of your chosen type</strong>:</p><p>straight / segment / bezier / adaptive curve.</p><p>✅ Example: <a href="https://flow.foblex.com/examples/connection-waypoints">https://flow.foblex.com/examples/connection-waypoints</a></p><figure><img alt="" src="https://cdn-images-1.medium.com/max/720/1*4cdHRP4Qbh1KNDA4EFrEnQ.gif" /><figcaption>Connection Waypoints Example</figcaption></figure><h4>Minimal usage</h4><pre>&lt;f-connection fType=&quot;adaptive-curve&quot; fOutputId=&quot;1&quot; fInputId=&quot;2&quot;&gt;<br>  &lt;f-connection-waypoints [(waypoints)]=&quot;waypoints&quot; /&gt;<br>&lt;/f-connection&gt;</pre><p>This keeps the <strong>data lives in your app</strong>”principle: Waypoints are just points, and you fully own them.</p><h3>Pinch-to-Zoom — finally a first-class multi-touch zoom UX</h3><p>Zooming used to be wheel/double-click/buttons — good for mouse users, but not enough for modern devices.</p><p>v18 adds <strong>pinch-to-zoom</strong>:</p><ul><li>Trackpads (macOS / Windows precision touchpads)</li><li>Touch devices</li></ul><p>✅ Example: <a href="https://flow.foblex.com/examples/zoom">https://flow.foblex.com/examples/zoom</a></p><p>Enable it the same way as normal zoom:</p><pre>&lt;f-canvas fZoom&gt;&lt;/f-canvas&gt;</pre><h3>Better compatibility with Angular Control Flow + Content Projection</h3><p>Angular’s @if / @for are great — but real component trees + content projection can be tricky.</p><p>In v18 I updated the canvas projection slots, so you can wrap nodes/connections using grouped slots:</p><pre>&lt;f-canvas&gt;<br>  &lt;ng-container ngProjectAs=&quot;[fNodes]&quot;&gt;<br>    @for (...) { ... }<br>  &lt;/ng-container&gt;<br><br>  &lt;ng-container ngProjectAs=&quot;[fConnections]&quot;&gt;<br>    @if (...) { ... }<br>  &lt;/ng-container&gt;<br>&lt;/f-canvas&gt;</pre><p>This makes “conditional rendering + content projection” much more predictable.</p><h3>Custom Backgrounds — richer SVG patterns + new example</h3><p>Backgrounds in flow editors matter more than people think: grid, dots, paper-like patterns, or fully custom SVG.</p><p>In v18:</p><ul><li>better support for <strong>complex SVG patterns</strong></li><li>plus a <strong>new example</strong> showing how to build advanced backgrounds</li></ul><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*2YH4Wm0KL8XdySdwYY7enA.png" /></figure><h3>Release + demo</h3><ul><li>Release: <a href="https://github.com/Foblex/f-flow/releases/tag/v18.0.0">https://github.com/Foblex/f-flow/releases/tag/v18.0.0</a></li><li>Waypoints example: <a href="https://flow.foblex.com/examples/connection-waypoints">https://flow.foblex.com/examples/connection-waypoints</a></li><li>Zoom example: <a href="https://flow.foblex.com/examples/zoom">https://flow.foblex.com/examples/zoom</a></li></ul><h3>Closing</h3><p>Waypoints are one of those features that instantly level up any node editor:</p><p>users can make routes clean, readable, and intentional — without fighting the layout.</p><p>If you’re building a visual editor in Angular and want a native Angular solution (not a React wrapper) — take a look.</p><p>And if you like what I’m building, please consider starring the repo ⭐️</p><p>It helps the project a lot.</p>
+Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders — all with a focus on interactive UX and clean APIs.
+
+Today I’m shipping **v18.0.0**, and it’s a big one. The headline features are **Connection Waypoints** and **Pinch-to-Zoom**, plus a few important improvements for real-world Angular apps.
+
+### Connection Waypoints — editable paths for any connection type
+
+Until now, a connection path was mostly a **builder decision** (straight / segment / bezier / adaptive curve).
+
+In v18 you can **edit the connection route** by adding and moving **waypoints**
+
+What it feels like in the editor
+
+- **Drag a candidate point** to create a new waypoint (drag-to-add).
+- **Drag an existing waypoint** to adjust the route (drag-to-move).
+- **Right click** a waypoint to remove it (simple and fast, no extra selection state).
+
+Waypoints are not a separate connection type — they work **on top of your chosen type**:
+
+straight / segment / bezier / adaptive curve.
+
+✅ Example: <https://flow.foblex.com/examples/connection-waypoints>
+
+![](https://cdn-images-1.medium.com/max/720/1*4cdHRP4Qbh1KNDA4EFrEnQ.gif)
+
+Connection Waypoints Example
+
+#### Minimal usage
+
+```
+<f-connection fType="adaptive-curve" fOutputId="1" fInputId="2">
+  <f-connection-waypoints [(waypoints)]="waypoints" />
+</f-connection>
+```
+
+This keeps the **data lives in your app**”principle: Waypoints are just points, and you fully own them.
+
+### Pinch-to-Zoom — finally a first-class multi-touch zoom UX
+
+Zooming used to be wheel/double-click/buttons — good for mouse users, but not enough for modern devices.
+
+v18 adds **pinch-to-zoom**:
+
+- Trackpads (macOS / Windows precision touchpads)
+- Touch devices
+
+✅ Example: <https://flow.foblex.com/examples/zoom>
+
+Enable it the same way as normal zoom:
+
+```
+<f-canvas fZoom></f-canvas>
+```
+
+### Better compatibility with Angular Control Flow + Content Projection
+
+Angular’s @if / @for are great — but real component trees + content projection can be tricky.
+
+In v18 I updated the canvas projection slots, so you can wrap nodes/connections using grouped slots:
+
+```
+<f-canvas>
+  <ng-container ngProjectAs="[fNodes]">
+    @for (...) { ... }
+  </ng-container>
+
+  <ng-container ngProjectAs="[fConnections]">
+    @if (...) { ... }
+  </ng-container>
+</f-canvas>
+```
+
+This makes “conditional rendering + content projection” much more predictable.
+
+### Custom Backgrounds — richer SVG patterns + new example
+
+Backgrounds in flow editors matter more than people think: grid, dots, paper-like patterns, or fully custom SVG.
+
+In v18:
+
+- better support for **complex SVG patterns**
+- plus a **new example** showing how to build advanced backgrounds
+
+![](https://cdn-images-1.medium.com/max/1024/1*2YH4Wm0KL8XdySdwYY7enA.png)
+
+### Release + demo
+
+- Release: <https://github.com/Foblex/f-flow/releases/tag/v18.0.0>
+- Waypoints example: <https://flow.foblex.com/examples/connection-waypoints>
+- Zoom example: <https://flow.foblex.com/examples/zoom>
+
+### Closing
+
+Waypoints are one of those features that instantly level up any node editor:
+
+users can make routes clean, readable, and intentional — without fighting the layout.
+
+If you’re building a visual editor in Angular and want a native Angular solution (not a React wrapper) — take a look.
+
+And if you like what I’m building, please consider starring the repo ⭐️
+
+It helps the project a lot.

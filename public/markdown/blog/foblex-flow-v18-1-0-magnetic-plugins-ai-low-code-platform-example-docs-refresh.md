@@ -7,4 +7,130 @@ ogType: "article"
 twitterCard: "summary_large_image"
 ---
 
-<p>Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders-with a focus on interactive UX and clean APIs.</p><p>Today I’m shipping <strong>v18.1.0</strong>. This release adds <strong>two new magnetic alignment plugins</strong>, a <strong>new AI Low-Code Platform example</strong>, and a <strong>big documentation overhaul</strong> (new pages + improved existing docs).</p><h3>✨ Highlights</h3><ul><li>🧲 <strong>Magnetic alignment plugins</strong>: new <strong>Magnetic Lines</strong> and <strong>Magnetic Rects</strong> to help align elements while moving.</li><li>🤖 <strong>New example: AI Low-Code Platform</strong> -a larger, “real-world” demo showing how to build a production-like node editor experience.</li><li>📚 <strong>Docs refresh - </strong>new documentation pages + reworked existing guides for consistency, clarity, and better quick-start sections.</li></ul><h3>🧲 New: Magnetic Alignment Plugins</h3><p>Alignment is one of those features that immediately makes an editor feel “professional”.</p><p>In v18.1 there are <strong>two new plugins</strong> you can enable depending on the UX you want.</p><h3>Magnetic Lines (Line Alignment)</h3><p>This plugin adds guideline-like alignment behavior (snap/assist) while dragging.</p><figure><img alt="" src="https://cdn-images-1.medium.com/max/800/1*d1qqO9ReXGQRrJBuh8fgug.gif" /></figure><ul><li>You move an element close to a virtual guide line</li><li>the editor helps you “lock” into that alignment</li><li>you get a clean, predictable layout without pixel-hunting</li></ul><p>✅ Live demo: <a href="https://flow.foblex.com/examples/magnetic-lines">https://flow.foblex.com/examples/magnetic-lines</a></p><blockquote><em>Note: this is the next step of the old “Line Alignment” direction. If you used the previous approach - this is the cleaner, dedicated plugin version.</em></blockquote><h3>Magnetic Rects</h3><p>This plugin focuses on <strong>bounds-based alignment</strong>:</p><figure><img alt="" src="https://cdn-images-1.medium.com/max/800/1*5tfHyAmFm0TuNs-oy_9RUw.gif" /></figure><p>you align element rectangles against other elements’ bounds (edges/centers).</p><ul><li>Helps with spacing, clean rows/columns</li><li>Feels closer to how design tools behave</li><li>Great for diagram builders where visual order matters</li></ul><p>✅ Live demo: <a href="https://flow.foblex.com/examples/magnetic-rects">https://flow.foblex.com/examples/magnetic-rects</a></p><p>Both plugins ship with dedicated examples and documentation updates.</p><h3>🤖 New example: AI Low-Code Platform</h3><p>I also added a new larger example: <strong>AI Low-Code Platform</strong>.</p><figure><img alt="" src="https://cdn-images-1.medium.com/max/800/1*6GJ3IBxEbeXbBoXGVI6PIg.gif" /></figure><p>✅ Live demo: <a href="https://foblex.github.io/Building-AI-Low-Code-Platform5/">https://foblex.github.io/Building-AI-Low-Code-Platform5/</a></p><p>✅ Source code: <a href="https://github.com/Foblex/Building-AI-Low-Code-Platform5">https://github.com/Foblex/Building-AI-Low-Code-Platform5</a></p><p>This example is meant as a <strong>reference implementation</strong> for building “production-like” editors with Foblex Flow:</p><ul><li><strong>Undo/redo</strong> as the baseline safety net while editing</li><li><strong>Import/Export to JSON</strong> (share flows, version them, move between machines)</li><li><strong>4 themes</strong> with runtime switching</li><li><strong>localStorage persistence</strong> (state + settings)</li><li><strong>animated connections</strong> to make data flow readable</li><li><strong>multi-selection</strong> for batch operations</li><li><strong>node configuration panel</strong> per node with validation</li><li>UI built with <strong>Angular Material</strong></li></ul><p>If you’re building a serious editor and want to see how the pieces fit together - this demo is the best starting point right now.</p><h3>📚 Documentation update (major)</h3><p>This release includes a large documentation pass.</p><h3>New docs pages</h3><ul><li><a href="https://flow.foblex.com/docs/event-system">https://flow.foblex.com/docs/event-system</a></li><li><a href="https://flow.foblex.com/docs/selection-system">https://flow.foblex.com/docs/selection-system</a></li><li><a href="https://flow.foblex.com/docs/f-drag-handle-directive">https://flow.foblex.com/docs/f-drag-handle-directive</a></li><li><a href="https://flow.foblex.com/docs/f-group-directive">https://flow.foblex.com/docs/f-group-directive</a></li><li><a href="https://flow.foblex.com/docs/f-resize-handle-directive">https://flow.foblex.com/docs/f-resize-handle-directive</a></li><li><a href="https://flow.foblex.com/docs/f-rotate-handle-directive">https://flow.foblex.com/docs/f-rotate-handle-directive</a></li><li><a href="https://flow.foblex.com/docs/connection-rules">https://flow.foblex.com/docs/connection-rules</a></li><li><a href="https://flow.foblex.com/docs/f-connection-marker-directive">https://flow.foblex.com/docs/f-connection-marker-directive</a></li><li><a href="https://flow.foblex.com/docs/f-snap-connection-component">https://flow.foblex.com/docs/f-snap-connection-component</a></li><li><a href="https://flow.foblex.com/docs/f-connection-waypoints-component">https://flow.foblex.com/docs/f-connection-waypoints-component</a></li><li><a href="https://flow.foblex.com/docs/f-external-item-directive">https://flow.foblex.com/docs/f-external-item-directive</a></li><li><a href="https://flow.foblex.com/docs/f-selection-area-component">https://flow.foblex.com/docs/f-selection-area-component</a></li><li><a href="https://flow.foblex.com/docs/f-magnetic-lines-component">https://flow.foblex.com/docs/f-magnetic-lines-component</a></li><li><a href="https://flow.foblex.com/docs/f-magnetic-rects-component">https://flow.foblex.com/docs/f-magnetic-rects-component</a></li></ul><h3>Improved existing guides</h3><ul><li><a href="https://flow.foblex.com/docs/f-flow-component">https://flow.foblex.com/docs/f-flow-component</a></li><li><a href="https://flow.foblex.com/docs/f-canvas-component">https://flow.foblex.com/docs/f-canvas-component</a></li><li><a href="https://flow.foblex.com/docs/f-node-directive">https://flow.foblex.com/docs/f-node-directive</a></li><li><a href="https://flow.foblex.com/docs/f-node-output-directive">https://flow.foblex.com/docs/f-node-output-directive</a></li><li><a href="https://flow.foblex.com/docs/f-node-input-directive">https://flow.foblex.com/docs/f-node-input-directive</a></li><li><a href="https://flow.foblex.com/docs/f-node-outlet-directive">https://flow.foblex.com/docs/f-node-outlet-directive</a></li><li><a href="https://flow.foblex.com/docs/f-connection-component">https://flow.foblex.com/docs/f-connection-component</a></li><li><a href="https://flow.foblex.com/docs/f-connection-for-create-component">https://flow.foblex.com/docs/f-connection-for-create-component</a></li><li><a href="https://flow.foblex.com/docs/f-draggable-directive">https://flow.foblex.com/docs/f-draggable-directive</a></li><li><a href="https://flow.foblex.com/docs/f-zoom-directive">https://flow.foblex.com/docs/f-zoom-directive</a></li><li><a href="https://flow.foblex.com/docs/f-background-component">https://flow.foblex.com/docs/f-background-component</a></li><li><a href="https://flow.foblex.com/docs/f-minimap-component">https://flow.foblex.com/docs/f-minimap-component</a></li></ul><p>If you haven’t checked the docs in a while - it’s worth revisiting.</p><p>The goal of this refresh is simple: <strong>less guessing, faster onboarding, more consistent terminology</strong>.</p><h3>✅ Release links</h3><ul><li>Release: https://github.com/Foblex/f-flow/releases/tag/v18.1.0</li><li>Magnetic Lines demo: https://flow.foblex.com/examples/magnetic-lines</li><li>Magnetic Rects demo: https://flow.foblex.com/examples/magnetic-rects</li><li>AI Low-Code Platform demo: <a href="https://foblex.github.io/Building-AI-Low-Code-Platform5/">https://foblex.github.io/Building-AI-Low-Code-Platform5/</a></li></ul><h3>Closing</h3><p>Magnetic alignment is one of those features that changes the feel of the editor immediately-things become cleaner, faster, and more intentional.</p><p>If you’re building a visual editor in Angular and want a native Angular solution (not a React wrapper)-take a look.</p><p>And if you like what I’m building, please consider starring the repo ⭐️</p><p>It helps the project a lot.</p><p>Repo: <a href="https://github.com/Foblex/f-flow">https://github.com/Foblex/f-flow</a></p>
+Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders-with a focus on interactive UX and clean APIs.
+
+Today I’m shipping **v18.1.0**. This release adds **two new magnetic alignment plugins**, a **new AI Low-Code Platform example**, and a **big documentation overhaul** (new pages + improved existing docs).
+
+### ✨ Highlights
+
+- 🧲 **Magnetic alignment plugins**: new **Magnetic Lines** and **Magnetic Rects** to help align elements while moving.
+- 🤖 **New example: AI Low-Code Platform** -a larger, “real-world” demo showing how to build a production-like node editor experience.
+- 📚 **Docs refresh**: new documentation pages + reworked existing guides for consistency, clarity, and better quick-start sections.
+
+### 🧲 New: Magnetic Alignment Plugins
+
+Alignment is one of those features that immediately makes an editor feel “professional”.
+
+In v18.1 there are **two new plugins** you can enable depending on the UX you want.
+
+### Magnetic Lines (Line Alignment)
+
+This plugin adds guideline-like alignment behavior (snap/assist) while dragging.
+
+![](https://cdn-images-1.medium.com/max/800/1*d1qqO9ReXGQRrJBuh8fgug.gif)
+
+- You move an element close to a virtual guide line
+- the editor helps you “lock” into that alignment
+- you get a clean, predictable layout without pixel-hunting
+
+✅ Live demo: <https://flow.foblex.com/examples/magnetic-lines>
+
+> _Note: this is the next step of the old “Line Alignment” direction. If you used the previous approach - this is the cleaner, dedicated plugin version._
+
+### Magnetic Rects
+
+This plugin focuses on **bounds-based alignment**:
+
+![](https://cdn-images-1.medium.com/max/800/1*5tfHyAmFm0TuNs-oy_9RUw.gif)
+
+you align element rectangles against other elements’ bounds (edges/centers).
+
+- Helps with spacing, clean rows/columns
+- Feels closer to how design tools behave
+- Great for diagram builders where visual order matters
+
+✅ Live demo: <https://flow.foblex.com/examples/magnetic-rects>
+
+Both plugins ship with dedicated examples and documentation updates.
+
+### 🤖 New example: AI Low-Code Platform
+
+I also added a new larger example: **AI Low-Code Platform**.
+
+![](https://cdn-images-1.medium.com/max/800/1*6GJ3IBxEbeXbBoXGVI6PIg.gif)
+
+✅ Live demo: <https://foblex.github.io/Building-AI-Low-Code-Platform5/>
+
+✅ Source code: <https://github.com/Foblex/Building-AI-Low-Code-Platform5>
+
+This example is meant as a **reference implementation** for building “production-like” editors with Foblex Flow:
+
+- **Undo/redo** as the baseline safety net while editing
+- **Import/Export to JSON** (share flows, version them, move between machines)
+- **4 themes** with runtime switching
+- **localStorage persistence** (state + settings)
+- **animated connections** to make data flow readable
+- **multi-selection** for batch operations
+- **node configuration panel** per node with validation
+- UI built with **Angular Material**
+
+If you’re building a serious editor and want to see how the pieces fit together - this demo is the best starting point right now.
+
+### 📚 Documentation update (major)
+
+This release includes a large documentation pass.
+
+### New docs pages
+
+- <https://flow.foblex.com/docs/event-system>
+- <https://flow.foblex.com/docs/selection-system>
+- <https://flow.foblex.com/docs/f-drag-handle-directive>
+- <https://flow.foblex.com/docs/f-group-directive>
+- <https://flow.foblex.com/docs/f-resize-handle-directive>
+- <https://flow.foblex.com/docs/f-rotate-handle-directive>
+- <https://flow.foblex.com/docs/connection-rules>
+- <https://flow.foblex.com/docs/f-connection-marker-directive>
+- <https://flow.foblex.com/docs/f-snap-connection-component>
+- <https://flow.foblex.com/docs/f-connection-waypoints-component>
+- <https://flow.foblex.com/docs/f-external-item-directive>
+- <https://flow.foblex.com/docs/f-selection-area-component>
+- <https://flow.foblex.com/docs/f-magnetic-lines-component>
+- <https://flow.foblex.com/docs/f-magnetic-rects-component>
+
+### Improved existing guides
+
+- <https://flow.foblex.com/docs/f-flow-component>
+- <https://flow.foblex.com/docs/f-canvas-component>
+- <https://flow.foblex.com/docs/f-node-directive>
+- <https://flow.foblex.com/docs/f-node-output-directive>
+- <https://flow.foblex.com/docs/f-node-input-directive>
+- <https://flow.foblex.com/docs/f-node-outlet-directive>
+- <https://flow.foblex.com/docs/f-connection-component>
+- <https://flow.foblex.com/docs/f-connection-for-create-component>
+- <https://flow.foblex.com/docs/f-draggable-directive>
+- <https://flow.foblex.com/docs/f-zoom-directive>
+- <https://flow.foblex.com/docs/f-background-component>
+- <https://flow.foblex.com/docs/f-minimap-component>
+
+If you haven’t checked the docs in a while - it’s worth revisiting.
+
+The goal of this refresh is simple: **less guessing, faster onboarding, more consistent terminology**.
+
+### ✅ Release links
+
+- Release: <https://github.com/Foblex/f-flow/releases/tag/v18.1.0>
+- Magnetic Lines demo: <https://flow.foblex.com/examples/magnetic-lines>
+- Magnetic Rects demo: <https://flow.foblex.com/examples/magnetic-rects>
+- AI Low-Code Platform demo: <https://foblex.github.io/Building-AI-Low-Code-Platform5/>
+
+### Closing
+
+Magnetic alignment is one of those features that changes the feel of the editor immediately-things become cleaner, faster, and more intentional.
+
+If you’re building a visual editor in Angular and want a native Angular solution (not a React wrapper)-take a look.
+
+And if you like what I’m building, please consider starring the repo ⭐️
+
+It helps the project a lot.
+
+Repo: <https://github.com/Foblex/f-flow>

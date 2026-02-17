@@ -2,9 +2,98 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-custom-content-on-connections-and-smarter-validation-in-angular-4a9bc7129d86"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular"
-description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow, we bring this experience natively into Angular."
+description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular."
 ogType: "article"
 twitterCard: "summary_large_image"
 ---
 
-<h3>Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular</h3><p>Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With <strong>Foblex Flow</strong>, we bring this experience natively into Angular.</p><p>The new release, <strong>v17.8.0</strong>, introduces two major improvements:</p><p>✅ <strong>Custom content inside connections</strong></p><p>✅ <strong>Smarter validation rules for allowed connections</strong></p><p>Together, these make visual editors more flexible, user-friendly, and production-ready.</p><p>✨ <strong>Custom Content on Connections</strong></p><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*wW8qCQaR8F8RxhEFZ3dYcw.png" /></figure><p>Connections are no longer just lines — you can now place any custom widget directly on them.</p><p>With the new fConnectionContent directive, you can:</p><ul><li>Add <strong>labels, icons, or buttons</strong> at any point along a connection.</li><li>Control <strong>position (0..1)</strong>, <strong>offset (px)</strong>, and <strong>alignment</strong> relative to the path.</li><li>Use multiple content elements on the same connection.</li></ul><p>Example:</p><pre>&lt;f-connection ...&gt;<br>  &lt;button fConnectionContent [position]=&quot;0.25&quot; [offset]=&quot;-12&quot;&gt;+&lt;/button&gt;<br>  &lt;span fConnectionContent [position]=&quot;0.75&quot; align=&quot;along&quot;&gt;⮕&lt;/span&gt;<br>&lt;/f-connection&gt;</pre><p>This enables interaction patterns like inline buttons, directional icons, or status indicators <strong>directly on edges</strong>.</p><p>🔒 <strong>Smarter Connection Validation</strong></p><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*e88tuPSnChdoFE8zOhic9A.png" /></figure><p>Validation rules got a big upgrade.</p><p>Previously, connections could only be restricted by <strong>input ID</strong>.</p><p>Now you can also define restrictions by <strong>input category</strong> (fInputCategory).</p><p>On the output side, you specify an array fCanBeConnectedInputs, which may include both:</p><ul><li>explicit IDs</li><li>or categories (labels like “math”, “string”, “number”).</li></ul><p>During a drag operation:</p><ul><li>Only valid inputs are highlighted with .f-connector-connectable.</li><li>Invalid inputs stay dimmed.</li><li>The container gets .f-connections-dragging for styling.</li></ul><p>This gives <strong>instant visual feedback</strong> and allows real editors to enforce rules like “math nodes can only connect to math inputs”.</p><p>⚠️ <strong>Deprecations</strong></p><p>Two older APIs are now deprecated:</p><ul><li>fConnectionCenter directive</li><li>fText property</li></ul><p>They are replaced by the new fConnectionContent directive. Migration is simple — see the <a href="https://github.com/foblex/flow/releases/tag/v17.8.0">changelog</a>.</p><p>📚 <strong>Other Improvements</strong></p><ul><li>Refactored Dagre layout example with better connection handling.</li><li>Connector IDs migrated to Angular Signals for improved reactivity.</li><li>Infrastructure update: added <strong>chokidar</strong> for file watching.</li><li>Angular dependencies updated to latest patch versions.</li></ul><p>💡 <strong>Why This Matters</strong></p><p>These features move Foblex Flow closer to the UX of professional diagramming tools:</p><ul><li><strong>Content on connections</strong> makes diagrams informative and interactive.</li><li><strong>Validation by category</strong> keeps flows correct and safe.</li><li><strong>Deprecations</strong> streamline the API for future growth.</li></ul><p>Foblex Flow continues to evolve into a <strong>production-ready Angular framework for low-code editors, AI builders, and workflow tools</strong>.</p><p>🔗 <strong>Links</strong></p><ul><li>GitHub repo: <a href="https://github.com/foblex/flow">https://github.com/foblex/flow</a></li><li>Live examples: <a href="https://flow.foblex.com/examples/overview">https://flow.foblex.com/examples</a></li></ul><p>❤️ If you find it useful, please ⭐ the repo on GitHub — it’s the best way to support the project and help it grow.</p>
+### Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular
+
+Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With **Foblex Flow**, we bring this experience natively into Angular.
+
+The new release, **v17.8.0**, introduces two major improvements:
+
+✅ **Custom content inside connections**
+
+✅ **Smarter validation rules for allowed connections**
+
+Together, these make visual editors more flexible, user-friendly, and production-ready.
+
+✨ **Custom Content on Connections**
+
+![](https://cdn-images-1.medium.com/max/1024/1*wW8qCQaR8F8RxhEFZ3dYcw.png)
+
+Connections are no longer just lines — you can now place any custom widget directly on them.
+
+With the new fConnectionContent directive, you can:
+
+- Add **labels, icons, or buttons** at any point along a connection.
+- Control **position (0..1)**, **offset (px)**, and **alignment** relative to the path.
+- Use multiple content elements on the same connection.
+
+Example:
+
+```
+<f-connection ...>
+  <button fConnectionContent [position]="0.25" [offset]="-12">+</button>
+  <span fConnectionContent [position]="0.75" align="along">⮕</span>
+</f-connection>
+```
+
+This enables interaction patterns like inline buttons, directional icons, or status indicators **directly on edges**.
+
+🔒 **Smarter Connection Validation**
+
+![](https://cdn-images-1.medium.com/max/1024/1*e88tuPSnChdoFE8zOhic9A.png)
+
+Validation rules got a big upgrade.
+
+Previously, connections could only be restricted by **input ID**.
+
+Now you can also define restrictions by **input category** (fInputCategory).
+
+On the output side, you specify an array fCanBeConnectedInputs, which may include both:
+
+- explicit IDs
+- or categories (labels like “math”, “string”, “number”).
+
+During a drag operation:
+
+- Only valid inputs are highlighted with .f-connector-connectable.
+- Invalid inputs stay dimmed.
+- The container gets .f-connections-dragging for styling.
+
+This gives **instant visual feedback** and allows real editors to enforce rules like “math nodes can only connect to math inputs”.
+
+⚠️ **Deprecations**
+
+Two older APIs are now deprecated:
+
+- fConnectionCenter directive
+- fText property
+
+They are replaced by the new fConnectionContent directive. Migration is simple — see the [changelog](https://github.com/foblex/flow/releases/tag/v17.8.0).
+
+📚 **Other Improvements**
+
+- Refactored Dagre layout example with better connection handling.
+- Connector IDs migrated to Angular Signals for improved reactivity.
+- Infrastructure update: added **chokidar** for file watching.
+- Angular dependencies updated to latest patch versions.
+
+💡 **Why This Matters**
+
+These features move Foblex Flow closer to the UX of professional diagramming tools:
+
+- **Content on connections** makes diagrams informative and interactive.
+- **Validation by category** keeps flows correct and safe.
+- **Deprecations** streamline the API for future growth.
+
+Foblex Flow continues to evolve into a **production-ready Angular framework for low-code editors, AI builders, and workflow tools**.
+
+🔗 **Links**
+
+- GitHub repo: <https://github.com/foblex/flow>
+- Live examples: [https://flow.foblex.com/examples](https://flow.foblex.com/examples/overview)
+
+❤️ If you find it useful, please ⭐ the repo on GitHub — it’s the best way to support the project and help it grow.

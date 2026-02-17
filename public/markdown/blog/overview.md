@@ -1,13 +1,15 @@
 # Foblex Flow Blog
 
-This section contains release-focused updates for **Foblex Flow**.
-Each post highlights what changed, why it matters, and where to read the full publication.
+All posts from Siarhei Huzarevich's Medium profile and publications are mirrored here with origin attribution.
 
 ::: preview-group
-[Latest releases]
+[Releases]
+[Inside Foblex Flow]
+[Building AI Low-Code Platform]
+[Call Flow Editor]
 :::
 
 ---
 
-Looking for the complete changelog?
+Looking for the complete changelog?  
 See [CHANGELOG.md](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md).

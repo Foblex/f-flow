@@ -392,4 +392,49 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/call-center-flow-editor-now-updated-with-angular-20-signals/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-17-7-smarter-grouping-copy-paste-and-undo-redo-in-angular/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/inside-foblex-flow-part-2-drag-and-drop-architecture-in-angular-without-cdk/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/inside-foblex-flow-part-1-library-architecture-and-design-principles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-4-styling-and-handling-connections/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-2-creating-your-first-flow/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-1-introduction-to-foblex-flow/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/creating-a-visual-call-workflow-editor-with-angular/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

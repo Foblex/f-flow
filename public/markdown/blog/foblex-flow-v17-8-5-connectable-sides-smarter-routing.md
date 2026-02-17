@@ -2,9 +2,70 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-5-connectable-sides-for-smarter-routing-in-angular-36e49407b78a"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow 17.8.5— Connectable Sides for Smarter Routing in Angular"
-description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow, we bring this experience natively into Angular."
+description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular."
 ogType: "article"
 twitterCard: "summary_large_image"
 ---
 
-<p>Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With <strong>Foblex Flow</strong>, we bring this experience natively into Angular.</p><p>The new release, <strong>v17.8.5</strong>, introduces a major improvement:</p><p>✅ Fine-grained control over which side of a node is connectable (manual or calculated).</p><p>Together, these updates give developers precise control over routing while still supporting automatic, dynamic layouts.</p><p>✨ <strong>Connectable Sides</strong></p><p>Connections are no longer limited to a single default side. Now, each connector can define exactly where links are allowed:</p><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*HWWQhq3K27BEpulOEqw12w.png" /></figure><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*mwesRS9iVglibX_ydFUSNA.png" /></figure><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*QY_wSupK6uRKuFvFClYFJg.png" /></figure><pre>export enum EFConnectableSide {<br>  LEFT = &#39;left&#39;,<br>  TOP = &#39;top&#39;,<br>  RIGHT = &#39;right&#39;,<br>  BOTTOM = &#39;bottom&#39;,<br>  CALCULATE = &#39;calculate&#39;,<br>  CALCULATE_HORIZONTAL = &#39;calculate_horizontal&#39;,<br>  CALCULATE_VERTICAL = &#39;calculate_vertical&#39;,<br>  AUTO = &#39;auto&#39;,<br>}</pre><p>You can:</p><ul><li><strong>Fix a side</strong> (e.g., input always on the left, output always on the right).</li><li><strong>Calculate dynamically</strong> (CALCULATE) — side is chosen based on relative positions of nodes.</li><li><strong>Restrict calculation</strong> to only horizontal (CALCULATE_HORIZONTAL) or vertical (CALCULATE_VERTICAL) axes.</li><li><strong>Let the system decide fully</strong> (AUTO).</li></ul><p>Demo — <a href="https://flow.foblex.com/examples/connectable-side">https://flow.foblex.com/examples/connectable-side</a></p><p>📚 <strong>Other Improvements</strong></p><ul><li>AUTO mode for quick setup with default heuristics.</li><li>Clearer routing logic, reducing edge overlaps in dynamic layouts.</li><li>No breaking changes; previous side selection remains compatible.</li></ul><p>💡 <strong>Why This Matters</strong></p><p>Professional diagramming tools let you fine-tune how edges are routed.</p><p>Now, Foblex Flow brings the same level of control into Angular:</p><ul><li><strong>Manual control</strong> when you want stable, predictable layouts.</li><li><strong>Dynamic calculation</strong> for adaptive editors.</li><li><strong>Simple API</strong> to cover most use cases without boilerplate.</li></ul><p>🔗 <strong>Links</strong></p><ul><li>GitHub repo: <a href="https://github.com/Foblex/f-flow">https://github.com/Foblex/f-flow</a></li><li>Live examples: <a href="https://flow.foblex.com/examples/overview">https://flow.foblex.com/examples</a></li></ul><p>❤️ If you find Foblex Flow useful, please ⭐ the repo on <a href="https://github.com/Foblex/f-flow">GitHub</a> — it’s the best way to support the project and help it grow.</p>
+Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With **Foblex Flow**, we bring this experience natively into Angular.
+
+The new release, **v17.8.5**, introduces a major improvement:
+
+✅ Fine-grained control over which side of a node is connectable (manual or calculated).
+
+Together, these updates give developers precise control over routing while still supporting automatic, dynamic layouts.
+
+✨ **Connectable Sides**
+
+Connections are no longer limited to a single default side. Now, each connector can define exactly where links are allowed:
+
+![](https://cdn-images-1.medium.com/max/1024/1*HWWQhq3K27BEpulOEqw12w.png)
+
+![](https://cdn-images-1.medium.com/max/1024/1*mwesRS9iVglibX_ydFUSNA.png)
+
+![](https://cdn-images-1.medium.com/max/1024/1*QY_wSupK6uRKuFvFClYFJg.png)
+
+```
+export enum EFConnectableSide {
+  LEFT = 'left',
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  CALCULATE = 'calculate',
+  CALCULATE_HORIZONTAL = 'calculate_horizontal',
+  CALCULATE_VERTICAL = 'calculate_vertical',
+  AUTO = 'auto',
+}
+```
+
+You can:
+
+- **Fix a side** (e.g., input always on the left, output always on the right).
+- **Calculate dynamically** (CALCULATE) — side is chosen based on relative positions of nodes.
+- **Restrict calculation** to only horizontal (CALCULATE_HORIZONTAL) or vertical (CALCULATE_VERTICAL) axes.
+- **Let the system decide fully** (AUTO).
+
+Demo — <https://flow.foblex.com/examples/connectable-side>
+
+📚 **Other Improvements**
+
+- AUTO mode for quick setup with default heuristics.
+- Clearer routing logic, reducing edge overlaps in dynamic layouts.
+- No breaking changes; previous side selection remains compatible.
+
+💡 **Why This Matters**
+
+Professional diagramming tools let you fine-tune how edges are routed.
+
+Now, Foblex Flow brings the same level of control into Angular:
+
+- **Manual control** when you want stable, predictable layouts.
+- **Dynamic calculation** for adaptive editors.
+- **Simple API** to cover most use cases without boilerplate.
+
+🔗 **Links**
+
+- GitHub repo: <https://github.com/Foblex/f-flow>
+- Live examples: [https://flow.foblex.com/examples](https://flow.foblex.com/examples/overview)
+
+❤️ If you find Foblex Flow useful, please ⭐ the repo on [GitHub](https://github.com/Foblex/f-flow) — it’s the best way to support the project and help it grow.
