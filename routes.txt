@@ -88,3 +88,18 @@
 /examples/tournament-bracket
 
 /showcase/overview
+
+/blog/overview
+/blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh
+/blog/foblex-flow-v18-waypoints-pinch-to-zoom-better-control-flow-support
+/blog/foblex-flow-v17-8-5-connectable-sides-smarter-routing
+/blog/foblex-flow-v17-8-custom-content-on-connections-smarter-validation
+/blog/call-center-flow-editor-now-updated-with-angular-20-signals
+/blog/foblex-flow-17-7-smarter-grouping-copy-paste-and-undo-redo-in-angular
+/blog/inside-foblex-flow-part-2-drag-and-drop-architecture-in-angular-without-cdk
+/blog/inside-foblex-flow-part-1-library-architecture-and-design-principles
+/blog/building-ai-low-code-platform-in-angular-part-4-styling-and-handling-connections
+/blog/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette
+/blog/building-ai-low-code-platform-in-angular-part-2-creating-your-first-flow
+/blog/building-ai-low-code-platform-in-angular-part-1-introduction-to-foblex-flow
+/blog/creating-a-visual-call-workflow-editor-with-angular

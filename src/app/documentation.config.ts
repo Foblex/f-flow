@@ -198,6 +198,11 @@ export const DOCUMENTATION_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/blog/overview',
+          active: '/blog',
+          text: 'Blog',
+        },
       ]),
       provideHeaderMediaLinks([
         { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -213,17 +218,24 @@ export const DOCUMENTATION_CONFIGURATION = {
       next: 'Next Page',
     }),
     provideMeta({
-      url: 'https://flow.foblex.com',
+      url: 'https://flow.foblex.com/docs/intro',
+      canonical: 'https://flow.foblex.com/docs/intro',
       type: 'website',
       title: 'Foblex Flow Documentation - Angular Library for Node-Based Editors',
       app_name: 'Foblex Flow',
-      locale: 'en',
+      locale: 'en_US',
       description:
         'Official Foblex Flow documentation for Angular node-based editors and diagram UIs: components, directives, interaction systems, and migration guides.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
+      keywords:
+        'foblex flow docs, angular flowchart documentation, angular diagram library docs, node editor angular, foblex flow guides',
+      robots: 'index, follow, max-image-preview:large',
+      twitter_card: 'summary_large_image',
+      twitter_site: '@foblexflow',
+      twitter_creator: '@foblexflow',
     }),
   ],
 };
