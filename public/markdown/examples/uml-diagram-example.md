@@ -1,4 +1,9 @@
-# UML Chart 
+---
+toc: false
+wideContent: true
+---
+
+# UML Chart
 
 ## Example
 

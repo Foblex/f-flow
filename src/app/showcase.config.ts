@@ -38,9 +38,14 @@ export const SHOWCASE_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/blog/overview',
+          active: '/blog',
+          text: 'Blog',
+        },
       ]),
       provideHeaderMediaLinks([
-        { icon: 'github', link: 'https://github.com/Foblex/m-render' },
+        { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
         { icon: 'twitter', link: 'https://x.com/foblexflow' },
       ]),
     ),
@@ -51,13 +56,19 @@ export const SHOWCASE_CONFIGURATION = {
       canonical: 'https://flow.foblex.com/showcase/overview',
       title: 'Showcase of Projects Built with Foblex Flow | Angular Flow Diagrams',
       app_name: 'Foblex Flow',
-      locale: 'en',
+      locale: 'en_US',
       description:
         'Discover real-world projects and apps built with Foblex Flow, the Angular flow diagram and node editor library. See how developers and companies use it in production.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
+      keywords:
+        'foblex flow showcase, angular diagram showcase, flowchart projects angular, node editor case studies',
+      robots: 'index, follow, max-image-preview:large',
+      twitter_card: 'summary_large_image',
+      twitter_site: '@foblexflow',
+      twitter_creator: '@foblexflow',
     }),
   ],
 };

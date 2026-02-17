@@ -321,6 +321,11 @@ export const EXAMPLES_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/blog/overview',
+          active: '/blog',
+          text: 'Blog',
+        },
       ]),
       provideHeaderMediaLinks([
         { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -336,17 +341,24 @@ export const EXAMPLES_CONFIGURATION = {
       next: 'Next Page',
     }),
     provideMeta({
-      url: 'https://flow.foblex.com',
+      url: 'https://flow.foblex.com/examples/overview',
+      canonical: 'https://flow.foblex.com/examples/overview',
       type: 'website',
       title: 'Angular Library for Flow-Based UIs - Foblex Flow',
       app_name: 'Foblex Flow',
-      locale: 'en',
+      locale: 'en_US',
       description:
         'Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
+      keywords:
+        'foblex flow examples, angular flowchart examples, angular diagram examples, node editor angular demos, flow ui angular',
+      robots: 'index, follow, max-image-preview:large',
+      twitter_card: 'summary_large_image',
+      twitter_site: '@foblexflow',
+      twitter_creator: '@foblexflow',
     }),
   ],
 };

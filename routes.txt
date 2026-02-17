@@ -88,3 +88,9 @@
 /examples/tournament-bracket
 
 /showcase/overview
+
+/blog/overview
+/blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh
+/blog/foblex-flow-v18-waypoints-pinch-to-zoom-better-control-flow-support
+/blog/foblex-flow-v17-8-5-connectable-sides-smarter-routing
+/blog/foblex-flow-v17-8-custom-content-on-connections-smarter-validation

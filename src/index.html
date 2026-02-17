@@ -1,81 +1,104 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Foblex Flow – Angular Library for Flow-Based UIs</title>
-  <link rel="canonical" href="https://flow.foblex.com/">
-  <base href="/">
+  <head>
+    <meta charset="utf-8" />
+    <title>Foblex Flow: Angular Flowchart and Node Editor Library</title>
+    <link rel="canonical" href="https://flow.foblex.com/" />
+    <base href="/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections.">
-  <meta name="author" content="Foblex">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Build interactive flowcharts, node editors, and diagram UIs in Angular with Foblex Flow. Explore official docs, examples, blog releases, and showcase projects."
+    />
+    <meta
+      name="keywords"
+      content="foblex flow, angular flowchart library, angular diagram library, angular node editor, flow ui angular, node based editor angular"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="application-name" content="Foblex Flow" />
+    <meta name="author" content="Foblex" />
 
-  <meta property="og:url" content="https://flow.foblex.com/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Angular Library for Flow-Based UIs - Foblex Flow" />
-  <meta property="og:site_name" content="Angular Library for Flow-Based UIs - Foblex Flow">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:description" content="Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections." />
-  <meta property="og:image" content="https://flow.foblex.com/site-preview.png" />
-  <meta property="og:image:secure_url" content="https://flow.foblex.com/site-preview.png" />
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="2986" />
-  <meta property="og:image:height" content="1926" />
+    <meta property="og:url" content="https://flow.foblex.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Foblex Flow: Angular Flowchart and Node Editor Library" />
+    <meta property="og:site_name" content="Foblex Flow" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:description"
+      content="Build interactive flowcharts, node editors, and diagram UIs in Angular with Foblex Flow. Explore official docs, examples, blog releases, and showcase projects."
+    />
+    <meta property="og:image" content="https://flow.foblex.com/site-preview.png" />
+    <meta property="og:image:secure_url" content="https://flow.foblex.com/site-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="2986" />
+    <meta property="og:image:height" content="1926" />
+    <meta
+      property="og:image:alt"
+      content="Foblex Flow overview with Angular flowchart documentation and examples"
+    />
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@foblexflow">
-  <meta name="twitter:title" content="Angular Library for Flow-Based UIs - Foblex Flow">
-  <meta name="twitter:description" content="Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections.">
-  <meta name="twitter:image" content="https://flow.foblex.com/site-preview.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@foblexflow" />
+    <meta name="twitter:creator" content="@foblexflow" />
+    <meta name="twitter:title" content="Foblex Flow: Angular Flowchart and Node Editor Library" />
+    <meta
+      name="twitter:description"
+      content="Build interactive flowcharts, node editors, and diagram UIs in Angular with Foblex Flow. Explore docs, examples, blog releases, and showcase projects."
+    />
+    <meta name="twitter:image" content="https://flow.foblex.com/site-preview.png" />
 
-  <meta name="color-scheme" content="light dark">
+    <meta name="color-scheme" content="light dark" />
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="/favicons/manifest.json">
-  <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ffffff">
-  <link rel="shortcut icon" href="/favicons/favicon.ico">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/favicons/manifest.json" />
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#ffffff" />
+    <link rel="shortcut icon" href="/favicons/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
 
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Angular Library for Flow-Based UIs - Foblex Flow" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="theme-color" content="#FFFFFF">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Foblex Flow" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
 
-  <meta name="msvalidate.01" content="3008D36C0635CF46350671728F1F3F8A" />
+    <meta name="msvalidate.01" content="3008D36C0635CF46350671728F1F3F8A" />
 
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Angular Library for Flow-Based UIs - Foblex Flow",
-      "url": "https://flow.foblex.com/",
-      "description": "Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections.",
-      "creator": {
-        "@type": "Organization",
-        "name": "Foblex",
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Foblex Flow",
         "url": "https://flow.foblex.com/",
-        "logo": "https://flow.foblex.com/favicons/android-chrome-512x512.png",
-        "sameAs": [
-          "https://github.com/Foblex/f-flow",
-          "https://twitter.com/foblexflow"
-        ]
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://flow.foblex.com/"
+        "description": "Foblex Flow is an Angular library for building interactive flowcharts, node editors, and diagram UIs with SSR-friendly architecture.",
+        "creator": {
+          "@type": "Organization",
+          "name": "Foblex",
+          "url": "https://flow.foblex.com/",
+          "logo": "https://flow.foblex.com/favicons/android-chrome-512x512.png",
+          "sameAs": [
+            "https://github.com/Foblex/f-flow",
+            "https://x.com/foblexflow"
+          ]
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://flow.foblex.com/"
+        }
       }
-    }
-  </script>
-</head>
-<body>
-  <app-root></app-root>
-</body>
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>

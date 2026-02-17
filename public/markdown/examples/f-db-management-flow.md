@@ -1,3 +1,8 @@
+---
+toc: false
+wideContent: true
+---
+
 # DB Management
 
 ## Example

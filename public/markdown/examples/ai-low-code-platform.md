@@ -1,3 +1,8 @@
+---
+toc: false
+wideContent: true
+---
+
 # Visual Programming
 
 ## Example
