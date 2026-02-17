@@ -81,7 +81,7 @@ That makes the library predictable and easy to integrate with any state manageme
 
 We can break down [Foblex Flow](https://flow.foblex.com/) into four layers:
 
-```
+```text
 FFlowComponent
  └── FCanvas
       ├── FNodeDirective
@@ -113,7 +113,7 @@ An SVG path connecting an output to an input. Supports Bezier curves, straight l
 
 ### 🔧 Minimal Example
 
-```
+```html
 <f-flow>
   <f-canvas>
     <!-- Node 1 -->
@@ -164,7 +164,7 @@ The library never dictates your persistence strategy.
 
 ### 📐 Visual Diagram
 
-```
+```mermaid
 flowchart TD
     subgraph "Library stores"
         A[Node positions] --> B[Scale/Translate]

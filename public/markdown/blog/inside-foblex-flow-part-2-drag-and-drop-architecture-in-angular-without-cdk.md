@@ -39,7 +39,7 @@ One of our core principles is that — whether it’s a mouse or touch input
 
 To achieve this, we introduced the following interface:
 
-```
+```ts
 export abstract class IPointerEvent {
 
   public get originalEvent(): MouseEvent | TouchEvent {
@@ -83,7 +83,8 @@ Advantages of this approach:
 - Simplified support for new input types and devices;
 - Fewer bugs related to platform inconsistencies.
 
-![](https://cdn-images-1.medium.com/max/1024/1*LG8V4QTKl5TC6-QNiXnaEQ.png)
+::: ng-component <custom-event-triggers></custom-event-triggers> [height]="600"
+:::
 
 Unified Event Interface
 
@@ -148,7 +149,7 @@ Dragging isn’t just about “moving a node.” In real-world applications, the
 
 Instead of hardcoding all of this into the core, we built a **before/after plugin architecture**:
 
-```
+```ts
 private _beforePlugins!: QueryList<IFDragAndDropPlugin>;
 ```
 
@@ -184,7 +185,7 @@ This makes drag-and-drop work even in Angular Universal, without crashes or runt
 
 Any drag-and-drop behavior can be finely tuned using triggers. For example:
 
-```
+```html
 <f-flow fDraggable [fNodeMoveTrigger]="e => e.shiftKey"></f-flow>
 ```
 

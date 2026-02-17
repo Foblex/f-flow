@@ -17,15 +17,12 @@ Together, these updates give developers precise control over routing while still
 
 ✨ **Connectable Sides**
 
+::: ng-component <connectable-side></connectable-side> [height]="600"
+:::
+
 Connections are no longer limited to a single default side. Now, each connector can define exactly where links are allowed:
 
-![](https://cdn-images-1.medium.com/max/1024/1*HWWQhq3K27BEpulOEqw12w.png)
-
-![](https://cdn-images-1.medium.com/max/1024/1*mwesRS9iVglibX_ydFUSNA.png)
-
-![](https://cdn-images-1.medium.com/max/1024/1*QY_wSupK6uRKuFvFClYFJg.png)
-
-```
+```ts
 export enum EFConnectableSide {
   LEFT = 'left',
   TOP = 'top',
@@ -44,8 +41,6 @@ You can:
 - **Calculate dynamically** (CALCULATE) — side is chosen based on relative positions of nodes.
 - **Restrict calculation** to only horizontal (CALCULATE_HORIZONTAL) or vertical (CALCULATE_VERTICAL) axes.
 - **Let the system decide fully** (AUTO).
-
-Demo — <https://flow.foblex.com/examples/connectable-side>
 
 📚 **Other Improvements**
 

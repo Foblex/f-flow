@@ -22,11 +22,13 @@ Working with groups is now more powerful and intuitive:
 - Refactored and improved examples:
 - [Grouping Example](https://flow.foblex.com/examples/grouping)
 
-![](https://cdn-images-1.medium.com/max/800/1*k6X5w-KcFIsj-8ov5wvHZw.gif)
+::: ng-component <grouping></grouping> [height]="600"
+:::
 
 - [Drag-to-Group Example](https://flow.foblex.com/examples/drag-to-group)
 
-![](https://cdn-images-1.medium.com/max/800/1*W6HMUOpLy0qGZcxbG9lFdQ.gif)
+::: ng-component <drag-to-group></drag-to-group> [height]="600"
+:::
 
 ⚠️ **Breaking Change**
 
@@ -50,7 +52,8 @@ This example shows how easy it is to implement clipboard functionality directly 
 
 No editor feels complete without Undo/Redo. With v17.7, you now have a reference implementation:
 
-![](https://cdn-images-1.medium.com/max/800/1*96EmOCN801emOiETUatvMA.gif)
+::: ng-component <undo-redo-v2></undo-redo-v2> [height]="600"
+:::
 
 - New [**Undo-Redo V2 Example**](https://flow.foblex.com/examples/undo-redo-v2).
 - Powered by [**@foblex/mutator**](https://www.npmjs.com/package/@foblex/mutator).

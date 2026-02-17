@@ -27,15 +27,17 @@ Let’s turn static lines into smart, responsive connectors — and give our
 
 Connections in Foblex Flow aren’t just static wires — they’re fully interactive and reconfigurable. Each end of a connection features a *drag handle* — an invisible area you can grab to change where the connection starts or ends.
 
-![](https://cdn-images-1.medium.com/max/1024/1*BMepl6vHtZRw1TrCrbJxCw.png)
+::: ng-component <drag-to-reassign></drag-to-reassign> [height]="600"
+:::
 
 By default, only the **target end** ([input](https://flow.foblex.com/docs/f-node-input-directive)) is draggable. But you can also make the **source end** ([output](https://flow.foblex.com/docs/f-node-output-directive)) reassignable by setting the fReassignableStart=”true” input. This gives you precise control over which ends can be modified — on a **per-connection** basis.
 
-![](https://cdn-images-1.medium.com/max/1004/1*LMHxIB8k5ALbRq13V2BFfA.png)
+::: ng-component <drag-to-reassign></drag-to-reassign> [height]="600"
+:::
 
 Want to rewire a connection? Just drag one of its ends and drop it onto another connector. [Foblex Flow](https://flow.foblex.com/) takes care of the rest — when the drag operation finishes, it emits the fReassignConnection event from the \<f-flow> component itself (not from the connection element):
 
-```
+```html
 <f-flow fDraggable
         (fCreateNode)="createNode($event)"
         (fCreateConnection)="createConnection($event)"
@@ -45,7 +47,7 @@ Want to rewire a connection? Just drag one of its ends and drop it onto another 
 
 This event contains everything you need to handle the reattachment:
 
-```
+```ts
 class FReassignConnectionEvent {
   connectionId: string;
   isSourceReassign: boolean;
@@ -66,7 +68,7 @@ This is extremely useful if you want to open a context menu or create a new node
 
 Here’s how to update your connection list when the target changes:
 
-```
+```ts
 protected reassignConnection(event: FReassignConnectionEvent): void {
   if (!event.newTargetId) {
     return;
@@ -96,7 +98,8 @@ Let’s start with the **three connection types**, each offering a different vis
 - segment — a segmented line with right angles (ideal for logic-style editors)
 - bezier — a smooth, curved Bézier path
 
-![](https://cdn-images-1.medium.com/max/1024/1*eo-dzAKHze5_plBoFCgUsg.png)
+::: ng-component <connection-types></connection-types> [height]="600"
+:::
 
 <https://flow.foblex.com/examples/connection-types>
 
@@ -106,7 +109,8 @@ Next, you can define how the connection _behaves_ when linking nodes:
 - fixed_center — connects from the exact center of each node
 - floating — auto-calculates the intersection between the node’s shape and the imaginary line between node centers (great for circular or irregular shapes)
 
-![](https://cdn-images-1.medium.com/max/1024/1*iC1NZdNP0ZvV4zL0dCF35Q.png)
+::: ng-component <connection-behaviours></connection-behaviours> [height]="600"
+:::
 
 Connection Behaviours
 
@@ -120,7 +124,7 @@ These options give you total control over both aesthetics and logic — whet
 
 In our low-code platform, we’ll use a **Bézier curve** with a **fixed side behavior**, which feels natural for horizontal flow layouts:
 
-```
+```html
 <f-connection [fConnectionId]="connection.id"
               fBehavior="fixed"
               fType="bezier"
@@ -136,13 +140,14 @@ A great UI isn’t just about layout — it’s about **clarity** and **dire
 
 With [Foblex Flow](https://flow.foblex.com/), you can attach **custom SVG markers** to the **start** or **end** of any connection. These can be arrows, dots, diamonds — anything you can draw in SVG.
 
-![](https://cdn-images-1.medium.com/max/1024/1*8E5LfN1cA6XASbdlKz7vTg.png)
+::: ng-component <connection-markers></connection-markers> [height]="600"
+:::
 
 <https://flow.foblex.com/examples/connection-markers>
 
 Here’s a minimal example that adds a simple circle to the **start** of a connection:
 
-```
+```html
 <f-connection [fOutputId]="id1" [fInputId]="id2">
   <svg fMarker type="f-connection-marker-start"
        [height]="10" [width]="10" [refX]="5" [refY]="5">
@@ -159,7 +164,7 @@ Here’s a minimal example that adds a simple circle to the **start** of a conne
 
 All marker types are defined in the [EFMarkerType](https://flow.foblex.com/docs/f-connection-marker-directive) enum:
 
-```
+```ts
 enum EFMarkerType {
   START,
   END,
@@ -172,11 +177,11 @@ You can style markers differently for selected states — this is great for 
 
 Here’s a full example that applies **all four types of markers** on a connection:
 
-```
+```ts
 protected readonly eMarkerType = EFMarkerType;
 ```
 
-```
+```html
 <f-connection [fConnectionId]="connection.id"
               fBehavior="fixed"
               fType="bezier"
@@ -207,7 +212,7 @@ Let’s make our connections not just smart — but **stylish**.
 
 First, we’ll define a custom CSS variable** — connection-color** and apply it to both the stroke of the connection path and the fill of any SVG markers. This way, all visual elements stay perfectly in sync.
 
-```
+```scss
 ::ng-deep {
   .f-connection {
     --connection-color: rgba(60, 60, 67); // default line color
@@ -240,7 +245,7 @@ They allow you to easily **switch themes**, support dark/light mode, or dynamica
 
 Now let’s make our connections respond to user interaction. A subtle glow on hover helps users understand that a line is clickable or draggable.
 
-```
+```scss
 .f-connection-selection {
   stroke-width: 15;
 

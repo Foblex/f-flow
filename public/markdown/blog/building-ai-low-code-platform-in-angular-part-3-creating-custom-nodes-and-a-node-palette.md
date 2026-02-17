@@ -40,13 +40,13 @@ We’ll continue building on the project from the [previous article.](https://me
 
 First, we need to load the required fonts and icons. Add the following to your index.html:
 
-```
+```html
 <link href="https://fonts.googleapis.com/css2?family=Inter&family=Material+Symbols+Outlined" rel="stylesheet"/>
 ```
 
 Then, reset default styles and apply the base font by adding this to your styles.scss:
 
-```
+```scss
 html, body {
   margin: 0;
   padding: 0;
@@ -60,7 +60,7 @@ html, body {
 
 Let’s begin by defining the models for nodes and connections. Below are the TypeScript interfaces and an example set of 8 node types, which you can expand or customize later as needed:
 
-```
+```ts
 // i-connection.ts
 export interface IConnection {
   id: string;
@@ -69,7 +69,7 @@ export interface IConnection {
 }
 ```
 
-```
+```ts
 // i-storage-node.ts
 export interface IStorageNode {
   name: string;
@@ -80,7 +80,7 @@ export interface IStorageNode {
 }
 ```
 
-```
+```ts
 // i-node.ts
 import { IStorageNode } from './i-storage-node';
 
@@ -92,7 +92,7 @@ export interface INode extends IStorageNode {
 
 Now let’s define a list of available nodes:
 
-```
+```ts
 // data.ts
 export const DATA: IStorageNode[] = [
   {
@@ -162,7 +162,7 @@ Each palette item is a div using the fExternalItem directive, which enables exte
 
 #### Template (flow-palette.html)
 
-```
+```html
 @for (node of nodes; track node.name) {
   <div class="palette-node" fExternalItem [fData]="node" [fPreviewMatchSize]="true">
     <span class="icon">{{ node.icon }}</span>
@@ -173,7 +173,7 @@ Each palette item is a div using the fExternalItem directive, which enables exte
 
 #### Styles (flow-palette.scss)
 
-```
+```scss
 :host {
   position: absolute;
   display: flex;
@@ -208,7 +208,7 @@ Each palette item is a div using the fExternalItem directive, which enables exte
 
 #### Component (flow-palette.ts)
 
-```
+```ts
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
 import { DATA } from './data';
@@ -228,7 +228,7 @@ export class FlowPalette {
 
 Now we can add nodes from the palette directly into the flow by handling the following event:
 
-```
+```html
 <f-flow (fCreateNode)="createNode($event)">
 </f-flow>
 ```
@@ -237,7 +237,7 @@ Now we can add nodes from the palette directly into the flow by handling the fol
 
 Each node in the editor will be represented by a dedicated Angular component:
 
-```
+```ts
 @Component({
   selector: 'node',
   ...
@@ -249,7 +249,7 @@ export class Node {
 
 #### Node Template:
 
-```
+```html
 <div class="connectors inputs">
   @for (connector of data().inputs; track $index) {
     <connector fNodeInput [fInputId]="connector + ' ' + data().id" fInputConnectableSide="left" />
@@ -271,7 +271,7 @@ export class Node {
 
 #### Styles (node.scss):
 
-```
+```scss
 :host {
   position: relative;
   background: #ffffff;
@@ -353,7 +353,7 @@ While we could have kept the connector inline inside the node, we’re moving it
 
 #### Component (connector.ts):
 
-```
+```ts
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
 
@@ -370,7 +370,7 @@ export class Connector {}
 
 #### Styles (connector.scss):
 
-```
+```scss
 :host {
   position: relative;
   width: 12px;
@@ -408,7 +408,7 @@ Here’s how the flow works:
 
 We start by creating a signal to hold the list of all current nodes:
 
-```
+```ts
 protected nodes = signal<INode[]>([]);
 ```
 
@@ -418,7 +418,7 @@ Signals make the UI reactive — whenever the list updates, the DOM reflects
 
 Now let’s define the method that will run when a new node is added:
 
-```
+```ts
 protected createNode(event: FCreateNodeEvent<IStorageNode>): void {
   this.nodes.update((nodes) => {
     const newNode: INode = {
@@ -442,7 +442,7 @@ Here’s what’s happening:
 
 Let’s replace the static nodes with a dynamic list rendered using @for:
 
-```
+```html
 <f-flow fDraggable
         (fCreateNode)="createNode($event)">
   <f-canvas>
@@ -476,7 +476,7 @@ When a user drags a node from flow-palette, the fExternalItem directive fires an
 
 To ensure each node has a unique identifier, we use a small utility function:
 
-```
+```ts
 export function generateGuid(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = Math.random() * 16 | 0;
@@ -498,7 +498,7 @@ This component goes inside \<f-canvas> and renders a **temporary line** when the
 
 Let’s update our Flow component template to handle the connection event and also render all created connections:
 
-```
+```html
 <f-flow fDraggable
         (fCreateNode)="createNode($event)"
         (fCreateConnection)="createConnection($event)">
@@ -533,7 +533,7 @@ Let’s update our Flow component template to handle the connection event and al
 
 Here’s the method that handles fCreateConnection and stores the connection in a reactive signal:
 
-```
+```ts
 protected connections = signal<IConnection[]>([]);
 
 protected createConnection(event: FCreateConnectionEvent): void {

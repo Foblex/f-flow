@@ -11,5 +11,5 @@ All posts from Siarhei Huzarevich's Medium profile and publications are mirrored
 
 ---
 
-Looking for the complete changelog?  
+Looking for the complete changelog?
 See [CHANGELOG.md](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md).

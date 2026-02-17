@@ -21,7 +21,8 @@ Together, these make visual editors more flexible, user-friendly, and production
 
 ✨ **Custom Content on Connections**
 
-![](https://cdn-images-1.medium.com/max/1024/1*wW8qCQaR8F8RxhEFZ3dYcw.png)
+::: ng-component <connection-content></connection-content> [height]="600"
+:::
 
 Connections are no longer just lines — you can now place any custom widget directly on them.
 
@@ -33,7 +34,7 @@ With the new fConnectionContent directive, you can:
 
 Example:
 
-```
+```html
 <f-connection ...>
   <button fConnectionContent [position]="0.25" [offset]="-12">+</button>
   <span fConnectionContent [position]="0.75" align="along">⮕</span>
@@ -44,7 +45,8 @@ This enables interaction patterns like inline buttons, directional icons, or sta
 
 🔒 **Smarter Connection Validation**
 
-![](https://cdn-images-1.medium.com/max/1024/1*e88tuPSnChdoFE8zOhic9A.png)
+::: ng-component <connection-rules></connection-rules> [height]="600"
+:::
 
 Validation rules got a big upgrade.
 

@@ -28,7 +28,8 @@ Here’s what changed in this update:
 - Improved overall UX (zooming, dragging and reconnecting nodes feels smoother)
 - Using **Angular Material components** for the interface
 
-![](https://cdn-images-1.medium.com/max/800/1*HtMSYbDxgGCY2orxw9BEkg.gif)
+::: ng-component [url]="https://foblex.github.io/f-flow-example/" [height]="600"
+:::
 
 Call Center Flow
 

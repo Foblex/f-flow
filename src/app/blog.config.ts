@@ -1,7 +1,9 @@
 import {
+  defineLazyComponent,
   defineNavigationGroup,
   INavigationGroup,
   provide404Markdown,
+  provideComponents,
   provideDirectory,
   provideFooterNavigation,
   provideHeader,
@@ -30,6 +32,100 @@ export const BLOG_CONFIGURATION = {
       buildingAiLowCodePlatformGroup(),
       callFlowEditorGroup(),
     ),
+    provideComponents([
+      defineLazyComponent(
+        'add-node-from-palette',
+        () =>
+          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
+      ),
+      defineLazyComponent(
+        'ai-low-code-platform',
+        () =>
+          import('../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'),
+      ),
+      defineLazyComponent(
+        'background-example',
+        () =>
+          import('../../projects/f-examples/extensions/background-example/background-example.component'),
+      ),
+      defineLazyComponent(
+        'connectable-side',
+        () => import('../../projects/f-examples/connectors/connectable-side/connectable-side'),
+      ),
+      defineLazyComponent(
+        'connection-behaviours',
+        () =>
+          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
+      ),
+      defineLazyComponent(
+        'connection-connectable-side',
+        () =>
+          import('../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'),
+      ),
+      defineLazyComponent(
+        'connection-content',
+        () => import('../../projects/f-examples/connections/connection-content/connection-content'),
+      ),
+      defineLazyComponent(
+        'connection-markers',
+        () => import('../../projects/f-examples/connections/connection-markers/connection-markers'),
+      ),
+      defineLazyComponent(
+        'connection-rules',
+        () => import('../../projects/f-examples/connectors/connection-rules/connection-rules'),
+      ),
+      defineLazyComponent(
+        'connection-types',
+        () => import('../../projects/f-examples/connections/connection-types/connection-types'),
+      ),
+      defineLazyComponent(
+        'connection-waypoints',
+        () =>
+          import('../../projects/f-examples/connections/connection-waypoints/connection-waypoints'),
+      ),
+      defineLazyComponent(
+        'custom-event-triggers',
+        () =>
+          import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'),
+      ),
+      defineLazyComponent(
+        'custom-nodes',
+        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes.component'),
+      ),
+      defineLazyComponent(
+        'drag-handle',
+        () => import('../../projects/f-examples/nodes/drag-handle/drag-handle'),
+      ),
+      defineLazyComponent(
+        'drag-start-end-events',
+        () =>
+          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
+      ),
+      defineLazyComponent(
+        'drag-to-group',
+        () => import('../../projects/f-examples/nodes/drag-to-group/drag-to-group.component'),
+      ),
+      defineLazyComponent(
+        'drag-to-reassign',
+        () => import('../../projects/f-examples/connections/drag-to-reassign/drag-to-reassign'),
+      ),
+      defineLazyComponent(
+        'grouping',
+        () => import('../../projects/f-examples/nodes/grouping/grouping'),
+      ),
+      defineLazyComponent(
+        'magnetic-lines',
+        () => import('../../projects/f-examples/extensions/magnetic-lines/magnetic-lines'),
+      ),
+      defineLazyComponent(
+        'magnetic-rects',
+        () => import('../../projects/f-examples/extensions/magnetic-rects/magnetic-rects'),
+      ),
+      defineLazyComponent(
+        'undo-redo-v2',
+        () => import('../../projects/f-examples/advanced/undo-redo-v2/undo-redo-v2'),
+      ),
+    ]),
     provideTableOfContent({
       title: 'In this article',
       range: { start: 2, end: 4 },

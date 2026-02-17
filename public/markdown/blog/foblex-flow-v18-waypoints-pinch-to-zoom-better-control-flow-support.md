@@ -29,13 +29,14 @@ straight / segment / bezier / adaptive curve.
 
 ✅ Example: <https://flow.foblex.com/examples/connection-waypoints>
 
-![](https://cdn-images-1.medium.com/max/720/1*4cdHRP4Qbh1KNDA4EFrEnQ.gif)
+::: ng-component <connection-waypoints></connection-waypoints> [height]="600"
+:::
 
 Connection Waypoints Example
 
 #### Minimal usage
 
-```
+```html
 <f-connection fType="adaptive-curve" fOutputId="1" fInputId="2">
   <f-connection-waypoints [(waypoints)]="waypoints" />
 </f-connection>
@@ -56,7 +57,7 @@ v18 adds **pinch-to-zoom**:
 
 Enable it the same way as normal zoom:
 
-```
+```html
 <f-canvas fZoom></f-canvas>
 ```
 
@@ -66,7 +67,7 @@ Angular’s @if / @for are great — but real component trees + content proj
 
 In v18 I updated the canvas projection slots, so you can wrap nodes/connections using grouped slots:
 
-```
+```html
 <f-canvas>
   <ng-container ngProjectAs="[fNodes]">
     @for (...) { ... }
@@ -89,7 +90,8 @@ In v18:
 - better support for **complex SVG patterns**
 - plus a **new example** showing how to build advanced backgrounds
 
-![](https://cdn-images-1.medium.com/max/1024/1*2YH4Wm0KL8XdySdwYY7enA.png)
+::: ng-component <background-example></background-example> [height]="600"
+:::
 
 ### Release + demo
 

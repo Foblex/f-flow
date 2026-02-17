@@ -27,7 +27,8 @@ In v18.1 there are **two new plugins** you can enable depending on the UX you wa
 
 This plugin adds guideline-like alignment behavior (snap/assist) while dragging.
 
-![](https://cdn-images-1.medium.com/max/800/1*d1qqO9ReXGQRrJBuh8fgug.gif)
+::: ng-component <magnetic-lines></magnetic-lines> [height]="600"
+:::
 
 - You move an element close to a virtual guide line
 - the editor helps you “lock” into that alignment
@@ -41,7 +42,8 @@ This plugin adds guideline-like alignment behavior (snap/assist) while dragging.
 
 This plugin focuses on **bounds-based alignment**:
 
-![](https://cdn-images-1.medium.com/max/800/1*5tfHyAmFm0TuNs-oy_9RUw.gif)
+::: ng-component <magnetic-rects></magnetic-rects> [height]="600"
+:::
 
 you align element rectangles against other elements’ bounds (edges/centers).
 
@@ -57,7 +59,8 @@ Both plugins ship with dedicated examples and documentation updates.
 
 I also added a new larger example: **AI Low-Code Platform**.
 
-![](https://cdn-images-1.medium.com/max/800/1*6GJ3IBxEbeXbBoXGVI6PIg.gif)
+::: ng-component [url]="https://foblex.github.io/Building-AI-Low-Code-Platform5/" [height]="700"
+:::
 
 ✅ Live demo: <https://foblex.github.io/Building-AI-Low-Code-Platform5/>
 
