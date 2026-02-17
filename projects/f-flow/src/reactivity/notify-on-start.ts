@@ -15,8 +15,20 @@ import { FChannelOperator } from './types';
 //   };
 // }
 export function notifyOnStart(): FChannelOperator {
-  return (callback) => ({
-    callback,
-    onSubscribe: (finalCallback) => queueMicrotask(finalCallback),
-  });
+  return (callback) => {
+    let active = true;
+
+    return {
+      callback,
+      onSubscribe: (finalCallback) => {
+        queueMicrotask(() => {
+          if (!active) return;
+          finalCallback();
+        });
+      },
+      cleanup: () => {
+        active = false;
+      },
+    };
+  };
 }

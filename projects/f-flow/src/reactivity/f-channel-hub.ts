@@ -36,10 +36,14 @@ export class FChannelHub {
 
     const unsubs = this._channels.map((ch) => ch.listen(() => current()));
 
+    let unregisterOnDestroy: (() => void) | null = null;
     let tornDown = false;
     const teardown = () => {
       if (tornDown) return;
       tornDown = true;
+
+      unregisterOnDestroy?.();
+      unregisterOnDestroy = null;
 
       unsubs.forEach((u) => u());
       cleanups.forEach((c) => c());
@@ -54,6 +58,6 @@ export class FChannelHub {
       .reverse()
       .forEach((fn) => fn(current));
 
-    destroyRef.onDestroy(teardown);
+    unregisterOnDestroy = destroyRef.onDestroy(teardown);
   }
 }
