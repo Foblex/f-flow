@@ -9,7 +9,9 @@ import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 export class ListenDataChanges implements IExecution<ListenDataChangesRequest, FChannelHub> {
   private readonly _store = inject(FComponentsStore);
 
-  public handle(_request: ListenDataChangesRequest): FChannelHub {
-    return new FChannelHub(this._store.dataChanges$).pipe(notifyOnStart(), debounceTime(1));
+  public handle({ notifyOnSubscribe }: ListenDataChangesRequest): FChannelHub {
+    return notifyOnSubscribe
+      ? new FChannelHub(this._store.dataChanges$).pipe(notifyOnStart(), debounceTime(1))
+      : new FChannelHub(this._store.dataChanges$).pipe(debounceTime(1));
   }
 }

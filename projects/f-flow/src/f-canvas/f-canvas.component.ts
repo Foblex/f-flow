@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -32,7 +33,11 @@ import {
   transitionEnd,
   UpdateScaleRequest,
 } from '../domain';
-import { ListenDataChangesRequest, NotifyTransformChangedRequest } from '../f-storage';
+import {
+  FComponentsStore,
+  ListenDataChangesRequest,
+  NotifyTransformChangedRequest,
+} from '../f-storage';
 import { FFlowBase } from '../f-flow';
 import { FChannelHub, takeOne } from '../reactivity';
 
@@ -58,6 +63,7 @@ import { FChannelHub, takeOne } from '../reactivity';
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
+  private readonly _componentsStore = inject(FComponentsStore);
   private readonly _elementReference = inject(ElementRef);
   private readonly _injector = inject(Injector);
 
@@ -208,8 +214,14 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   private _afterRedraw(callback: () => void): void {
+    if (this._componentsStore.dataVersion > 0) {
+      afterNextRender(callback, { injector: this._injector });
+
+      return;
+    }
+
     this._mediator
-      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .execute<FChannelHub>(new ListenDataChangesRequest(false))
       .pipe(takeOne())
       .listen(this.destroyRef, callback);
   }
