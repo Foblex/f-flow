@@ -55,16 +55,12 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'drag-start-end-events',
         () =>
-          import(
-            '../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'
-          ),
+          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
       ),
       defineLazyComponent(
         'add-node-from-palette',
         () =>
-          import(
-            '../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'
-          ),
+          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
       ),
       defineLazyComponent(
         'zoom',
@@ -77,16 +73,12 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connection-behaviours',
         () =>
-          import(
-            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
-          ),
+          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
       ),
       defineLazyComponent(
         'custom-connection-type',
         () =>
-          import(
-            '../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'
-          ),
+          import('../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'),
       ),
       defineLazyComponent(
         'drag-to-connect',
@@ -112,9 +104,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connector-inside-node',
         () =>
-          import(
-            '../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'
-          ),
+          import('../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -123,9 +113,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connector-outlet',
         () =>
-          import(
-            '../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'
-          ),
+          import('../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'),
       ),
       defineLazyComponent(
         'connection-markers',
@@ -134,16 +122,12 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'background-example',
         () =>
-          import(
-            '../../projects/f-examples/extensions/background-example/background-example.component'
-          ),
+          import('../../projects/f-examples/extensions/background-example/background-example.component'),
       ),
       defineLazyComponent(
         'help-in-positioning',
         () =>
-          import(
-            '../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'
-          ),
+          import('../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -198,6 +182,11 @@ export const DOCUMENTATION_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/blog/overview',
+          active: '/blog',
+          text: 'Blog',
+        },
       ]),
       provideHeaderMediaLinks([
         { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -213,17 +202,24 @@ export const DOCUMENTATION_CONFIGURATION = {
       next: 'Next Page',
     }),
     provideMeta({
-      url: 'https://flow.foblex.com',
+      url: 'https://flow.foblex.com/docs/intro',
+      canonical: 'https://flow.foblex.com/docs/intro',
       type: 'website',
       title: 'Foblex Flow Documentation - Angular Library for Node-Based Editors',
       app_name: 'Foblex Flow',
-      locale: 'en',
+      locale: 'en_US',
       description:
         'Official Foblex Flow documentation for Angular node-based editors and diagram UIs: components, directives, interaction systems, and migration guides.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
+      keywords:
+        'foblex flow docs, angular flowchart documentation, angular diagram library docs, node editor angular, foblex flow guides',
+      robots: 'index, follow, max-image-preview:large',
+      twitter_card: 'summary_large_image',
+      twitter_site: '@foblexflow',
+      twitter_creator: '@foblexflow',
     }),
   ],
 };

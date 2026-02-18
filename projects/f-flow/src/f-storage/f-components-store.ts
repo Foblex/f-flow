@@ -24,6 +24,12 @@ export class FComponentsStore {
 
   public readonly countChanges$ = new FChannel();
 
+  private _dataVersion = 0;
+
+  public get dataVersion(): number {
+    return this._dataVersion;
+  }
+
   public get flowHost(): HTMLElement {
     return this.fFlow?.hostElement as HTMLElement;
   }
@@ -53,6 +59,7 @@ export class FComponentsStore {
   }
 
   public dataChanged(): void {
+    this._dataVersion++;
     this.dataChanges$.notify();
   }
 

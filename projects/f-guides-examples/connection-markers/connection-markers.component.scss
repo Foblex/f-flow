@@ -1,9 +1,0 @@
-@use "../flow-common";
-
-::ng-deep connection-markers {
-  @include flow-common.connection;
-}
-
-.f-node {
-  @include flow-common.node;
-}

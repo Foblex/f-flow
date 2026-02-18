@@ -1,8 +1,13 @@
-# Tournament Bracket 
+---
+toc: false
+wideContent: true
+---
+
+# Tournament Bracket
 
 ## Example
 
-This example demonstrates how to use the Foblex Flow to create a tournament bracket. 
+This example demonstrates how to use the Foblex Flow to create a tournament bracket.
 
 ::: ng-component <tournament-bracket></tournament-bracket> [height]="600"
 :::

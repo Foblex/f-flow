@@ -65,9 +65,7 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'stress-test-with-connections',
         () =>
-          import(
-            '../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections.component'
-          ),
+          import('../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections.component'),
       ),
       defineLazyComponent(
         'node-selection',
@@ -76,30 +74,22 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'node-as-connector',
         () =>
-          import(
-            '../../projects/f-examples/connectors/node-as-connector/node-as-connector.component'
-          ),
+          import('../../projects/f-examples/connectors/node-as-connector/node-as-connector.component'),
       ),
       defineLazyComponent(
         'connector-inside-node',
         () =>
-          import(
-            '../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'
-          ),
+          import('../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'),
       ),
       defineLazyComponent(
         'connector-outlet',
         () =>
-          import(
-            '../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'
-          ),
+          import('../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'),
       ),
       defineLazyComponent(
         'limiting-connections',
         () =>
-          import(
-            '../../projects/f-examples/connectors/limiting-connections/limiting-connections.component'
-          ),
+          import('../../projects/f-examples/connectors/limiting-connections/limiting-connections.component'),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -120,23 +110,17 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'create-node-on-connection-drop',
         () =>
-          import(
-            '../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component'
-          ),
+          import('../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component'),
       ),
       defineLazyComponent(
         'remove-connection-on-drop',
         () =>
-          import(
-            '../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component'
-          ),
+          import('../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component'),
       ),
       defineLazyComponent(
         'assign-node-to-connection-on-drop',
         () =>
-          import(
-            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'
-          ),
+          import('../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'),
       ),
       defineLazyComponent(
         'auto-snap',
@@ -154,16 +138,12 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'custom-connection-type',
         () =>
-          import(
-            '../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'
-          ),
+          import('../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'),
       ),
       defineLazyComponent(
         'connection-behaviours',
         () =>
-          import(
-            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
-          ),
+          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
       ),
       defineLazyComponent(
         'connection-markers',
@@ -177,16 +157,12 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'custom-connections',
         () =>
-          import(
-            '../../projects/f-examples/connections/custom-connections/custom-connections.component'
-          ),
+          import('../../projects/f-examples/connections/custom-connections/custom-connections.component'),
       ),
       defineLazyComponent(
         'connection-connectable-side',
         () =>
-          import(
-            '../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'
-          ),
+          import('../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'),
       ),
       defineLazyComponent(
         'dagre-layout',
@@ -195,9 +171,7 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'elkjs-layout-example',
         () =>
-          import(
-            '../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component'
-          ),
+          import('../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component'),
       ),
       defineLazyComponent(
         'selection-area',
@@ -207,9 +181,7 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'help-in-positioning',
         () =>
-          import(
-            '../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'
-          ),
+          import('../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -231,23 +203,17 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'background-example',
         () =>
-          import(
-            '../../projects/f-examples/extensions/background-example/background-example.component'
-          ),
+          import('../../projects/f-examples/extensions/background-example/background-example.component'),
       ),
       defineLazyComponent(
         'db-management-flow',
         () =>
-          import(
-            '../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component'
-          ),
+          import('../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component'),
       ),
       defineLazyComponent(
         'uml-diagram-example',
         () =>
-          import(
-            '../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component'
-          ),
+          import('../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component'),
       ),
       defineLazyComponent(
         'tournament-bracket',
@@ -273,30 +239,22 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'add-node-from-palette',
         () =>
-          import(
-            '../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'
-          ),
+          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
       ),
       defineLazyComponent(
         'drag-start-end-events',
         () =>
-          import(
-            '../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'
-          ),
+          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
       ),
       defineLazyComponent(
         'custom-event-triggers',
         () =>
-          import(
-            '../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'
-          ),
+          import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'),
       ),
       defineLazyComponent(
         'ai-low-code-platform',
         () =>
-          import(
-            '../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'
-          ),
+          import('../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'),
       ),
     ]),
     provideTableOfContent({
@@ -321,6 +279,11 @@ export const EXAMPLES_CONFIGURATION = {
           active: '/showcase',
           text: 'Showcase',
         },
+        {
+          link: '/blog/overview',
+          active: '/blog',
+          text: 'Blog',
+        },
       ]),
       provideHeaderMediaLinks([
         { icon: 'github', link: 'https://github.com/Foblex/f-flow' },
@@ -336,17 +299,24 @@ export const EXAMPLES_CONFIGURATION = {
       next: 'Next Page',
     }),
     provideMeta({
-      url: 'https://flow.foblex.com',
+      url: 'https://flow.foblex.com/examples/overview',
+      canonical: 'https://flow.foblex.com/examples/overview',
       type: 'website',
       title: 'Angular Library for Flow-Based UIs - Foblex Flow',
       app_name: 'Foblex Flow',
-      locale: 'en',
+      locale: 'en_US',
       description:
         'Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
+      keywords:
+        'foblex flow examples, angular flowchart examples, angular diagram examples, node editor angular demos, flow ui angular',
+      robots: 'index, follow, max-image-preview:large',
+      twitter_card: 'summary_large_image',
+      twitter_site: '@foblexflow',
+      twitter_creator: '@foblexflow',
     }),
   ],
 };

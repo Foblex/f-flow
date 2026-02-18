@@ -9,6 +9,11 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://flow.foblex.com/membership/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
   <!-- Documentation -->
   <url>
@@ -352,5 +357,84 @@
     <loc>https://flow.foblex.com/examples/tournament-bracket/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Showcase -->
+  <url>
+    <loc>https://flow.foblex.com/showcase/overview/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://flow.foblex.com/blog/overview/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-v18-waypoints-pinch-to-zoom-better-control-flow-support/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-v17-8-5-connectable-sides-smarter-routing/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-v17-8-custom-content-on-connections-smarter-validation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/call-center-flow-editor-now-updated-with-angular-20-signals/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-17-7-smarter-grouping-copy-paste-and-undo-redo-in-angular/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/inside-foblex-flow-part-2-drag-and-drop-architecture-in-angular-without-cdk/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/inside-foblex-flow-part-1-library-architecture-and-design-principles/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-4-styling-and-handling-connections/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-2-creating-your-first-flow/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/building-ai-low-code-platform-in-angular-part-1-introduction-to-foblex-flow/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/creating-a-visual-call-workflow-editor-with-angular/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

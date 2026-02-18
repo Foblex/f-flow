@@ -11,8 +11,11 @@ export function takeOne(): FChannelOperator {
         if (taken) return;
         taken = true;
 
-        callback();
-        teardown?.();
+        try {
+          callback();
+        } finally {
+          teardown?.();
+        }
       },
     };
   };
