@@ -17,23 +17,30 @@ export function app(): express.Express {
   server.set('views', browserDistFolder);
 
   server.get(['/docs', '/docs/'], (_req, res) => {
-    res.redirect(301, '/docs/intro/');
+    res.redirect(301, '/docs/intro');
   });
 
   server.get(['/examples', '/examples/'], (_req, res) => {
-    res.redirect(301, '/examples/overview/');
+    res.redirect(301, '/examples/overview');
   });
 
-  const slashCanonicalPrefixes = ['/docs', '/examples'];
+  server.get(['/showcase', '/showcase/'], (_req, res) => {
+    res.redirect(301, '/showcase/overview');
+  });
+
+  server.get(['/blog', '/blog/'], (_req, res) => {
+    res.redirect(301, '/blog/overview');
+  });
+
   server.use((req, res, next) => {
     const [pathOnly, query = ''] = req.url.split('?', 2);
-    const isAsset = /\.[A-Za-z0-9]{1,8}$/.test(pathOnly); // простая проверка "есть расширение"
-    const needsPrefix = slashCanonicalPrefixes.some(
-      (p) => pathOnly === p || pathOnly.startsWith(p + '/'),
-    );
+    const isAsset = /\.[A-Za-z0-9]{1,8}$/.test(pathOnly);
 
-    if (needsPrefix && !isAsset && !pathOnly.endsWith('/')) {
-      return res.redirect(301, pathOnly + '/' + (query ? '?' + query : ''));
+    // Keep canonical URLs without trailing slash across docs/examples/showcase/blog.
+    if (pathOnly.length > 1 && !isAsset && pathOnly.endsWith('/')) {
+      const normalizedPath = pathOnly.replace(/\/+$/, '');
+
+      return res.redirect(301, normalizedPath + (query ? '?' + query : ''));
     }
     next();
   });
@@ -61,6 +68,7 @@ export function app(): express.Express {
     '**',
     express.static(browserDistFolder, {
       maxAge: '1d',
+      redirect: false,
       index: 'index.html',
     }),
   );
