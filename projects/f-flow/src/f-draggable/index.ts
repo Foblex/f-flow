@@ -10,7 +10,7 @@ export * from './drop-to-group';
 
 export * from './drag-node';
 
-export * from './f-node-resize';
+export * from './resize-node';
 
 export * from './f-node-rotate';
 

@@ -48,7 +48,7 @@ import {
   PreventDefaultIsExternalItemRequest,
 } from '../f-external-item';
 import { SelectByPointerRequest } from './select-by-pointer';
-import { NodeResizeFinalizeRequest, NodeResizePreparationRequest } from './f-node-resize';
+import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
 import {
   F_AFTER_MAIN_PLUGIN,
   F_BEFORE_MAIN_PLUGIN,
@@ -242,7 +242,7 @@ export class FDraggableDirective
   protected override prepareDragSequence(event: IPointerEvent) {
     this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
 
-    this._mediator.execute<void>(new NodeResizePreparationRequest(event, this.fNodeResizeTrigger));
+    this._mediator.execute<void>(new ResizeNodePreparationRequest(event, this.fNodeResizeTrigger));
 
     this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
 
@@ -278,7 +278,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event));
 
-    this._mediator.execute<void>(new NodeResizeFinalizeRequest(event));
+    this._mediator.execute<void>(new ResizeNodeFinalizeRequest(event));
 
     this._mediator.execute<void>(new FNodeRotateFinalizeRequest(event));
 

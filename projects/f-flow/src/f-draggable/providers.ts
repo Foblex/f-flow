@@ -2,7 +2,7 @@ import { DRAG_CANVAS_PROVIDERS } from './drag-canvas';
 import { DRAG_CONNECTIONS_PROVIDERS } from './connection';
 import { DRAG_SELECT_BY_POINTER_PROVIDERS } from './select-by-pointer';
 import { NODE_PROVIDERS } from './drag-node';
-import { NODE_RESIZE_PROVIDERS } from './f-node-resize';
+import { NODE_RESIZE_PROVIDERS } from './resize-node';
 import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers';
 import { F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS } from '../f-external-item';
 import { DRAG_AND_DROP_COMMON_PROVIDERS } from './domain';
