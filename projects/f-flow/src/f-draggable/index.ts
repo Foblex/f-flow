@@ -12,7 +12,7 @@ export * from './drag-node';
 
 export * from './resize-node';
 
-export * from './f-node-rotate';
+export * from './rotate-node';
 
 export * from './pinch-to-zoom';
 

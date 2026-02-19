@@ -2,20 +2,21 @@ import { inject, Injectable } from '@angular/core';
 import { ResizeNodeFinalizeRequest } from './resize-node-finalize-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
+import { isResizeNodeHandler } from '../is-resize-node-handler';
 
 @Injectable()
 @FExecutionRegister(ResizeNodeFinalizeRequest)
 export class ResizeNodeFinalize implements IExecution<ResizeNodeFinalizeRequest, void> {
-  private readonly _dragContext = inject(FDraggableDataContext);
+  private readonly _dragSession = inject(FDraggableDataContext);
 
   public handle(_request: ResizeNodeFinalizeRequest): void {
     if (!this._isNodeResizeHandler()) {
       return;
     }
-    this._dragContext.draggableItems.forEach((x) => x.onPointerUp?.());
+    this._dragSession.draggableItems.forEach((x) => x.onPointerUp?.());
   }
 
   private _isNodeResizeHandler(): boolean {
-    return this._dragContext.draggableItems.some((x) => x.getEvent().kind === 'node-resize');
+    return this._dragSession.draggableItems.some((x) => isResizeNodeHandler(x));
   }
 }

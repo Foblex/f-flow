@@ -7,7 +7,7 @@ import { F_MINIMAP_DRAG_AND_DROP_PROVIDERS } from '../f-minimap/domain/providers
 import { F_EXTERNAL_ITEM_DRAG_AND_DROP_PROVIDERS } from '../f-external-item';
 import { DRAG_AND_DROP_COMMON_PROVIDERS } from './domain';
 import { DRAG_DROP_TO_GROUP_PROVIDERS } from './drop-to-group';
-import { NODE_ROTATE_PROVIDERS } from './f-node-rotate';
+import { NODE_ROTATE_PROVIDERS } from './rotate-node';
 import { PINCH_TO_ZOOM_PROVIDERS } from './pinch-to-zoom';
 import { DRAG_SELECTION_AREA_PROVIDERS } from './selection-area';
 

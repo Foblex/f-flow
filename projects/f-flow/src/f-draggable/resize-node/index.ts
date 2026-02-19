@@ -12,10 +12,12 @@ export * from './constraint';
 
 export * from './resize-node-finalize';
 
+export * from './resize-node-handler';
+
 export * from './resize-preparation';
 
 export * from './f-resize-node-start-event-data';
 
-export * from './resize-node-handler';
+export * from './is-resize-node-handler';
 
 export * from './providers';

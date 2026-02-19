@@ -10,11 +10,12 @@ import { GetNormalizedElementRectRequest } from '../../../domain';
 import { inject, Injectable } from '@angular/core';
 import { IResizeConstraint } from '../constraint';
 import { FResizeNodeStartEventData } from '../f-resize-node-start-event-data';
+import { RESIZE_NODE_HANDLER_KIND, RESIZE_NODE_HANDLER_TYPE } from '../is-resize-node-handler';
 
 @Injectable()
 export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData> {
-  protected readonly type = 'node-resize';
-  protected readonly kind = 'node-resize';
+  protected readonly type = RESIZE_NODE_HANDLER_TYPE;
+  protected readonly kind = RESIZE_NODE_HANDLER_KIND;
   protected override data() {
     return new FResizeNodeStartEventData(this._nodeOrGroup.fId());
   }

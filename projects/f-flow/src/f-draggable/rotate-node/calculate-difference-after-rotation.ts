@@ -3,7 +3,6 @@ export function calculateDifferenceAfterRotation(
   rotation: number,
   pivot: { x: number; y: number },
 ): { x: number; y: number } {
-
   const { x: newX, y: newY } = calculatePositionAfterRotation(position, rotation, pivot);
 
   const dx = newX - position.x;
@@ -20,7 +19,7 @@ export function calculatePositionAfterRotation(
   const translatedX = position.x - pivot.x;
   const translatedY = position.y - pivot.y;
 
-  const theta = rotation * Math.PI / 180;
+  const theta = (rotation * Math.PI) / 180;
 
   const cosTheta = Math.cos(theta);
   const sinTheta = Math.sin(theta);
@@ -33,4 +32,3 @@ export function calculatePositionAfterRotation(
 
   return { x: newX, y: newY };
 }
-

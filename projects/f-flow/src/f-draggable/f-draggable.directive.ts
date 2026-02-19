@@ -67,7 +67,7 @@ import {
   DropToGroupPreparationRequest,
   FDropToGroupEvent,
 } from './drop-to-group';
-import { FNodeRotateFinalizeRequest, FNodeRotatePreparationRequest } from './f-node-rotate';
+import { RotateNodeFinalizeRequest, RotateNodePreparationRequest } from './rotate-node';
 import { IPointerEvent } from '../drag-toolkit';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
@@ -244,7 +244,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new ResizeNodePreparationRequest(event, this.fNodeResizeTrigger));
 
-    this._mediator.execute<void>(new FNodeRotatePreparationRequest(event, this.fNodeRotateTrigger));
+    this._mediator.execute<void>(new RotateNodePreparationRequest(event, this.fNodeRotateTrigger));
 
     this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger));
 
@@ -280,7 +280,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new ResizeNodeFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FNodeRotateFinalizeRequest(event));
+    this._mediator.execute<void>(new RotateNodeFinalizeRequest(event));
 
     this._mediator.execute<void>(new DragNodeFinalizeRequest(event));
 
