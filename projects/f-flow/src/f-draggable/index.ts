@@ -36,8 +36,6 @@ export * from './f-draggable-data-context';
 
 export * from './f-selection-change-event';
 
-export * from './i-f-drag-and-drop-plugin';
-
 export * from './is-drag-blocker';
 
 export * from './providers';
