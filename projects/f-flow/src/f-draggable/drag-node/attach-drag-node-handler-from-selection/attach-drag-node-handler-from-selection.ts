@@ -12,20 +12,24 @@ import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection
 import { DragNodeHandler, DragNodeItemHandler } from '../drag-node-handler';
 import { CreateDragNodeHierarchyRequest, DragNodeHierarchy } from './create-drag-node-hierarchy';
 import { CreateDragNodeHandlerRequest } from './create-drag-node-handler';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
 @FExecutionRegister(AttachDragNodeHandlerFromSelectionRequest)
-export class AttachDragNodeHandlerFromSelection
-  implements IExecution<AttachDragNodeHandlerFromSelectionRequest, DragNodeHandler>
-{
+export class AttachDragNodeHandlerFromSelection implements IExecution<
+  AttachDragNodeHandlerFromSelectionRequest,
+  DragNodeHandler
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
+  private readonly _geometryCache = inject(FGeometryCache);
 
   public handle({ nodeOrGroup }: AttachDragNodeHandlerFromSelectionRequest): DragNodeHandler {
     const selected = this._collectSelected(nodeOrGroup);
     const selectedWithChildren = this._withDeepChildren(selected);
+    this._ensureGeometryFresh(selectedWithChildren);
 
     const hierarchy = this._mediator.execute<DragNodeHierarchy>(
       new CreateDragNodeHierarchyRequest(selectedWithChildren),
@@ -43,6 +47,20 @@ export class AttachDragNodeHandlerFromSelection
     return this._mediator.execute(
       new CreateDragNodeHandlerRequest(hierarchy.rootHandlers, hierarchy.participants),
     );
+  }
+
+  private _ensureGeometryFresh(nodes: FNodeBase[]): void {
+    const uniqueIds = new Set<string>();
+
+    for (const node of nodes) {
+      const nodeId = node.fId();
+      if (uniqueIds.has(nodeId)) {
+        continue;
+      }
+
+      uniqueIds.add(nodeId);
+      this._geometryCache.ensureNodeGeometryFresh(nodeId);
+    }
   }
 
   private _collectSelected(nodeOrGroup?: FNodeBase): FNodeBase[] {

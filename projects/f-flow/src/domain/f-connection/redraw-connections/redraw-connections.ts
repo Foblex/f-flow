@@ -6,7 +6,6 @@ import { FConnectorBase } from '../../../f-connectors';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
-import { DragRectCache } from '../../drag-rect-cache';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
@@ -45,7 +44,6 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
         connection,
       );
     });
-    DragRectCache.invalidateAll();
   }
 
   private _resetConnectors(): void {

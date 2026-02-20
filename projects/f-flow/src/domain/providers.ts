@@ -22,6 +22,7 @@ import { F_NODE_FEATURES } from './f-node';
 import { F_ZOOM_FEATURES } from './f-zoom';
 import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
 import { F_MINIMAP_FEATURES } from './minimap';
+import { FGeometryCache } from './geometry-cache';
 
 /**
  * This module provides a collection of common providers for the FFlow domain.
@@ -69,4 +70,6 @@ export const COMMON_PROVIDERS = [
   UpdateItemAndChildrenLayers,
 
   MoveFrontElementsBeforeTargetElement,
+
+  FGeometryCache,
 ];

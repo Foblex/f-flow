@@ -15,7 +15,7 @@ export class GetNormalizedPointExecution implements IExecution<GetNormalizedPoin
   private readonly _store = inject(FComponentsStore);
 
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
   // BrowserWindow
   // +------------------------------------------+

@@ -1,13 +1,16 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { DragNodeItemHandler } from './drag-node-item-handler';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FDragNodeStartEventData } from '../f-drag-node-start-event-data';
 import { IMagneticGuidesResult, MagneticLinesHandler } from '../magnetic-lines';
 import { IMagneticRectsResult, MagneticRectsHandler } from '../magnetic-rects';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 @Injectable()
 export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
+  private readonly _geometryCache = inject(FGeometryCache);
+
   protected readonly type = 'move-node';
   protected readonly kind = 'drag-node';
 
@@ -61,6 +64,10 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override prepareDragSequence(): void {
+    for (const item of this.items) {
+      this._geometryCache.beginDragSession(item.nodeOrGroup.fId());
+    }
+
     for (const root of this.roots) {
       root.prepareDragSequence();
     }
@@ -77,6 +84,10 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   public override onPointerUp(): void {
     for (const root of this.roots) {
       root.onPointerUp();
+    }
+
+    for (const item of this.items) {
+      this._geometryCache.endDragSession(item.nodeOrGroup.fId());
     }
 
     this._magneticLines?.clearGuides();
@@ -108,7 +119,11 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override destroy(): void {
-    for (const root of this.roots) {
+    for (const item of this.items ?? []) {
+      this._geometryCache.endDragSession(item.nodeOrGroup.fId());
+    }
+
+    for (const root of this.roots ?? []) {
       root.destroy?.();
     }
   }
