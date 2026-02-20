@@ -41,12 +41,6 @@ import {
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
 } from '../domain';
-import {
-  FCreateNodeEvent,
-  FExternalItemFinalizeRequest,
-  FExternalItemPreparationRequest,
-  PreventDefaultIsExternalItemRequest,
-} from '../f-external-item';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
 import {
@@ -73,6 +67,12 @@ import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
 import { FDragStartedEvent } from './f-drag-started-event';
 import { SelectionAreaFinalizeRequest, SelectionAreaPreparationRequest } from './selection-area';
+import {
+  DragExternalItemFinalizeRequest,
+  DragExternalItemPreparationRequest,
+  FCreateNodeEvent,
+  PreventDefaultIsExternalItemRequest,
+} from './drag-external-item';
 
 @Directive({
   selector: 'f-flow[fDraggable]',
@@ -249,7 +249,7 @@ export class FDraggableDirective
     this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger));
 
     this._mediator.execute<void>(
-      new FExternalItemPreparationRequest(event, this.fExternalItemTrigger),
+      new DragExternalItemPreparationRequest(event, this.fExternalItemTrigger),
     );
 
     this._mediator.execute<void>(new DropToGroupPreparationRequest(event));
@@ -284,7 +284,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DragNodeFinalizeRequest(event));
 
-    this._mediator.execute<void>(new FExternalItemFinalizeRequest(event));
+    this._mediator.execute<void>(new DragExternalItemFinalizeRequest(event));
 
     this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
 

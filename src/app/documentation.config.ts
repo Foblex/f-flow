@@ -420,7 +420,7 @@ function interactionGroup(): INavigationGroup {
     {
       link: 'f-external-item-directive',
       text: 'External Item',
-      pageTitle: 'FExternalItemDirective - Drag Items from a Palette into the Canvas',
+      pageTitle: 'FExternalItem - Drag Items from a Palette into the Canvas',
       description:
         'Drag external palette items into the flow to create nodes on drop. Useful for toolboxes, sidebars, and node libraries.',
     },

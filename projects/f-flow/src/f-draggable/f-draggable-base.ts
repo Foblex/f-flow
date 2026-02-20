@@ -11,12 +11,12 @@ import {
   FReassignConnectionEvent,
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
-import { FCreateNodeEvent } from '../f-external-item';
 import { FDropToGroupEvent } from './drop-to-group';
 import { DragAndDropBase } from '../drag-toolkit';
 import { FMoveNodesEvent } from './drag-node';
 import { FDragStartedEvent } from './f-drag-started-event';
 import { FNodeConnectionsIntersectionEvent, FNodeIntersectedWithConnections } from './domain';
+import { FCreateNodeEvent } from './drag-external-item';
 
 export abstract class FDraggableBase extends DragAndDropBase {
   public readonly hostElement = inject(ElementRef).nativeElement;

@@ -1,7 +1,7 @@
 # External Item
 
 **Selector:** `[fExternalItem]`  
-**Class:** `FExternalItemDirective<TData>`
+**Class:** `FExternalItem<TData>`
 
 External item directives let you drag items from outside the canvas and create nodes on drop.
 

@@ -13,9 +13,9 @@ import { FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { DragNodeHandler } from '../../drag-node';
-import { FExternalItemDragHandler } from '../../../f-external-item';
 import { SortDropCandidatesByLayerRequest } from '../sort-drop-candidates-by-layer';
 import { DragHandlerInjector } from '../../infrastructure';
+import { DragExternalItemHandler } from '../../drag-external-item';
 
 @Injectable()
 @FExecutionRegister(DropToGroupPreparationRequest)
@@ -76,7 +76,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   }
 
   private _hasExternalDrag(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof FExternalItemDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof DragExternalItemHandler);
   }
 
   private _sortedTargetsForDrop(): INodeWithRect[] {

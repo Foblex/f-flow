@@ -2,6 +2,8 @@ export * from './domain';
 
 export * from './drag-canvas';
 
+export * from './drag-external-item';
+
 export * from './connection';
 
 export * from './infrastructure';

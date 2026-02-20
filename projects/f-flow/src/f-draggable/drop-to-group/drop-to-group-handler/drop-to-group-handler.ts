@@ -13,7 +13,7 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
   /** Legacy identifier (external compatibility). */
   protected readonly type = 'move-node-to-parent';
   /** New identifier. */
-  protected readonly kind = 'drop-to-group';
+  protected readonly kind = 'assign-to-container';
 
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
