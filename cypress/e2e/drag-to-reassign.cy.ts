@@ -4,34 +4,57 @@ describe('DragToReassign', () => {
     cy.get('f-flow').scrollIntoView();
   });
 
-  it('should drag from input to another input and reassign the connection', function () {
-    cy.get('#connection_113').should('exist');
-
-    cy.get('div[data-f-input-id="3"]').should('exist');
-    cy.get('div[data-f-input-id="4"]').should('exist');
+  it('should reassign connection target from input 3 to input 4', () => {
+    cy.get('.f-connection').should('have.length', 1);
+    cy.get('[data-f-input-id="3"]').should('have.class', 'f-node-input-connected');
+    cy.get('[data-f-input-id="4"]').should('not.have.class', 'f-node-input-connected');
 
     cy.get('.f-connection-drag-handle')
+      .should('have.length', 1)
       .first()
-      .then(($handle) => {
+      .then(($handle: JQuery<HTMLElement>) => {
         const handleRect = $handle[0].getBoundingClientRect();
-        const startY = handleRect.top + handleRect.height / 2;
         const startX = handleRect.left + handleRect.width / 2;
+        const startY = handleRect.top + handleRect.height / 2;
 
-        cy.get('div[data-f-input-id="4"]')
+        cy.get('[data-f-input-id="4"]')
           .first()
-          .then(($input2) => {
-            const input2Rect = $input2[0].getBoundingClientRect();
-            const endY = input2Rect.top + input2Rect.height / 2;
-            const endX = input2Rect.left + input2Rect.width / 2;
+          .then(($targetInput: JQuery<HTMLElement>) => {
+            const targetRect = $targetInput[0].getBoundingClientRect();
+            const endX = targetRect.left + targetRect.width / 2;
+            const endY = targetRect.top + targetRect.height / 2;
 
-            cy.get('.f-connection-drag-handle')
-              .trigger('mousedown', { button: 0, clientY: startY, clientX: startX, force: true })
-              .trigger('mousemove', { clientY: endY, clientX: endX, force: true })
-              .trigger('pointerup', { clientY: endY, clientX: endX, force: true });
+            cy.wrap($handle).trigger('mousedown', {
+              button: 0,
+              clientX: startX,
+              clientY: startY,
+              force: true,
+            });
 
-            cy.get('#connection_113').should('not.exist');
-            cy.get('#connection_114').should('exist');
+            cy.get('body')
+              .trigger('mousemove', {
+                clientX: startX + 2,
+                clientY: startY + 2,
+                force: true,
+              })
+              .trigger('mousemove', {
+                clientX: endX,
+                clientY: endY,
+                force: true,
+              })
+              .trigger('pointerup', {
+                clientX: endX,
+                clientY: endY,
+                force: true,
+              });
           });
       });
+
+    cy.get('[data-f-input-id="3"]', { timeout: 2000 }).should(
+      'not.have.class',
+      'f-node-input-connected',
+    );
+    cy.get('[data-f-input-id="4"]').should('have.class', 'f-node-input-connected');
+    cy.get('.f-connection').should('have.length', 1);
   });
 });
