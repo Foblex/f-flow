@@ -6,7 +6,7 @@ import { FConnectorBase } from '../../../f-connectors';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
-import { DragRectCache } from '../../drag-rect-cache';
+import { FGeometryCache } from '../../f-geometry-cache';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
@@ -17,6 +17,11 @@ import {
  * Execution that redraws connections in the FComponentsStore.
  * It resets connectors, sets markers for temporary and snap connections,
  * and sets up connections based on the stored outputs and inputs.
+ *
+ * Connector rects are resolved via FGeometryCache when available and fresh,
+ * falling back to a direct DOM measurement otherwise.
+ * After each full redraw cycle all cache entries are refreshed so the next
+ * drag session can start without any DOM reads (zero-cost ensureFresh).
  */
 @Injectable()
 @FExecutionRegister(RedrawConnectionsRequest)
@@ -24,6 +29,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _connectionBehaviour = inject(ConnectionBehaviourBuilder);
+  private readonly _geometryCache = inject(FGeometryCache);
 
   public handle(_request: RedrawConnectionsRequest): void {
     this._resetConnectors();
@@ -45,7 +51,6 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
         connection,
       );
     });
-    DragRectCache.invalidateAll();
   }
 
   private _resetConnectors(): void {
@@ -85,10 +90,29 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     );
   }
 
+  /**
+   * Returns the connector rect from the geometry cache when fresh,
+   * or measures it from the DOM and stores it in the cache for future drag sessions.
+   */
   private _calculateConnectorRect(connector: FConnectorBase): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(
+    const connectorId = connector.fId();
+    const nodeId = this._geometryCache.getConnectorNodeId(connectorId);
+
+    // Use the cached rect only when both the entry exists and the owning node is fresh.
+    if (nodeId && !this._geometryCache.isNodeStale(nodeId)) {
+      const cached = this._geometryCache.getConnectorRect(connectorId);
+      if (cached) {
+        return cached;
+      }
+    }
+
+    // Cache is absent or stale — measure from DOM and refresh the cache entry.
+    const rect = this._mediator.execute<IRoundedRect>(
       new GetNormalizedConnectorRectRequest(connector.hostElement),
     );
+    this._geometryCache.setConnectorRect(connectorId, rect);
+
+    return rect;
   }
 
   private _createMarkers(connection: FConnectionBase): void {
