@@ -1,8 +1,7 @@
 import { IPolylineContent } from './i-polyline-content';
-import { IPoint } from '@foblex/2d';
+import { IPoint, RectExtensions } from '@foblex/2d';
 import { PolylineSampler } from './polyline-sampler';
 import { PolylineContentAlign } from './polyline-content-align';
-import { DragRectCache } from '../../../../domain';
 
 /**
  * Encapsulates placement logic for a single content item along the path.
@@ -71,7 +70,7 @@ export class PolylineContentPlace {
   }
 
   private _sizeAlongDirection(element: HTMLElement, dir: IPoint): number {
-    const rect = DragRectCache.fromElement(element);
+    const rect = RectExtensions.fromElement(element);
 
     return Math.abs(dir.x) * rect.width + Math.abs(dir.y) * rect.height;
   }

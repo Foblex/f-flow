@@ -31,7 +31,6 @@ import { FMediator } from '@foblex/mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,
-  DragRectCache,
   FEventTrigger,
   FTriggerEvent,
   InitializeDragSequenceRequest,
@@ -280,7 +279,6 @@ export class FDraggableDirective
   }
 
   protected override finalizeDragSequence(): void {
-    DragRectCache.invalidateAll();
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._result.clear();
