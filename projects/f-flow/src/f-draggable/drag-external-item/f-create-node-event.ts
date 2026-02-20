@@ -1,6 +1,7 @@
 import { IPoint, IRect } from '@foblex/2d';
 
-export class FCreateNodeEvent<TData = never> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class FCreateNodeEvent<TData = any> {
   // -----------------------------
   // Preferred API
   // -----------------------------

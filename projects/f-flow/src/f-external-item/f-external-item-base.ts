@@ -11,7 +11,8 @@ import {
 export const F_EXTERNAL_ITEM = new InjectionToken<FExternalItemBase>('F_EXTERNAL_ITEM');
 
 @Directive()
-export abstract class FExternalItemBase<TData = never> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export abstract class FExternalItemBase<TData = any> {
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   public abstract externalItemId: Signal<string>;

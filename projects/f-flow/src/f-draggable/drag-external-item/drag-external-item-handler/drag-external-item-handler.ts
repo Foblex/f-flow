@@ -39,7 +39,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
 
   constructor(
     injector: Injector,
-    private readonly _externalItem: FExternalItemBase,
+    private readonly _externalItem: FExternalItemBase<unknown>,
   ) {
     super();
 

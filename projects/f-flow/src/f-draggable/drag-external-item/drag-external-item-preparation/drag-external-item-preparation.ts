@@ -50,7 +50,7 @@ export class DragExternalItemPreparation implements IExecution<
     this._dragSession.draggableItems = [new DragExternalItemHandler(this._injector, item)];
   }
 
-  private _resolveExternalItem(target: HTMLElement): FExternalItemBase<unknown> | undefined {
+  private _resolveExternalItem(target: HTMLElement): FExternalItemBase | undefined {
     return this._apiService.getByElement(target);
   }
 }
