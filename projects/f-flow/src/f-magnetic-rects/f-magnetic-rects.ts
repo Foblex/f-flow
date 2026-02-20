@@ -1,4 +1,12 @@
-import { Component, inject, input, numberAttribute, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  numberAttribute,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { F_MAGNETIC_RECTS, FMagneticRectsBase } from './f-magnetic-rects-base';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -14,6 +22,7 @@ import {
   host: {
     'class': 'f-magnetic-rects f-component',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [{ provide: F_MAGNETIC_RECTS, useExisting: FMagneticRects }],
 })

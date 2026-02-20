@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   booleanAttribute,
-  ContentChildren,
   Directive,
   EventEmitter,
   inject,
@@ -12,7 +11,6 @@ import {
   OnInit,
   output,
   Output,
-  QueryList,
 } from '@angular/core';
 import { FDraggableBase } from './f-draggable-base';
 import { DragNodeFinalizeRequest, DragNodePreparationRequest, FMoveNodesEvent } from './drag-node';
@@ -43,11 +41,6 @@ import {
 } from '../domain';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
-import {
-  F_AFTER_MAIN_PLUGIN,
-  F_BEFORE_MAIN_PLUGIN,
-  IFDragAndDropPlugin,
-} from './i-f-drag-and-drop-plugin';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
 import {
   EmitEndDragSequenceEventRequest,
@@ -73,6 +66,7 @@ import {
   FCreateNodeEvent,
   PreventDefaultIsExternalItemRequest,
 } from './drag-external-item';
+import { DragMinimapFinalizeRequest, DragMinimapPreparationRequest } from './drag-minimap';
 
 @Directive({
   selector: 'f-flow[fDraggable]',
@@ -183,12 +177,6 @@ export class FDraggableDirective
   @Output()
   public override fDragEnded = new EventEmitter<void>();
 
-  @ContentChildren(F_BEFORE_MAIN_PLUGIN, { descendants: true })
-  private _beforePlugins!: QueryList<IFDragAndDropPlugin>;
-
-  @ContentChildren(F_AFTER_MAIN_PLUGIN, { descendants: true })
-  private _afterPlugins!: QueryList<IFDragAndDropPlugin>;
-
   private readonly _dragHandlerInjector = inject(DragHandlerInjector);
 
   public ngOnInit(): void {
@@ -211,7 +199,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new SelectionAreaPreparationRequest(event));
 
-    this._beforePlugins.forEach((p) => p.onPointerDown?.(event));
+    this._mediator.execute<void>(new DragMinimapPreparationRequest(event));
 
     this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
 
@@ -229,8 +217,6 @@ export class FDraggableDirective
       new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
-    this._afterPlugins.forEach((p) => p.onPointerDown?.(event));
-
     const isMouseLeftOrTouch = event.isMouseLeftButton();
     if (!isMouseLeftOrTouch) {
       this.finalizeDragSequence();
@@ -240,8 +226,6 @@ export class FDraggableDirective
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {
-    this._beforePlugins.forEach((p) => p.prepareDragSequence?.(event));
-
     this._mediator.execute<void>(new ResizeNodePreparationRequest(event, this.fNodeResizeTrigger));
 
     this._mediator.execute<void>(new RotateNodePreparationRequest(event, this.fNodeRotateTrigger));
@@ -256,8 +240,6 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new DragCanvasPreparationRequest(event, this.fCanvasMoveTrigger));
 
-    this._afterPlugins.forEach((p) => p.prepareDragSequence?.(event));
-
     this._mediator.execute<void>(new PrepareDragSequenceRequest());
   }
 
@@ -270,7 +252,7 @@ export class FDraggableDirective
   }
 
   public override onPointerUp(event: IPointerEvent): void {
-    this._beforePlugins.forEach((x) => x.onPointerUp?.(event));
+    this._mediator.execute<void>(new DragMinimapFinalizeRequest(event));
 
     this._mediator.execute<void>(new SelectionAreaFinalizeRequest(event));
 
@@ -289,8 +271,6 @@ export class FDraggableDirective
     this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
 
     this._mediator.execute<void>(new DragCanvasFinalizeRequest(event));
-
-    this._afterPlugins.forEach((x) => x.onPointerUp?.(event));
 
     this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
 

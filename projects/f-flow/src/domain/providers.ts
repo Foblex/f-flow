@@ -21,6 +21,7 @@ import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
 import { F_ZOOM_FEATURES } from './f-zoom';
 import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
+import { F_MINIMAP_FEATURES } from './minimap';
 
 /**
  * This module provides a collection of common providers for the FFlow domain.
@@ -48,6 +49,8 @@ export const COMMON_PROVIDERS = [
   ...F_SELECTION_FEATURES,
 
   ...F_ZOOM_FEATURES,
+
+  ...F_MINIMAP_FEATURES,
 
   GetDeepChildrenNodesAndGroupsExecution,
 

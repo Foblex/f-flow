@@ -15,6 +15,7 @@ import { FZoomBase } from '../f-zoom';
 import { FSelectionAreaBase } from '../f-selection-area';
 import { FMagneticLinesBase } from '../f-magnetic-lines';
 import { FMagneticRectsBase } from '../f-magnetic-rects';
+import { FMinimapBase } from '../f-minimap';
 
 @Injectable()
 export class FComponentsStore {
@@ -83,4 +84,7 @@ export const INSTANCES = {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   SELECTION_AREA: fInstanceKey<FSelectionAreaBase>('selection-area'),
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  MINIMAP: fInstanceKey<FMinimapBase>('minimap'),
 } as const;

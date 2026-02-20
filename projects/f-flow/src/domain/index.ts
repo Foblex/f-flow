@@ -18,6 +18,8 @@ export * from './f-selection';
 
 export * from './f-zoom';
 
+export * from './minimap';
+
 export * from './get-deep-children-nodes-and-groups';
 
 export * from './get-normalized-connector-rect';

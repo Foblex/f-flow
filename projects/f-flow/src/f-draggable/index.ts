@@ -4,6 +4,8 @@ export * from './drag-canvas';
 
 export * from './drag-external-item';
 
+export * from './drag-minimap';
+
 export * from './connection';
 
 export * from './infrastructure';
