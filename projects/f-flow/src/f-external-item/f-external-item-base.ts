@@ -11,7 +11,7 @@ import {
 export const F_EXTERNAL_ITEM = new InjectionToken<FExternalItemBase>('F_EXTERNAL_ITEM');
 
 @Directive()
-export abstract class FExternalItemBase<TData = unknown> {
+export abstract class FExternalItemBase<TData = never> {
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   public abstract externalItemId: Signal<string>;
