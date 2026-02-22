@@ -5,6 +5,7 @@ import { ApplyChildResizeConstraints } from './apply-child-resize-constraints';
 import { ApplyParentResizeConstraints } from './apply-parent-resize-constraints';
 import { CalculateChangedRectFromDifference } from './calculate-changed-rect-from-difference';
 import { CalculateDirectChildrenUnionRect } from './calculate-direct-children-union-rect';
+import { AttachResizeConnectionDragHandlersToNode } from './resize-preparation';
 
 export const NODE_RESIZE_PROVIDERS = [
   ApplyChildResizeConstraints,
@@ -16,6 +17,8 @@ export const NODE_RESIZE_PROVIDERS = [
   CalculateDirectChildrenUnionRect,
 
   CalculateResizeLimits,
+
+  AttachResizeConnectionDragHandlersToNode,
 
   ResizeNodeFinalize,
 

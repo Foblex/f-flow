@@ -12,6 +12,7 @@ import {
   isClosestElementHasClass,
 } from '@foblex/utils';
 import { DragHandlerInjector } from '../../infrastructure';
+import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node';
 
 @Injectable()
 @FExecutionRegister(ResizeNodePreparationRequest)
@@ -53,6 +54,9 @@ export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRe
 
     const handler = this._dragInjector.createInstance(ResizeNodeHandler);
     handler.initialize(nodeOrGroup, this._readResizeHandleType(event.targetElement));
+    this._mediator.execute<void>(
+      new AttachResizeConnectionDragHandlersToNodeRequest(handler, nodeOrGroup),
+    );
 
     this._dragSession.draggableItems = [handler];
   }
