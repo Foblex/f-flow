@@ -18,6 +18,7 @@ import {
 } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { IParentConnectionHandlers } from './i-soft-parent-connection-handlers';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 export class DragNodeItemHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'move-node';
@@ -36,6 +37,7 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
   private _softParentConnectionHandlers: IParentConnectionHandlers[] = [];
 
   private readonly _mediator: FMediator;
+  private readonly _cache: FGeometryCache;
 
   constructor(
     private readonly _injector: Injector,
@@ -48,6 +50,7 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
     super();
 
     this._mediator = _injector.get(FMediator);
+    this._cache = _injector.get(FGeometryCache);
 
     this._startRect = this._mediator.execute(
       new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
@@ -137,6 +140,15 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
   private _redraw(position: IPoint): void {
     this._lastPosition = position;
     this.nodeOrGroup.updatePosition(position);
+    this._cache.setNodeRect(
+      this.nodeOrGroup.fId(),
+      RectExtensions.initialize(
+        position.x,
+        position.y,
+        this._startRect.width,
+        this._startRect.height,
+      ),
+    );
     this.nodeOrGroup.redraw();
   }
 
@@ -164,6 +176,7 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
 
     parent.updateSize({ width: rect.width, height: rect.height });
     parent.updatePosition({ x: rect.x, y: rect.y });
+    this._cache.setNodeRect(parent.fId(), rect);
     parent.redraw();
 
     return changed;

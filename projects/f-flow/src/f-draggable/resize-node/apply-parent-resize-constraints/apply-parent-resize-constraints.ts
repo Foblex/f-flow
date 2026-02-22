@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-constraints-request';
 import { IRect } from '@foblex/2d';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { IResizeLimit, IResizeLimits, IResizeOverflow } from '../constraint';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 /**
  * Resize constraints behavior:
@@ -17,6 +18,8 @@ export class ApplyParentResizeConstraints implements IExecution<
   ApplyParentResizeConstraintsRequest,
   void
 > {
+  private readonly _cache = inject(FGeometryCache);
+
   /** Entry point: applies soft and hard resize constraints. */
   public handle({ rect, limits }: ApplyParentResizeConstraintsRequest): void {
     this._applyResizeConstraints(rect, limits);
@@ -165,6 +168,7 @@ export class ApplyParentResizeConstraints implements IExecution<
   private _applyParentRect(limit: IResizeLimit, rect: IRect): void {
     limit.nodeOrGroup.updatePosition(rect);
     limit.nodeOrGroup.updateSize(rect);
+    this._cache.setNodeRect(limit.nodeOrGroup.fId(), rect);
     limit.nodeOrGroup.redraw();
   }
 }

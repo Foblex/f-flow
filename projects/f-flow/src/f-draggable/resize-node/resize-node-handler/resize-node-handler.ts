@@ -11,6 +11,7 @@ import { inject, Injectable } from '@angular/core';
 import { IResizeConstraint } from '../constraint';
 import { FResizeNodeStartEventData } from '../f-resize-node-start-event-data';
 import { RESIZE_NODE_HANDLER_KIND, RESIZE_NODE_HANDLER_TYPE } from '../is-resize-node-handler';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 @Injectable()
 export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData> {
@@ -21,6 +22,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   }
 
   private readonly _mediator = inject(FMediator);
+  private readonly _cache = inject(FGeometryCache);
 
   private _baselineRect!: IRect;
   private _constraints!: IResizeConstraint;
@@ -98,6 +100,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   private _commitRect(rect: IRect): void {
     this._nodeOrGroup.updatePosition({ x: rect.x, y: rect.y });
     this._nodeOrGroup.updateSize({ width: rect.width, height: rect.height });
+    this._cache.setNodeRect(this._nodeOrGroup.fId(), rect);
     this._nodeOrGroup.redraw();
   }
 

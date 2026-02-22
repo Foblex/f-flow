@@ -9,11 +9,13 @@ import {
   ConnectionBehaviourBuilderRequest,
   FConnectionBase,
 } from '../../../f-connection-v2';
+import { FGeometryCache } from '../../../domain/geometry-cache';
 
 export class DragNodeConnectionHandlerBase {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _behaviour = inject(ConnectionBehaviourBuilder);
+  private readonly _cache = inject(FGeometryCache);
 
   private _source!: FConnectorBase;
   private _target!: FConnectorBase;
@@ -38,10 +40,20 @@ export class DragNodeConnectionHandlerBase {
 
   public setSourceDelta(delta: IPoint): void {
     this._sourceDelta = delta;
+    this._cache.setConnectorRect(
+      this._source.fId(),
+      this._source.kind,
+      this._withDelta(this._sourceRef.rect, delta),
+    );
   }
 
   public setTargetDelta(delta: IPoint): void {
     this._targetDelta = delta;
+    this._cache.setConnectorRect(
+      this._target.fId(),
+      this._target.kind,
+      this._withDelta(this._targetRef.rect, delta),
+    );
   }
 
   protected redraw(): void {
@@ -73,5 +85,9 @@ export class DragNodeConnectionHandlerBase {
     return this._mediator.execute<IConnectorRectRef>(
       new GetConnectorRectReferenceRequest(connector),
     );
+  }
+
+  private _withDelta(rect: IConnectorRectRef['rect'], delta: IPoint): IConnectorRectRef['rect'] {
+    return RoundedRect.fromRoundedRect(rect).addPoint(delta);
   }
 }

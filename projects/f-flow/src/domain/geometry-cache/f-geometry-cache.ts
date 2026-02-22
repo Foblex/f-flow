@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IRect, IRoundedRect } from '@foblex/2d';
+import { IRect, IRoundedRect, RectExtensions, RoundedRect } from '@foblex/2d';
 import { FCacheConnectorKeyFactory } from './f-cache-connector-key-factory';
 import { FConnectorEntry, IConnectorGeometryRef } from './f-connector-entry';
 import { FNodeEntry } from './node-cache/f-node-entry';
@@ -113,6 +113,32 @@ export class FGeometryCache {
     }
   }
 
+  public setNodeRect(nodeId: string, rect: IRect): void {
+    const node = this._nodeEntries.get(nodeId);
+    if (!node) {
+      return;
+    }
+
+    const previousRect = node.rect;
+    node.rect = RectExtensions.initialize(rect.x, rect.y, rect.width, rect.height);
+
+    if (!previousRect) {
+      return;
+    }
+
+    this._updateConnectorRectsByNodeRect(nodeId, previousRect, node.rect);
+  }
+
+  public setConnectorRect(connectorId: string, kind: string, rect: IRoundedRect): void {
+    const cacheKey = FCacheConnectorKeyFactory.build(connectorId, kind);
+    const connector = this._connectorEntries.get(cacheKey);
+    if (!connector) {
+      return;
+    }
+
+    connector.rect = RoundedRect.fromRoundedRect(rect);
+  }
+
   public getCachedRect<T extends IRect>(element: HTMLElement | SVGElement): T | undefined {
     return (this.getNodeRectByElement(element) ?? this.getConnectorRectByElement(element)) as
       | T
@@ -178,6 +204,53 @@ export class FGeometryCache {
       if (node) {
         node.rect = undefined;
       }
+    }
+  }
+
+  private _updateConnectorRectsByNodeRect(
+    nodeId: string,
+    previousRect: IRect,
+    nextRect: IRect,
+  ): void {
+    const connectorKeys = this._connectorKeysByNodeId.get(nodeId);
+    if (!connectorKeys?.size) {
+      return;
+    }
+
+    const dx = nextRect.x - previousRect.x;
+    const dy = nextRect.y - previousRect.y;
+
+    const hasScaleX = previousRect.width !== 0;
+    const hasScaleY = previousRect.height !== 0;
+    const scaleX = hasScaleX ? nextRect.width / previousRect.width : 1;
+    const scaleY = hasScaleY ? nextRect.height / previousRect.height : 1;
+
+    for (const connectorKey of connectorKeys) {
+      const connector = this._connectorEntries.get(connectorKey);
+      if (!connector?.rect) {
+        continue;
+      }
+
+      const prevConnectorRect = connector.rect;
+      const prevCenter = prevConnectorRect.gravityCenter;
+
+      const nextCenterX = hasScaleX
+        ? nextRect.x + (prevCenter.x - previousRect.x) * scaleX
+        : prevCenter.x + dx;
+      const nextCenterY = hasScaleY
+        ? nextRect.y + (prevCenter.y - previousRect.y) * scaleY
+        : prevCenter.y + dy;
+
+      connector.rect = new RoundedRect(
+        nextCenterX - prevConnectorRect.width / 2,
+        nextCenterY - prevConnectorRect.height / 2,
+        prevConnectorRect.width,
+        prevConnectorRect.height,
+        prevConnectorRect.radius1,
+        prevConnectorRect.radius2,
+        prevConnectorRect.radius3,
+        prevConnectorRect.radius4,
+      );
     }
   }
 }

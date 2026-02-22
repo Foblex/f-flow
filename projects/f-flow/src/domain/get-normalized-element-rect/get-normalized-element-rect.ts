@@ -34,10 +34,10 @@ export class GetNormalizedElementRect implements IExecution<
   }
 
   public handle({ element }: GetNormalizedElementRectRequest): IRect {
-    // const cachedRect = this._cache.getCachedRect<IRect>(element);
-    // if (cachedRect) {
-    //   return cachedRect;
-    // }
+    const cachedRect = this._cache.getCachedRect<IRect>(element);
+    if (cachedRect) {
+      return cachedRect;
+    }
 
     const systemRect = RectExtensions.fromElement(element);
     const position = this._normalizePosition(systemRect);
