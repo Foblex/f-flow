@@ -1,5 +1,3 @@
-export * from './get-element-rounded-rect';
-
 export * from './f-background';
 
 export * from './f-canvas';

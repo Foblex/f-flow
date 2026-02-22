@@ -10,9 +10,10 @@ import { FConnectionBase } from '../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(DetectConnectionsUnderDragNodeRequest)
-export class DetectConnectionsUnderDragNode
-  implements IExecution<DetectConnectionsUnderDragNodeRequest, void>
-{
+export class DetectConnectionsUnderDragNode implements IExecution<
+  DetectConnectionsUnderDragNodeRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -84,7 +85,7 @@ export class DetectConnectionsUnderDragNode
 
   private _collectConnectionsUnderNode(node: FNodeBase): FConnectionBase[] {
     const nodeRect = this._mediator.execute<IRoundedRect>(
-      new GetNormalizedConnectorRectRequest(node.hostElement),
+      new GetNormalizedConnectorRectRequest(node.hostElement, false),
     );
 
     const result: FConnectionBase[] = [];

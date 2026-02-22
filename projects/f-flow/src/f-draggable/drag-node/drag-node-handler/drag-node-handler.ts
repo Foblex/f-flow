@@ -1,16 +1,13 @@
 import { IPoint, IRect, RectExtensions } from '@foblex/2d';
 import { DragNodeItemHandler } from './drag-node-item-handler';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FDragNodeStartEventData } from '../f-drag-node-start-event-data';
 import { IMagneticGuidesResult, MagneticLinesHandler } from '../magnetic-lines';
 import { IMagneticRectsResult, MagneticRectsHandler } from '../magnetic-rects';
-import { FGeometryCache } from '../../../domain/geometry-cache';
 
 @Injectable()
 export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
-  private readonly _geometryCache = inject(FGeometryCache);
-
   protected readonly type = 'move-node';
   protected readonly kind = 'drag-node';
 

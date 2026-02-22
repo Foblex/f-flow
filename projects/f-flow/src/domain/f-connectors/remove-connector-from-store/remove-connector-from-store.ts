@@ -12,7 +12,7 @@ import { FGeometryCache } from '../../geometry-cache';
 @FExecutionRegister(RemoveConnectorFromStoreRequest)
 export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
-  private readonly _geometryCache = inject(FGeometryCache);
+  private readonly _cache = inject(FGeometryCache);
 
   public handle({ instance }: RemoveConnectorFromStoreRequest): void {
     switch (instance.kind) {
@@ -32,19 +32,26 @@ export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromS
 
   private _removeInput(component: FConnectorBase): void {
     this._store.inputs.removeById(component.fId());
-    this._geometryCache.unregisterConnector(component.fId(), component.kind);
     this._store.countChanged();
+
+    this._geometryUnregister(component);
   }
 
   private _removeOutput(component: FConnectorBase): void {
     this._store.outputs.removeById(component.fId());
-    this._geometryCache.unregisterConnector(component.fId(), component.kind);
     this._store.countChanged();
+
+    this._geometryUnregister(component);
   }
 
   private _removeOutlet(component: FConnectorBase): void {
     this._store.outlets.removeById(component.fId());
-    this._geometryCache.unregisterConnector(component.fId(), component.kind);
     this._store.countChanged();
+
+    this._geometryUnregister(component);
+  }
+
+  private _geometryUnregister(component: FConnectorBase): void {
+    this._cache.unregisterConnector(component.fId(), component.kind);
   }
 }

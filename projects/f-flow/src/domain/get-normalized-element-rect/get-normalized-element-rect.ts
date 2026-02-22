@@ -27,26 +27,30 @@ export class GetNormalizedElementRect implements IExecution<
 > {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
-  private readonly _geometryCache = inject(FGeometryCache);
+  private readonly _cache = inject(FGeometryCache);
 
   private get _transform(): ITransformModel {
     return this._store.transform;
   }
 
-  public handle(request: GetNormalizedElementRectRequest): IRect {
-    const cachedRect = this._getCachedRect(request.element);
+  public handle({ element }: GetNormalizedElementRectRequest): IRect {
+    const cachedRect = this._cache.getCachedRect<IRect>(element);
     if (cachedRect) {
       return cachedRect;
     }
 
-    const systemRect = RectExtensions.fromElement(request.element);
+    const systemRect = RectExtensions.fromElement(element);
     const position = this._normalizePosition(systemRect);
     const unscaledSize = this._unscaleSize(systemRect);
     const unscaledRect = this._getUnscaledRect(position, unscaledSize);
 
-    const offsetSize = this._getOffsetSize(request.element, unscaledSize);
+    const offsetSize = this._getOffsetSize(element, unscaledSize);
 
-    return this._fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
+    const rect = this._fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
+
+    this._cache.updateRectByElement(element, rect);
+
+    return rect;
   }
 
   private _fromCenter(rect: IRect, width: number, height: number): IRect {
@@ -75,25 +79,5 @@ export class GetNormalizedElementRect implements IExecution<
 
   private _getOffsetSize(element: HTMLElement | SVGElement, size: ISize): ISize {
     return SizeExtensions.offsetFromElement(element) || size;
-  }
-
-  private _getCachedRect(element: HTMLElement | SVGElement): IRect | undefined {
-    return this._getCachedNodeRect(element) ?? this._getCachedConnectorRect(element);
-  }
-
-  private _getCachedNodeRect(element: HTMLElement | SVGElement): IRect | undefined {
-    const nodeId = this._geometryCache.resolveNodeIdByElement(element);
-    if (nodeId) {
-      const nodeRect = this._geometryCache.getNodeRect(nodeId);
-      if (nodeRect) {
-        return nodeRect;
-      }
-    }
-
-    return undefined;
-  }
-
-  private _getCachedConnectorRect(element: HTMLElement | SVGElement): IRect | undefined {
-    return this._geometryCache.getConnectorRectByElement(element);
   }
 }

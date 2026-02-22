@@ -10,7 +10,6 @@ import {
   SortNodeLayersExecution,
 } from './sort-item-layers';
 import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
-import { GetElementRoundedRectExecution } from './get-element-rounded-rect';
 import { F_SELECTION_FEATURES } from './f-selection';
 import { F_BACKGROUND_FEATURES } from './f-background';
 import { F_CANVAS_FEATURES } from './f-canvas';
@@ -44,8 +43,6 @@ export const COMMON_PROVIDERS = [
   ...F_FLOW_FEATURES,
 
   ...F_NODE_FEATURES,
-
-  GetElementRoundedRectExecution,
 
   ...F_SELECTION_FEATURES,
 

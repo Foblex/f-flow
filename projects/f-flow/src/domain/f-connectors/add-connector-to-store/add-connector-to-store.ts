@@ -17,7 +17,7 @@ import { FGeometryCache } from '../../geometry-cache';
 @FExecutionRegister(AddConnectorToStoreRequest)
 export class AddConnectorToStore implements IExecution<AddConnectorToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
-  private readonly _geometryCache = inject(FGeometryCache);
+  private readonly _cache = inject(FGeometryCache);
 
   public handle({ instance }: AddConnectorToStoreRequest): void {
     switch (instance.kind) {
@@ -37,37 +37,32 @@ export class AddConnectorToStore implements IExecution<AddConnectorToStoreReques
 
   private _addInput(component: FConnectorBase): void {
     this._store.inputs.add(component as FNodeInputBase);
-    this._geometryCache.registerConnector(
-      component.fId(),
-      component.fNodeId,
-      component.kind,
-      component.hostElement,
-      component,
-    );
     this._store.countChanged();
+
+    this._geometryRegister(component);
   }
 
   private _addOutput(component: FConnectorBase): void {
     this._store.outputs.add(component as FNodeOutputBase);
-    this._geometryCache.registerConnector(
-      component.fId(),
-      component.fNodeId,
-      component.kind,
-      component.hostElement,
-      component,
-    );
     this._store.countChanged();
+
+    this._geometryRegister(component);
   }
 
   private _addOutlet(component: FConnectorBase): void {
     this._store.outlets.add(component as FNodeOutletBase);
-    this._geometryCache.registerConnector(
+    this._store.countChanged();
+
+    this._geometryRegister(component);
+  }
+
+  private _geometryRegister(component: FConnectorBase): void {
+    this._cache.registerConnector(
       component.fId(),
       component.fNodeId,
       component.kind,
       component.hostElement,
       component,
     );
-    this._store.countChanged();
   }
 }

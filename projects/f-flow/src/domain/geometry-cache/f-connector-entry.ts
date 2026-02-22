@@ -12,7 +12,7 @@ export class FConnectorEntry {
     public readonly id: string,
     public readonly kind: string,
     public readonly nodeId: string,
-    public elementRef: HTMLElement | SVGElement,
+    public element: HTMLElement | SVGElement,
     public connectorRef?: IConnectorGeometryRef,
     public rect?: IRoundedRect | null,
   ) {}
