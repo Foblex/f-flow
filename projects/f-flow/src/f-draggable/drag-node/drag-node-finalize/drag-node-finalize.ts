@@ -10,6 +10,7 @@ import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes-event';
 import { IMagneticAxisGuide, IMagneticGuidesResult } from '../magnetic-lines';
 import { IMagneticRectsResult } from '../magnetic-rects';
+import { FVirtualizationService } from '../../../f-virtualization';
 
 @Injectable()
 @FExecutionRegister(DragNodeFinalizeRequest)
@@ -17,6 +18,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
+  private readonly _virtualization = inject(FVirtualizationService);
 
   private _dragHandler?: DragNodeHandler | undefined;
 
@@ -32,6 +34,11 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
 
     this._finalizeMove(this._dragHandler, snappedDelta);
     this._emitNodeIntersectIfNeeded(this._dragHandler);
+
+    // Remove forced visibility for all dragged nodes
+    for (const root of this._dragHandler.roots) {
+      this._virtualization.removeForceVisible(root.nodeOrGroup.fId());
+    }
   }
 
   private _getDragHandler(): DragNodeHandler | undefined {

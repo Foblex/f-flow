@@ -39,11 +39,13 @@ import {
   FComponentsStore,
   ListenCountChangesRequest,
   ListenDataChangesRequest,
+  ListenTransformChangesRequest,
   NotifyDataChangedRequest,
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { FChannelHub, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
+import { F_VIRTUALIZATION_PROVIDERS, FVirtualizationService } from '../f-virtualization';
 
 let uniqueId = 0;
 
@@ -64,6 +66,7 @@ let uniqueId = 0;
     ...COMMON_PROVIDERS,
     FDraggableDataContext,
     ...F_DRAGGABLE_PROVIDERS,
+    ...F_VIRTUALIZATION_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -75,6 +78,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _elementReference = inject(ElementRef);
   private readonly _injector = inject(Injector);
   private readonly _store = inject(FComponentsStore);
+  private readonly _virtualization = inject(FVirtualizationService);
 
   public override fId = input<string>(`f-flow-${uniqueId++}`, { alias: 'fFlowId' });
   public readonly fUseConnectionWorker = input(true, {
@@ -101,6 +105,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     }
     this._listenCountChanges();
     this._listenDataChanges();
+    this._listenTransformChangesForVirtualization();
   }
 
   private _listenCountChanges(): void {
@@ -127,6 +132,17 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       });
   }
 
+  private _listenTransformChangesForVirtualization(): void {
+    if (!this._virtualization.enabled) {
+      return;
+    }
+    this._mediator
+      .execute<FChannelHub>(new ListenTransformChangesRequest())
+      .listen(this._destroyRef, () => {
+        this._virtualization.updateVisibility();
+      });
+  }
+
   private _bindConnectionWorkerOption(): void {
     effect(
       () => {
@@ -139,6 +155,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _emitLoaded(): void {
     if (!this._isLoaded) {
       this._isLoaded = true;
+      this._virtualization.initialize();
       this.fLoaded.emit(this.fId());
     }
   }

@@ -16,6 +16,7 @@ import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../../drag-toolkit';
 import { MagneticLinesPreparationRequest } from '../magnetic-lines';
 import { MagneticRectsPreparationRequest } from '../magnetic-rects';
+import { FVirtualizationService } from '../../../f-virtualization';
 
 @Injectable()
 @FExecutionRegister(DragNodePreparationRequest)
@@ -23,6 +24,7 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
+  private readonly _virtualization = inject(FVirtualizationService);
 
   public handle({ event, trigger }: DragNodePreparationRequest): void {
     if (!this._canStartDrag(event, trigger)) {
@@ -84,6 +86,8 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
         this._mediator.execute<void>(new SelectAndUpdateNodeLayerRequest(node));
       });
     }
+
+    this._virtualization.forceVisible(node.fId());
 
     return this._mediator.execute(new AttachDragNodeHandlerFromSelectionRequest(node));
   }

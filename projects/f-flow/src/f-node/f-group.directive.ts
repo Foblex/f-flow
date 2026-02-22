@@ -22,6 +22,7 @@ import {
   CalculateConnectorsConnectableSidesRequest,
 } from '../domain';
 import { FMediator } from '@foblex/mediator';
+import { FVirtualizationService } from '../f-virtualization';
 
 let uniqueId = 0;
 const _DEBOUNCE_TIME = 3;
@@ -45,6 +46,7 @@ export class FGroupDirective
 
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
+  private readonly _virtualization = inject(FVirtualizationService);
 
   public override readonly fId = input<string>(`f-group-${uniqueId++}`, { alias: 'fGroupId' });
 
@@ -109,6 +111,8 @@ export class FGroupDirective
     super.redraw();
 
     this._mediator.execute<void>(new AddNodeToStoreRequest(this));
+    this._virtualization.registerNode(this.fId(), this.hostElement);
+    this._virtualization.applyContainmentCSS(this.hostElement);
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -157,6 +161,7 @@ export class FGroupDirective
   }
 
   public ngOnDestroy(): void {
+    this._virtualization.unregisterNode(this.fId());
     this._mediator.execute<void>(new RemoveNodeFromStoreRequest(this));
   }
 }
