@@ -9,6 +9,7 @@ import { AddConnectionMarkerToStore } from './add-connection-marker-to-store';
 import { RemoveConnectionMarkerFromStore } from './remove-connection-marker-from-store';
 import { RedrawConnections } from './redraw-connections';
 import { RemoveConnectionWaypoint } from './remove-connection-waypoint';
+import { FConnectionCalculationWorker } from './connection-calculation-worker';
 
 /**
  * This file exports all the connection-related features for the F-Flow domain.
@@ -23,6 +24,8 @@ export const F_CONNECTION_FEATURES = [
   AddSnapConnectionToStore,
 
   CreateConnectionMarkers,
+
+  FConnectionCalculationWorker,
 
   RedrawConnections,
 

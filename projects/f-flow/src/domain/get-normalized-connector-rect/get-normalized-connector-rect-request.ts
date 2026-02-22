@@ -1,5 +1,5 @@
 export class GetNormalizedConnectorRectRequest {
   static readonly fToken = Symbol('GetNormalizedConnectorRectRequest');
 
-  constructor(public element: HTMLElement | SVGElement) {}
+  constructor(public readonly element: HTMLElement | SVGElement) {}
 }

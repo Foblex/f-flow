@@ -64,10 +64,6 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override prepareDragSequence(): void {
-    for (const item of this.items) {
-      this._geometryCache.beginDragSession(item.nodeOrGroup.fId());
-    }
-
     for (const root of this.roots) {
       root.prepareDragSequence();
     }
@@ -84,10 +80,6 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   public override onPointerUp(): void {
     for (const root of this.roots) {
       root.onPointerUp();
-    }
-
-    for (const item of this.items) {
-      this._geometryCache.endDragSession(item.nodeOrGroup.fId());
     }
 
     this._magneticLines?.clearGuides();
@@ -119,10 +111,6 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override destroy(): void {
-    for (const item of this.items ?? []) {
-      this._geometryCache.endDragSession(item.nodeOrGroup.fId());
-    }
-
     for (const root of this.roots ?? []) {
       root.destroy?.();
     }

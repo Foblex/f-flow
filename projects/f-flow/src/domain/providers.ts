@@ -1,4 +1,4 @@
-import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
+import { GetNormalizedElementRect } from './get-normalized-element-rect';
 import {
   MoveFrontElementsBeforeTargetElement,
   UpdateItemAndChildrenLayers,
@@ -20,7 +20,7 @@ import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
 import { F_ZOOM_FEATURES } from './f-zoom';
-import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
+import { GetNormalizedConnectorRect } from './get-normalized-connector-rect';
 import { F_MINIMAP_FEATURES } from './minimap';
 import { FGeometryCache } from './geometry-cache';
 
@@ -55,9 +55,9 @@ export const COMMON_PROVIDERS = [
 
   GetDeepChildrenNodesAndGroupsExecution,
 
-  GetNormalizedConnectorRectExecution,
+  GetNormalizedConnectorRect,
 
-  GetNormalizedElementRectExecution,
+  GetNormalizedElementRect,
 
   GetNormalizedPointExecution,
 

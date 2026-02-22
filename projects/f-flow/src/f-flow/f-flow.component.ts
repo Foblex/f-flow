@@ -1,10 +1,13 @@
 import {
   AfterContentInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
+  Injector,
   input,
   OnDestroy,
   OnInit,
@@ -12,32 +15,33 @@ import {
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
-  ClearSelectionRequest,
+  AddFlowToStoreRequest,
+  CalculateFlowStateRequest,
   CalculateNodesBoundingBoxNormalizedPositionRequest,
-  GetNormalizedPointRequest,
+  ClearSelectionRequest,
+  COMMON_PROVIDERS,
   GetCurrentSelectionRequest,
+  GetNormalizedPointRequest,
+  ICurrentSelection,
+  IFFlowState,
+  IsDragStartedRequest,
   RedrawConnectionsRequest,
+  RemoveFlowFromStoreRequest,
   SelectAllRequest,
   SelectRequest,
-  IFFlowState,
-  CalculateFlowStateRequest,
-  RemoveFlowFromStoreRequest,
-  AddFlowToStoreRequest,
   SortItemLayersRequest,
-  ICurrentSelection,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { FDraggableDataContext } from '../f-draggable';
+import { F_DRAGGABLE_PROVIDERS, FDraggableDataContext } from '../f-draggable';
 import {
-  NotifyDataChangedRequest,
   F_STORAGE_PROVIDERS,
+  FComponentsStore,
   ListenCountChangesRequest,
   ListenDataChangesRequest,
+  NotifyDataChangedRequest,
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
-import { COMMON_PROVIDERS } from '../domain';
-import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
 import { FChannelHub, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 
@@ -69,8 +73,14 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _mediator = inject(FMediator);
   private readonly _browserService = inject(BrowserService);
   private readonly _elementReference = inject(ElementRef);
+  private readonly _injector = inject(Injector);
+  private readonly _store = inject(FComponentsStore);
 
   public override fId = input<string>(`f-flow-${uniqueId++}`, { alias: 'fFlowId' });
+  public readonly fUseConnectionWorker = input(true, {
+    alias: 'fUseConnectionWorker',
+    transform: booleanAttribute,
+  });
 
   public override get hostElement(): HTMLElement {
     return this._elementReference.nativeElement;
@@ -82,6 +92,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public ngOnInit(): void {
     this._mediator.execute(new AddFlowToStoreRequest(this));
+    this._bindConnectionWorkerOption();
   }
 
   public ngAfterContentInit(): void {
@@ -96,6 +107,9 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._mediator
       .execute<FChannelHub>(new ListenCountChangesRequest())
       .listen(this._destroyRef, () => {
+        if (this._mediator.execute(new IsDragStartedRequest())) {
+          return;
+        }
         this._mediator.execute(new SortItemLayersRequest());
       });
   }
@@ -104,10 +118,22 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._mediator
       .execute<FChannelHub>(new ListenDataChangesRequest())
       .listen(this._destroyRef, () => {
+        if (this._mediator.execute(new IsDragStartedRequest())) {
+          return;
+        }
         this._mediator.execute(new RedrawConnectionsRequest());
 
         this._emitLoaded();
       });
+  }
+
+  private _bindConnectionWorkerOption(): void {
+    effect(
+      () => {
+        this._store.useConnectionWorker = this.fUseConnectionWorker();
+      },
+      { injector: this._injector },
+    );
   }
 
   private _emitLoaded(): void {

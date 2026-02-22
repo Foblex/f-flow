@@ -7,7 +7,6 @@ import {
   viewChild,
 } from '@angular/core';
 import { FCanvasComponent, FFlowComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
-import { NgForOf } from '@angular/common';
 import { PointExtensions } from '@foblex/2d';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
@@ -24,7 +23,6 @@ type Edge = { source: number; target: number };
   standalone: true,
   imports: [
     FFlowModule,
-    NgForOf,
     FZoomDirective,
     MatFormField,
     MatLabel,
@@ -37,7 +35,7 @@ export class StressTestComponent {
   private readonly _canvas = viewChild.required(FCanvasComponent);
   private readonly _flow = viewChild(FFlowComponent);
 
-  protected readonly totals = [200, 500, 1000, 2000];
+  protected readonly totals = [200, 500, 1000, 2000, 5000];
 
   protected readonly showConnections = signal(false);
   protected readonly totalNodes = signal(200);

@@ -1,13 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { RotateNodePreparationRequest } from './rotate-node-preparation-request';
-import { IPoint, IRect, ITransformModel, Point } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   CalculateInputConnectionsRequest,
   CalculateOutputConnectionsRequest,
-  GetNormalizedElementRectRequest,
+  GetConnectorRectReferenceRequest,
+  IConnectorRectRef,
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
@@ -98,15 +99,16 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(nodeOrGroup))
       .map((x) => {
-        const connectorHost = this._store.inputs.require(x.fInputId())?.hostElement;
+        const connector = this._store.inputs.require(x.fInputId());
+        const connectorRef = this._mediator.execute<IConnectorRectRef>(
+          new GetConnectorRectReferenceRequest(connector),
+        );
         const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
         handler.initialize(x);
 
         return {
           connection: handler,
-          connector: this._mediator.execute<IRect>(
-            new GetNormalizedElementRectRequest(connectorHost),
-          ).gravityCenter,
+          connector: connectorRef.rect.gravityCenter,
         };
       });
   }
@@ -115,15 +117,16 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(nodeOrGroup))
       .map((x) => {
-        const connectorHost = this._store.outputs.require(x.fOutputId())?.hostElement;
+        const connector = this._store.outputs.require(x.fOutputId());
+        const connectorRef = this._mediator.execute<IConnectorRectRef>(
+          new GetConnectorRectReferenceRequest(connector),
+        );
         const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
         handler.initialize(x);
 
         return {
           connection: handler,
-          connector: this._mediator.execute<IRect>(
-            new GetNormalizedElementRectRequest(connectorHost),
-          ).gravityCenter,
+          connector: connectorRef.rect.gravityCenter,
         };
       });
   }

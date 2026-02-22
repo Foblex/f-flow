@@ -3,15 +3,17 @@ import { GetNormalizedConnectorRectRequest } from './get-normalized-connector-re
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../f-storage';
 import {
-  IRoundedRect,
-  RoundedRect,
   IPoint,
+  IRect,
+  IRoundedRect,
   ISize,
-  SizeExtensions,
   ITransformModel,
+  RoundedRect,
+  SizeExtensions,
 } from '@foblex/2d';
 import { GetElementRoundedRectRequest } from '../get-element-rounded-rect';
 import { GetNormalizedPointRequest } from '../get-normalized-point';
+import { FGeometryCache } from '../geometry-cache';
 
 /**
  * Execution that retrieves the normalized rectangle of a connector.
@@ -20,29 +22,36 @@ import { GetNormalizedPointRequest } from '../get-normalized-point';
  */
 @Injectable()
 @FExecutionRegister(GetNormalizedConnectorRectRequest)
-export class GetNormalizedConnectorRectExecution
-  implements IExecution<GetNormalizedConnectorRectRequest, IRoundedRect>
-{
+export class GetNormalizedConnectorRect implements IExecution<
+  GetNormalizedConnectorRectRequest,
+  IRoundedRect
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
+  private readonly _geometryCache = inject(FGeometryCache);
 
   private get _transform(): ITransformModel {
-    return this._store.fCanvas!.transform;
+    return this._store.transform;
   }
 
-  public handle(request: GetNormalizedConnectorRectRequest): IRoundedRect {
-    const systemRect = this._getElementRoundedRect(request);
+  public handle({ element }: GetNormalizedConnectorRectRequest): IRoundedRect {
+    const cachedRect = this._getCachedRect(element);
+    if (cachedRect) {
+      return cachedRect;
+    }
+
+    const systemRect = this._getElementRoundedRect(element);
     const position = this._normalizePosition(systemRect);
     const unscaledSize = this._unscaleSize(systemRect);
     const unscaledRect = this._getUnscaledRect(position, unscaledSize, systemRect);
 
-    const offsetSize = this._getOffsetSize(request.element, unscaledSize);
+    const offsetSize = this._getOffsetSize(element, unscaledSize);
 
     return RoundedRect.fromCenter(unscaledRect, offsetSize.width, offsetSize.height);
   }
 
-  private _getElementRoundedRect(request: GetNormalizedConnectorRectRequest): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(new GetElementRoundedRectRequest(request.element));
+  private _getElementRoundedRect(element: HTMLElement | SVGElement): IRoundedRect {
+    return this._mediator.execute<IRoundedRect>(new GetElementRoundedRectRequest(element));
   }
 
   private _normalizePosition(rect: IRoundedRect): IPoint {
@@ -71,5 +80,27 @@ export class GetNormalizedConnectorRectExecution
 
   private _getOffsetSize(element: HTMLElement | SVGElement, size: ISize): ISize {
     return SizeExtensions.offsetFromElement(element) || size;
+  }
+
+  private _getCachedRect(element: HTMLElement | SVGElement): IRoundedRect | undefined {
+    return (this._getCachedNodeRect(element) ?? this._getCachedConnectorRect(element)) as
+      | IRoundedRect
+      | undefined;
+  }
+
+  private _getCachedNodeRect(element: HTMLElement | SVGElement): IRect | undefined {
+    const nodeId = this._geometryCache.resolveNodeIdByElement(element);
+    if (nodeId) {
+      const nodeRect = this._geometryCache.getNodeRect(nodeId);
+      if (nodeRect) {
+        return nodeRect;
+      }
+    }
+
+    return undefined;
+  }
+
+  private _getCachedConnectorRect(element: HTMLElement | SVGElement): IRoundedRect | undefined {
+    return this._geometryCache.getConnectorRectByElement(element);
   }
 }

@@ -6,6 +6,8 @@ export * from './add-connection-to-store';
 
 export * from './add-snap-connection-to-store';
 
+export * from './connection-calculation-worker';
+
 export * from './create-connection-markers';
 
 export * from './redraw-connections';

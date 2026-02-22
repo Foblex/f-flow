@@ -2,21 +2,28 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { NotifyDataChangedRequest } from '../../../f-storage';
-import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../../../reactivity';
-import { FResizeChannel } from '../../../reactivity';
+import {
+  debounceAnimationFrame,
+  FChannelHub,
+  FResizeChannel,
+  notifyOnStart,
+} from '../../../reactivity';
 import { FitToChildNodesAndGroupsRequest } from '../fit-to-child-nodes-and-groups';
 import { IsDragStartedRequest } from '../../f-draggable';
 import { CalculateConnectorsConnectableSidesRequest } from '../calculate-connectors-connectable-sides';
+import { FGeometryCache } from '../../geometry-cache';
 
 /**
  * Execution that updates a node's connectors when its state or size changes.
  */
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
-export class UpdateNodeWhenStateOrSizeChanged
-  implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void>
-{
+export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
+  UpdateNodeWhenStateOrSizeChangedRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
+  private readonly _cache = inject(FGeometryCache);
 
   /**
    * Handles the request to update the node's connectors based on state or size changes.
@@ -32,6 +39,8 @@ export class UpdateNodeWhenStateOrSizeChanged
         this._mediator.execute<void>(new NotifyDataChangedRequest());
 
         if (!this._isDragging()) {
+          this._cache.invalidateNode(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged');
+
           this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
 
           this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));

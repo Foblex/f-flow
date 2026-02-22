@@ -26,6 +26,7 @@ export class FComponentsStore {
   public readonly countChanges$ = new FChannel();
 
   private _dataVersion = 0;
+  public useConnectionWorker = false;
 
   public get dataVersion(): number {
     return this._dataVersion;

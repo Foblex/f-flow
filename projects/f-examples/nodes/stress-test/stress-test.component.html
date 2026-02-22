@@ -1,5 +1,7 @@
 @if (columns()) {
   <f-flow fDraggable (fLoaded)="loaded()">
+    <f-selection-area />
+
     <f-canvas fZoom>
       <ng-container ngProjectAs="[fNodes]">
         @for (column of columns(); track column; let cIndex = $index) {

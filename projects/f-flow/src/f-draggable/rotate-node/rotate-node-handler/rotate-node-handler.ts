@@ -10,7 +10,6 @@ import { DragNodeConnectionHandlerBase } from '../../drag-node';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { calculateDifferenceAfterRotation } from '../calculate-difference-after-rotation';
 import { ROTATE_NODE_HANDLER_KIND, ROTATE_NODE_HANDLER_TYPE } from '../is-rotate-node-handler';
-import { FGeometryCache } from '../../../domain/geometry-cache';
 
 type TRotateConnectionHandler = {
   connection: DragNodeConnectionHandlerBase;
@@ -29,7 +28,6 @@ export class RotateNodeHandler extends DragHandlerBase<FRotateNodeStartEventData
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _dragSession = inject(FDraggableDataContext);
-  private readonly _geometryCache = inject(FGeometryCache);
 
   private _nodeOrGroup!: FNodeBase;
   private _sourceConnections!: TRotateConnectionHandler[];
@@ -95,9 +93,7 @@ export class RotateNodeHandler extends DragHandlerBase<FRotateNodeStartEventData
 
   public override onPointerUp(): void {
     this._nodeOrGroup.rotate.set(this._nodeOrGroup._rotate);
-    if (this._nodeOrGroup._rotate !== this._startRotation) {
-      this._geometryCache.invalidateNode(this._nodeOrGroup.fId(), 'rotate-finalized');
-    }
+    this._nodeOrGroup.refresh();
   }
 
   private _readNodeRect(): IRect {
