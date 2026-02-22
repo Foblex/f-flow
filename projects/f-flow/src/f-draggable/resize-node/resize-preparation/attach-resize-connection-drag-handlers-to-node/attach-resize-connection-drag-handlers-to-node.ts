@@ -5,18 +5,13 @@ import { FComponentsStore } from '../../../../f-storage';
 import { FNodeBase } from '../../../../f-node';
 import { FConnectionBase } from '../../../../f-connection-v2';
 import {
-  DragNodeConnectionBothSidesHandler,
-  DragNodeConnectionHandlerBase,
-  DragNodeConnectionSourceHandler,
-  DragNodeConnectionTargetHandler,
-} from '../../../drag-node/drag-node-dependent-connection-handlers';
-import { FConnectorBase } from '../../../../f-connectors';
-import { IRect, IRoundedRect } from '@foblex/2d';
-import {
-  GetConnectorRectReferenceRequest,
-  GetNormalizedElementRectRequest,
-  IConnectorRectRef,
-} from '../../../../domain';
+  ResizeNodeConnectionBothSidesHandler,
+  ResizeNodeConnectionHandlerBase,
+  ResizeNodeConnectionSourceHandler,
+  ResizeNodeConnectionTargetHandler,
+} from '../../resize-node-handler';
+import { IRect } from '@foblex/2d';
+import { GetNormalizedElementRectRequest } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
 import { CalculateResizeLimitsRequest } from '../../calculate-resize-limits';
 import { IResizeNodeConnectionHandlers } from '../../resize-node-handler';
@@ -24,10 +19,9 @@ import { IResizeConstraint, IResizeLimit } from '../../constraint';
 
 @Injectable()
 @FExecutionRegister(AttachResizeConnectionDragHandlersToNodeRequest)
-export class AttachResizeConnectionDragHandlersToNode implements IExecution<
-  AttachResizeConnectionDragHandlersToNodeRequest,
-  void
-> {
+export class AttachResizeConnectionDragHandlersToNode
+  implements IExecution<AttachResizeConnectionDragHandlersToNodeRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _dragInjector = inject(DragHandlerInjector);
@@ -38,7 +32,7 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
 
     const involvedSourceIds = this._collectSourceConnectorIds(involvedNodes);
     const involvedTargetIds = this._collectTargetConnectorIds(involvedNodes);
-    const connectionHandlerPool = new Map<string, DragNodeConnectionHandlerBase>();
+    const connectionHandlerPool = new Map<string, ResizeNodeConnectionHandlerBase>();
 
     handler.setNodeConnectionHandlers(
       this._buildConnectionHandlersForNode(
@@ -98,7 +92,7 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
     nodeOrGroup: FNodeBase,
     involvedSourceIds: Set<string>,
     involvedTargetIds: Set<string>,
-    connectionHandlerPool: Map<string, DragNodeConnectionHandlerBase>,
+    connectionHandlerPool: Map<string, ResizeNodeConnectionHandlerBase>,
   ): IResizeNodeConnectionHandlers {
     const outputs = this._store.outputs.getAll().filter((x) => x.fNodeId === nodeOrGroup.fId());
     const inputs = this._store.inputs.getAll().filter((x) => x.fNodeId === nodeOrGroup.fId());
@@ -109,7 +103,6 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
 
     const outputIds = new Set(outputs.map((x) => x.fId()));
     const inputIds = new Set(inputs.map((x) => x.fId()));
-    const baselineRectByConnectorId = new Map<string, IRoundedRect>();
 
     const result: IResizeNodeConnectionHandlers = { source: [], target: [] };
 
@@ -130,7 +123,6 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
         result.source.push({
           handler: connectionHandler,
           connector: sourceConnector,
-          baselineRect: this._readConnectorRect(sourceConnector, baselineRectByConnectorId),
         });
       }
 
@@ -139,7 +131,6 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
         result.target.push({
           handler: connectionHandler,
           connector: targetConnector,
-          baselineRect: this._readConnectorRect(targetConnector, baselineRectByConnectorId),
         });
       }
     }
@@ -151,37 +142,19 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
     connection: FConnectionBase,
     involvedSourceIds: Set<string>,
     involvedTargetIds: Set<string>,
-  ): DragNodeConnectionHandlerBase {
+  ): ResizeNodeConnectionHandlerBase {
     const isSource = involvedSourceIds.has(connection.fOutputId());
     const isTarget = involvedTargetIds.has(connection.fInputId());
 
     const result =
       isSource && isTarget
-        ? this._dragInjector.createInstance(DragNodeConnectionBothSidesHandler)
+        ? this._dragInjector.createInstance(ResizeNodeConnectionBothSidesHandler)
         : isSource
-          ? this._dragInjector.createInstance(DragNodeConnectionSourceHandler)
-          : this._dragInjector.createInstance(DragNodeConnectionTargetHandler);
+          ? this._dragInjector.createInstance(ResizeNodeConnectionSourceHandler)
+          : this._dragInjector.createInstance(ResizeNodeConnectionTargetHandler);
 
     result.initialize(connection);
 
     return result;
-  }
-
-  private _readConnectorRect(
-    connector: FConnectorBase,
-    cache: Map<string, IRoundedRect>,
-  ): IRoundedRect {
-    const cacheKey = `${connector.kind}::${connector.fId()}`;
-    const cached = cache.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
-
-    const rect = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    ).rect;
-    cache.set(cacheKey, rect);
-
-    return rect;
   }
 }

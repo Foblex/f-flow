@@ -1,11 +1,9 @@
-import { IRoundedRect } from '@foblex/2d';
-import { DragNodeConnectionHandlerBase } from '../../drag-node/drag-node-dependent-connection-handlers';
+import { ResizeNodeConnectionHandlerBase } from './resize-node-dependent-connection-handlers';
 import { FConnectorBase } from '../../../f-connectors';
 
 export interface IResizeNodeConnectionEndpointHandler {
-  handler: DragNodeConnectionHandlerBase;
+  handler: ResizeNodeConnectionHandlerBase;
   connector: FConnectorBase;
-  baselineRect: IRoundedRect;
 }
 
 export interface IResizeNodeConnectionHandlers {

@@ -7,19 +7,15 @@ import { ApplyChildResizeConstraintsRequest } from '../apply-child-resize-constr
 import { CalculateChangedRectFromDifferenceRequest } from '../calculate-changed-rect-from-difference';
 import { ApplyParentResizeConstraintsRequest } from '../apply-parent-resize-constraints';
 import {
-  GetConnectorRectReferenceRequest,
+  GetNormalizedConnectorRectRequest,
   GetNormalizedElementRectRequest,
-  IConnectorRectRef,
 } from '../../../domain';
 import { inject, Injectable } from '@angular/core';
 import { IResizeConstraint } from '../constraint';
 import { FResizeNodeStartEventData } from '../f-resize-node-start-event-data';
 import { RESIZE_NODE_HANDLER_KIND, RESIZE_NODE_HANDLER_TYPE } from '../is-resize-node-handler';
 import { FGeometryCache } from '../../../domain/geometry-cache';
-import {
-  IResizeNodeConnectionEndpointHandler,
-  IResizeNodeConnectionHandlers,
-} from './i-resize-node-connection-handlers';
+import { IResizeNodeConnectionHandlers } from './i-resize-node-connection-handlers';
 import { FConnectorBase } from '../../../f-connectors';
 
 @Injectable()
@@ -146,12 +142,12 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
 
     for (const source of handlers.source) {
       const currentRect = this._readConnectorRect(source.connector, currentRectByConnectorId);
-      source.handler.setSourceDelta(this._buildDelta(source.baselineRect, currentRect));
+      source.handler.setSourceRect(currentRect);
     }
 
     for (const target of handlers.target) {
       const currentRect = this._readConnectorRect(target.connector, currentRectByConnectorId);
-      target.handler.setTargetDelta(this._buildDelta(target.baselineRect, currentRect));
+      target.handler.setTargetRect(currentRect);
     }
   }
 
@@ -165,21 +161,11 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
       return cached;
     }
 
-    const rect = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    ).rect;
+    const rect = this._mediator.execute<IRoundedRect>(
+      new GetNormalizedConnectorRectRequest(connector.hostElement, false),
+    );
     cache.set(cacheKey, rect);
 
     return rect;
-  }
-
-  private _buildDelta(
-    baselineRect: IResizeNodeConnectionEndpointHandler['baselineRect'],
-    currentRect: IRoundedRect,
-  ): IPoint {
-    return {
-      x: currentRect.x - baselineRect.x,
-      y: currentRect.y - baselineRect.y,
-    };
   }
 }
