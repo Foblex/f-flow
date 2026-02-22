@@ -25,7 +25,8 @@ export class FMeasurementPipeline {
       this._resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const element = entry.target as HTMLElement;
-          const nodeId = element.getAttribute('data-f-node-id');
+          const nodeId =
+            element.getAttribute('data-f-node-id') ?? element.getAttribute('data-f-group-id');
           if (nodeId) {
             this.enqueue(nodeId, element);
           }
