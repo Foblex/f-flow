@@ -13,7 +13,7 @@ updatedAt: "2026-03-09"
 
 This archive combines **release notes**, **architecture deep dives**, and **hands-on Angular tutorials** around node-based UIs, workflow builders, and custom graph interfaces.
 
-Start with the [latest release](./blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh) if you want the newest features and docs updates. Read the [Inside Foblex Flow](./blog/inside-foblex-flow-part-1-library-architecture-and-design-principles) series when you care about architecture, and use the [Building AI Low-Code Platform](./blog/building-ai-low-code-platform-in-angular-part-1-introduction-to-foblex-flow) series when you want a step-by-step build path.
+Start with the [latest release](./blog/foblex-flow-v18-2-0-caching-virtualization-connection-worker-performance-refresh) if you want the newest performance work, scaling tools, and docs updates. Read the [Inside Foblex Flow](./blog/inside-foblex-flow-part-1-library-architecture-and-design-principles) series when you care about architecture, and use the [Building AI Low-Code Platform](./blog/building-ai-low-code-platform-in-angular-part-1-introduction-to-foblex-flow) series when you want a step-by-step build path.
 
 ::: preview-group
 [Releases]

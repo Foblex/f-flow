@@ -136,6 +136,17 @@ export const BLOG_CONFIGURATION = {
         () => import('../../projects/f-examples/extensions/magnetic-rects/magnetic-rects'),
       ),
       defineLazyComponent(
+        'stress-test',
+        () => import('../../projects/f-examples/nodes/stress-test/stress-test'),
+      ),
+      defineLazyComponent(
+        'stress-test-with-connections',
+        () =>
+          import(
+            '../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections'
+          ),
+      ),
+      defineLazyComponent(
         'undo-redo-v2',
         () => import('../../projects/f-examples/advanced/undo-redo-v2/undo-redo-v2'),
       ),
@@ -219,6 +230,21 @@ function overviewGroup(): INavigationGroup {
 
 function releasesGroup(): INavigationGroup {
   return defineNavigationGroup('Releases', [
+    {
+      link: 'foblex-flow-v18-2-0-caching-virtualization-connection-worker-performance-refresh',
+      text: 'v18.2.0',
+      pageTitle:
+        'Foblex Flow v18.2.0: Caching, Virtualization, Connection Worker, and a Major Performance Refresh',
+      description:
+        'Foblex Flow v18.2 adds optional caching, progressive virtualization, worker-assisted connection calculation, zoom during drag, and broader redraw optimizations for large Angular editors.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v18-2-0-caching-virtualization-connection-worker-performance-refresh',
+      image: 'https://flow.foblex.com/previews/examples/stress-test.light.png',
+      image_type: 'image/png',
+      image_width: 2140,
+      image_height: 1200,
+      date: new Date('2026-03-09T12:00:00.000Z'),
+    },
     {
       link: 'foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh',
       text: 'v18.1.0',
