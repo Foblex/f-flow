@@ -41,7 +41,7 @@ It works with Angular 15+, SSR, standalone components, and zoneless-friendly app
 
 ## Examples
 
-- [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform) - A production-style Angular example for custom nodes, palette-driven creation, and interactive workflow logic.
+- [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform) - A flagship front-end-only AI low-code IDE demo with custom nodes, JSON import/export, multiple themes, config panels with validation, validation feedback on nodes, undo/redo, persistence, multi-select, and animated connections.
 - [DB Management](https://flow.foblex.com/examples/f-db-management-flow) - A database-oriented workflow builder with richer interactions and UI patterns.
 - [UML Diagram](https://flow.foblex.com/examples/uml-diagram-example) - An Angular example for architecture and UML-style graph interfaces.
 - [Tournament Bracket](https://flow.foblex.com/examples/tournament-bracket) - A specialized bracket UI built on the same node-based primitives.

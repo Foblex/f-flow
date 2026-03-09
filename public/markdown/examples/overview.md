@@ -24,7 +24,7 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 
 ## How to use this section
 
-- Start with **Pro Examples** if you want complete, product-like editors.
+- Start with **Reference Apps** if you want complete, product-like editors.
 - Open **Connections** and **Extensions** if you are comparing specific interaction features.
 - Use **Advanced** when you need layout engines, history, or more complex editor behavior.
 
@@ -35,5 +35,5 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 [Layouts]
 [Extensions]
 [Advanced]
-[Pro Examples]
+[Reference Apps]
 :::

@@ -1030,17 +1030,24 @@ function advancedGroup() {
 }
 
 function proExamplesGroup() {
-  return defineNavigationGroup('Pro Examples', [
+  return defineNavigationGroup('Reference Apps', [
     {
       text: 'AI Low-Code Platform',
       link: 'ai-low-code-platform',
+      pageTitle:
+        'Angular AI Low-Code IDE Example – Flagship Product-Style Demo with Foblex Flow',
       description:
-        'AI low-code platform example in Angular: create nodes, connect logic and run workflows in an interactive diagram.',
-      image: './previews/examples/vp-flow.light.png',
-      image_dark: './previews/examples/vp-flow.dark.png',
-      image_width: 757,
-      image_height: 600,
+        'Flagship front-end-only AI low-code IDE demo in Angular with custom nodes, JSON import/export, multiple themes, right-side config panels, validation reflected on nodes, undo/redo, persistence, multi-select, and animated connections.',
+      image: './previews/examples/ai-low-code.light.png',
+      image_dark: './previews/examples/ai-low-code.dark.png',
+      image_width: 3700,
+      image_height: 2080,
       image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       text: 'DB Management',
