@@ -17,9 +17,10 @@ import { ReassignConnectionHandler } from '../reassign-connection-handler';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionPreparationRequest)
-export class ReassignConnectionPreparation
-  implements IExecution<ReassignConnectionPreparationRequest, void>
-{
+export class ReassignConnectionPreparation implements IExecution<
+  ReassignConnectionPreparationRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
@@ -43,7 +44,7 @@ export class ReassignConnectionPreparation
     }
 
     const pointerInFlow = calculatePointerInFlow(
-      request.event,
+      request.event.getPosition(),
       this._store.flowHost,
       this._transform,
     );

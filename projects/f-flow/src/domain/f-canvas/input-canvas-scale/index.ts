@@ -1,3 +1,3 @@
-export * from './input-canvas-scale.execution';
+export * from './input-canvas-scale';
 
 export * from './input-canvas-scale-request';

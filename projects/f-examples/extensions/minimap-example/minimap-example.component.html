@@ -1,13 +1,22 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
-  <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
-    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>I'm a node</div>
-    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>I'm a node</div>
-    <div [fMinimapClass]="['custom-class-for-minimap']" fNode [fNodePosition]="{ x: 244, y: 164 }"  fDragHandle>I'm a node</div>
+  <f-canvas fZoom>
+    <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating" />
+    <div fNode [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fDragHandle>
+      I'm a node
+    </div>
+    <div fNode [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fDragHandle>
+      I'm a node
+    </div>
+    <div
+      [fMinimapClass]="['custom-class-for-minimap']"
+      fNode
+      [fNodePosition]="{ x: 244, y: 164 }"
+      fDragHandle
+    >
+      I'm a node
+    </div>
   </f-canvas>
   <div class="any-container-or-without-container">
-    <f-minimap [fMinSize]="2000"></f-minimap>
+    <f-minimap [fMinSize]="2000" />
   </div>
-
 </f-flow>
-

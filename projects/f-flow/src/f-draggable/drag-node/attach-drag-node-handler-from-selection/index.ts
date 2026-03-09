@@ -10,6 +10,8 @@ export * from './attach-target-connection-drag-handlers-to-node';
 
 export * from './attach-source-connection-drag-handlers-to-node';
 
+export * from './attach-soft-parent-connection-drag-handlers-to-node';
+
 export * from './providers';
 
 export * from './attach-drag-node-handler-from-selection';

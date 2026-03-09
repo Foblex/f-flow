@@ -1,5 +1,3 @@
-export * from './get-element-rounded-rect';
-
 export * from './f-background';
 
 export * from './f-canvas';
@@ -17,6 +15,8 @@ export * from './f-node';
 export * from './f-selection';
 
 export * from './f-zoom';
+
+export * from './minimap';
 
 export * from './get-deep-children-nodes-and-groups';
 
@@ -43,7 +43,5 @@ export * from './log-deprecated';
 export * from './log-execution-time';
 
 export * from './providers';
-
-export * from './drag-rect-cache';
 
 export * from './transition-end';

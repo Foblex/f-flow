@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IRect, ITransformModel, RectExtensions } from '@foblex/2d';
+import { IRect } from '@foblex/2d';
 import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
 import { CalculateSelectableItemsRequest } from './calculate-selectable-items-request';
 import { FNodeBase } from '../../../f-node';
@@ -28,10 +28,6 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
     return this._store.connections.getAll();
   }
 
-  private get _transform(): ITransformModel {
-    return this._store.fCanvas?.transform as ITransformModel;
-  }
-
   public handle(): ICanBeSelectedElementAndRect[] {
     return [...this._nodeRects(), ...this._connectionRects()].filter((x) => {
       return !this._dragContext.selectedItems.includes(x.element);
@@ -48,10 +44,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: RectExtensions.mult(
-            this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
-            this._transform.scale,
-          ),
+          fRect: this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
         };
       });
   }
@@ -66,9 +59,8 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: RectExtensions.mult(
-            this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.boundingElement)),
-            this._transform.scale,
+          fRect: this._mediator.execute<IRect>(
+            new GetNormalizedElementRectRequest(x.boundingElement),
           ),
         };
       });

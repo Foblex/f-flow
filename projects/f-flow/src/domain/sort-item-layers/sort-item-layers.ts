@@ -19,20 +19,26 @@ export class SortItemLayers implements IExecution<SortItemLayersRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
-  private get _fCanvas(): FCanvasBase {
+  private get _canvas(): FCanvasBase {
     return this._store.fCanvas as FCanvasBase;
   }
 
   public handle(_request: SortItemLayersRequest): void {
-    if (!this._store.fCanvas) {
+    if (!this._canvas) {
       return;
     }
+
+    const nodes = this._store.nodes.getAll();
+    if (nodes.length < 2 || !nodes.some((node) => !!node.fParentId())) {
+      return;
+    }
+
     this._mediator.execute(
-      new SortItemsByParentRequest(this._fCanvas.fGroupsContainer().nativeElement),
+      new SortItemsByParentRequest(this._canvas.fGroupsContainer().nativeElement),
     );
     this._mediator.execute(new SortNodeLayersRequest());
     this._mediator.execute(
-      new SortItemsByParentRequest(this._fCanvas.fNodesContainer().nativeElement),
+      new SortItemsByParentRequest(this._canvas.fNodesContainer().nativeElement),
     );
   }
 }

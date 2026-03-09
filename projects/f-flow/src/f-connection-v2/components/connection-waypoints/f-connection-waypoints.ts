@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { F_CONNECTION_WAYPOINTS, FConnectionWaypointsBase } from './models';
 import { IPoint } from '@foblex/2d';
-import { NotifyDataChangedRequest } from '../../../f-storage';
+import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FMediator } from '@foblex/mediator';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 import { RemoveConnectionWaypointRequest } from '../../../domain';
@@ -61,7 +61,7 @@ export class FConnectionWaypoints extends FConnectionWaypointsBase implements On
   }
 
   private _notifyDataChanged(): void {
-    this._mediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new EmitConnectionsChangesRequest());
   }
 
   protected remove(index: number, event: MouseEvent): void {

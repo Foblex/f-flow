@@ -16,9 +16,10 @@ import { CreateDragNodeHandlerRequest } from './create-drag-node-handler';
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
 @FExecutionRegister(AttachDragNodeHandlerFromSelectionRequest)
-export class AttachDragNodeHandlerFromSelection
-  implements IExecution<AttachDragNodeHandlerFromSelectionRequest, DragNodeHandler>
-{
+export class AttachDragNodeHandlerFromSelection implements IExecution<
+  AttachDragNodeHandlerFromSelectionRequest,
+  DragNodeHandler
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);

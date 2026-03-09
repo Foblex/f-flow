@@ -1,0 +1,69 @@
+@if (cells()) {
+<f-flow fDraggable (fLoaded)="loaded()" [fCache]="cache()">
+  <f-selection-area />
+
+  <f-canvas fZoom>
+    @if (virtualization()) {
+    <ng-container ngProjectAs="[fNodes]" *fVirtualFor="let cell of cells(); trackBy trackCell;">
+      <div
+        fNode
+        [fNodePosition]="{ x: 120 * cell.cIndex, y: cell.rIndex * 120 }"
+        fDragHandle
+        fNodeInput
+        [fInputId]="cell.node"
+        fNodeOutput
+        [fOutputId]="cell.node"
+      >
+        Node
+      </div>
+    </ng-container>
+    } @else {
+    <ng-container ngProjectAs="[fNodes]">
+      @for (cell of cells(); track $index) {
+      <div
+        fNode
+        [fNodePosition]="{ x: 120 * cell.cIndex, y: cell.rIndex * 120 }"
+        fDragHandle
+        fNodeInput
+        [fInputId]="cell.node"
+        fNodeOutput
+        [fOutputId]="cell.node"
+      >
+        Node
+      </div>
+      }
+    </ng-container>
+    }
+
+    <ng-container ngProjectAs="[fConnections]">
+      @if (showConnections()) { @for (connection of connections(); track connection) {
+      <f-connection
+        fType="adaptive-curve"
+        fBehavior="fixed"
+        [fInputId]="connection.target"
+        [fOutputId]="connection.source"
+        fInputSide="calculate"
+        fOutputSide="calculate"
+      />
+      } }
+    </ng-container>
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <f-checkbox [checked]="cache()" (change)="toggleCache()">Cache</f-checkbox>
+  <f-checkbox [checked]="virtualization()" (change)="toggleVirtualization()"
+    >Virtualization</f-checkbox
+  >
+  <f-checkbox [checked]="showConnections()" (change)="toggleConnections()"
+    >Show Connections</f-checkbox
+  >
+  <mat-form-field>
+    <mat-label>Number</mat-label>
+    <mat-select [(value)]="totalNodes">
+      @for (option of totals; track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+}

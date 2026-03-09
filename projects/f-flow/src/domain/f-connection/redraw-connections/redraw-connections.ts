@@ -5,13 +5,25 @@ import { FComponentsStore } from '../../../f-storage';
 import { FConnectorBase } from '../../../f-connectors';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
-import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
-import { DragRectCache } from '../../drag-rect-cache';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
+  EFConnectableSide,
   FConnectionBase,
 } from '../../../f-connection-v2';
+import { BrowserService } from '@foblex/platform';
+import {
+  CalculateConnectionsUsingConnectionWorkerRequest,
+  IFConnectionWorkerConnectors,
+  IFConnectionWorkerContext,
+  IFConnectionWorkerResultItem,
+  ResolveConnectionWorkerConnectorsRequest,
+  ResolveConnectionWorkerContextRequest,
+  ShouldUseConnectionWorkerRequest,
+} from '../../../f-connection-worker';
+
+const CONNECTIONS_PER_SLICE_LIMIT = 500;
+const SLICE_BUDGET_MS = 6;
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -24,9 +36,15 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _connectionBehaviour = inject(ConnectionBehaviourBuilder);
+  private readonly _browser = inject(BrowserService);
+
+  private _renderTicket = 0;
+  private readonly _connectedInPreviousRender = new Set<FConnectorBase>();
 
   public handle(_request: RedrawConnectionsRequest): void {
-    this._resetConnectors();
+    const renderTicket = ++this._renderTicket;
+    const nodesRevision = this._store.nodesRevision;
+    this._resetConnectedConnectors();
 
     const instanceForCreate = this._store.connections.getForCreate();
     if (instanceForCreate) {
@@ -38,60 +56,338 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
       this._createMarkers(instanceForSnap);
     }
 
-    this._store.connections.getAll().forEach((connection) => {
-      this._setupConnection(
-        this._store.outputs.require(connection.fOutputId()),
-        this._store.inputs.require(connection.fInputId()),
-        connection,
+    const connections = [...this._store.connections.getAll()];
+    const connectorRectCache = new Map<string, IRoundedRect>();
+
+    if (this._shouldUseWorker(connections.length)) {
+      this._setupConnectionsUsingWorker(
+        connections,
+        connectorRectCache,
+        renderTicket,
+        nodesRevision,
       );
-    });
-    DragRectCache.invalidateAll();
+
+      return;
+    }
+    this._setupConnectionsChunked(connections, connectorRectCache, 0, renderTicket, nodesRevision);
   }
 
-  private _resetConnectors(): void {
-    this._store.outputs.getAll().forEach((x) => x.resetConnected());
-    this._store.inputs.getAll().forEach((x) => x.resetConnected());
+  private _resetConnectedConnectors(): void {
+    if (!this._connectedInPreviousRender.size) {
+      return;
+    }
+
+    for (const connector of this._connectedInPreviousRender) {
+      connector.resetConnected();
+    }
+
+    this._connectedInPreviousRender.clear();
   }
 
-  private _setupConnection(
+  private _setupConnection(connection: FConnectionBase, cache: Map<string, IRoundedRect>): void {
+    const context = this._resolveConnectionContext(connection, cache);
+    if (!context) {
+      return;
+    }
+
+    const line = this._calculateConnectionLine(connection, context);
+
+    this._setupConnectionWithLine(connection, context.source, context.target, line);
+  }
+
+  private _setupConnectionWithLine(
+    connection: FConnectionBase,
     source: FConnectorBase,
     target: FConnectorBase,
-    connection: FConnectionBase,
+    line: ILine,
   ): void {
     source.setConnected(target);
     target.setConnected(source);
+    this._connectedInPreviousRender.add(source);
+    this._connectedInPreviousRender.add(target);
 
     this._createMarkers(connection);
-
-    connection.setLine(this._calculateConnectionLine(source, target, connection));
-
+    connection.setLine(line);
     connection.initialize();
     connection.isSelected() ? connection.markAsSelected() : null;
   }
 
   private _calculateConnectionLine(
-    source: FConnectorBase,
-    target: FConnectorBase,
     connection: FConnectionBase,
+    context: IFConnectionWorkerContext,
   ): ILine {
     return this._connectionBehaviour.handle(
       new ConnectionBehaviourBuilderRequest(
-        this._calculateConnectorRect(source),
-        this._calculateConnectorRect(target),
+        context.sourceRect,
+        context.targetRect,
         connection,
-        source.fConnectableSide,
-        target.fConnectableSide,
+        context.source.fConnectableSide,
+        context.target.fConnectableSide,
       ),
     );
   }
 
-  private _calculateConnectorRect(connector: FConnectorBase): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(
-      new GetNormalizedConnectorRectRequest(connector.hostElement),
+  private _resolveConnectionConnectors(
+    connection: FConnectionBase,
+  ): IFConnectionWorkerConnectors | null {
+    return this._mediator.execute<IFConnectionWorkerConnectors | null>(
+      new ResolveConnectionWorkerConnectorsRequest(connection),
+    );
+  }
+
+  private _resolveConnectionContext(
+    connection: FConnectionBase,
+    cache: Map<string, IRoundedRect>,
+  ): IFConnectionWorkerContext | null {
+    return this._mediator.execute<IFConnectionWorkerContext | null>(
+      new ResolveConnectionWorkerContextRequest(connection, cache),
     );
   }
 
   private _createMarkers(connection: FConnectionBase): void {
     this._mediator.execute(new CreateConnectionMarkersRequest(connection));
+  }
+
+  private _setupConnectionsUsingWorker(
+    connections: readonly FConnectionBase[],
+    connectorRectCache: Map<string, IRoundedRect>,
+    renderTicket: number,
+    nodesRevision: number,
+  ): void {
+    this._mediator
+      .execute<Promise<readonly IFConnectionWorkerResultItem[] | null>>(
+        new CalculateConnectionsUsingConnectionWorkerRequest(connections, connectorRectCache),
+      )
+      .then((results) => {
+        if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+          return;
+        }
+
+        if (!results) {
+          this._setupConnectionsChunked(
+            connections,
+            connectorRectCache,
+            0,
+            renderTicket,
+            nodesRevision,
+          );
+
+          return;
+        }
+
+        const workerResults = this._alignWorkerResultsToConnectionIndexes(
+          results,
+          connections.length,
+        );
+
+        this._applyWorkerResultsChunked(
+          connections,
+          workerResults,
+          connectorRectCache,
+          0,
+          renderTicket,
+          nodesRevision,
+        );
+      })
+      .catch(() => {
+        if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+          return;
+        }
+
+        this._setupConnectionsChunked(
+          connections,
+          connectorRectCache,
+          0,
+          renderTicket,
+          nodesRevision,
+        );
+      });
+  }
+
+  private _applyWorkerResultsChunked(
+    connections: readonly FConnectionBase[],
+    workerResults: readonly (IFConnectionWorkerResultItem | undefined)[],
+    connectorRectCache: Map<string, IRoundedRect>,
+    startIndex: number,
+    renderTicket: number,
+    nodesRevision: number,
+  ): void {
+    if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+      return;
+    }
+
+    const sliceStart = this._now();
+    let endIndex = startIndex;
+    let processed = 0;
+
+    while (
+      endIndex < connections.length &&
+      processed < CONNECTIONS_PER_SLICE_LIMIT &&
+      this._isWithinSliceBudget(sliceStart)
+    ) {
+      const connection = connections[endIndex];
+      const result = workerResults[endIndex];
+
+      if (this._isWorkerResultSupported(result)) {
+        const connectors = this._resolveConnectionConnectors(connection);
+        if (!connectors) {
+          endIndex++;
+          processed++;
+
+          if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+            return;
+          }
+          continue;
+        }
+
+        try {
+          connection._applyResolvedSidesToConnection(
+            result.sourceSide as EFConnectableSide,
+            result.targetSide as EFConnectableSide,
+          );
+          this._setupConnectionWithLine(
+            connection,
+            connectors.source,
+            connectors.target,
+            result.line,
+          );
+        } catch {
+          this._setupConnection(connection, connectorRectCache);
+        }
+      } else {
+        this._setupConnection(connection, connectorRectCache);
+      }
+
+      endIndex++;
+      processed++;
+
+      if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+        return;
+      }
+    }
+
+    if (endIndex >= connections.length) {
+      return;
+    }
+
+    this._requestAnimationFrame(() =>
+      this._applyWorkerResultsChunked(
+        connections,
+        workerResults,
+        connectorRectCache,
+        endIndex,
+        renderTicket,
+        nodesRevision,
+      ),
+    );
+  }
+
+  private _alignWorkerResultsToConnectionIndexes(
+    results: readonly IFConnectionWorkerResultItem[],
+    connectionCount: number,
+  ): (IFConnectionWorkerResultItem | undefined)[] {
+    const aligned: (IFConnectionWorkerResultItem | undefined)[] = new Array(connectionCount);
+
+    for (const result of results) {
+      const index = result.originalIndex;
+      if (typeof index !== 'number') {
+        continue;
+      }
+
+      if (index < 0 || index >= connectionCount) {
+        continue;
+      }
+
+      aligned[index] = result;
+    }
+
+    return aligned;
+  }
+
+  private _isWorkerResultSupported(
+    result: IFConnectionWorkerResultItem | undefined,
+  ): result is IFConnectionWorkerResultItem & {
+    sourceSide: string;
+    targetSide: string;
+    line: ILine;
+  } {
+    return !!(result?.supported && result.sourceSide && result.targetSide && result.line);
+  }
+
+  private _setupConnectionsChunked(
+    connections: readonly FConnectionBase[],
+    connectorRectCache: Map<string, IRoundedRect>,
+    startIndex: number,
+    renderTicket: number,
+    nodesRevision: number,
+  ): void {
+    if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+      return;
+    }
+
+    const sliceStart = this._now();
+    let endIndex = startIndex;
+    let processed = 0;
+
+    while (
+      endIndex < connections.length &&
+      processed < CONNECTIONS_PER_SLICE_LIMIT &&
+      this._isWithinSliceBudget(sliceStart)
+    ) {
+      this._setupConnection(connections[endIndex], connectorRectCache);
+      endIndex++;
+      processed++;
+
+      if (!this._isCurrentRenderContext(renderTicket, nodesRevision)) {
+        return;
+      }
+    }
+
+    if (endIndex >= connections.length) {
+      return;
+    }
+
+    this._requestAnimationFrame(() =>
+      this._setupConnectionsChunked(
+        connections,
+        connectorRectCache,
+        endIndex,
+        renderTicket,
+        nodesRevision,
+      ),
+    );
+  }
+
+  private _shouldUseWorker(connectionCount: number): boolean {
+    return this._mediator.execute<boolean>(new ShouldUseConnectionWorkerRequest(connectionCount));
+  }
+
+  private _isCurrentRenderContext(renderTicket: number, nodesRevision: number): boolean {
+    return renderTicket === this._renderTicket && nodesRevision === this._store.nodesRevision;
+  }
+
+  private _requestAnimationFrame(callback: () => void): void {
+    const windowRef = this._browser.document.defaultView;
+    if (!windowRef) {
+      callback();
+
+      return;
+    }
+
+    windowRef.requestAnimationFrame(callback);
+  }
+
+  private _now(): number {
+    const performanceRef = this._browser.document.defaultView?.performance;
+
+    return performanceRef ? performanceRef.now() : Date.now();
+  }
+
+  private _isWithinSliceBudget(sliceStart: number): boolean {
+    if (!this._browser.isBrowser()) {
+      return true;
+    }
+
+    return this._now() - sliceStart < SLICE_BUDGET_MS;
   }
 }

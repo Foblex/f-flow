@@ -12,9 +12,10 @@ import { FConnectionBase, pickWaypoint } from '../../../../f-connection-v2';
 
 @Injectable()
 @FExecutionRegister(DragConnectionWaypointPreparationRequest)
-export class DragConnectionWaypointPreparation
-  implements IExecution<DragConnectionWaypointPreparationRequest, void>
-{
+export class DragConnectionWaypointPreparation implements IExecution<
+  DragConnectionWaypointPreparationRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
@@ -37,7 +38,11 @@ export class DragConnectionWaypointPreparation
   }
 
   public handle(request: DragConnectionWaypointPreparationRequest): void {
-    const position = calculatePointerInFlow(request.event, this._flowHost, this._transform);
+    const position = calculatePointerInFlow(
+      request.event.getPosition(),
+      this._flowHost,
+      this._transform,
+    );
 
     const pick = this._pickControlPoint(position);
     if (!pick || !this._isValidTrigger(request)) {

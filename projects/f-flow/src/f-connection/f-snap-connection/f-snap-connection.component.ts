@@ -11,7 +11,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { NotifyDataChangedRequest } from '../../f-storage';
+import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -90,7 +90,7 @@ export class FSnapConnectionComponent
   }
 
   public ngOnChanges(): void {
-    this._mediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new EmitConnectionsChangesRequest());
   }
 
   public ngOnDestroy(): void {

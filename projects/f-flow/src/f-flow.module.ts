@@ -14,13 +14,13 @@ import { F_ZOOM_PROVIDERS } from './f-zoom';
 import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
 import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
 import { F_MAGNETIC_RECTS_PROVIDERS } from './f-magnetic-rects';
+import { F_VIRTUAL_FOR_PROVIDERS } from './f-virtual';
 
 @NgModule({
   declarations: [
     ...F_CONNECTION_PROVIDERS,
     ...F_CONNECTORS_PROVIDERS,
     ...F_LINE_ALIGNMENT_PROVIDERS,
-    ...F_MINIMAP_PROVIDERS,
     ...F_NODE_PROVIDERS,
 
     FDragBlockerDirective,
@@ -32,12 +32,15 @@ import { F_MAGNETIC_RECTS_PROVIDERS } from './f-magnetic-rects';
     ...F_BACKGROUND_PROVIDERS,
     ...F_ZOOM_PROVIDERS,
     ...F_EXTERNAL_ITEM_PROVIDERS,
+    ...F_MINIMAP_PROVIDERS,
 
     ...F_SELECTION_AREA_PROVIDERS,
     ...F_MAGNETIC_LINES_PROVIDERS,
     ...F_MAGNETIC_RECTS_PROVIDERS,
 
     ...F_CONNECTION_IMPORTS_EXPORTS,
+
+    ...F_VIRTUAL_FOR_PROVIDERS,
 
     CommonModule,
   ],
@@ -59,6 +62,8 @@ import { F_MAGNETIC_RECTS_PROVIDERS } from './f-magnetic-rects';
     ...F_LINE_ALIGNMENT_PROVIDERS,
     ...F_MINIMAP_PROVIDERS,
     ...F_NODE_PROVIDERS,
+
+    ...F_VIRTUAL_FOR_PROVIDERS,
 
     FDragBlockerDirective,
     FDraggableDirective,

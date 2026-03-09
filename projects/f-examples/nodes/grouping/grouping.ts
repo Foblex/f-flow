@@ -1,21 +1,15 @@
-import {ChangeDetectionStrategy, Component, signal, viewChild} from '@angular/core';
-import {
-  FCanvasComponent,
-  FFlowModule
-} from '@foblex/flow';
-import {FCheckboxComponent} from "@foblex/m-render";
-import {IRect} from "@foblex/2d";
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { FCanvasComponent, FFlowModule } from '@foblex/flow';
+import { FCheckboxComponent } from '@foblex/m-render';
+import { IRect } from '@foblex/2d';
 
 @Component({
   selector: 'grouping',
-  styleUrls: [ './grouping.scss' ],
+  styleUrls: ['./grouping.scss'],
   templateUrl: './grouping.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FCheckboxComponent,
-  ]
+  imports: [FFlowModule, FCheckboxComponent],
 })
 export class Grouping {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -40,7 +34,7 @@ export class Grouping {
     this.autoExpandOnChildHit.set(!this.autoExpandOnChildHit());
   }
 
-  protected sizeChanged(event: IRect): void {
+  protected sizeChanged(_event: IRect): void {
     // This event is emitted only when a child node or group movement
     // actually changes (resizes) the boundaries of its parent.
     // Typical scenarios:

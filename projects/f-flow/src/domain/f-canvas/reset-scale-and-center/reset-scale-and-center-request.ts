@@ -1,7 +1,4 @@
 export class ResetScaleAndCenterRequest {
   static readonly fToken = Symbol('ResetScaleAndCenterRequest');
-  constructor(
-    public animated: boolean,
-  ) {
-  }
+  constructor(public readonly animated: boolean) {}
 }

@@ -1,0 +1,49 @@
+<f-flow
+  fDraggable
+  (fLoaded)="loaded()"
+  (fDropToGroup)="dropToGroup($event)"
+  (fCreateNode)="createNode($event)"
+>
+  <f-canvas fZoom>
+    @for (group of groups(); track group.id) {
+    <div
+      fGroup
+      fDragHandle
+      [fGroupId]="group.id"
+      [fGroupParentId]="group.parentId"
+      [fIncludePadding]="includePaddings()"
+      [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
+      [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+      [fGroupPosition]="group.position"
+    >
+      Drag to Group
+    </div>
+    } @for (node of nodes(); track node.id) {
+    <div
+      fNode
+      fDragHandle
+      [fNodeId]="node.id"
+      [fNodeParentId]="node.parentId"
+      [fIncludePadding]="includePaddings()"
+      [fAutoSizeToFitChildren]="autoSizeToFitChildren()"
+      [fAutoExpandOnChildHit]="autoExpandOnChildHit()"
+      [fNodePosition]="node.position"
+    >
+      Drag to Group
+    </div>
+    }
+  </f-canvas>
+</f-flow>
+<div class="examples-toolbar">
+  <div class="external-item" fExternalItem>Drag to Group</div>
+  <div class="flex-space"></div>
+  <f-checkbox [checked]="includePaddings()" (change)="changePaddings()"
+    >Include Paddings</f-checkbox
+  >
+  <f-checkbox [checked]="autoSizeToFitChildren()" (change)="changeSizeToFitChildren()"
+    >Auto Size to Fit Children</f-checkbox
+  >
+  <f-checkbox [checked]="autoExpandOnChildHit()" (change)="changeExpandOnChildHit()"
+    >Auto Expand on Child Hit</f-checkbox
+  >
+</div>

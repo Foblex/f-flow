@@ -1,5 +1,3 @@
-import { FExternalItemDirective } from './f-external-item.directive';
+import { FExternalItem } from './f-external-item';
 
-export const F_EXTERNAL_ITEM_PROVIDERS = [
-  FExternalItemDirective,
-];
+export const F_EXTERNAL_ITEM_PROVIDERS = [FExternalItem];

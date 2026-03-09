@@ -1,0 +1,34 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-canvas fZoom>
+    <ng-container ngProjectAs="[fConnections]">
+      @for (connection of state.connections(); track connection.id) {
+      <f-connection
+        [fReassignDisabled]="true"
+        [fSelectionDisabled]="true"
+        fBehavior="fixed_center"
+        fType="segment"
+        [fOutputId]="connection.from"
+        [fInputId]="connection.to"
+      />
+      }
+    </ng-container>
+
+    @for (match of state.matches(); track match.id) {
+    <article
+      class="tournament-node"
+      fNode
+      [fNodeId]="match.id"
+      [fNodePosition]="match.position!"
+      fNodeOutput
+      [fOutputId]="match.id"
+      fOutputConnectableSide="right"
+      fNodeInput
+      [fInputId]="match.id"
+      fInputConnectableSide="left"
+      [fNodeDraggingDisabled]="true"
+    >
+      <tournament-match-card [match]="match" />
+    </article>
+    }
+  </f-canvas>
+</f-flow>

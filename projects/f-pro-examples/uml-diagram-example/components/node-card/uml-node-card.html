@@ -1,0 +1,29 @@
+@if (node().data.stereotype) {
+<div class="uml-node__stereotype">{{ node().data.stereotype }}</div>
+}
+
+<div class="uml-node__title">{{ node().data.name }}</div>
+
+<section class="uml-node__section">
+  @for (attribute of node().data.attributes; track attribute) {
+  <div class="uml-node__line">{{ attribute }}</div>
+  } @if (!node().data.attributes.length) {
+  <div class="uml-node__line uml-node__line-empty">No fields</div>
+  }
+</section>
+
+<section class="uml-node__section">
+  @for (method of node().data.methods; track method) {
+  <div class="uml-node__line">{{ method }}</div>
+  } @if (!node().data.methods.length) {
+  <div class="uml-node__line uml-node__line-empty">No methods</div>
+  }
+</section>
+
+@if (node().data.notes?.length) {
+<section class="uml-node__section uml-node__section-notes">
+  @for (note of node().data.notes; track note) {
+  <div class="uml-node__note">{{ note }}</div>
+  }
+</section>
+}

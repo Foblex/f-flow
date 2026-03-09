@@ -18,4 +18,6 @@ export * from './f-move-nodes-event';
 
 export * from './f-drag-node-start-event-data';
 
+export * from './is-drag-node-handler';
+
 export * from './providers';

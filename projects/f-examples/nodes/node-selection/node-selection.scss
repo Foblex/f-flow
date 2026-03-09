@@ -1,0 +1,38 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+}
+
+.f-node {
+  @include flow-common.node;
+  border: 1px solid var(--node-border-color);
+
+  &.f-selected {
+    border: 1px solid var(--node-selected-border-color);
+  }
+}
+
+.f-node-input,
+.f-node-output {
+  &:not(.f-node) {
+    @include flow-common.connectors;
+  }
+}
+
+.f-node-output {
+  &:not(.f-node) {
+    border-radius: 4px;
+  }
+}
+
+.overlay {
+  @include flow-common.overlay;
+}
+
+@include flow-common.examples-toolbar;
+
+.examples-toolbar {
+  left: 16px;
+  right: unset;
+}

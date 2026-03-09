@@ -5,11 +5,12 @@ import { DragHandlerBase } from '../../infrastructure';
 import { FDragNodeStartEventData } from '../f-drag-node-start-event-data';
 import { IMagneticGuidesResult, MagneticLinesHandler } from '../magnetic-lines';
 import { IMagneticRectsResult, MagneticRectsHandler } from '../magnetic-rects';
+import { DRAG_NODE_HANDLER_KIND, DRAG_NODE_HANDLER_TYPE } from '../is-drag-node-handler';
 
 @Injectable()
 export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
-  protected readonly type = 'move-node';
-  protected readonly kind = 'drag-node';
+  protected readonly type = DRAG_NODE_HANDLER_TYPE;
+  protected readonly kind = DRAG_NODE_HANDLER_KIND;
 
   protected override data(): FDragNodeStartEventData {
     return new FDragNodeStartEventData(this.items.map((x) => x.nodeOrGroup.fId()));
@@ -108,7 +109,7 @@ export class DragNodeHandler extends DragHandlerBase<FDragNodeStartEventData> {
   }
 
   public override destroy(): void {
-    for (const root of this.roots) {
+    for (const root of this.roots ?? []) {
       root.destroy?.();
     }
   }

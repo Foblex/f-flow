@@ -1,7 +1,11 @@
 export function isExternalItem(element: HTMLElement | SVGElement): boolean {
-  return !!element.closest('[fExternalItem]');
+  return !!element.closest?.('[fExternalItem]');
 }
 
-export function getExternalItem(element: HTMLElement | SVGElement): HTMLElement | SVGElement {
+// export function getExternalItem(element: HTMLElement | SVGElement): HTMLElement | SVGElement {
+//   return element.closest('[fExternalItem]') as HTMLElement | SVGElement;
+// }
+
+export function getExternalItemHost(element: HTMLElement | SVGElement): HTMLElement | SVGElement {
   return element.closest('[fExternalItem]') as HTMLElement | SVGElement;
 }

@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.match-card {
+  color: var(--node-color);
+  background: var(--node-background-color);
+}
+
+.header {
+  padding: 4px 12px;
+
+  .title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .date {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  &.blue {
+    color: var(--blue);
+    background-color: var(--blue-soft);
+  }
+
+  &.red {
+    color: var(--red);
+    background-color: var(--red-soft);
+  }
+
+  &.green {
+    color: var(--green);
+    background-color: var(--green-soft);
+  }
+
+  &.yellow {
+    color: var(--yellow);
+    background-color: var(--yellow-soft);
+  }
+
+  &.purple {
+    color: var(--purple);
+    background-color: var(--purple-soft);
+  }
+}
+
+.competitor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 12px;
+  font-size: 14px;
+}

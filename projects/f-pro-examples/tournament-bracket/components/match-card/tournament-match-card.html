@@ -1,0 +1,15 @@
+<article class="match-card">
+  <div class="header" [class]="match().color">
+    <div class="title">{{ match().competitionPhase }}</div>
+    <div class="date">{{ match().date | date }}</div>
+  </div>
+
+  <div class="body">
+    @for (competitor of match().competitors; track competitor.title + $index) {
+    <div class="competitor">
+      <div class="name">{{ competitor.title }}</div>
+      <div class="score">{{ competitor.score }}</div>
+    </div>
+    }
+  </div>
+</article>

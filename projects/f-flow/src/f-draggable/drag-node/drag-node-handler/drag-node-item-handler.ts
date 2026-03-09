@@ -1,4 +1,4 @@
-import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, IRoundedRect, PointExtensions, RectExtensions } from '@foblex/2d';
 import { Injector } from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import { DragHandlerBase } from '../../infrastructure';
@@ -10,11 +10,20 @@ import {
 } from '../drag-node-constraint';
 import { FNodeBase } from '../../../f-node';
 import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection-handlers';
-import { F_CSS_CLASS, GetNormalizedElementRectRequest } from '../../../domain';
+import {
+  F_CSS_CLASS,
+  GetConnectorRectReferenceRequest,
+  GetNormalizedElementRectRequest,
+  IConnectorRectRef,
+} from '../../../domain';
+import { FConnectorBase } from '../../../f-connectors';
+import { IParentConnectionHandlers } from './i-soft-parent-connection-handlers';
+import { SetFCacheNodeRectRequest } from '../../../f-cache';
+import { DRAG_NODE_HANDLER_KIND, DRAG_NODE_HANDLER_TYPE } from '../is-drag-node-handler';
 
 export class DragNodeItemHandler extends DragHandlerBase<unknown> {
-  protected readonly type = 'move-node';
-  protected readonly kind = 'drag-node';
+  protected readonly type = DRAG_NODE_HANDLER_TYPE;
+  protected readonly kind = DRAG_NODE_HANDLER_KIND;
 
   private readonly _startPosition = PointExtensions.initialize();
   private readonly _startRect = RectExtensions.initialize();
@@ -26,6 +35,7 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
 
   private _constraints!: IDragNodeDeltaConstraints;
   private _lastPosition = PointExtensions.initialize();
+  private _softParentConnectionHandlers: IParentConnectionHandlers[] = [];
 
   private readonly _mediator: FMediator;
 
@@ -61,6 +71,10 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
 
       return summary.hardDelta;
     };
+  }
+
+  public setSoftParentConnectionHandlers(handlers: IParentConnectionHandlers[]): void {
+    this._softParentConnectionHandlers = handlers;
   }
 
   public finalizeConstraints(): void {
@@ -125,6 +139,17 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
   private _redraw(position: IPoint): void {
     this._lastPosition = position;
     this.nodeOrGroup.updatePosition(position);
+    this._mediator.execute(
+      new SetFCacheNodeRectRequest(
+        this.nodeOrGroup.fId(),
+        RectExtensions.initialize(
+          position.x,
+          position.y,
+          this._startRect.width,
+          this._startRect.height,
+        ),
+      ),
+    );
     this.nodeOrGroup.redraw();
   }
 
@@ -137,14 +162,69 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
 
       const expandedRect = expandRectByOverflow(soft.boundingRect, r.overflow, r.edges);
 
-      this._commitParentRect(soft.nodeOrGroup, expandedRect);
+      if (this._commitParentRect(soft.nodeOrGroup, expandedRect)) {
+        this._updateParentConnectionHandlers(i);
+      }
     }
   }
 
-  private _commitParentRect(parent: FNodeBase, rect: IRect): void {
+  private _commitParentRect(parent: FNodeBase, rect: IRect): boolean {
+    const changed =
+      parent._position.x !== rect.x ||
+      parent._position.y !== rect.y ||
+      parent._size?.width !== rect.width ||
+      parent._size?.height !== rect.height;
+
     parent.updateSize({ width: rect.width, height: rect.height });
     parent.updatePosition({ x: rect.x, y: rect.y });
+    this._mediator.execute(new SetFCacheNodeRectRequest(parent.fId(), rect));
     parent.redraw();
+
+    return changed;
+  }
+
+  private _updateParentConnectionHandlers(softConstraintIndex: number): void {
+    const handlers = this._softParentConnectionHandlers[softConstraintIndex];
+    if (!handlers) {
+      return;
+    }
+
+    const currentRectByConnectorId = new Map<string, IRoundedRect>();
+
+    for (const source of handlers.source) {
+      const currentRect = this._readConnectorRect(source.connector, currentRectByConnectorId);
+      source.handler.setSourceDelta(this._buildDelta(source.baselineRect, currentRect));
+    }
+
+    for (const target of handlers.target) {
+      const currentRect = this._readConnectorRect(target.connector, currentRectByConnectorId);
+      target.handler.setTargetDelta(this._buildDelta(target.baselineRect, currentRect));
+    }
+  }
+
+  private _readConnectorRect(
+    connector: FConnectorBase,
+    cache: Map<string, IRoundedRect>,
+  ): IRoundedRect {
+    const cacheKey = `${connector.kind}::${connector.fId()}`;
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const rect = this._mediator.execute<IConnectorRectRef>(
+      new GetConnectorRectReferenceRequest(connector),
+    ).rect;
+    cache.set(cacheKey, rect);
+
+    return rect;
+  }
+
+  private _buildDelta(baselineRect: IRoundedRect, currentRect: IRoundedRect): IPoint {
+    return PointExtensions.initialize(
+      currentRect.x - baselineRect.x,
+      currentRect.y - baselineRect.y,
+    );
   }
 
   private _emitExpandedEvent(): void {
@@ -173,5 +253,6 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
     // this._constraints = null;
     this._lastSoftResults = [];
     this._applyConstraints = (d) => d;
+    this._softParentConnectionHandlers = [];
   }
 }

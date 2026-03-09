@@ -6,27 +6,68 @@ import { FNodeBase } from '../../../../f-node';
 import { BuildDragNodeConstraintsRequest } from '../build-drag-node-constraints';
 import { IDragNodeDeltaConstraints } from '../../drag-node-constraint';
 import { DragHandlerInjector } from '../../../infrastructure';
+import { DragNodeConnectionHandlerBase } from '../../drag-node-dependent-connection-handlers';
+import { AttachSoftParentConnectionDragHandlersToNodeRequest } from '../attach-soft-parent-connection-drag-handlers-to-node';
 
 @Injectable()
 @FExecutionRegister(CreateDragNodeHandlerRequest)
-export class CreateDragNodeHandler
-  implements IExecution<CreateDragNodeHandlerRequest, DragNodeHandler>
-{
+export class CreateDragNodeHandler implements IExecution<
+  CreateDragNodeHandlerRequest,
+  DragNodeHandler
+> {
   private readonly _dragInjector = inject(DragHandlerInjector);
   private readonly _mediator = inject(FMediator);
 
   public handle({ rootHandlers, participants }: CreateDragNodeHandlerRequest): DragNodeHandler {
-    this._applyConstraintsToRoots(rootHandlers);
+    const handlerPool = this._collectConnectionHandlers(participants);
+    this._applyConstraintsToRoots(rootHandlers, handlerPool);
+
     const handler = this._dragInjector.createInstance(DragNodeHandler);
     handler.initialize(participants, rootHandlers);
 
     return handler;
   }
 
-  private _applyConstraintsToRoots(roots: DragNodeItemHandler[]): void {
+  private _applyConstraintsToRoots(
+    roots: DragNodeItemHandler[],
+    handlerPool: DragNodeConnectionHandlerBase[],
+  ): void {
     for (const handler of roots) {
-      handler.setConstraints(this._calculateConstraints(handler.nodeOrGroup));
+      const constraints = this._calculateConstraints(handler.nodeOrGroup);
+      handler.setConstraints(constraints);
+      this._attachSoftParentConnectionHandlers(handler, constraints, handlerPool);
     }
+  }
+
+  private _collectConnectionHandlers(
+    participants: DragNodeItemHandler[],
+  ): DragNodeConnectionHandlerBase[] {
+    const result = new Map<string, DragNodeConnectionHandlerBase>();
+
+    for (const participant of participants) {
+      for (const handler of participant.sourceConnectionHandlers) {
+        result.set(handler.connection.fId(), handler);
+      }
+      for (const handler of participant.targetConnectionHandlers) {
+        result.set(handler.connection.fId(), handler);
+      }
+    }
+
+    return Array.from(result.values());
+  }
+
+  private _attachSoftParentConnectionHandlers(
+    dragHandler: DragNodeItemHandler,
+    constraints: IDragNodeDeltaConstraints,
+    handlerPool: DragNodeConnectionHandlerBase[],
+  ): void {
+    this._mediator.execute<void>(
+      new AttachSoftParentConnectionDragHandlersToNodeRequest(
+        dragHandler,
+        constraints,
+        handlerPool,
+      ),
+    );
   }
 
   private _calculateConstraints(nodeOrGroup: FNodeBase): IDragNodeDeltaConstraints {

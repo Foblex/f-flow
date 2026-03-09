@@ -1,3 +1,3 @@
-export * from './initialize-drag-sequence.execution';
+export * from './initialize-drag-sequence';
 
 export * from './initialize-drag-sequence-request';

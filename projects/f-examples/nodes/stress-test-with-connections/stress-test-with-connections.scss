@@ -1,0 +1,19 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+  @include flow-common.connection-marker;
+}
+
+.f-node {
+  @include flow-common.node;
+  width: 100px;
+  height: 100px;
+
+  &.main-node {
+    background: var(--node-background-color-inverse);
+    color: var(--node-background-color);
+  }
+}
+
+@include flow-common.examples-toolbar;

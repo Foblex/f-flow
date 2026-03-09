@@ -10,6 +10,7 @@ import { FNodeBase } from '../../../f-node';
 import { FMoveNodesEvent } from '../f-move-nodes-event';
 import { IMagneticAxisGuide, IMagneticGuidesResult } from '../magnetic-lines';
 import { IMagneticRectsResult } from '../magnetic-rects';
+import { isDragNodeHandler } from '../is-drag-node-handler';
 
 @Injectable()
 @FExecutionRegister(DragNodeFinalizeRequest)
@@ -35,7 +36,7 @@ export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, voi
   }
 
   private _getDragHandler(): DragNodeHandler | undefined {
-    return this._dragSession.draggableItems.find((x) => x instanceof DragNodeHandler);
+    return this._dragSession.draggableItems.find(isDragNodeHandler);
   }
 
   private _buildDragDelta(pointerPosition: IPoint): Point {
