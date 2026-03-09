@@ -1,37 +1,13 @@
-﻿# Connection Connectable Side
+﻿---
+toc: false
+wideContent: true
+---
+
+# Connection Connectable Side
 
 ## Description
 
-This example demonstrates how to control which side of a connection (both at its start and end) is used when linking nodes.
-Each connection can have a specific side assigned — **LEFT**, **RIGHT**, **TOP**, or **BOTTOM** — or you can let the system determine the most appropriate side automatically using **CALCULATE**, **CALCULATE_HORIZONTAL**, or **CALCULATE_VERTICAL**.
-
-You can define the connectable side for both the output (source) and input (target) of a connection.
-This gives you precise control over how connections are drawn between nodes, independent of the connector sides themselves.
-
-The available enum values are defined as:
-
-```typescript
-export enum EFConnectionConnectableSide {
-  DEFAULT = 'default',
-  TOP = 'top',
-  BOTTOM = 'bottom',
-  LEFT = 'left',
-  RIGHT = 'right',
-  CALCULATE = 'calculate',
-  CALCULATE_HORIZONTAL = 'calculate_horizontal',
-  CALCULATE_VERTICAL = 'calculate_vertical',
-}
-```
-
-The demo showcases how different connection sides affect the visual layout:
-
-- **Manual mode** – You can manually switch the output and input sides of each connection to see how the connection path changes when sides are fixed.
-- **Calculated mode** – Uses one of the **CALCULATE** options to dynamically determine the best sides based on the positions of connected nodes.
-
-Unlike connector sides (which define how connections attach to a specific node), connection sides take precedence if both are set.
-This allows you to override connector behavior for finer visual and logical control over connection routing.
-
-This flexibility enables consistent, predictable connection drawing while still supporting dynamic and adaptive layouts.
+Control which side an individual connection uses at both ends instead of relying only on connector defaults. Use this when routing should stay predictable, or when a specific edge needs to override the usual node-side behavior.
 
 ## Example
 
@@ -41,3 +17,15 @@ This flexibility enables consistent, predictable connection drawing while still 
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-connectable-side/connection-connectable-side.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
+
+## Supported modes
+
+- Set explicit sides such as `LEFT`, `RIGHT`, `TOP`, or `BOTTOM`.
+- Use `CALCULATE`, `CALCULATE_HORIZONTAL`, or `CALCULATE_VERTICAL` when the route should adapt to node positions.
+- Configure the side independently for the output and input of each connection.
+
+## Why it matters
+
+- Manual mode helps when the route itself carries meaning and should not jump around.
+- Calculated modes are useful when layouts are dynamic but still need cleaner edge directions.
+- Connection-side settings take precedence over connector-side settings, so they are the stronger routing control.

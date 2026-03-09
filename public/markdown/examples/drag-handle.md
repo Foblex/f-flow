@@ -1,37 +1,35 @@
-﻿# Drag Handle
+﻿---
+toc: false
+wideContent: true
+---
+
+# Drag Handle
 
 ## Description
 
-This example showcases how to add a [DragHandle](./docs/f-drag-handle-directive) for nodes, allowing users to move them easily within Angular and Foblex Flow.
-
-The `fDragHandle` directive can be applied to any HTML element inside a node `fNode`. It defines which part of the node should respond to drag gestures. This enables you to:
--	Make the entire node draggable
--	Limit dragging to a specific element like an icon, header, or image
--	Build flexible and intuitive drag behavior for custom UIs
-
-#### How to Handle Position Changes
-
-To track and persist node positions, you should handle the `fNodePositionChange` event emitted by each node. This event returns a new position of the node `{ x: number, y: number }` whenever it is moved.
-
-You can use this event to:
--	Save the new position to a model or store
--	Sync changes to a backend or local storage
--	Trigger layout adjustments or constraints
-
-In addition, the `fMoveNodes` event emitted by `<f-flow>` is triggered whenever one or more nodes are moved, including single-node moves.
-It provides an array of updated nodes, each with its new position, making it ideal for:
-
--	Tracking bulk movements (e.g., group drag)
--	Implementing `undo/redo` systems
--	Managing external logic like snapping or alignment
+Attach a dedicated drag area inside a node instead of making the whole node draggable. Use this when your nodes contain buttons, inputs, or rich content and drag should start only from a specific handle.
 
 ## Example
 
 ::: ng-component <drag-handle></drag-handle> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/drag-handle/drag-handle.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
+## What this pattern enables
 
+- Make only part of the node draggable.
+- Protect buttons, images, forms, or other interactive content inside the node.
+- Build node UIs that feel closer to real product surfaces instead of generic diagram blocks.
+
+## Position updates
+
+Use `fNodePositionChange` to persist the new `{ x, y }` of a single node after movement.
+
+Use `fMoveNodes` from `<f-flow>` when you need the full batch of moved nodes for:
+
+- group drag handling,
+- undo/redo,
+- snapping, alignment, or other external layout logic.

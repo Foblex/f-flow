@@ -2,14 +2,20 @@
 origin: "https://javascript.plainenglish.io/design-node-based-interfaces-in-angular-a-beginners-guide-with-foblex-flow-b3160ac3edbb"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Design Node-Based Interfaces in Angular — A Beginner’s Guide with Foblex Flow"
-description: "Learn how to render a flow, create basic draggable nodes, and connect them. This is the foundation for your AI low-code platform."
+description: "Render your first Angular flow with draggable nodes and connections using Foblex Flow, the foundation for workflow builders and node editors."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Build the first working flow in Angular with nodes and connections."
+primaryKeyword: "angular workflow builder tutorial"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-06-23"
+updatedAt: "2026-03-08"
 ---
 
 # Building AI Low-Code Platform in Angular — Part 2: Creating Your First Flow
 
-Learn how to render a flow, create basic draggable nodes, and connect them. This is the foundation for your AI low-code platform.
+Learn how to render a flow, create basic draggable nodes, and connect them. This tutorial gives you the first working editor surface that later evolves into a richer Angular workflow builder.
 
 In this article, we’ll build a minimal interactive flow with draggable nodes and dynamic connections using Foblex Flow.
 

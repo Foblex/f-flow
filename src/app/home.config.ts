@@ -1,7 +1,5 @@
 import {
   provideBackground,
-  provideHeader,
-  provideHeaderSearch,
   provideHero,
   provideHomeButtons,
   provideHomeFeatures,
@@ -19,9 +17,10 @@ export const HOME_CONFIGURATION = {
     provideTitle('Foblex Flow'),
     provideHero({
       headline: 'Foblex Flow',
-      tagline1: 'Built with Angular',
-      tagline2: 'Flow-Chart Library',
-      subDescription: 'Supports Angular 15+, SSR, and Composition API.',
+      tagline1: 'Angular-Native',
+      tagline2: 'Node-Based UI Library',
+      subDescription:
+        'Build node editors, workflow builders, and interactive graph interfaces with SSR-friendly Angular APIs.',
     }),
     provideBackground(HomePageBackgroundComponent),
     provideImage(HomePageImageComponent),
@@ -36,10 +35,6 @@ export const HOME_CONFIGURATION = {
         routerLink: '/examples/overview',
       },
       {
-        text: 'Blog',
-        routerLink: '/blog/overview',
-      },
-      {
         text: 'GitHub',
         href: 'https://github.com/Foblex/f-flow',
       },
@@ -47,32 +42,27 @@ export const HOME_CONFIGURATION = {
         text: 'Showcase',
         routerLink: '/showcase/overview',
       },
-      {
-        icon: 'heart',
-        text: 'Support Us',
-        href: 'https://www.paypal.com/donate/?hosted_button_id=VXXQ5SRMEU256',
-      },
     ]),
     provideHomeFeatures([
       {
-        headline: 'Easy to Use',
+        headline: 'Angular-First Architecture',
         description:
-          'Create sophisticated diagrams effortlessly with a straightforward and intuitive API. Whether you’re a beginner or a pro, a few lines of code are all you need to get started.',
+          'Foblex Flow fits Angular apps instead of forcing a React-style data model. Use standalone components, SSR, signals-friendly patterns, and your own application state.',
       },
       {
-        headline: 'Customizable',
+        headline: 'Built For Real Editors',
         description:
-          'Build with total flexibility in mind. Foblex Flow allows you to easily integrate any content within nodes, providing full control over the look and feel, ensuring it adapts perfectly to your project’s needs.',
+          'Build workflow builders, call-flow editors, AI pipeline tools, internal back-office UIs, UML diagrams, and custom graph interfaces with the same Angular-first primitives.',
       },
       {
-        headline: 'Visualization',
+        headline: 'Production Interaction Layer',
         description:
-          'Transform complex data into clear, visual representations. Foblex Flow turns information into intuitive diagrams, helping users rapidly understand, analyze, and navigate intricate relationships.',
+          'Handle dragging, connect/reassign flows, selection, minimap, zoom, snapping, waypoints, and alignment helpers without rebuilding low-level interaction logic from scratch.',
       },
       {
-        headline: 'Interactive',
+        headline: 'Validated On Real Products',
         description:
-          'Foblex Flow takes interactivity to the next level. With fluid drag-and-drop node movement, seamless connection creation, and smooth zooming, exploring your diagrams is an effortless, enjoyable experience.',
+          'Review the open-source AI Low-Code Platform reference and the Showcase collection of production products before you commit Foblex Flow to your Angular stack.',
       },
     ]),
     provideHomeFooter({

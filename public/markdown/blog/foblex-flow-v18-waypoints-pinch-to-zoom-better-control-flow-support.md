@@ -2,16 +2,24 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-v18-waypoints-pinch-to-zoom-and-better-control-flow-support-8d290f946916"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow v18: Waypoints, Pinch-to-Zoom, and Better Control Flow Support"
-description: "Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders — all with a focus on interactive UX and clean APIs."
+description: "Foblex Flow v18 adds connection waypoints, pinch-to-zoom, and Angular control-flow improvements for richer node-based editors."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Release notes for waypoints, pinch-to-zoom, and Angular control-flow support in Foblex Flow v18."
+primaryKeyword: "angular node editor release"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2026-01-26"
+updatedAt: "2026-03-08"
 ---
 
-Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders — all with a focus on interactive UX and clean APIs.
+# Foblex Flow v18: Waypoints, Pinch-to-Zoom, and Better Control Flow Support
+
+Foblex Flow v18 improves route editing and viewport control for Angular node editors with connection waypoints and first-class pinch-to-zoom support.
 
 Today I’m shipping **v18.0.0**, and it’s a big one. The headline features are **Connection Waypoints** and **Pinch-to-Zoom**, plus a few important improvements for real-world Angular apps.
 
-### Connection Waypoints — editable paths for any connection type
+## Connection Waypoints — Editable Paths for Any Connection Type
 
 Until now, a connection path was mostly a **builder decision** (straight / segment / bezier / adaptive curve).
 
@@ -44,7 +52,7 @@ Connection Waypoints Example
 
 This keeps the **data lives in your app**”principle: Waypoints are just points, and you fully own them.
 
-### Pinch-to-Zoom — finally a first-class multi-touch zoom UX
+## Pinch-to-Zoom — A First-Class Multi-Touch Zoom UX
 
 Zooming used to be wheel/double-click/buttons — good for mouse users, but not enough for modern devices.
 
@@ -61,7 +69,7 @@ Enable it the same way as normal zoom:
 <f-canvas fZoom></f-canvas>
 ```
 
-### Better compatibility with Angular Control Flow + Content Projection
+## Better Compatibility with Angular Control Flow and Content Projection
 
 Angular’s @if / @for are great — but real component trees + content projection can be tricky.
 

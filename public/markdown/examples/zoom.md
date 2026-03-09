@@ -1,4 +1,9 @@
-﻿# Zoom
+﻿---
+toc: false
+wideContent: true
+---
+
+# Zoom
 
 ## Description
 
@@ -10,6 +15,11 @@ This guide shows how to `zoom in` and `zoom out` of the [canvas](./docs/f-canvas
 - **Pinch-to-zoom** (trackpad / touchscreen)
 
 To enable zooming, add the [fZoom directive](./docs/f-zoom-directive) to the [f-canvas](./docs/f-canvas-component).
+
+Zoom is a core interaction for any serious node editor. It helps users move from a high-level overview to fine-grained editing without losing orientation on large canvases.
+
+It becomes even more important when the editor supports minimaps, large graphs, or touch-friendly interactions on trackpads and tablets.
+Good zoom behavior is one of the easiest ways to improve perceived editor quality.
 
 ### Notes
 
@@ -24,3 +34,9 @@ To enable zooming, add the [fZoom directive](./docs/f-zoom-directive) to the [f-
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
+
+## Related docs
+
+- [Zoom Docs](./docs/f-zoom-directive)
+- [Minimap Example](./examples/minimap)
+- [Connection Waypoints Example](./examples/connection-waypoints)

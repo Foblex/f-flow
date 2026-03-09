@@ -2,18 +2,24 @@
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette-2377435effce"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette"
-description: "In the previous article, we built a basic editor with two nodes and a single connection. Now, let’s take the next step — we’ll add custom Angular node components, interactive connectors, and a simple node palette."
+description: "Build custom Angular nodes, interactive connectors, and a node palette with Foblex Flow to move from a basic demo to a real editor."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Custom nodes and palette patterns for Angular editors built with Foblex Flow."
+primaryKeyword: "angular custom node editor tutorial"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-07-05"
+updatedAt: "2026-03-08"
 ---
 
+# Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette
+
+In the previous article, we built a basic editor with two nodes and a single connection. In this part, we move toward a real Angular node editor by adding custom node components, interactive connectors, and a reusable node palette.
+
+It’s not a full low-code platform just yet, but it establishes the custom-node architecture most teams need before layering on validation, side panels, and richer workflow behavior.
+
 ![](https://cdn-images-1.medium.com/max/1024/1*RYPpEhabtg8HXuDrbcrpKw.png)
-
-### Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette
-
-In the previous article, we built a basic editor with two nodes and a single connection. Now, let’s take the next step — we’ll add custom Angular node components, interactive connectors, and a simple node palette.
-
-It’s not a full low-code platform just yet, but we’re steadily laying the groundwork — from visual customization to dynamic interaction between elements.
 
 ### In this part, we’ll implement:
 

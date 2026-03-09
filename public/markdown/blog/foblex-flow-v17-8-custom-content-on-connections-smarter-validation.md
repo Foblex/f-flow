@@ -2,14 +2,20 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-custom-content-on-connections-and-smarter-validation-in-angular-4a9bc7129d86"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular"
-description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular."
+description: "Foblex Flow 17.8 adds connection content and smarter validation rules for Angular workflow builders, node editors, and diagram interfaces."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Release notes for connection content and validation improvements in Foblex Flow 17.8."
+primaryKeyword: "angular connection content"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-09-15"
+updatedAt: "2026-03-08"
 ---
 
-### Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular
+# Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular
 
-Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With **Foblex Flow**, we bring this experience natively into Angular.
+This release focuses on two features that make Angular graph editors more expressive and easier to validate: custom content on edges and smarter rules for allowed connections.
 
 The new release, **v17.8.0**, introduces two major improvements:
 
@@ -19,7 +25,7 @@ The new release, **v17.8.0**, introduces two major improvements:
 
 Together, these make visual editors more flexible, user-friendly, and production-ready.
 
-✨ **Custom Content on Connections**
+## Custom Content on Connections
 
 ::: ng-component <connection-content></connection-content> [height]="600"
 :::
@@ -43,7 +49,7 @@ Example:
 
 This enables interaction patterns like inline buttons, directional icons, or status indicators **directly on edges**.
 
-🔒 **Smarter Connection Validation**
+## Smarter Connection Validation
 
 ::: ng-component <connection-rules></connection-rules> [height]="600"
 :::
@@ -67,7 +73,7 @@ During a drag operation:
 
 This gives **instant visual feedback** and allows real editors to enforce rules like “math nodes can only connect to math inputs”.
 
-⚠️ **Deprecations**
+## Deprecations
 
 Two older APIs are now deprecated:
 
@@ -76,7 +82,7 @@ Two older APIs are now deprecated:
 
 They are replaced by the new fConnectionContent directive. Migration is simple — see the [changelog](https://github.com/foblex/flow/releases/tag/v17.8.0).
 
-📚 **Other Improvements**
+## Other Improvements
 
 - Refactored Dagre layout example with better connection handling.
 - Connector IDs migrated to Angular Signals for improved reactivity.

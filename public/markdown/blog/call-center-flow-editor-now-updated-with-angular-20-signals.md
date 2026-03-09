@@ -2,20 +2,26 @@
 origin: "https://javascript.plainenglish.io/call-center-flow-editor-now-updated-with-angular-20-signals-3f10ae63ffa0"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Call Center Flow Editor — now updated with Angular 20 & Signals"
-description: "About a year ago I shared a small side project: a call center flow editor built on top of Foblex Flow ."
+description: "See how a visual call flow editor built with Foblex Flow was updated to Angular 20, Signals, undo/redo, and a cleaner editing UX."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Angular 20 refresh of a call flow editor built on top of Foblex Flow."
+primaryKeyword: "angular call flow editor"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-09-03"
+updatedAt: "2026-03-08"
 ---
 
-![](https://cdn-images-1.medium.com/max/1024/1*iXc5ysiX_VEXlnDXO2eQCg.png)
+# Call Center Flow Editor — Now Updated with Angular 20 and Signals
 
-### Call Center Flow Editor — now updated with Angular 20 & Signals 🚀
+This update revisits a **call center flow editor** built on top of [Foblex Flow](https://github.com/Foblex/f-flow) and shows how the project benefits from Angular 20, Signals, and a more production-ready editing UX.
 
-About a year ago I shared a small side project: a **call center flow editor** built on top of [Foblex Flow](https://github.com/Foblex/f-flow).
-
-The idea was simple — give users a way to design call flows visually by dragging nodes and connecting them, instead of writing configuration manually.
+The goal stayed the same: let users design call flows visually by dragging nodes and connecting them instead of writing configuration manually.
 
 Since then, Angular has evolved, and so has this project. I wanted to take advantage of **Angular 20** and its new **Signals API**, so I decided to give the editor a proper refresh.
+
+![](https://cdn-images-1.medium.com/max/1024/1*iXc5ysiX_VEXlnDXO2eQCg.png)
 
 ### 🔥 What’s New
 

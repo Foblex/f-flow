@@ -2,12 +2,20 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-5-connectable-sides-for-smarter-routing-in-angular-36e49407b78a"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow 17.8.5— Connectable Sides for Smarter Routing in Angular"
-description: "Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular."
+description: "Foblex Flow 17.8.5 adds connectable side controls so Angular teams can route node connections with more precision and less visual noise."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Release notes for connectable side control in Foblex Flow 17.8.5."
+primaryKeyword: "angular connection routing"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-10-05"
+updatedAt: "2026-03-08"
 ---
 
-Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With **Foblex Flow**, we bring this experience natively into Angular.
+# Foblex Flow 17.8.5 — Connectable Sides for Smarter Routing in Angular
+
+This release adds more precise control over where connections can attach to a node, which is especially useful in Angular workflow builders and diagram editors where routing clarity matters.
 
 The new release, **v17.8.5**, introduces a major improvement:
 
@@ -15,7 +23,7 @@ The new release, **v17.8.5**, introduces a major improvement:
 
 Together, these updates give developers precise control over routing while still supporting automatic, dynamic layouts.
 
-✨ **Connectable Sides**
+## Connectable Sides
 
 ::: ng-component <connectable-side></connectable-side> [height]="600"
 :::
@@ -48,7 +56,7 @@ You can:
 - Clearer routing logic, reducing edge overlaps in dynamic layouts.
 - No breaking changes; previous side selection remains compatible.
 
-💡 **Why This Matters**
+## Why This Matters
 
 Professional diagramming tools let you fine-tune how edges are routed.
 
@@ -58,7 +66,7 @@ Now, Foblex Flow brings the same level of control into Angular:
 - **Dynamic calculation** for adaptive editors.
 - **Simple API** to cover most use cases without boilerplate.
 
-🔗 **Links**
+## Links
 
 - GitHub repo: <https://github.com/Foblex/f-flow>
 - Live examples: [https://flow.foblex.com/examples](https://flow.foblex.com/examples/overview)

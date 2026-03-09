@@ -8,91 +8,114 @@
   <a href="https://www.npmjs.com/package/@foblex/flow">
     <img src="https://img.shields.io/npm/v/@foblex/flow.svg?logo=npm&logoColor=fff&label=Release&color=limegreen" alt="NPM Release"/>
   </a>
-  <a href="https://github.com/foblex/f-flow/actions/workflows/tests-ci.yml">
-    <img src="https://github.com/foblex/f-flow/actions/workflows/tests-ci.yml/badge.svg" alt="Build Status"/>
+  <a href="https://github.com/Foblex/f-flow/actions/workflows/tests-ci.yml">
+    <img src="https://github.com/Foblex/f-flow/actions/workflows/tests-ci.yml/badge.svg" alt="Build Status"/>
   </a>
 </p>
 
+<h1 align="center">Foblex Flow</h1>
 
-<h2 align="center">Powerful Flow Editor Framework — Native to Angular</h2>
+<p align="center">
+  <strong>Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.</strong>
+</p>
 
----
+Foblex Flow gives Angular teams the primitives for building graph-based products without adopting a React-first mental model. Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces while keeping your own state, validation, persistence, and domain logic.
 
-**Foblex Flow** is a modern Angular library for building interactive flow-based UIs, including visual editors, diagrams, and automation tools.  
-It provides a robust, fully Angular-native foundation to create, customize, and manage dynamic node-based structures — with full support for SSR, Standalone Components, and zoneless mode.
+It works with Angular 15+, SSR, standalone components, and zoneless-friendly application setups.
 
-🔧 Ideal for internal tools, low-code platforms, process editors, call flows, and custom visual builders.
+## Why Foblex Flow
 
----
+- Angular-first API that fits Angular apps instead of wrapping a React-style state model.
+- Built for real editor interactions: drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment helpers, and waypoints.
+- Custom nodes, connectors, and connections for domain-specific graph UIs.
+- Your app stays in control of graph state, validation rules, permissions, and persistence.
+- Suitable for both lightweight diagrams and full workflow-builder products.
 
-### 🚀 Features at a Glance
+## What You Can Build
 
-- 🧩 **Dynamic Node & Connection Creation** — Create, connect, and manage nodes in real-time
-- 🔄 **Reassignable Connections** — Drag to reconnect inputs and outputs
-- 🧠 **Event-driven architecture** — React to user interaction via clean APIs
-- 🎨 **Customizable Templates** — Use your own components for nodes and connections
-- 🖱 **Drag, Zoom, Pan** — Smooth canvas navigation for large graphs
-- ⚙️ **SSR + Angular Compatibility** — Works with Angular 15+, SSR, Standalone Components, and Composition API
+- Angular node editors
+- Angular workflow builders
+- AI low-code and internal tools
+- Call flows, automation editors, and pipeline UIs
+- UML, architecture, and other interactive diagram interfaces
 
----
+## Examples
 
-### Examples
+- [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform) - A production-style Angular example for custom nodes, palette-driven creation, and interactive workflow logic.
+- [DB Management](https://flow.foblex.com/examples/f-db-management-flow) - A database-oriented workflow builder with richer interactions and UI patterns.
+- [UML Diagram](https://flow.foblex.com/examples/uml-diagram-example) - An Angular example for architecture and UML-style graph interfaces.
+- [Tournament Bracket](https://flow.foblex.com/examples/tournament-bracket) - A specialized bracket UI built on the same node-based primitives.
+- [All Examples](https://flow.foblex.com/examples/overview) - Focused examples for connections, selection, minimap, layout, alignment, and other editor features.
 
-Check out real-world use cases built with Foblex Flow:
-
-- 🟢 [Call Center](https://github.com/Foblex/f-flow-example) - A streamlined flow example simulating a call flow.
-
-- 🧱 [Scheme Editor](https://github.com/Foblex/f-scheme-editor) - A more advanced example of a fully interactive scheme editor.
-
-- 💡 [Visual Programming](https://flow.foblex.com/examples/f-visual-programming-flow/) - An example of a visual programming flow.
-
-- 🗄 [DB Management](https://flow.foblex.com/examples/f-db-management-flow/) - An example of a database management flow.
-
-🔗 [Explore all examples](https://flow.foblex.com/examples/overview)
----
-
-### ⚙️ Quick Start
-
-Install via Angular CLI:
+## Install
 
 ```bash
 ng add @foblex/flow
 ```
 
-Minimal usage example:
+If you prefer manual installation:
+
+```bash
+npm install @foblex/flow
+```
+
+## Minimal Example
 
 ```html
-
 <f-flow fDraggable>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1"></f-connection>
-    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }" fNodeOutput fOutputId="output1" fOutputConnectableSide="right"> Drag me</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }" fNodeInput fInputId="input1" fInputConnectableSide="left"> Drag me</div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 24, y: 24 }"
+      fNodeOutput
+      fOutputId="output1"
+      fOutputConnectableSide="right"
+    >
+      Drag me
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 244, y: 24 }"
+      fNodeInput
+      fInputId="input1"
+      fInputConnectableSide="left"
+    >
+      Drag me
+    </div>
   </f-canvas>
 </f-flow>
 ```
 
-📘 Full documentation: https://flow.foblex.com/docs/get-started
+## Resources
 
-### 🛣 Roadmap
+- [Get Started](https://flow.foblex.com/docs/get-started)
+- [Documentation](https://flow.foblex.com/docs/intro)
+- [Examples](https://flow.foblex.com/examples/overview)
+- [Articles](https://flow.foblex.com/blog/overview)
+- [Showcase](https://flow.foblex.com/showcase/overview)
+- [Roadmap](https://github.com/Foblex/f-flow/blob/main/ROADMAP.md)
+- [Changelog](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md)
 
-We have a detailed roadmap for the development of Foblex Flow. Check out the [Roadmap](./ROADMAP.md) to see the upcoming features and milestones.
+## Community and Support
 
-### 💬 Community & Support
--	🌐 [Documentation Portal](https://flow.foblex.com)
--	🗣 [GitHub Discussions](https://github.com/Foblex/f-flow/discussions)
--	🐞 [Issue Tracker](https://github.com/Foblex/f-flow/issues)
+- [GitHub Repository](https://github.com/Foblex/f-flow)
+- [GitHub Discussions](https://github.com/Foblex/f-flow/discussions)
+- [Issue Tracker](https://github.com/Foblex/f-flow/issues)
+- [Documentation Portal](https://flow.foblex.com)
 
-Questions, suggestions or bugs? Contact support@foblex.com
+For questions or partnership inquiries: support@foblex.com
 
-### 📄 License
+## License
 
-Foblex Flow is MIT licensed — free to use and open for contribution.
+Foblex Flow is available under the [MIT License](https://github.com/Foblex/f-flow/blob/main/LICENSE).
 
-## 💬 Support the Project
+## Support the Project
 
-If Foblex Flow has helped you build something awesome — consider giving it a ⭐️ on GitHub:  
-[https://github.com/foblex/flow](https://github.com/foblex/flow)
+If Foblex Flow is useful in your product, give the repository a star:
 
-It helps the project reach more people, keeps development going, and motivates future improvements.
-
+[https://github.com/Foblex/f-flow](https://github.com/Foblex/f-flow)

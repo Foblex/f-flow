@@ -2,28 +2,36 @@
 origin: "https://medium.com/@shuzarevich/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-and-a-major-docs-refresh-1182c7e7fde1"
 originLabel: "Originally published on Medium"
 title: "Foblex Flow v18.1.0 Magnetic Plugins, AI Low-Code Platform Example, and a Major Docs Refresh"
-description: "Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders-with a focus on interactive UX and clean APIs."
+description: "Foblex Flow v18.1 adds Magnetic Lines, Magnetic Rects, a stronger AI workflow example, and refreshed Angular documentation."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Release notes for Magnetic Lines, Magnetic Rects, docs refresh, and the AI low-code example."
+primaryKeyword: "angular node editor release"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2026-02-16"
+updatedAt: "2026-03-08"
 ---
 
-Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders-with a focus on interactive UX and clean APIs.
+# Foblex Flow v18.1.0 Magnetic Plugins, AI Low-Code Platform Example, and a Major Docs Refresh
+
+Foblex Flow v18.1 adds alignment helpers and stronger workflow-builder references for Angular teams evaluating the library for production-style editors.
 
 Today I’m shipping **v18.1.0**. This release adds **two new magnetic alignment plugins**, a **new AI Low-Code Platform example**, and a **big documentation overhaul** (new pages + improved existing docs).
 
-### ✨ Highlights
+## Highlights
 
 - 🧲 **Magnetic alignment plugins**: new **Magnetic Lines** and **Magnetic Rects** to help align elements while moving.
 - 🤖 **New example: AI Low-Code Platform** -a larger, “real-world” demo showing how to build a production-like node editor experience.
 - 📚 **Docs refresh**: new documentation pages + reworked existing guides for consistency, clarity, and better quick-start sections.
 
-### 🧲 New: Magnetic Alignment Plugins
+## New: Magnetic Alignment Plugins
 
 Alignment is one of those features that immediately makes an editor feel “professional”.
 
 In v18.1 there are **two new plugins** you can enable depending on the UX you want.
 
-### Magnetic Lines (Line Alignment)
+### Magnetic Lines
 
 This plugin adds guideline-like alignment behavior (snap/assist) while dragging.
 
@@ -55,7 +63,7 @@ you align element rectangles against other elements’ bounds (edges/centers).
 
 Both plugins ship with dedicated examples and documentation updates.
 
-### 🤖 New example: AI Low-Code Platform
+## New Example: AI Low-Code Platform
 
 I also added a new larger example: **AI Low-Code Platform**.
 

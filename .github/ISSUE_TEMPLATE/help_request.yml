@@ -6,20 +6,40 @@ body:
   - type: markdown
     attributes:
       value: |
-        Need help using Foblex Flow? We're happy to help!
+        Need help using Foblex Flow? We're happy to help.
+
+        The best help requests explain the goal, what you already tried, and which example or API is closest to your use case.
 
   - type: textarea
-    id: question
+    id: goal
     attributes:
-      label: Your Question
-      placeholder: Ask your question in detail
+      label: What are you trying to achieve?
+      placeholder: |
+        I want to allow users to drag nodes between groups while preserving connection behavior.
     validations:
       required: true
 
   - type: textarea
+    id: current_attempt
+    attributes:
+      label: What have you tried so far?
+      placeholder: |
+        I tried using the drag-to-group example and the external item example, but I am blocked by...
+    validations:
+      required: true
+
+  - type: input
+    id: relevant_example
+    attributes:
+      label: Relevant Example or Documentation Page (optional)
+      placeholder: "https://flow.foblex.com/examples/drag-to-group"
+    validations:
+      required: false
+
+  - type: textarea
     id: context
     attributes:
-      label: Context (optional)
-      placeholder: What are you trying to do? What's blocking you?
+      label: Additional Context (optional)
+      placeholder: Share your constraints, current setup, or code snippets if relevant.
     validations:
       required: false

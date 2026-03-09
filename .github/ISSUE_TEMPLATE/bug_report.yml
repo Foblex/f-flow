@@ -6,7 +6,18 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for reporting a bug! Please provide as much information as possible.
+        Thank you for reporting a bug.
+
+        Please focus on one reproducible problem per issue. Exact steps and expected behavior are more useful than broad descriptions.
+
+  - type: input
+    id: affected_version
+    attributes:
+      label: Affected Version
+      description: Which Foblex Flow version is affected?
+      placeholder: "18.1.0"
+    validations:
+      required: false
 
   - type: input
     id: reproduction_url
@@ -44,6 +55,19 @@ body:
       placeholder: What actually happened?
     validations:
       required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Optional, but helpful for defining the expected fix.
+      placeholder: |
+        - the bug is reproducible before the fix
+        - the failing behavior is corrected
+        - related interactions remain stable
+        - regression coverage is added when appropriate
+    validations:
+      required: false
 
   - type: dropdown
     id: browser
