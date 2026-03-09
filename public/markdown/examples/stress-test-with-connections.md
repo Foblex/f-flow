@@ -3,12 +3,12 @@ toc: false
 wideContent: true
 ---
 
-# Stress Test with Connections
+# Connection Redraw Performance
 
 ## Description
 
 This example focuses on connection-heavy rendering rather than raw node count.
-A central draggable node is connected to a large ring of surrounding nodes, letting you stress-test routing, markers, and redraw behavior while changing connection settings live.
+A central draggable node is connected to a large ring of surrounding nodes, so you can measure routing, marker rendering, and redraw cost while changing connection settings live.
 
 What you can test in this demo:
 

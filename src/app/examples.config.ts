@@ -469,34 +469,6 @@ function nodesGroup() {
       image_type: 'image/png',
       date: new Date('2025-08-23 16:04:08'),
     },
-    {
-      link: 'stress-test',
-      text: 'Stress Test',
-      pageTitle:
-        'Angular Diagram Performance Example – Large Node Scenes with Cache and Virtualization',
-      image: './previews/examples/stress-test.light.png',
-      image_dark: './previews/examples/stress-test.dark.png',
-      description:
-        'Explore large node scenes with 200 to 5000 nodes, optional cache, progressive virtualization, and toggleable connections in an Angular Foblex Flow stress test.',
-      image_width: 806,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2026-03-08 20:49:43'),
-    },
-    {
-      link: 'stress-test-with-connections',
-      text: 'Stress Test with Connections',
-      pageTitle:
-        'Angular Flowchart Performance Example – Dense Connection Redraws and Routing Modes',
-      image: './previews/examples/stress-test-with-connections.light.png',
-      image_dark: './previews/examples/stress-test-with-connections.dark.png',
-      description:
-        'Stress-test dense fan-out connections with switchable behaviors, path types, live redraws, and custom markers in an Angular Foblex Flow example.',
-      image_width: 806,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2026-03-08 20:49:43'),
-    },
   ]);
 }
 
@@ -924,6 +896,42 @@ function extensionGroup() {
 
 function advancedGroup() {
   return defineNavigationGroup('Advanced', [
+    {
+      link: 'stress-test',
+      text: 'Large Scene Performance',
+      pageTitle:
+        'Angular Diagram Performance Example – Large Scene Performance with Cache and Virtualization',
+      image: './previews/examples/stress-test.light.png',
+      image_dark: './previews/examples/stress-test.dark.png',
+      description:
+        'Measure large scene performance with 200 to 5000 nodes, optional cache, progressive virtualization, and toggleable connections in Angular Foblex Flow.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+    {
+      link: 'stress-test-with-connections',
+      text: 'Connection Redraw Performance',
+      pageTitle:
+        'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
+      image: './previews/examples/stress-test-with-connections.light.png',
+      image_dark: './previews/examples/stress-test-with-connections.dark.png',
+      description:
+        'Measure dense fan-out connection redraws with switchable behaviors, path types, live updates, and custom markers in an Angular Foblex Flow example.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
     {
       link: 'copy-paste',
       text: 'Cut/Copy/Paste',

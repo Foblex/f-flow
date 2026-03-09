@@ -3,12 +3,12 @@ toc: false
 wideContent: true
 ---
 
-# Stress Test
+# Large Scene Performance
 
 ## Description
 
-This example is a performance playground for large node-based scenes in Foblex Flow.
-Instead of showing just a static large graph, it lets you switch between several rendering strategies and interaction modes while keeping the canvas fully interactive.
+This example focuses on large-scene performance in Foblex Flow.
+It lets you compare several rendering strategies, including `fCache` and `*fVirtualFor`, while keeping the canvas fully interactive.
 
 What you can test in this demo:
 
