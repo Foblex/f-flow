@@ -5,10 +5,12 @@ import {
   Input,
   NgZone,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
+import { FComponentsStore } from '../f-storage';
 
 interface FVirtualContext<T> {
   $implicit: T;
@@ -19,15 +21,18 @@ interface FVirtualContext<T> {
   selector: '[fVirtualFor][fVirtualForOf]',
   standalone: true,
 })
-export class FVirtualFor<T> implements OnChanges {
+export class FVirtualFor<T> implements OnChanges, OnDestroy {
   @Input() fVirtualForOf: readonly T[] = [];
   @Input() fVirtualForTrackBy?: (index: number, item: T) => unknown;
 
   private readonly _vc = inject(ViewContainerRef);
   private readonly _tpl = inject<TemplateRef<FVirtualContext<T>>>(TemplateRef);
   private readonly _zone = inject(NgZone);
+  private readonly _componentsStore = inject(FComponentsStore, { optional: true });
 
   private _views: EmbeddedViewRef<FVirtualContext<T>>[] = [];
+  private _rafId: number | null = null;
+  private _isProgressiveRenderActive = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['fVirtualForOf']) {
@@ -36,7 +41,17 @@ export class FVirtualFor<T> implements OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    this._reset();
+  }
+
   private _reset(): void {
+    if (this._rafId !== null) {
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+    }
+
+    this._finishProgressiveRender();
     this._vc.clear();
     this._views.length = 0;
   }
@@ -44,6 +59,7 @@ export class FVirtualFor<T> implements OnChanges {
   private _renderProgressively(): void {
     const FRAME_BUDGET = 10; // ms
     let index = 0;
+    this._startProgressiveRender();
 
     this._zone.runOutsideAngular(() => {
       const pump = () => {
@@ -62,11 +78,34 @@ export class FVirtualFor<T> implements OnChanges {
         }
 
         if (index < this.fVirtualForOf.length) {
-          requestAnimationFrame(pump);
+          this._rafId = requestAnimationFrame(pump);
+
+          return;
         }
+
+        this._rafId = null;
+        this._finishProgressiveRender();
       };
 
-      requestAnimationFrame(pump);
+      this._rafId = requestAnimationFrame(pump);
     });
+  }
+
+  private _startProgressiveRender(): void {
+    if (this._isProgressiveRenderActive) {
+      return;
+    }
+
+    this._isProgressiveRenderActive = true;
+    this._componentsStore?.beginProgressiveRender();
+  }
+
+  private _finishProgressiveRender(): void {
+    if (!this._isProgressiveRenderActive) {
+      return;
+    }
+
+    this._isProgressiveRenderActive = false;
+    this._componentsStore?.endProgressiveRender();
   }
 }
