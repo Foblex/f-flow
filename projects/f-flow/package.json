@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow",
-  "version": "18.2.0",
+  "version": "18.2.1",
   "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.",
   "main": "index.js",
   "types": "index.d.ts",
