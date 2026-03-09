@@ -2,6 +2,8 @@
 
 Build your first interactive diagram in Angular: **install Foblex Flow**, render **two draggable nodes**, and connect them with a **live connection**.
 
+This is the default starting path for most Angular teams. You do not need caching, virtualization, or the connection worker on day one.
+
 ## Description
 
 This guide is the shortest path from installation to a working flow. You will:
@@ -34,6 +36,7 @@ Start here if you are:
 - bootstrapping a workflow / node editor screen,
 - building internal tools with draggable, connected nodes,
 - creating the base layout before adding selection, minimap, alignment, and spacing helpers.
+- validating whether Foblex Flow fits your Angular stack before adding optional advanced modules.
 
 ## Minimal flow template
 
@@ -152,6 +155,8 @@ After you get the minimal template working, try:
 - experimenting with connector sides (`fOutputConnectableSide`, `fInputConnectableSide`),
 - changing the connection look/behavior via `fType` and `fBehavior`,
 - enabling additional UX helpers (selection area, minimap, alignment and spacing).
+
+Only add scaling features such as cache, virtualization, or worker-assisted connection rendering once you actually need them for larger scenes.
 
 ## Notes / pitfalls
 

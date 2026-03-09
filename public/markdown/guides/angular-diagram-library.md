@@ -1,7 +1,7 @@
 ---
 title: "Angular Diagram Library"
-description: "Use Foblex Flow as an Angular diagram library for interactive custom diagrams, graph interfaces, UML-style editors, and connected visual tools."
-summary: "Why Foblex Flow is a strong fit for interactive Angular diagrams, not just static visualization."
+description: "Use Foblex Flow as an Angular diagram library when you need interactive diagrams with a simple starting path and room for richer graph behavior."
+summary: "Why Foblex Flow is a strong fit for interactive Angular diagrams that may start small and grow later."
 primaryKeyword: "angular diagram library"
 schemaType: "TechArticle"
 author: "Siarhei Huzarevich"
@@ -12,6 +12,8 @@ updatedAt: "2026-03-08"
 # Angular Diagram Library
 
 Foblex Flow is not a charting package or a static SVG helper. It is an **Angular diagram library for interactive, editable graph UIs**. That matters when your users are not just viewing relationships, but actively creating, connecting, moving, and organizing diagram elements.
+
+You can still start small. A simple diagram editor only needs the core flow primitives, while features like minimap, waypoints, alignment, caching, virtualization, or worker-assisted rendering stay optional.
 
 ## When to use it
 
@@ -25,6 +27,7 @@ Use it for Angular diagram interfaces such as:
 
 ## Why it differs from generic diagram widgets
 
+- The core path is small enough for normal Angular product screens, not only advanced graph tools.
 - Nodes can contain real Angular UI, not only labels and icons.
 - Connections are first-class and support markers, content, and editable routing.
 - Users get editor behaviors such as zoom, selection, minimap, and snapping.

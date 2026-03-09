@@ -20,7 +20,7 @@ export const HOME_CONFIGURATION = {
       tagline1: 'Angular-Native',
       tagline2: 'Node-Based UI Library',
       subDescription:
-        'Build node editors, workflow builders, and interactive graph interfaces with SSR-friendly Angular APIs.',
+        'Start with a simple Angular node editor in minutes. Add selection, minimap, snapping, caching, virtualization, and worker-assisted rendering only when you need them.',
     }),
     provideBackground(HomePageBackgroundComponent),
     provideImage(HomePageImageComponent),
@@ -45,9 +45,14 @@ export const HOME_CONFIGURATION = {
     ]),
     provideHomeFeatures([
       {
-        headline: 'Angular-First Architecture',
+        headline: 'Simple Angular Start',
         description:
-          'Foblex Flow fits Angular apps instead of forcing a React-style data model. Use standalone components, SSR, signals-friendly patterns, and your own application state.',
+          'Most teams start with `f-flow`, `f-canvas`, nodes, and connections. Use your own Angular templates, forms, validators, and state without adopting a React-style mental model.',
+      },
+      {
+        headline: 'Scale When Needed',
+        description:
+          'Advanced helpers are optional. Add selection, minimap, alignment, waypoints, caching, virtualization, or the connection worker later if your editor grows in complexity or size.',
       },
       {
         headline: 'Built For Real Editors',
@@ -55,14 +60,9 @@ export const HOME_CONFIGURATION = {
           'Build workflow builders, call-flow editors, AI pipeline tools, internal back-office UIs, UML diagrams, and custom graph interfaces with the same Angular-first primitives.',
       },
       {
-        headline: 'Production Interaction Layer',
-        description:
-          'Handle dragging, connect/reassign flows, selection, minimap, zoom, snapping, waypoints, and alignment helpers without rebuilding low-level interaction logic from scratch.',
-      },
-      {
         headline: 'Validated On Real Products',
         description:
-          'Review the open-source AI Low-Code Platform reference and the Showcase collection of production products before you commit Foblex Flow to your Angular stack.',
+          'Review the open-source AI Low-Code Platform reference app and the Showcase collection of production products before you commit Foblex Flow to your Angular stack.',
       },
     ]),
     provideHomeFooter({

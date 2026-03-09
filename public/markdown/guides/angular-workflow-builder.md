@@ -1,7 +1,7 @@
 ---
 title: "Angular Workflow Builder"
-description: "Build an Angular workflow builder with Foblex Flow using custom nodes, validation rules, drag-to-connect, minimaps, and app-owned state."
-summary: "How to use Foblex Flow as the interaction layer for Angular workflow builders."
+description: "Build an Angular workflow builder with Foblex Flow using a simple core flow surface first, then add validation, minimaps, and richer editor features later."
+summary: "How to use Foblex Flow as the interaction layer for Angular workflow builders without overbuilding the first version."
 primaryKeyword: "angular workflow builder"
 schemaType: "TechArticle"
 author: "Siarhei Huzarevich"
@@ -12,6 +12,8 @@ updatedAt: "2026-03-08"
 # Angular Workflow Builder
 
 Foblex Flow works well as the foundation for an **Angular workflow builder** because it separates editor UX from workflow logic. The library renders and manages the interactive canvas; your application decides which nodes exist, which connections are valid, and how the workflow is stored or executed.
+
+That does not mean you need a huge setup on day one. Most workflow builders start with a small flow surface and add history, minimap, layout helpers, or performance modules later.
 
 ## When to use it
 
@@ -28,7 +30,7 @@ This approach fits products such as:
 - You can reuse Angular forms, validators, dialogs, and Material components inside nodes.
 - The graph stays in your own state layer, which makes persistence and execution easier.
 - You can express workflow constraints with connection rules and custom event handlers instead of patching a black-box editor.
-- It scales from a simple prototype to a richer builder with undo/redo, minimap, and layout helpers.
+- It scales from a simple prototype to a richer builder with undo/redo, minimap, layout helpers, and optional performance tooling.
 
 ## Key capabilities for workflow builders
 

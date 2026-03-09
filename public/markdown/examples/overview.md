@@ -1,7 +1,7 @@
 ---
 title: "Foblex Flow Examples for Angular Node Editors and Workflow Builders"
-description: "Explore Foblex Flow examples for Angular node editors, workflow builders, interactive diagrams, and production-style graph interfaces."
-summary: "Overview of the strongest Foblex Flow examples for Angular teams."
+description: "Explore Foblex Flow examples for Angular teams, from simple starting points to full reference apps for node editors, workflow builders, and interactive diagrams."
+summary: "Overview of Foblex Flow examples, from simple Angular starting points to full reference apps."
 primaryKeyword: "angular node editor examples"
 schemaType: "TechArticle"
 author: "Siarhei Huzarevich"
@@ -12,6 +12,8 @@ updatedAt: "2026-03-08"
 # Examples
 
 This page collects the strongest **Foblex Flow examples for Angular** so you can evaluate the library by concrete interaction patterns, not only by API reference. The examples cover **node editors**, **workflow builders**, **interactive diagrams**, **layout helpers**, and richer production-style demos.
+
+Most teams should start with a small example, not the largest reference app. The point is to learn the core flow primitives first and add advanced features only when you actually need them.
 
 Use this section when you want to answer one of these questions quickly:
 
@@ -24,9 +26,10 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 
 ## How to use this section
 
-- Start with **Reference Apps** if you want complete, product-like editors.
+- Start with **Custom Nodes**, **Drag to Connect**, or **Get Started** if you want the fastest path into the library.
+- Open **Reference Apps** after the basics if you want complete, product-like editors.
 - Open **Connections** and **Extensions** if you are comparing specific interaction features.
-- Use **Advanced** when you need layout engines, history, or more complex editor behavior.
+- Use **Advanced** when you need layout engines, history, larger-scene performance tools, or more complex editor behavior.
 
 ::: preview-group
 [Nodes]
