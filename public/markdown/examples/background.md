@@ -1,4 +1,9 @@
-﻿# Background
+﻿---
+toc: false
+wideContent: true
+---
+
+# Background
 
 ## Description
 
@@ -16,6 +21,8 @@ Backgrounds can work in three modes:
 
 The `custom` mode is configured via standard SVG `<pattern>` elements and a custom component.  
 Detailed instructions and API for creating custom patterns are described in the [f-background documentation](./docs/f-background-component).
+
+Backgrounds matter more than they seem: they improve spatial orientation, reinforce brand identity, and make dense editor canvases easier to parse.
 
 ## Example
 

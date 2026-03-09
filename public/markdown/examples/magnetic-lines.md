@@ -1,4 +1,9 @@
-﻿# Magnetic Lines
+﻿---
+toc: false
+wideContent: true
+---
+
+# Magnetic Lines
 
 ## Description
 
@@ -10,13 +15,22 @@ When a dragged node gets close to another node, the plugin shows **alignment lin
 
 This makes it easy to keep diagrams clean and consistent without manual pixel-perfect positioning.
 
-### How it works
+## Example
+
+::: ng-component <magnetic-lines></magnetic-lines> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.scss
+[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
+:::
+
+## How it works
 
 1. Add `<f-magnetic-lines>` inside `<f-flow>`.
-2. Set a `threshold` (in px) — the distance at which snapping and guide rendering starts.
-3. Drag nodes — lines appear near matching edges/centers, and the node snaps into alignment.
+2. Set a `threshold` in pixels for when guide rendering and snapping should begin.
+3. Drag nodes until matching edges or centers enter the threshold zone.
 
-> Tip: Start with `threshold="30–50"` for a “Figma-like” feel.
+> Tip: Start with `threshold="30–50"` for a more Figma-like feel.
 
 ## Configuration
 
@@ -35,12 +49,3 @@ This makes it easy to keep diagrams clean and consistent without manual pixel-pe
 
 - Magnetic Lines are purely UX helpers: they don’t change your data model - they only help users position nodes while dragging.
 - You can style the guide lines via CSS (see the example `.f-magnetic-lines` `.f-line rule`).
-
-## Example
-
-::: ng-component <magnetic-lines></magnetic-lines> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/magnetic-lines/magnetic-lines.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
-:::

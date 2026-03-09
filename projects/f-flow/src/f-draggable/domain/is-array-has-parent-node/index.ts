@@ -1,3 +1,3 @@
-export * from './is-array-has-parent-node.execution';
+export * from './is-array-has-parent-node';
 
-export * from './is-array-has-parent-node.request';
+export * from './is-array-has-parent-node-request';

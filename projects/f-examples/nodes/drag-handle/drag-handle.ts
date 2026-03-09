@@ -18,25 +18,25 @@ export class DragHandle {
    * Resets the canvas scale and centers the view without animation.
    */
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(false);
+    this._canvas()?.resetScaleAndCenter(true);
   }
 
   /**
    * Called when one or more nodes are moved.
    * Can be used to track movements or persist state.
    *
-   * @param event - Node movement event containing affected nodes and delta.
+   * @param _event - Node movement event containing affected nodes and delta.
    */
-  protected moveNodes(event: FMoveNodesEvent): void {
+  protected moveNodes(_event: FMoveNodesEvent): void {
     // Handle node movement.
   }
 
   /**
    * Called when a single node's position changes.
    *
-   * @param position - The new position of the node.
+   * @param _position - The new position of the node.
    */
-  protected positionChanged(position: IPoint): void {
+  protected positionChanged(_position: IPoint): void {
     // Handle node position change.
   }
 }

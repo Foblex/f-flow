@@ -2,6 +2,80 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.2.0](https://github.com/foblex/flow/compare/v18.1.0...v18.2.0) (2026-03-09)
+
+### Highlights
+
+- **Zoom during drag-and-drop** - wheel zoom now stays available during active drag interactions instead of being blocked for the whole drag session ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **Connection rendering pipeline refresh** - added optional flow caching, worker-assisted connection calculation, and chunked redraws for large diagrams ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **Drag-and-drop interactions reworked** - refactored external item, minimap, resize, rotate, and related connection flows ([2019ea4](https://github.com/foblex/flow/commit/2019ea41), [77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **Public API growth** - exported `f-cache`, `f-virtual`, and `f-connection-worker` ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **Examples and docs refresh** - standardized example structure, rebuilt pro examples, and expanded Cypress coverage ([c58fd1f](https://github.com/foblex/flow/commit/c58fd1fb), [f231423](https://github.com/foblex/flow/commit/f2314233), [454a323](https://github.com/foblex/flow/commit/454a3237)).
+
+### Features
+
+- **flow/cache:** add `fCache` input on `f-flow` and a new public `f-cache` module with cache providers, registration, invalidation, and cached rect helpers ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **connection-worker:** add worker-backed connection calculation and expose `f-connection-worker` ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **virtualization:** add `fVirtualFor` for progressive rendering of large projected node lists ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **minimap:** add `fNodeRenderLimit` to skip expensive minimap rendering for very large scenes ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **resize-node:** keep dependent connections in sync while resizing nodes, including soft-parent scenarios ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **drag-and-drop:** improve external item handling, pointer normalization, and create-node/drop-to-group integration ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **zoom/drag-and-drop:** allow wheel zoom during active drag sessions by rebasing drag context for node drag, external item drag, resize, rotate, connection create/reassign, waypoint drag, and container assignment ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+
+### Improvements
+
+- Separated node and connection change streams, added debounced layer sorting, and chunked connection redraws ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- Improved zoom behavior during supported drag-and-drop flows, with direct support for canvas drag and selection-area interactions and drag-context rebasing for node, external-item, resize, rotate, connection, waypoint, and container-assignment flows ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- Improved connection context resolution and cache reuse across redraws, node drag, and resize flows ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- Reworked minimap, external item, resize, and rotate handler architecture for more consistent internal interaction flow ([2019ea4](https://github.com/foblex/flow/commit/2019ea41)).
+- Standardized example authoring, lazy imports, markdown embeds, and example style checks ([f231423](https://github.com/foblex/flow/commit/f2314233)).
+- Rebuilt the UML architecture demo with signal-based Angular state and modularized the tournament bracket pro example ([454a323](https://github.com/foblex/flow/commit/454a3237)).
+- Expanded Cypress regression coverage for interactions and examples ([c58fd1f](https://github.com/foblex/flow/commit/c58fd1fb)).
+
+### Fixes
+
+- **flow:** correct node padding tuple order used for child bounding calculations ([1ef5bb4](https://github.com/foblex/flow/commit/1ef5bb43)).
+- **zoom:** use the dominant wheel axis so Shift + wheel / horizontal wheel zoom behaves correctly ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **selection:** simplify selectable rectangle calculations and remove stale scaling dependencies ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+- **minimap:** batch SVG drawing and clear the canvas when rendering is intentionally skipped ([77673e3](https://github.com/foblex/flow/commit/77673e3c)).
+
+### Documentation
+
+- Updated multiple guides and example pages to match the new example structure and API naming ([f231423](https://github.com/foblex/flow/commit/f2314233)).
+- Refreshed stress test example descriptions and example metadata to document cache, virtualization, connection toggles, routing modes, and marker-heavy rendering scenarios ([f231423](https://github.com/foblex/flow/commit/f2314233)).
+
+### ⚠️ Breaking Changes
+
+#### External Item directive class names were renamed
+
+Examples had to update their imports from `@foblex/flow`:
+
+- `FExternalItemDirective` -> `FExternalItem`
+- `FExternalItemPlaceholderDirective` -> `FExternalItemPlaceholder`
+- `FExternalItemPreviewDirective` -> `FExternalItemPreview`
+
+### Migration Notes
+
+Update imports:
+
+```ts
+import {
+  FExternalItemDirective,
+  FExternalItemPlaceholderDirective,
+  FExternalItemPreviewDirective,
+} from '@foblex/flow';
+```
+
+to:
+
+```ts
+import {
+  FExternalItem,
+  FExternalItemPlaceholder,
+  FExternalItemPreview,
+} from '@foblex/flow';
+```
+
 ## [18.1.0](https://github.com/foblex/flow/compare/v18.0.0...v18.1.0) (2026-02-16)
 
 ### Highlights

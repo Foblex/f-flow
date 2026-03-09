@@ -34,6 +34,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       connectionGroup(),
       interactionGroup(),
       helpersGroup(),
+      seoPagesGroup(),
     ),
     provideComponents([
       defineLazyComponent(
@@ -42,11 +43,11 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'custom-nodes',
-        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes.component'),
+        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes'),
       ),
       defineLazyComponent(
         'node-selection',
-        () => import('../../projects/f-examples/nodes/node-selection/node-selection.component'),
+        () => import('../../projects/f-examples/nodes/node-selection/node-selection'),
       ),
       defineLazyComponent(
         'drag-handle',
@@ -55,12 +56,16 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'drag-start-end-events',
         () =>
-          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
+          import(
+            '../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'
+          ),
       ),
       defineLazyComponent(
         'add-node-from-palette',
         () =>
-          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
+          import(
+            '../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'
+          ),
       ),
       defineLazyComponent(
         'zoom',
@@ -73,12 +78,16 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connection-behaviours',
         () =>
-          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
+          import(
+            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
+          ),
       ),
       defineLazyComponent(
         'custom-connection-type',
         () =>
-          import('../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'),
+          import(
+            '../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'
+          ),
       ),
       defineLazyComponent(
         'drag-to-connect',
@@ -104,7 +113,9 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connector-inside-node',
         () =>
-          import('../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'),
+          import(
+            '../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'
+          ),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -113,7 +124,9 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'connector-outlet',
         () =>
-          import('../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'),
+          import(
+            '../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'
+          ),
       ),
       defineLazyComponent(
         'connection-markers',
@@ -122,12 +135,16 @@ export const DOCUMENTATION_CONFIGURATION = {
       defineLazyComponent(
         'background-example',
         () =>
-          import('../../projects/f-examples/extensions/background-example/background-example.component'),
+          import(
+            '../../projects/f-examples/extensions/background-example/background-example.component'
+          ),
       ),
       defineLazyComponent(
         'help-in-positioning',
         () =>
-          import('../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'),
+          import(
+            '../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'
+          ),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -148,11 +165,11 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'resize-handle',
-        () => import('../../projects/f-examples/nodes/resize-handle/resize-handle.component'),
+        () => import('../../projects/f-examples/nodes/resize-handle/resize-handle'),
       ),
       defineLazyComponent(
         'rotate-handle',
-        () => import('../../projects/f-examples/nodes/rotate-handle/rotate-handle.component'),
+        () => import('../../projects/f-examples/nodes/rotate-handle/rotate-handle'),
       ),
       defineLazyComponent(
         'minimap-example',
@@ -185,7 +202,7 @@ export const DOCUMENTATION_CONFIGURATION = {
         {
           link: '/blog/overview',
           active: '/blog',
-          text: 'Blog',
+          text: 'Articles',
         },
       ]),
       provideHeaderMediaLinks([
@@ -205,17 +222,17 @@ export const DOCUMENTATION_CONFIGURATION = {
       url: 'https://flow.foblex.com/docs/intro',
       canonical: 'https://flow.foblex.com/docs/intro',
       type: 'website',
-      title: 'Foblex Flow Documentation - Angular Library for Node-Based Editors',
+      title: 'Foblex Flow Documentation - Angular-Native Node-Based UI Library',
       app_name: 'Foblex Flow',
       locale: 'en_US',
       description:
-        'Official Foblex Flow documentation for Angular node-based editors and diagram UIs: components, directives, interaction systems, and migration guides.',
+        'Official Foblex Flow documentation for Angular node-based UI apps: node editors, workflow builders, diagram interfaces, components, directives, and interaction patterns.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
       keywords:
-        'foblex flow docs, angular flowchart documentation, angular diagram library docs, node editor angular, foblex flow guides',
+        'foblex flow docs, angular node based ui, angular node editor docs, angular workflow builder docs, angular diagram library docs',
       robots: 'index, follow, max-image-preview:large',
       twitter_card: 'summary_large_image',
       twitter_site: '@foblexflow',
@@ -229,9 +246,9 @@ function introductionGroup(): INavigationGroup {
     {
       link: 'intro',
       text: 'Introducing Foblex Flow',
-      pageTitle: 'Foblex Flow Docs - Angular Library for Node-Based Editors',
+      pageTitle: 'Foblex Flow Docs - Angular-Native Node-Based UI Library',
       description:
-        'Learn the core Foblex Flow concepts for building interactive node-based editors in Angular.',
+        'Learn the core Foblex Flow concepts for building interactive node-based UIs, node editors, and workflow builders in Angular.',
     },
     {
       link: 'get-started',
@@ -253,6 +270,46 @@ function introductionGroup(): INavigationGroup {
       pageTitle: 'Foblex Flow Roadmap - Planned and In-Progress Features',
       description:
         'Follow planned, in-progress, and recently completed features to align your roadmap with Foblex Flow evolution.',
+    },
+  ]);
+}
+
+function seoPagesGroup(): INavigationGroup {
+  return defineNavigationGroup('Use Cases', [
+    {
+      link: 'angular-node-based-ui-library',
+      text: 'Angular Node-Based UI Library',
+      pageTitle: 'Angular Node-Based UI Library - Why Teams Use Foblex Flow',
+      description:
+        'See when to use Foblex Flow as an Angular-native node-based UI library for interactive graph interfaces and custom visual editors.',
+    },
+    {
+      link: 'angular-node-editor-library',
+      text: 'Angular Node Editor Library',
+      pageTitle: 'Angular Node Editor Library - Build Editors with Foblex Flow',
+      description:
+        'Build node editors in Angular with reusable primitives for nodes, connections, selection, zoom, and advanced editor UX.',
+    },
+    {
+      link: 'angular-workflow-builder',
+      text: 'Angular Workflow Builder',
+      pageTitle: 'Angular Workflow Builder - Build Visual Workflow Editors',
+      description:
+        'Use Foblex Flow to build Angular workflow builders with drag-to-connect, validation rules, minimaps, and application-owned state.',
+    },
+    {
+      link: 'angular-diagram-library',
+      text: 'Angular Diagram Library',
+      pageTitle: 'Angular Diagram Library - Interactive Diagrams with Foblex Flow',
+      description:
+        'Build interactive Angular diagrams with custom nodes, graph navigation, routing controls, and production-ready interaction helpers.',
+    },
+    {
+      link: 'react-flow-vs-foblex-flow-for-angular-teams',
+      text: 'React Flow vs Foblex Flow',
+      pageTitle: 'React Flow vs Foblex Flow for Angular Teams',
+      description:
+        'Compare React Flow and Foblex Flow when your product team needs Angular-native APIs, SSR-aware rendering, and custom graph interactions.',
     },
   ]);
 }
@@ -420,7 +477,7 @@ function interactionGroup(): INavigationGroup {
     {
       link: 'f-external-item-directive',
       text: 'External Item',
-      pageTitle: 'FExternalItemDirective - Drag Items from a Palette into the Canvas',
+      pageTitle: 'FExternalItem - Drag Items from a Palette into the Canvas',
       description:
         'Drag external palette items into the flow to create nodes on drop. Useful for toolboxes, sidebars, and node libraries.',
     },

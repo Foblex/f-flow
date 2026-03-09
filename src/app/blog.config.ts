@@ -36,17 +36,23 @@ export const BLOG_CONFIGURATION = {
       defineLazyComponent(
         'add-node-from-palette',
         () =>
-          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
+          import(
+            '../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'
+          ),
       ),
       defineLazyComponent(
         'ai-low-code-platform',
         () =>
-          import('../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'),
+          import(
+            '../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'
+          ),
       ),
       defineLazyComponent(
         'background-example',
         () =>
-          import('../../projects/f-examples/extensions/background-example/background-example.component'),
+          import(
+            '../../projects/f-examples/extensions/background-example/background-example.component'
+          ),
       ),
       defineLazyComponent(
         'connectable-side',
@@ -55,12 +61,16 @@ export const BLOG_CONFIGURATION = {
       defineLazyComponent(
         'connection-behaviours',
         () =>
-          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
+          import(
+            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
+          ),
       ),
       defineLazyComponent(
         'connection-connectable-side',
         () =>
-          import('../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'),
+          import(
+            '../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'
+          ),
       ),
       defineLazyComponent(
         'connection-content',
@@ -86,11 +96,13 @@ export const BLOG_CONFIGURATION = {
       defineLazyComponent(
         'custom-event-triggers',
         () =>
-          import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'),
+          import(
+            '../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'
+          ),
       ),
       defineLazyComponent(
         'custom-nodes',
-        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes.component'),
+        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes'),
       ),
       defineLazyComponent(
         'drag-handle',
@@ -99,11 +111,13 @@ export const BLOG_CONFIGURATION = {
       defineLazyComponent(
         'drag-start-end-events',
         () =>
-          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
+          import(
+            '../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'
+          ),
       ),
       defineLazyComponent(
         'drag-to-group',
-        () => import('../../projects/f-examples/nodes/drag-to-group/drag-to-group.component'),
+        () => import('../../projects/f-examples/nodes/drag-to-group/drag-to-group'),
       ),
       defineLazyComponent(
         'drag-to-reassign',
@@ -151,7 +165,7 @@ export const BLOG_CONFIGURATION = {
         {
           link: '/blog/overview',
           active: '/blog',
-          text: 'Blog',
+          text: 'Articles',
         },
       ]),
       provideHeaderMediaLinks([
@@ -167,17 +181,17 @@ export const BLOG_CONFIGURATION = {
       url: 'https://flow.foblex.com/blog/overview',
       canonical: 'https://flow.foblex.com/blog/overview',
       type: 'website',
-      title: 'Foblex Flow Blog - Releases, Engineering Articles and Product Updates',
+      title: 'Foblex Flow Articles - Releases, Architecture Notes and Angular Tutorials',
       app_name: 'Foblex Flow',
       locale: 'en_US',
       description:
-        'Read all Foblex Flow and related engineering posts mirrored from the official Medium profile and publications with source attribution.',
+        'Read Foblex Flow release notes, architecture articles, and Angular tutorials about node editors, workflow builders, and graph UI development.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
       keywords:
-        'foblex flow blog, angular flowchart articles, node editor engineering, foblex flow releases, medium mirror',
+        'foblex flow articles, angular node editor articles, angular workflow builder tutorials, node based ui engineering, foblex flow releases',
       robots: 'index, follow, max-image-preview:large',
       twitter_card: 'summary_large_image',
       twitter_site: '@foblexflow',
@@ -187,13 +201,13 @@ export const BLOG_CONFIGURATION = {
 };
 
 function overviewGroup(): INavigationGroup {
-  return defineNavigationGroup('Blog', [
+  return defineNavigationGroup('Articles', [
     {
       link: 'overview',
       text: 'Overview',
-      pageTitle: 'Foblex Flow Blog - Releases, Series and Engineering Guides',
+      pageTitle: 'Foblex Flow Articles - Releases, Architecture Notes and Angular Tutorials',
       description:
-        'Browse the mirrored article archive from the official Medium feed, grouped by release notes and article series.',
+        'Browse release notes, architecture write-ups, and Angular tutorials grouped by topic and article series.',
       canonical: 'https://flow.foblex.com/blog/overview',
       image: './site-preview.png',
       image_type: 'image/png',
@@ -211,7 +225,7 @@ function releasesGroup(): INavigationGroup {
       pageTitle:
         'Foblex Flow v18.1.0 Magnetic Plugins, AI Low-Code Platform Example, and a Major Docs Refresh',
       description:
-        'Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders-with a focus on interactive UX and clean APIs.',
+        'Foblex Flow v18.1 adds Magnetic Lines, Magnetic Rects, a stronger AI low-code platform example, and a major Angular docs refresh.',
       canonical:
         'https://flow.foblex.com/blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh',
       image: 'https://cdn-images-1.medium.com/max/800/1*d1qqO9ReXGQRrJBuh8fgug.gif',
@@ -223,7 +237,7 @@ function releasesGroup(): INavigationGroup {
       text: 'v18.0.0',
       pageTitle: 'Foblex Flow v18: Waypoints, Pinch-to-Zoom, and Better Control Flow Support',
       description:
-        'Foblex Flow is an Angular library for building node-based editors: flows, diagrams, visual builders — all with a focus on interactive UX and clean APIs.',
+        'Foblex Flow v18 adds connection waypoints, pinch-to-zoom, and Angular control-flow improvements for richer node editors and workflow builders.',
       canonical:
         'https://flow.foblex.com/blog/foblex-flow-v18-waypoints-pinch-to-zoom-better-control-flow-support',
       image: 'https://cdn-images-1.medium.com/max/720/1*4cdHRP4Qbh1KNDA4EFrEnQ.gif',
@@ -235,7 +249,7 @@ function releasesGroup(): INavigationGroup {
       text: 'v17.8.5',
       pageTitle: 'Foblex Flow 17.8.5— Connectable Sides for Smarter Routing in Angular',
       description:
-        'Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular.',
+        'Foblex Flow 17.8.5 adds connectable side controls so Angular teams can route node connections with more precision and less visual noise.',
       canonical:
         'https://flow.foblex.com/blog/foblex-flow-v17-8-5-connectable-sides-smarter-routing',
       image: 'https://cdn-images-1.medium.com/max/1024/1*HWWQhq3K27BEpulOEqw12w.png',
@@ -248,7 +262,7 @@ function releasesGroup(): INavigationGroup {
       pageTitle:
         'Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular',
       description:
-        'Node-based editors are becoming the backbone of AI pipelines, workflow builders, and low-code platforms. With Foblex Flow , we bring this experience natively into Angular.',
+        'Foblex Flow 17.8 adds connection content and smarter validation rules for Angular workflow builders, node editors, and diagram interfaces.',
       canonical:
         'https://flow.foblex.com/blog/foblex-flow-v17-8-custom-content-on-connections-smarter-validation',
       image: 'https://cdn-images-1.medium.com/max/1024/1*wW8qCQaR8F8RxhEFZ3dYcw.png',
@@ -260,7 +274,7 @@ function releasesGroup(): INavigationGroup {
       text: 'v17.7.0',
       pageTitle: 'Foblex Flow 17.7 — Smarter Grouping, Copy/Paste, and Undo/Redo in Angular',
       description:
-        'Node-based editors are becoming a standard for automation, AI workflows, and low-code platforms. With Foblex Flow , we bring this power natively to Angular.',
+        'Foblex Flow 17.7 adds grouping improvements, copy/paste, and undo/redo patterns for Angular node editors and workflow builders.',
       canonical:
         'https://flow.foblex.com/blog/foblex-flow-17-7-smarter-grouping-copy-paste-and-undo-redo-in-angular',
       image: 'https://cdn-images-1.medium.com/max/800/1*k6X5w-KcFIsj-8ov5wvHZw.gif',

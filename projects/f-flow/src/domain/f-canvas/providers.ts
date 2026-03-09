@@ -1,39 +1,35 @@
-import { CenterGroupOrNodeExecution } from './center-group-or-node';
-import { FitToFlowExecution } from './fit-to-flow';
-import { ResetScaleAndCenterExecution } from './reset-scale-and-center';
-import { ResetScaleExecution } from './reset-scale';
-import { UpdateScaleExecution } from './update-scale';
-import { InputCanvasPositionExecution } from './input-canvas-position';
-import { InputCanvasScaleExecution } from './input-canvas-scale';
-import { AddCanvasToStoreExecution } from './add-canvas-to-store';
-import { RemoveCanvasFromStoreExecution } from './remove-canvas-from-store';
-import { GetCanvasExecution } from './get-canvas';
-import { RedrawCanvasWithAnimationExecution } from './redraw-canvas-with-animation';
+import { CenterGroupOrNode } from './center-group-or-node';
+import { FitToFlow } from './fit-to-flow';
+import { ResetScaleAndCenter } from './reset-scale-and-center';
+import { ResetScale } from './reset-scale';
+import { UpdateScale } from './update-scale';
+import { InputCanvasPosition } from './input-canvas-position';
+import { InputCanvasScale } from './input-canvas-scale';
+import { AddCanvasToStore } from './add-canvas-to-store';
+import { RemoveCanvasFromStore } from './remove-canvas-from-store';
+import { RedrawCanvasWithAnimation } from './redraw-canvas-with-animation';
 
 /**
  * This file exports all the canvas-related executions that can be used in the FCanvas feature.
  */
 export const F_CANVAS_FEATURES = [
+  AddCanvasToStore,
 
-  AddCanvasToStoreExecution,
+  CenterGroupOrNode,
 
-  CenterGroupOrNodeExecution,
+  FitToFlow,
 
-  FitToFlowExecution,
+  InputCanvasPosition,
 
-  GetCanvasExecution,
+  InputCanvasScale,
 
-  InputCanvasPositionExecution,
+  RedrawCanvasWithAnimation,
 
-  InputCanvasScaleExecution,
+  RemoveCanvasFromStore,
 
-  RedrawCanvasWithAnimationExecution,
+  ResetScale,
 
-  RemoveCanvasFromStoreExecution,
+  ResetScaleAndCenter,
 
-  ResetScaleExecution,
-
-  ResetScaleAndCenterExecution,
-
-  UpdateScaleExecution,
+  UpdateScale,
 ];

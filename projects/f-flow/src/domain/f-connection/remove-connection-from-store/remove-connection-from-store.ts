@@ -5,13 +5,14 @@ import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(RemoveConnectionFromStoreRequest)
-export class RemoveConnectionFromStore
-  implements IExecution<RemoveConnectionFromStoreRequest, void>
-{
+export class RemoveConnectionFromStore implements IExecution<
+  RemoveConnectionFromStoreRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connection }: RemoveConnectionFromStoreRequest): void {
     this._store.connections.remove(connection);
-    this._store.dataChanged();
+    this._store.emitConnectionChanges();
   }
 }

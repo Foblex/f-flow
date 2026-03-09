@@ -139,8 +139,8 @@ interface IRect {
 ## Example
 
 ::: ng-component <custom-nodes></custom-nodes> [height]="600"
-[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.html
-[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.ts
-[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.component.scss
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/custom-nodes/custom-nodes.scss
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

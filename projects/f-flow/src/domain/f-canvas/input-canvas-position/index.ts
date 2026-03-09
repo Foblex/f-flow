@@ -1,3 +1,3 @@
-export * from './input-canvas-position.execution';
+export * from './input-canvas-position';
 
 export * from './input-canvas-position-request';

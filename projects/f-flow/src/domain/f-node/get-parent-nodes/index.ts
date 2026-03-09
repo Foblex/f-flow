@@ -1,3 +1,3 @@
 export * from './get-parent-nodes';
 
-export * from './get-parent-nodes.request';
+export * from './get-parent-nodes-request';

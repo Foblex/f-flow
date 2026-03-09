@@ -6,15 +6,15 @@ import {
   FCanvasBase,
   FComponentsStore,
   FNodeBase,
-  GetDeepChildrenNodesAndGroupsExecution,
+  GetDeepChildrenNodesAndGroups,
   injectFromDi,
   MediatorHarness,
   nodeFactory,
   registryAddMany,
   SortItemLayers,
   SortItemLayersRequest,
-  SortItemsByParentExecution,
-  SortNodeLayersExecution,
+  SortItemsByParent,
+  SortNodeLayers,
 } from '@foblex/flow';
 
 const pure = createPureHarness();
@@ -33,12 +33,7 @@ describe('SortItemLayers, SortNodeLayersByGroups, SortItemsByParent', () => {
 
   beforeEach(() => {
     configureDiTest({
-      providers: [
-        SortItemLayers,
-        SortItemsByParentExecution,
-        GetDeepChildrenNodesAndGroupsExecution,
-        SortNodeLayersExecution,
-      ],
+      providers: [SortItemLayers, SortItemsByParent, GetDeepChildrenNodesAndGroups, SortNodeLayers],
     });
 
     mediator = createMediatorHarness();

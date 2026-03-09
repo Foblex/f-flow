@@ -1,39 +1,13 @@
-﻿# Custom Event Triggers
+﻿---
+toc: false
+wideContent: true
+---
+
+# Custom Event Triggers
 
 ## Description
 
-This example demonstrates how to set up custom event triggers to handle drag operations.
-
-To add a custom trigger, you need to create a function that accepts a parameter of type `FTriggerEvent` and returns a `boolean`. 
-Below is an example of a trigger for zooming that requires holding the `Ctrl` key:
-
-```typescript
-protected zoomTrigger = (event: FTriggerEvent) => {
-  return event.ctrlKey;
-};
-```
-
-Next, you need to set this function to the appropriate attribute, as shown in the example below:
-
-```html
- <f-canvas fZoom [fWheelTrigger]="zoomTrigger"></f-canvas>
-```
-
-In this example, three custom triggers are defined:
-
-1. `fWheelTrigger`: Zooming is activated by the mouse wheel, but only when the `Ctrl` key is held.
-
-2. `fNodeMoveTrigger`: Dragging is activated by the mouse, but only when the `Shift` key is held.
-
-3. `fCreateConnectionTrigger`: Creating a connection between nodes is only possible when the `F` key is held.
-
-But you can define custom triggers for any event that the flow supports:
-
-**fZoom:** `fWheelTrigger`, `fDblClickTrigger`;
-
-**fDraggable:** `fReassignConnectionTrigger`, `fCreateConnectionTrigger`, `fNodeResizeTrigger`, `fNodeMoveTrigger`, `fCanvasMoveTrigger`, `fExternalItemTrigger`, `fMultiSelectTrigger`;
-
-**f-selection-area:** `fTrigger`;
+Override the default triggers for zooming, dragging, and connection creation when your editor shares gestures with the rest of the page or needs power-user shortcuts. Custom triggers let the app decide exactly when an interaction should start.
 
 ## Example
 
@@ -44,4 +18,28 @@ But you can define custom triggers for any event that the flow supports:
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
+## Trigger examples
 
+Each trigger is a function that receives `FTriggerEvent` and returns `boolean`.
+
+```typescript
+protected zoomTrigger = (event: FTriggerEvent) => {
+  return event.ctrlKey;
+};
+```
+
+```html
+<f-canvas fZoom [fWheelTrigger]="zoomTrigger"></f-canvas>
+```
+
+This page demonstrates three common patterns:
+
+- `fWheelTrigger`: zoom only while `Ctrl` is pressed.
+- `fNodeMoveTrigger`: drag nodes only while `Shift` is pressed.
+- `fCreateConnectionTrigger`: allow connection creation only while `F` is pressed.
+
+## Supported trigger points
+
+- `fZoom`: `fWheelTrigger`, `fDblClickTrigger`
+- `fDraggable`: `fReassignConnectionTrigger`, `fCreateConnectionTrigger`, `fNodeResizeTrigger`, `fNodeMoveTrigger`, `fCanvasMoveTrigger`, `fExternalItemTrigger`, `fMultiSelectTrigger`
+- `f-selection-area`: `fTrigger`

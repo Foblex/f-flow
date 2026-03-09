@@ -4,7 +4,7 @@ import { CalculateTargetConnectorsToConnect } from './calculate-target-connector
 import { GetConnectorRectReference } from './get-connector-rect-reference';
 import { CalculateClosestConnector } from './calculate-closest-connector';
 import { CalculateSourceConnectorsToConnect } from './calculate-source-connectors-to-connect';
-import { FindConnectableConnectorUsingPriorityAndPositionExecution } from './find-connectable-connector-using-priority-and-position';
+import { FindConnectableConnectorUsingPriorityAndPosition } from './find-connectable-connector-using-priority-and-position';
 import { AddConnectorToStore } from './add-connector-to-store';
 import { RemoveConnectorFromStore } from './remove-connector-from-store';
 /*
@@ -17,7 +17,7 @@ export const F_CONNECTORS_FEATURES = [
 
   CalculateClosestConnector,
 
-  FindConnectableConnectorUsingPriorityAndPositionExecution,
+  FindConnectableConnectorUsingPriorityAndPosition,
 
   CalculateSourceConnectorsToConnect,
 

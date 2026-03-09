@@ -5,7 +5,7 @@ export const SHOWCASE: IShowcaseItem[] = [
     name: 'Call Center Automation Platform',
     tags: ['Workflow Automation', 'No Code', 'Open Source'],
     description:
-      'Open Source solution designed to streamline and automate call center operations. It provides a visual interface for creating and managing workflows, enabling users to design complex call handling processes without writing code.',
+      'Open-source call-center automation reference with a visual workflow editor for designing and managing complex call handling processes.',
     imageUrl: './showcase/images/call-center.light.png',
     imageUrlDark: './showcase/images/call-center.dark.png',
     links: [
@@ -39,7 +39,7 @@ export const SHOWCASE: IShowcaseItem[] = [
     name: 'AI Low Code Platform',
     tags: ['AI Automation', 'Low Code', 'Open Source'],
     description:
-      'Open Source low-code platform that enables users to create AI-powered applications and workflows with minimal coding.',
+      'Open-source AI low-code platform for building applications and workflows through a visual editor.',
     imageUrl: './showcase/images/ai-low-code.light.png',
     imageUrlDark: './showcase/images/ai-low-code.dark.png',
     links: [
@@ -51,7 +51,7 @@ export const SHOWCASE: IShowcaseItem[] = [
     name: 'DB Management System',
     tags: ['No Code', 'Open Source', 'Dev Tools'],
     description:
-      'Database management system that provides a user-friendly interface for managing and interacting with databases.',
+      'Database-oriented workflow interface for managing and interacting with data through a visual editor.',
     imageUrl: './showcase/images/db-management-flow.light.png',
     imageUrlDark: './showcase/images/db-management-flow.dark.png',
     links: [
@@ -66,7 +66,7 @@ export const SHOWCASE: IShowcaseItem[] = [
     name: 'ProcessMIX',
     tags: ['Low-Code', 'Business Rules Engine', 'Decision Automation'],
     description:
-      'Low-code/no-code platform that enables businesses to automate decision-making and build complex workflows visually. It provides a powerful rules engine and integration tools to connect with external systems, allowing teams to design, test, and deploy processes rapidly.',
+      'Low-code decision automation platform with a visual rules and workflow builder for designing, testing, and deploying processes rapidly.',
     imageUrl: './showcase/images/processmix.dark.png',
     links: [{ text: 'Website', url: 'https://processmix.com/' }],
   },

@@ -5,18 +5,25 @@ import {
   DestroyRef,
   inject,
   input,
+  numberAttribute,
+  OnDestroy,
+  OnInit,
   viewChild,
 } from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
-import { F_BEFORE_MAIN_PLUGIN, IFDragAndDropPlugin } from '../f-draggable';
-import { MinimapDragFinalizeRequest, MinimapDragPreparationRequest } from './domain';
-import { ListenTransformChangesRequest } from '../f-storage';
+import {
+  FComponentsStore,
+  INSTANCES,
+  ListenTransformChangesRequest,
+  RegisterPluginInstanceRequest,
+  RemovePluginInstanceRequest,
+} from '../f-storage';
 import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../reactivity';
 import { BrowserService } from '@foblex/platform';
-import { IPointerEvent } from '../drag-toolkit';
+import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
 
 @Component({
   selector: 'f-minimap',
@@ -26,19 +33,31 @@ import { IPointerEvent } from '../drag-toolkit';
   host: {
     'class': 'f-component f-minimap',
   },
-  providers: [{ provide: F_BEFORE_MAIN_PLUGIN, useExisting: FMinimapComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  providers: [{ provide: F_MINIMAP_BASE, useExisting: FMinimapComponent }],
+  imports: [FMinimapFlowDirective, FMinimapCanvasDirective, FMinimapViewDirective],
 })
-export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
+export class FMinimapComponent extends FMinimapBase implements AfterViewInit, OnInit, OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
+  private readonly _store = inject(FComponentsStore);
 
   public readonly _canvas = viewChild.required(FMinimapCanvasDirective);
   public readonly _flow = viewChild.required(FMinimapFlowDirective);
   public readonly _minimapView = viewChild.required(FMinimapViewDirective);
 
   public readonly fMinSize = input<number>(1000);
+  public readonly fNodeRenderLimit = input<number, unknown>(1500, { transform: numberAttribute });
+
+  public override get state() {
+    return this._flow().model;
+  }
+
+  public ngOnInit(): void {
+    this._mediator.execute(new RegisterPluginInstanceRequest(INSTANCES.MINIMAP, this));
+  }
 
   public ngAfterViewInit(): void {
     this._listenTransformChanges();
@@ -57,16 +76,25 @@ export class FMinimapComponent implements AfterViewInit, IFDragAndDropPlugin {
     if (!this._browser.isBrowser()) {
       return;
     }
+
+    if (this._isOverNodeRenderLimit()) {
+      this._canvas().clear();
+
+      return;
+    }
+
     this._flow().redraw();
     this._minimapView().redraw();
     this._canvas().redraw();
   }
 
-  public onPointerDown(event: IPointerEvent): void {
-    this._mediator.execute(new MinimapDragPreparationRequest(event, this._flow().model));
+  private _isOverNodeRenderLimit(): boolean {
+    const limit = this.fNodeRenderLimit();
+
+    return limit > 0 && this._store.nodes.size() > limit;
   }
 
-  public onPointerUp(event: IPointerEvent): void {
-    this._mediator.execute(new MinimapDragFinalizeRequest(event));
+  public ngOnDestroy(): void {
+    this._mediator.execute(new RemovePluginInstanceRequest(INSTANCES.MINIMAP));
   }
 }

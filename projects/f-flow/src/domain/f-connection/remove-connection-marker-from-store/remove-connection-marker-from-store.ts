@@ -8,13 +8,14 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(RemoveConnectionMarkerFromStoreRequest)
-export class RemoveConnectionMarkerFromStore
-  implements IExecution<RemoveConnectionMarkerFromStoreRequest, void>
-{
+export class RemoveConnectionMarkerFromStore implements IExecution<
+  RemoveConnectionMarkerFromStoreRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ instance }: RemoveConnectionMarkerFromStoreRequest): void {
     this._store.connectionMarkers.remove(instance);
-    this._store.countChanged();
+    this._store.emitNodeChanges();
   }
 }

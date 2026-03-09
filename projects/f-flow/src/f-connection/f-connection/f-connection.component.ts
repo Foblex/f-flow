@@ -10,7 +10,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { NotifyDataChangedRequest } from '../../f-storage';
+import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
@@ -94,7 +94,7 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
   }
 
   public ngOnChanges(): void {
-    this._mediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new EmitConnectionsChangesRequest());
   }
 
   public ngOnDestroy(): void {

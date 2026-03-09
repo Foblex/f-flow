@@ -11,9 +11,10 @@ import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connecto
  */
 @Injectable()
 @FExecutionRegister(GetConnectorRectReferenceRequest)
-export class GetConnectorRectReference
-  implements IExecution<GetConnectorRectReferenceRequest, IConnectorRectRef>
-{
+export class GetConnectorRectReference implements IExecution<
+  GetConnectorRectReferenceRequest,
+  IConnectorRectRef
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connector }: GetConnectorRectReferenceRequest): IConnectorRectRef {

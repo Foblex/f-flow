@@ -1,16 +1,11 @@
-import { GetNormalizedElementRectExecution } from './get-normalized-element-rect';
+import { GetNormalizedElementRect } from './get-normalized-element-rect';
 import {
   MoveFrontElementsBeforeTargetElement,
   UpdateItemAndChildrenLayers,
 } from './update-item-and-children-layers';
-import { GetNormalizedPointExecution } from './get-normalized-point';
-import {
-  SortItemLayers,
-  SortItemsByParentExecution,
-  SortNodeLayersExecution,
-} from './sort-item-layers';
-import { GetDeepChildrenNodesAndGroupsExecution } from './get-deep-children-nodes-and-groups';
-import { GetElementRoundedRectExecution } from './get-element-rounded-rect';
+import { GetNormalizedPoint } from './get-normalized-point';
+import { SortItemLayers, SortItemsByParent, SortNodeLayers } from './sort-item-layers';
+import { GetDeepChildrenNodesAndGroups } from './get-deep-children-nodes-and-groups';
 import { F_SELECTION_FEATURES } from './f-selection';
 import { F_BACKGROUND_FEATURES } from './f-background';
 import { F_CANVAS_FEATURES } from './f-canvas';
@@ -20,7 +15,9 @@ import { F_FLOW_FEATURES } from './f-flow';
 import { F_DRAGGABLE_FEATURES } from './f-draggable';
 import { F_NODE_FEATURES } from './f-node';
 import { F_ZOOM_FEATURES } from './f-zoom';
-import { GetNormalizedConnectorRectExecution } from './get-normalized-connector-rect';
+import { GetNormalizedConnectorRect } from './get-normalized-connector-rect';
+import { F_MINIMAP_FEATURES } from './minimap';
+import { F_CACHE_FEATURES } from '../f-cache';
 
 /**
  * This module provides a collection of common providers for the FFlow domain.
@@ -43,25 +40,27 @@ export const COMMON_PROVIDERS = [
 
   ...F_NODE_FEATURES,
 
-  GetElementRoundedRectExecution,
-
   ...F_SELECTION_FEATURES,
 
   ...F_ZOOM_FEATURES,
 
-  GetDeepChildrenNodesAndGroupsExecution,
+  ...F_MINIMAP_FEATURES,
 
-  GetNormalizedConnectorRectExecution,
+  ...F_CACHE_FEATURES,
 
-  GetNormalizedElementRectExecution,
+  GetDeepChildrenNodesAndGroups,
 
-  GetNormalizedPointExecution,
+  GetNormalizedConnectorRect,
+
+  GetNormalizedElementRect,
+
+  GetNormalizedPoint,
 
   SortItemLayers,
 
-  SortItemsByParentExecution,
+  SortItemsByParent,
 
-  SortNodeLayersExecution,
+  SortNodeLayers,
 
   UpdateItemAndChildrenLayers,
 

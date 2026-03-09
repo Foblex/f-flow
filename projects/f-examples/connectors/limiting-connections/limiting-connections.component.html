@@ -1,25 +1,27 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="onCreateConnection($event)">
+<f-flow fDraggable (fLoaded)="loaded()" (fCreateConnection)="createConnection($event)">
   <f-canvas>
-    <f-connection-for-create fBehavior="floating"></f-connection-for-create>
+    <f-connection-for-create fBehavior="floating" />
 
-    @for (connection of connections; track connection.to) {
-      <f-connection [fReassignDisabled]="true"
-                    [fOutputId]="connection.from" [fInputId]="connection.to"
-                    fBehavior="floating">
-      </f-connection>
+    @for (connection of connections(); track connection.to) {
+      <f-connection
+        [fReassignDisabled]="true"
+        [fOutputId]="connection.from"
+        [fInputId]="connection.to"
+        fBehavior="floating"
+      />
     }
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 75 }" >
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 75 }">
       <div fNodeOutput fOutputId="1" class="right"></div>
       Connect to one input only
     </div>
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 225 }" >
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 225 }">
       <div fNodeOutput fOutputId="2" class="right" [fOutputMultiple]="true"></div>
       Connect to multiple inputs
     </div>
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" >
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }">
       <div fNodeInput fInputId="1" [fInputMultiple]="false" class="left"></div>
       Connect to one output only
     </div>
@@ -31,9 +33,8 @@
       <div fNodeInput fInputId="3" [fInputMultiple]="true" class="left"></div>
       Connect to multiple outputs
     </div>
-
   </f-canvas>
 </f-flow>
 <div class="examples-toolbar">
-  <button class="f-button" (click)="onDeleteConnections()">Delete Connections</button>
+  <button class="f-button" (click)="deleteConnections()">Delete Connections</button>
 </div>

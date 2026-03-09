@@ -17,7 +17,6 @@ import { FMediator } from '@foblex/mediator';
 import {
   defaultEventTrigger,
   FEventTrigger,
-  GetCanvasRequest,
   isValidEventTrigger,
   ResetZoomRequest,
   SetZoomRequest,
@@ -74,7 +73,7 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private get _canvas(): FCanvasBase {
-    return this._mediator.execute(new GetCanvasRequest());
+    return this._store.fCanvas as FCanvasBase;
   }
 
   public ngOnInit(): void {
@@ -124,24 +123,34 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
-    const step = this._normalizeWheelStep(event.deltaY);
+    const delta = this._resolveWheelDelta(event);
+    if (delta === 0) {
+      return;
+    }
+
+    const step = this._normalizeWheelStep(delta);
     this.setZoom(
       PointExtensions.initialize(event.clientX, event.clientY),
       step,
-      this._calculateDirection(event.deltaY),
+      this._calculateDirection(delta),
       false,
     );
   };
 
-  private _normalizeWheelStep(deltaY: number): number {
-    const intensity = Math.abs(deltaY) / 100;
+  private _normalizeWheelStep(delta: number): number {
+    const intensity = Math.abs(delta) / 100;
     const normalized = Math.max(0.1, Math.min(intensity, 1));
 
     return this.step * normalized;
   }
 
-  private _calculateDirection(deltaY: number): number {
-    return deltaY > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
+  private _calculateDirection(delta: number): number {
+    return delta > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
+  }
+
+  private _resolveWheelDelta(event: WheelEvent): number {
+    // With Shift pressed many browsers emit horizontal wheel (deltaX) and keep deltaY near 0.
+    return Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
   }
 
   private _onDoubleClick = (event: MouseEvent) => {

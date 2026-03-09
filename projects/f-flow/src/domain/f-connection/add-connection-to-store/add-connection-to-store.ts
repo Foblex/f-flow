@@ -13,6 +13,6 @@ export class AddConnectionToStore implements IExecution<AddConnectionToStoreRequ
 
   public handle({ connection }: AddConnectionToStoreRequest): void {
     this._store.connections.add(connection);
-    this._store.dataChanged();
+    this._store.emitConnectionChanges();
   }
 }

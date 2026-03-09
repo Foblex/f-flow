@@ -15,19 +15,24 @@ import { FZoomBase } from '../f-zoom';
 import { FSelectionAreaBase } from '../f-selection-area';
 import { FMagneticLinesBase } from '../f-magnetic-lines';
 import { FMagneticRectsBase } from '../f-magnetic-rects';
+import { FMinimapBase } from '../f-minimap';
 
 @Injectable()
 export class FComponentsStore {
   public readonly transformChanges$ = new FChannel();
 
-  public readonly dataChanges$ = new FChannel();
+  public readonly connectionsChanges$ = new FChannel();
+  private _connectionsRevision = 0;
 
-  public readonly countChanges$ = new FChannel();
+  public readonly nodesChanges$ = new FChannel();
+  private _nodesRevision = 0;
 
-  private _dataVersion = 0;
+  public get connectionsRevision(): number {
+    return this._connectionsRevision;
+  }
 
-  public get dataVersion(): number {
-    return this._dataVersion;
+  public get nodesRevision(): number {
+    return this._nodesRevision;
   }
 
   public get flowHost(): HTMLElement {
@@ -54,13 +59,14 @@ export class FComponentsStore {
 
   public fDraggable: FDraggableBase | undefined;
 
-  public countChanged(): void {
-    this.countChanges$.notify();
+  public emitNodeChanges(): void {
+    this._nodesRevision++;
+    this.nodesChanges$.notify();
   }
 
-  public dataChanged(): void {
-    this._dataVersion++;
-    this.dataChanges$.notify();
+  public emitConnectionChanges(): void {
+    this._connectionsRevision++;
+    this.connectionsChanges$.notify();
   }
 
   public transformChanged(): void {
@@ -83,4 +89,7 @@ export const INSTANCES = {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   SELECTION_AREA: fInstanceKey<FSelectionAreaBase>('selection-area'),
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  MINIMAP: fInstanceKey<FMinimapBase>('minimap'),
 } as const;

@@ -8,6 +8,7 @@ export * from './drag-toolkit';
 
 export * from './f-connection';
 export * from './f-connection-v2';
+export * from './f-connection-worker';
 
 export * from './f-connectors';
 
@@ -25,9 +26,13 @@ export * from './f-selection-area';
 
 export * from './f-flow';
 
+export * from './f-cache';
+
 export * from './f-node';
 
 export * from './f-storage';
+
+export * from './f-virtual';
 
 export * from './f-zoom';
 

@@ -1,11 +1,44 @@
-# Built with Foblex Flow
-
-Foblex Flow is used by developers and companies around the world to build amazing applications. Here are some examples of what you can create with Foblex Flow:
-
+---
+title: "Projects Built with Foblex Flow"
+description: "See real products and open-source references built with Foblex Flow for workflow builders, AI tools, and Angular graph interfaces."
+summary: "Showcase of real products and references built with Foblex Flow."
+primaryKeyword: "angular node editor showcase"
+schemaType: "CollectionPage"
+author: "Siarhei Huzarevich"
+publishedAt: "2026-03-09"
+updatedAt: "2026-03-09"
 ---
 
-Do you have an application built with **Foblex Flow** that you'd like to showcase here?  
-You can read how to submit your project in our [GitHub Discussions](https://github.com/Foblex/f-flow/discussions/212).
+# Built with Foblex Flow
+
+This page collects real products and open-source references built with Foblex Flow. Use it when you want proof that the library works beyond isolated demos and can support workflow builders, AI tools, contact-center products, and other Angular graph interfaces.
+
+## What you will find here
+
+- Open-source reference implementations with demos and source code.
+- Production products where node-based workflows are part of the real user experience.
+- A clearer sense of the product categories Foblex Flow already supports well.
+
+Some entries are open-source demos with public source links. Others are production or commercial products. The mix is intentional: it shows both implementation transparency and real-world adoption.
+
+## Representative use cases
+
+- **Workflow Automation** and **No Code** tools for operations and business teams.
+- **AI**, **AI Automation**, and **Multi-Agent Systems** interfaces.
+- **Decision Automation** and **Business Rules Engine** products.
+- **Dev Tools**, database-oriented editors, and contact-center workflow surfaces.
+
+These categories come directly from the current showcase tags, so the page reflects how existing builders position their products today.
+
+## Why teams pick Foblex Flow
+
+- It gives Angular teams editor interactions without forcing a React-first architecture.
+- It supports production workflows like dragging, reassigning, snapping, selection, zoom, minimap, and alignment helpers.
+- It keeps graph state and domain rules in the application instead of hiding them in a black-box data model.
+
+## Submit your project
+
+If you built something with Foblex Flow and want it listed here, open the submission thread in [GitHub Discussions](https://github.com/Foblex/f-flow/discussions/212). Include a short product description, one screenshot, and links to a site, demo, or source repository if they are public.
 
 ::: showcase
 :::

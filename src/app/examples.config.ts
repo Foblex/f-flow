@@ -36,7 +36,7 @@ export const EXAMPLES_CONFIGURATION = {
     provideComponents([
       defineLazyComponent(
         'custom-nodes',
-        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes.component'),
+        () => import('../../projects/f-examples/nodes/custom-nodes/custom-nodes'),
       ),
       defineLazyComponent(
         'drag-handle',
@@ -44,11 +44,11 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'resize-handle',
-        () => import('../../projects/f-examples/nodes/resize-handle/resize-handle.component'),
+        () => import('../../projects/f-examples/nodes/resize-handle/resize-handle'),
       ),
       defineLazyComponent(
         'rotate-handle',
-        () => import('../../projects/f-examples/nodes/rotate-handle/rotate-handle.component'),
+        () => import('../../projects/f-examples/nodes/rotate-handle/rotate-handle'),
       ),
       defineLazyComponent(
         'grouping',
@@ -56,40 +56,50 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-to-group',
-        () => import('../../projects/f-examples/nodes/drag-to-group/drag-to-group.component'),
+        () => import('../../projects/f-examples/nodes/drag-to-group/drag-to-group'),
       ),
       defineLazyComponent(
         'stress-test',
-        () => import('../../projects/f-examples/nodes/stress-test/stress-test.component'),
+        () => import('../../projects/f-examples/nodes/stress-test/stress-test'),
       ),
       defineLazyComponent(
         'stress-test-with-connections',
         () =>
-          import('../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections.component'),
+          import(
+            '../../projects/f-examples/nodes/stress-test-with-connections/stress-test-with-connections'
+          ),
       ),
       defineLazyComponent(
         'node-selection',
-        () => import('../../projects/f-examples/nodes/node-selection/node-selection.component'),
+        () => import('../../projects/f-examples/nodes/node-selection/node-selection'),
       ),
       defineLazyComponent(
         'node-as-connector',
         () =>
-          import('../../projects/f-examples/connectors/node-as-connector/node-as-connector.component'),
+          import(
+            '../../projects/f-examples/connectors/node-as-connector/node-as-connector.component'
+          ),
       ),
       defineLazyComponent(
         'connector-inside-node',
         () =>
-          import('../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'),
+          import(
+            '../../projects/f-examples/connectors/connector-inside-node/connector-inside-node.component'
+          ),
       ),
       defineLazyComponent(
         'connector-outlet',
         () =>
-          import('../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'),
+          import(
+            '../../projects/f-examples/connectors/connector-outlet/connector-outlet.component'
+          ),
       ),
       defineLazyComponent(
         'limiting-connections',
         () =>
-          import('../../projects/f-examples/connectors/limiting-connections/limiting-connections.component'),
+          import(
+            '../../projects/f-examples/connectors/limiting-connections/limiting-connections.component'
+          ),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -110,17 +120,23 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'create-node-on-connection-drop',
         () =>
-          import('../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component'),
+          import(
+            '../../projects/f-examples/connections/create-node-on-connection-drop/create-node-on-connection-drop.component'
+          ),
       ),
       defineLazyComponent(
         'remove-connection-on-drop',
         () =>
-          import('../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component'),
+          import(
+            '../../projects/f-examples/connections/remove-connection-on-drop/remove-connection-on-drop.component'
+          ),
       ),
       defineLazyComponent(
         'assign-node-to-connection-on-drop',
         () =>
-          import('../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'),
+          import(
+            '../../projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop'
+          ),
       ),
       defineLazyComponent(
         'auto-snap',
@@ -138,12 +154,16 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'custom-connection-type',
         () =>
-          import('../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'),
+          import(
+            '../../projects/f-examples/connections/custom-connection-type/custom-connection-type.component'
+          ),
       ),
       defineLazyComponent(
         'connection-behaviours',
         () =>
-          import('../../projects/f-examples/connections/connection-behaviours/connection-behaviours'),
+          import(
+            '../../projects/f-examples/connections/connection-behaviours/connection-behaviours'
+          ),
       ),
       defineLazyComponent(
         'connection-markers',
@@ -157,12 +177,16 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'custom-connections',
         () =>
-          import('../../projects/f-examples/connections/custom-connections/custom-connections.component'),
+          import(
+            '../../projects/f-examples/connections/custom-connections/custom-connections.component'
+          ),
       ),
       defineLazyComponent(
         'connection-connectable-side',
         () =>
-          import('../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'),
+          import(
+            '../../projects/f-examples/connections/connection-connectable-side/connection-connectable-side'
+          ),
       ),
       defineLazyComponent(
         'dagre-layout',
@@ -171,7 +195,9 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'elkjs-layout-example',
         () =>
-          import('../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component'),
+          import(
+            '../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component'
+          ),
       ),
       defineLazyComponent(
         'selection-area',
@@ -181,7 +207,9 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'help-in-positioning',
         () =>
-          import('../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'),
+          import(
+            '../../projects/f-examples/extensions/help-in-positioning/help-in-positioning.component'
+          ),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -203,22 +231,24 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'background-example',
         () =>
-          import('../../projects/f-examples/extensions/background-example/background-example.component'),
+          import(
+            '../../projects/f-examples/extensions/background-example/background-example.component'
+          ),
       ),
       defineLazyComponent(
         'db-management-flow',
         () =>
-          import('../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component'),
+          import(
+            '../../projects/f-pro-examples/db-management-example/components/flow/db-management-flow.component'
+          ),
       ),
       defineLazyComponent(
         'uml-diagram-example',
-        () =>
-          import('../../projects/f-pro-examples/uml-diagram-example/flow/uml-diagram-example.component'),
+        () => import('../../projects/f-pro-examples/uml-diagram-example'),
       ),
       defineLazyComponent(
         'tournament-bracket',
-        () =>
-          import('../../projects/f-pro-examples/tournament-bracket/tournament-bracket.component'),
+        () => import('../../projects/f-pro-examples/tournament-bracket'),
       ),
       defineLazyComponent(
         'grid-system',
@@ -239,22 +269,30 @@ export const EXAMPLES_CONFIGURATION = {
       defineLazyComponent(
         'add-node-from-palette',
         () =>
-          import('../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'),
+          import(
+            '../../projects/f-examples/extensions/add-node-from-palette/add-node-from-palette.component'
+          ),
       ),
       defineLazyComponent(
         'drag-start-end-events',
         () =>
-          import('../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'),
+          import(
+            '../../projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component'
+          ),
       ),
       defineLazyComponent(
         'custom-event-triggers',
         () =>
-          import('../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'),
+          import(
+            '../../projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component'
+          ),
       ),
       defineLazyComponent(
         'ai-low-code-platform',
         () =>
-          import('../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'),
+          import(
+            '../../projects/f-examples/pro-examples/ai-low-code-platform/ai-low-code-platform'
+          ),
       ),
     ]),
     provideTableOfContent({
@@ -282,7 +320,7 @@ export const EXAMPLES_CONFIGURATION = {
         {
           link: '/blog/overview',
           active: '/blog',
-          text: 'Blog',
+          text: 'Articles',
         },
       ]),
       provideHeaderMediaLinks([
@@ -302,17 +340,17 @@ export const EXAMPLES_CONFIGURATION = {
       url: 'https://flow.foblex.com/examples/overview',
       canonical: 'https://flow.foblex.com/examples/overview',
       type: 'website',
-      title: 'Angular Library for Flow-Based UIs - Foblex Flow',
+      title: 'Foblex Flow Examples - Angular Node Editors and Workflow Builders',
       app_name: 'Foblex Flow',
       locale: 'en_US',
       description:
-        'Foblex Flow is an Angular library that simplifies the creation of flow-based UIs, providing components for building interactive UIs with nodes and connections',
+        'Explore Angular examples for node editors, workflow builders, interactive diagrams, layout helpers, and production-style graph interfaces built with Foblex Flow.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
       image_width: 2986,
       image_height: 1926,
       keywords:
-        'foblex flow examples, angular flowchart examples, angular diagram examples, node editor angular demos, flow ui angular',
+        'foblex flow examples, angular node editor examples, angular workflow builder examples, angular diagram examples, graph ui angular demos',
       robots: 'index, follow, max-image-preview:large',
       twitter_card: 'summary_large_image',
       twitter_site: '@foblexflow',
@@ -326,9 +364,9 @@ function overviewGroup() {
     {
       link: 'overview',
       text: 'Overview',
-      pageTitle: 'Foblex Flow – Angular Flowchart & Diagram Library Examples Overview',
+      pageTitle: 'Foblex Flow Examples - Angular Node Editors and Workflow Builders',
       description:
-        'Foblex Flow: Angular library for interactive flowcharts and diagrams. Explore features, live demos, and learn how to start building diagrams quickly.',
+        'Explore the strongest Foblex Flow examples for Angular node editors, workflow builders, interactive diagrams, and advanced graph UX.',
       image: './previews/examples/examples-overview.light.png',
       image_dark: './previews/examples/examples-overview.dark.png',
       image_width: 1612,
@@ -371,7 +409,7 @@ function nodesGroup() {
       text: 'Node Selection',
       pageTitle: 'Angular Diagram Example – Node Selection & Multi-Select with Foblex Flow',
       description:
-        'Click, box and keyboard selection for diagram nodes in Angular. Multi-select, modifiers and clean UX patterns with code.',
+        'Select single and multiple nodes in Angular with click-based and keyboard-modified interactions. Solid base for batch actions, grouping, and richer editor UX.',
       image: './previews/examples/node-selection.light.png',
       image_dark: './previews/examples/node-selection.dark.png',
       image_width: 781,
@@ -382,11 +420,11 @@ function nodesGroup() {
     {
       link: 'resize-handle',
       text: 'Resize Handle',
-      pageTitle: 'Angular Flowchart Example – Resizable Nodes with Handles',
+      pageTitle: 'Angular Diagram Example – Resizable Nodes with Resize Handles',
       image: './previews/examples/resize-handle.light.png',
       image_dark: './previews/examples/resize-handle.dark.png',
       description:
-        'Make diagram nodes resizable with handles. Constraints, snapping and clean UX — complete Angular example.',
+        'Make Angular diagram nodes resizable with dedicated handles. Useful for notes, groups, panels, and richer node-based UI layouts.',
       image_width: 801,
       image_height: 600,
       image_type: 'image/png',
@@ -399,7 +437,7 @@ function nodesGroup() {
       image: './previews/examples/rotate-handle.light.png',
       image_dark: './previews/examples/rotate-handle.dark.png',
       description:
-        'Add rotation handles with snapping and constraints for diagram nodes. Lightweight Angular example with code.',
+        'Rotate Angular diagram nodes with a dedicated handle. Clear orientation control for design-like editors, architecture views, and custom canvas tools.',
       image_width: 795,
       image_height: 600,
       image_type: 'image/png',
@@ -431,32 +469,6 @@ function nodesGroup() {
       image_type: 'image/png',
       date: new Date('2025-08-23 16:04:08'),
     },
-    {
-      link: 'stress-test',
-      text: 'Stress Test',
-      pageTitle: 'Angular Diagram Performance Example – Thousands of Nodes',
-      image: './previews/examples/stress-test.light.png',
-      image_dark: './previews/examples/stress-test.dark.png',
-      description:
-        'Performance test with thousands of nodes in Angular. FPS tips, batching and rendering strategies for large diagrams.',
-      image_width: 806,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2024-11-22 17:19:38'),
-    },
-    {
-      link: 'stress-test-with-connections',
-      text: 'Stress Test with Connections',
-      pageTitle: 'Angular Flowchart Performance Example – Many Connections',
-      image: './previews/examples/stress-test-with-connections.light.png',
-      image_dark: './previews/examples/stress-test-with-connections.dark.png',
-      description:
-        'Performance with many connections: throttling, async updates and routing tips. Angular example you can reuse.',
-      image_width: 806,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-01-16 19:19:10'),
-    },
   ]);
 }
 
@@ -465,8 +477,9 @@ function connectorGroup() {
     {
       link: 'node-as-connector',
       text: 'Node as Connector',
+      pageTitle: 'Angular Diagram Example – Use a Node as a Connector',
       description:
-        'Use nodes as interactive connectors with dynamic ports. Patterns and Angular code for complex flows.',
+        'Use the node itself as a connector in Angular graph UIs. A compact pattern for slot-based builders, touch-friendly editors, and dense canvases.',
       image: './previews/examples/node-as-connector.light.png',
       image_dark: './previews/examples/node-as-connector.dark.png',
       image_width: 726,
@@ -477,8 +490,9 @@ function connectorGroup() {
     {
       link: 'connector-inside-node',
       text: 'Connector Inside Node',
+      pageTitle: 'Angular Diagram Example – Place Connectors Inside Nodes',
       description:
-        'Place connectors inside nodes for compact UIs. Alignment, routing and a practical Angular example.',
+        'Place connectors inside Angular nodes to keep ports close to the fields or actions they represent. A practical pattern for compact editor UIs.',
       image: './previews/examples/connector-inside-node.light.png',
       image_dark: './previews/examples/connector-inside-node.dark.png',
       image_width: 726,
@@ -489,8 +503,9 @@ function connectorGroup() {
     {
       link: 'connector-outlet',
       text: 'Connector Outlet',
+      pageTitle: 'Angular Diagram Example – Connector Outlet for Branching Nodes',
       description:
-        'Control connectors via outlets and route multiple edges. Clean patterns for complex flows in Angular.',
+        'Use outlet connectors to control where edges leave a node. Cleaner fan-out, clearer branching, and better routing for Angular workflow builders.',
       image: './previews/examples/connector-outlet.light.png',
       image_dark: './previews/examples/connector-outlet.dark.png',
       image_width: 726,
@@ -501,8 +516,9 @@ function connectorGroup() {
     {
       link: 'limiting-connections',
       text: 'Limiting Connections',
+      pageTitle: 'Angular Diagram Example – Limit Connections per Port or Node',
       description:
-        'Limit connections per node or port with validation rules. Prevent spaghetti graphs in Angular diagrams.',
+        'Restrict how many connections a node or port can accept in Angular. Enforce graph rules early and prevent invalid or messy states.',
       image: './previews/examples/limiting-connections.light.png',
       image_dark: './previews/examples/limiting-connections.dark.png',
       image_width: 726,
@@ -573,8 +589,9 @@ function connectionGroup() {
     {
       link: 'create-node-on-connection-drop',
       text: 'Create Node on Connection Drop',
+      pageTitle: 'Angular Workflow Builder Example – Create a Node on Connection Drop',
       description:
-        'Create a node when an edge is dropped. Context-aware creation and UX details — Angular example.',
+        'Create a new node when a dragged connection is dropped into empty space. A fast, product-style pattern for Angular workflow builders.',
       image: './previews/examples/create-node-on-connection-drop.light.png',
       image_dark: './previews/examples/create-node-on-connection-drop.dark.png',
       image_width: 791,
@@ -585,8 +602,9 @@ function connectionGroup() {
     {
       link: 'remove-connection-on-drop',
       text: 'Remove Connection on Drop',
+      pageTitle: 'Angular Diagram Example – Remove Connections on Drop',
       description:
-        'Remove a connection on drop to trash/invalid targets. Guards, feedback and concise Angular code.',
+        'Remove an existing connection as part of drag-and-drop editing. Useful for faster rewiring and cleaner Angular graph UX.',
       image: './previews/examples/remove-connection-on-drop.light.png',
       image_dark: './previews/examples/remove-connection-on-drop.dark.png',
       image_width: 791,
@@ -597,8 +615,9 @@ function connectionGroup() {
     {
       link: 'assign-node-to-connection-on-drop',
       text: 'Assign Node to Connection on Drop',
+      pageTitle: 'Angular Workflow Builder Example – Insert a Node into a Connection',
       description:
-        'Assign a node to an existing edge when dropped on it. Mid-edge targets, events and Angular demo.',
+        'Drop a node onto an existing edge to insert it into the graph. A practical pattern for Angular workflow builders and AI pipelines.',
       image: './previews/examples/assign-node-to-connection-on-drop.light.png',
       image_dark: './previews/examples/assign-node-to-connection-on-drop.dark.png',
       image_width: 791,
@@ -635,8 +654,9 @@ function connectionGroup() {
     {
       link: 'custom-connection-type',
       text: 'Custom Connection Type',
+      pageTitle: 'Angular Diagram Example – Custom Connection Type in Foblex Flow',
       description:
-        'Define your own connection style and behavior. Full example with rendering, hit-tests, and interaction hooks.',
+        'Define a reusable custom connection type with its own rendering and interaction model. Useful when different edge classes carry different meaning.',
       image: './previews/examples/custom-connection-type.light.png',
       image_dark: './previews/examples/custom-connection-type.dark.png',
       image_width: 791,
@@ -647,8 +667,9 @@ function connectionGroup() {
     {
       link: 'connection-behaviours',
       text: 'Connection Behaviours',
+      pageTitle: 'Angular Diagram Example – Custom Connection Behaviours',
       description:
-        'Customize connection behavior: snapping, rerouting, constraints and hover feedback for Angular diagrams.',
+        'Apply different behaviors to different connections in the same Angular editor. Useful for mixed graphs with strict and flexible edge rules.',
       image: './previews/examples/connection-behaviours.light.png',
       image_dark: './previews/examples/connection-behaviours.dark.png',
       image_width: 791,
@@ -706,8 +727,9 @@ function connectionGroup() {
     {
       link: 'custom-connections',
       text: 'Custom Connections',
+      pageTitle: 'Angular Diagram Example – Fully Custom Connections',
       description:
-        'Build fully custom connections: drawing, routing and interactivity. Complete Angular example with code.',
+        'Build fully custom Angular connections with your own drawing, routing, and interaction logic for domain-specific graph products.',
       image: './previews/examples/custom-connections.light.png',
       image_dark: './previews/examples/custom-connections.dark.png',
       image_width: 791,
@@ -764,10 +786,10 @@ function extensionGroup() {
     },
     {
       link: 'help-in-positioning',
-      text: 'Help in Positioning (Legacy',
+      text: 'Help in Positioning (Legacy)',
       pageTitle: 'Angular Diagram Example – Legacy Node Alignment Helpers (Deprecated)',
       description:
-        'Legacy demo of node alignment helpers: snap lines and basic guides. Kept for reference; use Magnetic Lines and Magnetic Rects for the latest UX.',
+        'Legacy node alignment helper example kept for reference. For new projects, use Magnetic Lines and Magnetic Rects instead.',
       image: './previews/examples/help-in-positioning.light.png',
       image_dark: './previews/examples/help-in-positioning.dark.png',
       image_width: 821,
@@ -875,6 +897,42 @@ function extensionGroup() {
 function advancedGroup() {
   return defineNavigationGroup('Advanced', [
     {
+      link: 'stress-test',
+      text: 'Large Scene Performance',
+      pageTitle:
+        'Angular Diagram Performance Example – Large Scene Performance with Cache and Virtualization',
+      image: './previews/examples/stress-test.light.png',
+      image_dark: './previews/examples/stress-test.dark.png',
+      description:
+        'Measure large scene performance with 200 to 5000 nodes, optional cache, progressive virtualization, and toggleable connections in Angular Foblex Flow.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+    {
+      link: 'stress-test-with-connections',
+      text: 'Connection Redraw Performance',
+      pageTitle:
+        'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
+      image: './previews/examples/stress-test-with-connections.light.png',
+      image_dark: './previews/examples/stress-test-with-connections.dark.png',
+      description:
+        'Measure dense fan-out connection redraws with switchable behaviors, path types, live updates, and custom markers in an Angular Foblex Flow example.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+    {
       link: 'copy-paste',
       text: 'Cut/Copy/Paste',
       description:
@@ -946,8 +1004,9 @@ function advancedGroup() {
     {
       link: 'drag-start-end-events',
       text: 'Drag Start/End Events',
+      pageTitle: 'Angular Diagram Example – Drag Start and End Events',
       description:
-        'Listen to drag start and end events on nodes and edges. Clean event patterns with Angular example.',
+        'Track drag start and end events for nodes and edges in Angular. Useful for helper UI, analytics, and external state coordination.',
       image: './previews/examples/drag-start-end-events.light.png',
       image_dark: './previews/examples/drag-start-end-events.dark.png',
       image_width: 781,
@@ -971,17 +1030,24 @@ function advancedGroup() {
 }
 
 function proExamplesGroup() {
-  return defineNavigationGroup('Pro Examples', [
+  return defineNavigationGroup('Reference Apps', [
     {
-      text: 'Visual Programming',
+      text: 'AI Low-Code Platform',
       link: 'ai-low-code-platform',
+      pageTitle:
+        'Angular AI Low-Code IDE Example – Flagship Product-Style Demo with Foblex Flow',
       description:
-        'Visual programming editor in Angular: create nodes, connect logic and run workflows in an interactive diagram.',
-      image: './previews/examples/vp-flow.light.png',
-      image_dark: './previews/examples/vp-flow.dark.png',
-      image_width: 757,
-      image_height: 600,
+        'Flagship front-end-only AI low-code IDE demo in Angular with custom nodes, JSON import/export, multiple themes, right-side config panels, validation reflected on nodes, undo/redo, persistence, multi-select, and animated connections.',
+      image: './previews/examples/ai-low-code.light.png',
+      image_dark: './previews/examples/ai-low-code.dark.png',
+      image_width: 3700,
+      image_height: 2080,
       image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       text: 'DB Management',

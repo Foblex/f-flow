@@ -1,5 +1,5 @@
 import { Directive, effect, inject, Injector, input, OnInit, untracked } from '@angular/core';
-import { NotifyDataChangedRequest } from '../../../f-storage';
+import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FMediator } from '@foblex/mediator';
 import { castToEnum } from '@foblex/utils';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
@@ -71,7 +71,7 @@ export class FConnectionContent extends FConnectionContentBase implements OnInit
         this.offset();
         this.position();
         this.align();
-        untracked(() => this._mediator.execute(new NotifyDataChangedRequest()));
+        untracked(() => this._mediator.execute(new EmitConnectionsChangesRequest()));
       },
       { injector: this._injector },
     );

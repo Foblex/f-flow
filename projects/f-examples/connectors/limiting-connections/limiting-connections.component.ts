@@ -1,41 +1,36 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 
 @Component({
   selector: 'limiting-connections',
-  styleUrls: [ './limiting-connections.component.scss' ],
+  styleUrls: ['./limiting-connections.component.scss'],
   templateUrl: './limiting-connections.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-  ]
+  imports: [FFlowModule],
 })
 export class LimitingConnectionsComponent {
+  private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  @ViewChild(FCanvasComponent, { static: true })
-  public fCanvas!: FCanvasComponent;
+  protected readonly connections = signal<
+    {
+      from: string;
+      to: string;
+    }[]
+  >([]);
 
-  public connections: { from: string, to: string }[] = [];
-
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
+  protected loaded(): void {
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
-  public onLoaded(): void {
-    this.fCanvas.resetScaleAndCenter(false);
-  }
-
-  public onCreateConnection(event: FCreateConnectionEvent): void {
-    if (!event.fInputId) {
+  protected createConnection(event: FCreateConnectionEvent): void {
+    if (!event.targetId) {
       return;
     }
-    this.connections.push({ from: event.fOutputId, to: event.fInputId });
+    this.connections.update((x) => x.concat({ from: event.sourceId, to: event.targetId! }));
   }
 
-  public onDeleteConnections(): void {
-    this.connections = [];
-    this.changeDetectorRef.detectChanges();
+  protected deleteConnections(): void {
+    this.connections.set([]);
   }
 }

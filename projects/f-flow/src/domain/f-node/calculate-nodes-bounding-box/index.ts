@@ -1,3 +1,3 @@
 export * from './calculate-nodes-bounding-box';
 
-export * from './calculate-nodes-bounding-box.request';
+export * from './calculate-nodes-bounding-box-request';

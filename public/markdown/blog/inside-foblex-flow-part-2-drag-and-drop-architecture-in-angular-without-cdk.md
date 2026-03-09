@@ -2,18 +2,24 @@
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-2-drag-and-drop-architecture-in-angular-without-cdk-bfe3dce097a3"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Inside Foblex Flow — Part 2: Drag-and-Drop Architecture in Angular Without CDK"
-description: "When we think about node-based editors, the first thing that stands out is the interaction with on-screen elements. Dragging nodes, connecting ports, zooming the canvas — that’s what brings the interface to life."
+description: "Inside Foblex Flow Part 2 explains the custom drag-and-drop architecture behind Angular node editors, connections, and canvas interactions."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Custom drag-and-drop engine architecture in Foblex Flow."
+primaryKeyword: "angular drag and drop architecture"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-08-23"
+updatedAt: "2026-03-08"
 ---
 
-![](https://cdn-images-1.medium.com/max/1024/1*4toRlIn0M9Tm0gAIOKabbA.png)
+# Inside Foblex Flow — Part 2: Drag-and-Drop Architecture in Angular Without CDK
 
-### Inside Foblex Flow — Part 2: Drag-and-Drop Architecture in Angular Without CDK
-
-When we think about node-based editors, the first thing that stands out is the interaction with on-screen elements. Dragging nodes, connecting ports, zooming the canvas — that’s what brings the interface to life.
+This article looks at the drag-and-drop engine behind Foblex Flow and why custom interaction infrastructure was necessary for Angular node editors beyond simple list dragging.
 
 Without a well-designed drag-and-drop system, the entire editor turns into a static image. That’s why, during the development of [Foblex Flow](https://flow.foblex.com/), we decided to build our own engine for handling events and drag sessions.
+
+![](https://cdn-images-1.medium.com/max/1024/1*4toRlIn0M9Tm0gAIOKabbA.png)
 
 > 🛠 [Sources](https://github.com/Foblex/f-flow)
 

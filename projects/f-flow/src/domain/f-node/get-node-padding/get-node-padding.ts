@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { GetNodePaddingRequest } from './get-node-padding.request';
+import { GetNodePaddingRequest } from './get-node-padding-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { IRect } from '@foblex/2d';
@@ -11,16 +11,19 @@ import { BrowserService } from '@foblex/platform';
  */
 @Injectable()
 @FExecutionRegister(GetNodePaddingRequest)
-export class GetNodePadding
-  implements IExecution<GetNodePaddingRequest, [ number, number, number, number ]> {
-
+export class GetNodePadding implements IExecution<
+  GetNodePaddingRequest,
+  [number, number, number, number]
+> {
   private readonly _browser = inject(BrowserService);
 
-  public handle(request: GetNodePaddingRequest): [ number, number, number, number ] {
-    return request.fNode.fIncludePadding() ? this.getPaddingData(request.fNode, request.rect) : [ 0, 0, 0, 0 ];
+  public handle(request: GetNodePaddingRequest): [number, number, number, number] {
+    return request.fNode.fIncludePadding()
+      ? this._getPaddingData(request.fNode, request.rect)
+      : [0, 0, 0, 0];
   }
 
-  private getPaddingData(node: FNodeBase, rect: IRect): [ number, number, number, number ] {
+  private _getPaddingData(node: FNodeBase, rect: IRect): [number, number, number, number] {
     const style = this._browser.window.getComputedStyle(node.hostElement);
 
     return [

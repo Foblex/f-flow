@@ -2,16 +2,20 @@
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-1-library-architecture-and-design-principles-3c0a6ed81087"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Inside Foblex Flow — Part 1: Library Architecture and Design Principles"
-description: "Node-based interfaces are everywhere today: low-code platforms, workflow editors, chatbot builders, business automation systems, ETL tools. Visual logic modeling allows users to “assemble a program” without code by dragging blocks and conne"
+description: "Inside Foblex Flow Part 1 explains the architecture and design principles behind an Angular-native node-based UI library."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Architecture and design principles behind Foblex Flow."
+primaryKeyword: "angular node editor architecture"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-08-19"
+updatedAt: "2026-03-08"
 ---
 
-![](https://cdn-images-1.medium.com/max/1024/1*C5fuysW8hY46nNZDRiJgIA.png)
+# Inside Foblex Flow — Part 1: Library Architecture and Design Principles
 
-### Inside Foblex Flow — Part 1: Library Architecture and Design Principles
-
-Node-based interfaces are everywhere today: low-code platforms, workflow editors, chatbot builders, business automation systems, ETL tools. Visual logic modeling allows users to “assemble a program” without code by dragging blocks and connecting them with arrows.
+This article explains the architectural choices behind Foblex Flow and why the library is designed as Angular-native interaction infrastructure rather than a full graph data platform.
 
 But if you work with **Angular**, you’ll quickly face a problem:
 
@@ -29,6 +33,8 @@ That’s why we built [**Foblex Flow**](https://flow.foblex.com/) — a libr
 In this series, we’ll look inside the library — how it works, which principles guide its design, and which architectural decisions make it lightweight and universal.
 
 We’ll start with the foundation: **architecture and design principles**.
+
+![](https://cdn-images-1.medium.com/max/1024/1*C5fuysW8hY46nNZDRiJgIA.png)
 
 <https://github.com/Foblex/f-flow>
 

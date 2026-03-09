@@ -1,0 +1,20 @@
+@use '../../flow-common';
+
+::ng-deep f-flow {
+  @include flow-common.connection;
+}
+
+.f-selection-area {
+  background-color: var(--selection-area-color);
+}
+
+.f-node {
+  @include flow-common.node;
+  width: unset;
+
+  &.f-selected {
+    border: 1px solid var(--node-selected-border-color);
+  }
+}
+
+@include flow-common.examples-toolbar;

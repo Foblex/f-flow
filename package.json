@@ -1,12 +1,12 @@
 {
   "version": "18.1.0",
-  "description": "An Angular library designed to simplify the creation and manipulation of dynamic flow. Provides components for flows, nodes, and connections, automating node manipulation and inter-node connections.",
+  "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
   "docs": "https://flow.foblex.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/foblex/flow.git"
+    "url": "git+https://github.com/Foblex/f-flow.git"
   },
   "license": "MIT",
   "scripts": {
@@ -80,7 +80,7 @@
     "@angular/ssr": "18.2.19",
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
-    "@foblex/m-render": "^3.0.2",
+    "@foblex/m-render": "^3.0.5",
     "@foblex/mediator": "1.1.3",
     "@foblex/mutator": "^1.0.7",
     "@foblex/platform": "1.0.4",

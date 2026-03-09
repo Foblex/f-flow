@@ -1,17 +1,21 @@
-﻿# Adding a Node from the Palette
+---
+toc: false
+wideContent: true
+summary: "Drag new node types from a palette into the flow canvas."
+primaryKeyword: "angular node palette example"
+schemaType: "TechArticle"
+author: "Siarhei Huzarevich"
+publishedAt: "2026-03-08"
+updatedAt: "2026-03-08"
+---
+
+# Adding a Node from the Palette
 
 ## Description
 
-This guide shows how to add [fNode](./docs/f-node-directive) to the [f-canvas](./docs/f-canvas-component) using the [fExternalItem](./docs/f-external-item-directive) directive. 
-The directive allows placing elements outside the [f-canvas](./docs/f-canvas-component) and moving them onto it.
-It supports features like Preview and Placeholder elements to manage the visual representation during interactions. 
-External items can be dragged onto the [f-canvas](./docs/f-canvas-component) while preserving predefined parameters using the **fData** attribute.
+This guide shows how to add [fNode](./docs/f-node-directive) to the [f-canvas](./docs/f-canvas-component) using the [fExternalItem](./docs/f-external-item-directive) directive. The directive allows placing elements outside the canvas and moving them onto it while preserving metadata through `fData`.
 
-#### Directive Features
-
--	**fExternalItem** — links an element to the canvas, enabling movement and integration into the overall structure.
--	**fPlaceholder** and **fPreview** — provide mechanisms to add placeholder and preview elements.
--	**fPreviewMatchSize** — synchronizes the size of the **fExternalItem** with its preview to ensure consistent display.
+This pattern is useful in real workflow builders where users pick a node type from a sidebar or command palette, then drop it onto the canvas to create a new graph element.
 
 ## Example
 
@@ -22,4 +26,20 @@ External items can be dragged onto the [f-canvas](./docs/f-canvas-component) whi
 [common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
+## What this solves
 
+- Build a node toolbox without coupling the palette to node rendering.
+- Keep node creation explicit and easy to understand.
+- Add previews and placeholders during drag operations.
+
+#### Directive Features
+
+- **fExternalItem** links an element to the canvas so it can create nodes on drop.
+- **fPlaceholder** and **fPreview** let you render dedicated drag states.
+- **fPreviewMatchSize** keeps the preview aligned with the original palette item.
+
+## Related docs
+
+- [External Item](./docs/f-external-item-directive)
+- [Flow](./docs/f-flow-component)
+- [AI Low-Code Platform Example](./examples/ai-low-code-platform)

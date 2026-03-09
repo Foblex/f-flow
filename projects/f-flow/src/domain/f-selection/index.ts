@@ -4,7 +4,7 @@ export * from './calculate-selectable-items';
 
 export * from './get-current-selection';
 
-export * from './select';
+export * from './select-items';
 
 export * from './select-all';
 

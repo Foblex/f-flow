@@ -2,14 +2,20 @@
 origin: "https://javascript.plainenglish.io/building-visual-interfaces-in-angular-introducing-foblex-flow-5a508e0b4a15"
 originLabel: "Originally published on JavaScript in Plain English"
 title: "Building Visual Interfaces in Angular — Introducing Foblex Flow"
-description: "Introduction to the series and the Foblex Flow library — a flexible tool for creating flow-based UIs in Angular."
+description: "Start this Angular tutorial series on building node-based UIs, workflow builders, and visual editors with Foblex Flow in Angular apps."
 ogType: "article"
 twitterCard: "summary_large_image"
+summary: "Series introduction to Foblex Flow as an Angular-native node-based UI library."
+primaryKeyword: "angular node based ui tutorial"
+schemaType: "Article"
+author: "Siarhei Huzarevich"
+publishedAt: "2025-06-15"
+updatedAt: "2026-03-08"
 ---
 
 # Building AI Low-Code Platform in Angular— Part 1: Introduction to Foblex Flow
 
-Introduction to the series and the Foblex Flow library — a flexible tool for creating flow-based UIs in Angular. Learn the core concepts behind low-code architecture.
+This article opens the series on building node-based UIs in Angular with Foblex Flow. If you are evaluating Angular workflow builders, custom node editors, or visual automation tools, this is the best place to start before jumping into code.
 
 ## ✍ Introduction
 

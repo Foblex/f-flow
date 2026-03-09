@@ -1,14 +1,14 @@
-import {ChangeDetectionStrategy, Component, signal, viewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import {
   FCanvasComponent,
   FCreateNodeEvent,
-  FExternalItemDirective,
-  FExternalItemPlaceholderDirective,
-  FExternalItemPreviewDirective,
-  FFlowModule
+  FExternalItem,
+  FExternalItemPlaceholder,
+  FExternalItemPreview,
+  FFlowModule,
 } from '@foblex/flow';
-import {generateGuid} from '@foblex/utils';
-import {FCheckboxComponent} from '@foblex/m-render';
+import { generateGuid } from '@foblex/utils';
+import { FCheckboxComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'add-node-from-palette',
@@ -18,25 +18,27 @@ import {FCheckboxComponent} from '@foblex/m-render';
   standalone: true,
   imports: [
     FFlowModule,
-    FExternalItemDirective,
-    FExternalItemPlaceholderDirective,
-    FExternalItemPreviewDirective,
+    FExternalItem,
+    FExternalItemPlaceholder,
+    FExternalItemPreview,
     FCheckboxComponent,
-  ]
+  ],
 })
 export class AddNodeFromPaletteComponent {
+  protected nodes = signal([
+    {
+      id: generateGuid(),
+      text: 'node 1',
+      position: { x: 0, y: 0 },
+    },
+    {
+      id: generateGuid(),
+      text: 'node 2',
+      position: { x: 200, y: 0 },
+    },
+  ]);
 
-  protected nodes = signal([{
-    id: generateGuid(),
-    text: 'node 1',
-    position: {x: 0, y: 0},
-  }, {
-    id: generateGuid(),
-    text: 'node 2',
-    position: {x: 200, y: 0},
-  }]);
-
-  protected isMatchSize = signal(false)
+  protected isMatchSize = signal(false);
 
   protected fCanvas = viewChild(FCanvasComponent);
 
@@ -45,11 +47,14 @@ export class AddNodeFromPaletteComponent {
   }
 
   protected onCreateNode(event: FCreateNodeEvent): void {
-    this.nodes.set([...this.nodes(), {
-      id: generateGuid(),
-      text: event.data || 'node ' + (this.nodes().length + 1),
-      position: event.rect,
-    }]);
+    this.nodes.set([
+      ...this.nodes(),
+      {
+        id: generateGuid(),
+        text: event.data || 'node ' + (this.nodes().length + 1),
+        position: event.rect,
+      },
+    ]);
   }
 
   protected onPreviewMatchSizeChange(checked: boolean): void {

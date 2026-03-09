@@ -3,7 +3,7 @@ import { DropToGroupPreparationRequest } from './drop-to-group-preparation-reque
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IRect } from '@foblex/2d';
 import {
   GetChildNodeIdsRequest,
   GetNormalizedElementRectRequest,
@@ -13,9 +13,9 @@ import { FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { DragNodeHandler } from '../../drag-node';
-import { FExternalItemDragHandler } from '../../../f-external-item';
 import { SortDropCandidatesByLayerRequest } from '../sort-drop-candidates-by-layer';
 import { DragHandlerInjector } from '../../infrastructure';
+import { DragExternalItemHandler } from '../../drag-external-item';
 
 @Injectable()
 @FExecutionRegister(DropToGroupPreparationRequest)
@@ -27,14 +27,6 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
 
   private get _allNodes(): FNodeBase[] {
     return this._store.nodes.getAll();
-  }
-
-  private get _transform(): ITransformModel {
-    return this._store.transform;
-  }
-
-  private get _canvasOffset(): IPoint {
-    return PointExtensions.sum(this._transform.position, this._transform.scaledPosition);
   }
 
   public handle({ event }: DropToGroupPreparationRequest): void {
@@ -76,7 +68,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
   }
 
   private _hasExternalDrag(): boolean {
-    return this._dragContext.draggableItems.some((x) => x instanceof FExternalItemDragHandler);
+    return this._dragContext.draggableItems.some((x) => x instanceof DragExternalItemHandler);
   }
 
   private _sortedTargetsForDrop(): INodeWithRect[] {
@@ -91,7 +83,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
         new GetNormalizedElementRectRequest(node.hostElement),
       );
 
-      return { node, rect: this._toCanvasRect(rect) };
+      return { node, rect };
     });
 
     return this._mediator.execute<INodeWithRect[]>(new SortDropCandidatesByLayerRequest(targets));
@@ -118,16 +110,5 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     const nonDragged = this._allNodes.filter((n) => !draggedWithParents.includes(n));
 
     return draggingGroup ? nonDragged.filter((n) => n instanceof FGroupDirective) : nonDragged;
-  }
-
-  private _toCanvasRect(rect: IRect): IRect {
-    const scale = this._transform.scale;
-
-    return RectExtensions.initialize(
-      rect.x * scale + this._canvasOffset.x,
-      rect.y * scale + this._canvasOffset.y,
-      rect.width * scale,
-      rect.height * scale,
-    );
   }
 }

@@ -35,7 +35,7 @@ import {
 } from '../domain';
 import {
   FComponentsStore,
-  ListenDataChangesRequest,
+  ListenConnectionsChangesRequest,
   NotifyTransformChangedRequest,
 } from '../f-storage';
 import { FFlowBase } from '../f-flow';
@@ -90,7 +90,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     viewChild.required<ElementRef<HTMLElement>>('fConnectionsContainer');
 
   public get flowId(): string {
-    return this._flowId!;
+    return this._flowId || '';
   }
 
   public ngOnInit(): void {
@@ -124,10 +124,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public override redraw(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
-    this.hostElement.setAttribute(
-      'style',
-      `transform: ${TransformModelExtensions.toString(this.transform)}`,
-    );
+    this.hostElement.style.removeProperty('transition');
+    this.hostElement.style.transform = TransformModelExtensions.toString(this.transform);
     this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
@@ -138,10 +136,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public override redrawWithAnimation(): void {
     this._mediator.execute(new SetBackgroundTransformRequest(this.transform));
-    this.hostElement.setAttribute(
-      'style',
-      `transition: transform ${isMobile() ? 80 : 150}ms ease-in-out; transform: ${TransformModelExtensions.toString(this.transform)}`,
-    );
+    this.hostElement.style.transition = `transform ${isMobile() ? 80 : 150}ms ease-in-out`;
+    this.hostElement.style.transform = TransformModelExtensions.toString(this.transform);
     transitionEnd(this.hostElement, () => this.redraw());
   }
 
@@ -214,14 +210,14 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   private _afterRedraw(callback: () => void): void {
-    if (this._componentsStore.dataVersion > 0) {
+    if (this._componentsStore.connectionsRevision > 0) {
       afterNextRender(callback, { injector: this._injector });
 
       return;
     }
 
     this._mediator
-      .execute<FChannelHub>(new ListenDataChangesRequest(false))
+      .execute<FChannelHub>(new ListenConnectionsChangesRequest(false))
       .pipe(takeOne())
       .listen(this.destroyRef, callback);
   }

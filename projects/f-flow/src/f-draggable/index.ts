@@ -2,6 +2,10 @@ export * from './domain';
 
 export * from './drag-canvas';
 
+export * from './drag-external-item';
+
+export * from './drag-minimap';
+
 export * from './connection';
 
 export * from './infrastructure';
@@ -10,9 +14,9 @@ export * from './drop-to-group';
 
 export * from './drag-node';
 
-export * from './f-node-resize';
+export * from './resize-node';
 
-export * from './f-node-rotate';
+export * from './rotate-node';
 
 export * from './pinch-to-zoom';
 
@@ -31,8 +35,6 @@ export * from './f-draggable-base';
 export * from './f-draggable-data-context';
 
 export * from './f-selection-change-event';
-
-export * from './i-f-drag-and-drop-plugin';
 
 export * from './is-drag-blocker';
 

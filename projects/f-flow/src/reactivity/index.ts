@@ -1,3 +1,5 @@
+export * from './after-next-paint';
+
 export * from './debounce-animation-frame';
 
 export * from './debounce-microtask';

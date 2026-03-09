@@ -1,4 +1,4 @@
-describe('Grouping — drag child group into parent and expand parent', () => {
+describe('Grouping - drag child group into parent and expand parent', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/examples/grouping');
     cy.get('f-flow').scrollIntoView();

@@ -1,3 +1,3 @@
-export * from './clear-selection.execution';
+export * from './clear-selection';
 
-export * from './clear-selection.request';
+export * from './clear-selection-request';

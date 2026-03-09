@@ -1,10 +1,13 @@
 import {
   AfterContentInit,
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
+  Injector,
   input,
   OnDestroy,
   OnInit,
@@ -12,36 +15,39 @@ import {
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
-  ClearSelectionRequest,
+  AddFlowToStoreRequest,
+  CalculateFlowStateRequest,
   CalculateNodesBoundingBoxNormalizedPositionRequest,
-  GetNormalizedPointRequest,
+  ClearSelectionRequest,
+  COMMON_PROVIDERS,
   GetCurrentSelectionRequest,
+  GetNormalizedPointRequest,
+  ICurrentSelection,
+  IFFlowState,
+  IsDragStartedRequest,
   RedrawConnectionsRequest,
+  RemoveFlowFromStoreRequest,
   SelectAllRequest,
   SelectRequest,
-  IFFlowState,
-  CalculateFlowStateRequest,
-  RemoveFlowFromStoreRequest,
-  AddFlowToStoreRequest,
   SortItemLayersRequest,
-  ICurrentSelection,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { FDraggableDataContext } from '../f-draggable';
+import { F_DRAGGABLE_PROVIDERS, FDraggableDataContext } from '../f-draggable';
 import {
-  NotifyDataChangedRequest,
+  EmitConnectionsChangesRequest,
   F_STORAGE_PROVIDERS,
-  ListenCountChangesRequest,
-  ListenDataChangesRequest,
+  ListenConnectionsChangesRequest,
+  ListenNodesChangesRequest,
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
-import { COMMON_PROVIDERS } from '../domain';
-import { F_DRAGGABLE_PROVIDERS } from '../f-draggable';
-import { FChannelHub, takeOne } from '../reactivity';
+import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
+import { F_CACHE_OPTIONS } from '../f-cache';
+import { F_CONNECTION_WORKER_FEATURES, FConnectionWorker } from '../f-connection-worker';
 
 let uniqueId = 0;
+const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
 
 @Component({
   selector: 'f-flow',
@@ -55,6 +61,7 @@ let uniqueId = 0;
   providers: [
     FMediator,
     ...F_STORAGE_PROVIDERS,
+    ...F_CONNECTION_WORKER_FEATURES,
     ConnectionLineBuilder,
     ConnectionBehaviourBuilder,
     ...COMMON_PROVIDERS,
@@ -67,14 +74,15 @@ let uniqueId = 0;
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
-  private readonly _browserService = inject(BrowserService);
-  private readonly _elementReference = inject(ElementRef);
+  private readonly _browser = inject(BrowserService);
+  private readonly _cache = inject(F_CACHE_OPTIONS);
+  private readonly _injector = inject(Injector);
+  private readonly _worker = inject(FConnectionWorker);
 
   public override fId = input<string>(`f-flow-${uniqueId++}`, { alias: 'fFlowId' });
+  public override fCache = input(false, { transform: booleanAttribute });
 
-  public override get hostElement(): HTMLElement {
-    return this._elementReference.nativeElement;
-  }
+  public override readonly hostElement = inject(ElementRef).nativeElement;
 
   public override fLoaded = output<string>();
 
@@ -82,31 +90,52 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public ngOnInit(): void {
     this._mediator.execute(new AddFlowToStoreRequest(this));
+    this._listenCacheChanges();
   }
 
   public ngAfterContentInit(): void {
-    if (!this._browserService.isBrowser()) {
+    if (!this._browser.isBrowser()) {
       return;
     }
-    this._listenCountChanges();
-    this._listenDataChanges();
+    this._listenNodesChanges();
+    this._listenConnectionsChanges();
   }
 
-  private _listenCountChanges(): void {
+  public _listenCacheChanges(): void {
+    effect(
+      () => {
+        this._cache.enabled = this.fCache();
+      },
+      { injector: this._injector },
+    );
+  }
+
+  private _listenNodesChanges(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenCountChangesRequest())
+      .execute<FChannelHub>(new ListenNodesChangesRequest())
+      .pipe(notifyOnStart(), debounceTime(SORT_ITEM_LAYERS_DEBOUNCE_MS), afterNextPaint())
       .listen(this._destroyRef, () => {
+        if (this._mediator.execute(new IsDragStartedRequest())) {
+          return;
+        }
+
         this._mediator.execute(new SortItemLayersRequest());
+        this._mediator.execute<void>(new EmitConnectionsChangesRequest());
+
+        this._emitLoaded();
       });
   }
 
-  private _listenDataChanges(): void {
+  private _listenConnectionsChanges(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
+      .pipe(afterNextPaint())
       .listen(this._destroyRef, () => {
-        this._mediator.execute(new RedrawConnectionsRequest());
+        if (this._mediator.execute(new IsDragStartedRequest())) {
+          return;
+        }
 
-        this._emitLoaded();
+        this._mediator.execute(new RedrawConnectionsRequest());
       });
   }
 
@@ -118,7 +147,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public redraw(): void {
-    this._mediator.execute(new NotifyDataChangedRequest());
+    this._mediator.execute(new EmitConnectionsChangesRequest());
   }
 
   public reset(): void {
@@ -145,7 +174,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public selectAll(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
       .pipe(takeOne())
       .listen(this._destroyRef, () => {
         this._mediator.execute<void>(new SelectAllRequest());
@@ -166,7 +195,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
    */
   public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
     this._mediator
-      .execute<FChannelHub>(new ListenDataChangesRequest())
+      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
       .pipe(takeOne())
       .listen(this._destroyRef, () => {
         this._mediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
@@ -178,6 +207,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngOnDestroy(): void {
+    this._worker.dispose();
     this._mediator.execute(new RemoveFlowFromStoreRequest());
   }
 }

@@ -6,13 +6,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to suggest a feature!
+        Thanks for taking the time to suggest a feature.
+
+        Please keep each issue focused on one user-facing goal. Describe the problem first, then the desired solution.
 
   - type: textarea
     id: description
     attributes:
       label: Describe the Feature
-      placeholder: A clear and concise description of the feature.
+      description: Describe the user-facing capability you want to add.
+      placeholder: |
+        Allow wheel zoom to stay available during active drag-and-drop interactions.
     validations:
       required: true
 
@@ -20,7 +24,48 @@ body:
     id: usecase
     attributes:
       label: What problem does it solve?
-      placeholder: Describe the problem or use case.
+      description: Explain the actual workflow or limitation behind the request.
+      placeholder: |
+        Large diagrams often require zooming while dragging nodes or connections. Blocking zoom during drag makes editing slower and less predictable.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: api_impact
+    attributes:
+      label: Public API impact
+      description: Tell us whether this feature changes the public library contract.
+      options:
+        - No public API change
+        - Adds public API
+        - Changes public API
+        - Breaking change
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: List the main scenarios, modules, or examples this issue should cover.
+      placeholder: |
+        - support wheel zoom during node drag
+        - support wheel zoom during connection drag
+        - keep drag context stable after scale changes
+        - document the behavior in examples or changelog if needed
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define what must be true for this issue to be done.
+      placeholder: |
+        - feature works in the supported scenarios
+        - no regression in existing interactions
+        - tests or examples cover the new behavior
+        - docs are updated if the change is user-visible
     validations:
       required: true
 
@@ -28,6 +73,7 @@ body:
     id: alternatives
     attributes:
       label: Have you considered any alternatives?
+      description: Optional. Mention workarounds, related APIs, or alternative approaches.
       placeholder: Describe any workarounds you've tried.
     validations:
       required: false

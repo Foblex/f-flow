@@ -71,7 +71,7 @@ export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGr
 
   private _calculateChildrenBounding(
     directChildren: FNodeBase[],
-    [top, right, bottom, left]: [number, number, number, number],
+    [left, top, right, bottom]: [number, number, number, number],
   ): IRect {
     let childrenBounding = this._unionRect(directChildren);
     childrenBounding = RectExtensions.initialize(

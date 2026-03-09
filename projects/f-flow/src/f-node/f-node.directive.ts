@@ -130,6 +130,10 @@ export class FNodeDirective
   }
 
   protected _updateConnectorsSides(): void {
+    if (!this.connectors.length) {
+      return;
+    }
+
     if (this._debounceTimer) {
       clearTimeout(this._debounceTimer);
     }

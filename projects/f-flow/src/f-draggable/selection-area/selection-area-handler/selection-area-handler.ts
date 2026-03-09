@@ -59,7 +59,10 @@ export class SelectionAreaHandler extends DragHandlerBase<unknown> {
     this._canBeSelected.forEach((item) => {
       item.element.unmarkAsSelected();
 
-      const _itemRect = RectExtensions.addPoint(item.fRect, this._canvasPosition);
+      const _itemRect = RectExtensions.addPoint(
+        RectExtensions.mult(item.fRect, this._transform.scale),
+        this._canvasPosition,
+      );
 
       const isIntersect = RectExtensions.intersectionWithRect(_itemRect, _selectionAreaRect);
       if (isIntersect) {

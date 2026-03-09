@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IPoint, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, Point, RectExtensions } from '@foblex/2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
@@ -13,7 +13,7 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
   /** Legacy identifier (external compatibility). */
   protected readonly type = 'move-node-to-parent';
   /** New identifier. */
-  protected readonly kind = 'drop-to-group';
+  protected readonly kind = 'assign-to-container';
 
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);
@@ -24,7 +24,6 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
 
   private _candidateGroups: INodeWithRect[] = [];
 
-  private _pointerDownInFlow = PointExtensions.initialize();
   private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   private _activeTarget: INodeWithRect | null = null;
@@ -35,7 +34,6 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
   }
 
   public initialize(candidateGroups: INodeWithRect[]) {
-    this._pointerDownInFlow = this._dragSession.onPointerDownPosition;
     this._candidateGroups = candidateGroups;
   }
 
@@ -67,8 +65,8 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
   }
 
   private _updateActiveTarget(difference: IPoint): void {
-    const pointerInCanvas = this._getPointerInCanvas(difference);
-    const next = this._findTargetUnderPointer(pointerInCanvas);
+    const pointerInFlow = this._getPointerInFlow(difference);
+    const next = this._findTargetUnderPointer(pointerInFlow);
 
     if (next) {
       this._setActiveTarget(next);
@@ -77,8 +75,15 @@ export class DropToGroupHandler extends DragHandlerBase<unknown> {
     }
   }
 
-  private _getPointerInCanvas(difference: IPoint): IPoint {
-    return Point.fromPoint(this._pointerDownInFlow).add(difference).mult(this._transform.scale);
+  private _getPointerInFlow(difference: IPoint): IPoint {
+    const pointerInScaledFlow = Point.fromPoint(this._dragSession.onPointerDownPosition).add(
+      difference,
+    );
+    const transformOffsetInFlow = Point.fromPoint(this._transform.position)
+      .add(this._transform.scaledPosition)
+      .div(this._transform.scale);
+
+    return pointerInScaledFlow.sub(transformOffsetInFlow);
   }
 
   private _findTargetUnderPointer(pointer: IPoint): INodeWithRect | undefined {

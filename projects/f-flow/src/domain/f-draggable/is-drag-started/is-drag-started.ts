@@ -9,10 +9,9 @@ import { FComponentsStore } from '../../../f-storage';
 @Injectable()
 @FExecutionRegister(IsDragStartedRequest)
 export class IsDragStarted implements IExecution<IsDragStartedRequest, boolean> {
-
   private readonly _store = inject(FComponentsStore);
 
-  public handle(request: IsDragStartedRequest): boolean {
+  public handle(_: IsDragStartedRequest): boolean {
     return !!this._store.fDraggable?.isDragStarted;
   }
 }

@@ -5,7 +5,7 @@ import {
   createPureHarness,
   FComponentsStore,
   FNodeBase,
-  GetDeepChildrenNodesAndGroupsExecution,
+  GetDeepChildrenNodesAndGroups,
   injectFromDi,
   MediatorHarness,
   MoveFrontElementsBeforeTargetElement,
@@ -13,8 +13,8 @@ import {
   registryAddMany,
   SortItemLayers,
   SortItemLayersRequest,
-  SortItemsByParentExecution,
-  SortNodeLayersExecution,
+  SortItemsByParent,
+  SortNodeLayers,
   UpdateItemAndChildrenLayers,
   UpdateItemAndChildrenLayersRequest,
 } from '@foblex/flow';
@@ -34,9 +34,9 @@ describe('UpdateItemAndChildrenLayers', () => {
       providers: [
         UpdateItemAndChildrenLayers,
         SortItemLayers,
-        SortItemsByParentExecution,
-        SortNodeLayersExecution,
-        GetDeepChildrenNodesAndGroupsExecution,
+        SortItemsByParent,
+        SortNodeLayers,
+        GetDeepChildrenNodesAndGroups,
         MoveFrontElementsBeforeTargetElement,
       ],
     });
