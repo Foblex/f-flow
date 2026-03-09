@@ -36,9 +36,9 @@ import { FMediator } from '@foblex/mediator';
 import { F_DRAGGABLE_PROVIDERS, FDraggableDataContext } from '../f-draggable';
 import {
   EmitConnectionsChangesRequest,
+  FComponentsStore,
   F_STORAGE_PROVIDERS,
   ListenConnectionsChangesRequest,
-  ListenNodesChangesRequest,
 } from '../f-storage';
 import { BrowserService } from '@foblex/platform';
 import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
@@ -75,6 +75,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
+  private readonly _componentsStore = inject(FComponentsStore);
   private readonly _cache = inject(F_CACHE_OPTIONS);
   private readonly _injector = inject(Injector);
   private readonly _worker = inject(FConnectionWorker);
@@ -111,11 +112,17 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   private _listenNodesChanges(): void {
-    this._mediator
-      .execute<FChannelHub>(new ListenNodesChangesRequest())
+    new FChannelHub(
+      this._componentsStore.nodesChanges$,
+      this._componentsStore.progressiveRenderChanges$,
+    )
       .pipe(notifyOnStart(), debounceTime(SORT_ITEM_LAYERS_DEBOUNCE_MS), afterNextPaint())
       .listen(this._destroyRef, () => {
         if (this._mediator.execute(new IsDragStartedRequest())) {
+          return;
+        }
+
+        if (this._componentsStore.hasPendingProgressiveRender) {
           return;
         }
 

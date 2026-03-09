@@ -27,12 +27,19 @@ export class FComponentsStore {
   public readonly nodesChanges$ = new FChannel();
   private _nodesRevision = 0;
 
+  public readonly progressiveRenderChanges$ = new FChannel();
+  private _pendingProgressiveRenderCount = 0;
+
   public get connectionsRevision(): number {
     return this._connectionsRevision;
   }
 
   public get nodesRevision(): number {
     return this._nodesRevision;
+  }
+
+  public get hasPendingProgressiveRender(): boolean {
+    return this._pendingProgressiveRenderCount > 0;
   }
 
   public get flowHost(): HTMLElement {
@@ -67,6 +74,20 @@ export class FComponentsStore {
   public emitConnectionChanges(): void {
     this._connectionsRevision++;
     this.connectionsChanges$.notify();
+  }
+
+  public beginProgressiveRender(): void {
+    this._pendingProgressiveRenderCount++;
+    this.progressiveRenderChanges$.notify();
+  }
+
+  public endProgressiveRender(): void {
+    if (!this._pendingProgressiveRenderCount) {
+      return;
+    }
+
+    this._pendingProgressiveRenderCount--;
+    this.progressiveRenderChanges$.notify();
   }
 
   public transformChanged(): void {
