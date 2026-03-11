@@ -48,14 +48,6 @@ For the **drag preview** while the user is creating a new link, use
   Default: `false`.  
   Disables selecting this connection.
 
-- `fStartColor: InputSignal<string>;`  
-  Default: `black`.  
-  Start color for the path gradient.
-
-- `fEndColor: InputSignal<string>;`  
-  Default: `black`.  
-  End color for the path gradient.
-
 - `fBehavior: InputSignal<EFConnectionBehavior>;`  
   Default: `EFConnectionBehavior.FIXED`.  
   Controls how the line behaves relative to endpoints (fixed/floating/etc.).  
@@ -115,6 +107,43 @@ These classes are useful when styling the SVG and interaction affordances:
 - `.f-connection-selection` invisible hit-path (easier selection)
 - `.f-connection-drag-handle` endpoint drag handle circles
 - `.f-connection-content` projected content container (if you project content)
+
+## Projected Gradient
+
+If you want a gradient stroke, project `f-connection-gradient` into the connection.
+The gradient config owns its own colors, while the actual SVG `linearGradient` is created internally by the connection.
+`f-connection` itself no longer owns gradient colors.
+
+```html
+<f-connection fOutputId="out-1" fInputId="in-1">
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-connection>
+```
+
+If no gradient is projected, the connection path uses the normal single-color stroke styling.
+
+Migration from the old API:
+
+```html
+<!-- Old -->
+<f-connection
+  fOutputId="out-1"
+  fInputId="in-1"
+  fStartColor="#4f46e5"
+  fEndColor="#06b6d4"
+></f-connection>
+
+<!-- New -->
+<f-connection fOutputId="out-1" fInputId="in-1">
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-connection>
+```
 
 ## Notes and pitfalls
 

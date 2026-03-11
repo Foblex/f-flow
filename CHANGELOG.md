@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Highlights
+
+- **Projected connection gradients** - gradient strokes are now opt-in through projected `f-connection-gradient` config instead of always living on the connection component itself.
+- **Docs and examples updated** - the custom connection example and connection guides now show the projected gradient pattern and explain the migration path from the old API.
+
+### Improvements
+
+- Gradient DOM identifiers now stay stable per connection instance, even when a connection is reassigned to different source or target connectors.
+- Gradient rendering now avoids unnecessary DOM writes for unchanged coordinates and colors.
+
+### Documentation
+
+- Updated `f-connection`, `f-connection-for-create`, and `f-snap-connection` guides to document projected gradient usage.
+- Updated the connection gradients example page to explain when and why projected gradients should be used.
+
+### ⚠️ Breaking Changes
+
+#### Connection gradient colors moved off the connection components
+
+Gradient colors are no longer configured directly on:
+
+- `f-connection`
+- `f-connection-for-create`
+- `f-snap-connection`
+
+Use projected `f-connection-gradient` instead.
+
+### Migration Notes
+
+Move gradient colors from the connection inputs to the projected gradient config:
+
+```html
+<!-- Old -->
+<f-connection
+  fOutputId="out-1"
+  fInputId="in-1"
+  fStartColor="#4f46e5"
+  fEndColor="#06b6d4"
+></f-connection>
+
+<!-- New -->
+<f-connection fOutputId="out-1" fInputId="in-1">
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-connection>
+```
+
 ## [18.2.0](https://github.com/foblex/flow/compare/v18.1.0...v18.2.0) (2026-03-09)
 
 ### Highlights

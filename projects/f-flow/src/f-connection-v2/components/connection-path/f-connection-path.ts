@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { normalizeDomElementId } from '@foblex/utils';
 import { F_CONNECTION_PATH, FConnectionPathBase } from './models';
 import { createConnectionDomIdentifier, createGradientDomUrl } from '../../utils';
@@ -13,7 +13,7 @@ import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
     class: 'f-component f-connection-path',
     '[attr.id]': 'attrConnectionId',
     '[attr.data-f-path-id]': 'fPathId',
-    '[attr.stroke]': 'linkToGradient',
+    '[style.stroke]': 'linkToGradient()',
   },
   providers: [
     {
@@ -25,16 +25,17 @@ import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 export class FConnectionPath extends FConnectionPathBase {
   private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
 
+  public readonly useGradient = input(false);
+  public readonly linkToGradient = computed<string | null>(() => {
+    if (!this.useGradient()) {
+      return null;
+    }
+
+    return createGradientDomUrl(this._connection.fId());
+  });
+
   public get fPathId(): string {
     return this._connection.fId();
-  }
-
-  public get linkToGradient(): string {
-    return createGradientDomUrl(
-      this._connection.fId(),
-      this._connection.fOutputId(),
-      this._connection.fInputId(),
-    );
   }
 
   public get attrConnectionId(): string {

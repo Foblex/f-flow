@@ -4,7 +4,6 @@ import {
   Directive,
   ElementRef,
   inject,
-  input,
   signal,
   Signal,
   viewChild,
@@ -19,7 +18,6 @@ import {
 import { ConnectionLineBuilder, EFConnectionBehavior, EFConnectionConnectableSide } from '../utils';
 import { EFConnectableSide, EFConnectionType } from '../enums';
 import { F_CONNECTION_PATH } from './connection-path';
-import { F_CONNECTION_GRADIENT } from './connection-gradient';
 import {
   F_CONNECTION_DRAG_HANDLE_END,
   F_CONNECTION_DRAG_HANDLE_START,
@@ -31,6 +29,7 @@ import {
   FConnectionContentBase,
 } from './connection-content';
 import { F_CONNECTION_WAYPOINTS } from './connection-waypoints';
+import { F_CONNECTION_GRADIENT, FConnectionGradientRenderer } from './connection-gradient';
 
 const MIXIN_BASE = mixinChangeSelection(
   mixinChangeVisibility(
@@ -48,10 +47,6 @@ export abstract class FConnectionBase
   private readonly _fConnectionBuilder = inject(ConnectionLineBuilder);
 
   public abstract override fId: Signal<string>;
-
-  public readonly fStartColor = input<string>('black');
-
-  public readonly fEndColor = input<string>('black');
 
   public abstract fOutputId: Signal<string>;
 
@@ -81,8 +76,6 @@ export abstract class FConnectionBase
 
   public readonly fPath = viewChild.required(F_CONNECTION_PATH);
 
-  public readonly fGradient = viewChild.required(F_CONNECTION_GRADIENT);
-
   public readonly fDragHandleStart = viewChild(F_CONNECTION_DRAG_HANDLE_START);
 
   public readonly fDragHandleEnd = viewChild.required(F_CONNECTION_DRAG_HANDLE_END);
@@ -92,6 +85,10 @@ export abstract class FConnectionBase
   public readonly fContents = contentChildren(F_CONNECTION_CONTENT, {
     descendants: true,
   });
+
+  public readonly fGradient = contentChild(F_CONNECTION_GRADIENT);
+
+  private readonly _fGradientRenderer = viewChild(FConnectionGradientRenderer);
 
   public readonly fWaypoints = contentChild(F_CONNECTION_WAYPOINTS);
 
@@ -116,7 +113,6 @@ export abstract class FConnectionBase
 
   public initialize(): void {
     this.fPath().initialize();
-    this.fGradient().initialize();
     this.redraw();
   }
 
@@ -174,9 +170,9 @@ export abstract class FConnectionBase
   public redraw(): void {
     this.fPath().setPath(this.path);
     this.fSelection().setPath(this.path);
-    this.fGradient().redraw(this.line);
     this.fDragHandleEnd().redraw(this._penultimatePoint, this.line.point2);
     this.fDragHandleStart()?.redraw(this._secondPoint, this.line.point1);
+    this._fGradientRenderer()?.redraw(this.line);
   }
 
   /**

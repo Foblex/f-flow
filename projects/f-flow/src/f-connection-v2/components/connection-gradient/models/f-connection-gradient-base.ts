@@ -1,14 +1,10 @@
-import { ILine } from '@foblex/2d';
-import { ElementRef, inject, InjectionToken } from '@angular/core';
+import { InjectionToken, Signal } from '@angular/core';
 
 export const F_CONNECTION_GRADIENT = new InjectionToken<FConnectionGradientBase>(
   'F_CONNECTION_GRADIENT',
 );
 
 export abstract class FConnectionGradientBase {
-  public readonly hostElement = inject(ElementRef<SVGLinearGradientElement>).nativeElement;
-
-  public abstract initialize(): void;
-
-  public abstract redraw(line: ILine): void;
+  public abstract fStartColor: Signal<string>;
+  public abstract fEndColor: Signal<string>;
 }

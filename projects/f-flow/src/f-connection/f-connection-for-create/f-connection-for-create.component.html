@@ -1,17 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg">
   <defs #defs></defs>
-  <ng-content />
+  <ng-content select="svg[fMarker]" />
   <g class="f-connection-group">
-    <linearGradient fConnectionGradient></linearGradient>
+    @if (fGradient(); as gradient) {
+      <linearGradient
+        fConnectionGradientRenderer
+        [fConnectionGradientRendererFor]="gradient"
+      ></linearGradient>
+    }
     <path fConnectionSelection [attr.d]="path"></path>
     <g>
-      <path f-connection-path [attr.d]="path"></path>
-      <circle f-connection-drag-handle-start r="8"></circle>
+      <path f-connection-path [useGradient]="!!fGradient()" [attr.d]="path"></path>
       <circle f-connection-drag-handle-end r="8"></circle>
     </g>
   </g>
 </svg>
+<ng-content select="f-connection-gradient" />
 
 @if (fContents().length) {
-  <ng-content select="[fConnectionContent]"></ng-content>
+  <ng-content select="[fConnectionContent]" />
 }

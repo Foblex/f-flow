@@ -80,6 +80,23 @@ enum EFConnectionConnectableSide {
 - `.f-snap-connection` Snap-helper host class.
 - `.f-connection-path` Helper path element.
 
+## Projected Gradient
+
+If you want the snap helper itself to use a gradient stroke, project `f-connection-gradient` into `f-snap-connection`:
+
+```html
+<f-snap-connection>
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-snap-connection>
+```
+
+As with regular connections, the gradient colors belong to `f-connection-gradient`, not to `f-snap-connection`.
+
+If you previously set `fStartColor` / `fEndColor` directly on `f-snap-connection`, move those colors into the projected `f-connection-gradient`.
+
 ## Notes / Pitfalls
 
 - Requires `fDraggable` and is typically used together with `f-connection-for-create`.

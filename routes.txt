@@ -61,7 +61,7 @@
 /examples/connection-markers
 /examples/connection-content
 /examples/connection-waypoints
-/examples/custom-connections
+/examples/connection-gradients
 /examples/connection-connectable-side
 /examples/add-node-from-palette
 /examples/selection-area

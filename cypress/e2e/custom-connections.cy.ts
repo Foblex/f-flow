@@ -1,6 +1,6 @@
-describe('CustomConnections', () => {
+describe('ConnectionGradients', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/examples/custom-connections');
+    cy.visit('http://localhost:4200/examples/connection-gradients');
     cy.get('f-flow').scrollIntoView();
   });
 

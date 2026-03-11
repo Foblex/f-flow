@@ -13,10 +13,6 @@ export abstract class FConnectionComponentsParent {
 
   public abstract fInputId: Signal<string>;
 
-  public abstract fStartColor: Signal<string>;
-
-  public abstract fEndColor: Signal<string>;
-
   public abstract fBehavior: EFConnectionBehavior;
 
   public abstract _applyResolvedSidesToConnection(

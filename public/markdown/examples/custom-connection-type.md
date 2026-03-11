@@ -41,4 +41,4 @@ This example is useful when you want a consistent custom edge type, not just one
 - [Connection Component](./docs/f-connection-component)
 - [Connection Marker Directive](./docs/f-connection-marker-directive)
 - [Connection Types Example](./examples/connection-types)
-- [Custom Connections Example](./examples/custom-connections)
+- [Connection Gradients Example](./examples/connection-gradients)

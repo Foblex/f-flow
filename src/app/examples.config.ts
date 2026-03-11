@@ -175,7 +175,7 @@ export const EXAMPLES_CONFIGURATION = {
         () => import('../../projects/f-examples/connections/connection-content/connection-content'),
       ),
       defineLazyComponent(
-        'custom-connections',
+        'connection-gradients',
         () =>
           import(
             '../../projects/f-examples/connections/custom-connections/custom-connections.component'
@@ -725,17 +725,21 @@ function connectionGroup() {
       },
     },
     {
-      link: 'custom-connections',
-      text: 'Custom Connections',
-      pageTitle: 'Angular Diagram Example – Fully Custom Connections',
+      link: 'connection-gradients',
+      text: 'Connection Gradients',
+      pageTitle: 'Angular Diagram Example – Projected Connection Gradients',
       description:
-        'Build fully custom Angular connections with your own drawing, routing, and interaction logic for domain-specific graph products.',
+        'Configure projected SVG gradients for Angular diagram connections and switch start/end colors live in a focused Foblex Flow example.',
       image: './previews/examples/custom-connections.light.png',
       image_dark: './previews/examples/custom-connections.dark.png',
       image_width: 791,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2024-10-03 01:32:33'),
+      date: new Date('2026-03-11 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
     {
       link: 'connection-connectable-side',
@@ -917,8 +921,7 @@ function advancedGroup() {
     {
       link: 'stress-test-with-connections',
       text: 'Connection Redraw Performance',
-      pageTitle:
-        'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
+      pageTitle: 'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
       image: './previews/examples/stress-test-with-connections.light.png',
       image_dark: './previews/examples/stress-test-with-connections.dark.png',
       description:
@@ -1034,8 +1037,7 @@ function proExamplesGroup() {
     {
       text: 'AI Low-Code Platform',
       link: 'ai-low-code-platform',
-      pageTitle:
-        'Angular AI Low-Code IDE Example – Flagship Product-Style Demo with Foblex Flow',
+      pageTitle: 'Angular AI Low-Code IDE Example – Flagship Product-Style Demo with Foblex Flow',
       description:
         'Flagship front-end-only AI low-code IDE demo in Angular with custom nodes, JSON import/export, multiple themes, right-side config panels, validation reflected on nodes, undo/redo, persistence, multi-select, and animated connections.',
       image: './previews/examples/ai-low-code.light.png',
