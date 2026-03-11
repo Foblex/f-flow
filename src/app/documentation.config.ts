@@ -265,11 +265,11 @@ function introductionGroup(): INavigationGroup {
         'Track released features, fixes, and breaking changes before updating your Foblex Flow version.',
     },
     {
-      link: 'https://github.com/Foblex/f-flow/blob/main/ROADMAP.md',
+      link: 'roadmap',
       text: 'Roadmap',
-      pageTitle: 'Foblex Flow Roadmap - Planned and In-Progress Features',
+      pageTitle: 'Foblex Flow Roadmap and Release Timeline',
       description:
-        'Follow planned, in-progress, and recently completed features to align your roadmap with Foblex Flow evolution.',
+        'Track what is planned, what is already on the way, and which releases shipped each major Foblex Flow capability.',
     },
   ]);
 }
