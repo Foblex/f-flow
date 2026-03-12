@@ -175,6 +175,13 @@ export abstract class FConnectionBase
     this._fGradientRenderer()?.redraw(this.line);
   }
 
+  public getResolvedSides(): { sourceSide: EFConnectableSide; targetSide: EFConnectableSide } {
+    return {
+      sourceSide: this._sourceSide,
+      targetSide: this._targetSide,
+    };
+  }
+
   /**
    * Applies the resolved sides to the connection. Don't call this method directly; it's used internally.
    *
