@@ -57,7 +57,7 @@ This is the main migration point in the release.
 ::: ng-component <connection-gradients></connection-gradients> [height]="700"
 :::
 
-✅ Example: <https://flow.foblex.com/examples/connection-gradients>
+✅ Example: <https://flow.foblex.com/examples/custom-connections>
 
 ## Smarter Redraws for Unchanged Connections
 
