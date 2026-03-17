@@ -6,13 +6,18 @@ import { HandleConnectionWorkerMessageRequest } from '../handle-connection-worke
 import { FConnectionWorker, IFConnectionWorkerResponse } from '../../model';
 import { EnsureConnectionWorkerRequest } from './ensure-connection-worker-request';
 import { ResetConnectionWorkerRuntimeRequest } from '../reset-connection-worker-runtime';
+import {
+  createConnectionWorkerUrl,
+  isConnectionWorkerRuntimeSupported,
+  resolveConnectionWorkerRuntime,
+  revokeConnectionWorkerUrl,
+} from '../../worker/connection-worker-runtime';
 
 @Injectable()
 @FExecutionRegister(EnsureConnectionWorkerRequest)
-export class EnsureConnectionWorker implements IExecution<
-  EnsureConnectionWorkerRequest,
-  Worker | null
-> {
+export class EnsureConnectionWorker
+  implements IExecution<EnsureConnectionWorkerRequest, Worker | null>
+{
   private readonly _browser = inject(BrowserService);
   private readonly _state = inject(FConnectionWorker);
   private readonly _mediator = inject(FMediator);
@@ -23,18 +28,21 @@ export class EnsureConnectionWorker implements IExecution<
     }
 
     const windowRef = this._browser.document.defaultView;
-    if (!windowRef?.Worker) {
+    if (!isConnectionWorkerRuntimeSupported(windowRef)) {
       return null;
     }
 
+    const runtime = resolveConnectionWorkerRuntime(windowRef);
+    if (!runtime) {
+      return null;
+    }
+
+    const workerUrl = createConnectionWorkerUrl(runtime);
+
     try {
-      const worker = new windowRef.Worker(
-        new URL('../../worker/f-connection.worker.ts', import.meta.url),
-        {
-          type: 'module',
-          name: 'f-flow-connection-worker',
-        },
-      );
+      const worker = new runtime.workerCtor(workerUrl, {
+        name: 'f-flow-connection-worker',
+      });
 
       worker.onmessage = (event: MessageEvent<IFConnectionWorkerResponse>) => {
         this._mediator.execute(new HandleConnectionWorkerMessageRequest(event.data));
@@ -48,10 +56,12 @@ export class EnsureConnectionWorker implements IExecution<
         );
       };
 
+      this._state.workerUrl = workerUrl;
       this._state.worker = worker;
 
       return worker;
     } catch (error) {
+      revokeConnectionWorkerUrl(workerUrl, runtime.urlApi);
       this._disableWorker(
         error instanceof Error ? error : new Error('Connection worker initialization failed.'),
       );

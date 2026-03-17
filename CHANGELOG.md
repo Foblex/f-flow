@@ -7,17 +7,26 @@ All notable changes to this project will be documented in this file. See [standa
 ### Highlights
 
 - **Projected connection gradients** - gradient strokes are now opt-in through projected `f-connection-gradient` config instead of always living on the connection component itself.
-- **Docs and examples updated** - the custom connection example and connection guides now show the projected gradient pattern and explain the migration path from the old API.
+- **Connection redraw work reduced** - unchanged connections now skip redundant marker generation and repeated line re-initialization when their render signature stays the same.
+- **Connection worker production loading fixed** - production bundles now start the connection worker from a blob URL instead of requesting `worker/f-connection.worker.ts`, avoiding MIME type failures on deployed apps.
+- **Docs, examples, and roadmap updated** - the custom connection example, connection guides, and roadmap docs now reflect the projected gradient model and the recent release history.
 
 ### Improvements
 
 - Gradient DOM identifiers now stay stable per connection instance, even when a connection is reassigned to different source or target connectors.
 - Gradient rendering now avoids unnecessary DOM writes for unchanged coordinates and colors.
+- Connection marker rendering now skips redundant regeneration when the effective marker inputs have not changed.
+- Connection redraw caching now short-circuits repeated `setLine()` / `initialize()` work for unchanged routes and waypoint state.
+
+### Fixes
+
+- **connection-worker:** production builds now inline the worker runtime via `Blob` and `URL.createObjectURL`, which removes requests for `worker/f-connection.worker.ts` and the related MIME type error.
 
 ### Documentation
 
 - Updated `f-connection`, `f-connection-for-create`, and `f-snap-connection` guides to document projected gradient usage.
 - Updated the connection gradients example page to explain when and why projected gradients should be used.
+- Rebuilt the roadmap documentation around release history and added a dedicated roadmap markdown page to the docs navigation.
 
 ### ⚠️ Breaking Changes
 

@@ -43,7 +43,9 @@ function createConnection(
     fType: 'adaptive-curve',
     fRadius: 16,
     fOffset: 24,
+    fReassignableStart: () => false,
     fPath: () => ({ hostElement: pathElement }),
+    fContents: () => [],
     fWaypoints: () => ({
       waypoints: () => waypoints.current,
     }),
