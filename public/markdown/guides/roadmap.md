@@ -2,10 +2,7 @@
 
 This page combines the current roadmap with the shipped release timeline, so you can see both what is next and what has already landed.
 
-It is synchronized with:
-
-- published GitHub releases through **March 9, 2026**,
-- the current `CHANGELOG.md` `Unreleased` section for code that is already on `main` but not released yet.
+It is synchronized with the release history through **v18.3.0 (2026-03-17)**.
 
 ## Description
 
@@ -19,15 +16,19 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Current Status
 
-| Status                    | Item                               | Notes                                                                                                                                                          |
-| ------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 👀 **Queued for release** | **Projected Connection Gradients** | Already listed in `CHANGELOG.md` `Unreleased`. Gradient colors move to projected `f-connection-gradient`.                                                      |
-| 🚧 **In Progress**        | **Freeform Connections**           | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88) |
-| 🧭 **Planned**            | **Grid-Aware Resize Handles**      | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                 |
+| Status                     | Item                               | Notes                                                                                                                                                                         |
+| -------------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ **Released in v18.3.0** | **Projected Connection Gradients** | Gradient colors now live in projected `f-connection-gradient`. The release also shipped smarter redraw caching, production-safe worker loading, and the related docs refresh. |
+| 🚧 **In Progress**         | **Freeform Connections**           | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88)                |
+| 🧭 **Planned**             | **Grid-Aware Resize Handles**      | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                                |
 
 ## Release Timeline
 
 ### 2026
+
+- **[v18.3.0](https://github.com/Foblex/f-flow/releases/tag/v18.3.0)** - **2026-03-17**  
+  Connection-model release: projected `f-connection-gradient`, smarter redraw caching for unchanged routes and markers, production-safe blob worker loading, and a roadmap/docs refresh.  
+  Example: [Connection Gradients](https://flow.foblex.com/examples/connection-gradients)
 
 - **[v18.2.0](https://github.com/Foblex/f-flow/releases/tag/v18.2.0)** - **2026-03-09**  
   Performance and scale release: `fCache`, `*fVirtualFor`, `f-connection-worker`, `fNodeRenderLimit`, chunked redraws, and zoom during drag.  
@@ -99,10 +100,10 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Capability Map
 
-- **Performance and scale**: `v18.2.0`, `v17.9.5`, `v12.5.0`
-- **Connection authoring and routing**: `v18.0.0`, `17.8.5`, `v17.8.0`, `v16.0.0`, `V12.2.0`
+- **Performance and scale**: `v18.3.0`, `v18.2.0`, `v17.9.5`, `v12.5.0`
+- **Connection authoring and routing**: `v18.3.0`, `v18.0.0`, `17.8.5`, `v17.8.0`, `v16.0.0`, `V12.2.0`
 - **Editor UX and interactions**: `v18.1.0`, `v17.7.0`, `v17.6.0`, `v17.5.0`, `v17.4.0`, `v17.1.1`
-- **Platform and integration**: `v16.0.0`, `v17.5.0`, `v18.1.0`
+- **Platform and integration**: `v18.3.0`, `v16.0.0`, `v17.5.0`, `v18.1.0`
 
 ## Related Links
 
@@ -115,5 +116,5 @@ For migration details and breaking changes, always check the [Changelog](https:/
 ## Notes
 
 - This page is release-oriented, not branch-oriented.
-- If a feature appears in `CHANGELOG.md` `Unreleased`, it means the work exists on `main` but has not been published yet.
 - If you are planning an upgrade, prefer the changelog for migration guidance and this page for historical context.
+- For not-yet-versioned work, use discussions and issues rather than the release timeline.

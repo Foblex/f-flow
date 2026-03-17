@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [Unreleased]
+## [18.3.0](https://github.com/Foblex/f-flow/compare/v18.2.0...v18.3.0) (2026-03-17)
 
 ### Highlights
 
@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file. See [standa
 - Updated `f-connection`, `f-connection-for-create`, and `f-snap-connection` guides to document projected gradient usage.
 - Updated the connection gradients example page to explain when and why projected gradients should be used.
 - Rebuilt the roadmap documentation around release history and added a dedicated roadmap markdown page to the docs navigation.
+- Added a dedicated `v18.3.0` release article covering projected gradients, redraw caching, and production worker hardening.
 
 ### ⚠️ Breaking Changes
 

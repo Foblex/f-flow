@@ -7,10 +7,7 @@ This file now tracks two things in one place:
 - what is currently queued, in progress, or planned,
 - what has already shipped, based on published GitHub releases.
 
-This roadmap is synchronized with:
-
-- published GitHub releases through **March 9, 2026**,
-- the current local `CHANGELOG.md` **Unreleased** section for work that is already on `main` but not released yet.
+This roadmap is synchronized with the release history through **v18.3.0 (2026-03-17)**.
 
 Stay up to date and help shape the future via [GitHub Discussions](https://github.com/Foblex/f-flow/discussions).
 
@@ -18,17 +15,20 @@ Stay up to date and help shape the future via [GitHub Discussions](https://githu
 
 ## Snapshot
 
-| Status                    | Item                               | Notes                                                                                                                                              |
-| ------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 👀 **Queued for release** | **Projected Connection Gradients** | Already documented in `CHANGELOG.md` `Unreleased`. Gradient colors move from connection inputs to projected `f-connection-gradient`.               |
-| 🚧 **In Progress**        | **Freeform Connections**           | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88) |
-| 🧭 **Planned**            | **Grid-Aware Resize Handles**      | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130)                          |
+| Status                     | Item                               | Notes                                                                                                                                                                 |
+| -------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ **Released in v18.3.0** | **Projected Connection Gradients** | Gradient colors now live in projected `f-connection-gradient`. The release also shipped redraw caching, production-safe worker loading, and the related docs refresh. |
+| 🚧 **In Progress**         | **Freeform Connections**           | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [↗](https://github.com/Foblex/f-flow/discussions/88)                    |
+| 🧭 **Planned**             | **Grid-Aware Resize Handles**      | Resize handles will snap to gridlines to ensure precise alignment. [↗](https://github.com/Foblex/f-flow/discussions/130)                                             |
 
 ---
 
 ## Shipped Timeline
 
 ### 2026 Releases
+
+- **[v18.3.0](https://github.com/Foblex/f-flow/releases/tag/v18.3.0)** - **2026-03-17**  
+  Shipped projected `f-connection-gradient`, smarter redraw caching for unchanged routes and markers, production-safe blob worker loading, and the roadmap/docs refresh around the new connection model.
 
 - **[v18.2.0](https://github.com/Foblex/f-flow/releases/tag/v18.2.0)** - **2026-03-09**  
   Shipped `fCache`, `*fVirtualFor`, `f-connection-worker`, `fNodeRenderLimit`, chunked connection redraws, and wheel zoom during active drag sessions.

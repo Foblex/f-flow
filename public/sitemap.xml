@@ -518,7 +518,13 @@
   </url>
   <url>
     <loc>https://flow.foblex.com/blog/overview</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/blog/foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening</loc>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
