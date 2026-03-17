@@ -31,8 +31,6 @@ The component is registered as a special connection instance and controlled by d
 - `fType: EFConnectionType;` Default: `STRAIGHT`. Type of the path (segment, straight, bezier).
 - `fInputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for target connection.
 - `fOutputSide: EFConnectionConnectableSide;` Default: `DEFAULT`. Preferred side for source connection.
-- `fStartColor: string;` Default: `black`. Color of the start of the gradient (if used).
-- `fEndColor: string;` Default: `black`. Color of the end of the gradient (if used).
 
 ### Types
 
@@ -73,6 +71,37 @@ enum EFConnectionConnectableSide {
 - `.f-connection-for-create` Preview host class.
 - `.f-connection-path` Preview path element.
 - `.f-connection-drag-handle` Preview endpoint handle element.
+
+## Projected Gradient
+
+If you want a gradient preview stroke, project `f-connection-gradient` into `f-connection-for-create` and set the colors on the gradient config itself:
+
+```html
+<f-connection-for-create>
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-connection-for-create>
+```
+
+Migration from the old API:
+
+```html
+<!-- Old -->
+<f-connection-for-create
+  fStartColor="#4f46e5"
+  fEndColor="#06b6d4"
+></f-connection-for-create>
+
+<!-- New -->
+<f-connection-for-create>
+  <f-connection-gradient
+    fStartColor="#4f46e5"
+    fEndColor="#06b6d4"
+  ></f-connection-gradient>
+</f-connection-for-create>
+```
 
 ## Notes / Pitfalls
 

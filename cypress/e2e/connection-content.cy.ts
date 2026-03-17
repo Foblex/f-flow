@@ -9,9 +9,19 @@ describe('ConnectionContent', () => {
     cy.get('.f-connection-content').should('have.length', 4).and('contain.text', 'Any Content');
     cy.get('mat-select').should('have.length', 3);
 
-    cy.get('mat-select').first().click({ force: true });
-    cy.contains('mat-option', '75%').click({ force: true });
+    cy.get('.f-connection-content')
+      .first()
+      .invoke('attr', 'style')
+      .then((beforeStyle) => {
+        cy.get('mat-select').first().click({ force: true });
+        cy.contains('mat-option', '75%').click({ force: true });
 
-    cy.get('.f-connection-content').should('have.length', 4).and('contain.text', 'Any Content');
+        cy.get('.f-connection-content')
+          .should('have.length', 4)
+          .and('contain.text', 'Any Content')
+          .first()
+          .invoke('attr', 'style')
+          .should('not.equal', beforeStyle);
+      });
   });
 });

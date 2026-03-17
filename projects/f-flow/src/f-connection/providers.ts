@@ -3,19 +3,19 @@ import { FConnectionForCreateComponent } from './f-connection-for-create';
 import { FSnapConnectionComponent } from './f-snap-connection';
 import {
   FConnectionContent,
-  FConnectionWaypoints,
   FConnectionDragHandleEnd,
   FConnectionDragHandleStart,
   FConnectionGradient,
+  FConnectionGradientRenderer,
   FConnectionMarker,
   FConnectionPath,
   FConnectionSelection,
+  FConnectionWaypoints,
 } from '../f-connection-v2';
 
 export const F_CONNECTION_PROVIDERS = [
   FConnectionDragHandleStart,
   FConnectionDragHandleEnd,
-  FConnectionGradient,
   FConnectionPath,
   FConnectionSelection,
   FConnectionMarker,
@@ -25,4 +25,9 @@ export const F_CONNECTION_PROVIDERS = [
   FSnapConnectionComponent,
 ];
 
-export const F_CONNECTION_IMPORTS_EXPORTS = [FConnectionContent, FConnectionWaypoints];
+export const F_CONNECTION_IMPORTS_EXPORTS = [
+  FConnectionContent,
+  FConnectionGradient,
+  FConnectionGradientRenderer,
+  FConnectionWaypoints,
+];

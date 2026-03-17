@@ -10,6 +10,7 @@ import {
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
   FConnectionBase,
+  FConnectionContentBase,
 } from '../../../f-connection-v2';
 import { BrowserService } from '@foblex/platform';
 import {
@@ -40,6 +41,10 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
 
   private _renderTicket = 0;
   private readonly _connectedInPreviousRender = new Set<FConnectorBase>();
+  private readonly _connectionRenderCache = new WeakMap<
+    FConnectionBase,
+    { signature: string; pathElement: SVGElement }
+  >();
 
   public handle(_request: RedrawConnectionsRequest): void {
     const renderTicket = ++this._renderTicket;
@@ -106,7 +111,11 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     this._connectedInPreviousRender.add(source);
     this._connectedInPreviousRender.add(target);
 
-    this._createMarkers(connection);
+    const markersChanged = this._createMarkers(connection);
+    if (!markersChanged && !this._shouldRedrawConnection(connection, line)) {
+      return;
+    }
+
     connection.setLine(line);
     connection.initialize();
     connection.isSelected() ? connection.markAsSelected() : null;
@@ -144,8 +153,21 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     );
   }
 
-  private _createMarkers(connection: FConnectionBase): void {
-    this._mediator.execute(new CreateConnectionMarkersRequest(connection));
+  private _createMarkers(connection: FConnectionBase): boolean {
+    return this._mediator.execute<boolean>(new CreateConnectionMarkersRequest(connection));
+  }
+
+  private _shouldRedrawConnection(connection: FConnectionBase, line: ILine): boolean {
+    const pathElement = connection.fPath().hostElement;
+    const signature = createConnectionRenderSignature(connection, line);
+    const cached = this._connectionRenderCache.get(connection);
+    if (cached?.signature === signature && cached.pathElement === pathElement) {
+      return false;
+    }
+
+    this._connectionRenderCache.set(connection, { signature, pathElement });
+
+    return true;
   }
 
   private _setupConnectionsUsingWorker(
@@ -390,4 +412,38 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
 
     return this._now() - sliceStart < SLICE_BUDGET_MS;
   }
+}
+
+function createConnectionRenderSignature(connection: FConnectionBase, line: ILine): string {
+  const { sourceSide, targetSide } = connection.getResolvedSides();
+
+  return [
+    connection.fBehavior,
+    connection.fType,
+    connection.fRadius,
+    connection.fOffset,
+    connection.fReassignableStart(),
+    serializeContents(connection.fContents() || []),
+    sourceSide,
+    targetSide,
+    serializePoint(line.point1),
+    serializePoint(line.point2),
+    serializeWaypoints(connection.fWaypoints()?.waypoints() || []),
+  ].join('|');
+}
+
+function serializePoint(point: ILine['point1']): string {
+  return `${point.x}:${point.y}`;
+}
+
+function serializeWaypoints(waypoints: readonly ILine['point1'][]): string {
+  return waypoints.map(serializePoint).join(';');
+}
+
+function serializeContents(contents: readonly FConnectionContentBase[]): string {
+  return contents
+    .map((content) => {
+      return [content.position(), content.offset(), content.align()].join(':');
+    })
+    .join(';');
 }

@@ -4,6 +4,27 @@ describe('DragToReassign', () => {
     cy.get('f-flow').scrollIntoView();
   });
 
+  it('should position start handle immediately after enabling start reassignment', () => {
+    cy.get('.f-connection-drag-handle').should('have.length', 1);
+
+    cy.contains('Enable Reassign Start').click({ force: true });
+
+    cy.get('.f-connection-drag-handle')
+      .should('have.length', 2)
+      .first()
+      .should('have.attr', 'cx')
+      .and((cx) => {
+        expect(Number(cx)).to.be.greaterThan(0);
+      });
+
+    cy.get('.f-connection-drag-handle')
+      .first()
+      .should('have.attr', 'cy')
+      .and((cy) => {
+        expect(Number(cy)).to.be.greaterThan(0);
+      });
+  });
+
   it('should reassign connection target from input 3 to input 4', () => {
     cy.get('.f-connection').should('have.length', 1);
     cy.get('[data-f-input-id="3"]').should('have.class', 'f-node-input-connected');

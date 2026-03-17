@@ -3,13 +3,13 @@ import { BrowserService } from '@foblex/platform';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FConnectionWorker } from '../../model';
 import { IsConnectionWorkerEnabledRequest } from './is-connection-worker-enabled-request';
+import { isConnectionWorkerRuntimeSupported } from '../../worker/connection-worker-runtime';
 
 @Injectable()
 @FExecutionRegister(IsConnectionWorkerEnabledRequest)
-export class IsConnectionWorkerEnabled implements IExecution<
-  IsConnectionWorkerEnabledRequest,
-  boolean
-> {
+export class IsConnectionWorkerEnabled
+  implements IExecution<IsConnectionWorkerEnabledRequest, boolean>
+{
   private readonly _browser = inject(BrowserService);
   private readonly _state = inject(FConnectionWorker);
 
@@ -24,7 +24,7 @@ export class IsConnectionWorkerEnabled implements IExecution<
 
     const windowRef = this._browser.document.defaultView;
 
-    return !!windowRef?.Worker;
+    return isConnectionWorkerRuntimeSupported(windowRef);
   }
 
   private _isWorkerAvailable(): boolean {

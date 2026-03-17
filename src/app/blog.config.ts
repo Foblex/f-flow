@@ -77,6 +77,13 @@ export const BLOG_CONFIGURATION = {
         () => import('../../projects/f-examples/connections/connection-content/connection-content'),
       ),
       defineLazyComponent(
+        'connection-gradients',
+        () =>
+          import(
+            '../../projects/f-examples/connections/custom-connections/custom-connections.component'
+          ),
+      ),
+      defineLazyComponent(
         'connection-markers',
         () => import('../../projects/f-examples/connections/connection-markers/connection-markers'),
       ),
@@ -230,6 +237,21 @@ function overviewGroup(): INavigationGroup {
 
 function releasesGroup(): INavigationGroup {
   return defineNavigationGroup('Releases', [
+    {
+      link: 'foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening',
+      text: 'v18.3.0',
+      pageTitle:
+        'Foblex Flow v18.3.0: Projected Connection Gradients, Smarter Redraws, and Production Worker Hardening',
+      description:
+        'Foblex Flow v18.3 introduces projected connection gradients, reduces redundant redraw work, fixes connection worker production loading, and refreshes roadmap/docs guidance.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening',
+      image: 'https://flow.foblex.com/previews/examples/custom-connections.light.png',
+      image_type: 'image/png',
+      image_width: 2986,
+      image_height: 1926,
+      date: new Date('2026-03-17T12:00:00.000Z'),
+    },
     {
       link: 'foblex-flow-v18-2-0-caching-virtualization-connection-worker-performance-refresh',
       text: 'v18.2.0',

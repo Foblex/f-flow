@@ -11,14 +11,32 @@ import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2
  */
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
-export class CreateConnectionMarkers implements IExecution<CreateConnectionMarkersRequest, void> {
+export class CreateConnectionMarkers
+  implements IExecution<CreateConnectionMarkersRequest, boolean>
+{
   private readonly _browser = inject(BrowserService);
   private readonly _store = inject(FComponentsStore);
+  private readonly _markerCache = new WeakMap<
+    FConnectionBase,
+    { signature: string; defsElement: SVGDefsElement }
+  >();
 
-  public handle({ connection }: CreateConnectionMarkersRequest): void {
+  public handle({ connection }: CreateConnectionMarkersRequest): boolean {
+    const markers = this._findConnectionMarkers(connection);
+    const defs = connection.fDefs();
+    if (!defs) {
+      return false;
+    }
+
+    const signature = createConnectionMarkersSignature(markers);
+    const cached = this._markerCache.get(connection);
+    if (cached?.signature === signature && cached.defsElement === defs.nativeElement) {
+      return false;
+    }
+
     const element = createSVGElement('defs', this._browser);
 
-    this._findConnectionMarkers(connection).forEach((marker) => {
+    markers.forEach((marker) => {
       const markerElement = createMarkerElement(marker, connection.fId(), this._browser);
 
       const clone = marker.hostElement.cloneNode(true) as HTMLElement;
@@ -31,12 +49,14 @@ export class CreateConnectionMarkers implements IExecution<CreateConnectionMarke
       element.append(markerElement);
     });
 
-    const defs = connection.fDefs();
-    if (defs) {
-      defs.nativeElement.innerHTML = element.innerHTML;
-    }
-
+    defs.nativeElement.innerHTML = element.innerHTML;
+    this._markerCache.set(connection, {
+      signature,
+      defsElement: defs.nativeElement,
+    });
     this._makeSafariCompatible(connection);
+
+    return true;
   }
 
   public _findConnectionMarkers(connection: FConnectionBase): FConnectionMarkerBase[] {
@@ -49,6 +69,23 @@ export class CreateConnectionMarkers implements IExecution<CreateConnectionMarke
   private _makeSafariCompatible(fConnection: FConnectionBase): void {
     fConnection.fPath().hostElement.replaceWith(fConnection.fPath().hostElement);
   }
+}
+
+function createConnectionMarkersSignature(markers: readonly FConnectionMarkerBase[]): string {
+  return markers
+    .map((marker) =>
+      [
+        marker.type,
+        marker.width,
+        marker.height,
+        marker.refX,
+        marker.refY,
+        marker.orient,
+        marker.markerUnits,
+        marker.hostElement.outerHTML,
+      ].join('|'),
+    )
+    .join('||');
 }
 
 function createMarkerElement(
