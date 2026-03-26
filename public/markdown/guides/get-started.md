@@ -22,11 +22,23 @@ This guide is the shortest path from installation to a working flow. You will:
 ng add @foblex/flow
 ```
 
+```bash [nx]
+nx g @foblex/flow:add
+```
+
+```bash [manual]
+npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+```
+
 ```bash [update]
 ng update @foblex/flow
 ```
 
 :::
+
+`ng add` also connects the shipped default theme automatically by adding `node_modules/@foblex/flow/styles/default.scss` to application styles when the entry is missing.
+
+If you want manual or selective theme setup, continue with [Default Theme and Styling](default-theme-and-styling).
 
 ## Why / when to use this
 
@@ -78,7 +90,38 @@ A minimal interactive flow consists of:
 </f-flow>
 ```
 
-## Styling baseline
+## Default theme
+
+The quickest styling path is to keep the shipped theme connected.
+
+If you installed the package manually, add one of these:
+
+::: code-group
+
+```json [angular.json]
+"styles": [
+  "src/styles.scss",
+  "node_modules/@foblex/flow/styles/default.scss"
+]
+```
+
+```scss [styles.scss]
+@use '@foblex/flow/styles/default';
+```
+
+:::
+
+Then only add layout styles that belong to your screen:
+
+```scss
+.f-flow {
+  height: 400px;
+}
+```
+
+For selective mixins and token overrides, see [Default Theme and Styling](default-theme-and-styling).
+
+## Manual styling baseline
 
 Foblex Flow is intentionally UI-agnostic: it does not enforce a design system.  
 Use this as a practical baseline, then adapt it to your app styles.

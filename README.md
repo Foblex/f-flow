@@ -57,11 +57,45 @@ It works with Angular 15+, SSR, standalone components, and zoneless-friendly app
 ng add @foblex/flow
 ```
 
-If you prefer manual installation:
+For Nx workspaces:
 
 ```bash
-npm install @foblex/flow
+nx g @foblex/flow:add
 ```
+
+`ng add` installs the required companion packages automatically. If you prefer manual installation, install them explicitly:
+
+```bash
+npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+```
+
+`ng add` also wires the shipped default theme into application styles by adding `node_modules/@foblex/flow/styles/default.scss` when the entry is missing.
+
+## Default Theme
+
+Use the default theme when you want styled nodes, connectors, connections, minimap, selection area, and helper plugins immediately.
+
+```json
+"styles": [
+  "src/styles.scss",
+  "node_modules/@foblex/flow/styles/default.scss"
+]
+```
+
+If you prefer selective SCSS mixins instead of one full entrypoint:
+
+```scss
+@use '@foblex/flow/styles' as flow-theme;
+
+@include flow-theme.theme-tokens();
+@include flow-theme.flow-canvas();
+@include flow-theme.node-group();
+@include flow-theme.connector();
+@include flow-theme.connection-all();
+@include flow-theme.plugins();
+```
+
+Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-theme-and-styling)
 
 ## Minimal Example
 

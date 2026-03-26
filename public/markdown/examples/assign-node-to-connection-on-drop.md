@@ -25,7 +25,6 @@ The important part is not just the visual effect. A good implementation updates 
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/assign-node-to-connection-on-drop/assign-node-to-connection-on-drop.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## When to use it

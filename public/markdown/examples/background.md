@@ -39,5 +39,4 @@ The example below shows how to:
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/background-example.component.scss
 [custom.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/custom-background-example/custom-background-example.html
 [custom.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/background-example/custom-background-example/custom-background-example.ts
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

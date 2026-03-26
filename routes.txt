@@ -6,6 +6,10 @@
 /docs/angular-workflow-builder
 /docs/angular-diagram-library
 /docs/react-flow-vs-foblex-flow-for-angular-teams
+/docs/default-theme-and-styling
+/docs/styling-mixins-and-scoping
+/docs/styling-tokens-and-overrides
+/docs/styling-recipes
 /docs/event-system
 /docs/selection-system
 /docs/f-flow-component
