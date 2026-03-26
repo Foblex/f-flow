@@ -6,12 +6,8 @@
       fInputId="2"
       fBehavior="fixed"
       fType="segment"
-      class="gradient-color"
     >
-      <f-connection-gradient
-        [fStartColor]="startColor()"
-        [fEndColor]="endColor()"
-      ></f-connection-gradient>
+      <f-connection-gradient [fStartColor]="startColor()" [fEndColor]="endColor()" />
     </f-connection>
     <div
       fNode
@@ -34,8 +30,7 @@
       I'm a node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fOutputId="3" fInputId="4" fBehavior="floating">
-    </f-connection>
+    <f-connection [fReassignDisabled]="true" fOutputId="3" fInputId="4" fBehavior="floating" />
     <div
       fNode
       fDragHandle
@@ -59,16 +54,13 @@
   </f-canvas>
 </f-flow>
 
-<div class="examples-toolbar">
+<example-toolbar>
   <mat-form-field>
     <mat-label>Gradient Start</mat-label>
     <mat-select [(value)]="startColor">
       @for (option of colorOptions; track option.value) {
         <mat-option [value]="option.value">
-          <span class="color-option">
-            <span class="color-swatch" [style.background]="option.value"></span>
-            {{ option.label }}
-          </span>
+          {{ option.label }}
         </mat-option>
       }
     </mat-select>
@@ -79,12 +71,9 @@
     <mat-select [(value)]="endColor">
       @for (option of colorOptions; track option.value) {
         <mat-option [value]="option.value">
-          <span class="color-option">
-            <span class="color-swatch" [style.background]="option.value"></span>
-            {{ option.label }}
-          </span>
+          {{ option.label }}
         </mat-option>
       }
     </mat-select>
   </mat-form-field>
-</div>
+</example-toolbar>

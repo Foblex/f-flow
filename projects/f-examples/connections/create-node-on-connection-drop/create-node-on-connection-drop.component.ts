@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, viewChild, ViewCh
 import { FCanvasComponent, FCreateConnectionEvent, FFlowComponent, FFlowModule } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
+import { ExampleToolbar } from '@portal-ui';
 
 //This example demonstrates how to create a new node in position where a connection was dropped.
 @Component({
@@ -11,7 +12,8 @@ import { generateGuid } from '@foblex/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    ExampleToolbar
   ]
 })
 export class CreateNodeOnConnectionDropComponent {

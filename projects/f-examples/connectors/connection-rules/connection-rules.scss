@@ -1,22 +1,20 @@
-@use '../../flow-common';
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
+  @include flow-theme.connection($scoped: false);
 }
 
-.f-node {
-  @include flow-common.node;
-}
-
-@include flow-common.connector;
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);
 
 .f-connections-dragging {
   .f-node-input {
     &:not(.f-connector-connectable) {
-      //.f-node-input-can-be-connected-to changed to .f-connector-connectable
-      background-color: var(--disabled-color);
+      background-color: var(--ff-connector-disabled-color);
     }
   }
 }
-
-@include flow-common.examples-toolbar;

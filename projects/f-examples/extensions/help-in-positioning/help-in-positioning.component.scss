@@ -1,18 +1,13 @@
-@use "../../flow-common";
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
-
-  .f-line-alignment {
-    .f-line {
-      background-color: var(--connection-color);
-    }
-  }
+  @include flow-theme.connection($scoped: false);
+  @include flow-theme.plugins($scoped: false);
 }
 
-.f-node {
-  @include flow-common.node;
-}
-
-@include flow-common.connector;
-
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);

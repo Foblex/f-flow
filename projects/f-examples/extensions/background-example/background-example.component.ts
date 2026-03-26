@@ -4,6 +4,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FlowBackground } from './custom-background-example/custom-background-example';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'background-example',
@@ -11,7 +12,15 @@ import { FlowBackground } from './custom-background-example/custom-background-ex
   templateUrl: './background-example.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelectModule, FlowBackground],
+  imports: [
+    FFlowModule,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatSelectModule,
+    FlowBackground,
+    ExampleToolbar,
+  ],
 })
 export class BackgroundExampleComponent {
   private readonly _canvas = viewChild.required(FCanvasComponent);

@@ -1,23 +1,25 @@
-@use '../../flow-common';
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
+  @include flow-theme.connection($scoped: false);
 }
 
 .mat-mdc-card {
   max-width: 300px;
-  color: var(--node-color);
-  background: var(--node-background-color);
-  border-radius: var(--node-border-radius);
-  border: 0.2px solid var(--node-border-color);
+  color: var(--ff-node-color);
+  background: var(--ff-node-background-color);
   cursor: move;
 
   .mat-mdc-card-subtitle {
-    color: var(--node-color);
+    color: var(--ff-node-color);
   }
 
   &:active {
-    box-shadow: var(--node-shadow);
+    box-shadow: var(--ff-node-shadow);
   }
 }
 
@@ -27,7 +29,7 @@
 }
 
 .simple-node {
-  @include flow-common.node;
+  @include flow-theme.node($selectorless: true);
   width: unset;
 }
 

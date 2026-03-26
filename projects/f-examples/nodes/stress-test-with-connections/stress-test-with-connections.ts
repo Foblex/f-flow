@@ -19,6 +19,7 @@ import { IPoint, PointExtensions } from '@foblex/2d';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'stress-test-with-connections',
@@ -26,7 +27,15 @@ import { MatSelect } from '@angular/material/select';
   templateUrl: './stress-test-with-connections.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect, FZoomDirective],
+  imports: [
+    FFlowModule,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatSelect,
+    FZoomDirective,
+    ExampleToolbar,
+  ],
 })
 export class StressTestWithConnections {
   private readonly _canvas = viewChild.required(FCanvasComponent);

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
 import { MatIcon } from '@angular/material/icon';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connector-outlet',
@@ -12,7 +13,8 @@ import { MatIcon } from '@angular/material/icon';
   imports: [
     FFlowModule,
     FCheckboxComponent,
-    MatIcon
+    MatIcon,
+    ExampleToolbar
   ]
 })
 export class ConnectorOutletComponent {

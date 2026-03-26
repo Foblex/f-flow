@@ -12,6 +12,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 type Edge = { source: number; target: number };
 
@@ -35,6 +36,7 @@ type Cell = {
     MatOption,
     MatSelect,
     FCheckboxComponent,
+    ExampleToolbar,
   ],
 })
 export class StressTest {

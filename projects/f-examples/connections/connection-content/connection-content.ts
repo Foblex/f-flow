@@ -10,6 +10,7 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { KeyValue } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connection-content',
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     MatSelect,
     FConnectionContent,
     FormsModule,
+    ExampleToolbar,
   ],
 })
 export class ConnectionContent {

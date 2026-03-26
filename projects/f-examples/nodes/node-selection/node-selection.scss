@@ -1,38 +1,13 @@
-@use '../../flow-common';
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
+  @include flow-theme.connection($scoped: false);
 }
 
-.f-node {
-  @include flow-common.node;
-  border: 1px solid var(--node-border-color);
+@include flow-theme.node($scoped: false);
+@include flow-theme.connector($scoped: false);
 
-  &.f-selected {
-    border: 1px solid var(--node-selected-border-color);
-  }
-}
-
-.f-node-input,
-.f-node-output {
-  &:not(.f-node) {
-    @include flow-common.connectors;
-  }
-}
-
-.f-node-output {
-  &:not(.f-node) {
-    border-radius: 4px;
-  }
-}
-
-.overlay {
-  @include flow-common.overlay;
-}
-
-@include flow-common.examples-toolbar;
-
-.examples-toolbar {
-  left: 16px;
-  right: unset;
-}

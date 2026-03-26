@@ -4,6 +4,7 @@ import { PointExtensions } from '@foblex/2d';
 import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
 import { NgClass } from '@angular/common';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'elkjs-layout-example',
@@ -15,7 +16,8 @@ import { NgClass } from '@angular/common';
     FFlowModule,
     FCheckboxComponent,
     NgClass,
-    FZoomDirective
+    FZoomDirective,
+    ExampleToolbar
   ]
 })
 export class ElkjsLayoutExampleComponent implements OnInit {

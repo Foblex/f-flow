@@ -7,9 +7,9 @@
     }
   </f-canvas>
 </f-flow>
-<div class="examples-toolbar">
+<example-toolbar>
   <f-checkbox [checked]="isMatchSize()" (change)="onPreviewMatchSizeChange($event)">Is preview match size</f-checkbox>
-</div>
+</example-toolbar>
 
 <div class="external-panel">
   <div class="external-item" fExternalItem [fData]="'Data 1'" [fPreviewMatchSize]="isMatchSize()">

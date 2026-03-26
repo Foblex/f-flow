@@ -1,0 +1,100 @@
+@mixin _plugins-scope($scoped: true) {
+  @if $scoped {
+    f-flow,
+    .f-flow {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin background($scoped: true) {
+  @include _plugins-scope($scoped) {
+    .f-background {
+      line,
+      path {
+        stroke: var(--ff-background-line-color);
+      }
+
+      circle {
+        fill: var(--ff-background-dot-color);
+      }
+    }
+  }
+}
+
+@mixin selection-area($scoped: true) {
+  @include _plugins-scope($scoped) {
+    .f-selection-area {
+      box-sizing: border-box;
+      background: var(--ff-selection-area-color);
+      border: 1px solid var(--ff-selection-area-border-color);
+    }
+  }
+}
+
+@mixin minimap($scoped: true) {
+  @include _plugins-scope($scoped) {
+    .f-minimap {
+      overflow: hidden;
+      background: var(--ff-minimap-background-color);
+      border: 1px solid var(--ff-minimap-border-color);
+      border-radius: var(--ff-minimap-border-radius);
+      box-shadow: var(--ff-minimap-shadow);
+      bottom: 16px;
+      right: 16px;
+      width: 140px;
+      height: 120px;
+
+      .f-minimap-node,
+      .f-minimap-group {
+        fill: var(--ff-minimap-node-color);
+      }
+
+      .f-minimap-node,
+      .f-minimap-group {
+        &.f-selected {
+          fill: var(--ff-minimap-node-selected-color);
+        }
+      }
+
+      .f-minimap-view {
+        fill: var(--ff-minimap-view-color);
+        stroke: var(--ff-minimap-view-border-color);
+        stroke-width: 1;
+      }
+    }
+  }
+}
+
+@mixin magnetic-lines($scoped: true) {
+  @include _plugins-scope($scoped) {
+    .f-magnetic-lines,
+    .f-line-alignment {
+      .f-line {
+        background: var(--ff-magnetic-line-color);
+      }
+    }
+  }
+}
+
+@mixin magnetic-rects($scoped: true) {
+  @include _plugins-scope($scoped) {
+    .f-magnetic-rects {
+      .f-rect {
+        box-sizing: border-box;
+        background: var(--ff-magnetic-rect-fill);
+        border: 1px solid var(--ff-magnetic-rect-border-color);
+      }
+    }
+  }
+}
+
+@mixin plugins($scoped: true) {
+  @include background($scoped);
+  @include selection-area($scoped);
+  @include minimap($scoped);
+  @include magnetic-lines($scoped);
+  @include magnetic-rects($scoped);
+}

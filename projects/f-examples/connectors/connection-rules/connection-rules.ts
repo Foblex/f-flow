@@ -3,6 +3,7 @@ import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/f
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connection-rules',
@@ -10,7 +11,7 @@ import { MatSelect } from '@angular/material/select';
   templateUrl: './connection-rules.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect],
+  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect, ExampleToolbar],
 })
 export class ConnectionRules {
   private readonly _canvas = viewChild.required(FCanvasComponent);

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateNodeEvent, FDropToGroupEvent, FFlowModule } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 interface INode {
   id: string;
@@ -14,7 +15,7 @@ interface INode {
   templateUrl: './drag-to-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent],
+  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar],
 })
 export class DragToGroup {
   private readonly _canvas = viewChild.required(FCanvasComponent);

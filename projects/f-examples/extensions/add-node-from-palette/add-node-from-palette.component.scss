@@ -1,13 +1,15 @@
-@use "../../flow-common";
+@use '@foblex/flow/styles' as flow-theme;
 
-.f-node {
-  @include flow-common.node;
+::ng-deep {
+  @include flow-theme.theme-tokens();
 }
 
-@include flow-common.examples-toolbar;
+@include flow-theme.node($selectorless: false);
+
+@include flow-theme.external-item-all();
 
 .external-panel {
-  background-color: var(--node-background-color);
+  background-color: var(--ff-node-background-color);
   width: 170px;
   border-radius: 4px;
   padding: 4px;
@@ -17,24 +19,4 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.external-item, .external-item-placeholder, .external-item-preview {
-  padding: 4px;
-  min-height: 24px;
-  background-color: var(--node-background-color);
-  border: 1px solid var(--node-border-color);
-  border-radius: 4px;
-  overflow: hidden;
-  text-align: center;
-  user-select: none;
-}
-
-.external-item-placeholder {
-  background-color: var(--disabled-color);
-}
-
-.external-item-preview {
-  background-color: var(--node-background-color);
-  border: 1px dashed var(--node-border-color);
 }

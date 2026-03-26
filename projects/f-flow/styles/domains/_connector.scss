@@ -1,0 +1,150 @@
+@mixin _connector-scope($scoped: true) {
+  @if $scoped {
+    f-flow,
+    .f-flow {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin _socket-positioning() {
+  &.left {
+    left: calc(var(--ff-connector-size) / -2);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.right {
+    right: calc(var(--ff-connector-size) / -2);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &.top {
+    top: calc(var(--ff-connector-size) / -2);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.top-left {
+    top: calc(var(--ff-connector-size) / -2);
+    left: calc(var(--ff-connector-size) / -2);
+  }
+
+  &.top-right {
+    top: calc(var(--ff-connector-size) / -2);
+    right: calc(var(--ff-connector-size) / -2);
+  }
+
+  &.bottom {
+    bottom: calc(var(--ff-connector-size) / -2);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.bottom-left {
+    bottom: calc(var(--ff-connector-size) / -2);
+    left: calc(var(--ff-connector-size) / -2);
+  }
+
+  &.bottom-right {
+    bottom: calc(var(--ff-connector-size) / -2);
+    right: calc(var(--ff-connector-size) / -2);
+  }
+}
+
+@mixin _socket-frame($radius: 50%) {
+  position: absolute;
+  width: var(--ff-connector-size);
+  height: var(--ff-connector-size);
+  box-sizing: border-box;
+  border: 1px solid var(--ff-connector-border-color);
+  border-radius: $radius;
+  background: var(--ff-connector-background-color);
+  box-shadow: 0 0 0 2px var(--ff-connector-node-ring-color);
+  pointer-events: all;
+
+  @include _socket-positioning();
+
+  &.f-connector-connectable {
+    border-color: var(--ff-connector-accent-color);
+  }
+
+  &.f-node-output-connected,
+  &.f-node-input-connected {
+    background: var(--ff-connector-connected-color);
+    border-color: var(--ff-connector-connected-color);
+  }
+
+  &.f-node-output-not-connectable,
+  &.f-node-input-not-connectable,
+  &.f-node-input-disabled,
+  &.f-node-output-disabled {
+    background: var(--ff-connector-disabled-color);
+    border-color: var(--ff-connector-disabled-border-color);
+  }
+}
+
+@mixin connector-sockets($scoped: true, $selectorless: false) {
+  @if $selectorless {
+    @include _socket-frame();
+  } @else {
+    @include _connector-scope($scoped) {
+      .f-node-input,
+      .f-node-output {
+        &:not(.f-node) {
+          @include _socket-frame();
+        }
+      }
+
+      .f-node-input {
+        &:not(.f-node) {
+          border-radius: var(--ff-radius-socket-square);
+        }
+      }
+
+      .f-connections-dragging {
+        .f-node-input,
+        .f-node-output {
+          &:not(.f-connector-connectable) {
+            &:not(.f-node-input-connected):not(.f-node-output-connected) {
+              border-color: var(--ff-connector-disabled-border-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin connector-outlet($scoped: true) {
+  @include _connector-scope($scoped) {
+    .f-node-outlet {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: var(--ff-outlet-padding-y) var(--ff-outlet-padding-x);
+      box-sizing: border-box;
+      border: 1px solid var(--ff-outlet-border-color);
+      border-radius: var(--ff-outlet-border-radius);
+      background: var(--ff-outlet-background-color);
+      color: var(--ff-outlet-color);
+      pointer-events: all;
+
+      &.f-node-outlet-disabled {
+        background: var(--ff-outlet-disabled-background-color);
+        border-color: var(--ff-outlet-disabled-border-color);
+        color: var(--ff-outlet-disabled-color);
+      }
+    }
+  }
+}
+
+@mixin connector($scoped: true) {
+  @include connector-sockets($scoped);
+  @include connector-outlet($scoped);
+}

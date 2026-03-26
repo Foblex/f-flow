@@ -1,19 +1,14 @@
-@use "../../flow-common";
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
+  @include flow-theme.connection($scoped: false);
 }
 
-.f-selection-area {
-  background-color: var(--selection-area-color);
-}
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);
 
-.f-node {
-  @include flow-common.node;
-
-  &.f-selected {
-    border: 1px solid var(--node-selected-border-color);
-  }
-}
-
-@include flow-common.connector;
+@include flow-theme.selection-area();

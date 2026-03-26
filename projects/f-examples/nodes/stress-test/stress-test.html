@@ -7,7 +7,7 @@
     <ng-container ngProjectAs="[fNodes]" *fVirtualFor="let cell of cells(); trackBy trackCell;">
       <div
         fNode
-        [fNodePosition]="{ x: 120 * cell.cIndex, y: cell.rIndex * 120 }"
+        [fNodePosition]="{ x: 160 * cell.cIndex, y: cell.rIndex * 120 }"
         fDragHandle
         fNodeInput
         [fInputId]="cell.node"
@@ -22,7 +22,7 @@
       @for (cell of cells(); track $index) {
       <div
         fNode
-        [fNodePosition]="{ x: 120 * cell.cIndex, y: cell.rIndex * 120 }"
+        [fNodePosition]="{ x: 160 * cell.cIndex, y: cell.rIndex * 120 }"
         fDragHandle
         fNodeInput
         [fInputId]="cell.node"
@@ -49,7 +49,7 @@
     </ng-container>
   </f-canvas>
 </f-flow>
-<div class="examples-toolbar">
+<example-toolbar>
   <f-checkbox [checked]="cache()" (change)="toggleCache()">Cache</f-checkbox>
   <f-checkbox [checked]="virtualization()" (change)="toggleVirtualization()"
     >Virtualization</f-checkbox
@@ -65,5 +65,5 @@
       }
     </mat-select>
   </mat-form-field>
-</div>
+</example-toolbar>
 }

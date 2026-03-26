@@ -9,6 +9,7 @@ import {
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'add-node-from-palette',
@@ -22,6 +23,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
     FExternalItemPlaceholder,
     FExternalItemPreview,
     FCheckboxComponent,
+    ExampleToolbar,
   ],
 })
 export class AddNodeFromPaletteComponent {

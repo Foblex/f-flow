@@ -9,6 +9,7 @@ import {
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 import { FDragStartedEvent } from '@foblex/flow';
+import { ExampleOverlay } from '@portal-ui';
 
 @Component({
   selector: 'drag-start-end-events',
@@ -16,7 +17,7 @@ import { FDragStartedEvent } from '@foblex/flow';
   templateUrl: './drag-start-end-events.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FZoomDirective],
+  imports: [FFlowModule, FZoomDirective, ExampleOverlay],
 })
 export class DragStartEndEventsComponent {
   protected fCanvas = viewChild(FCanvasComponent);

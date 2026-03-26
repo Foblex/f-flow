@@ -8,6 +8,7 @@ import {
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
+import { ExampleToolbar } from '@portal-ui';
 
 interface INode {
   id: string;
@@ -64,7 +65,7 @@ const STATE = {
   templateUrl: './copy-paste.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule],
+  imports: [FFlowModule, ExampleToolbar],
 })
 export class CopyPaste {
   private readonly _flow = viewChild.required(FFlowComponent);

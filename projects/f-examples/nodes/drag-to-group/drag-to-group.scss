@@ -1,48 +1,10 @@
-@use '../../flow-common';
+@use '@foblex/flow/styles' as flow-theme;
 
-.f-node,
-.f-group {
-  @include flow-common.node;
-
-  &.f-grouping-over-boundary {
-    border-style: dashed;
-    border-width: 2px;
-  }
+::ng-deep {
+  @include flow-theme.theme-tokens();
+  @include flow-theme.flow($scoped: true);
 }
 
-.f-node {
-  background-color: var(--node-background-color);
-}
-
-.f-group {
-  background-color: var(--minimap-view-color);
-}
-
-.f-flow {
-  &.f-dragging {
-    .f-node {
-      &.f-grouping-drop-active {
-        border-color: var(--node-background-color-inverse);
-      }
-    }
-
-    .f-group {
-      &.f-grouping-drop-active {
-        border-color: var(--node-background-color-inverse);
-      }
-    }
-  }
-}
-
-@include flow-common.examples-toolbar;
-
-.external-item {
-  padding: 4px;
-  min-height: 24px;
-  background-color: var(--node-background-color);
-  border: 1px solid var(--node-border-color);
-  border-radius: 4px;
-  overflow: hidden;
-  text-align: center;
-  user-select: none;
-}
+@include flow-theme.external-item-all($scoped: false);
+@include flow-theme.node-group($scoped: false);
+@include flow-theme.grouping($scoped: false);

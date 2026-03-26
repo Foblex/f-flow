@@ -53,7 +53,7 @@
     </div>
   </f-canvas>
 </f-flow>
-<div class="examples-toolbar">
+<example-toolbar>
   <mat-form-field>
     <mat-label>Can be connected to Input</mat-label>
     <mat-select [(value)]="input">
@@ -70,5 +70,5 @@
       }
     </mat-select>
   </mat-form-field>
-  <button class="f-button" (click)="deleteConnections()">Delete Connections</button>
-</div>
+  <button class="f-button primary" (click)="deleteConnections()">Delete Connections</button>
+</example-toolbar>

@@ -1,0 +1,175 @@
+@mixin _connection-scope($scoped: true) {
+  @if $scoped {
+    f-flow,
+    .f-flow {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin connection($scoped: true) {
+  @include _connection-scope($scoped) {
+    .f-connection-content {
+      box-sizing: border-box;
+      color: var(--ff-connection-content-color);
+      font-size: var(--ff-connection-content-font-size);
+      padding: var(--ff-connection-content-padding-y) var(--ff-connection-content-padding-x);
+      background: var(--ff-connection-content-background-color);
+      border: 1px solid var(--ff-connection-content-border-color);
+      border-radius: var(--ff-connection-content-border-radius);
+    }
+
+    .f-connection {
+      .f-connection-selection {
+        fill: none;
+        stroke: transparent;
+        stroke-width: var(--ff-connection-hit-width);
+      }
+
+      .f-connection-path {
+        fill: none;
+        stroke: var(--ff-connection-color);
+        stroke-width: var(--ff-connection-width);
+      }
+
+      .f-connection-drag-handle {
+        fill: transparent;
+        stroke: transparent;
+        cursor: move;
+      }
+
+      &.f-snap-connection {
+        .f-connection-path {
+          stroke: var(--ff-snap-connection-color);
+          stroke-dasharray: 8 4;
+        }
+      }
+
+      &.f-selected {
+        .f-connection-content {
+          border-color: var(--ff-connection-content-border-color-selected);
+        }
+
+        .f-connection-path {
+          stroke: var(--ff-connection-selected-color);
+        }
+      }
+
+    }
+
+    &:not(.f-dragging) {
+      .f-connection:not(.f-dragging):not(.f-selected):not(.f-connection-selection-disabled) {
+        &:hover {
+          .f-connection-selection {
+            stroke: var(--ff-connection-hover-color);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin connection-markers($scoped: true) {
+  @include _connection-scope($scoped) {
+    .f-marker,
+    .connection-marker {
+      color: var(--ff-marker-color);
+
+      circle,
+      rect,
+      path,
+      polygon,
+      line {
+        fill: currentColor;
+        stroke: currentColor;
+      }
+    }
+
+    .f-connection {
+      &.f-snap-connection {
+        .f-marker,
+        .connection-marker {
+          color: var(--ff-snap-connection-color);
+        }
+      }
+
+      &.f-selected {
+        .f-marker,
+        .connection-marker {
+          color: var(--ff-connection-selected-color);
+        }
+      }
+    }
+  }
+}
+
+@mixin connection-waypoints($scoped: true) {
+  @include _connection-scope($scoped) {
+    .f-connection {
+      .f-connection-waypoints {
+        .f-candidate,
+        .f-waypoint {
+          vector-effect: non-scaling-stroke;
+          transform-box: fill-box;
+          transform-origin: center;
+          stroke-width: 1.5;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        .f-candidate {
+          fill: var(--ff-waypoint-candidate-fill);
+          stroke: var(--ff-waypoint-candidate-stroke);
+        }
+
+        .f-waypoint {
+          fill: var(--ff-waypoint-fill);
+          stroke: var(--ff-waypoint-stroke);
+          cursor: move;
+        }
+      }
+    }
+  }
+}
+
+@mixin connection-drag-handles($scoped: true) {
+  @include _connection-scope($scoped) {
+    .f-connection {
+      .f-connection-drag-handle {
+        fill: transparent;
+        stroke: var(--ff-connection-drag-handle-stroke);
+        stroke-width: 1.5;
+      }
+    }
+  }
+}
+
+@mixin connection-drag-handles-visible($scoped: true) {
+  @include connection-drag-handles($scoped);
+
+  @include _connection-scope($scoped) {
+    .f-connection {
+      .f-connection-drag-handle {
+        fill: var(--ff-connection-drag-handle-fill);
+      }
+
+      &.f-selected {
+        .f-connection-drag-handle {
+          fill: var(--ff-connection-drag-handle-fill);
+          stroke: var(--ff-connection-selected-color);
+        }
+      }
+    }
+  }
+}
+
+@mixin connection-all($scoped: true) {
+  @include connection($scoped);
+  @include connection-markers($scoped);
+  @include connection-waypoints($scoped);
+  @include connection-drag-handles($scoped);
+}

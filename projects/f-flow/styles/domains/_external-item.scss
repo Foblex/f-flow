@@ -1,0 +1,44 @@
+@mixin external-item($scoped: true) {
+  .f-external-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    box-sizing: border-box;
+    color: var(--ff-external-item-color);
+    background: var(--ff-external-item-background-color);
+    border: 1px solid var(--ff-external-item-border-color);
+    border-radius: var(--ff-external-item-border-radius);
+    box-shadow: var(--ff-external-item-shadow);
+    cursor: grab;
+    user-select: none;
+
+    &.f-external-item-disabled {
+      color: var(--ff-external-item-disabled-color);
+      background: var(--ff-external-item-disabled-background-color);
+      cursor: not-allowed;
+    }
+  }
+}
+
+@mixin external-item-preview($scoped: true) {
+  .f-external-item-preview {
+    box-sizing: border-box;
+    box-shadow: var(--ff-external-item-preview-shadow);
+  }
+}
+
+@mixin external-item-placeholder($scoped: true) {
+  .f-external-item-placeholder {
+    box-sizing: border-box;
+    background: var(--ff-external-item-placeholder-background-color);
+    border: 1px dashed var(--ff-external-item-placeholder-border-color);
+    border-radius: var(--ff-external-item-border-radius);
+  }
+}
+
+@mixin external-item-all($scoped: true) {
+  @include external-item($scoped);
+  @include external-item-preview($scoped);
+  @include external-item-placeholder($scoped);
+}

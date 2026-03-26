@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'limiting-connections',
@@ -7,7 +8,7 @@ import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/f
   templateUrl: './limiting-connections.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule],
+  imports: [FFlowModule, ExampleToolbar],
 })
 export class LimitingConnectionsComponent {
   private readonly _canvas = viewChild.required(FCanvasComponent);

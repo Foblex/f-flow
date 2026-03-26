@@ -1,0 +1,117 @@
+@mixin ff-aliases() {
+  :root {
+    --ff-flow-background-color: var(--ff-color-surface-page);
+    --ff-flow-text-color: var(--ff-color-text-primary);
+    --ff-flow-font-family: var(--ff-font-sans);
+    --ff-flow-font-size: var(--ff-font-size-body);
+
+    --ff-canvas-background-color: var(--ff-color-surface-canvas);
+
+    --ff-node-background-color: var(--ff-color-surface-card);
+    --ff-node-background-color-inverse: var(--ff-color-text-primary);
+    --ff-node-border-color: var(--ff-color-border-default);
+    --ff-node-border-color-selected: var(--ff-color-border-accent);
+    --ff-node-color: var(--ff-color-text-primary);
+    --ff-node-border-radius: var(--ff-radius-node);
+    --ff-node-shadow: var(--ff-shadow-surface);
+    --ff-node-shadow-selected: var(--ff-shadow-floating);
+    --ff-node-width: 120px;
+    --ff-node-min-height: 56px;
+    --ff-node-padding: 24px;
+
+    --ff-group-background-color: var(--ff-color-surface-group);
+    --ff-group-background-color-active: var(--ff-color-surface-group-active);
+    --ff-group-border-color: var(--ff-color-border-subtle);
+    --ff-group-border-color-selected: var(--ff-color-border-accent);
+    --ff-group-border-color-active: var(--ff-color-border-accent);
+    --ff-group-color: var(--ff-color-text-secondary);
+    --ff-group-border-radius: var(--ff-radius-group);
+    --ff-group-min-width: 180px;
+    --ff-group-min-height: 120px;
+    --ff-group-padding: 24px;
+    --ff-grouping-drop-target-border-color: var(--ff-color-grouping-drop-target-border);
+    --ff-grouping-drop-target-border-style: dashed;
+    --ff-grouping-drop-target-border-width: 1px;
+    --ff-grouping-drop-target-border-color-active: var(--ff-color-grouping-drop-target-border-active);
+    --ff-grouping-drop-target-border-style-active: dashed;
+    --ff-grouping-drop-target-border-width-active: 2px;
+
+    --ff-handle-background-color: var(--ff-color-surface-card);
+    --ff-handle-border-color: var(--ff-color-border-strong);
+    --ff-handle-color: var(--ff-color-text-secondary);
+    --ff-handle-size: 12px;
+    --ff-handle-radius: var(--ff-radius-control);
+    --ff-rotate-handle-size: 16px;
+
+    --ff-connector-background-color: var(--ff-color-surface-card);
+    --ff-connector-border-color: var(--ff-color-border-default);
+    --ff-connector-connected-color: var(--ff-color-connector-connected);
+    --ff-connector-accent-color: var(--ff-color-accent);
+    --ff-connector-disabled-color: var(--ff-color-disabled-surface);
+    --ff-connector-disabled-border-color: var(--ff-color-disabled-border);
+    --ff-connector-size: 16px;
+    --ff-connector-node-ring-color: var(--ff-canvas-background-color);
+
+    --ff-outlet-background-color: var(--ff-color-surface-muted);
+    --ff-outlet-border-color: var(--ff-color-border-default);
+    --ff-outlet-color: var(--ff-color-accent);
+    --ff-outlet-disabled-background-color: var(--ff-color-disabled-surface);
+    --ff-outlet-disabled-border-color: var(--ff-color-disabled-border);
+    --ff-outlet-disabled-color: var(--ff-color-disabled-text);
+    --ff-outlet-border-radius: var(--ff-radius-pill);
+    --ff-outlet-padding-y: 6px;
+    --ff-outlet-padding-x: 12px;
+
+    --ff-connection-color: var(--ff-color-connection);
+    --ff-snap-connection-color: var(--ff-color-connection-muted);
+    --ff-connection-hover-color: var(--ff-color-connection-hover);
+    --ff-connection-selected-color: var(--ff-color-accent);
+    --ff-connection-label-color: var(--ff-color-text-secondary);
+    --ff-connection-content-color: var(--ff-node-color);
+    --ff-connection-content-background-color: var(--ff-node-background-color);
+    --ff-connection-content-border-color: var(--ff-node-border-color);
+    --ff-connection-content-border-color-selected: var(--ff-connection-selected-color);
+    --ff-connection-content-border-radius: var(--ff-node-border-radius);
+    --ff-connection-content-font-size: 13px;
+    --ff-connection-content-padding-y: 2px;
+    --ff-connection-content-padding-x: 8px;
+    --ff-connection-width: 2px;
+    --ff-connection-hit-width: 14px;
+    --ff-connection-drag-handle-fill: var(--ff-color-surface-card);
+    --ff-connection-drag-handle-stroke: var(--ff-color-accent);
+    --ff-marker-color: var(--ff-connection-color);
+    --ff-waypoint-fill: var(--ff-color-waypoint-fill);
+    --ff-waypoint-stroke: var(--ff-color-waypoint-stroke);
+    --ff-waypoint-candidate-fill: var(--ff-color-waypoint-candidate-fill);
+    --ff-waypoint-candidate-stroke: var(--ff-color-waypoint-candidate-stroke);
+
+    --ff-background-line-color: var(--ff-color-grid);
+    --ff-background-dot-color: var(--ff-color-grid-strong);
+    --ff-selection-area-color: var(--ff-color-selection-fill);
+    --ff-selection-area-border-color: var(--ff-color-selection-stroke);
+
+    --ff-minimap-background-color: var(--ff-color-minimap-surface);
+    --ff-minimap-border-color: var(--ff-color-border-default);
+    --ff-minimap-node-color: var(--ff-color-minimap-node);
+    --ff-minimap-node-selected-color: var(--ff-color-accent);
+    --ff-minimap-view-color: var(--ff-color-minimap-view);
+    --ff-minimap-view-border-color: var(--ff-color-selection-stroke);
+    --ff-minimap-border-radius: var(--ff-radius-node);
+    --ff-minimap-shadow: var(--ff-shadow-floating);
+
+    --ff-magnetic-line-color: var(--ff-color-magnetic-line);
+    --ff-magnetic-rect-fill: var(--ff-color-magnetic-rect-fill);
+    --ff-magnetic-rect-border-color: var(--ff-color-magnetic-rect-border);
+
+    --ff-external-item-background-color: var(--ff-color-surface-card);
+    --ff-external-item-border-color: var(--ff-color-border-default);
+    --ff-external-item-color: var(--ff-color-text-primary);
+    --ff-external-item-disabled-color: var(--ff-color-disabled-text);
+    --ff-external-item-disabled-background-color: var(--ff-color-disabled-surface);
+    --ff-external-item-border-radius: var(--ff-radius-node);
+    --ff-external-item-shadow: var(--ff-shadow-surface);
+    --ff-external-item-preview-shadow: var(--ff-shadow-floating);
+    --ff-external-item-placeholder-background-color: var(--ff-color-surface-soft);
+    --ff-external-item-placeholder-border-color: var(--ff-color-border-subtle);
+  }
+}
