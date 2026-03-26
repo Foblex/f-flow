@@ -9,6 +9,6 @@
   @include flow-theme.connection($scoped: false);
 }
 
-@include flow-theme.node-group($scoped: false);
+@include flow-theme.node($scoped: false);
+@include flow-theme.group($scoped: false);
 @include flow-theme.connector($scoped: false);
-
