@@ -128,6 +128,7 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
         this._connection,
         this._sourceRef.connector.fConnectableSide,
         targetSide,
+        this._sourceRef.connector,
       ),
     );
 
@@ -154,6 +155,8 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
         snap,
         this._sourceRef.connector.fConnectableSide,
         target.connector.fConnectableSide,
+        this._sourceRef.connector,
+        target.connector,
       ),
     );
     snap.show();

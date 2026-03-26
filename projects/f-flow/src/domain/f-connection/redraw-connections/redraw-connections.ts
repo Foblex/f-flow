@@ -132,6 +132,8 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
         connection,
         context.source.fConnectableSide,
         context.target.fConnectableSide,
+        context.source,
+        context.target,
       ),
     );
   }

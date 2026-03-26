@@ -71,6 +71,8 @@ export class ResizeNodeConnectionHandlerBase {
         this.connection,
         this._sourceRef.connector.fConnectableSide,
         this._targetRef.connector.fConnectableSide,
+        this._sourceRef.connector,
+        this._targetRef.connector,
       ),
     );
   }

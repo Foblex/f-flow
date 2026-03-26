@@ -51,7 +51,7 @@ describe('connection-worker-runtime', () => {
     const blob = createObjectURL.calls.mostRecent().args[0] as Blob;
     expect(blob.type).toBe('text/javascript');
     await expectAsync(blob.text()).toBeResolvedTo(
-      jasmine.stringContaining("addEventListener('message'"),
+      jasmine.stringContaining('item.sourceRotation || item.targetRotation'),
     );
   });
 

@@ -7,6 +7,8 @@ export interface IFConnectionWorkerRequestItem {
   inputSide: string;
   sourceConnectableSide: string;
   targetConnectableSide: string;
+  sourceRotation: number;
+  targetRotation: number;
   sourceRect: IFConnectionWorkerRect;
   targetRect: IFConnectionWorkerRect;
 }

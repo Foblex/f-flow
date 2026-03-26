@@ -2,7 +2,6 @@ import { Directive, effect, inject, Injector, input, OnInit, untracked } from '@
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FMediator } from '@foblex/mediator';
 import { castToEnum } from '@foblex/utils';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { F_CONNECTION_CONTENT, FConnectionContentBase } from './models';
 import { PolylineContentAlign } from './utils';
 
@@ -47,14 +46,14 @@ export class FConnectionContent extends FConnectionContentBase implements OnInit
 
   public override readonly position = input<number, unknown>(0.5, {
     transform: (x) => {
-      const v = coerceNumberProperty(x);
+      const v = coerceConnectionContentNumber(x);
 
       return v < 0 ? 0 : v > 1 ? 1 : v;
     },
   });
 
   public override readonly offset = input<number, unknown>(0, {
-    transform: (x) => coerceNumberProperty(x),
+    transform: (x) => coerceConnectionContentNumber(x),
   });
 
   public override readonly align = input<PolylineContentAlign, unknown>(PolylineContentAlign.NONE, {
@@ -76,4 +75,24 @@ export class FConnectionContent extends FConnectionContentBase implements OnInit
       { injector: this._injector },
     );
   }
+}
+
+function coerceConnectionContentNumber(value: unknown, fallbackValue: number = 0): number {
+  return isNumberValue(value) ? Number(value) : fallbackValue;
+}
+
+function isNumberValue(value: unknown): value is number | string | bigint {
+  if (typeof value === 'number') {
+    return !Number.isNaN(value);
+  }
+
+  if (typeof value === 'bigint') {
+    return true;
+  }
+
+  if (typeof value === 'string') {
+    return value.trim() !== '' && !Number.isNaN(Number(value));
+  }
+
+  return false;
 }

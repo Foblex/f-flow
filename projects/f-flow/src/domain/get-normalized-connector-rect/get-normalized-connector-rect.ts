@@ -23,10 +23,9 @@ import { calculatePointerInFlow } from '../../utils';
  */
 @Injectable()
 @FExecutionRegister(GetNormalizedConnectorRectRequest)
-export class GetNormalizedConnectorRect implements IExecution<
-  GetNormalizedConnectorRectRequest,
-  IRoundedRect
-> {
+export class GetNormalizedConnectorRect
+  implements IExecution<GetNormalizedConnectorRectRequest, IRoundedRect>
+{
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
@@ -70,15 +69,26 @@ export class GetNormalizedConnectorRect implements IExecution<
     element: HTMLElement | SVGElement,
     styles: CSSStyleDeclaration,
   ): RoundedRect {
+    const [radius1, radius2, radius3, radius4] = this._normalizeCircularBorderRadii(
+      rect.width,
+      rect.height,
+      [
+        this._getSystemRadius(styles.borderTopLeftRadius, element, styles.fontSize),
+        this._getSystemRadius(styles.borderTopRightRadius, element, styles.fontSize),
+        this._getSystemRadius(styles.borderBottomRightRadius, element, styles.fontSize),
+        this._getSystemRadius(styles.borderBottomLeftRadius, element, styles.fontSize),
+      ],
+    );
+
     return new RoundedRect(
       rect.x,
       rect.y,
       rect.width,
       rect.height,
-      this._toPixels(styles.borderTopLeftRadius, element, styles.fontSize),
-      this._toPixels(styles.borderTopRightRadius, element, styles.fontSize),
-      this._toPixels(styles.borderBottomRightRadius, element, styles.fontSize),
-      this._toPixels(styles.borderBottomLeftRadius, element, styles.fontSize),
+      radius1,
+      radius2,
+      radius3,
+      radius4,
     );
   }
 
@@ -88,6 +98,50 @@ export class GetNormalizedConnectorRect implements IExecution<
 
   private _toPixels(value: string, element: HTMLElement | SVGElement, fontSize: string): number {
     return this._browser.toPixels(value, element.clientWidth, element.clientHeight, fontSize) || 0;
+  }
+
+  private _getSystemRadius(
+    value: string,
+    element: HTMLElement | SVGElement,
+    fontSize: string,
+  ): number {
+    return this._toPixels(value, element, fontSize) * this._transform.scale;
+  }
+
+  /**
+   * Mirrors CSS border-radius normalization so oversized values like `999px`
+   * collapse to the largest valid circular radii for the current rect.
+   */
+  private _normalizeCircularBorderRadii(
+    width: number,
+    height: number,
+    radii: [number, number, number, number],
+  ): [number, number, number, number] {
+    const [topLeft, topRight, bottomRight, bottomLeft] = radii.map((value) =>
+      Math.max(0, value),
+    ) as [number, number, number, number];
+
+    const scale = Math.min(
+      1,
+      this._getRadiusScaleFactor(width, topLeft + topRight),
+      this._getRadiusScaleFactor(height, topRight + bottomRight),
+      this._getRadiusScaleFactor(width, bottomRight + bottomLeft),
+      this._getRadiusScaleFactor(height, bottomLeft + topLeft),
+    );
+
+    return [topLeft * scale, topRight * scale, bottomRight * scale, bottomLeft * scale];
+  }
+
+  private _getRadiusScaleFactor(limit: number, sum: number): number {
+    if (sum <= 0) {
+      return 1;
+    }
+
+    if (limit <= 0) {
+      return 0;
+    }
+
+    return limit / sum;
   }
 
   private _normalizePosition(rect: IRoundedRect): IPoint {
@@ -107,11 +161,15 @@ export class GetNormalizedConnectorRect implements IExecution<
       position.y,
       size.width,
       size.height,
-      rect.radius1,
-      rect.radius2,
-      rect.radius3,
-      rect.radius4,
+      this._unscaleRadius(rect.radius1),
+      this._unscaleRadius(rect.radius2),
+      this._unscaleRadius(rect.radius3),
+      this._unscaleRadius(rect.radius4),
     );
+  }
+
+  private _unscaleRadius(radius: number): number {
+    return radius / this._transform.scale;
   }
 
   private _getOffsetSize(element: HTMLElement | SVGElement, size: ISize): ISize {

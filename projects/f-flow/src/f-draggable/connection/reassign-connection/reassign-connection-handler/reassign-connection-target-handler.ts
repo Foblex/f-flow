@@ -115,6 +115,8 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
         this._connection,
         this._source.fConnectableSide,
         targetSide,
+        this._sourceRef.connector,
+        undefined,
       ),
     );
 
@@ -141,6 +143,8 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
         snap,
         this._source.fConnectableSide,
         closest.connector.fConnectableSide,
+        this._sourceRef.connector,
+        closest.connector,
       ),
     );
 
