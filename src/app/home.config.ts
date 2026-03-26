@@ -9,7 +9,7 @@ import {
   provideTitle,
 } from '@foblex/m-render';
 import { HomePageImageComponent } from './home-page/home-page-image/home-page-image.component';
-import { HomePageBackgroundComponent } from './home-page/home-page-background/home-page-background.component';
+import { HeroFlow } from './home-page/home-page-flow/hero-flow';
 
 export const HOME_CONFIGURATION = {
   providers: [
@@ -22,7 +22,7 @@ export const HOME_CONFIGURATION = {
       subDescription:
         'Start with a simple Angular node editor in minutes. Add selection, minimap, snapping, caching, virtualization, and worker-assisted rendering only when you need them.',
     }),
-    provideBackground(HomePageBackgroundComponent),
+    provideBackground(HeroFlow),
     provideImage(HomePageImageComponent),
     provideHomeButtons([
       {

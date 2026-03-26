@@ -1,0 +1,18 @@
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.decision-shell {
+  width: 78px;
+  height: 78px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #8c73ff 0%, var(--hero-purple) 100%);
+  box-shadow: var(--hero-purple-shadow-md);
+}
+
+.f-node-output,
+.f-node-input {
+  border-radius: 16px;
+}
