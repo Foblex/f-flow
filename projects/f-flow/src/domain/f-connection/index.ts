@@ -10,6 +10,8 @@ export * from './create-connection-markers';
 
 export * from './redraw-connections';
 
+export * from './resolve-connection-endpoint-rotation-context';
+
 export * from './remove-connection-for-create-from-store';
 
 export * from './remove-connection-from-store';

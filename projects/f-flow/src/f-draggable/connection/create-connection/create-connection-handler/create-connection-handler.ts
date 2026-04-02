@@ -1,13 +1,14 @@
 import { FMediator } from '@foblex/mediator';
 import { IPoint, IRoundedRect, PointExtensions, RectExtensions, RoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FNodeOutletBase, FNodeOutputBase } from '../../../../f-connectors';
+import { FConnectorBase, FNodeOutletBase, FNodeOutputBase } from '../../../../f-connectors';
 import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';
 import { ICreateConnectionEventData } from '../i-create-connection-event-data';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
+  IConnectionEndpointRotationContext,
 } from '../../../../f-connection-v2';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../../../../f-connection';
@@ -18,6 +19,7 @@ import {
   IClosestConnectorRef,
   IConnectorRectRef,
   MarkConnectableConnectorsRequest,
+  ResolveConnectionEndpointRotationContextRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../../domain';
 
@@ -128,7 +130,7 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
         this._connection,
         this._sourceRef.connector.fConnectableSide,
         targetSide,
-        this._sourceRef.connector,
+        this._resolveRotationContext(this._sourceRef.connector),
       ),
     );
 
@@ -155,8 +157,8 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
         snap,
         this._sourceRef.connector.fConnectableSide,
         target.connector.fConnectableSide,
-        this._sourceRef.connector,
-        target.connector,
+        this._resolveRotationContext(this._sourceRef.connector),
+        this._resolveRotationContext(target.connector),
       ),
     );
     snap.show();
@@ -171,6 +173,14 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
 
     this._mediator.execute(
       new UnmarkConnectableConnectorsRequest(this._targets.map((x) => x.connector)),
+    );
+  }
+
+  private _resolveRotationContext(
+    connector?: FConnectorBase,
+  ): IConnectionEndpointRotationContext | undefined {
+    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
     );
   }
 }

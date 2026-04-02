@@ -5,9 +5,14 @@ import {
   IClosestConnectorRef,
   IConnectorRectRef,
   MarkConnectableConnectorsRequest,
+  ResolveConnectionEndpointRotationContextRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../../domain';
-import { FNodeInputDirective, FNodeOutputDirective } from '../../../../f-connectors';
+import {
+  FConnectorBase,
+  FNodeInputDirective,
+  FNodeOutputDirective,
+} from '../../../../f-connectors';
 import { FSnapConnectionComponent } from '../../../../f-connection';
 import { ILine, IPoint, RoundedRect } from '@foblex/2d';
 import { IReassignHandler, rectFromPoint, withinSnapThreshold } from './i-reassign-handler';
@@ -16,6 +21,7 @@ import {
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
   FConnectionBase,
+  IConnectionEndpointRotationContext,
 } from '../../../../f-connection-v2';
 
 export class ReassignConnectionSourceHandler implements IReassignHandler {
@@ -106,7 +112,7 @@ export class ReassignConnectionSourceHandler implements IReassignHandler {
         sourceSide,
         this._targetRef.connector.fConnectableSide,
         undefined,
-        this._targetRef.connector,
+        this._resolveRotationContext(this._targetRef.connector),
       ),
     );
 
@@ -133,8 +139,8 @@ export class ReassignConnectionSourceHandler implements IReassignHandler {
         snap,
         closest.connector.fConnectableSide,
         this._target.fConnectableSide,
-        closest.connector,
-        this._targetRef.connector,
+        this._resolveRotationContext(closest.connector),
+        this._resolveRotationContext(this._targetRef.connector),
       ),
     );
 
@@ -149,6 +155,14 @@ export class ReassignConnectionSourceHandler implements IReassignHandler {
 
     this._mediator.execute(
       new UnmarkConnectableConnectorsRequest(this._candidates.map((x) => x.connector)),
+    );
+  }
+
+  private _resolveRotationContext(
+    connector?: FConnectorBase,
+  ): IConnectionEndpointRotationContext | undefined {
+    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
     );
   }
 }

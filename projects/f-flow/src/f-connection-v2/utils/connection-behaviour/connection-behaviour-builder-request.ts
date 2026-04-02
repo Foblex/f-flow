@@ -1,7 +1,7 @@
 import { IRoundedRect } from '@foblex/2d';
 import { EFConnectableSide } from '../../enums';
 import { FConnectionComponentsParent } from '../../models';
-import { FConnectorBase } from '../../../f-connectors';
+import { IConnectionEndpointRotationContext } from './models';
 
 export class ConnectionBehaviourBuilderRequest {
   constructor(
@@ -10,7 +10,7 @@ export class ConnectionBehaviourBuilderRequest {
     public readonly connection: FConnectionComponentsParent,
     public readonly sourceConnectableSide: EFConnectableSide,
     public readonly targetConnectableSide: EFConnectableSide,
-    public readonly sourceConnector?: FConnectorBase,
-    public readonly targetConnector?: FConnectorBase,
+    public readonly sourceRotationContext?: IConnectionEndpointRotationContext,
+    public readonly targetRotationContext?: IConnectionEndpointRotationContext,
   ) {}
 }

@@ -1,14 +1,10 @@
 import { ConnectionBehaviourBuilderRequest } from './connection-behaviour-builder-request';
-import { ILine, IRect } from '@foblex/2d';
+import { ILine } from '@foblex/2d';
 import { fixedCenterBehavior, fixedOutboundBehavior, floatingBehavior } from './utils';
 import { EFConnectionBehavior, EFConnectionConnectableSide } from './enums';
 import { EFConnectableSide } from '../../enums';
-import { ICalculateBehaviorRequest, IConnectionEndpointRotationContext } from './models';
-import { inject, Injectable } from '@angular/core';
-import { FConnectorBase } from '../../../f-connectors';
-import { FComponentsStore } from '../../../f-storage';
-import { FMediator } from '@foblex/mediator';
-import { GetNormalizedElementRectRequest } from '../../../domain';
+import { ICalculateBehaviorRequest } from './models';
+import { Injectable } from '@angular/core';
 
 /**
  * Small epsilon to treat near-zero differences as negligible.
@@ -46,9 +42,6 @@ interface IDirectionalVectors {
  */
 @Injectable()
 export class ConnectionBehaviourBuilder {
-  private readonly _store = inject(FComponentsStore);
-  private readonly _mediator = inject(FMediator);
-
   /**
    * Main execution entry point.
    *
@@ -75,31 +68,9 @@ export class ConnectionBehaviourBuilder {
       targetRect: request.targetRect,
       sourceConnectableSide: sourceSide,
       targetConnectableSide: targetSide,
-      sourceRotationContext: this._resolveRotationContext(request.sourceConnector),
-      targetRotationContext: this._resolveRotationContext(request.targetConnector),
+      sourceRotationContext: request.sourceRotationContext,
+      targetRotationContext: request.targetRotationContext,
     });
-  }
-
-  private _resolveRotationContext(
-    connector?: FConnectorBase,
-  ): IConnectionEndpointRotationContext | undefined {
-    if (!connector) {
-      return undefined;
-    }
-
-    const node = this._store.nodes.get(connector.fNodeId);
-    if (!node || !node._rotate) {
-      return undefined;
-    }
-
-    const nodeRect = this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(node.hostElement),
-    );
-
-    return {
-      rotationDeg: node._rotate,
-      pivot: nodeRect.gravityCenter,
-    };
   }
 
   /**

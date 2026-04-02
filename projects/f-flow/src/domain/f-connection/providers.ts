@@ -8,6 +8,7 @@ import { RemoveSnapConnectionFromStore } from './remove-snap-connection-from-sto
 import { AddConnectionMarkerToStore } from './add-connection-marker-to-store';
 import { RemoveConnectionMarkerFromStore } from './remove-connection-marker-from-store';
 import { RedrawConnections } from './redraw-connections';
+import { ResolveConnectionEndpointRotationContext } from './resolve-connection-endpoint-rotation-context';
 import { RemoveConnectionWaypoint } from './remove-connection-waypoint';
 
 /**
@@ -25,6 +26,8 @@ export const F_CONNECTION_FEATURES = [
   CreateConnectionMarkers,
 
   RedrawConnections,
+
+  ResolveConnectionEndpointRotationContext,
 
   RemoveConnectionForCreateFromStore,
 
