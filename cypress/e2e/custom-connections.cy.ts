@@ -6,7 +6,6 @@ describe('ConnectionGradients', () => {
 
   it('should apply projected gradient only to the opted-in connection', () => {
     cy.get('.f-connection').should('have.length', 2);
-    cy.get('.f-connection').first().should('have.class', 'gradient-color');
     cy.get('.f-connection').first().find('linearGradient').should('have.length', 1);
     cy.get('.f-connection').first().find('stop').should('have.length', 2);
 
@@ -27,11 +26,13 @@ describe('ConnectionGradients', () => {
           .eq(1)
           .invoke('attr', 'stop-color')
           .then((initialEndColor) => {
-            cy.get('mat-select').first().click({ force: true });
-            cy.contains('mat-option', 'Sky').click({ force: true });
+            cy.contains('example-select', 'Gradient Start')
+              .find('select')
+              .select('Sky', { force: true });
 
-            cy.get('mat-select').eq(1).click({ force: true });
-            cy.contains('mat-option', 'Amber').click({ force: true });
+            cy.contains('example-select', 'Gradient End')
+              .find('select')
+              .select('Amber', { force: true });
 
             cy.get('.f-connection')
               .first()

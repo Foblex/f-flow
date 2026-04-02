@@ -7,14 +7,13 @@ describe('ConnectionContent', () => {
 
   it('should render content on each connection and keep it after controls change', () => {
     cy.get('.f-connection-content').should('have.length', 4).and('contain.text', 'Any Content');
-    cy.get('mat-select').should('have.length', 3);
+    cy.get('example-select select').should('have.length', 3);
 
     cy.get('.f-connection-content')
       .first()
       .invoke('attr', 'style')
       .then((beforeStyle) => {
-        cy.get('mat-select').first().click({ force: true });
-        cy.contains('mat-option', '75%').click({ force: true });
+        cy.contains('example-select', 'Position').find('select').select('75%', { force: true });
 
         cy.get('.f-connection-content')
           .should('have.length', 4)

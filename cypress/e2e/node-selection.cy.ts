@@ -6,17 +6,17 @@ describe('NodeSelection', () => {
   });
 
   it('should select node and then select connection from toolbar', () => {
-    cy.get('[data-f-node-id="node1"]').click({ force: true });
+    cy.get('.f-node').first().click({ force: true });
 
     cy.get('.f-node.f-selected').should('have.length', 1);
-    cy.get('[data-f-node-id="node1"]').should('have.class', 'f-selected');
-    cy.get('.overlay').should('contain.text', 'Selection changed: node1');
+    cy.get('example-overlay').should('contain.text', 'Selection changed: node1');
 
-    cy.get('[data-f-node-id="node3"]').click({ force: true });
-    cy.get('[data-f-node-id="node3"]').should('not.have.class', 'f-selected');
+    cy.contains('.f-node', 'Disabled selection').click({ force: true });
+    cy.contains('.f-node', 'Disabled selection').should('not.have.class', 'f-selected');
+    cy.get('.f-node.f-selected').should('have.length', 0);
 
-    cy.contains('.f-button', 'Select Connection').click({ force: true });
-    cy.get('#connection1').should('have.class', 'f-selected');
+    cy.contains('button', 'Select Connection').click({ force: true });
+    cy.get('.f-connection').first().should('have.class', 'f-selected');
     cy.get('.f-node.f-selected').should('have.length', 0);
   });
 });
