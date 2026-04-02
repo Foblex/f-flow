@@ -20,6 +20,9 @@ The demo enables auto-pan through `<f-auto-pan />` and combines the supported dr
 ## Example
 
 ::: ng-component <auto-pan></auto-pan> [height]="600"
+[component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/auto-pan/auto-pan.html
+[component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/auto-pan/auto-pan.ts
+[component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/auto-pan/auto-pan.scss
 :::
 
 ## What to try
