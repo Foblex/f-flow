@@ -41,6 +41,10 @@ export const BLOG_CONFIGURATION = {
           ),
       ),
       defineLazyComponent(
+        'auto-pan',
+        () => import('../../projects/f-examples/extensions/auto-pan/auto-pan'),
+      ),
+      defineLazyComponent(
         'ai-low-code-platform',
         () =>
           import(
