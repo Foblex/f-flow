@@ -210,8 +210,8 @@ export const BLOG_CONFIGURATION = {
         'Read Foblex Flow release notes, architecture articles, and Angular tutorials about node editors, workflow builders, and graph UI development.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow articles, angular node editor articles, angular workflow builder tutorials, node based ui engineering, foblex flow releases',
       robots: 'index, follow, max-image-preview:large',
@@ -233,8 +233,8 @@ function overviewGroup(): INavigationGroup {
       canonical: 'https://flow.foblex.com/blog/overview',
       image: './site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
     },
   ]);
 }
@@ -266,8 +266,8 @@ function releasesGroup(): INavigationGroup {
         'https://flow.foblex.com/blog/foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening',
       image: 'https://flow.foblex.com/previews/examples/custom-connections.light.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       date: new Date('2026-03-17T12:00:00.000Z'),
     },
     {

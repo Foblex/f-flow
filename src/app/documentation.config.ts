@@ -230,8 +230,8 @@ export const DOCUMENTATION_CONFIGURATION = {
         'Official Foblex Flow documentation for Angular node-based UI apps: node editors, workflow builders, diagram interfaces, components, directives, and interaction patterns.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow docs, angular node based ui, angular node editor docs, angular workflow builder docs, angular diagram library docs',
       robots: 'index, follow, max-image-preview:large',

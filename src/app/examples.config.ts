@@ -351,8 +351,8 @@ export const EXAMPLES_CONFIGURATION = {
         'Explore Angular examples for node editors, workflow builders, interactive diagrams, layout helpers, and production-style graph interfaces built with Foblex Flow.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow examples, angular node editor examples, angular workflow builder examples, angular diagram examples, graph ui angular demos',
       robots: 'index, follow, max-image-preview:large',
