@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 type ExampleToolbarAlign = 'start' | 'end';
 
 @Component({
-  selector: 'example-toolbar, ff-example-toolbar',
+  selector: 'example-toolbar',
   standalone: true,
   template: '<ng-content />',
   styleUrl: './example-toolbar.scss',

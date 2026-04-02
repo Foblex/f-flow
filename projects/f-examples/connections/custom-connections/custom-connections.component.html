@@ -55,25 +55,6 @@
 </f-flow>
 
 <example-toolbar>
-  <mat-form-field>
-    <mat-label>Gradient Start</mat-label>
-    <mat-select [(value)]="startColor">
-      @for (option of colorOptions; track option.value) {
-        <mat-option [value]="option.value">
-          {{ option.label }}
-        </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Gradient End</mat-label>
-    <mat-select [(value)]="endColor">
-      @for (option of colorOptions; track option.value) {
-        <mat-option [value]="option.value">
-          {{ option.label }}
-        </mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select [(value)]="startColor" [options]="colorOptions" label="Gradient Start" />
+  <example-select [(value)]="endColor" [options]="colorOptions" label="Gradient End" />
 </example-toolbar>

@@ -29,12 +29,5 @@
   </f-canvas>
 </f-flow>
 <example-toolbar>
-  <mat-form-field>
-    <mat-label>Select Background</mat-label>
-    <mat-select [(value)]="background">
-      @for (option of backgroundOptions; track option) {
-        <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select [(value)]="background" [options]="backgroundOptions" label="Select Background" />
 </example-toolbar>

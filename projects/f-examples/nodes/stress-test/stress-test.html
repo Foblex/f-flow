@@ -57,13 +57,6 @@
   <f-checkbox [checked]="showConnections()" (change)="toggleConnections()"
     >Show Connections</f-checkbox
   >
-  <mat-form-field>
-    <mat-label>Number</mat-label>
-    <mat-select [(value)]="totalNodes">
-      @for (option of totals; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select label="Number" [(value)]="totalNodes" [options]="totals" />
 </example-toolbar>
 }

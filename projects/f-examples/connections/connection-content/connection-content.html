@@ -127,28 +127,7 @@
   </f-canvas>
 </f-flow>
 <example-toolbar>
-  <mat-form-field>
-    <mat-label>Position</mat-label>
-    <mat-select [(ngModel)]="position">
-      @for (option of positions; track option.key) {
-      <mat-option [value]="option.value">{{ option.key }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Align</mat-label>
-    <mat-select [(ngModel)]="align">
-      @for (option of aligns; track option.key) {
-      <mat-option [value]="option.value">{{ option.key }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Offset</mat-label>
-    <mat-select [(ngModel)]="offset">
-      @for (option of offsets; track option.key) {
-      <mat-option [value]="option.value">{{ option.key }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select [(value)]="position" [options]="positions" label="Position" />
+  <example-select [(value)]="align" [options]="aligns" label="Align" />
+  <example-select [(value)]="offset" [options]="offsets" label="Offset" />
 </example-toolbar>

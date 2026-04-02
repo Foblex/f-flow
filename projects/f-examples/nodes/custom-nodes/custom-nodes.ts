@@ -3,9 +3,8 @@ import { FCanvasChangeEvent, FCanvasComponent, FFlowModule, FZoomDirective } fro
 import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { PointExtensions } from '@foblex/2d';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { DOCUMENT } from '@angular/common';
+import { ExampleSelect } from '@portal-ui';
 
 @Component({
   selector: 'custom-nodes',
@@ -13,19 +12,17 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './custom-nodes.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatCardModule,
-    MatButton,
-    MatFormFieldModule,
-    MatSelect,
-    MatOption,
-    FZoomDirective,
-  ],
+  imports: [FFlowModule, MatCardModule, MatButton, FZoomDirective, ExampleSelect],
 })
 export class CustomNodes implements OnDestroy {
   private readonly _canvas = viewChild(FCanvasComponent);
   private readonly _document = inject(DOCUMENT);
+
+  protected readonly options = [
+    { key: 'option1', value: 'Option 1' },
+    { key: 'option2', value: 'Option 2' },
+    { key: 'option3', value: 'Option 3' },
+  ];
 
   protected loaded(): void {
     this._canvas()?.fitToScreen(PointExtensions.initialize(100, 100), false);

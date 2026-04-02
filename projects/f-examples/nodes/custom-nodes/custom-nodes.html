@@ -22,14 +22,7 @@
       fOutputId="fOutput1"
       fOutputConnectableSide="right"
     >
-      <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select>
-          <mat-option value="steak-0">Steak</mat-option>
-          <mat-option value="pizza-1">Pizza</mat-option>
-          <mat-option value="tacos-2">Tacos</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <example-select value="option1" [options]="options" />
     </div>
 
     <mat-card

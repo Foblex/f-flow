@@ -38,6 +38,7 @@ import {
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
 } from '../domain';
+import { StopAutoPanRequest } from './auto-pan';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
@@ -279,6 +280,7 @@ export class FDraggableDirective
   }
 
   protected override finalizeDragSequence(): void {
+    this._mediator.execute<void>(new StopAutoPanRequest());
     this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
 
     this._result.clear();
@@ -287,6 +289,7 @@ export class FDraggableDirective
   }
 
   public ngOnDestroy(): void {
+    this._mediator.execute<void>(new StopAutoPanRequest());
     this._mediator.execute<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();
   }

@@ -16,6 +16,7 @@ import { FSelectionAreaBase } from '../f-selection-area';
 import { FMagneticLinesBase } from '../f-magnetic-lines';
 import { FMagneticRectsBase } from '../f-magnetic-rects';
 import { FMinimapBase } from '../f-minimap';
+import { FAutoPanBase } from '../f-auto-pan';
 
 @Injectable()
 export class FComponentsStore {
@@ -113,4 +114,7 @@ export const INSTANCES = {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MINIMAP: fInstanceKey<FMinimapBase>('minimap'),
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  AUTO_PAN: fInstanceKey<FAutoPanBase>('auto-pan'),
 } as const;

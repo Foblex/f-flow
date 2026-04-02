@@ -10,7 +10,7 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { KeyValue } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExampleToolbar } from '@portal-ui';
+import { ExampleSelect, ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connection-content',
@@ -27,31 +27,32 @@ import { ExampleToolbar } from '@portal-ui';
     FConnectionContent,
     FormsModule,
     ExampleToolbar,
+    ExampleSelect,
   ],
 })
 export class ConnectionContent {
-  protected readonly positions: KeyValue<string, number>[] = [
-    { key: '10%', value: 0.1 },
-    { key: '25%', value: 0.25 },
-    { key: '30%', value: 0.3 },
-    { key: '50%', value: 0.5 },
-    { key: '75%', value: 0.75 },
-    { key: '100%', value: 1 },
+  protected readonly positions: KeyValue<number, string>[] = [
+    { key: 0.1, value: '10%' },
+    { key: 0.25, value: '25%' },
+    { key: 0.3, value: '30%' },
+    { key: 0.5, value: '50%' },
+    { key: 0.75, value: '75%' },
+    { key: 1, value: '100%' },
   ];
   protected readonly position = model<number>(0.5);
 
-  protected readonly aligns: KeyValue<string, PolylineContentAlign>[] = [
-    { key: 'None', value: PolylineContentAlign.NONE },
-    { key: 'Along', value: PolylineContentAlign.ALONG },
+  protected readonly aligns: KeyValue<PolylineContentAlign, string>[] = [
+    { key: PolylineContentAlign.NONE, value: 'None' },
+    { key: PolylineContentAlign.ALONG, value: 'Along' },
   ];
   protected readonly align = model<PolylineContentAlign>(PolylineContentAlign.NONE);
 
-  protected readonly offsets: KeyValue<string, number>[] = [
-    { key: '0px', value: 0 },
-    { key: '-25px', value: -25 },
-    { key: '25px', value: 25 },
-    { key: '-50px', value: -50 },
-    { key: '50px', value: 50 },
+  protected readonly offsets: KeyValue<number, string>[] = [
+    { key: 0, value: '0px' },
+    { key: -25, value: '-25px' },
+    { key: 25, value: '25px' },
+    { key: -50, value: '-50px' },
+    { key: 50, value: '50px' },
   ];
   protected readonly offset = signal(0);
 

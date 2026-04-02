@@ -1,4 +1,5 @@
 export * from './f-backgroud';
+export * from './f-auto-pan';
 
 export * from './f-canvas';
 

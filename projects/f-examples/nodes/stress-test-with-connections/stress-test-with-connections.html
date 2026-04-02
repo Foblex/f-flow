@@ -67,28 +67,7 @@
   </f-canvas>
 </f-flow>
 <example-toolbar>
-  <mat-form-field>
-    <mat-label>Number</mat-label>
-    <mat-select [(value)]="count">
-      @for (option of counts; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Behavior</mat-label>
-    <mat-select [(value)]="behavior">
-      @for (option of behaviors; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Type</mat-label>
-    <mat-select [(value)]="type">
-      @for (option of types; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select label="Number" [(value)]="count" [options]="counts" />
+  <example-select label="Behavior" [(value)]="behavior" [options]="behaviors" />
+  <example-select label="Type" [(value)]="type" [options]="types" />
 </example-toolbar>

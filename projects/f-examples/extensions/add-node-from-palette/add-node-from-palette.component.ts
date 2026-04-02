@@ -9,7 +9,7 @@ import {
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleToolbar } from '@portal-ui';
+import { ExampleExternalPalette, ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'add-node-from-palette',
@@ -24,10 +24,11 @@ import { ExampleToolbar } from '@portal-ui';
     FExternalItemPreview,
     FCheckboxComponent,
     ExampleToolbar,
+    ExampleExternalPalette,
   ],
 })
 export class AddNodeFromPaletteComponent {
-  protected nodes = signal([
+  protected readonly nodes = signal([
     {
       id: generateGuid(),
       text: 'node 1',
@@ -40,12 +41,11 @@ export class AddNodeFromPaletteComponent {
     },
   ]);
 
-  protected isMatchSize = signal(false);
-
-  protected fCanvas = viewChild(FCanvasComponent);
+  protected readonly matchSize = signal(false);
+  private readonly _canvas = viewChild(FCanvasComponent);
 
   protected onLoaded(): void {
-    this.fCanvas()?.resetScaleAndCenter(false);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   protected onCreateNode(event: FCreateNodeEvent): void {
@@ -59,7 +59,7 @@ export class AddNodeFromPaletteComponent {
     ]);
   }
 
-  protected onPreviewMatchSizeChange(checked: boolean): void {
-    this.isMatchSize.set(checked);
+  protected previewMatchSizeChange(checked: boolean): void {
+    this.matchSize.set(checked);
   }
 }

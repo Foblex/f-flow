@@ -54,21 +54,11 @@
   </f-canvas>
 </f-flow>
 <example-toolbar>
-  <mat-form-field>
-    <mat-label>Can be connected to Input</mat-label>
-    <mat-select [(value)]="input">
-      @for (option of inputs(); track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Can be connected to Category</mat-label>
-    <mat-select [(value)]="category">
-      @for (option of categories(); track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <example-select [(value)]="input" [options]="inputs()" label="Can be connected to Input" />
+  <example-select
+    [(value)]="category"
+    [options]="categories()"
+    label="Can be connected to Category"
+  />
   <button class="f-button primary" (click)="deleteConnections()">Delete Connections</button>
 </example-toolbar>

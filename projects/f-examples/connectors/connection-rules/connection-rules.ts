@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component, model, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule } from '@foblex/flow';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-import { ExampleToolbar } from '@portal-ui';
+import { ExampleSelect, ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connection-rules',
@@ -11,7 +8,7 @@ import { ExampleToolbar } from '@portal-ui';
   templateUrl: './connection-rules.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect, ExampleToolbar],
+  imports: [FFlowModule, ExampleToolbar, ExampleSelect],
 })
 export class ConnectionRules {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -29,10 +26,10 @@ export class ConnectionRules {
   }
 
   protected createConnection(event: FCreateConnectionEvent): void {
-    if (!event.fInputId) {
+    if (!event.targetId) {
       return;
     }
-    this.connections().push({ from: event.fOutputId, to: event.fInputId });
+    this.connections().push({ from: event.sourceId, to: event.targetId });
   }
 
   protected deleteConnections(): void {
