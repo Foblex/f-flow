@@ -17,13 +17,14 @@ The `fConnectionContent` directive lets you attach any custom content to a conne
 
 This is useful for adding labels, statuses, metrics, or interactive controls directly on diagram edges. In real products, it is one of the features that turns a passive edge into a meaningful UI element.
 
+`fConnectionContent` is rendered as a regular HTML block with the `.f-connection-content` class, so it should be styled directly as HTML content rather than as part of the SVG path. The base component gives it intrinsic width sizing, so by default it expands to its content.
+
 ## Example
 
 ::: ng-component <connection-content></connection-content> [height]="600"
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-content/connection-content.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-content/connection-content.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-content/connection-content.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## API

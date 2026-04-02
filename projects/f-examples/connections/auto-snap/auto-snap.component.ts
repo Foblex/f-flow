@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FCreateConnectionEvent, FFlowModule, FZoomDirective } from '@foblex/flow';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'auto-snap',
@@ -9,7 +10,8 @@ import { FCanvasComponent, FCreateConnectionEvent, FFlowModule, FZoomDirective }
   standalone: true,
   imports: [
     FFlowModule,
-    FZoomDirective
+    FZoomDirective,
+    ExampleToolbar
   ]
 })
 export class AutoSnapComponent {

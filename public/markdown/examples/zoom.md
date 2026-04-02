@@ -32,7 +32,6 @@ Good zoom behavior is one of the easiest ways to improve perceived editor qualit
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/extensions/zoom/zoom.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## Related docs

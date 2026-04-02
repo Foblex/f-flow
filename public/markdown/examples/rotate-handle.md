@@ -25,7 +25,6 @@ The important part is keeping the interaction understandable. A rotate handle gi
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/rotate-handle/rotate-handle.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/rotate-handle/rotate-handle.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/nodes/rotate-handle/rotate-handle.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## What this solves

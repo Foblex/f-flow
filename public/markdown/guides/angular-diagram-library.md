@@ -55,4 +55,16 @@ Use it for Angular diagram interfaces such as:
 ng add @foblex/flow
 ```
 
+For Nx workspaces:
+
+```bash
+nx g @foblex/flow:add
+```
+
+Or install it manually with the required companion packages:
+
+```bash
+npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+```
+
 If you need a diagram surface that still behaves like an Angular product screen, Foblex Flow is a better fit than a static renderer.

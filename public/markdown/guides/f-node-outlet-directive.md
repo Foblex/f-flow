@@ -83,5 +83,4 @@ In other words: **Outlet starts the action; Output owns the connection.**
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-outlet/connector-outlet.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-outlet/connector-outlet.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connectors/connector-outlet/connector-outlet.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

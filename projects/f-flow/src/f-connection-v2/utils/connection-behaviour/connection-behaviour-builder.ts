@@ -68,6 +68,8 @@ export class ConnectionBehaviourBuilder {
       targetRect: request.targetRect,
       sourceConnectableSide: sourceSide,
       targetConnectableSide: targetSide,
+      sourceRotationContext: request.sourceRotationContext,
+      targetRotationContext: request.targetRotationContext,
     });
   }
 

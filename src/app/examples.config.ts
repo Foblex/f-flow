@@ -205,6 +205,10 @@ export const EXAMPLES_CONFIGURATION = {
           import('../../projects/f-examples/extensions/selection-area/selection-area.component'),
       ),
       defineLazyComponent(
+        'auto-pan',
+        () => import('../../projects/f-examples/extensions/auto-pan/auto-pan'),
+      ),
+      defineLazyComponent(
         'help-in-positioning',
         () =>
           import(
@@ -347,8 +351,8 @@ export const EXAMPLES_CONFIGURATION = {
         'Explore Angular examples for node editors, workflow builders, interactive diagrams, layout helpers, and production-style graph interfaces built with Foblex Flow.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow examples, angular node editor examples, angular workflow builder examples, angular diagram examples, graph ui angular demos',
       robots: 'index, follow, max-image-preview:large',
@@ -764,6 +768,22 @@ function connectionGroup() {
 
 function extensionGroup() {
   return defineNavigationGroup('Extensions', [
+    {
+      link: 'auto-pan',
+      text: 'Auto Pan',
+      description:
+        'Pan the viewport automatically while dragging near the edge. Includes connection create/reassign, node drag, external items, and selection area.',
+      image: './previews/examples/auto-pan.light.png',
+      image_dark: './previews/examples/auto-pan.dark.png',
+      image_width: 2120,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-26 13:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
+    },
     {
       link: 'add-node-from-palette',
       text: 'Add Node from Palette',

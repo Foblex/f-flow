@@ -56,8 +56,16 @@ function calculateItem(item) {
     };
   }
 
+  if (item.sourceRotation || item.targetRotation) {
+    return { originalIndex: item.originalIndex, supported: false };
+  }
+
   if (item.behavior !== 'fixed') {
     if (item.behavior !== 'floating') {
+      return { originalIndex: item.originalIndex, supported: false };
+    }
+
+    if (hasRoundedCorners(item.sourceRect) || hasRoundedCorners(item.targetRect)) {
       return { originalIndex: item.originalIndex, supported: false };
     }
 
@@ -150,6 +158,10 @@ function buildFloatingLine(sourceRect, targetRect) {
     point1: getRectBorderIntersection(sourceRect, sourceCenter, targetCenter),
     point2: getRectBorderIntersection(targetRect, targetCenter, sourceCenter),
   };
+}
+
+function hasRoundedCorners(rect) {
+  return !!(rect.radius1 || rect.radius2 || rect.radius3 || rect.radius4);
 }
 
 function getRectCenter(rect) {

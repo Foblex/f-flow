@@ -1,0 +1,14 @@
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
+
+::ng-deep f-flow {
+  @include flow-theme.connection($scoped: false);
+  @include flow-theme.connection-drag-handles-visible($scoped: false);
+}
+
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);
+@include flow-theme.selection-area();

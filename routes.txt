@@ -6,6 +6,10 @@
 /docs/angular-workflow-builder
 /docs/angular-diagram-library
 /docs/react-flow-vs-foblex-flow-for-angular-teams
+/docs/default-theme-and-styling
+/docs/styling-mixins-and-scoping
+/docs/styling-tokens-and-overrides
+/docs/styling-recipes
 /docs/event-system
 /docs/selection-system
 /docs/f-flow-component
@@ -85,6 +89,8 @@
 /examples/tournament-bracket
 /showcase/overview
 /blog/overview
+/blog/foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom
+/blog/foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening
 /blog/foblex-flow-v18-2-0-caching-virtualization-connection-worker-performance-refresh
 /blog/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-docs-refresh
 /blog/foblex-flow-v18-waypoints-pinch-to-zoom-better-control-flow-support

@@ -10,6 +10,7 @@ import { PINCH_TO_ZOOM_PROVIDERS } from './pinch-to-zoom';
 import { DRAG_SELECTION_AREA_PROVIDERS } from './selection-area';
 import { DRAG_EXTERNAL_ITEM_PROVIDERS } from './drag-external-item';
 import { DRAG_MINIMAP_PROVIDERS } from './drag-minimap';
+import { DRAG_AUTO_PAN_PROVIDERS } from './auto-pan';
 
 export const F_DRAGGABLE_PROVIDERS = [
   ...DRAG_CANVAS_PROVIDERS,
@@ -21,6 +22,8 @@ export const F_DRAGGABLE_PROVIDERS = [
   ...DRAG_SELECT_BY_POINTER_PROVIDERS,
 
   ...DRAG_EXTERNAL_ITEM_PROVIDERS,
+
+  ...DRAG_AUTO_PAN_PROVIDERS,
 
   ...DRAG_MINIMAP_PROVIDERS,
 

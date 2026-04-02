@@ -21,7 +21,20 @@ In this tutorial, we build a visual call-flow editor in Angular using `@foblex/f
 
 ```bash
 ng new call-workflow-editor
-npm install @foblex/flow
+cd call-workflow-editor
+ng add @foblex/flow
+```
+
+For Nx workspaces, use:
+
+```bash
+nx g @foblex/flow:add
+```
+
+If you prefer manual installation, install the required companion packages explicitly:
+
+```bash
+npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
 ```
 
 ### Defining models

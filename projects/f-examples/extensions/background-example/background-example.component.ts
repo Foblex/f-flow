@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FlowBackground } from './custom-background-example/custom-background-example';
+import { ExampleSelect, ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'background-example',
@@ -11,7 +10,7 @@ import { FlowBackground } from './custom-background-example/custom-background-ex
   templateUrl: './background-example.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelectModule, FlowBackground],
+  imports: [FFlowModule, MatSelectModule, FlowBackground, ExampleToolbar, ExampleSelect],
 })
 export class BackgroundExampleComponent {
   private readonly _canvas = viewChild.required(FCanvasComponent);

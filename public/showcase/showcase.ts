@@ -3,7 +3,7 @@ import { IShowcaseItem } from '@foblex/m-render';
 export const SHOWCASE: IShowcaseItem[] = [
   {
     name: 'Call Center Automation Platform',
-    tags: ['Workflow Automation', 'No Code', 'Open Source'],
+    tags: ['Workflow Automation', 'Contact Center'],
     description:
       'Open-source call-center automation reference with a visual workflow editor for designing and managing complex call handling processes.',
     imageUrl: './showcase/images/call-center.light.png',
@@ -15,7 +15,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'Agents Platform (XpertAI)',
-    tags: ['AI', 'No Code', 'Open Source'],
+    tags: ['AI'],
     description:
       'An Multi agents and data analysis platform for enterprises to make business decisions.',
     imageUrl: './showcase/images/xpertai-light.png',
@@ -26,7 +26,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'Multi Agent AI Orchestration (EpicStaff)',
-    tags: ['AI Automation', 'Multi-Agent Systems', 'Open Source'],
+    tags: ['AI', 'Workflow Automation'],
     description:
       'Open-source platform designed to build and orchestrate multi-agent AI systems. It combines a visual workflow builder with full developer control.',
     imageUrl: './showcase/images/epicstaff-dark.png',
@@ -37,7 +37,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'AI Low Code Platform',
-    tags: ['AI Automation', 'Low Code', 'Open Source'],
+    tags: ['AI', 'Low Code'],
     description:
       'Open-source AI low-code platform for building applications and workflows through a visual editor.',
     imageUrl: './showcase/images/ai-low-code.light.png',
@@ -49,7 +49,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'DB Management System',
-    tags: ['No Code', 'Open Source', 'Dev Tools'],
+    tags: ['Dev Tools'],
     description:
       'Database-oriented workflow interface for managing and interacting with data through a visual editor.',
     imageUrl: './showcase/images/db-management-flow.light.png',
@@ -64,7 +64,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'ProcessMIX',
-    tags: ['Low-Code', 'Business Rules Engine', 'Decision Automation'],
+    tags: ['Workflow Automation', 'Low Code'],
     description:
       'Low-code decision automation platform with a visual rules and workflow builder for designing, testing, and deploying processes rapidly.',
     imageUrl: './showcase/images/processmix.dark.png',
@@ -72,7 +72,7 @@ export const SHOWCASE: IShowcaseItem[] = [
   },
   {
     name: 'Luware Nimbus',
-    tags: ['Omnichannel Contact Center', 'Microsoft Teams Integration', 'Intelligent Routing'],
+    tags: ['Contact Center'],
     description:
       'Cloud-based SaaS contact-center solution built natively for Microsoft Teams. It unifies internal helpdesks, branch offices and global contact centres into one intelligent hub, enabling omni-channel communication (voice, chat, email, tasks) and routing to the right agents based on skills, priority or context. ',
     imageUrl: './showcase/images/luware-nimbus.light.png',

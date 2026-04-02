@@ -97,6 +97,8 @@ interface FDragStartedEvent<TData = unknown> {
 - The directive must be applied on `f-flow`, not on `f-canvas`.
 - Aggressive custom trigger functions can block expected interactions; test mouse and touch.
 - If you emit large state updates on every drag event, UI can stutter; debounce heavy side effects in your app layer.
+- Use [`f-auto-pan`](f-auto-pan-component) to add edge-based viewport scrolling for supported drags.
+- See the [Auto Pan example](./examples/auto-pan) for a dedicated configuration playground.
 
 ## Example
 
@@ -104,5 +106,4 @@ interface FDragStartedEvent<TData = unknown> {
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/drag-start-end-events/drag-start-end-events.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

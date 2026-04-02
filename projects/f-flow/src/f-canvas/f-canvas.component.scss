@@ -8,6 +8,7 @@
   transform-origin: 0 0;
   pointer-events: none;
 
+  &.f-canvas-dragging,
   &.canvas-dragging {
     transform: translateZ(0);
   }

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'drag-to-reassign',
@@ -8,7 +9,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
   templateUrl: './drag-to-reassign.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent],
+  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar],
 })
 export class DragToReassign {
   private readonly _canvas = viewChild.required(FCanvasComponent);

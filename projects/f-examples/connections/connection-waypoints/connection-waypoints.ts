@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FConnectionWaypointsChangedEvent, FFlowModule } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connection-waypoints',
@@ -8,7 +9,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
   templateUrl: './connection-waypoints.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent],
+  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar],
 })
 export class ConnectionWaypoints {
   private readonly _canvas = viewChild.required(FCanvasComponent);

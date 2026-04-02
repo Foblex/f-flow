@@ -1,0 +1,41 @@
+@mixin _flow-scope($scoped: true) {
+  @if $scoped {
+    f-flow,
+    .f-flow {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin flow($scoped: true) {
+  @include _flow-scope($scoped) {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: all;
+    user-select: none;
+    touch-action: none;
+    color: var(--ff-flow-text-color);
+    background: var(--ff-flow-background-color);
+    font-family: var(--ff-flow-font-family);
+    font-size: var(--ff-flow-font-size);
+    line-height: 1.4;
+  }
+}
+
+@mixin canvas($scoped: true) {
+  @include _flow-scope($scoped) {
+    .f-canvas {
+      background: var(--ff-canvas-background-color);
+    }
+  }
+}
+
+@mixin flow-canvas($scoped: true) {
+  @include flow($scoped);
+  @include canvas($scoped);
+}

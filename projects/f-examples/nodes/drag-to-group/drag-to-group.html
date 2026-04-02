@@ -34,9 +34,10 @@
     }
   </f-canvas>
 </f-flow>
-<div class="examples-toolbar">
-  <div class="external-item" fExternalItem>Drag to Group</div>
-  <div class="flex-space"></div>
+<example-external-palette>
+  <div fExternalItem>Drag to Group</div>
+</example-external-palette>
+<example-toolbar>
   <f-checkbox [checked]="includePaddings()" (change)="changePaddings()"
     >Include Paddings</f-checkbox
   >
@@ -46,4 +47,4 @@
   <f-checkbox [checked]="autoExpandOnChildHit()" (change)="changeExpandOnChildHit()"
     >Auto Expand on Child Hit</f-checkbox
   >
-</div>
+</example-toolbar>

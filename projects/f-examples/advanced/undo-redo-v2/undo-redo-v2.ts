@@ -25,6 +25,7 @@ import {
 import { IPoint } from '@foblex/2d';
 import { Mutator } from '@foblex/mutator';
 import { generateGuid } from '@foblex/utils';
+import { ExampleToolbar } from '@portal-ui';
 
 interface INode {
   id: string;
@@ -87,7 +88,7 @@ const DEFAULT_STATE: IState = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [FlowState],
-  imports: [FFlowModule],
+  imports: [FFlowModule, ExampleToolbar],
 })
 export class UndoRedoV2 implements OnInit {
   protected readonly state = inject(FlowState);

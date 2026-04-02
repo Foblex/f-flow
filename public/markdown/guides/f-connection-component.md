@@ -108,6 +108,8 @@ These classes are useful when styling the SVG and interaction affordances:
 - `.f-connection-drag-handle` endpoint drag handle circles
 - `.f-connection-content` projected content container (if you project content)
 
+`f-connection-content` is positioned absolutely and defaults to intrinsic width sizing, so label-like content keeps its natural width. If you need wrapping, set `width` or `max-width` explicitly in your own styles.
+
 ## Projected Gradient
 
 If you want a gradient stroke, project `f-connection-gradient` into the connection.
@@ -159,7 +161,6 @@ Migration from the old API:
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-types/connection-types.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-types/connection-types.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-types/connection-types.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ### Connection behaviors
@@ -168,7 +169,6 @@ Migration from the old API:
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/connection-behaviours/connection-behaviours.scss
 :::
 
 ### Custom connection type
@@ -177,7 +177,6 @@ Migration from the old API:
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/custom-connection-type/custom-connection-type.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/custom-connection-type/custom-connection-type.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/custom-connection-type/custom-connection-type.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ### Reassign example
@@ -186,5 +185,4 @@ Migration from the old API:
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/connections/drag-to-reassign/drag-to-reassign.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::

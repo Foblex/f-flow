@@ -1,0 +1,73 @@
+<f-flow
+  fDraggable
+  (fCreateConnection)="createConnection($event)"
+  (fReassignConnection)="reassignConnection($event)"
+  (fLoaded)="loaded()"
+>
+  @if (enabled()) {
+  <f-auto-pan
+    [fEdgeThreshold]="edgeThreshold()"
+    [fSpeed]="speed()"
+    [fAcceleration]="acceleration()"
+  />
+  }
+  <f-selection-area />
+  <f-canvas fZoom>
+    <f-connection-for-create />
+
+    @for (connection of connections(); track $index) {
+    <f-connection
+      fInputSide="calculate"
+      fOutputSide="calculate"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+    />
+    }
+
+    <div
+      fNode
+      fDragHandle
+      fNodeInput
+      fInputId="input1"
+      [fNodePosition]="{ x: 24, y: 120 }"
+      fNodeOutput
+      fOutputId="output1"
+    >
+      Node 1
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      fNodeInput
+      fInputId="input2"
+      [fNodePosition]="{ x: 24, y: 320 }"
+      fNodeOutput
+      fOutputId="output2"
+    >
+      Node 2
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 360, y: 320 }"
+      fNodeInput
+      fInputId="input3"
+      fNodeOutput
+      fOutputId="output3"
+    >
+      Node 3
+    </div>
+  </f-canvas>
+</f-flow>
+
+<example-toolbar>
+  <f-checkbox [checked]="enabled()" (change)="onEnabledChange($event)">Enable Auto Pan</f-checkbox>
+  <f-checkbox [checked]="acceleration()" (change)="onAccelerationChange($event)">
+    Acceleration
+  </f-checkbox>
+
+  <example-input label="Edge Threshold" [(value)]="edgeThreshold" />
+  <example-input label="Speed" [(value)]="speed" />
+</example-toolbar>

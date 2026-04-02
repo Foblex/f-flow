@@ -1,20 +1,18 @@
-@use "../../flow-common";
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
+
+@include flow-theme.drag-handle();
 
 .f-node {
-  @include flow-common.node;
-  cursor: default;
+  @include flow-theme.node($selectorless: true);
   width: unset;
 
   img {
-    display: block;
-    pointer-events: none;
     width: 150px;
   }
-}
-
-.f-drag-handle {
-  width: fit-content;
-  cursor: move;
 }
 
 .drag-handle-inside {
@@ -34,15 +32,13 @@
 
 .drag-handle-outside {
   .f-drag-handle {
-    background-color: var(--node-background-color);
+    background-color: var(--ff-node-background-color);
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     left: -50px;
     padding: 4px;
-    border: 0.5px solid var(--node-border-color);
-    border-radius: var(--node-border-radius);
+    border: 0.5px solid var(--ff-node-border-color);
+    border-radius: var(--ff-node-border-radius);
   }
 }
-
-

@@ -1,13 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-
-interface IColorOption {
-  readonly label: string;
-  readonly value: string;
-}
+import { ExampleSelect, ExampleToolbar } from '@portal-ui';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'connection-gradients',
@@ -15,24 +9,24 @@ interface IColorOption {
   templateUrl: './custom-connections.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatFormField, MatLabel, MatOption, MatSelect],
+  imports: [FFlowModule, ExampleToolbar, ExampleSelect],
 })
 export class ConnectionGradientsComponent {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  protected readonly colorOptions: readonly IColorOption[] = [
-    { label: 'Theme Red', value: 'var(--connection-gradient-1)' },
-    { label: 'Theme Green', value: 'var(--connection-gradient-2)' },
-    { label: 'Sky', value: '#0ea5e9' },
-    { label: 'Amber', value: '#f59e0b' },
-    { label: 'Rose', value: '#e11d48' },
-    { label: 'Violet', value: '#7c3aed' },
-    { label: 'Slate', value: '#334155' },
+  protected readonly colorOptions: KeyValue<string, string>[] = [
+    { value: 'Red', key: '#ef4444' },
+    { value: 'Green', key: '#22c55e' },
+    { value: 'Sky', key: '#0ea5e9' },
+    { value: 'Amber', key: '#f59e0b' },
+    { value: 'Rose', key: '#e11d48' },
+    { value: 'Violet', key: '#7c3aed' },
+    { value: 'Slate', key: '#334155' },
   ];
 
-  protected readonly startColor = signal(this.colorOptions[0].value);
+  protected readonly startColor = signal(this.colorOptions[0].key);
 
-  protected readonly endColor = signal(this.colorOptions[1].value);
+  protected readonly endColor = signal(this.colorOptions[1].key);
 
   protected onLoaded(): void {
     this._canvas().resetScaleAndCenter(false);

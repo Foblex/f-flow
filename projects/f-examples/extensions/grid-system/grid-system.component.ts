@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, signal, viewChild, ViewChild} from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'grid-system',
@@ -12,6 +13,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
     FFlowModule,
     FCheckboxComponent,
     FZoomDirective,
+    ExampleToolbar,
   ]
 })
 export class GridSystemComponent {

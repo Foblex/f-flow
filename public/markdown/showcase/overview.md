@@ -23,12 +23,12 @@ Some entries are open-source demos with public source links. Others are producti
 
 ## Representative use cases
 
-- **Workflow Automation** and **No Code** tools for operations and business teams.
-- **AI**, **AI Automation**, and **Multi-Agent Systems** interfaces.
-- **Decision Automation** and **Business Rules Engine** products.
-- **Dev Tools**, database-oriented editors, and contact-center workflow surfaces.
+- **Workflow Automation** and **Low Code** builders for operations and business teams.
+- **AI** products, copilots, and agent orchestration interfaces.
+- **Dev Tools** and database-oriented editors.
+- **Contact Center** products and workflow surfaces.
 
-These categories come directly from the current showcase tags, so the page reflects how existing builders position their products today.
+These categories are intentionally broader than the original raw tags, so the showcase stays easier to scan and filter.
 
 ## Why teams pick Foblex Flow
 

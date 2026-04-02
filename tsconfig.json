@@ -4,6 +4,12 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "paths": {
+      "@portal-ui": [
+        "./src/app/portal-ui/index.ts"
+      ],
+      "@portal-ui/*": [
+        "./src/app/portal-ui/*"
+      ],
       "@foblex/flow": [
         "./projects/f-flow/src/public-api.ts"
       ],

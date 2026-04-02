@@ -1,0 +1,28 @@
+:host {
+  position: relative;
+  display: inline-flex;
+}
+
+.no-shell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ff7d57 0%, var(--hero-orange) 100%);
+  box-shadow: 0 18px 26px rgba(102, 122, 171, 0.18);
+}
+
+.no-text {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--hero-accent-contrast);
+}
+
+.f-node-output,
+.f-node-input {
+  border-radius: 10px;
+}

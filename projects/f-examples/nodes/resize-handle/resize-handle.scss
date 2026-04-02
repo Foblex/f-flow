@@ -1,14 +1,17 @@
-@use '../../flow-common';
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
 
 ::ng-deep f-flow {
-  @include flow-common.connection;
+  @include flow-theme.connection($scoped: false);
 }
 
 .f-node {
-  @include flow-common.node;
-  position: relative;
+  @include flow-theme.node($selectorless: true);
+  min-height: unset;
   padding: 0;
-  border: 1px solid var(--node-border-color);
 
   &.resize-when-selected {
     .f-resize-handle {
@@ -21,70 +24,6 @@
       }
     }
   }
-
-  &.f-selected {
-    border: 1px solid var(--node-selected-border-color);
-  }
 }
-@include flow-common.connector;
-
-.f-resize-handle {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background-color: var(--node-background-color);
-  border: 1px solid var(--node-border-color);
-
-  &.f-resize-handle-left {
-    top: calc(50% - 6px);
-    left: -6px;
-    cursor: col-resize;
-  }
-
-  &.f-resize-handle-left-top {
-    top: -6px;
-    left: -6px;
-    cursor: nwse-resize;
-  }
-
-  &.f-resize-handle-top {
-    top: -6px;
-    left: calc(50% - 6px);
-    cursor: row-resize;
-  }
-
-  &.f-resize-handle-right-top {
-    top: -6px;
-    right: -6px;
-    cursor: nesw-resize;
-  }
-
-  &.f-resize-handle-right {
-    top: calc(50% - 6px);
-    right: -6px;
-    cursor: col-resize;
-  }
-
-  &.f-resize-handle-right-bottom {
-    bottom: -6px;
-    right: -6px;
-    cursor: nwse-resize;
-  }
-
-  &.f-resize-handle-bottom {
-    bottom: -6px;
-    left: calc(50% - 6px);
-    cursor: row-resize;
-  }
-
-  &.f-resize-handle-left-bottom {
-    bottom: -6px;
-    left: -6px;
-    cursor: nesw-resize;
-  }
-
-  &.resize-icon {
-    width: 26px;
-    height: 26px;
-  }
-}
+@include flow-theme.connector($scoped: false);
+@include flow-theme.resize-handle($scoped: false);

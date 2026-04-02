@@ -5,6 +5,7 @@ import {
   FConnectionContent,
   FFlowModule,
 } from '@foblex/flow';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'connectable-connectable-side',
@@ -12,7 +13,7 @@ import {
   templateUrl: './connection-connectable-side.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FConnectionContent],
+  imports: [FFlowModule, FConnectionContent, ExampleToolbar],
 })
 export class ConnectionConnectableSide {
   private readonly _canvas = viewChild.required(FCanvasComponent);

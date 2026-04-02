@@ -22,6 +22,10 @@ import {
   ResolveConnectionWorkerContextRequest,
   ShouldUseConnectionWorkerRequest,
 } from '../../../f-connection-worker';
+import {
+  ResolveConnectionEndpointRotationContextRequest,
+  TResolveConnectionEndpointRotationContextResponse,
+} from '../resolve-connection-endpoint-rotation-context';
 
 const CONNECTIONS_PER_SLICE_LIMIT = 500;
 const SLICE_BUDGET_MS = 6;
@@ -132,7 +136,17 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
         connection,
         context.source.fConnectableSide,
         context.target.fConnectableSide,
+        this._resolveRotationContext(context.source),
+        this._resolveRotationContext(context.target),
       ),
+    );
+  }
+
+  private _resolveRotationContext(
+    connector: IFConnectionWorkerContext['source'],
+  ): TResolveConnectionEndpointRotationContextResponse {
+    return this._mediator.execute<TResolveConnectionEndpointRotationContextResponse>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
     );
   }
 

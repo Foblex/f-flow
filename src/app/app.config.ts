@@ -11,6 +11,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideGTag, provideTheme } from '@foblex/m-render';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_SELECT_CONFIG } from '@angular/material/select';
 
 @Injectable()
 export class ClientErrorHandler implements ErrorHandler {
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
     { provide: ErrorHandler, useClass: ClientErrorHandler },
     provideGTag({ id: 'AW-16677977117' }),
     provideTheme(),
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', subscriptSizing: 'dynamic' } },
+    { provide: MAT_SELECT_CONFIG, useValue: { overlayPanelClass: 'example-select-panel', disableOptionCentering: true } },
   ],
 };

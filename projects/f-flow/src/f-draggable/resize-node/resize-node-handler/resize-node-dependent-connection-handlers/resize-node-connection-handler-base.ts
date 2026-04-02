@@ -1,6 +1,10 @@
 import { ILine, IRoundedRect, RoundedRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { GetNormalizedConnectorRectRequest, IConnectorRectRef } from '../../../../domain';
+import {
+  GetNormalizedConnectorRectRequest,
+  IConnectorRectRef,
+  ResolveConnectionEndpointRotationContextRequest,
+} from '../../../../domain';
 import { FConnectorBase } from '../../../../f-connectors';
 import { FComponentsStore } from '../../../../f-storage';
 import { inject } from '@angular/core';
@@ -8,6 +12,7 @@ import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
   FConnectionBase,
+  IConnectionEndpointRotationContext,
 } from '../../../../f-connection-v2';
 import { SetFCacheConnectorRectRequest } from '../../../../f-cache';
 
@@ -71,6 +76,8 @@ export class ResizeNodeConnectionHandlerBase {
         this.connection,
         this._sourceRef.connector.fConnectableSide,
         this._targetRef.connector.fConnectableSide,
+        this._resolveRotationContext(this._sourceRef.connector),
+        this._resolveRotationContext(this._targetRef.connector),
       ),
     );
   }
@@ -82,5 +89,13 @@ export class ResizeNodeConnectionHandlerBase {
         new GetNormalizedConnectorRectRequest(connector.hostElement, false),
       ),
     };
+  }
+
+  private _resolveRotationContext(
+    connector?: FConnectorBase,
+  ): IConnectionEndpointRotationContext | undefined {
+    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
+    );
   }
 }

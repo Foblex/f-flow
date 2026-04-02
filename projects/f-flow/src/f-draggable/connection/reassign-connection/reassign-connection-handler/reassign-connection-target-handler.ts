@@ -5,9 +5,14 @@ import {
   IClosestConnectorRef,
   IConnectorRectRef,
   MarkConnectableConnectorsRequest,
+  ResolveConnectionEndpointRotationContextRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../../domain';
-import { FNodeInputDirective, FNodeOutputDirective } from '../../../../f-connectors';
+import {
+  FConnectorBase,
+  FNodeInputDirective,
+  FNodeOutputDirective,
+} from '../../../../f-connectors';
 import { FSnapConnectionComponent } from '../../../../f-connection';
 import { ILine, IPoint, RoundedRect } from '@foblex/2d';
 import { IReassignHandler, rectFromPoint, withinSnapThreshold } from './i-reassign-handler';
@@ -16,6 +21,7 @@ import {
   ConnectionBehaviourBuilderRequest,
   EFConnectableSide,
   FConnectionBase,
+  IConnectionEndpointRotationContext,
 } from '../../../../f-connection-v2';
 
 export class ReassignConnectionTargetHandler implements IReassignHandler {
@@ -115,6 +121,8 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
         this._connection,
         this._source.fConnectableSide,
         targetSide,
+        this._resolveRotationContext(this._sourceRef.connector),
+        undefined,
       ),
     );
 
@@ -141,11 +149,21 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
         snap,
         this._source.fConnectableSide,
         closest.connector.fConnectableSide,
+        this._resolveRotationContext(this._sourceRef.connector),
+        this._resolveRotationContext(closest.connector),
       ),
     );
 
     snap.show();
     snap.setLine(line);
     snap.redraw();
+  }
+
+  private _resolveRotationContext(
+    connector?: FConnectorBase,
+  ): IConnectionEndpointRotationContext | undefined {
+    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
+    );
   }
 }

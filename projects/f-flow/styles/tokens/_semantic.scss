@@ -1,0 +1,131 @@
+@mixin semantic-tokens() {
+  :root {
+    --ff-color-surface-page: var(--ff-gray-25);
+    --ff-color-surface-canvas: var(--ff-gray-25);
+    --ff-color-surface-card: var(--ff-white);
+    --ff-color-surface-group: rgba(65, 118, 255, 0.14);
+    --ff-color-surface-group-active: rgba(65, 118, 255, 0.2);
+    --ff-color-surface-muted: var(--ff-gray-50);
+    --ff-color-surface-soft: var(--ff-gray-75);
+    --ff-color-surface-accent-soft: rgba(65, 118, 255, 0.1);
+
+    --ff-color-border-default: var(--ff-alpha-black-12);
+    --ff-color-border-subtle: var(--ff-alpha-black-08);
+    --ff-color-border-strong: var(--ff-alpha-black-20);
+    --ff-color-border-accent: var(--ff-blue-500);
+
+    --ff-color-text-primary: var(--ff-gray-800);
+    --ff-color-text-secondary: var(--ff-gray-500);
+    --ff-color-text-tertiary: var(--ff-gray-400);
+    --ff-color-text-inverse: var(--ff-white);
+
+    --ff-color-accent: var(--ff-blue-500);
+    --ff-color-accent-strong: var(--ff-blue-600);
+    --ff-color-success: var(--ff-green-400);
+    --ff-color-warning: var(--ff-yellow-400);
+    --ff-color-danger: var(--ff-red-400);
+
+    --ff-color-disabled-surface: var(--ff-gray-100);
+    --ff-color-disabled-border: var(--ff-alpha-black-10);
+    --ff-color-disabled-text: var(--ff-gray-300);
+
+    --ff-color-selection-fill: rgba(65, 118, 255, 0.12);
+    --ff-color-selection-stroke: rgba(65, 118, 255, 0.28);
+
+    --ff-color-grid: var(--ff-alpha-black-08);
+    --ff-color-grid-strong: var(--ff-alpha-black-15);
+
+    --ff-color-connector-connected: var(--ff-blue-500);
+    --ff-color-connection: var(--ff-gray-600);
+    --ff-color-connection-muted: var(--ff-gray-300);
+    --ff-color-connection-hover: var(--ff-alpha-black-12);
+    --ff-color-grouping-drop-target-border: var(--ff-gray-800);
+    --ff-color-grouping-drop-target-border-active: var(--ff-gray-800);
+    --ff-color-waypoint-fill: var(--ff-white);
+    --ff-color-waypoint-stroke: var(--ff-blue-500);
+    --ff-color-waypoint-candidate-fill: var(--ff-white);
+    --ff-color-waypoint-candidate-stroke: var(--ff-green-400);
+
+    --ff-color-minimap-surface: var(--ff-white);
+    --ff-color-minimap-node: var(--ff-gray-700);
+    --ff-color-minimap-view: rgba(65, 118, 255, 0.14);
+
+    --ff-color-magnetic-line: var(--ff-blue-500);
+    --ff-color-magnetic-rect-fill: rgba(65, 118, 255, 0.08);
+    --ff-color-magnetic-rect-border: rgba(65, 118, 255, 0.24);
+
+    --ff-radius-node: var(--ff-radius-4);
+    --ff-radius-group: var(--ff-radius-4);
+    --ff-radius-control: var(--ff-radius-4);
+    --ff-radius-socket-square: var(--ff-radius-6);
+    --ff-radius-pill: var(--ff-radius-pill);
+
+    --ff-font-sans: var(--ff-font-family-sans);
+    --ff-font-mono: var(--ff-font-family-mono);
+    --ff-font-size-body: var(--ff-font-size-sm);
+    --ff-font-size-label: var(--ff-font-size-xs);
+
+    --ff-shadow-surface: var(--ff-shadow-1);
+    --ff-shadow-floating: var(--ff-shadow-2);
+  }
+
+  .dark,
+  [data-theme='dark'] {
+    --ff-color-surface-page: var(--ff-gray-1000);
+    --ff-color-surface-canvas: var(--ff-gray-1000);
+    --ff-color-surface-card: var(--ff-gray-950);
+    --ff-color-surface-group: rgba(125, 183, 255, 0.18);
+    --ff-color-surface-group-active: rgba(125, 183, 255, 0.24);
+    --ff-color-surface-muted: var(--ff-gray-900);
+    --ff-color-surface-soft: var(--ff-gray-900);
+    --ff-color-surface-accent-soft: rgba(125, 183, 255, 0.14);
+
+    --ff-color-border-default: var(--ff-alpha-white-12);
+    --ff-color-border-subtle: var(--ff-alpha-white-08);
+    --ff-color-border-strong: var(--ff-alpha-white-20);
+    --ff-color-border-accent: var(--ff-blue-300);
+
+    --ff-color-text-primary: var(--ff-gray-100);
+    --ff-color-text-secondary: var(--ff-gray-300);
+    --ff-color-text-tertiary: var(--ff-gray-400);
+    --ff-color-text-inverse: var(--ff-gray-1000);
+
+    --ff-color-accent: var(--ff-blue-300);
+    --ff-color-accent-strong: var(--ff-blue-200);
+    --ff-color-success: var(--ff-green-300);
+    --ff-color-warning: var(--ff-yellow-300);
+    --ff-color-danger: var(--ff-red-300);
+
+    --ff-color-disabled-surface: var(--ff-gray-800);
+    --ff-color-disabled-border: var(--ff-alpha-white-10);
+    --ff-color-disabled-text: var(--ff-gray-500);
+
+    --ff-color-selection-fill: rgba(125, 183, 255, 0.16);
+    --ff-color-selection-stroke: rgba(125, 183, 255, 0.34);
+
+    --ff-color-grid: var(--ff-alpha-white-08);
+    --ff-color-grid-strong: var(--ff-alpha-white-15);
+
+    --ff-color-connector-connected: var(--ff-blue-300);
+    --ff-color-connection: var(--ff-gray-200);
+    --ff-color-connection-muted: var(--ff-gray-500);
+    --ff-color-connection-hover: var(--ff-alpha-white-12);
+    --ff-color-grouping-drop-target-border: var(--ff-gray-100);
+    --ff-color-grouping-drop-target-border-active: var(--ff-gray-100);
+    --ff-color-waypoint-fill: var(--ff-gray-950);
+    --ff-color-waypoint-stroke: var(--ff-blue-300);
+    --ff-color-waypoint-candidate-fill: var(--ff-white);
+    --ff-color-waypoint-candidate-stroke: var(--ff-green-300);
+
+    --ff-color-minimap-surface: var(--ff-gray-950);
+    --ff-color-minimap-node: var(--ff-gray-200);
+    --ff-color-minimap-view: rgba(125, 183, 255, 0.18);
+
+    --ff-color-magnetic-line: var(--ff-blue-300);
+    --ff-color-magnetic-rect-fill: rgba(125, 183, 255, 0.1);
+    --ff-color-magnetic-rect-border: rgba(125, 183, 255, 0.24);
+
+    --ff-shadow-surface: 0 1px 2px rgba(0, 0, 0, 0.28), 0 8px 20px rgba(0, 0, 0, 0.14);
+    --ff-shadow-floating: 0 14px 36px rgba(0, 0, 0, 0.26), 0 4px 12px rgba(0, 0, 0, 0.16);
+  }
+}

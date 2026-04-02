@@ -32,6 +32,11 @@
             "styles": [
               "src/styles/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "tools/sass-aliases"
+              ]
+            },
             "scripts": [],
             "server": "src/main.server.ts",
             "ssr": {
@@ -94,6 +99,11 @@
             "styles": [
               "src/styles.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "tools/sass-aliases"
+              ]
+            },
             "scripts": []
           }
         },

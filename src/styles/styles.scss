@@ -1,8 +1,5 @@
 @use '@angular/material' as mat;
 
-@use 'material';
-@use 'mat-dialog';
-
 @include mat.core();
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
@@ -36,12 +33,6 @@
     'opsz' 24;
 }
 
-.f-button:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
 .cdk-overlay-dark-backdrop {
   backdrop-filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.6);
@@ -49,4 +40,64 @@
 
 .flex-space {
   flex: 1;
+}
+
+:root {
+  --ff-example-control-height: 32px;
+  --ff-example-control-radius: 4px;
+  --ff-example-control-gutter: 12px;
+  --ff-example-control-gap: 8px;
+  --ff-example-control-font-size: 14px;
+  --ff-example-control-font-weight: 500;
+  --ff-example-control-ring-color: var(--blue-500);
+  --ff-example-control-text-color: #0d0d0d;
+  --ff-example-control-muted-text-color: #8f8f8f;
+  --ff-example-control-border-color: rgba(13, 13, 13, 0.16);
+  --ff-example-control-border-color-hover: rgba(13, 13, 13, 0.2);
+  --ff-example-control-border-color-focus: rgba(13, 13, 13, 0.25);
+  --ff-example-control-panel-background: #ffffff;
+  --ff-example-control-panel-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --ff-example-control-panel-hairline: 0 0 0 1px rgba(13, 13, 13, 0.08);
+  --ff-example-control-option-background-hover: rgba(13, 13, 13, 0.08);
+  --ff-example-control-option-background-selected: rgba(13, 13, 13, 0.08);
+  --ff-example-control-disabled-text-color: #8f8f8f;
+}
+
+.dark {
+  --ff-example-control-ring-color: var(--blue-400);
+  --ff-example-control-text-color: #ffffff;
+  --ff-example-control-muted-text-color: #8f8f8f;
+  --ff-example-control-border-color: rgba(255, 255, 255, 0.25);
+  --ff-example-control-border-color-hover: rgba(255, 255, 255, 0.3);
+  --ff-example-control-border-color-focus: rgba(255, 255, 255, 0.35);
+  --ff-example-control-panel-background: #303030;
+  --ff-example-control-panel-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+  --ff-example-control-panel-hairline: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --ff-example-control-option-background-hover: rgba(255, 255, 255, 0.1);
+  --ff-example-control-option-background-selected: rgba(255, 255, 255, 0.1);
+  --ff-example-control-disabled-text-color: #767676;
+}
+
+external-component {
+  f-checkbox {
+    padding: 6px 0;
+  }
+
+  .f-button {
+    height: var(--ff-example-control-height);
+    line-height: var(--ff-example-control-height);
+
+    &[disabled] {
+      cursor: not-allowed;
+      border-color: var(--ff-example-control-disabled-text-color);
+      background-color: var(--ff-example-control-disabled-text-color);
+
+      &:hover {
+        border-color: var(--ff-example-control-disabled-text-color);
+        background-color: var(--ff-example-control-disabled-text-color);
+      }
+    }
+  }
 }

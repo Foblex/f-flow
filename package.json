@@ -1,5 +1,5 @@
 {
-  "version": "18.3.0",
+  "version": "18.4.0",
   "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
@@ -21,7 +21,6 @@
     "release": "standard-version --skip.commit",
     "release:minor": "standard-version --release-as minor --skip.commit",
     "release:major": "standard-version --release-as major --skip.commit",
-    "release:bundle": "bash tools/changelog-bundle.sh --base origin/main --lib projects/f-flow",
     "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run",
     "lint": "ng lint",
@@ -80,7 +79,7 @@
     "@angular/ssr": "18.2.19",
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
-    "@foblex/m-render": "^3.0.5",
+    "@foblex/m-render": "^4.0.2",
     "@foblex/mediator": "1.1.3",
     "@foblex/mutator": "^1.0.7",
     "@foblex/platform": "1.0.4",

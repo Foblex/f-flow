@@ -15,6 +15,7 @@ import { FCheckboxComponent } from '@foblex/m-render';
 import { generateGuid } from '@foblex/utils';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ExampleToolbar } from '@portal-ui';
 
 interface INodeViewModel {
   id: string;
@@ -34,7 +35,7 @@ interface IConnectionViewModel {
   templateUrl: './dagre-layout.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent, NgClass, FormsModule],
+  imports: [FFlowModule, FCheckboxComponent, NgClass, FormsModule, ExampleToolbar],
 })
 export class DagreLayout implements OnInit {
   private readonly _flow = viewChild(FFlowComponent);

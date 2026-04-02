@@ -23,7 +23,6 @@ Use this version when your editor already has enough state complexity that you w
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/undo-redo-v2/undo-redo-v2.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/undo-redo-v2/undo-redo-v2.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/undo-redo-v2/undo-redo-v2.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## Installation

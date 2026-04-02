@@ -15,6 +15,7 @@ import {
 } from '@foblex/flow';
 import {IPoint} from '@foblex/2d';
 import {generateGuid} from '@foblex/utils';
+import { ExampleToolbar } from '@portal-ui';
 
 interface INode {
   id: string;
@@ -61,7 +62,8 @@ const STORE: IState = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FFlowModule
+    FFlowModule,
+    ExampleToolbar
   ]
 })
 export class UndoRedoComponent {

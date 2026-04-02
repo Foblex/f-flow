@@ -49,4 +49,16 @@ Foblex Flow is not only an advanced-case choice. Most Angular teams start with t
 ng add @foblex/flow
 ```
 
+For Nx workspaces:
+
+```bash
+nx g @foblex/flow:add
+```
+
+Or install it manually with the required companion packages:
+
+```bash
+npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+```
+
 Review the [GitHub repository](https://github.com/Foblex/f-flow), then compare the examples against the type of editor your Angular team actually needs to ship.

@@ -1,6 +1,10 @@
 import { ILine, IPoint, PointExtensions, RoundedRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../domain';
+import {
+  GetConnectorRectReferenceRequest,
+  IConnectorRectRef,
+  ResolveConnectionEndpointRotationContextRequest,
+} from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { inject } from '@angular/core';
@@ -8,6 +12,7 @@ import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
   FConnectionBase,
+  IConnectionEndpointRotationContext,
 } from '../../../f-connection-v2';
 import { SetFCacheConnectorRectRequest } from '../../../f-cache';
 
@@ -80,6 +85,8 @@ export class DragNodeConnectionHandlerBase {
         this.connection,
         this._sourceRef.connector.fConnectableSide,
         this._targetRef.connector.fConnectableSide,
+        this._resolveRotationContext(this._sourceRef.connector),
+        this._resolveRotationContext(this._targetRef.connector),
       ),
     );
   }
@@ -92,5 +99,13 @@ export class DragNodeConnectionHandlerBase {
 
   private _withDelta(rect: IConnectorRectRef['rect'], delta: IPoint): IConnectorRectRef['rect'] {
     return RoundedRect.fromRoundedRect(rect).addPoint(delta);
+  }
+
+  private _resolveRotationContext(
+    connector?: FConnectorBase,
+  ): IConnectionEndpointRotationContext | undefined {
+    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
+      new ResolveConnectionEndpointRotationContextRequest(connector),
+    );
   }
 }

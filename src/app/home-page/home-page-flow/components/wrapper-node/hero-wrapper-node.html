@@ -1,0 +1,13 @@
+@let viewModel = data(); @switch (viewModel.type) { @case ('screen') {
+<hero-auth-screen-node [data]="viewModel" />
+} @case ('onboarding') {
+<hero-onboarding-node [data]="viewModel" />
+} @case ('menu') {
+<hero-dashboard-node [data]="viewModel" />
+} @case ('decision') {
+<hero-decision-node [data]="viewModel" />
+} @case ('yes') {
+<hero-yes-node [data]="viewModel" />
+} @case ('no') {
+<hero-no-node [data]="viewModel" />
+} }

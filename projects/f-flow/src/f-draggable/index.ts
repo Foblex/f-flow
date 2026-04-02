@@ -1,5 +1,7 @@
 export * from './domain';
 
+export * from './auto-pan';
+
 export * from './drag-canvas';
 
 export * from './drag-external-item';

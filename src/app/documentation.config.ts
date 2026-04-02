@@ -27,6 +27,7 @@ export const DOCUMENTATION_CONFIGURATION = {
     provideTitle('Foblex Flow'),
     provideNavigation(
       introductionGroup(),
+      stylingGroup(),
       conceptsGroup(),
       containerGroup(),
       nodeGroup(),
@@ -229,8 +230,8 @@ export const DOCUMENTATION_CONFIGURATION = {
         'Official Foblex Flow documentation for Angular node-based UI apps: node editors, workflow builders, diagram interfaces, components, directives, and interaction patterns.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow docs, angular node based ui, angular node editor docs, angular workflow builder docs, angular diagram library docs',
       robots: 'index, follow, max-image-preview:large',
@@ -310,6 +311,40 @@ function seoPagesGroup(): INavigationGroup {
       pageTitle: 'React Flow vs Foblex Flow for Angular Teams',
       description:
         'Compare React Flow and Foblex Flow when your product team needs Angular-native APIs, SSR-aware rendering, and custom graph interactions.',
+    },
+  ]);
+}
+
+function stylingGroup(): INavigationGroup {
+  return defineNavigationGroup('Styling', [
+    {
+      link: 'default-theme-and-styling',
+      text: 'Styling Overview',
+      pageTitle:
+        'Foblex Flow Styling Overview - Default Theme, Mixins and Token-Based Customization',
+      description:
+        'Start with the shipped theme, understand the SCSS entrypoints, and navigate the styling and customization guides for Foblex Flow.',
+    },
+    {
+      link: 'styling-mixins-and-scoping',
+      text: 'Mixins and Scoping',
+      pageTitle: 'Foblex Flow Styling Mixins and Scoping - Compose Theme Layers Correctly',
+      description:
+        'Learn the public SCSS mixins, how `$scoped` and `$selectorless` work, and which interaction layers are opt-in.',
+    },
+    {
+      link: 'styling-tokens-and-overrides',
+      text: 'Tokens and Overrides',
+      pageTitle: 'Foblex Flow Styling Tokens and Overrides - Customize `--ff-*` Theme Variables',
+      description:
+        'Override alias tokens, scope themes per editor, and extend light and dark defaults without forking the shipped SCSS layers.',
+    },
+    {
+      link: 'styling-recipes',
+      text: 'Styling Recipes',
+      pageTitle: 'Foblex Flow Styling Recipes - Practical Theme Composition Patterns',
+      description:
+        'Use ready-made styling patterns for minimal editors, grouping, external items, custom node shells, and plugin-heavy flows.',
     },
   ]);
 }

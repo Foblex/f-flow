@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.4.0](https://github.com/Foblex/f-flow/compare/v18.3.0...v18.4.0) (2026-04-02)
+
+### Highlights
+
+- **Home page hero flow redesigned** - the landing page now uses a richer, modular flow showcase with dedicated hero nodes, connectors, and refreshed showcase copy.
+- **Default SCSS theme shipped for Foblex Flow** - the package now exposes a ready-to-use theme entrypoint, domain mixins, and public `--ff-*` tokens for nodes, groups, connectors, connections, plugins, and external items.
+- **Auto-pan shipped as an opt-in flow plugin** - `f-auto-pan` now extends supported drag sessions with edge-based viewport panning and a dedicated example/docs page.
+- **Examples portal controls refreshed** - the examples UI now uses reusable toolbar/overlay primitives plus dedicated native input/select components instead of one-off Material form controls.
+- **Rounded connector geometry hardened** - worker payload generation, rotated intersection math, and corner-radius normalization were updated so rounded connectors behave more predictably across drag, resize, and redraw flows.
+- **Trackpad pinch-to-zoom smoothed** - wheel-based gesture zoom now follows trackpad deltas more closely instead of snapping to the mouse-wheel minimum step.
+- **Installation docs aligned across Angular, Nx, and manual setup** - install sections now describe `ng add`, `nx g @foblex/flow:add`, and explicit companion-package installation consistently across README, guides, and blog tutorials.
+- **Undeclared CDK runtime dependency removed** - `fConnectionContent` now uses a local number coercion helper instead of importing `@angular/cdk/coercion`.
+
+### Features
+
+- **hero-flow:** replace the previous home page background implementation with a dedicated hero flow system composed from reusable node, wrapper, and connector components.
+- **theme:** add a shipped `@foblex/flow/styles/default` entrypoint, public SCSS mixins, token layers, and packaged style assets for selective or full-theme usage.
+- **auto-pan:** add the `f-auto-pan` plugin, drag-session runtime support, unit coverage, Cypress coverage, and a dedicated example for edge-triggered viewport panning during drag.
+- **examples-portal:** add reusable example toolbar/overlay/input/select primitives and move shared example control styling onto the new theme-aligned defaults.
+
+### Improvements
+
+- Migrate examples and guides off the old shared `_flow-common.scss` helper toward the new public theme API and token surface.
+- Update `ng add` to append the default theme stylesheet automatically for application projects, and align package metadata with the documented setup path.
+- Replace ad-hoc Material select/form-field usage in affected examples with the new portal UI controls and shared styling tokens.
+- Refresh showcase taxonomy and example chrome so portal pages present a cleaner, more consistent visual system.
+- Remove stale repository/docs leftovers after retiring the old changelog bundle tooling and the deprecated multiple-flows example.
+
+### Fixes
+
+- **connection-worker:** fall back from worker-based floating geometry for rounded connectors instead of producing incorrect intersections for unsupported shapes.
+- **connections:** calculate floating intersections against rotated rounded connectors during redraw, create, reassign, drag, and resize flows.
+- **connectors:** normalize oversized corner radii before connector geometry is used for rounded intersection calculations.
+- **connection-content:** remove the runtime dependency on `@angular/cdk/coercion` by replacing it with a local number coercion helper.
+- **zoom:** smooth wheel-based pinch-to-zoom on trackpads by separating gesture-wheel normalization from mouse-wheel stepping.
+
+### Documentation
+
+- Normalize install docs across README, guides, and blog tutorials so Angular, Nx, and manual installation paths use the same dependency story.
+- Sync install-related package metadata and schematic companion dependency versions with the documented setup commands.
+- Expand styling documentation with dedicated guides for mixins/scoping, token overrides, and practical styling recipes, and add the new pages to docs navigation, prerender routes, and sitemap.
+- Add a dedicated `v18.4.0` release article, document `f-auto-pan` in the guides and examples, and remove the obsolete markdown page for the deleted multiple-flows demo.
+
+### ⚠️ Breaking Changes
+
+#### Canvas dragging host class was renamed
+
+Use `.f-canvas-dragging` instead of `.canvas-dragging` in custom styles and examples.
+
+The legacy `.canvas-dragging` class is still emitted for compatibility in `18.4.0`, but it is now deprecated and should be treated as transitional only.
+
+### Migration Notes
+
+Update CSS selectors:
+
+```scss
+/* Old */
+f-canvas.canvas-dragging {
+
+}
+
+/* New */
+f-canvas.f-canvas-dragging {
+
+}
+```
+
 ## [18.3.0](https://github.com/Foblex/f-flow/compare/v18.2.0...v18.3.0) (2026-03-17)
 
 ### Highlights

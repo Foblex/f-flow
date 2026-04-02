@@ -61,8 +61,8 @@ export const SHOWCASE_CONFIGURATION = {
         'Discover real-world apps built with Foblex Flow, the Angular-native node-based UI library for workflow builders, diagram editors, and interactive graph tools.',
       image: 'https://flow.foblex.com/site-preview.png',
       image_type: 'image/png',
-      image_width: 2986,
-      image_height: 1926,
+      image_width: 1688,
+      image_height: 937,
       keywords:
         'foblex flow showcase, angular workflow builder showcase, angular diagram showcase, node editor case studies',
       robots: 'index, follow, max-image-preview:large',

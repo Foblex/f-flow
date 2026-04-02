@@ -1,0 +1,4 @@
+@use './index' as flow-theme;
+
+@include flow-theme.theme-tokens();
+@include flow-theme.theme-all();

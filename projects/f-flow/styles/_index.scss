@@ -1,0 +1,31 @@
+@forward 'domains/flow-canvas';
+@forward 'domains/node-group';
+@forward 'domains/connector';
+@forward 'domains/connection';
+@forward 'domains/external-item';
+@forward 'domains/plugins';
+
+@use 'tokens/primitive';
+@use 'tokens/semantic';
+@use 'tokens/ff-aliases';
+@use 'domains/flow-canvas';
+@use 'domains/node-group';
+@use 'domains/connector';
+@use 'domains/connection';
+@use 'domains/external-item';
+@use 'domains/plugins';
+
+@mixin theme-tokens() {
+  @include primitive.primitive-tokens();
+  @include semantic.semantic-tokens();
+  @include ff-aliases.ff-aliases();
+}
+
+@mixin theme-all($scoped: true) {
+  @include flow-canvas.flow-canvas($scoped);
+  @include node-group.node-group($scoped);
+  @include connector.connector($scoped);
+  @include connection.connection-all($scoped);
+  @include external-item.external-item-all($scoped);
+  @include plugins.plugins($scoped);
+}

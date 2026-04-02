@@ -15,7 +15,6 @@ Override the default triggers for zooming, dragging, and connection creation whe
 [component.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component.html
 [component.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component.ts
 [component.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/advanced/custom-event-triggers/custom-event-triggers.component.scss
-[common.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/projects/f-examples/_flow-common.scss
 :::
 
 ## Trigger examples

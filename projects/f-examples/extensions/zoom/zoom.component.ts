@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { FCheckboxComponent } from '@foblex/m-render';
+import { ExampleToolbar } from '@portal-ui';
 
 @Component({
   selector: 'zoom',
@@ -11,7 +12,8 @@ import { FCheckboxComponent } from '@foblex/m-render';
   imports: [
     FFlowModule,
     FCheckboxComponent,
-    FZoomDirective
+    FZoomDirective,
+    ExampleToolbar
   ]
 })
 export class ZoomComponent {
