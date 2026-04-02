@@ -32,6 +32,7 @@ import {
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
 } from '../f-storage';
+import { normalizeWheelStep, resolveWheelDelta } from './wheel-zoom.utils';
 
 @Directive({
   selector: 'f-canvas[fZoom]',
@@ -123,12 +124,16 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
-    const delta = this._resolveWheelDelta(event);
+    const delta = resolveWheelDelta(event);
     if (delta === 0) {
       return;
     }
 
-    const step = this._normalizeWheelStep(delta);
+    const step = this._normalizeWheelStep(event, delta);
+    if (step === 0) {
+      return;
+    }
+
     this.setZoom(
       PointExtensions.initialize(event.clientX, event.clientY),
       step,
@@ -137,22 +142,13 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     );
   };
 
-  private _normalizeWheelStep(delta: number): number {
-    const intensity = Math.abs(delta) / 100;
-    const normalized = Math.max(0.1, Math.min(intensity, 1));
-
-    return this.step * normalized;
+  private _normalizeWheelStep(event: WheelEvent, delta: number): number {
+    return normalizeWheelStep(event, delta, this.step);
   }
 
   private _calculateDirection(delta: number): number {
     return delta > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
   }
-
-  private _resolveWheelDelta(event: WheelEvent): number {
-    // With Shift pressed many browsers emit horizontal wheel (deltaX) and keep deltaY near 0.
-    return Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-  }
-
   private _onDoubleClick = (event: MouseEvent) => {
     if (!isValidEventTrigger(event, this.fDblClickTrigger)) {
       return;
