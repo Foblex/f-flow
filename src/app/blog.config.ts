@@ -238,6 +238,20 @@ function overviewGroup(): INavigationGroup {
 function releasesGroup(): INavigationGroup {
   return defineNavigationGroup('Releases', [
     {
+      link: 'foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom',
+      text: 'v18.4.0',
+      pageTitle: 'Foblex Flow v18.4.0: Auto-Pan, Default Theme, and Smoother Trackpad Zoom',
+      description:
+        'Foblex Flow v18.4 adds the opt-in f-auto-pan plugin, ships a default theme entrypoint, smooths trackpad pinch-to-zoom, and refreshes example portal controls and docs.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom',
+      image: 'https://flow.foblex.com/previews/examples/auto-pan.light.png',
+      image_type: 'image/png',
+      image_width: 2120,
+      image_height: 1200,
+      date: new Date('2026-04-02T12:00:00.000Z'),
+    },
+    {
       link: 'foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening',
       text: 'v18.3.0',
       pageTitle:

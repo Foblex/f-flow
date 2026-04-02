@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## Unreleased
+## [18.4.0](https://github.com/Foblex/f-flow/compare/v18.3.0...v18.4.0) (2026-04-02)
 
 ### Highlights
 
@@ -43,7 +43,7 @@ All notable changes to this project will be documented in this file. See [standa
 - Normalize install docs across README, guides, and blog tutorials so Angular, Nx, and manual installation paths use the same dependency story.
 - Sync install-related package metadata and schematic companion dependency versions with the documented setup commands.
 - Expand styling documentation with dedicated guides for mixins/scoping, token overrides, and practical styling recipes, and add the new pages to docs navigation, prerender routes, and sitemap.
-- Document `f-auto-pan` in the guides and examples, and remove the obsolete markdown page for the deleted multiple-flows demo.
+- Add a dedicated `v18.4.0` release article, document `f-auto-pan` in the guides and examples, and remove the obsolete markdown page for the deleted multiple-flows demo.
 
 ## [18.3.0](https://github.com/Foblex/f-flow/compare/v18.2.0...v18.3.0) (2026-03-17)
 
