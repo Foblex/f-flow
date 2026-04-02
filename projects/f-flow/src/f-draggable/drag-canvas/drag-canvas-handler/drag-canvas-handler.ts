@@ -3,6 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 
+const F_CANVAS_DRAGGING_CLASS = 'f-canvas-dragging';
+/** @deprecated Use `f-canvas-dragging`. */
+const LEGACY_CANVAS_DRAGGING_CLASS = 'canvas-dragging';
+
 @Injectable()
 export class DragCanvasHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'canvas-move';
@@ -13,7 +17,10 @@ export class DragCanvasHandler extends DragHandlerBase<unknown> {
 
   constructor() {
     super();
-    this._store.fCanvas?.hostElement.classList.add('canvas-dragging');
+    this._store.fCanvas?.hostElement.classList.add(
+      F_CANVAS_DRAGGING_CLASS,
+      LEGACY_CANVAS_DRAGGING_CLASS,
+    );
   }
 
   public override prepareDragSequence(): void {
@@ -27,6 +34,9 @@ export class DragCanvasHandler extends DragHandlerBase<unknown> {
 
   public override onPointerUp(): void {
     this._store.fCanvas?.emitCanvasChangeEvent();
-    this._store.fCanvas?.hostElement.classList.remove('canvas-dragging');
+    this._store.fCanvas?.hostElement.classList.remove(
+      F_CANVAS_DRAGGING_CLASS,
+      LEGACY_CANVAS_DRAGGING_CLASS,
+    );
   }
 }

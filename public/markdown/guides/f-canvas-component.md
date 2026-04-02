@@ -97,7 +97,8 @@ interface ITransformModel {
 - `.f-component` Base class for flow primitives.
 - `.f-canvas` Host class for the canvas layer.
 - `.f-connections-container` Connection layer container.
-- `.canvas-dragging` Temporary host class used during drag transitions.
+- `.f-canvas-dragging` Temporary host class used during drag transitions.
+- `.canvas-dragging` Deprecated compatibility alias for `.f-canvas-dragging`.
 
 ## Notes / Pitfalls
 

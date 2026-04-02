@@ -45,6 +45,30 @@ All notable changes to this project will be documented in this file. See [standa
 - Expand styling documentation with dedicated guides for mixins/scoping, token overrides, and practical styling recipes, and add the new pages to docs navigation, prerender routes, and sitemap.
 - Add a dedicated `v18.4.0` release article, document `f-auto-pan` in the guides and examples, and remove the obsolete markdown page for the deleted multiple-flows demo.
 
+### ⚠️ Breaking Changes
+
+#### Canvas dragging host class was renamed
+
+Use `.f-canvas-dragging` instead of `.canvas-dragging` in custom styles and examples.
+
+The legacy `.canvas-dragging` class is still emitted for compatibility in `18.4.0`, but it is now deprecated and should be treated as transitional only.
+
+### Migration Notes
+
+Update CSS selectors:
+
+```scss
+/* Old */
+f-canvas.canvas-dragging {
+
+}
+
+/* New */
+f-canvas.f-canvas-dragging {
+
+}
+```
+
 ## [18.3.0](https://github.com/Foblex/f-flow/compare/v18.2.0...v18.3.0) (2026-03-17)
 
 ### Highlights
