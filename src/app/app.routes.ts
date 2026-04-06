@@ -23,6 +23,16 @@ export const routes: Routes = [
     redirectTo: 'docs/intro',
   },
   {
+    path: 'docs/en',
+    pathMatch: 'full',
+    redirectTo: 'docs/intro',
+  },
+  {
+    path: 'docs/en/:slug',
+    pathMatch: 'full',
+    redirectTo: 'docs/:slug',
+  },
+  {
     path: 'docs',
     loadChildren: () =>
       import('@foblex/m-render').then((m) =>

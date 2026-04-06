@@ -3,6 +3,7 @@ import { CommonEngine } from '@angular/ssr';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { existsSync } from 'node:fs';
 import bootstrap from './src/main.server';
 
 export function app(): express.Express {
@@ -15,6 +16,25 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+
+  const renderNotFound = (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    const notFoundUrl = `${req.protocol}://${req.headers.host}/404`;
+
+    commonEngine
+      .render({
+        bootstrap,
+        documentFilePath: indexHtml,
+        url: notFoundUrl,
+        publicPath: browserDistFolder,
+        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      })
+      .then((html) => res.status(404).send(applyNotFoundMeta(html, notFoundUrl)))
+      .catch((err) => next(err));
+  };
 
   server.get(['/docs', '/docs/'], (_req, res) => {
     res.redirect(301, '/docs/intro');
@@ -34,34 +54,19 @@ export function app(): express.Express {
 
   server.use((req, res, next) => {
     const [pathOnly, query = ''] = req.url.split('?', 2);
-    const isAsset = /\.[A-Za-z0-9]{1,8}$/.test(pathOnly);
+    const legacyRedirect = resolveLegacyRedirect(pathOnly);
+
+    if (legacyRedirect) {
+      return res.redirect(301, legacyRedirect + (query ? '?' + query : ''));
+    }
 
     // Keep canonical URLs without trailing slash across docs/examples/showcase/blog.
-    if (pathOnly.length > 1 && !isAsset && pathOnly.endsWith('/')) {
+    if (pathOnly.length > 1 && !isAssetPath(pathOnly) && pathOnly.endsWith('/')) {
       const normalizedPath = pathOnly.replace(/\/+$/, '');
 
       return res.redirect(301, normalizedPath + (query ? '?' + query : ''));
     }
     next();
-  });
-
-  server.get('/:slug', (req, res, next) => {
-    const { slug } = req.params;
-
-    if (/\.[A-Za-z0-9]{1,8}$/.test(slug)) return next();
-
-    if (!slug) return next();
-
-    commonEngine
-      .render({
-        bootstrap,
-        documentFilePath: indexHtml,
-        url: `${req.protocol}://${req.headers.host}/404`,
-        publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
-      })
-      .then((html) => res.status(404).send(html))
-      .catch((err) => next(err));
   });
 
   server.get(
@@ -75,6 +80,13 @@ export function app(): express.Express {
 
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
+    const pathname = normalizeRoutePath(req.path);
+
+    if (isAssetPath(pathname)) return next();
+
+    if (!hasPrerenderedRoute(browserDistFolder, pathname)) {
+      return renderNotFound(req, res, next);
+    }
 
     commonEngine
       .render({
@@ -99,6 +111,91 @@ export function app(): express.Express {
   });
 
   return server;
+}
+
+function normalizeRoutePath(pathname: string): string {
+  if (!pathname || pathname === '/') {
+    return '/';
+  }
+  const normalized = pathname.replace(/\/+$/, '');
+
+  return normalized || '/';
+}
+
+function isAssetPath(pathname: string): boolean {
+  return /\.[A-Za-z0-9]{1,8}$/.test(pathname);
+}
+
+function resolveLegacyRedirect(pathname: string): string | null {
+  const normalized = normalizeRoutePath(pathname);
+
+  if (normalized === '/docs/en') {
+    return '/docs/intro';
+  }
+
+  if (normalized.startsWith('/docs/en/')) {
+    const slug = normalized.slice('/docs/en/'.length);
+
+    return slug ? `/docs/${slug}` : '/docs/intro';
+  }
+
+  return null;
+}
+
+function hasPrerenderedRoute(browserDistFolder: string, pathname: string): boolean {
+  const normalized = normalizeRoutePath(pathname);
+
+  if (normalized.includes('..')) {
+    return false;
+  }
+
+  const htmlPath =
+    normalized === '/'
+      ? join(browserDistFolder, 'index.html')
+      : join(browserDistFolder, normalized.replace(/^\/+/, ''), 'index.html');
+
+  return existsSync(htmlPath);
+}
+
+function applyNotFoundMeta(html: string, canonicalUrl: string): string {
+  const title = '404 - Page Not Found | Foblex Flow';
+  const description =
+    'The requested Foblex Flow page could not be found. Continue with the docs, examples, showcase, or articles.';
+
+  return html
+    .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
+    .replace(
+      /<link rel="canonical" href="[^"]*"\s*\/?>/,
+      `<link rel="canonical" href="${canonicalUrl}" />`,
+    )
+    .replace(
+      /<meta name="description" content="[^"]*"\s*\/?>/,
+      `<meta name="description" content="${description}" />`,
+    )
+    .replace(
+      /<meta name="robots" content="[^"]*"\s*\/?>/,
+      `<meta name="robots" content="noindex, nofollow, noarchive" />`,
+    )
+    .replace(
+      /<meta property="og:url" content="[^"]*"\s*\/?>/,
+      `<meta property="og:url" content="${canonicalUrl}" />`,
+    )
+    .replace(
+      /<meta property="og:title" content="[^"]*"\s*\/?>/,
+      `<meta property="og:title" content="${title}" />`,
+    )
+    .replace(
+      /<meta property="og:description" content="[^"]*"\s*\/?>/,
+      `<meta property="og:description" content="${description}" />`,
+    )
+    .replace(
+      /<meta name="twitter:title" content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:title" content="${title}" />`,
+    )
+    .replace(
+      /<meta name="twitter:description" content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:description" content="${description}" />`,
+    );
 }
 
 function run(): void {

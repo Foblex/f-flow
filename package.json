@@ -11,6 +11,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "prebuild": "npm run seo:check",
     "start": "ng serve",
     "start-shared": "ng serve --host 0.0.0.0",
     "build": "ng build",
@@ -24,6 +25,7 @@
     "serve:ssr:f-flow-portal": "ng build && node dist/f-flow-portal/server/server.mjs",
     "cypress:run": "cypress run",
     "lint": "ng lint",
+    "seo:check": "node scripts/validate-seo-content.mjs",
     "prepare": "husky"
   },
   "standard-version": {

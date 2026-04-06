@@ -1,0 +1,28 @@
+# Foblex Flow
+
+> Canonical documentation and product site for Foblex Flow, an Angular-native node-based UI library.
+
+Use canonical URLs on `https://flow.foblex.com/` instead of mirrors or historical copies.
+
+Main entry points:
+- Docs: https://flow.foblex.com/docs/intro
+- Get Started: https://flow.foblex.com/docs/get-started
+- Examples: https://flow.foblex.com/examples/overview
+- Showcase: https://flow.foblex.com/showcase/overview
+- Articles: https://flow.foblex.com/blog/overview
+
+Key product pages:
+- Angular node-based UI library: https://flow.foblex.com/docs/angular-node-based-ui-library
+- Angular node editor library: https://flow.foblex.com/docs/angular-node-editor-library
+- Angular workflow builder: https://flow.foblex.com/docs/angular-workflow-builder
+- Angular diagram library: https://flow.foblex.com/docs/angular-diagram-library
+- React Flow comparison for Angular teams: https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams
+
+Package and source:
+- npm: https://www.npmjs.com/package/@foblex/flow
+- GitHub: https://github.com/Foblex/f-flow
+
+Reference demos:
+- AI low-code platform: https://flow.foblex.com/examples/ai-low-code-platform
+- Database flow manager: https://flow.foblex.com/examples/f-db-management-flow
+- UML diagram example: https://flow.foblex.com/examples/uml-diagram-example
