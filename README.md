@@ -23,7 +23,7 @@ Foblex Flow gives Angular teams a simple way to start building graph-based produ
 
 Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces while keeping your own state, validation, persistence, and domain logic.
 
-It works with Angular 15+, SSR, standalone components, and zoneless-friendly application setups.
+Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.2, check the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first and pin the matching Foblex Flow line before installing.
 
 ## Why Foblex Flow
 
@@ -52,6 +52,8 @@ It works with Angular 15+, SSR, standalone components, and zoneless-friendly app
 - [All Examples](https://flow.foblex.com/examples/overview) - Focused examples for connections, selection, minimap, layout, alignment, and other editor features.
 
 ## Install
+
+These install commands are for the current `18.x` line. For Angular 12-17.2 apps, use the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first so you do not accidentally install a newer incompatible line.
 
 ```bash
 ng add @foblex/flow
@@ -138,6 +140,7 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 ## Resources
 
 - [Get Started](https://flow.foblex.com/docs/get-started)
+- [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility)
 - [Documentation](https://flow.foblex.com/docs/intro)
 - [Examples](https://flow.foblex.com/examples/overview)
 - [Articles](https://flow.foblex.com/blog/overview)

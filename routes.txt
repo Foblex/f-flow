@@ -1,6 +1,7 @@
 /
 /docs/intro
 /docs/get-started
+/docs/angular-version-compatibility
 /docs/angular-node-based-ui-library
 /docs/angular-node-editor-library
 /docs/angular-workflow-builder

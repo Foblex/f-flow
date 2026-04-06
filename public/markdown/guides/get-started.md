@@ -16,6 +16,8 @@ This guide is the shortest path from installation to a working flow. You will:
 
 ## Install
 
+This guide assumes the current `18.x` line. If your application is on Angular 12-17.2, start with [Angular Version Compatibility](angular-version-compatibility) and pin the matching Foblex Flow line before you run `ng add` or `npm install`.
+
 ::: code-group
 
 ```bash [install]

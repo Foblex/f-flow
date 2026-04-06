@@ -259,6 +259,13 @@ function introductionGroup(): INavigationGroup {
         'Install Foblex Flow, render your first nodes and connections, and verify the base setup in a few steps.',
     },
     {
+      link: 'angular-version-compatibility',
+      text: 'Angular Compatibility',
+      pageTitle: 'Foblex Flow Angular Version Compatibility Matrix',
+      description:
+        'Find the correct Foblex Flow line for Angular 12 through Angular 20+, including legacy, transition, and current signal-based releases.',
+    },
+    {
       link: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md',
       text: 'Changelog',
       pageTitle: 'Foblex Flow Changelog - Releases, Features and Breaking Changes',

@@ -40,8 +40,8 @@
     "save": "dependencies"
   },
   "peerDependencies": {
-    "@angular/common": ">=15.0.0",
-    "@angular/core": ">=15.0.0",
+    "@angular/common": ">=17.3.0",
+    "@angular/core": ">=17.3.0",
     "@foblex/platform": "^1.0.4",
     "@foblex/mediator": "^1.1.3",
     "@foblex/2d": "^1.2.2",

@@ -7,11 +7,13 @@ Use canonical URLs on `https://flow.foblex.com/` instead of mirrors or historica
 Main entry points:
 - Docs: https://flow.foblex.com/docs/intro
 - Get Started: https://flow.foblex.com/docs/get-started
+- Angular compatibility: https://flow.foblex.com/docs/angular-version-compatibility
 - Examples: https://flow.foblex.com/examples/overview
 - Showcase: https://flow.foblex.com/showcase/overview
 - Articles: https://flow.foblex.com/blog/overview
 
 Key product pages:
+- Angular version compatibility: https://flow.foblex.com/docs/angular-version-compatibility
 - Angular node-based UI library: https://flow.foblex.com/docs/angular-node-based-ui-library
 - Angular node editor library: https://flow.foblex.com/docs/angular-node-editor-library
 - Angular workflow builder: https://flow.foblex.com/docs/angular-workflow-builder
