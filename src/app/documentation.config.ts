@@ -40,7 +40,7 @@ export const DOCUMENTATION_CONFIGURATION = {
     provideComponents([
       defineLazyComponent(
         'draggable-flow',
-        () => import('../../projects/f-guides-examples/draggable-flow/draggable-flow.component'),
+        () => import('../../projects/f-examples/nodes/draggable-flow/draggable-flow'),
       ),
       defineLazyComponent(
         'custom-nodes',

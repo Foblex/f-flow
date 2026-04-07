@@ -1,4 +1,4 @@
-@use '../../f-flow/styles' as flow-theme;
+@use '../../../f-flow/styles' as flow-theme;
 
 ::ng-deep {
   @include flow-theme.theme-tokens();
