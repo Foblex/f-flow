@@ -14,7 +14,6 @@ import { PointExtensions } from '@foblex/2d';
 import {
   EFLayoutDirection,
   EFLayoutMode,
-  EFMarkerType,
   FCanvasComponent,
   FFlowComponent,
   FFlowModule,
@@ -64,7 +63,6 @@ export class DagreLayoutAuto implements OnInit {
   protected readonly directions = LAYOUT_DIRECTION_OPTIONS;
   protected readonly algorithms = DAGRE_LAYOUT_ALGORITHM_OPTIONS;
   protected readonly spacings = LAYOUT_SPACING_OPTIONS;
-  protected readonly markerType = EFMarkerType;
 
   // The template still renders application-owned graph state.
   // Auto mode does not replace your state model, it only updates positions for it.
@@ -173,7 +171,7 @@ export class DagreLayoutAuto implements OnInit {
   }
 
   private _showGraph(graph: IGraph): void {
-    // Resetting Flow allows `fLoaded` to fire again for the freshly rendered graph.
+    // Resetting Flow allows `fFullRendered` to fire again for the freshly rendered graph.
     this._flow()?.reset();
 
     // After this render completes, auto mode measures nodes, runs Dagre, and updates positions via `writeback`.

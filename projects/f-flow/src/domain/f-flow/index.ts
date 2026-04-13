@@ -6,4 +6,6 @@ export * from './calculate-flow-state';
 
 export * from './remove-flow-from-store';
 
+export * from './render-lifecycle';
+
 export * from './providers';

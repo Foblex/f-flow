@@ -1,12 +1,11 @@
 import { signal } from '@angular/core';
 import { BrowserService } from '@foblex/platform';
+import { EFMarkerType } from '../../../f-connection-v2/components/connection-marker/enums';
 import {
   configureDiTest,
-  FComponentsStore,
   FConnectionBase,
   FConnectionMarkerBase,
   injectFromDi,
-  registryAdd,
   valueProvider,
 } from '@foblex/flow';
 import { CreateConnectionMarkers } from './create-connection-markers';
@@ -14,38 +13,39 @@ import { CreateConnectionMarkersRequest } from './create-connection-markers-requ
 
 function createMarker(
   id: string,
-  hostElement: SVGSVGElement,
+  markerElement: SVGSVGElement,
   width: number,
 ): FConnectionMarkerBase {
   return {
     fId: signal(id),
-    hostElement,
+    hostElement: markerElement,
+    markerElement,
     width,
     height: 12,
     refX: 12,
     refY: 6,
-    type: 'f-connection-marker-end',
+    type: EFMarkerType.END,
     orient: 'auto',
     markerUnits: 'strokeWidth',
   } as unknown as FConnectionMarkerBase;
 }
 
 function createConnection(
-  hostElement: HTMLElement,
   defsElement: SVGDefsElement,
   pathElement: SVGPathElement,
+  markers: FConnectionMarkerBase[],
 ): FConnectionBase {
   return {
     fId: signal('connection-1'),
-    hostElement,
+    hostElement: document.createElement('div'),
     fDefs: () => ({ nativeElement: defsElement }),
     fPath: () => ({ hostElement: pathElement }),
+    fMarkers: () => markers,
   } as unknown as FConnectionBase;
 }
 
 describe('CreateConnectionMarkers', () => {
   let execution: CreateConnectionMarkers;
-  let store: FComponentsStore;
 
   beforeEach(() => {
     configureDiTest({
@@ -59,23 +59,18 @@ describe('CreateConnectionMarkers', () => {
     });
 
     execution = injectFromDi(CreateConnectionMarkers);
-    store = injectFromDi(FComponentsStore);
   });
 
   it('skips rebuilding defs when marker signature is unchanged', () => {
-    const hostElement = document.createElement('div');
     const markerElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     markerElement.innerHTML = '<path d="M0,0 L12,6 L0,12 z"></path>';
-    hostElement.append(markerElement);
 
     const defsElement = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
     const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const replaceSpy = spyOn(pathElement, 'replaceWith').and.callFake(() => undefined);
 
     const marker = createMarker('marker-1', markerElement, 12);
-    const connection = createConnection(hostElement, defsElement, pathElement);
-
-    registryAdd(store.connectionMarkers, marker);
+    const connection = createConnection(defsElement, pathElement, [marker]);
 
     expect(execution.handle(new CreateConnectionMarkersRequest(connection))).toBeTrue();
     expect(defsElement.innerHTML).toContain('marker');

@@ -2,6 +2,7 @@ import { Directive, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import { F_CONNECTION_MARKER, FConnectionMarkerBase } from './models';
 import { EFMarkerType } from './enums';
+import { coerceMarkerType } from './utils';
 import {
   AddConnectionMarkerToStoreRequest,
   RemoveConnectionMarkerFromStoreRequest,
@@ -17,6 +18,8 @@ import {
 export class FConnectionMarker extends FConnectionMarkerBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
 
+  public override markerElement: SVGElement = this.hostElement as unknown as SVGElement;
+
   @Input()
   public override width: number = 0;
 
@@ -29,8 +32,8 @@ export class FConnectionMarker extends FConnectionMarkerBase implements OnInit, 
   @Input()
   public override refY: number = 0;
 
-  @Input()
-  public override type: string = EFMarkerType.START;
+  @Input({ transform: (value: unknown) => coerceMarkerType(value, EFMarkerType.START) })
+  public override type: EFMarkerType = EFMarkerType.START;
 
   @Input()
   public override orient: 'auto' | 'auto-start-reverse' | 'calculated' | string = 'auto';

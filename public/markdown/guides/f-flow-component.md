@@ -20,7 +20,7 @@ All primitives (`f-canvas`, nodes, connectors, connections, and extensions) must
 
 Use `f-flow` when you need:
 
-- a predictable place to listen for “ready” (`fLoaded`),
+- a predictable place to listen for “ready” (`fNodesRendered` / `fFullRendered`),
 - imperative APIs for selection, bounding boxes, and exporting the current flow state,
 - a host for extensions like `fDraggable`, minimap, magnetic helpers, etc.
 
@@ -29,7 +29,7 @@ Use `f-flow` when you need:
 
 ## How it works
 
-`f-flow` registers itself in the internal store, watches data changes, redraws connection layers, and emits `fLoaded` once initial rendering stabilizes. Public methods like `select`, `clearSelection`, and `getState` call into that same store.
+`f-flow` registers itself in the internal store, watches data changes, redraws connection layers, and emits render lifecycle events as the flow stabilizes. Public methods like `select`, `clearSelection`, and `getState` call into that same store.
 
 ## API
 
@@ -39,14 +39,19 @@ Use `f-flow` when you need:
 
 ### Outputs
 
-- `fLoaded: OutputEmitterRef<string>;` Emits once when the first full render is ready. Payload is the current flow id.
-  Typical usage: center the canvas, apply initial zoom, or run any logic that requires all nodes to be registered.
+- `fNodesRendered: OutputEmitterRef<string>;` Emits once when the current render cycle has finished rendering nodes and groups. Payload is the current flow id.
+  Typical usage: run logic that only depends on node registration and measurement.
+
+- `fFullRendered: OutputEmitterRef<string>;` Emits once when the current render cycle has finished the full render cycle for nodes and connections. Payload is the current flow id.
+  Typical usage: center the canvas, apply initial zoom, or run logic that depends on final connection geometry.
+
+- `fLoaded: OutputEmitterRef<string>;` Deprecated alias for `fFullRendered`.
 
 ### Methods
 
 - `redraw(): void;` Forces a redraw of nodes and connections.
 
-- `reset(): void;` Resets internal loaded state. Next render will emit `fLoaded` again.
+- `reset(): void;` Resets internal loaded state. Next render will emit `fNodesRendered` and `fFullRendered` again.
 
 - `getNodesBoundingBox(): IRect | null;` Returns a bounding rectangle that covers **all nodes and groups** in the current flow.
 
@@ -113,7 +118,8 @@ interface ICurrentSelection {
 
 ## Notes / Pitfalls
 
-- `fLoaded` is one-time per internal load cycle; if you call `reset()`, a later render can emit again.
+- `fNodesRendered` and `fFullRendered` are one-time per internal render cycle; if you call `reset()`, a later render can emit again.
+- `fLoaded` still works for backward compatibility, but new code should prefer `fFullRendered`.
 - Programmatic `select(...)` runs after data-change notification, so call it when ids are already present in the flow.
 
 ## Example

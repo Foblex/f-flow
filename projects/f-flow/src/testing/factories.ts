@@ -379,6 +379,8 @@ class FlowFactoryBuilder {
       fId: inputSignal(this._id),
       fCache: inputSignal(false),
       hostElement: this._hostElement,
+      fNodesRendered: outputEmitterStub<string>(),
+      fFullRendered: outputEmitterStub<string>(),
       fLoaded: outputEmitterStub<string>(),
       redraw(): void {
         // No-op for tests.

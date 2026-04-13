@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { ECanvasRedrawContext } from './e-canvas-redraw-context';
 import { RedrawCanvasWithAnimationRequest } from './redraw-canvas-with-animation-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
@@ -12,10 +13,9 @@ import { FCanvasBase } from '../../../f-canvas';
  */
 @Injectable()
 @FExecutionRegister(RedrawCanvasWithAnimationRequest)
-export class RedrawCanvasWithAnimation implements IExecution<
-  RedrawCanvasWithAnimationRequest,
-  void
-> {
+export class RedrawCanvasWithAnimation
+  implements IExecution<RedrawCanvasWithAnimationRequest, void>
+{
   private readonly _store = inject(FComponentsStore);
 
   private get _canvas(): FCanvasBase {
@@ -23,17 +23,28 @@ export class RedrawCanvasWithAnimation implements IExecution<
   }
 
   public handle(request: RedrawCanvasWithAnimationRequest): void {
-    request.animated ? this._redrawWithAnimation() : this._redraw();
+    request.animated ? this._redrawWithAnimation(request.context) : this._redraw(request.context);
     this._canvas?.emitCanvasChangeEvent();
   }
 
-  private _redrawWithAnimation(): void {
+  private _redrawWithAnimation(context: ECanvasRedrawContext): void {
+    this._store.beginViewportAnimation();
     this._canvas?.redrawWithAnimation();
-    transitionEnd(this._canvas.hostElement, () => this._store.emitConnectionChanges());
+
+    transitionEnd(this._canvas.hostElement, () => {
+      this._store.endViewportAnimation();
+
+      if (context === ECanvasRedrawContext.WITH_CONNECTION_CHANGES) {
+        this._store.emitConnectionChanges();
+      }
+    });
   }
 
-  private _redraw(): void {
+  private _redraw(context: ECanvasRedrawContext): void {
     this._canvas?.redraw();
-    this._store.emitConnectionChanges();
+
+    if (context === ECanvasRedrawContext.WITH_CONNECTION_CHANGES) {
+      this._store.emitConnectionChanges();
+    }
   }
 }

@@ -8,7 +8,7 @@ During an active drag session the library updates positions internally for smoot
 This page summarizes **what events exist**, **where to subscribe**, and **how to use triggers** to control when interactions should start.
 **What you get**
 
-- Lifecycle events (e.g. `fLoaded`, drag start/end).
+- Lifecycle events (e.g. `fNodesRendered`, `fFullRendered`, drag start/end).
 - Selection and transform events (canvas changes, node/group geometry changes).
 - Connection workflow events (create, reassign, waypoints).
 - External-drop events (create node from palette/toolbox, drop to group).
@@ -46,7 +46,9 @@ In practice this gives you a clean separation:
 
 ### Core outputs to use
 
-- `fLoaded` on `f-flow`
+- `fNodesRendered` on `f-flow`
+- `fFullRendered` on `f-flow`
+- `fLoaded` on `f-flow` as a deprecated compatibility alias
 - `fCanvasChange` on `f-canvas`
 - `fNodePositionChange`, `fNodeRotateChange`, `fNodeSizeChange` on `fNode`
 - `fGroupPositionChange`, `fGroupRotateChange`, `fGroupSizeChange` on `fGroup`

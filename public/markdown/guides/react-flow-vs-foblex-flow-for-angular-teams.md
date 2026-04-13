@@ -18,7 +18,7 @@ If your product is already built in Angular, the main question is usually not wh
 - Choose **React Flow** when your editor is already React-based or your team is comfortable owning a cross-framework integration layer.
 - Choose **Foblex Flow** when your product is Angular-first and you want graph interactions, custom nodes, and workflow builder UX without introducing a React runtime into the editor surface.
 
-Foblex Flow is not only an advanced-case choice. Most Angular teams start with the core flow primitives and add optional helpers such as minimap, selection, caching, virtualization, or worker-assisted rendering later.
+Foblex Flow is not only an advanced-case choice. Most Angular teams start with the core flow primitives and add optional helpers such as minimap, selection, caching, or virtualization later.
 
 ## Why Angular teams often prefer Foblex Flow
 

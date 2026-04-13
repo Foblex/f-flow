@@ -9,12 +9,18 @@ import { FFlowComponent } from '@foblex/flow';
   standalone: true,
   imports: [FFlowModule],
   template: `
-    <f-flow (fLoaded)="loadedIds.push($event)">
+    <f-flow
+      (fNodesRendered)="nodesRenderedIds.push($event)"
+      (fFullRendered)="fullRenderedIds.push($event)"
+      (fLoaded)="loadedIds.push($event)"
+    >
       <f-canvas></f-canvas>
     </f-flow>
   `,
 })
 class HostComponent {
+  public nodesRenderedIds: string[] = [];
+  public fullRenderedIds: string[] = [];
   public loadedIds: string[] = [];
 }
 
@@ -45,7 +51,7 @@ describe('FFlowComponent', () => {
     }).compileComponents();
   });
 
-  it('should wait for progressive rendering before emitting fLoaded', fakeAsync(() => {
+  it('should wait for progressive rendering before emitting flow loaded events', fakeAsync(() => {
     const fixture = TestBed.createComponent(HostComponent);
     fixture.detectChanges();
 
@@ -58,6 +64,8 @@ describe('FFlowComponent', () => {
     tick(300);
     fixture.detectChanges();
 
+    expect(fixture.componentInstance.nodesRenderedIds).toEqual([]);
+    expect(fixture.componentInstance.fullRenderedIds).toEqual([]);
     expect(fixture.componentInstance.loadedIds).toEqual([]);
 
     store.endProgressiveRender();
@@ -65,6 +73,10 @@ describe('FFlowComponent', () => {
     tick(300);
     fixture.detectChanges();
 
+    expect(fixture.componentInstance.nodesRenderedIds.length).toBe(1);
+    expect(fixture.componentInstance.nodesRenderedIds[0]).toContain('f-flow-');
+    expect(fixture.componentInstance.fullRenderedIds.length).toBe(1);
+    expect(fixture.componentInstance.fullRenderedIds[0]).toContain('f-flow-');
     expect(fixture.componentInstance.loadedIds.length).toBe(1);
     expect(fixture.componentInstance.loadedIds[0]).toContain('f-flow-');
   }));
@@ -81,10 +93,11 @@ describe('FFlowComponent', () => {
     expect(flow.getState().nodes[0].size).toBeUndefined();
 
     const nodeState = flow.getState({ measuredSize: true }).nodes[0];
+    const measuredSize = nodeState.measuredSize;
 
     expect(nodeState.size).toBeUndefined();
-    expect(nodeState.measuredSize).toBeDefined();
-    expect(nodeState.measuredSize!.width).toBeGreaterThan(0);
-    expect(nodeState.measuredSize!.height).toBeGreaterThan(0);
+    expect(measuredSize).toBeDefined();
+    expect(measuredSize?.width).toBeGreaterThan(0);
+    expect(measuredSize?.height).toBeGreaterThan(0);
   }));
 });

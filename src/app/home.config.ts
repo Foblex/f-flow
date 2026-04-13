@@ -20,7 +20,7 @@ export const HOME_CONFIGURATION = {
       tagline1: 'Angular-Native',
       tagline2: 'Node-Based UI Library',
       subDescription:
-        'Start with a simple Angular node editor in minutes. Add selection, minimap, snapping, caching, virtualization, and worker-assisted rendering only when you need them.',
+        'Start with a simple Angular node editor in minutes. Add selection, minimap, snapping, caching, and virtualization only when you need them.',
     }),
     provideBackground(HeroFlow),
     provideImage(HomePageImageComponent),
@@ -52,7 +52,7 @@ export const HOME_CONFIGURATION = {
       {
         headline: 'Scale When Needed',
         description:
-          'Advanced helpers are optional. Add selection, minimap, alignment, waypoints, caching, virtualization, or the connection worker later if your editor grows in complexity or size.',
+          'Advanced helpers are optional. Add selection, minimap, alignment, waypoints, caching, or virtualization later if your editor grows in complexity or size.',
       },
       {
         headline: 'Built For Real Editors',

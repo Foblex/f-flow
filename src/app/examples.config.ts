@@ -691,7 +691,7 @@ function connectionGroup() {
       link: 'connection-markers',
       text: 'Connection Markers',
       description:
-        'Add arrowheads and markers to edges. SVG styling, sizes and examples for Angular flowcharts.',
+        'Use built-in or custom SVG connection markers, including normal and selected-state variants, in Angular flowcharts.',
       image: './previews/examples/connection-markers.light.png',
       image_dark: './previews/examples/connection-markers.dark.png',
       image_width: 791,

@@ -1,126 +1,114 @@
-import { signal } from '@angular/core';
-import { ILine } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { BrowserService } from '@foblex/platform';
-import {
-  configureDiTest,
-  ConnectionBehaviourBuilder,
-  createSpy,
-  EFConnectableSide,
-  EFConnectionBehavior,
-  FConnectionBase,
-  FConnectorBase,
-  injectFromDi,
-  valueProvider,
-} from '@foblex/flow';
+import { configureDiTest, FConnectionBase, injectFromDi, valueProvider } from '@foblex/flow';
+import { FComponentsStore } from '../../../f-storage';
+import { IConnectionRedrawSession } from './models';
+import { CompleteConnectionRedrawRequest } from './pipeline/complete-connection-redraw';
+import { RunConnectionRedrawSliceRequest } from './pipeline/run-connection-redraw-slice';
+import { StartConnectionRedrawRequest } from './pipeline/start-connection-redraw';
+import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { RedrawConnections } from './redraw-connections';
-
-interface RedrawConnectionsPrivate {
-  _setupConnectionWithLine(
-    connection: FConnectionBase,
-    source: FConnectorBase,
-    target: FConnectorBase,
-    line: ILine,
-  ): void;
-}
-
-function createConnector(): FConnectorBase {
-  return {
-    setConnected: createSpy('setConnected'),
-  } as unknown as FConnectorBase;
-}
-
-function createConnection(
-  pathElement: SVGPathElement,
-  waypoints: { current: { x: number; y: number }[] },
-): FConnectionBase & {
-  setLine: jasmine.Spy;
-  initialize: jasmine.Spy;
-} {
-  return {
-    fId: signal('connection-1'),
-    fBehavior: EFConnectionBehavior.FLOATING,
-    fType: 'adaptive-curve',
-    fRadius: 16,
-    fOffset: 24,
-    fReassignableStart: () => false,
-    fPath: () => ({ hostElement: pathElement }),
-    fContents: () => [],
-    fWaypoints: () => ({
-      waypoints: () => waypoints.current,
-    }),
-    getResolvedSides: () => ({
-      sourceSide: EFConnectableSide.RIGHT,
-      targetSide: EFConnectableSide.LEFT,
-    }),
-    setLine: createSpy('setLine'),
-    initialize: createSpy('initialize'),
-    isSelected: () => false,
-    markAsSelected: createSpy('markAsSelected'),
-  } as unknown as FConnectionBase & { setLine: jasmine.Spy; initialize: jasmine.Spy };
-}
+import { ShouldUseConnectionWorkerRequest } from './worker/should-use-connection-worker';
+import { StartConnectionWorkerRedrawRequest } from './worker/start-connection-worker-redraw';
 
 describe('RedrawConnections', () => {
   let execution: RedrawConnections;
   let mediator: jasmine.SpyObj<FMediator>;
-  let executionPrivate: RedrawConnectionsPrivate;
+  let store: FComponentsStore;
+  let connections: FConnectionBase[];
+
+  const session: IConnectionRedrawSession = {
+    renderTicket: 1,
+    connectionsRevision: 2,
+    nodesRevision: 3,
+  };
 
   beforeEach(() => {
     mediator = jasmine.createSpyObj<FMediator>('FMediator', ['execute']);
-    mediator.execute.and.returnValue(false);
+    connections = [];
+    store = {
+      connections: {
+        getForCreate: () => undefined,
+        getForSnap: () => undefined,
+        getAll: () => connections,
+      },
+    } as unknown as FComponentsStore;
 
     configureDiTest({
       providers: [
         RedrawConnections,
         valueProvider(FMediator, mediator),
-        valueProvider(ConnectionBehaviourBuilder, {} as ConnectionBehaviourBuilder),
-        valueProvider(BrowserService, {
-          document,
-          isBrowser: () => true,
-        } as BrowserService),
+        valueProvider(FComponentsStore, store),
       ],
     });
 
     execution = injectFromDi(RedrawConnections);
-    executionPrivate = execution as unknown as RedrawConnectionsPrivate;
   });
 
-  it('skips repeated connection redraw when the render signature is unchanged', () => {
-    const source = createConnector();
-    const target = createConnector();
-    const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const waypoints = { current: [] as { x: number; y: number }[] };
-    const connection = createConnection(pathElement, waypoints);
-    const line: ILine = {
-      point1: { x: 10, y: 20 },
-      point2: { x: 100, y: 200 },
-    };
+  it('completes redraw immediately when there are no connections', () => {
+    mediator.execute.and.callFake(<TResponse>(request: object): TResponse => {
+      if (request instanceof StartConnectionRedrawRequest) {
+        return session as TResponse;
+      }
 
-    executionPrivate._setupConnectionWithLine(connection, source, target, line);
-    executionPrivate._setupConnectionWithLine(connection, source, target, line);
+      return undefined as TResponse;
+    });
 
-    expect(connection.setLine).toHaveBeenCalledTimes(1);
-    expect(connection.initialize).toHaveBeenCalledTimes(1);
+    execution.handle(new RedrawConnectionsRequest());
+
+    expect(
+      _getRequests().some((request) => request instanceof CompleteConnectionRedrawRequest),
+    ).toBeTrue();
   });
 
-  it('redraws again when the connection route inputs change', () => {
-    const source = createConnector();
-    const target = createConnector();
-    const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const waypoints = { current: [] as { x: number; y: number }[] };
-    const connection = createConnection(pathElement, waypoints);
-    const line: ILine = {
-      point1: { x: 10, y: 20 },
-      point2: { x: 100, y: 200 },
-    };
+  it('starts chunked redraw when worker path is not used', () => {
+    connections = [{} as FConnectionBase];
+    mediator.execute.and.callFake(<TResponse>(request: object): TResponse => {
+      if (request instanceof StartConnectionRedrawRequest) {
+        return session as TResponse;
+      }
 
-    executionPrivate._setupConnectionWithLine(connection, source, target, line);
+      if (request instanceof ShouldUseConnectionWorkerRequest) {
+        return false as TResponse;
+      }
 
-    waypoints.current = [{ x: 50, y: 60 }];
+      return undefined as TResponse;
+    });
 
-    executionPrivate._setupConnectionWithLine(connection, source, target, line);
+    execution.handle(new RedrawConnectionsRequest());
 
-    expect(connection.setLine).toHaveBeenCalledTimes(2);
-    expect(connection.initialize).toHaveBeenCalledTimes(2);
+    expect(
+      _getRequests().some((request) => request instanceof RunConnectionRedrawSliceRequest),
+    ).toBeTrue();
+    expect(
+      _getRequests().some((request) => request instanceof StartConnectionWorkerRedrawRequest),
+    ).toBeFalse();
   });
+
+  it('starts worker redraw when worker path is enabled', () => {
+    connections = [{} as FConnectionBase];
+    mediator.execute.and.callFake(<TResponse>(request: object): TResponse => {
+      if (request instanceof StartConnectionRedrawRequest) {
+        return session as TResponse;
+      }
+
+      if (request instanceof ShouldUseConnectionWorkerRequest) {
+        return true as TResponse;
+      }
+
+      return undefined as TResponse;
+    });
+
+    execution.handle(new RedrawConnectionsRequest());
+
+    expect(
+      _getRequests().some((request) => request instanceof StartConnectionWorkerRedrawRequest),
+    ).toBeTrue();
+    expect(
+      _getRequests().some((request) => request instanceof RunConnectionRedrawSliceRequest),
+    ).toBeFalse();
+  });
+
+  function _getRequests(): object[] {
+    return mediator.execute.calls.allArgs().map(([request]) => request);
+  }
 });

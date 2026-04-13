@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## Unreleased
+
+### ⚠️ Breaking Changes
+
+- Remove the deprecated `f-connection-worker` public API. Connection redraw keeps using the built-in chunked pipeline and may still use the internal worker path for large diagrams.
+
+### Migration Notes
+
+- Remove imports that target `f-connection-worker` or `F_CONNECTION_WORKER_FEATURES`.
+- No runtime replacement is required. Connection redraw behavior stays built in to `f-flow`.
+
 ## [18.4.0](https://github.com/Foblex/f-flow/compare/v18.3.0...v18.4.0) (2026-04-02)
 
 ### Highlights

@@ -3,8 +3,8 @@ import { CreateConnectionMarkersRequest } from './create-connection-markers-requ
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { BrowserService } from '@foblex/platform';
 import { normalizeDomElementId } from '@foblex/utils';
-import { FComponentsStore } from '../../../f-storage';
 import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2';
+import { EFMarkerType } from '../../../f-connection-v2';
 
 /**
  * Execution that creates connection markers for a given connection.
@@ -15,7 +15,6 @@ export class CreateConnectionMarkers
   implements IExecution<CreateConnectionMarkersRequest, boolean>
 {
   private readonly _browser = inject(BrowserService);
-  private readonly _store = inject(FComponentsStore);
   private readonly _markerCache = new WeakMap<
     FConnectionBase,
     { signature: string; defsElement: SVGDefsElement }
@@ -37,16 +36,18 @@ export class CreateConnectionMarkers
     const element = createSVGElement('defs', this._browser);
 
     markers.forEach((marker) => {
-      const markerElement = createMarkerElement(marker, connection.fId(), this._browser);
+      resolveMarkerTypes(marker.type).forEach((type) => {
+        const markerElement = createMarkerElement(type, marker, connection.fId(), this._browser);
 
-      const clone = marker.hostElement.cloneNode(true) as HTMLElement;
-      clone.setAttribute('height', `${marker.height}`);
-      clone.setAttribute('width', `${marker.width}`);
-      clone.removeAttribute('markerUnits');
-      clone.style.display = 'unset';
-      markerElement.append(clone);
+        const clone = marker.markerElement.cloneNode(true) as SVGElement;
+        clone.setAttribute('height', `${marker.height}`);
+        clone.setAttribute('width', `${marker.width}`);
+        clone.removeAttribute('markerUnits');
+        clone.style.display = 'unset';
+        markerElement.append(clone);
 
-      element.append(markerElement);
+        element.append(markerElement);
+      });
     });
 
     defs.nativeElement.innerHTML = element.innerHTML;
@@ -60,9 +61,7 @@ export class CreateConnectionMarkers
   }
 
   public _findConnectionMarkers(connection: FConnectionBase): FConnectionMarkerBase[] {
-    return this._store.connectionMarkers
-      .getAll()
-      .filter((x) => connection.hostElement.contains(x.hostElement));
+    return Array.from(connection.fMarkers() ?? []);
   }
 
   // Safari does not support markers on path elements if markers are defined after the path element
@@ -75,27 +74,28 @@ function createConnectionMarkersSignature(markers: readonly FConnectionMarkerBas
   return markers
     .map((marker) =>
       [
-        marker.type,
+        ...resolveMarkerTypes(marker.type),
         marker.width,
         marker.height,
         marker.refX,
         marker.refY,
         marker.orient,
         marker.markerUnits,
-        marker.hostElement.outerHTML,
+        marker.markerElement.outerHTML,
       ].join('|'),
     )
     .join('||');
 }
 
 function createMarkerElement(
+  type: string,
   marker: FConnectionMarkerBase,
   connectionId: string,
   browser: BrowserService,
 ): SVGElement {
   const markerElement = createSVGElement('marker', browser);
 
-  markerElement.setAttribute('id', normalizeDomElementId(marker.type + '-' + connectionId));
+  markerElement.setAttribute('id', normalizeDomElementId(type + '-' + connectionId));
   markerElement.setAttribute('markerHeight', `${marker.height}`);
   markerElement.setAttribute('markerWidth', `${marker.width}`);
   markerElement.setAttribute('orient', `${marker.orient}`);
@@ -104,6 +104,31 @@ function createMarkerElement(
   markerElement.setAttribute('markerUnits', `${marker.markerUnits}`);
 
   return markerElement;
+}
+
+function resolveMarkerTypes(type: EFMarkerType): string[] {
+  switch (type) {
+    case EFMarkerType.START:
+      return [EFMarkerType.START];
+
+    case EFMarkerType.END:
+      return [EFMarkerType.END];
+
+    case EFMarkerType.SELECTED_START:
+      return [EFMarkerType.SELECTED_START];
+
+    case EFMarkerType.SELECTED_END:
+      return [EFMarkerType.SELECTED_END];
+
+    case EFMarkerType.START_ALL_STATES:
+      return [EFMarkerType.START, EFMarkerType.SELECTED_START];
+
+    case EFMarkerType.END_ALL_STATES:
+      return [EFMarkerType.END, EFMarkerType.SELECTED_END];
+
+    default:
+      return [];
+  }
 }
 
 function createSVGElement<K extends keyof SVGElementTagNameMap>(

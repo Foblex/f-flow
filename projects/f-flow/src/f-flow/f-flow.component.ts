@@ -26,11 +26,16 @@ import {
   IFFlowState,
   IFFlowStateOptions,
   IsDragStartedRequest,
+  NotifyFullRenderedRequest,
+  NotifyNodesRenderedRequest,
+  QueueConnectionRedrawRequest,
   RedrawConnectionsRequest,
   RemoveFlowFromStoreRequest,
+  ResetRenderLifecycleRequest,
   SelectAllRequest,
   SelectRequest,
   SortItemLayersRequest,
+  WaitForConnectionsRenderedRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
@@ -45,7 +50,6 @@ import { BrowserService } from '@foblex/platform';
 import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 import { F_CACHE_OPTIONS } from '../f-cache';
-import { F_CONNECTION_WORKER_FEATURES, FConnectionWorker } from '../f-connection-worker';
 
 let uniqueId = 0;
 const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
@@ -62,7 +66,6 @@ const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
   providers: [
     FMediator,
     ...F_STORAGE_PROVIDERS,
-    ...F_CONNECTION_WORKER_FEATURES,
     ConnectionLineBuilder,
     ConnectionBehaviourBuilder,
     ...COMMON_PROVIDERS,
@@ -79,16 +82,20 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _componentsStore = inject(FComponentsStore);
   private readonly _cache = inject(F_CACHE_OPTIONS);
   private readonly _injector = inject(Injector);
-  private readonly _worker = inject(FConnectionWorker);
 
   public override fId = input<string>(`f-flow-${uniqueId++}`, { alias: 'fFlowId' });
   public override fCache = input(false, { transform: booleanAttribute });
 
   public override readonly hostElement = inject(ElementRef).nativeElement;
 
-  public override fLoaded = output<string>();
+  public override fNodesRendered = output<string>();
 
-  private _isLoaded: boolean = false;
+  public override fFullRendered = output<string>();
+
+  /**
+   * @deprecated Use `fFullRendered` instead.
+   */
+  public override fLoaded = output<string>();
 
   public ngOnInit(): void {
     this._mediator.execute(new AddFlowToStoreRequest(this));
@@ -128,9 +135,16 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
         }
 
         this._mediator.execute(new SortItemLayersRequest());
+        this._mediator.execute(new NotifyNodesRenderedRequest());
+        this._mediator.execute(
+          new WaitForConnectionsRenderedRequest(
+            this._componentsStore.connectionsRevision + 1,
+            this._componentsStore.nodesRevision,
+            () => this._mediator.execute(new NotifyFullRenderedRequest()),
+            this._destroyRef,
+          ),
+        );
         this._mediator.execute<void>(new EmitConnectionsChangesRequest());
-
-        this._emitLoaded();
       });
   }
 
@@ -143,15 +157,14 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
           return;
         }
 
+        if (this._componentsStore.isViewportAnimating) {
+          this._mediator.execute(new QueueConnectionRedrawRequest(this._destroyRef));
+
+          return;
+        }
+
         this._mediator.execute(new RedrawConnectionsRequest());
       });
-  }
-
-  private _emitLoaded(): void {
-    if (!this._isLoaded) {
-      this._isLoaded = true;
-      this.fLoaded.emit(this.fId());
-    }
   }
 
   public redraw(): void {
@@ -159,7 +172,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public reset(): void {
-    this._isLoaded = false;
+    this._mediator.execute(new ResetRenderLifecycleRequest());
   }
 
   public getNodesBoundingBox(): IRect | null {
@@ -215,7 +228,6 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngOnDestroy(): void {
-    this._worker.dispose();
     this._mediator.execute(new RemoveFlowFromStoreRequest(this));
   }
 }

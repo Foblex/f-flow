@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
-import { afterNextPaint, FChannelHub, FResizeChannel, notifyOnStart } from '../../../reactivity';
+import { afterNextPaint, FChannelHub, FResizeChannel } from '../../../reactivity';
 import { FitToChildNodesAndGroupsRequest } from '../fit-to-child-nodes-and-groups';
 import { IsDragStartedRequest } from '../../f-draggable';
 import { CalculateConnectorsConnectableSidesRequest } from '../calculate-connectors-connectable-sides';
@@ -13,10 +13,9 @@ import { InvalidateFCacheNodeRequest } from '../../../f-cache';
  */
 @Injectable()
 @FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
-export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
-  UpdateNodeWhenStateOrSizeChangedRequest,
-  void
-> {
+export class UpdateNodeWhenStateOrSizeChanged
+  implements IExecution<UpdateNodeWhenStateOrSizeChangedRequest, void>
+{
   private readonly _mediator = inject(FMediator);
 
   /**
@@ -28,7 +27,7 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
     const { hostElement, stateChanges } = nodeOrGroup;
 
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
-      .pipe(notifyOnStart(), afterNextPaint())
+      .pipe(afterNextPaint())
       .listen(destroyRef, () => {
         this._mediator.execute<void>(new EmitConnectionsChangesRequest());
 

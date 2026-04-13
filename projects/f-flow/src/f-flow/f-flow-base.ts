@@ -15,6 +15,13 @@ export abstract class FFlowBase implements IHasHostElement {
 
   public abstract hostElement: HTMLElement;
 
+  public abstract fNodesRendered: OutputEmitterRef<string>;
+
+  public abstract fFullRendered: OutputEmitterRef<string>;
+
+  /**
+   * @deprecated Use `fFullRendered` instead.
+   */
   public abstract fLoaded: OutputEmitterRef<string>;
 
   public abstract redraw(): void;

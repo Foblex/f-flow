@@ -13,7 +13,6 @@ import {
 import {
   EFLayoutDirection,
   EFLayoutMode,
-  EFMarkerType,
   FCanvasComponent,
   FFlowComponent,
   FFlowModule,
@@ -69,8 +68,6 @@ export class DagreLayout implements OnInit {
   protected readonly directions = LAYOUT_DIRECTION_OPTIONS;
   protected readonly algorithms = DAGRE_LAYOUT_ALGORITHM_OPTIONS;
   protected readonly spacings = LAYOUT_SPACING_OPTIONS;
-
-  protected readonly markerType = EFMarkerType;
 
   // The template renders the fully calculated graph from these signals.
   protected readonly nodes = signal<INode[]>([]);
@@ -139,7 +136,7 @@ export class DagreLayout implements OnInit {
   }
 
   private _showGraph(graph: IGraph): void {
-    // Reset `fLoaded` so the next rendered graph emits it again and refits the canvas.
+    // Reset Flow so the next render emits `fFullRendered` again and refits the canvas.
     // This example recreates the graph for every change, so a full rerender is expected here.
     this._flow()?.reset();
 

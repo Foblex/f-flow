@@ -4,7 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
-import { RedrawCanvasWithAnimationRequest } from '../../../domain';
+import { ECanvasRedrawContext, RedrawCanvasWithAnimationRequest } from '../../../domain';
 
 /**
  * Execution that centers a group or a node inside the flow.
@@ -27,7 +27,9 @@ export class CenterGroupOrNode implements IExecution<CenterGroupOrNodeRequest, v
 
     this._toCenter(this._getNodeRect(node), this._getFlowRect(), node._position);
 
-    this._mediator.execute(new RedrawCanvasWithAnimationRequest(animated));
+    this._mediator.execute(
+      new RedrawCanvasWithAnimationRequest(animated, ECanvasRedrawContext.VIEWPORT_ONLY),
+    );
   }
 
   private _toCenter(fNodeRect: IRect, fFlowRect: IRect, position: IPoint): void {

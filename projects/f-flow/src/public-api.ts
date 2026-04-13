@@ -9,8 +9,6 @@ export * from './drag-toolkit';
 
 export * from './f-connection';
 export * from './f-connection-v2';
-export * from './f-connection-worker';
-
 export * from './f-connectors';
 
 export * from './f-draggable';

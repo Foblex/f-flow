@@ -2,7 +2,7 @@
 
 Build your first interactive diagram in Angular: **install Foblex Flow**, render **two draggable nodes**, and connect them with a **live connection**.
 
-This is the default starting path for most Angular teams. You do not need caching, virtualization, or the connection worker on day one.
+This is the default starting path for most Angular teams. You do not need caching or virtualization on day one.
 
 ## Description
 
@@ -201,7 +201,7 @@ After you get the minimal template working, try:
 - changing the connection look/behavior via `fType` and `fBehavior`,
 - enabling additional UX helpers (selection area, minimap, alignment and spacing).
 
-Only add scaling features such as cache, virtualization, or worker-assisted connection rendering once you actually need them for larger scenes.
+Only add scaling features such as cache or virtualization once you actually need them for larger scenes.
 
 ## Notes / pitfalls
 

@@ -13,7 +13,7 @@ updatedAt: "2026-03-08"
 
 Foblex Flow is an **Angular-native node-based UI library** for building interfaces where users edit connected entities visually. It gives you the rendering and interaction layer for **node editors**, **workflow builders**, **visual automation tools**, **AI pipeline builders**, and other graph-style product surfaces.
 
-The starting path is small: `f-flow`, `f-canvas`, nodes, connectors, and connections. Most teams add helpers like minimap, selection area, snapping, caching, virtualization, or worker-assisted rendering only later.
+The starting path is small: `f-flow`, `f-canvas`, nodes, connectors, and connections. Most teams add helpers like minimap, selection area, snapping, caching, or virtualization only later.
 
 ## When to use it
 

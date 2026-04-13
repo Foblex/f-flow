@@ -455,7 +455,7 @@ function connectionGroup(): INavigationGroup {
       text: 'Connection Marker',
       pageTitle: 'FConnectionMarker - Custom SVG Markers for Connection Start and End',
       description:
-        'Define reusable SVG markers for connection start and end visuals, including selected-state variants.',
+        'Use built-in or custom SVG connection markers for start, end, selected, and all-state connection visuals.',
     },
     {
       link: 'f-snap-connection-component',

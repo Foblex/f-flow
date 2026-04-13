@@ -30,7 +30,7 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 - Easy starting path: most editors begin with `f-flow`, `f-canvas`, nodes, connectors, and connections.
 - Angular-first API that fits Angular apps instead of wrapping a React-style state model.
 - Built for real editor interactions: drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment helpers, and waypoints.
-- Advanced modules are optional: caching, virtualization, and the connection worker are scaling tools, not day-one requirements.
+- Advanced modules are optional: caching and virtualization are scaling tools, not day-one requirements.
 - Custom nodes, connectors, and connections for domain-specific graph UIs.
 - Your app stays in control of graph state, validation rules, permissions, and persistence.
 - Suitable for both lightweight diagrams and full workflow-builder products.
@@ -134,7 +134,7 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 ## Quick FAQ
 
 - **Is Foblex Flow hard to use?** No. The core setup is small and Angular-native.
-- **Do I need caching, virtualization, or the connection worker?** No. Most editors do not need them on day one. They are optional scaling tools for larger scenes.
+- **Do I need caching or virtualization?** No. Most editors do not need them on day one. They are optional scaling tools for larger scenes.
 - **Who is it for?** Angular teams building node editors, workflow builders, interactive diagrams, and other graph-based product UIs.
 
 ## Resources

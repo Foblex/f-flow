@@ -8,10 +8,9 @@ import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(CalculateDirectChildrenUnionRectRequest)
-export class CalculateDirectChildrenUnionRect implements IExecution<
-  CalculateDirectChildrenUnionRectRequest,
-  IRect | null
-> {
+export class CalculateDirectChildrenUnionRect
+  implements IExecution<CalculateDirectChildrenUnionRectRequest, IRect | null>
+{
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -45,7 +44,7 @@ export class CalculateDirectChildrenUnionRect implements IExecution<
       rect.x - padding[0],
       rect.y - padding[1],
       rect.width + padding[0] + padding[2],
-      rect.height + +padding[1] + padding[3],
+      rect.height + padding[1] + padding[3],
     );
   }
 }

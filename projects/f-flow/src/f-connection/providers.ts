@@ -3,6 +3,8 @@ import { FConnectionForCreateComponent } from './f-connection-for-create';
 import { FSnapConnectionComponent } from './f-snap-connection';
 import {
   FConnectionContent,
+  FConnectionMarkerArrow,
+  FConnectionMarkerCircle,
   FConnectionDragHandleEnd,
   FConnectionDragHandleStart,
   FConnectionGradient,
@@ -27,6 +29,8 @@ export const F_CONNECTION_PROVIDERS = [
 
 export const F_CONNECTION_IMPORTS_EXPORTS = [
   FConnectionContent,
+  FConnectionMarkerCircle,
+  FConnectionMarkerArrow,
   FConnectionGradient,
   FConnectionGradientRenderer,
   FConnectionWaypoints,

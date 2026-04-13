@@ -13,7 +13,7 @@ updatedAt: "2026-03-08"
 
 Foblex Flow is not a charting package or a static SVG helper. It is an **Angular diagram library for interactive, editable graph UIs**. That matters when your users are not just viewing relationships, but actively creating, connecting, moving, and organizing diagram elements.
 
-You can still start small. A simple diagram editor only needs the core flow primitives, while features like minimap, waypoints, alignment, caching, virtualization, or worker-assisted rendering stay optional.
+You can still start small. A simple diagram editor only needs the core flow primitives, while features like minimap, waypoints, alignment, caching, or virtualization stay optional.
 
 ## When to use it
 

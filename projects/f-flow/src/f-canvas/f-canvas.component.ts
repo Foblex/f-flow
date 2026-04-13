@@ -32,14 +32,10 @@ import {
   SetBackgroundTransformRequest,
   transitionEnd,
   UpdateScaleRequest,
+  WaitForConnectionsRenderedRequest,
 } from '../domain';
-import {
-  FComponentsStore,
-  ListenConnectionsChangesRequest,
-  NotifyTransformChangedRequest,
-} from '../f-storage';
+import { FComponentsStore, NotifyTransformChangedRequest } from '../f-storage';
 import { FFlowBase } from '../f-flow';
-import { FChannelHub, takeOne } from '../reactivity';
 
 /**
  * Component representing a canvas in the F-Flow framework.
@@ -210,15 +206,13 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   private _afterRedraw(callback: () => void): void {
-    if (this._componentsStore.connectionsRevision > 0) {
-      afterNextRender(callback, { injector: this._injector });
-
-      return;
-    }
-
-    this._mediator
-      .execute<FChannelHub>(new ListenConnectionsChangesRequest(false))
-      .pipe(takeOne())
-      .listen(this.destroyRef, callback);
+    this._mediator.execute(
+      new WaitForConnectionsRenderedRequest(
+        this._componentsStore.connectionsRevision,
+        this._componentsStore.nodesRevision,
+        () => afterNextRender(callback, { injector: this._injector }),
+        this.destroyRef,
+      ),
+    );
   }
 }

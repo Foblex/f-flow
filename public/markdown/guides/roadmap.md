@@ -35,7 +35,7 @@ For migration details and breaking changes, always check the [Changelog](https:/
   Example: [Connection Gradients](https://flow.foblex.com/examples/connection-gradients)
 
 - **[v18.2.0](https://github.com/Foblex/f-flow/releases/tag/v18.2.0)** - **2026-03-09**  
-  Performance and scale release: `fCache`, `*fVirtualFor`, `f-connection-worker`, `fNodeRenderLimit`, chunked redraws, and zoom during drag.  
+  Performance and scale release: `fCache`, `*fVirtualFor`, the first `f-connection-worker` release, `fNodeRenderLimit`, chunked redraws, and zoom during drag.  
   Examples: [Large Scene Performance](https://flow.foblex.com/examples/stress-test), [Connection Redraw Performance](https://flow.foblex.com/examples/stress-test-with-connections)
 
 - **[v18.1.0](https://github.com/Foblex/f-flow/releases/tag/v18.1.0)** - **2026-02-16**  

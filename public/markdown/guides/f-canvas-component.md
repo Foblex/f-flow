@@ -104,16 +104,16 @@ interface ITransformModel {
 
 - `f-canvas` depends on a parent `f-flow`; using it alone is not supported.
 - High-frequency transform updates can flood consumers if `debounceTime` is `0`; use debouncing when syncing external UI.
-- Prefer `fitToScreen` or `resetScaleAndCenter` after `fLoaded` so all nodes are already measured.
+- Prefer `fitToScreen` or `resetScaleAndCenter` after `fFullRendered` so nodes and connection geometry are already stable.
 
 ## Common tasks
 
 ### Fit content after the first render
 
-Call viewport helpers after `fLoaded`, when nodes are already measured.
+Call viewport helpers after `fFullRendered`, when nodes and connections are already fully rendered.
 
 ```html
-<f-flow (fLoaded)="onLoaded()" fDraggable>
+<f-flow (fFullRendered)="onLoaded()" fDraggable>
   <f-canvas></f-canvas>
 </f-flow>
 ```

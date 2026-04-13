@@ -5,6 +5,7 @@ import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from 
 import { FComponentsStore } from '../../../f-storage';
 import {
   CalculateNodesBoundingBoxRequest,
+  ECanvasRedrawContext,
   RedrawCanvasWithAnimationRequest,
 } from '../../../domain';
 
@@ -37,7 +38,9 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
       toCenter,
     );
 
-    this._mediator.execute(new RedrawCanvasWithAnimationRequest(animated));
+    this._mediator.execute(
+      new RedrawCanvasWithAnimationRequest(animated, ECanvasRedrawContext.VIEWPORT_ONLY),
+    );
   }
 
   public fitToParent(rect: IRect, parentRect: IRect, points: IPoint[], toCenter: IPoint): void {

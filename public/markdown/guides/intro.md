@@ -6,7 +6,7 @@ Foblex Flow is an **Angular-native** library for building interactive **node-bas
 
 It’s designed for real products where users edit graphs manually: dragging nodes, connecting ports, selecting multiple items, aligning layouts, and navigating large canvases.
 
-The core path is intentionally small: `f-flow`, `f-canvas`, nodes, connectors, and connections. Advanced helpers such as selection area, minimap, alignment guides, caching, virtualization, and worker-assisted connection rendering are optional add-ons you introduce later if the editor grows.
+The core path is intentionally small: `f-flow`, `f-canvas`, nodes, connectors, and connections. Advanced helpers such as selection area, minimap, alignment guides, caching, and virtualization are optional add-ons you introduce later if the editor grows.
 
 **What you get**
 
@@ -50,7 +50,7 @@ Foblex Flow focuses on **rendering and interaction**. Your application owns the 
 ## Quick FAQ
 
 - **Is Foblex Flow hard to use?** No. The minimal editor path is small and stays inside normal Angular templates.
-- **Do I need caching, virtualization, or the connection worker?** No. Most editors start without them. They are optional tools for larger scenes and heavier redraw workloads.
+- **Do I need caching or virtualization?** No. Most editors start without them. They are optional tools for larger scenes and heavier redraw workloads.
 - **Who is it best for?** Angular teams building node editors, workflow builders, interactive diagrams, and graph-based internal tools.
 
 ## Next steps

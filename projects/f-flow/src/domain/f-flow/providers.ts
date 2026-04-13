@@ -2,6 +2,15 @@ import { AddFlowToStore } from './add-flow-to-store';
 import { RemoveFlowFromStore } from './remove-flow-from-store';
 import { GetFlow } from './get-flow';
 import { GET_FLOW_STATE_PROVIDERS } from './calculate-flow-state';
+import {
+  RenderLifecycleState,
+  NotifyNodesRendered,
+  NotifyFullRendered,
+  WaitForConnectionsRendered,
+  ResetRenderLifecycle,
+  QueueConnectionRedrawState,
+  QueueConnectionRedraw,
+} from './render-lifecycle';
 
 /**
  * Providers for managing the Flow in the FComponentsStore.
@@ -16,4 +25,13 @@ export const F_FLOW_FEATURES = [
   ...GET_FLOW_STATE_PROVIDERS,
 
   RemoveFlowFromStore,
+
+  RenderLifecycleState,
+  NotifyNodesRendered,
+  NotifyFullRendered,
+  WaitForConnectionsRendered,
+  ResetRenderLifecycle,
+
+  QueueConnectionRedrawState,
+  QueueConnectionRedraw,
 ];

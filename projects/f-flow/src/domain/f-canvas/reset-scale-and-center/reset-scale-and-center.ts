@@ -4,6 +4,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import {
   CalculateNodesBoundingBoxRequest,
+  ECanvasRedrawContext,
   RedrawCanvasWithAnimationRequest,
 } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
@@ -34,7 +35,9 @@ export class ResetScaleAndCenter implements IExecution<ResetScaleAndCenterReques
       this._store.nodes.getAll().map((x) => x._position),
     );
 
-    this._mediator.execute(new RedrawCanvasWithAnimationRequest(animated));
+    this._mediator.execute(
+      new RedrawCanvasWithAnimationRequest(animated, ECanvasRedrawContext.VIEWPORT_ONLY),
+    );
   }
 
   public _oneToOneCentering(rect: IRect, parentRect: IRect, points: IPoint[]): void {

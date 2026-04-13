@@ -28,6 +28,7 @@ import {
   F_CONNECTION_CONTENT,
   FConnectionContentBase,
 } from './connection-content';
+import { F_CONNECTION_MARKER } from './connection-marker';
 import { F_CONNECTION_WAYPOINTS } from './connection-waypoints';
 import { F_CONNECTION_GRADIENT, FConnectionGradientRenderer } from './connection-gradient';
 
@@ -86,6 +87,10 @@ export abstract class FConnectionBase
     descendants: true,
   });
 
+  public readonly fMarkers = contentChildren(F_CONNECTION_MARKER, {
+    descendants: true,
+  });
+
   public readonly fGradient = contentChild(F_CONNECTION_GRADIENT);
 
   private readonly _fGradientRenderer = viewChild(FConnectionGradientRenderer);
@@ -95,6 +100,8 @@ export abstract class FConnectionBase
   public readonly fInputSide: Signal<EFConnectionConnectableSide> = signal(
     EFConnectionConnectableSide.DEFAULT,
   );
+
+  private readonly _contentLayoutEngine = new ConnectionContentLayoutEngine();
 
   private _sourceSide = EFConnectableSide.AUTO;
 
@@ -112,8 +119,8 @@ export abstract class FConnectionBase
   }
 
   public initialize(): void {
-    this.fPath().initialize();
     this.redraw();
+    this.isSelected() ? this.markChildrenAsSelected() : this.unmarkChildrenAsSelected();
   }
 
   public isContains(element: HTMLElement | SVGElement): boolean {
@@ -137,7 +144,7 @@ export abstract class FConnectionBase
     this._secondPoint = secondPoint || point2;
     this.fWaypoints()?.candidates.set(candidates || []);
 
-    new ConnectionContentLayoutEngine().layout(points || [], this._contents());
+    this._contentLayoutEngine.layout(points || [], this._contents());
   }
 
   private _contents(): FConnectionContentBase[] {

@@ -14,7 +14,9 @@ export class ConnectionMarkers {
 
   protected readonly eMarkerType = EFMarkerType;
 
+  // Wait for the full render so the animated viewport reset runs
+  // after both nodes and connection paths are ready.
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(false);
+    this._canvas()?.resetScaleAndCenter(true);
   }
 }

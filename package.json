@@ -28,6 +28,7 @@
     "cypress:run": "cypress run",
     "lint": "ng lint",
     "seo:check": "node scripts/validate-seo-content.mjs",
+    "check:redraw-cycles": "node scripts/check-redraw-connection-cycles.mjs",
     "prepare": "husky"
   },
   "standard-version": {
