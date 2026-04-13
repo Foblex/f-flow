@@ -56,15 +56,11 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'drag-start-end-events',
-        () =>
-          import('@foblex/examples/advanced/drag-start-end-events/example'),
+        () => import('@foblex/examples/advanced/drag-start-end-events/example'),
       ),
       defineLazyComponent(
         'add-node-from-palette',
-        () =>
-          import(
-            '@foblex/examples/extensions/add-node-from-palette/example'
-          ),
+        () => import('@foblex/examples/extensions/add-node-from-palette/example'),
       ),
       defineLazyComponent('zoom', () => import('@foblex/examples/extensions/zoom/example')),
       defineLazyComponent(
@@ -77,10 +73,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'custom-connection-type',
-        () =>
-          import(
-            '@foblex/examples/connections/custom-connection-type/example'
-          ),
+        () => import('@foblex/examples/connections/custom-connection-type/example'),
       ),
       defineLazyComponent(
         'drag-to-connect',
@@ -104,10 +97,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connector-inside-node',
-        () =>
-          import(
-            '@foblex/examples/connectors/connector-inside-node/example'
-          ),
+        () => import('@foblex/examples/connectors/connector-inside-node/example'),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -127,8 +117,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       ),
       defineLazyComponent(
         'help-in-positioning',
-        () =>
-          import('@foblex/examples/extensions/help-in-positioning/example'),
+        () => import('@foblex/examples/extensions/help-in-positioning/example'),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -198,6 +187,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       previous: 'Previous Page',
       next: 'Next Page',
     }),
+    /* eslint-disable @typescript-eslint/naming-convention */
     provideMeta({
       url: 'https://flow.foblex.com/docs/intro',
       canonical: 'https://flow.foblex.com/docs/intro',
@@ -218,6 +208,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       twitter_site: '@foblexflow',
       twitter_creator: '@foblexflow',
     }),
+    /* eslint-enable @typescript-eslint/naming-convention */
   ],
 };
 
@@ -494,6 +485,13 @@ function interactionGroup(): INavigationGroup {
       pageTitle: 'FDraggableDirective - Drag, Move, Connect and Reassign Interactions',
       description:
         'Core interaction directive that enables dragging nodes, box selection, creating connections, and reassigning existing connections.',
+    },
+    {
+      link: 'f-auto-pan-component',
+      text: 'Auto Pan',
+      pageTitle: 'FAutoPanComponent - Edge-Based Viewport Scrolling During Drag',
+      description:
+        'Add `f-auto-pan` to keep drag sessions moving when the pointer reaches the viewport edge during node drag, connection drag, or selection.',
     },
     {
       link: 'f-external-item-directive',

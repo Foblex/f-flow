@@ -130,10 +130,6 @@ function registerEmbeddedReferenceApps(server: express.Express, serverDistFolder
       continue;
     }
 
-    server.get(`/embedded/${route}`, (_req, res) => {
-      res.redirect(301, `/embedded/${route}/`);
-    });
-
     server.use(
       `/embedded/${route}`,
       express.static(appDistFolder, {

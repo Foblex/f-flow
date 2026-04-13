@@ -4,6 +4,7 @@ dist
 .nx
 node_modules
 .idea
+tmp
 
 # Firebase
 .firebase

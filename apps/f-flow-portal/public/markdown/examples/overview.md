@@ -6,7 +6,7 @@ primaryKeyword: "angular node editor examples"
 schemaType: "TechArticle"
 author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
-updatedAt: "2026-03-08"
+updatedAt: "2026-04-13"
 ---
 
 # Examples
@@ -19,7 +19,7 @@ Use this section when you want to answer one of these questions quickly:
 
 - Can I build custom nodes and connectors with Angular templates?
 - How does drag-to-connect or connection reassignment work?
-- Which examples cover workflow builders, minimaps, undo/redo, and auto layout?
+- Which examples cover workflow builders, minimaps, undo/redo, and auto layout plugins?
 - What should I start from if I need a production-style editor rather than a tiny demo?
 
 For lower-level APIs, combine these pages with the [documentation](./docs/intro). For full source code, open the [GitHub repository](https://github.com/Foblex/f-flow).
@@ -28,15 +28,16 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 
 - Start with **Custom Nodes**, **Drag to Connect**, or **Get Started** if you want the fastest path into the library.
 - Open **Reference Apps** after the basics if you want complete, product-like editors.
-- Open **Connections** and **Extensions** if you are comparing specific interaction features.
-- Use **Advanced** when you need layout engines, history, larger-scene performance tools, or more complex editor behavior.
+- Open **Connections** and **Extensions** if you are comparing specific interaction features on the canvas.
+- Open **Plugins** when you want Dagre or ELK-based layout examples, including auto-layout flows.
+- Use **Advanced** when you need history, drag lifecycle events, larger-scene performance tools, or more complex editor behavior.
 
 ::: preview-group
 [Nodes]
 [Connectors]
 [Connections]
-[Layouts]
 [Extensions]
+[Plugins]
 [Advanced]
 [Reference Apps]
 :::

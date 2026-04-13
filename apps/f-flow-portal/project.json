@@ -7,11 +7,12 @@
   "tags": ["scope:portal", "type:app"],
   "targets": {
     "build": {
+      "dependsOn": ["generate-artifacts"],
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "prerender": {
-          "routesFile": "apps/f-flow-portal/routes.txt"
+          "routesFile": "tmp/portal-routes.txt"
         },
         "outputPath": "dist/f-flow-portal",
         "index": "apps/f-flow-portal/src/index.html",
@@ -22,6 +23,11 @@
           {
             "glob": "**/*",
             "input": "apps/f-flow-portal/public"
+          },
+          {
+            "glob": "sitemap.xml",
+            "input": "tmp",
+            "output": "."
           }
         ],
         "styles": ["apps/f-flow-portal/src/styles/styles.scss"],
@@ -57,6 +63,12 @@
         }
       },
       "defaultConfiguration": "production"
+    },
+    "generate-artifacts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/generate-portal-artifacts.mjs"
+      }
     },
     "serve": {
       "continuous": true,
