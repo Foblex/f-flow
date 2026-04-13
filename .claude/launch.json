@@ -2,6 +2,12 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "portal",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "portal"],
+      "port": 4200
+    },
+    {
       "name": "uml-diagram",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["nx", "serve", "uml-diagram"],
@@ -18,6 +24,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["nx", "serve", "schema-designer"],
       "port": 4301
+    },
+    {
+      "name": "call-center",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "call-center"],
+      "port": 4305
     }
   ]
 }

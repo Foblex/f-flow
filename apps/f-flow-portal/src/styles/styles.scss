@@ -43,41 +43,41 @@
 }
 
 :root {
-  --ff-example-control-height: 32px;
-  --ff-example-control-radius: 4px;
-  --ff-example-control-gutter: 12px;
+  --ff-example-control-height: 30px;
+  --ff-example-control-radius: 6px;
+  --ff-example-control-gutter: 10px;
   --ff-example-control-gap: 8px;
-  --ff-example-control-font-size: 14px;
+  --ff-example-control-font-size: 13px;
   --ff-example-control-font-weight: 500;
   --ff-example-control-ring-color: var(--blue-500);
-  --ff-example-control-text-color: #0d0d0d;
-  --ff-example-control-muted-text-color: #8f8f8f;
-  --ff-example-control-border-color: rgba(13, 13, 13, 0.16);
-  --ff-example-control-border-color-hover: rgba(13, 13, 13, 0.2);
-  --ff-example-control-border-color-focus: rgba(13, 13, 13, 0.25);
+  --ff-example-control-text-color: #1a1d26;
+  --ff-example-control-muted-text-color: #8b95a8;
+  --ff-example-control-border-color: rgba(13, 13, 13, 0.1);
+  --ff-example-control-border-color-hover: rgba(13, 13, 13, 0.18);
+  --ff-example-control-border-color-focus: rgba(99, 102, 241, 0.5);
   --ff-example-control-panel-background: #ffffff;
   --ff-example-control-panel-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --ff-example-control-panel-hairline: 0 0 0 1px rgba(13, 13, 13, 0.08);
-  --ff-example-control-option-background-hover: rgba(13, 13, 13, 0.08);
-  --ff-example-control-option-background-selected: rgba(13, 13, 13, 0.08);
-  --ff-example-control-disabled-text-color: #8f8f8f;
+    0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --ff-example-control-panel-hairline: 0 0 0 1px rgba(13, 13, 13, 0.06);
+  --ff-example-control-option-background-hover: rgba(99, 102, 241, 0.06);
+  --ff-example-control-option-background-selected: rgba(99, 102, 241, 0.08);
+  --ff-example-control-disabled-text-color: #c0c6d0;
 }
 
 .dark {
   --ff-example-control-ring-color: var(--blue-400);
-  --ff-example-control-text-color: #ffffff;
-  --ff-example-control-muted-text-color: #8f8f8f;
-  --ff-example-control-border-color: rgba(255, 255, 255, 0.25);
-  --ff-example-control-border-color-hover: rgba(255, 255, 255, 0.3);
-  --ff-example-control-border-color-focus: rgba(255, 255, 255, 0.35);
-  --ff-example-control-panel-background: #303030;
+  --ff-example-control-text-color: #e8ecf4;
+  --ff-example-control-muted-text-color: #5a6478;
+  --ff-example-control-border-color: rgba(255, 255, 255, 0.1);
+  --ff-example-control-border-color-hover: rgba(255, 255, 255, 0.18);
+  --ff-example-control-border-color-focus: rgba(129, 140, 248, 0.5);
+  --ff-example-control-panel-background: #1e2330;
   --ff-example-control-panel-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
-  --ff-example-control-panel-hairline: 0 0 0 1px rgba(255, 255, 255, 0.1);
-  --ff-example-control-option-background-hover: rgba(255, 255, 255, 0.1);
-  --ff-example-control-option-background-selected: rgba(255, 255, 255, 0.1);
-  --ff-example-control-disabled-text-color: #767676;
+    0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --ff-example-control-panel-hairline: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --ff-example-control-option-background-hover: rgba(129, 140, 248, 0.08);
+  --ff-example-control-option-background-selected: rgba(129, 140, 248, 0.1);
+  --ff-example-control-disabled-text-color: #3a4254;
 }
 
 external-component {

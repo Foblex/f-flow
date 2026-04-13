@@ -1,0 +1,18 @@
+<ng-container [formGroup]="form">
+  <div class="form-row">
+    <mat-form-field>
+      <mat-select placeholder="Outputs" formControlName="outputs">
+        @for (option of outputs; track option.key) {
+        <mat-option [value]="option.key">{{ option.value }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Timeout" formControlName="timeout">
+        @for (t of timeouts; track t.key) {
+        <mat-option [value]="t.key">{{ t.value }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>

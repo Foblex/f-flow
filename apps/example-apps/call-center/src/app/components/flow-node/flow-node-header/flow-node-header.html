@@ -1,0 +1,19 @@
+@let params = defaultParams[type()];
+
+<div class="node-icon-badge" [style.background-color]="params.color">
+  <mat-icon>{{ params.icon }}</mat-icon>
+</div>
+
+<div class="node-header-text">
+  <div class="node-header-title">{{ params.name }}</div>
+  @if (description()) {
+  <div class="node-header-subtitle">{{ description() }}</div>
+  }
+</div>
+
+<div class="flex-space"></div>
+@if (params.isExpandable) {
+<button class="node-toggle-button" [class.expanded]="expanded()" (click)="toggle()">
+  <mat-icon>expand_more</mat-icon>
+</button>
+}

@@ -26,5 +26,6 @@ Package and source:
 
 Reference demos:
 - AI low-code platform: https://flow.foblex.com/examples/ai-low-code-platform
+- Call center flow: https://flow.foblex.com/examples/call-center
 - Schema designer: https://flow.foblex.com/examples/schema-designer
 - UML diagram example: https://flow.foblex.com/examples/uml-diagram-example

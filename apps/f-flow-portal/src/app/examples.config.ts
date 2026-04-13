@@ -62,10 +62,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'stress-test-with-connections',
-        () =>
-          import(
-            '@foblex/examples/nodes/stress-test-with-connections/example'
-          ),
+        () => import('@foblex/examples/nodes/stress-test-with-connections/example'),
       ),
       defineLazyComponent(
         'node-selection',
@@ -77,10 +74,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connector-inside-node',
-        () =>
-          import(
-            '@foblex/examples/connectors/connector-inside-node/example'
-          ),
+        () => import('@foblex/examples/connectors/connector-inside-node/example'),
       ),
       defineLazyComponent(
         'connector-outlet',
@@ -88,8 +82,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'limiting-connections',
-        () =>
-          import('@foblex/examples/connectors/limiting-connections/example'),
+        () => import('@foblex/examples/connectors/limiting-connections/example'),
       ),
       defineLazyComponent(
         'connection-rules',
@@ -109,24 +102,15 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'create-node-on-connection-drop',
-        () =>
-          import(
-            '@foblex/examples/connections/create-node-on-connection-drop/example'
-          ),
+        () => import('@foblex/examples/connections/create-node-on-connection-drop/example'),
       ),
       defineLazyComponent(
         'remove-connection-on-drop',
-        () =>
-          import(
-            '@foblex/examples/connections/remove-connection-on-drop/example'
-          ),
+        () => import('@foblex/examples/connections/remove-connection-on-drop/example'),
       ),
       defineLazyComponent(
         'assign-node-to-connection-on-drop',
-        () =>
-          import(
-            '@foblex/examples/connections/assign-node-to-connection-on-drop/example'
-          ),
+        () => import('@foblex/examples/connections/assign-node-to-connection-on-drop/example'),
       ),
       defineLazyComponent(
         'auto-snap',
@@ -142,10 +126,7 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'custom-connection-type',
-        () =>
-          import(
-            '@foblex/examples/connections/custom-connection-type/example'
-          ),
+        () => import('@foblex/examples/connections/custom-connection-type/example'),
       ),
       defineLazyComponent(
         'connection-behaviours',
@@ -161,15 +142,11 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'connection-gradients',
-        () =>
-          import('@foblex/examples/connections/custom-connections/example'),
+        () => import('@foblex/examples/connections/custom-connections/example'),
       ),
       defineLazyComponent(
         'connection-connectable-side',
-        () =>
-          import(
-            '@foblex/examples/connections/connection-connectable-side/example'
-          ),
+        () => import('@foblex/examples/connections/connection-connectable-side/example'),
       ),
       defineLazyComponent(
         'dagre-layout',
@@ -191,14 +168,10 @@ export const EXAMPLES_CONFIGURATION = {
         'selection-area',
         () => import('@foblex/examples/extensions/selection-area/example'),
       ),
-      defineLazyComponent(
-        'auto-pan',
-        () => import('@foblex/examples/extensions/auto-pan/example'),
-      ),
+      defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
       defineLazyComponent(
         'help-in-positioning',
-        () =>
-          import('@foblex/examples/extensions/help-in-positioning/example'),
+        () => import('@foblex/examples/extensions/help-in-positioning/example'),
       ),
       defineLazyComponent(
         'magnetic-lines',
@@ -222,6 +195,10 @@ export const EXAMPLES_CONFIGURATION = {
         () => import('./reference-app-previews/schema-designer.preview'),
       ),
       defineLazyComponent(
+        'call-center',
+        () => import('./reference-app-previews/call-center.preview'),
+      ),
+      defineLazyComponent(
         'uml-diagram-example',
         () => import('./reference-app-previews/uml-diagram-example.preview'),
       ),
@@ -237,30 +214,22 @@ export const EXAMPLES_CONFIGURATION = {
         'copy-paste',
         () => import('@foblex/examples/advanced/copy-paste/example'),
       ),
-      defineLazyComponent(
-        'undo-redo',
-        () => import('@foblex/examples/advanced/undo-redo/example'),
-      ),
+      defineLazyComponent('undo-redo', () => import('@foblex/examples/advanced/undo-redo/example')),
       defineLazyComponent(
         'undo-redo-v2',
         () => import('@foblex/examples/advanced/undo-redo-v2/example'),
       ),
       defineLazyComponent(
         'add-node-from-palette',
-        () =>
-          import(
-            '@foblex/examples/extensions/add-node-from-palette/example'
-          ),
+        () => import('@foblex/examples/extensions/add-node-from-palette/example'),
       ),
       defineLazyComponent(
         'drag-start-end-events',
-        () =>
-          import('@foblex/examples/advanced/drag-start-end-events/example'),
+        () => import('@foblex/examples/advanced/drag-start-end-events/example'),
       ),
       defineLazyComponent(
         'custom-event-triggers',
-        () =>
-          import('@foblex/examples/advanced/custom-event-triggers/example'),
+        () => import('@foblex/examples/advanced/custom-event-triggers/example'),
       ),
       defineLazyComponent(
         'ai-low-code-platform',
@@ -675,8 +644,8 @@ function connectionGroup() {
       image_type: 'image/png',
       date: new Date('2025-09-15 18:23:26'),
       badge: {
-        text: 'New',
-        type: 'success',
+        text: 'Updated',
+        type: 'info',
       },
     },
     {
@@ -863,10 +832,6 @@ function extensionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2026-01-25 00:00:00'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'background',
@@ -879,10 +844,6 @@ function extensionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-11-29 14:49:44'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
   ]);
 }
@@ -901,6 +862,10 @@ function pluginsGroup() {
       image_height: 1200,
       image_type: 'image/png',
       date: new Date('2025-09-14 14:01:26'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'dagre-layout-auto',
@@ -914,6 +879,10 @@ function pluginsGroup() {
       image_height: 1200,
       image_type: 'image/png',
       date: new Date('2026-04-09 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'elkjs-layout',
@@ -927,6 +896,10 @@ function pluginsGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-02-08 14:01:26'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
     {
       link: 'elk-layout-auto',
@@ -940,6 +913,10 @@ function pluginsGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2026-04-09 12:00:00'),
+      badge: {
+        text: 'New',
+        type: 'success',
+      },
     },
   ]);
 }
@@ -959,10 +936,6 @@ function advancedGroup() {
       image_height: 1200,
       image_type: 'image/png',
       date: new Date('2026-03-09 12:00:00'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
     },
     {
       link: 'stress-test-with-connections',
@@ -992,10 +965,6 @@ function advancedGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-08-23 17:23:57'),
-      badge: {
-        text: 'New',
-        type: 'success',
-      },
     },
     {
       link: 'undo-redo',
@@ -1020,10 +989,6 @@ function advancedGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2025-08-23 17:23:57'),
-      badge: {
-        text: 'New',
-        type: 'success',
-      },
     },
     {
       link: 'drag-start-end-events',
@@ -1068,8 +1033,8 @@ function proExamplesGroup() {
       image_type: 'image/png',
       date: new Date('2026-03-09 12:00:00'),
       badge: {
-        text: 'New',
-        type: 'success',
+        text: 'Updated',
+        type: 'info',
       },
     },
     {
@@ -1079,9 +1044,29 @@ function proExamplesGroup() {
         'Interactive schema modeler with table nodes, inline column editing, relation toolbars, context menus, selection area, and minimap.',
       image: './previews/examples/db-management-flow.light.png',
       image_dark: './previews/examples/db-management-flow.dark.png',
-      image_width: 806,
-      image_height: 600,
+      image_width: 2102,
+      image_height: 1194,
       image_type: 'image/png',
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+    {
+      text: 'Call Center Flow',
+      link: 'call-center',
+      pageTitle: 'Angular Call Center Flow Builder Example – IVR, Queue, Transfer, and Voicemail',
+      description:
+        'Call-center flow builder with IVR branches, schedule checks, queueing, operator handoff, transfer, voicemail, palette-driven node creation, and minimap navigation.',
+      image: './previews/examples/call-center.light.png',
+      image_dark: './previews/examples/call-center.dark.png',
+      image_width: 2078,
+      image_height: 1194,
+      image_type: 'image/png',
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
     {
       text: 'UML Diagram',
@@ -1090,9 +1075,13 @@ function proExamplesGroup() {
         'Layered UML surface with package groups, relation filters, search, custom markers, details panel, and viewport controls.',
       image: './previews/examples/uml-diagram-example.light.png',
       image_dark: './previews/examples/uml-diagram-example.dark.png',
-      image_width: 821,
-      image_height: 600,
+      image_width: 2108,
+      image_height: 1194,
       image_type: 'image/png',
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
     {
       text: 'Tournament Bracket',
@@ -1101,9 +1090,13 @@ function proExamplesGroup() {
         'Tournament bracket demo with multiple layout strategies, bracket visibility filters, match drill-down, team stats, and minimap.',
       image: './previews/examples/tournament-bracket.light.png',
       image_dark: './previews/examples/tournament-bracket.dark.png',
-      image_width: 821,
-      image_height: 600,
+      image_width: 2102,
+      image_height: 1194,
       image_type: 'image/png',
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
     },
   ]);
 }

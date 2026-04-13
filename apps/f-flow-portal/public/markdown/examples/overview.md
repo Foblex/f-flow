@@ -32,6 +32,16 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 - Open **Plugins** when you want Dagre or ELK-based layout examples, including auto-layout flows.
 - Use **Advanced** when you need history, drag lifecycle events, larger-scene performance tools, or more complex editor behavior.
 
+## Reference Apps
+
+Production-ready examples that show the full power of Foblex Flow.
+
+::: preview-group
+[Reference Apps]
+:::
+
+## All Examples
+
 ::: preview-group
 [Nodes]
 [Connectors]
@@ -39,5 +49,4 @@ For lower-level APIs, combine these pages with the [documentation](./docs/intro)
 [Extensions]
 [Plugins]
 [Advanced]
-[Reference Apps]
 :::

@@ -30,7 +30,6 @@ export class UpdateNodeWhenStateOrSizeChanged
       .pipe(afterNextPaint())
       .listen(destroyRef, () => {
         this._mediator.execute<void>(new EmitConnectionsChangesRequest());
-
         if (!this._isDragging()) {
           this._mediator.execute(
             new InvalidateFCacheNodeRequest(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged'),

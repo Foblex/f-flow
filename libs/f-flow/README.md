@@ -46,6 +46,7 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 ## Examples
 
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform) - A flagship front-end-only AI low-code IDE demo with custom nodes, JSON import/export, multiple themes, config panels with validation, validation feedback on nodes, undo/redo, persistence, multi-select, and animated connections.
+- [Call Center Flow](https://flow.foblex.com/examples/call-center) - A workflow-builder reference app for IVR routing, queueing, operator handoff, transfer, voicemail, and embedded node forms.
 - [Schema Designer](https://flow.foblex.com/examples/schema-designer) - A richer schema editor demo with nodes, relations, and CRUD-style interactions.
 - [UML Diagram](https://flow.foblex.com/examples/uml-diagram-example) - An Angular example for architecture and UML-style graph interfaces.
 - [Tournament Bracket](https://flow.foblex.com/examples/tournament-bracket) - A specialized bracket UI built on the same node-based primitives.

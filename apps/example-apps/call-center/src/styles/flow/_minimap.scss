@@ -1,0 +1,22 @@
+.f-minimap {
+  background-color: var(--c-surface-1);
+  bottom: 16px;
+  right: 16px;
+  width: 160px;
+  height: 120px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+
+  .f-minimap-node {
+    fill: var(--c-border-muted);
+  }
+
+  .f-minimap-node.f-selected {
+    fill: var(--c-primary);
+  }
+
+  .f-minimap-view {
+    fill: var(--c-primary-soft);
+  }
+}

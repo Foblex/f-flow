@@ -1,0 +1,273 @@
+:root {
+  --mat-select-panel-background-color: var(--c-surface-1);
+  --mat-form-field-filled-input-text-color: var(--c-text);
+  --mat-form-field-filled-input-text-placeholder-color: var(--c-placeholder);
+
+  --mat-tooltip-container-color: var(--c-text);
+  --mat-tooltip-container-text-color: var(--c-surface-1);
+  --mat-tooltip-container-text-size: var(--fs-sm);
+}
+
+.mat-mdc-select {
+  --mat-select-enabled-trigger-text-color: var(--c-text);
+  --mat-select-enabled-arrow-color: var(--c-text-subtle);
+
+  .mat-mdc-select-arrow-wrapper {
+    height: 18px;
+
+    .mat-mdc-select-arrow {
+      width: 8px;
+      height: 5px;
+    }
+  }
+}
+
+.mat-mdc-option {
+  --mat-option-label-text-color: var(--c-text);
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+  --mat-form-field-container-text-size: var(--fs-md);
+  --mat-select-trigger-text-size: var(--fs-md);
+  --mat-form-field-filled-container-color: var(--c-surface-2);
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: var(--radius-sm);
+    padding: 0 8px;
+    background-color: var(--c-surface-2) !important;
+    border: 1px solid var(--c-border);
+    transition: border-color var(--transition-fast);
+
+    .mat-mdc-form-field-infix {
+      padding: 5px 0;
+      width: 100%;
+      min-height: 28px;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+      display: none;
+    }
+  }
+
+  &:hover:not(.mat-focused) .mat-mdc-text-field-wrapper {
+    border-color: var(--c-border-muted);
+  }
+
+  &.mat-focused .mat-mdc-text-field-wrapper {
+    border-color: var(--c-primary);
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    height: 0;
+  }
+
+  .mdc-line-ripple {
+    display: none;
+  }
+
+  textarea.mat-mdc-input-element {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-md);
+    line-height: var(--lh-md);
+    resize: vertical;
+  }
+}
+
+.mat-mdc-select-panel {
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 4px !important;
+}
+
+.mat-mdc-option {
+  font-size: var(--fs-md) !important;
+  min-height: 28px !important;
+  border-radius: var(--radius-xs);
+
+  .mat-pseudo-checkbox {
+    width: 14px;
+    height: 14px;
+
+    &.mat-pseudo-checkbox-checked::after {
+      width: 9px;
+      height: 4px;
+    }
+  }
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+  --mat-icon-button-state-layer-size: 30px;
+  --mat-icon-button-icon-size: 18px;
+  --mat-icon-button-icon-color: var(--c-text);
+  --mat-icon-button-disabled-icon-color: var(--c-disabled-text);
+  --mat-icon-button-focus-state-layer-opacity: 0.06;
+  --mat-icon-button-hover-state-layer-opacity: 0;
+  --mat-icon-button-pressed-state-layer-opacity: 0.06;
+  --mat-icon-button-ripple-color: var(--c-surface-4);
+  --mat-icon-button-container-shape: var(--radius-sm);
+
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  background-color: transparent;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+
+  .mat-mdc-button-touch-target {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .mat-icon {
+    margin: auto;
+    display: block;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: inherit;
+  }
+
+  &:not(.mat-mdc-button-disabled) {
+    &:hover {
+      background-color: var(--c-surface-3);
+    }
+  }
+
+  &.mat-mdc-button-disabled {
+    opacity: 0.35;
+  }
+}
+
+.mat-mdc-checkbox {
+  --mdc-checkbox-state-layer-size: 20px;
+  --mdc-checkbox-selected-icon-color: var(--c-primary);
+  --mdc-checkbox-selected-hover-icon-color: var(--c-primary-hover);
+  --mdc-checkbox-selected-focus-icon-color: var(--c-primary);
+  --mdc-checkbox-selected-pressed-icon-color: var(--c-primary-active);
+  --mdc-checkbox-selected-checkmark-color: var(--c-surface-1);
+  --mdc-checkbox-unselected-icon-color: var(--c-border-muted);
+  --mdc-checkbox-unselected-hover-icon-color: var(--c-text-subtle);
+
+  .mdc-form-field {
+    height: 28px;
+
+    > label {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--fs-md);
+      line-height: var(--lh-md);
+      color: var(--c-text-subtle);
+      padding-left: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .mdc-checkbox {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    flex: 0 0 18px;
+
+    .mdc-checkbox__background {
+      width: 14px;
+      height: 14px;
+      top: 2px;
+      left: 2px;
+      border-radius: 3px;
+    }
+
+    .mdc-checkbox__native-control {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mat-mdc-checkbox-touch-target {
+      width: 24px;
+      height: 24px;
+    }
+
+    .mdc-checkbox__ripple,
+    .mat-mdc-checkbox-ripple {
+      width: 24px;
+      height: 24px;
+      top: -3px;
+      left: -3px;
+    }
+  }
+}
+
+.mat-mdc-menu-panel {
+  --mat-menu-container-shape: var(--radius-md);
+  --mat-menu-container-color: var(--c-surface-1);
+  --mat-menu-container-elevation-shadow: var(--shadow-lg);
+
+  .mat-mdc-menu-content {
+    padding: 4px;
+
+    .mat-mdc-menu-item {
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: var(--radius-xs);
+      --mat-menu-item-label-text-color: var(--c-text);
+
+      .mat-mdc-menu-item-text {
+        --mat-menu-item-label-text-size: var(--fs-md);
+        font-family: 'Inter', sans-serif;
+      }
+
+      &:not(.mat-mdc-menu-item--disabled) {
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--c-surface-3);
+        }
+
+        &:active {
+          background-color: var(--c-surface-4);
+        }
+      }
+    }
+  }
+}
+
+.node-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 0 8px;
+
+  .form-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .mat-mdc-form-field {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .form-row-separator {
+      flex-shrink: 0;
+      font-size: var(--fs-md);
+      color: var(--c-text-subtle);
+      line-height: 1;
+    }
+  }
+
+  .mat-mdc-checkbox {
+    margin-top: 2px;
+  }
+}
+
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  font-family: 'Inter', sans-serif !important;
+  font-size: var(--fs-sm) !important;
+  line-height: var(--lh-sm) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 4px 8px !important;
+  max-width: 200px;
+  background-color: var(--c-text) !important;
+  color: var(--c-surface-1) !important;
+}

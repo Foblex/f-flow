@@ -1,0 +1,18 @@
+<ng-container [formGroup]="form">
+  <div class="node-form">
+    <mat-form-field>
+      <mat-select placeholder="Department" formControlName="department">
+        @for (d of departments; track d.key) {
+        <mat-option [value]="d.key">{{ d.value }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Skill level" formControlName="skillLevel">
+        @for (s of skillLevels; track s.key) {
+        <mat-option [value]="s.key">{{ s.value }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>

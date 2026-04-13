@@ -1,0 +1,34 @@
+:host {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+  background-color: var(--c-surface-1);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-xl);
+  padding: 4px;
+  gap: 2px;
+  box-shadow: var(--shadow-md);
+
+  .mat-mdc-icon-button {
+    --mat-icon-button-icon-color: var(--c-text-subtle);
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  background-color: var(--c-border);
+  margin: 0 2px;
+  flex-shrink: 0;
+}

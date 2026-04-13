@@ -1,0 +1,82 @@
+<div class="toolbar">
+  <button
+    mat-icon-button
+    (click)="removeSelected()"
+    [disabled]="!canRemove()"
+    matTooltip="Delete"
+    matTooltipPosition="above"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="processAction.emit(action.SELECT_ALL)"
+    matTooltip="Select All"
+    matTooltipPosition="above"
+  >
+    <mat-icon>select_all</mat-icon>
+  </button>
+
+  <div class="divider"></div>
+
+  <button
+    mat-icon-button
+    (click)="processAction.emit(action.ZOOM_IN)"
+    matTooltip="Zoom In"
+    matTooltipPosition="above"
+  >
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="processAction.emit(action.ZOOM_OUT)"
+    matTooltip="Zoom Out"
+    matTooltipPosition="above"
+  >
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="processAction.emit(action.FIT_TO_SCREEN)"
+    matTooltip="Fit to Screen"
+    matTooltipPosition="above"
+  >
+    <mat-icon>fit_screen</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="processAction.emit(action.ONE_TO_ONE)"
+    matTooltip="1:1"
+    matTooltipPosition="above"
+  >
+    <mat-icon>crop_free</mat-icon>
+  </button>
+
+  <div class="divider"></div>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="themeMenu"
+    matTooltip="Theme"
+    matTooltipPosition="above"
+  >
+    <mat-icon>{{ currentTheme === 'dark' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  </button>
+
+  <mat-menu #themeMenu="matMenu">
+    <button mat-menu-item (click)="toggleTheme('light')" [disabled]="currentTheme === 'light'">
+      Light
+    </button>
+    <button mat-menu-item (click)="toggleTheme('dark')" [disabled]="currentTheme === 'dark'">
+      Dark
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button (click)="reset()" matTooltip="Reset" matTooltipPosition="above">
+    <mat-icon>restart_alt</mat-icon>
+  </button>
+</div>

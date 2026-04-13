@@ -1,0 +1,26 @@
+<ng-container [formGroup]="form">
+  <div class="node-form">
+    <div class="form-row">
+      <mat-form-field>
+        <input matInput placeholder="Queue name" formControlName="queueName" />
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-select placeholder="Max wait" formControlName="maxWaitTime">
+          @for (t of waitTimes; track t.key) {
+          <mat-option [value]="t.key">{{ t.value }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Priority" formControlName="priority">
+          @for (p of priorities; track p.key) {
+          <mat-option [value]="p.key">{{ p.value }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-checkbox formControlName="musicOnHold" color="primary">Music on hold</mat-checkbox>
+  </div>
+</ng-container>

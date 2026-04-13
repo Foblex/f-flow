@@ -8,10 +8,13 @@
   inset-inline-end: 12px;
   padding: 12px;
   border: 1px solid var(--page-shell-border-color);
-  border-radius: 4px;
+  border-radius: 10px;
   background: var(--surface-glass-strong);
-  box-shadow: var(--shadow-2);
-  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.02),
+    var(--shadow-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
   gap: 8px;

@@ -9,8 +9,8 @@ export const SHOWCASE: IShowcaseItem[] = [
     imageUrl: './showcase/images/call-center.light.png',
     imageUrlDark: './showcase/images/call-center.dark.png',
     links: [
-      { text: 'Demo', url: 'https://foblex.github.io/f-flow-example/' },
-      { text: 'Sources', url: 'https://github.com/Foblex/f-flow-example' },
+      { text: 'Demo', url: 'https://flow.foblex.com/examples/call-center' },
+      { text: 'Sources', url: 'https://github.com/Foblex/f-flow' },
     ],
   },
   {

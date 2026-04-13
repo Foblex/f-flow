@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "call-center",
+  "projectType": "application",
+  "root": "apps/example-apps/call-center",
+  "sourceRoot": "apps/example-apps/call-center/src",
+  "tags": ["scope:examples", "type:app", "kind:standalone-example"],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/example-apps/call-center",
+        "index": "apps/example-apps/call-center/src/index.html",
+        "browser": "apps/example-apps/call-center/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/example-apps/call-center/tsconfig.app.json",
+        "assets": [],
+        "styles": ["apps/example-apps/call-center/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["tools/sass-aliases"]
+        },
+        "scripts": []
+      },
+      "configurations": {
+        "production": {},
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4305
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "call-center:build:production"
+        },
+        "development": {
+          "buildTarget": "call-center:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "call-center:build"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/example-apps/call-center/src/**/*.ts\" \"apps/example-apps/call-center/src/**/*.html\""
+      }
+    }
+  }
+}
