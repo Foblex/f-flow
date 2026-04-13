@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/f-dagre-layout",
+  "assets": ["./README.md"],
+  "allowedNonPeerDependencies": ["dagre"],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}

@@ -2,5 +2,8 @@ import { Type } from '@angular/core';
 
 export class CalculateNodesStateRequest {
   static readonly fToken = Symbol('CalculateNodesStateRequest');
-  constructor(public readonly component: Type<unknown>) {}
+  constructor(
+    public readonly component: Type<unknown>,
+    public readonly measuredSize: boolean = false,
+  ) {}
 }

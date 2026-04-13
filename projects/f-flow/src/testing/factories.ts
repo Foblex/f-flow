@@ -5,6 +5,7 @@ import { FConnectorBase, FConnectorKind } from '../f-connectors';
 import { FCanvasBase } from '../f-canvas';
 import { FNodeBase } from '../f-node';
 import { FFlowBase } from '../f-flow';
+import { IFFlowState } from '../domain';
 import { ISelectable, F_SELECTED_CLASS } from '../mixins';
 import { elementRef, inputSignal, outputEmitterStub, readonlySignal, unsafeCast } from './internal';
 
@@ -376,8 +377,21 @@ class FlowFactoryBuilder {
   public build(): FFlowBase {
     const flow = {
       fId: inputSignal(this._id),
+      fCache: inputSignal(false),
       hostElement: this._hostElement,
       fLoaded: outputEmitterStub<string>(),
+      redraw(): void {
+        // No-op for tests.
+      },
+      getState(): IFFlowState {
+        return {
+          position: PointExtensions.initialize(),
+          scale: 1,
+          nodes: [],
+          groups: [],
+          connections: [],
+        };
+      },
     };
 
     return unsafeCast<FFlowBase>(flow);

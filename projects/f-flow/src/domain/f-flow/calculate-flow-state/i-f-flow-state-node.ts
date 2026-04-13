@@ -10,6 +10,8 @@ export interface IFFlowStateNode {
 
   size?: ISize;
 
+  measuredSize?: ISize;
+
   rotate: number;
 
   fInputs: IFFlowStateConnector[];

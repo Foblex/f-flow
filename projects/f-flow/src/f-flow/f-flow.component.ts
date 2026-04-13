@@ -24,6 +24,7 @@ import {
   GetNormalizedPointRequest,
   ICurrentSelection,
   IFFlowState,
+  IFFlowStateOptions,
   IsDragStartedRequest,
   RedrawConnectionsRequest,
   RemoveFlowFromStoreRequest,
@@ -175,8 +176,8 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     return this._mediator.execute(new GetNormalizedPointRequest(position));
   }
 
-  public getState(): IFFlowState {
-    return this._mediator.execute(new CalculateFlowStateRequest());
+  public getState(options?: IFFlowStateOptions): IFFlowState {
+    return this._mediator.execute(new CalculateFlowStateRequest(options?.measuredSize ?? false));
   }
 
   public selectAll(): void {
@@ -215,6 +216,6 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public ngOnDestroy(): void {
     this._worker.dispose();
-    this._mediator.execute(new RemoveFlowFromStoreRequest());
+    this._mediator.execute(new RemoveFlowFromStoreRequest(this));
   }
 }

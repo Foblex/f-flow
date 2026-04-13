@@ -30,12 +30,12 @@ export class CalculateFlowState implements IExecution<CalculateFlowStateRequest,
     return PointExtensions.sum(this._transform.position, this._transform.scaledPosition);
   }
 
-  public handle(_payload: CalculateFlowStateRequest): IFFlowState {
+  public handle({ measuredSize }: CalculateFlowStateRequest): IFFlowState {
     return {
       position: this._canvasPosition,
       scale: this._canvas.transform.scale,
-      nodes: this._mediator.execute(new CalculateNodesStateRequest(FNodeDirective)),
-      groups: this._mediator.execute(new CalculateNodesStateRequest(FGroupDirective)),
+      nodes: this._mediator.execute(new CalculateNodesStateRequest(FNodeDirective, measuredSize)),
+      groups: this._mediator.execute(new CalculateNodesStateRequest(FGroupDirective, measuredSize)),
       connections: this._mediator.execute(new CalculateConnectionsStateRequest()),
     };
   }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FFlowModule } from '../f-flow.module';
+import { FFlowModule } from '@foblex/flow';
 import { FComponentsStore } from '../f-storage';
-import { FFlowComponent } from './f-flow.component';
+import { FFlowComponent } from '@foblex/flow';
 
 @Component({
   standalone: true,
@@ -18,10 +18,30 @@ class HostComponent {
   public loadedIds: string[] = [];
 }
 
+@Component({
+  standalone: true,
+  imports: [FFlowModule],
+  template: `
+    <f-flow>
+      <f-canvas>
+        <div
+          fNode
+          fNodeId="node-1"
+          [fNodePosition]="{ x: 0, y: 0 }"
+          style="width: 120px; height: 80px; padding: 0; margin: 0;"
+        >
+          Node
+        </div>
+      </f-canvas>
+    </f-flow>
+  `,
+})
+class HostStateComponent {}
+
 describe('FFlowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HostComponent],
+      imports: [HostComponent, HostStateComponent],
     }).compileComponents();
   });
 
@@ -47,5 +67,24 @@ describe('FFlowComponent', () => {
 
     expect(fixture.componentInstance.loadedIds.length).toBe(1);
     expect(fixture.componentInstance.loadedIds[0]).toContain('f-flow-');
+  }));
+
+  it('should include measured node sizes when requested', fakeAsync(() => {
+    const fixture = TestBed.createComponent(HostStateComponent);
+    fixture.detectChanges();
+    tick(300);
+    fixture.detectChanges();
+
+    const flow = fixture.debugElement.query(By.directive(FFlowComponent))
+      .componentInstance as FFlowComponent;
+
+    expect(flow.getState().nodes[0].size).toBeUndefined();
+
+    const nodeState = flow.getState({ measuredSize: true }).nodes[0];
+
+    expect(nodeState.size).toBeUndefined();
+    expect(nodeState.measuredSize).toBeDefined();
+    expect(nodeState.measuredSize!.width).toBeGreaterThan(0);
+    expect(nodeState.measuredSize!.height).toBeGreaterThan(0);
   }));
 });

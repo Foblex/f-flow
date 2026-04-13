@@ -16,6 +16,8 @@
     "start-shared": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "build-flow": "ng build f-flow && tsc -p projects/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"projects/f-flow/schematics/*/schema.json\" \"projects/f-flow/schematics/*/files/**\" \"projects/f-flow/schematics/collection.json\" dist/f-flow",
+    "build-dagre-layout": "npm run build-flow && ng build f-dagre-layout && tsc -p projects/f-layout/layout-dagre/tsconfig.schematics.json && copyfiles -u 3 \"projects/f-layout/layout-dagre/schematics/*/schema.json\" \"projects/f-layout/layout-dagre/schematics/collection.json\" dist/f-dagre-layout",
+    "build-elk-layout": "npm run build-flow && ng build f-elk-layout && tsc -p projects/f-layout/layout-elk/tsconfig.schematics.json && copyfiles -u 3 \"projects/f-layout/layout-elk/schematics/*/schema.json\" \"projects/f-layout/layout-elk/schematics/collection.json\" dist/f-elk-layout",
     "watch": "ng build --watch --configuration development",
     "test": "ng test f-flow",
     "publish": "npm run build-flow && cd dist/f-flow && npm publish",

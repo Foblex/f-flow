@@ -4,18 +4,11 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "paths": {
-      "@portal-ui": [
-        "./src/app/portal-ui/index.ts"
-      ],
-      "@portal-ui/*": [
-        "./src/app/portal-ui/*"
-      ],
-      "@foblex/flow": [
-        "./projects/f-flow/src/public-api.ts"
-      ],
-//      "@foblex/m-render": [
-//        "./projects/m-render/src/public-api.ts"
-//      ],
+      "@portal-ui": ["./src/app/portal-ui/index.ts"],
+      "@portal-ui/*": ["./src/app/portal-ui/*"],
+      "@foblex/flow": ["./projects/f-flow/src/public-api.ts"],
+      "@foblex/flow-dagre-layout": ["./projects/f-layout/layout-dagre/src/public-api.ts"],
+      "@foblex/flow-elk-layout": ["./projects/f-layout/layout-elk/src/public-api.ts"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -30,10 +23,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

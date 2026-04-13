@@ -14,4 +14,6 @@ export * from './i-f-flow-state-connector';
 
 export * from './i-f-flow-state-node';
 
+export * from './i-f-flow-state-options';
+
 export * from './providers';

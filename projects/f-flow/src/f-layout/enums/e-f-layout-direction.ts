@@ -1,0 +1,6 @@
+export enum EFLayoutDirection {
+  TOP_BOTTOM = 'TOP_BOTTOM',
+  BOTTOM_TOP = 'BOTTOM_TOP',
+  LEFT_RIGHT = 'LEFT_RIGHT',
+  RIGHT_LEFT = 'RIGHT_LEFT',
+}

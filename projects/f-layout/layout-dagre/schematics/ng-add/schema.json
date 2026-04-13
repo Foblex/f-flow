@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "FoblexFlowDagreLayoutNgAddSchema",
+  "title": "@foblex/flow-dagre-layout ng-add options",
+  "type": "object",
+  "properties": {
+    "skipTheme": {
+      "type": "boolean",
+      "description": "Do not add the default @foblex/flow theme to application styles.",
+      "default": false
+    }
+  }
+}
