@@ -3,7 +3,7 @@
 ## Purpose
 
 Use this file as the primary instruction set for AI agents working in this repository.
-Derive new code from existing repository patterns first, especially from `projects/f-flow/src`.
+Derive new code from existing repository patterns first, especially from `libs/f-flow/src`.
 Treat examples, docs, and the portal app as confirmation of public usage patterns, not as a reason to invent new framework layers.
 
 ## Core principles
@@ -18,18 +18,18 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ### Project structure
 
-- `projects/f-flow/src/` is the primary source of truth for library architecture and naming.
+- `libs/f-flow/src/` is the primary source of truth for library architecture and naming.
 - Top-level library slices are feature-oriented and colocated: `f-flow`, `f-canvas`, `f-node`, `f-connectors`, `f-connection`, `f-connection-v2`, `f-draggable`, `f-storage`, `f-cache`, `f-minimap`, `f-zoom`, `f-selection-area`, `f-external-item`, `f-magnetic-lines`, `f-magnetic-rects`, `f-virtual`, `f-auto-pan`, `f-backgroud`, `domain`, `drag-toolkit`, `reactivity`, `mixins`, `testing`, `utils`.
 - `domain/` contains internal mediator-driven operations and feature execution classes.
 - `f-storage/`, `f-cache/`, and `reactivity/` are internal runtime support layers, not app-facing graph state layers.
-- `projects/f-examples`, `projects/f-guides-examples`, and `projects/f-pro-examples` are consumer-style examples of the library.
-- `src/app` and `public/markdown` power the documentation portal and are the source of truth for docs/example registration.
-- Tests are colocated with source as `*.spec.ts`. Test-only helpers live under `projects/f-flow/src/testing`.
+- `libs/f-examples` and `libs/f-pro-examples` are consumer-style examples of the library.
+- `apps/f-flow-portal/src/app` and `apps/f-flow-portal/public/markdown` power the documentation portal and are the source of truth for docs/example registration.
+- Tests are colocated with source as `*.spec.ts`. Test-only helpers live under `libs/f-flow/src/testing`.
 
 ### File and folder naming
 
 - Use lowercase kebab-case for folders and file names.
-- In `projects/f-flow/src`, feature folders usually expose a local `index.ts`; keep exports flowing through that barrel.
+- In `libs/f-flow/src`, feature folders usually expose a local `index.ts`; keep exports flowing through that barrel.
 - Many feature folders also expose `providers.ts`; use that file for feature provider arrays instead of scattering provider registration across unrelated files.
 - Requests are named explicitly with a `-request.ts` suffix.
 - Events and event payload helpers use `*-event.ts` and `*-event-data.ts`.
@@ -42,7 +42,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ### Public API conventions
 
-- Public exports go through feature-level `index.ts` files and then `projects/f-flow/src/public-api.ts`.
+- Public exports go through feature-level `index.ts` files and then `libs/f-flow/src/public-api.ts`.
 - If a public declarable is also exposed through module compatibility, wire it through the relevant `F_*_PROVIDERS` array and `FFlowModule`.
 - Public selectors and aliases keep the repository’s `f*` naming scheme:
   - element selectors such as `f-flow`, `f-canvas`, `f-connection`
@@ -63,7 +63,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - Complex interaction features are split one level further into distinct phases such as `*-preparation`, `*-handler`, and `*-finalize` instead of collapsing the whole flow into one file.
 - Register execution classes through feature provider arrays such as `F_NODE_FEATURES`, `F_FLOW_FEATURES`, and `COMMON_PROVIDERS`.
 - Keep runtime registries in `f-storage`-style support layers instead of building a separate app-like store abstraction inside the library.
-- Keep specs next to the code they verify. Keep unsafe testing escape hatches inside `projects/f-flow/src/testing/internal`, not inside specs.
+- Keep specs next to the code they verify. Keep unsafe testing escape hatches inside `libs/f-flow/src/testing/internal`, not inside specs.
 
 ## Naming conventions
 
@@ -180,10 +180,10 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ### Discouraged patterns
 
-- Do not introduce an application-owned graph store into `projects/f-flow/src`.
+- Do not introduce an application-owned graph store into `libs/f-flow/src`.
 - Do not add React Flow style data APIs or node/edge store helpers to the library.
 - Do not introduce Angular CDK drag-drop into the core interaction pipeline.
-- Do not introduce RxJS-based internal state flow into library features that currently use signals and `projects/f-flow/src/reactivity`.
+- Do not introduce RxJS-based internal state flow into library features that currently use signals and `libs/f-flow/src/reactivity`.
 - Do not add DTO-style indirection or extra architectural layers when a feature already uses colocated requests, events, handlers, and types.
 - Do not introduce `*-handler` naming just to mirror a request pair when the surrounding feature uses plain operation names.
 - Do not remove deprecated compatibility aliases from public events unless the task explicitly includes a breaking API migration.
@@ -202,7 +202,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - Module compatibility via `FFlowModule`.
 - Mediator request registration via `@FExecutionRegister`.
 - Plugin/instance registration in `FComponentsStore.instances` and related request flows.
-- Testing helpers exported from `projects/f-flow/src/testing`.
+- Testing helpers exported from `libs/f-flow/src/testing`.
 
 ## Angular guidelines
 
@@ -247,7 +247,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 ### Forms / RxJS / SSR
 
 - No stable forms/CVA convention is established in the inspected flow library code. Do not invent one unless the local feature already uses it.
-- In `projects/f-flow/src`, prefer signals and the local `reactivity` helpers over RxJS.
+- In `libs/f-flow/src`, prefer signals and the local `reactivity` helpers over RxJS.
 - Guard browser-only behavior through `BrowserService`, injected `DOCUMENT`, or explicit browser/platform checks.
 - Preserve hydration and SSR guards in portal code such as `ngSkipHydration` and `IS_BROWSER_PLATFORM` checks when touching SSR-sensitive areas.
 
@@ -295,7 +295,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - Do name methods after the domain action they perform, not after generic control flow.
 - Do update feature barrels, `public-api.ts`, and `FFlowModule` when a public surface actually changes.
 - Do add colocated `*.spec.ts` tests for new logic when the surrounding feature already has tests.
-- Do use the testing kit from `projects/f-flow/src/testing` instead of ad hoc test infrastructure.
+- Do use the testing kit from `libs/f-flow/src/testing` instead of ad hoc test infrastructure.
 - Do keep public docs/examples in sync when changing public behavior.
 - Do let Prettier and ESLint conventions stand: 2-space indentation, single quotes, semicolons, multiline trailing commas, blank line before `return` when required by lint.
 
@@ -309,7 +309,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - Don’t introduce generic method names such as `process`, `executeFeature`, or `runLogic` when the surrounding code already has a clearer domain verb.
 - Don’t bypass browser/platform abstractions with direct `window` or `document` access in library code.
 - Don’t add `console.log`; lint only allows `console.warn` and `console.error`.
-- Don’t use `as any` in specs. Keep unsafe casts in `projects/f-flow/src/testing/internal`.
+- Don’t use `as any` in specs. Keep unsafe casts in `libs/f-flow/src/testing/internal`.
 - Don’t “fix” legacy naming or file-path oddities unless the task explicitly requires a migration.
 
 ## Safe generation rules for AI agents
@@ -332,7 +332,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
   - register the execution in the parent `providers.ts`
 - When adding a new public library surface:
   - update the feature barrel
-  - update `projects/f-flow/src/public-api.ts`
+  - update `libs/f-flow/src/public-api.ts`
   - update `FFlowModule` and the relevant `F_*_PROVIDERS` array if the symbol is part of Angular module compatibility
   - update examples/docs/changelog/migration notes when the change is user-visible
 - When continuing an existing Angular feature, preserve the local choice for:
@@ -349,10 +349,10 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - When adding examples:
   - keep them standalone if the surrounding example area is standalone
   - import `FFlowModule` when that is the local example pattern
-  - update the relevant lazy registration config such as `src/app/examples.config.ts`
-  - add the matching markdown entry under `public/markdown` when the example should appear in docs navigation
+  - update the relevant lazy registration config such as `apps/f-flow-portal/src/app/examples.config.ts`
+  - add the matching markdown entry under `apps/f-flow-portal/public/markdown` when the example should appear in docs navigation
 - If more than one repository pattern exists, prefer the one already used in the exact folder you are editing.
-- If the exact folder is mixed, prefer the dominant pattern inside `projects/f-flow/src` for library code and the dominant pattern inside the surrounding example/app area for consumer code.
+- If the exact folder is mixed, prefer the dominant pattern inside `libs/f-flow/src` for library code and the dominant pattern inside the surrounding example/app area for consumer code.
 - If ambiguity remains after that, preserve existing public API compatibility and choose the option that requires the smallest new abstraction footprint.
 
 ## Possible conventions that need manual confirmation

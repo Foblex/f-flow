@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "paths": {
+      "@foblex/portal-ui": ["./libs/portal-ui/src/index.ts"],
+      "@foblex/portal-ui/*": ["./libs/portal-ui/src/*"],
+      "@foblex/examples/*": ["./libs/f-examples/*"],
+      "@foblex/pro-examples/*": ["./libs/f-pro-examples/*"],
+      "@foblex/flow": ["./libs/f-flow/src/public-api.ts"],
+      "@foblex/flow-dagre-layout": ["./libs/f-layout/dagre/src/public-api.ts"],
+      "@foblex/flow-elk-layout": ["./libs/f-layout/elk/src/public-api.ts"]
+    },
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

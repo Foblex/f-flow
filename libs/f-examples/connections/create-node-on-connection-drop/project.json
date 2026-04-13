@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-create-node-on-connection-drop",
+  "root": "libs/f-examples/connections/create-node-on-connection-drop",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/create-node-on-connection-drop",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/create-node-on-connection-drop/**/*.ts\" \"libs/f-examples/connections/create-node-on-connection-drop/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

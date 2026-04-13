@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "layout-elk",
+  "projectType": "library",
+  "root": "libs/f-layout/elk",
+  "sourceRoot": "libs/f-layout/elk/src",
+  "tags": ["scope:layout", "type:publishable"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/f-elk-layout"],
+      "options": {
+        "project": "libs/f-layout/elk/ng-package.json",
+        "tsConfig": "libs/f-layout/elk/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/f-layout/elk/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-layout/elk/**/*.ts\" \"libs/f-layout/elk/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/f-elk-layout"],
+      "options": {
+        "command": "tsc -p libs/f-layout/elk/tsconfig.schematics.json && copyfiles -u 3 \"libs/f-layout/elk/schematics/*/schema.json\" \"libs/f-layout/elk/schematics/collection.json\" dist/f-elk-layout"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["package"],
+      "options": {
+        "command": "cd dist/f-elk-layout && npm publish"
+      }
+    }
+  }
+}

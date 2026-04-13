@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const root = path.resolve(
   process.cwd(),
-  'projects/f-flow/src/domain/f-connection/redraw-connections',
+  'libs/f-flow/src/domain/f-connection/redraw-connections',
 );
 
 const files = collectFiles(root).filter(

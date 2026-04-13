@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-custom-event-triggers",
+  "root": "libs/f-examples/advanced/custom-event-triggers",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/advanced/custom-event-triggers",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:advanced"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/advanced/custom-event-triggers/**/*.ts\" \"libs/f-examples/advanced/custom-event-triggers/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

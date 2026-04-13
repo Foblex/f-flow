@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-undo-redo-v2",
+  "root": "libs/f-examples/advanced/undo-redo-v2",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/advanced/undo-redo-v2",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:advanced"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/advanced/undo-redo-v2/**/*.ts\" \"libs/f-examples/advanced/undo-redo-v2/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

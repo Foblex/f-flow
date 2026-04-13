@@ -1,6 +1,7 @@
 
 dist
 .angular
+.nx
 node_modules
 .idea
 
@@ -12,3 +13,6 @@ node_modules
 .env
 *.env
 *.env.local
+
+cypress/videos
+cypress/screenshots

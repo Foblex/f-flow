@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-minimap-example",
+  "root": "libs/f-examples/extensions/minimap-example",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/extensions/minimap-example",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:extensions"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/extensions/minimap-example/**/*.ts\" \"libs/f-examples/extensions/minimap-example/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

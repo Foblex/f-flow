@@ -2,8 +2,8 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, join, relative, sep } from 'node:path';
 
 const ROOT = process.cwd();
-const MARKDOWN_ROOT = join(ROOT, 'public', 'markdown');
-const SITEMAP_PATH = join(ROOT, 'public', 'sitemap.xml');
+const MARKDOWN_ROOT = join(ROOT, 'apps', 'f-flow-portal', 'public', 'markdown');
+const SITEMAP_PATH = join(ROOT, 'apps', 'f-flow-portal', 'public', 'sitemap.xml');
 const CANONICAL_ORIGIN = 'https://flow.foblex.com';
 
 const markdownFiles = walkMarkdownFiles(MARKDOWN_ROOT);
@@ -25,7 +25,7 @@ for (const filePath of markdownFiles) {
 
 for (const route of noindexRoutes) {
   if (sitemap.includes(`<loc>${CANONICAL_ORIGIN}${route}</loc>`)) {
-    issues.push(`public/sitemap.xml: noindex route ${route} must not appear in the sitemap`);
+    issues.push(`apps/f-flow-portal/public/sitemap.xml: noindex route ${route} must not appear in the sitemap`);
   }
 }
 

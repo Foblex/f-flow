@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "pro-example-db-management",
+  "root": "libs/f-pro-examples/db-management-example",
+  "projectType": "library",
+  "sourceRoot": "libs/f-pro-examples/db-management-example",
+  "tags": ["scope:pro-example", "type:library"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-pro-examples/db-management-example/**/*.ts\" \"libs/f-pro-examples/db-management-example/**/*.html\""
+      }
+    }
+  }
+}

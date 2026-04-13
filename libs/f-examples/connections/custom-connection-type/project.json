@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-custom-connection-type",
+  "root": "libs/f-examples/connections/custom-connection-type",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/custom-connection-type",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/custom-connection-type/**/*.ts\" \"libs/f-examples/connections/custom-connection-type/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}
