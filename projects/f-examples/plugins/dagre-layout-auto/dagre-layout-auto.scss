@@ -6,6 +6,7 @@
 
 ::ng-deep f-flow {
   @include flow-theme.connection($scoped: false);
+  @include flow-theme.connection-markers($scoped: false);
 }
 
 @include flow-theme.node($selectorless: false);

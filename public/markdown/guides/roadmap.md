@@ -91,7 +91,7 @@ For migration details and breaking changes, always check the [Changelog](https:/
   Added SSR support, snap-connection helpers for create/reassign flows, `centerNodeOrGroup`, `getFlowState`, and a cleaner canvas API.
 
 - **[12.6.0](https://github.com/Foblex/f-flow/releases/tag/12.6.0)** - **2024-09-10**  
-  Added `f-group`, Dagre and ELKJS examples, the DB management reference example, and grouping-aware layer sorting.
+  Added `f-group`, Dagre and ELK.js examples, the DB management reference example, and grouping-aware layer sorting.
 
 - **[v12.5.0](https://github.com/Foblex/f-flow/releases/tag/v12.5.0)** - **2024-08-11**  
   Added minimap support and zoneless compatibility.

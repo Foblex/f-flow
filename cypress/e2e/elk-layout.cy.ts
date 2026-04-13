@@ -1,4 +1,4 @@
-describe('DagreLayout', () => {
+describe('ElkLayout', () => {
   function getSelect(label: string) {
     return cy.contains('.label', label).closest('example-select').find('select');
   }
@@ -43,12 +43,12 @@ describe('DagreLayout', () => {
   }
 
   beforeEach(() => {
-    cy.visit('http://localhost:4200/examples/dagre-layout');
+    cy.visit('http://localhost:4200/examples/elkjs-layout');
     cy.get('f-flow').scrollIntoView();
   });
 
   it('should relayout across all directions', () => {
-    cy.get('.f-node', { timeout: 10000 }).should('have.length', 10);
+    cy.get('.f-node', { timeout: 15000 }).should('have.length', 10);
     getSelect('Direction').find('option').should('have.length', 4);
     expectNodeDirection('Node1', 'Node2', 'TOP_BOTTOM');
 
@@ -66,13 +66,14 @@ describe('DagreLayout', () => {
   });
 
   it('should relayout after algorithm and spacing changes', () => {
-    cy.get('.f-node', { timeout: 10000 }).should('have.length', 10);
-    getSelect('Algorithm').select('tight-tree');
+    cy.get('.f-node', { timeout: 15000 }).should('have.length', 10);
+    getSelect('Algorithm').find('option').should('have.length', 12);
+    getSelect('Algorithm').select('mrtree');
     getSelect('Spacing').select('SPACIOUS');
 
     cy.contains('.f-button', 'Add Node').click({ force: true });
 
-    cy.get('.f-node', { timeout: 10000 }).should('have.length', 11);
+    cy.get('.f-node', { timeout: 15000 }).should('have.length', 11);
     cy.contains('.f-node', 'Node11')
       .should('have.attr', 'style')
       .and('not.contain', 'translate(0px,0px)');

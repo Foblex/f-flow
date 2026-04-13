@@ -31,6 +31,7 @@ Treat these as legacy-style references that still work but should not define new
   - `connectors`
   - `connections`
   - `extensions`
+  - `plugins`
   - `advanced`
   - `pro-examples`
 - Keep the normal example folder self-contained and flat.

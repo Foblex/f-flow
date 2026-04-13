@@ -493,8 +493,20 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://flow.foblex.com/examples/dagre-layout-auto</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://flow.foblex.com/examples/elkjs-layout</loc>
     <lastmod>2026-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://flow.foblex.com/examples/elk-layout-auto</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

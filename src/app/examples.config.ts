@@ -30,6 +30,7 @@ export const EXAMPLES_CONFIGURATION = {
       connectorGroup(),
       connectionGroup(),
       extensionGroup(),
+      pluginsGroup(),
       advancedGroup(),
       proExamplesGroup(),
     ),
@@ -190,14 +191,19 @@ export const EXAMPLES_CONFIGURATION = {
       ),
       defineLazyComponent(
         'dagre-layout',
-        () => import('../../projects/f-examples/advanced/dagre-layout/dagre-layout'),
+        () => import('../../projects/f-examples/plugins/dagre-layout/dagre-layout'),
       ),
       defineLazyComponent(
-        'elkjs-layout-example',
-        () =>
-          import(
-            '../../projects/f-examples/advanced/elkjs-layout-example/elkjs-layout-example.component'
-          ),
+        'dagre-layout-auto',
+        () => import('../../projects/f-examples/plugins/dagre-layout-auto/dagre-layout-auto'),
+      ),
+      defineLazyComponent(
+        'elk-layout',
+        () => import('../../projects/f-examples/plugins/elk-layout/elk-layout'),
+      ),
+      defineLazyComponent(
+        'elk-layout-auto',
+        () => import('../../projects/f-examples/plugins/elk-layout-auto/elk-layout-auto'),
       ),
       defineLazyComponent(
         'selection-area',
@@ -918,6 +924,63 @@ function extensionGroup() {
   ]);
 }
 
+function pluginsGroup() {
+  return defineNavigationGroup('Plugins', [
+    {
+      link: 'dagre-layout',
+      text: 'Dagre Layout',
+      pageTitle: 'Angular Dagre Graph Layout Example',
+      image: './previews/examples/dagre-layout.light.png',
+      image_dark: './previews/examples/dagre-layout.dark.png',
+      description:
+        'Build directed graph and tree layouts with Dagre in Angular. The example generates a graph from node count, recalculates links automatically, and re-runs manual layout on demand.',
+      image_width: 1600,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2025-09-14 14:01:26'),
+    },
+    {
+      link: 'dagre-layout-auto',
+      text: 'Dagre Auto Layout',
+      pageTitle: 'Angular Dagre Auto Layout Example',
+      image: './previews/examples/dagre-layout.light.png',
+      image_dark: './previews/examples/dagre-layout.dark.png',
+      description:
+        'Use Foblex Flow auto mode with Dagre in Angular. The example keeps app state as the source of truth, rebuilds the graph reactively, and lets auto relayout reposition nodes.',
+      image_width: 1600,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-04-09 12:00:00'),
+    },
+    {
+      link: 'elkjs-layout',
+      text: 'ELK.js Layout',
+      pageTitle: 'Angular ELK.js Graph Layout Example',
+      image: './previews/examples/elk-layout.light.png',
+      image_dark: './previews/examples/elk-layout.dark.png',
+      description:
+        'Generate layered graph layouts with ELK.js in Angular. The example rebuilds nodes and connections from one graph factory and applies manual layout direction changes through Foblex Flow.',
+      image_width: 806,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2025-02-08 14:01:26'),
+    },
+    {
+      link: 'elk-layout-auto',
+      text: 'ELK.js Auto Layout',
+      pageTitle: 'Angular ELK.js Auto Layout Example',
+      image: './previews/examples/elk-layout.light.png',
+      image_dark: './previews/examples/elk-layout.dark.png',
+      description:
+        'Run ELK.js through Foblex Flow auto mode in Angular. The example rebuilds the source graph from component state and syncs calculated positions back with writeback.',
+      image_width: 806,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2026-04-09 12:00:00'),
+    },
+  ]);
+}
+
 function advancedGroup() {
   return defineNavigationGroup('Advanced', [
     {
@@ -998,31 +1061,6 @@ function advancedGroup() {
         text: 'New',
         type: 'success',
       },
-    },
-    {
-      link: 'dagre-layout',
-      text: 'Dagre Layout (Directed Graph)',
-      pageTitle: 'Angular Dagre Graph Layout Example',
-      image: './previews/examples/dagre-layout.light.png',
-      image_dark: './previews/examples/dagre-layout.dark.png',
-      description:
-        'Interactive Angular example showing automatic graph and tree layouts with Dagre and Foblex Flow. Learn how to build directed graphs, org charts, and hierarchical diagrams with auto-arranged nodes, connections, and layout controls.',
-      image_width: 1600,
-      image_height: 1200,
-      image_type: 'image/png',
-      date: new Date('2025-09-14 14:01:26'),
-    },
-    {
-      link: 'elkjs-layout',
-      text: 'ELKJS Layout (Directed Graph)',
-      image: './previews/examples/elkjs-layout.light.png',
-      image_dark: './previews/examples/elkjs-layout.dark.png',
-      description:
-        'Create tidy tree & layered layouts with ELKJS in Angular. Working example, config options, performance notes, and live demo in Foblex Flow.',
-      image_width: 806,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-02-08 14:01:26'),
     },
     {
       link: 'drag-start-end-events',

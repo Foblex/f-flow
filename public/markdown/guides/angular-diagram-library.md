@@ -45,7 +45,7 @@ Use it for Angular diagram interfaces such as:
 
 - [UML Diagram Example](./examples/uml-diagram-example)
 - [Dagre Layout Example](./examples/dagre-layout)
-- [ELKJS Layout Example](./examples/elkjs-layout)
+- [ELK.js Layout Example](./examples/elkjs-layout)
 - [Connection Waypoints Example](./examples/connection-waypoints)
 - [Background Docs](f-background-component)
 
@@ -66,5 +66,21 @@ Or install it manually with the required companion packages:
 ```bash
 npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
 ```
+
+If you want layout engines on top of the core diagram surface:
+
+```bash
+ng add @foblex/flow-dagre-layout
+```
+
+or:
+
+```bash
+ng add @foblex/flow-elk-layout
+```
+
+If your app already owns Flow styling, both layout packages also support `--skipTheme`.
+
+Use Dagre for lighter hierarchical layouts and ELK.js when you need a richer algorithm set and more tuning options.
 
 If you need a diagram surface that still behaves like an Angular product screen, Foblex Flow is a better fit than a static renderer.

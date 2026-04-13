@@ -81,7 +81,9 @@
 /examples/undo-redo
 /examples/undo-redo-v2
 /examples/dagre-layout
+/examples/dagre-layout-auto
 /examples/elkjs-layout
+/examples/elk-layout-auto
 /examples/drag-start-end-events
 /examples/custom-event-triggers
 /examples/ai-low-code-platform
