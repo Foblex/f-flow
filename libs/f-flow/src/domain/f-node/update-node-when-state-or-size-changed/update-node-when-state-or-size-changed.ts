@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
-import { afterNextPaint, FChannelHub, FResizeChannel } from '../../../reactivity';
+import { FChannelHub, FResizeChannel } from '../../../reactivity';
 import { FitToChildNodesAndGroupsRequest } from '../fit-to-child-nodes-and-groups';
 import { IsDragStartedRequest } from '../../f-draggable';
 import { CalculateConnectorsConnectableSidesRequest } from '../calculate-connectors-connectable-sides';
@@ -27,7 +27,7 @@ export class UpdateNodeWhenStateOrSizeChanged
     const { hostElement, stateChanges } = nodeOrGroup;
 
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
-      .pipe(afterNextPaint())
+      // .pipe(afterNextPaint()) // Removed: caused ~32ms lag on resize/toggle. Debounce is sufficient for DOM stability.
       .listen(destroyRef, () => {
         this._mediator.execute<void>(new EmitConnectionsChangesRequest());
         if (!this._isDragging()) {

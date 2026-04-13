@@ -84,6 +84,9 @@ export class Flow implements OnInit {
 
   protected editorLoaded(): void {
     this._isChangeAfterLoadedResetAndCenter = true;
+    if (this.viewModel()?.transform?.position) {
+      return;
+    }
     this._canvas()?.fitToScreen({ x: 150, y: 150 }, false);
   }
 

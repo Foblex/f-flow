@@ -151,7 +151,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _listenConnectionsChanges(): void {
     this._mediator
       .execute<FChannelHub>(new ListenConnectionsChangesRequest())
-      .pipe(afterNextPaint())
+      // .pipe(afterNextPaint()) // Removed: caused ~32ms lag on connection redraw. 1ms debounce from ListenConnectionsChanges is sufficient.
       .listen(this._destroyRef, () => {
         if (this._mediator.execute(new IsDragStartedRequest())) {
           return;
