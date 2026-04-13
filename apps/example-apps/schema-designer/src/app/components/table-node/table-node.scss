@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  border-radius: var(--editor-radius);
+  overflow: hidden;
+  font-size: 13px;
+  font-family: var(--editor-font);
+  background-color: var(--editor-surface);
+  color: var(--editor-text);
+  box-shadow: var(--editor-shadow);
+  border: 1px solid var(--editor-border-subtle);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+
+  .columns {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 6px;
+  }
+
+  &.f-selected {
+    box-shadow: var(--editor-shadow-md);
+    border-color: var(--editor-primary);
+  }
+}

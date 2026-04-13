@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@use 'styles/theme';
+@use 'styles/controls';
+
+@include mat.core();
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--editor-bg);
+  color: var(--editor-text);
+}

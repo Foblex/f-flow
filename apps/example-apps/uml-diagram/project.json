@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "uml-diagram",
+  "projectType": "application",
+  "root": "apps/example-apps/uml-diagram",
+  "sourceRoot": "apps/example-apps/uml-diagram/src",
+  "tags": ["scope:examples", "type:app", "kind:standalone-example"],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/example-apps/uml-diagram",
+        "index": "apps/example-apps/uml-diagram/src/index.html",
+        "browser": "apps/example-apps/uml-diagram/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/example-apps/uml-diagram/tsconfig.app.json",
+        "assets": [],
+        "styles": ["apps/example-apps/uml-diagram/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["tools/sass-aliases"]
+        },
+        "scripts": []
+      },
+      "configurations": {
+        "production": {},
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4304
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "uml-diagram:build:production"
+        },
+        "development": {
+          "buildTarget": "uml-diagram:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "uml-diagram:build"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/example-apps/uml-diagram/src/**/*.ts\" \"apps/example-apps/uml-diagram/src/**/*.html\""
+      }
+    }
+  }
+}

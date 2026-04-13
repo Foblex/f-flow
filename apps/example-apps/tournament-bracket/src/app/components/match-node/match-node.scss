@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+
+.match-card {
+  background: var(--bracket-surface);
+  border: 1px solid var(--bracket-border);
+  border-radius: var(--bracket-radius);
+  box-shadow: var(--bracket-shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.25s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    box-shadow: var(--bracket-shadow-md);
+    border-color: var(--bracket-border-hover);
+  }
+
+  &.selected {
+    border-color: var(--bracket-accent);
+    box-shadow:
+      0 0 0 2px var(--bracket-accent-soft),
+      var(--bracket-shadow-md);
+  }
+
+  &.highlighted {
+    border-color: var(--bracket-accent);
+    box-shadow:
+      0 0 0 1px var(--bracket-accent-soft),
+      var(--bracket-shadow);
+  }
+
+  &.dimmed {
+    opacity: 0.35;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.match-body {
+  display: flex;
+  flex-direction: column;
+}

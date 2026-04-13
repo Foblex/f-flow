@@ -1,0 +1,99 @@
+@if (selectedClass(); as cls) {
+<div class="detail-panel">
+  <div class="panel-header">
+    <div class="panel-title-row">
+      <span class="layer-badge" [class]="cls.layer">{{ getLayerLabel(cls.layer) }}</span>
+      @if (cls.stereotype) {
+      <span class="stereotype-tag">&laquo;{{ cls.stereotype }}&raquo;</span>
+      }
+    </div>
+    <button class="close-btn" type="button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="panel-class-name" [class.is-abstract]="cls.isAbstract">{{ cls.name }}</div>
+
+  <div class="panel-body">
+    <div class="section-title">Attributes ({{ cls.attributes.length }})</div>
+    <div class="member-list">
+      @for (attr of cls.attributes; track attr.name) {
+      <div class="member-item">
+        <span class="vis">{{ attr.visibility }}</span>
+        <span class="name">{{ attr.name }}</span>
+        <span class="type">{{ attr.type }}</span>
+      </div>
+      } @if (!cls.attributes.length) {
+      <div class="member-item empty">None</div>
+      }
+    </div>
+
+    <div class="section-title">Methods ({{ cls.methods.length }})</div>
+    <div class="member-list">
+      @for (method of cls.methods; track method.name) {
+      <div class="member-item">
+        <span class="vis">{{ method.visibility }}</span>
+        <span class="name">{{ method.name }}({{ method.params }})</span>
+        <span class="type">{{ method.returnType }}</span>
+      </div>
+      } @if (!cls.methods.length) {
+      <div class="member-item empty">None</div>
+      }
+    </div>
+
+    @if (classRelations().length > 0) {
+    <div class="section-title">Relations ({{ classRelations().length }})</div>
+    <div class="relations-list">
+      @for (rel of classRelations(); track rel.id) {
+      <button
+        class="relation-item"
+        type="button"
+        (click)="onClassSelect(rel.from === cls.id ? rel.to : rel.from)"
+      >
+        <mat-icon class="relation-icon rel-{{ rel.kind }}"
+          >{{ getRelationIcon(rel.kind) }}</mat-icon
+        >
+        <span class="relation-label">{{ rel.label }}</span>
+        <span class="relation-target">{{ rel.from === cls.id ? rel.to : rel.from }}</span>
+      </button>
+      }
+    </div>
+    }
+  </div>
+</div>
+} @else if (selectedConnection()) {
+<div class="detail-panel">
+  <div class="panel-header">
+    <div class="panel-title-row">
+      <span class="relation-kind-badge rel-{{ selectedConnection()!.kind }}">
+        {{ selectedConnection()!.kind }}
+      </span>
+    </div>
+    <button class="close-btn" type="button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="panel-body">
+    @if (selectedConnection()!.label) {
+    <div class="connection-label">&laquo;{{ selectedConnection()!.label }}&raquo;</div>
+    } @if (connectionEndpoints(); as ep) {
+    <div class="endpoint-row">
+      <button class="endpoint-card" type="button" (click)="onClassSelect(ep.from!.id)">
+        <div class="endpoint-name">{{ ep.from?.name }}</div>
+        @if (selectedConnection()!.sourceMultiplicity) {
+        <div class="endpoint-multiplicity">{{ selectedConnection()!.sourceMultiplicity }}</div>
+        }
+      </button>
+      <mat-icon class="endpoint-arrow">arrow_forward</mat-icon>
+      <button class="endpoint-card" type="button" (click)="onClassSelect(ep.to!.id)">
+        <div class="endpoint-name">{{ ep.to?.name }}</div>
+        @if (selectedConnection()!.targetMultiplicity) {
+        <div class="endpoint-multiplicity">{{ selectedConnection()!.targetMultiplicity }}</div>
+        }
+      </button>
+    </div>
+    }
+  </div>
+</div>
+}

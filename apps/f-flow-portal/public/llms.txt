@@ -26,5 +26,5 @@ Package and source:
 
 Reference demos:
 - AI low-code platform: https://flow.foblex.com/examples/ai-low-code-platform
-- Database flow manager: https://flow.foblex.com/examples/f-db-management-flow
+- Schema designer: https://flow.foblex.com/examples/schema-designer
 - UML diagram example: https://flow.foblex.com/examples/uml-diagram-example

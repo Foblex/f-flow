@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.menu-shell {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  width: max-content;
+}
+
+.menu-shell > .menu-panel,
+.menu-panel--submenu {
+  width: max-content;
+  min-width: 172px;
+}
+
+.menu-panel--submenu {
+  flex-shrink: 0;
+}
+
+.menu-shell--submenu-open {
+  padding-inline-end: 0;
+}
+
+.menu-item--submenu[aria-expanded='true'] {
+  background-color: var(--editor-primary-muted);
+}

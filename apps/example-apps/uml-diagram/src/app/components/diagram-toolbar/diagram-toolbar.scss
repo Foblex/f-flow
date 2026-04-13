@@ -1,0 +1,65 @@
+:host {
+  display: block;
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  pointer-events: all;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 3px;
+  background: var(--uml-surface-elevated);
+  backdrop-filter: blur(var(--uml-blur));
+  -webkit-backdrop-filter: blur(var(--uml-blur));
+  border: 1px solid var(--uml-border);
+  border-radius: var(--uml-radius);
+  box-shadow: var(--uml-shadow-lg);
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 26px;
+  border: none;
+  border-radius: var(--uml-radius-sm);
+  background: transparent;
+  color: var(--uml-text-muted);
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: var(--uml-btn-hover);
+    color: var(--uml-text);
+  }
+
+  &:active {
+    background: var(--uml-btn-active);
+  }
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--uml-border);
+  margin: 0 2px;
+}

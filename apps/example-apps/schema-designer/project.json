@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "schema-designer",
+  "projectType": "application",
+  "root": "apps/example-apps/schema-designer",
+  "sourceRoot": "apps/example-apps/schema-designer/src",
+  "tags": ["scope:examples", "type:app", "kind:standalone-example"],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/example-apps/schema-designer",
+        "index": "apps/example-apps/schema-designer/src/index.html",
+        "browser": "apps/example-apps/schema-designer/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/example-apps/schema-designer/tsconfig.app.json",
+        "assets": [],
+        "styles": ["apps/example-apps/schema-designer/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["tools/sass-aliases"]
+        },
+        "scripts": []
+      },
+      "configurations": {
+        "production": {},
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4301
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "schema-designer:build:production"
+        },
+        "development": {
+          "buildTarget": "schema-designer:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "schema-designer:build"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/example-apps/schema-designer/src/**/*.ts\" \"apps/example-apps/schema-designer/src/**/*.html\""
+      }
+    }
+  }
+}

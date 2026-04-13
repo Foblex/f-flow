@@ -87,7 +87,7 @@
 /examples/drag-start-end-events
 /examples/custom-event-triggers
 /examples/ai-low-code-platform
-/examples/f-db-management-flow
+/examples/schema-designer
 /examples/uml-diagram-example
 /examples/tournament-bracket
 /showcase/overview

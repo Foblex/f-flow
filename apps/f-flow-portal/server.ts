@@ -6,6 +6,13 @@ import { dirname, join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
 import bootstrap from './src/main.server';
 
+const EMBEDDED_REFERENCE_APPS = {
+  'db-management-flow': '../../apps/example-apps/schema-designer/browser',
+  'schema-designer': '../../apps/example-apps/schema-designer/browser',
+  'uml-diagram-example': '../../apps/example-apps/uml-diagram/browser',
+  'tournament-bracket': '../../apps/example-apps/tournament-bracket/browser',
+} as const;
+
 export function app(): express.Express {
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
@@ -51,6 +58,8 @@ export function app(): express.Express {
   server.get(['/blog', '/blog/'], (_req, res) => {
     res.redirect(301, '/blog/overview');
   });
+
+  registerEmbeddedReferenceApps(server, serverDistFolder);
 
   server.use((req, res, next) => {
     const [pathOnly, query = ''] = req.url.split('?', 2);
@@ -113,6 +122,29 @@ export function app(): express.Express {
   return server;
 }
 
+function registerEmbeddedReferenceApps(server: express.Express, serverDistFolder: string): void {
+  for (const [route, distRelativePath] of Object.entries(EMBEDDED_REFERENCE_APPS)) {
+    const appDistFolder = resolve(serverDistFolder, distRelativePath);
+
+    if (!existsSync(appDistFolder)) {
+      continue;
+    }
+
+    server.get(`/embedded/${route}`, (_req, res) => {
+      res.redirect(301, `/embedded/${route}/`);
+    });
+
+    server.use(
+      `/embedded/${route}`,
+      express.static(appDistFolder, {
+        maxAge: '1d',
+        redirect: false,
+        index: 'index.html',
+      }),
+    );
+  }
+}
+
 function normalizeRoutePath(pathname: string): string {
   if (!pathname || pathname === '/') {
     return '/';
@@ -137,6 +169,10 @@ function resolveLegacyRedirect(pathname: string): string | null {
     const slug = normalized.slice('/docs/en/'.length);
 
     return slug ? `/docs/${slug}` : '/docs/intro';
+  }
+
+  if (normalized === '/examples/f-db-management-flow') {
+    return '/examples/schema-designer';
   }
 
   return null;

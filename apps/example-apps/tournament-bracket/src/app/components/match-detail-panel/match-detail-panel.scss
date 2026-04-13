@@ -1,0 +1,228 @@
+:host {
+  display: block;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.detail-panel {
+  width: 280px;
+  background: var(--bracket-surface-elevated);
+  border: 1px solid var(--bracket-border);
+  border-radius: var(--bracket-radius);
+  box-shadow: var(--bracket-shadow-lg);
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--bracket-border-subtle);
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bracket-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--bracket-radius-xs);
+
+  &.upper {
+    background-color: var(--bracket-upper-bg);
+    color: var(--bracket-upper);
+  }
+
+  &.lower {
+    background-color: var(--bracket-lower-bg);
+    color: var(--bracket-lower);
+  }
+
+  &.final {
+    background-color: var(--bracket-final-bg);
+    color: var(--bracket-final);
+  }
+}
+
+.team-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bracket-text);
+}
+
+.close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--bracket-radius-xs);
+  background: transparent;
+  color: var(--bracket-text-muted);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--bracket-btn-bg);
+    color: var(--bracket-text);
+  }
+
+  mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.panel-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--bracket-text-secondary);
+
+  mat-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: var(--bracket-text-muted);
+    flex-shrink: 0;
+  }
+}
+
+.status-badge {
+  display: inline-flex;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &.completed {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+
+  &.live {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  &.upcoming {
+    background: var(--bracket-btn-bg);
+    color: var(--bracket-text-muted);
+  }
+}
+
+.matchup {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--bracket-border-subtle);
+  border-radius: var(--bracket-radius-sm);
+  overflow: hidden;
+}
+
+.matchup-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--bracket-border-subtle);
+  }
+
+  &.winner {
+    background: var(--bracket-accent-soft);
+
+    .team-name {
+      font-weight: 600;
+      color: var(--bracket-text);
+    }
+
+    .team-score {
+      color: var(--bracket-accent);
+      font-weight: 700;
+    }
+  }
+}
+
+.team-name {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--bracket-text-secondary);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--bracket-accent);
+    text-decoration: underline;
+  }
+}
+
+.team-score {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bracket-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.team-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 0;
+  border-radius: var(--bracket-radius-sm);
+  background: var(--bracket-btn-bg);
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--bracket-text);
+  font-variant-numeric: tabular-nums;
+
+  .wins & {
+    color: #16a34a;
+  }
+
+  .losses & {
+    color: #ef4444;
+  }
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--bracket-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

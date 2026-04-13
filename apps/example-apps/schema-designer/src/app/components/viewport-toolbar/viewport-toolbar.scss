@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding: 3px;
+  background-color: var(--editor-surface);
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius-sm);
+  box-shadow: var(--editor-shadow);
+  pointer-events: all;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 26px;
+  border: none;
+  border-radius: calc(var(--editor-radius-sm) - 2px);
+  background: transparent;
+  color: var(--editor-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: var(--editor-btn-hover);
+    color: var(--editor-text);
+  }
+
+  &:active {
+    background: var(--editor-btn-active);
+  }
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--editor-border);
+  margin: 0 2px;
+}

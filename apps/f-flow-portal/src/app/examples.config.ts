@@ -218,19 +218,16 @@ export const EXAMPLES_CONFIGURATION = {
         () => import('@foblex/examples/extensions/background-example/example'),
       ),
       defineLazyComponent(
-        'db-management-flow',
-        () =>
-          import(
-            '@foblex/pro-examples/db-management-example/components/flow/db-management-flow.component'
-          ),
+        'schema-designer',
+        () => import('./reference-app-previews/schema-designer.preview'),
       ),
       defineLazyComponent(
         'uml-diagram-example',
-        () => import('@foblex/pro-examples/uml-diagram-example'),
+        () => import('./reference-app-previews/uml-diagram-example.preview'),
       ),
       defineLazyComponent(
         'tournament-bracket',
-        () => import('@foblex/pro-examples/tournament-bracket'),
+        () => import('./reference-app-previews/tournament-bracket.preview'),
       ),
       defineLazyComponent(
         'grid-system',
@@ -1076,10 +1073,10 @@ function proExamplesGroup() {
       },
     },
     {
-      text: 'DB Management',
-      link: 'f-db-management-flow',
+      text: 'Schema Designer',
+      link: 'schema-designer',
       description:
-        'Database workflow builder in Angular. Nodes, CRUD connections and interactive diagram with live demo.',
+        'Interactive schema modeler with table nodes, inline column editing, relation toolbars, context menus, selection area, and minimap.',
       image: './previews/examples/db-management-flow.light.png',
       image_dark: './previews/examples/db-management-flow.dark.png',
       image_width: 806,
@@ -1090,7 +1087,7 @@ function proExamplesGroup() {
       text: 'UML Diagram',
       link: 'uml-diagram-example',
       description:
-        'Build UML diagrams in Angular with Foblex Flow. Class nodes, relationships and auto-layout demo.',
+        'Layered UML surface with package groups, relation filters, search, custom markers, details panel, and viewport controls.',
       image: './previews/examples/uml-diagram-example.light.png',
       image_dark: './previews/examples/uml-diagram-example.dark.png',
       image_width: 821,
@@ -1101,7 +1098,7 @@ function proExamplesGroup() {
       text: 'Tournament Bracket',
       link: 'tournament-bracket',
       description:
-        'Create a tournament bracket in Angular. Automatic match connections, updates and live demo.',
+        'Tournament bracket demo with multiple layout strategies, bracket visibility filters, match drill-down, team stats, and minimap.',
       image: './previews/examples/tournament-bracket.light.png',
       image_dark: './previews/examples/tournament-bracket.dark.png',
       image_width: 821,

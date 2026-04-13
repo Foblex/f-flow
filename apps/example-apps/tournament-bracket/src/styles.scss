@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@use 'styles/theme';
+
+@include mat.core();
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--bracket-font);
+  background-color: var(--bracket-bg);
+  color: var(--bracket-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

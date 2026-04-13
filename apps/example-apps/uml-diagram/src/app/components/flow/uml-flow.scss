@@ -1,0 +1,203 @@
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-family: var(--uml-font);
+  background: var(--uml-bg);
+}
+
+// --- Connections ---
+
+::ng-deep uml-flow {
+  .f-background {
+    circle {
+      fill: var(--uml-grid-color);
+    }
+  }
+
+  .f-line-alignment {
+    .f-line {
+      border: 0.5px dashed var(--uml-border-hover);
+    }
+  }
+
+  .f-connection.uml-relation {
+    color: var(--uml-connection-color);
+    transition: opacity 0.25s ease;
+
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      transition:
+        stroke 0.2s ease,
+        stroke-width 0.15s ease;
+    }
+
+    .f-marker {
+      transition: fill 0.2s ease;
+
+      path {
+        fill: currentColor;
+        stroke: currentColor;
+      }
+    }
+
+    .f-connection-content {
+      pointer-events: none;
+    }
+
+    &.connection-highlighted {
+      .f-connection-path {
+        stroke-width: 2.5;
+      }
+    }
+
+    &.connection-dimmed {
+      opacity: 0.08;
+    }
+  }
+
+  .f-connection.relation-dependency,
+  .f-connection.relation-realization {
+    .f-connection-path {
+      stroke-dasharray: 6 5;
+    }
+  }
+
+  .f-connection.relation-composition {
+    color: var(--uml-rel-composition);
+  }
+  .f-connection.relation-aggregation {
+    color: var(--uml-rel-aggregation);
+  }
+  .f-connection.relation-association {
+    color: var(--uml-rel-association);
+  }
+  .f-connection.relation-inheritance {
+    color: var(--uml-rel-inheritance);
+  }
+  .f-connection.relation-dependency {
+    color: var(--uml-rel-dependency);
+  }
+  .f-connection.relation-realization {
+    color: var(--uml-rel-realization);
+  }
+
+  .f-connection.relation-realization {
+    .uml-marker-triangle.is-open path {
+      fill: transparent;
+      stroke-width: 1.2;
+    }
+  }
+
+  .f-connection.relation-aggregation {
+    .uml-marker-diamond path {
+      fill: transparent;
+      stroke-width: 1.2;
+    }
+  }
+
+  .f-connection.relation-association {
+    .uml-marker-arrow path {
+      fill: transparent;
+      stroke-width: 1;
+    }
+  }
+
+  // --- Minimap ---
+
+  .f-minimap {
+    position: absolute;
+    bottom: 60px;
+    right: 14px;
+    width: 160px;
+    height: 100px;
+    border: 1px solid var(--uml-border);
+    border-radius: var(--uml-radius-sm);
+    background: var(--uml-surface-elevated);
+    backdrop-filter: blur(var(--uml-blur));
+    -webkit-backdrop-filter: blur(var(--uml-blur));
+    box-shadow: var(--uml-shadow-md);
+    overflow: hidden;
+
+    .f-minimap-node {
+      fill: var(--uml-text-muted);
+      opacity: 0.4;
+      rx: 2;
+      ry: 2;
+    }
+
+    .f-minimap-view {
+      fill: var(--uml-accent-soft);
+      stroke: var(--uml-accent);
+      stroke-width: 1;
+      rx: 2;
+      ry: 2;
+    }
+  }
+}
+
+// --- Groups ---
+
+.uml-group {
+  border-radius: var(--uml-radius);
+  border: 1.5px dashed;
+  color: var(--uml-text);
+  min-width: 280px;
+  min-height: 200px;
+  padding: 12px;
+  padding-top: 48px;
+
+  &.layer-domain {
+    border-color: var(--uml-domain-border);
+    background: var(--uml-domain-bg);
+  }
+
+  &.layer-application {
+    border-color: var(--uml-application-border);
+    background: var(--uml-application-bg);
+  }
+
+  &.layer-infrastructure {
+    border-color: var(--uml-infrastructure-border);
+    background: var(--uml-infrastructure-bg);
+  }
+}
+
+// --- Nodes ---
+
+.uml-node {
+  display: block;
+  min-width: 200px;
+  max-width: 260px;
+  border-radius: var(--uml-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--uml-shadow-node);
+  transition: box-shadow 0.2s ease;
+
+  &.layer-domain {
+    background: var(--uml-domain-node-bg);
+    border-top: 2.5px solid var(--uml-domain);
+  }
+
+  &.layer-application {
+    background: var(--uml-application-node-bg);
+    border-top: 2.5px solid var(--uml-application);
+  }
+
+  &.layer-infrastructure {
+    background: var(--uml-infrastructure-node-bg);
+    border-top: 2.5px solid var(--uml-infrastructure);
+  }
+}

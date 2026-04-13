@@ -1,0 +1,57 @@
+<div class="legend-panel">
+  <div class="legend-header">
+    <span class="legend-title">Brackets</span>
+    <button class="show-all-btn" matTooltip="Show all" (click)="onShowAll()">
+      <mat-icon>visibility</mat-icon>
+    </button>
+  </div>
+
+  <div class="bracket-filters">
+    <button
+      class="filter-btn upper"
+      [class.active]="isBracketVisible('upper')"
+      (click)="onToggleBracket('upper')"
+    >
+      <span class="filter-dot"></span>
+      <span class="filter-label">Upper</span>
+      <span class="filter-count">{{ stats().upper }}</span>
+    </button>
+
+    <button
+      class="filter-btn lower"
+      [class.active]="isBracketVisible('lower')"
+      (click)="onToggleBracket('lower')"
+    >
+      <span class="filter-dot"></span>
+      <span class="filter-label">Lower</span>
+      <span class="filter-count">{{ stats().lower }}</span>
+    </button>
+
+    <button
+      class="filter-btn final"
+      [class.active]="isBracketVisible('final')"
+      (click)="onToggleBracket('final')"
+    >
+      <span class="filter-dot"></span>
+      <span class="filter-label">Final</span>
+      <span class="filter-count">{{ stats().final }}</span>
+    </button>
+  </div>
+
+  <div class="legend-divider"></div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-number completed">{{ stats().completed }}</span>
+      <span class="stat-text">Played</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number live">{{ stats().live }}</span>
+      <span class="stat-text">Live</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number upcoming">{{ stats().upcoming }}</span>
+      <span class="stat-text">Soon</span>
+    </div>
+  </div>
+</div>

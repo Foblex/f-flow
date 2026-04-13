@@ -1,0 +1,81 @@
+:root {
+  --bracket-font:
+    'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --bracket-bg: #f8f9fb;
+  --bracket-surface: #ffffff;
+  --bracket-surface-elevated: #ffffff;
+  --bracket-border: #e4e7ec;
+  --bracket-border-subtle: #f0f2f5;
+  --bracket-border-hover: #d0d5dd;
+
+  --bracket-text: #1a1d26;
+  --bracket-text-secondary: #5d6679;
+  --bracket-text-muted: #98a2b3;
+
+  --bracket-accent: #6366f1;
+  --bracket-accent-soft: rgba(99, 102, 241, 0.1);
+
+  --bracket-upper: #3b82f6;
+  --bracket-upper-bg: rgba(59, 130, 246, 0.08);
+  --bracket-lower: #ef4444;
+  --bracket-lower-bg: rgba(239, 68, 68, 0.08);
+  --bracket-final: #8b5cf6;
+  --bracket-final-bg: rgba(139, 92, 246, 0.08);
+  --bracket-live: #22c55e;
+
+  --bracket-score-bg: #f4f5f7;
+  --bracket-connection: #c4cad4;
+  --bracket-dot: rgba(0, 0, 0, 0.06);
+
+  --bracket-btn-bg: #f1f3f5;
+  --bracket-btn-hover: #e9ecef;
+  --bracket-btn-active: #dee2e6;
+
+  --bracket-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --bracket-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --bracket-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --bracket-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  --bracket-radius: 8px;
+  --bracket-radius-sm: 6px;
+  --bracket-radius-xs: 4px;
+
+  &.dark {
+    --bracket-bg: #0c0e14;
+    --bracket-surface: #171b24;
+    --bracket-surface-elevated: #1e2330;
+    --bracket-border: #2a3040;
+    --bracket-border-subtle: #222838;
+    --bracket-border-hover: #3a4258;
+
+    --bracket-text: #e8ecf4;
+    --bracket-text-secondary: #8b95a8;
+    --bracket-text-muted: #5a6478;
+
+    --bracket-accent: #818cf8;
+    --bracket-accent-soft: rgba(129, 140, 248, 0.15);
+
+    --bracket-upper: #60a5fa;
+    --bracket-upper-bg: rgba(96, 165, 250, 0.1);
+    --bracket-lower: #f87171;
+    --bracket-lower-bg: rgba(248, 113, 113, 0.1);
+    --bracket-final: #a78bfa;
+    --bracket-final-bg: rgba(167, 139, 250, 0.1);
+    --bracket-live: #4ade80;
+
+    --bracket-score-bg: #252b38;
+    --bracket-connection: #3a4258;
+    --bracket-dot: rgba(255, 255, 255, 0.04);
+
+    --bracket-btn-bg: #252b38;
+    --bracket-btn-hover: #2e3546;
+    --bracket-btn-active: #3a4254;
+
+    --bracket-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --bracket-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --bracket-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --bracket-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}

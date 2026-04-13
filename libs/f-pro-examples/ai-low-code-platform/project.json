@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "name": "pro-example-ai-low-code-platform",
   "root": "libs/f-pro-examples/ai-low-code-platform",
   "projectType": "library",

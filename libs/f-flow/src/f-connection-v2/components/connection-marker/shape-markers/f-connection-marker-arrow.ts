@@ -7,12 +7,12 @@ import { coerceMarkerType } from '../utils';
   selector: 'f-connection-marker-arrow',
   standalone: true,
   template: `
-    <svg #markerElement viewBox="0 0 6 7" class="connection-marker">
-      <svg:path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
+    <svg #markerElement viewBox="0 0 6 6" class="f-marker">
+      <svg:path d="M0,0 L6,3 0,6Z" />
     </svg>
   `,
   host: {
-    class: 'f-component f-connection-marker',
+    class: 'f-component',
     style: 'display: none;',
   },
   providers: [{ provide: F_CONNECTION_MARKER, useExisting: FConnectionMarkerArrow }],

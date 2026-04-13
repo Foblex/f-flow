@@ -1,0 +1,50 @@
+<f-flow fDraggable (fFullRendered)="flowRendered()" (click)="onCanvasClick()">
+  <f-canvas fZoom [fZoomMinimum]="0.2" [fZoomMaximum]="2">
+    @for (connection of state.connections(); track connection.id) {
+    <f-connection
+      [class.connection-highlighted]="isConnectionHighlighted(connection.id)"
+      [class.connection-dimmed]="isConnectionDimmed(connection.id)"
+      [fReassignDisabled]="true"
+      [fSelectionDisabled]="true"
+      fBehavior="fixed"
+      fType="segment"
+      [fOutputId]="connection.from"
+      [fInputId]="connection.to"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (match of state.visibleMatches(); track match.id) {
+    <div
+      class="bracket-node"
+      fNode
+      [fNodeId]="match.id"
+      [fNodePosition]="match.position!"
+      fNodeOutput
+      [fOutputId]="match.id"
+      fOutputConnectableSide="right"
+      fNodeInput
+      [fInputId]="match.id"
+      fInputConnectableSide="left"
+      [fNodeDraggingDisabled]="true"
+    >
+      <match-node
+        [match]="match"
+        [isHighlighted]="isHighlighted(match.id)"
+        [isDimmed]="isDimmed(match.id)"
+        [isSelected]="isSelected(match.id)"
+        (matchClick)="onMatchClick($event)"
+        (teamClick)="onTeamClick($event)"
+      />
+    </div>
+    }
+  </f-canvas>
+
+  <f-minimap [fMinSize]="2000" />
+</f-flow>
+
+<bracket-legend />
+<bracket-toolbar />
+
+@if (hasDetailPanel()) {
+<match-detail-panel />
+}

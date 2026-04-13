@@ -1,0 +1,87 @@
+:root {
+  --editor-font: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --editor-bg: #f4f5f7;
+  --editor-surface: #ffffff;
+  --editor-surface-elevated: #ffffff;
+  --editor-border: #e2e5ea;
+  --editor-border-subtle: #eef0f3;
+
+  --editor-primary: #6366f1;
+  --editor-primary-hover: #4f46e5;
+  --editor-primary-soft: rgba(99, 102, 241, 0.12);
+  --editor-primary-muted: rgba(99, 102, 241, 0.06);
+
+  --editor-text: #1e293b;
+  --editor-text-secondary: #64748b;
+  --editor-text-muted: #94a3b8;
+  --editor-text-on-primary: #ffffff;
+
+  --editor-amber: #d97706;
+  --editor-cyan: #06b6d4;
+  --editor-red: #ef4444;
+  --editor-red-soft: rgba(239, 68, 68, 0.08);
+
+  --editor-btn-bg: #f1f3f5;
+  --editor-btn-hover: #e9ecef;
+  --editor-btn-active: #dee2e6;
+
+  --editor-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --editor-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --editor-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --editor-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  --editor-canvas-dot: rgba(0, 0, 0, 0.08);
+  --editor-snap-connection: rgba(148, 163, 184, 0.6);
+  --editor-alignment-line: rgba(99, 102, 241, 0.35);
+  --editor-connection: #94a3b8;
+  --editor-connection-selected: var(--editor-primary);
+
+  --editor-group-bg: rgba(99, 102, 241, 0.04);
+  --editor-group-text: var(--editor-text-secondary);
+
+  --editor-radius: 10px;
+  --editor-radius-sm: 6px;
+  --editor-radius-xs: 4px;
+
+  &.dark {
+    --editor-bg: #0c0e14;
+    --editor-surface: #171b24;
+    --editor-surface-elevated: #1e2330;
+    --editor-border: #2a3040;
+    --editor-border-subtle: #222838;
+
+    --editor-primary: #818cf8;
+    --editor-primary-hover: #a5b4fc;
+    --editor-primary-soft: rgba(129, 140, 248, 0.15);
+    --editor-primary-muted: rgba(129, 140, 248, 0.06);
+
+    --editor-text: #e8ecf4;
+    --editor-text-secondary: #8b95a8;
+    --editor-text-muted: #5a6478;
+    --editor-text-on-primary: #0c0e14;
+
+    --editor-amber: #fbbf24;
+    --editor-cyan: #22d3ee;
+    --editor-red: #f87171;
+    --editor-red-soft: rgba(248, 113, 113, 0.1);
+
+    --editor-btn-bg: #252b38;
+    --editor-btn-hover: #2e3546;
+    --editor-btn-active: #3a4254;
+
+    --editor-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --editor-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --editor-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --editor-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    --editor-canvas-dot: rgba(255, 255, 255, 0.06);
+    --editor-snap-connection: rgba(148, 163, 184, 0.3);
+    --editor-alignment-line: rgba(129, 140, 248, 0.4);
+    --editor-connection: #5a6478;
+    --editor-connection-selected: var(--editor-primary);
+
+    --editor-group-bg: rgba(129, 140, 248, 0.04);
+  }
+}

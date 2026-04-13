@@ -1,0 +1,57 @@
+<f-flow fDraggable
+        (contextmenu)="onContextMenu($event)"
+        [cdkContextMenuTriggerFor]="menu.template()"
+        (cdkContextMenuClosed)="menu.dispose()"
+        (fFullRendered)="onInitialized()"
+        (fReassignConnection)="onReassignConnection($event)"
+        (fCreateConnection)="onCreateConnection($event)"
+        (fSelectionChange)="onSelectionChange($event)">
+  <f-background>
+    <f-circle-pattern />
+  </f-background>
+  <f-magnetic-lines />
+  <f-canvas fZoom (fCanvasChange)="onCanvasChange($event)">
+    <f-connection-for-create fBehavior="fixed" fType="straight">
+      <f-connection-marker-circle/>
+      <f-connection-marker-arrow/>
+    </f-connection-for-create>
+    <f-snap-connection fBehavior="fixed" fType="segment" [fSnapThreshold]="100">
+      <f-connection-marker-circle/>
+      <f-connection-marker-arrow/>
+    </f-snap-connection>
+
+    @for (connection of store.connections(); track connection.id) {
+      <f-connection [fConnectionId]="connection.id"
+                    fBehavior="fixed"
+                    fType="segment"
+                    [fOutputId]="connection.from" [fInputId]="connection.to">
+        <f-connection-marker-circle/>
+        <f-connection-marker-arrow/>
+        <div fConnectionContent relation-toolbar [connection]="connection"></div>
+      </f-connection>
+    }
+
+    @for (group of store.groups(); track group.id) {
+      <div fGroup [fGroupId]="group.id" [fGroupParentId]="group.parentId" [fGroupPosition]="group.position" fDragHandle fAutoExpandOnChildHit fIncludePadding fAutoSizeToFitChildren fGroupSelectionDisabled>
+        <div class="group-label">{{ group.name }}</div>
+      </div>
+    }
+
+    @for (table of store.tables(); track table.id) {
+      <table-node [table]="table"
+                  [fNodeId]="table.id"
+                  fNode
+                  [fConnectOnNode]="true"
+                  [fNodeParentId]="table.parentId"
+                  [fNodePosition]="table.position"
+                  (fNodePositionChange)="onMoveTable($event, table)">
+      </table-node>
+    }
+
+  </f-canvas>
+  <f-selection-area />
+  <f-minimap [fMinSize]="2000" />
+</f-flow>
+
+<viewport-toolbar />
+<selection-menu #menu="selectionMenu" />

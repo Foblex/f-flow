@@ -1,0 +1,63 @@
+@if (match(); as m) {
+<div class="detail-panel">
+  <div class="panel-header">
+    <div class="panel-title">
+      <span class="bracket-badge" [class]="m.bracket">{{ m.phase }}</span>
+    </div>
+    <button class="close-btn" type="button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="panel-body">
+    <div class="info-row">
+      <mat-icon>event</mat-icon>
+      <span>{{ m.date | date:'EEEE, MMM d, y \u2022 HH:mm' }}</span>
+    </div>
+
+    <div class="info-row">
+      <mat-icon>info</mat-icon>
+      <span class="status-badge" [class]="m.status">{{ m.status }}</span>
+    </div>
+
+    <div class="matchup">
+      @for (competitor of m.competitors; track competitor.name) {
+      <div class="matchup-row" [class.winner]="competitor.isWinner">
+        <button class="team-name" type="button" (click)="onTeamSelect(competitor.name)">
+          {{ competitor.name }}
+        </button>
+        <span class="team-score">{{ competitor.score }}</span>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+} @else if (selectedTeam()) {
+<div class="detail-panel">
+  <div class="panel-header">
+    <div class="panel-title">
+      <span class="team-title">{{ selectedTeam() }}</span>
+    </div>
+    <button class="close-btn" type="button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="panel-body">
+    <div class="team-stats">
+      <div class="stat">
+        <span class="stat-value">{{ teamMatchCount() }}</span>
+        <span class="stat-label">Matches</span>
+      </div>
+      <div class="stat wins">
+        <span class="stat-value">{{ teamWins() }}</span>
+        <span class="stat-label">Wins</span>
+      </div>
+      <div class="stat losses">
+        <span class="stat-value">{{ teamLosses() }}</span>
+        <span class="stat-label">Losses</span>
+      </div>
+    </div>
+  </div>
+</div>
+}

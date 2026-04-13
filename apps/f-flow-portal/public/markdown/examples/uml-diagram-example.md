@@ -1,36 +1,50 @@
 ---
 toc: false
 wideContent: true
+summary: "Layered UML and architecture diagram example with package groups, search, filters, custom relation markers, and detail panels."
+primaryKeyword: "angular uml diagram example"
+schemaType: "TechArticle"
+author: "Siarhei Huzarevich"
+publishedAt: "2026-03-08"
+updatedAt: "2026-04-13"
 ---
 
 # UML Architecture Diagram
 
 ## Example
 
-This page demonstrates how to build a custom diagram editor with `@foblex/flow` and Angular.
-The sample data is UML-styled, but the focus is the library integration patterns.
+This example shows how to turn Foblex Flow into a richer UML and architecture diagram surface. It combines grouped packages, custom connection markers, semantic relation styling, search, filtering, and side-panel inspection without introducing a separate graph framework.
 
-::: ng-component <uml-diagram-example></uml-diagram-example> [height]="1080"
+::: ng-component <uml-diagram-example></uml-diagram-example> [height]="600"
 :::
 
-## Library Building Blocks Used
+## User-Facing Capabilities
 
-- `f-flow` as the interaction root.
-- `f-canvas` with `fZoom` for viewport and scale control.
-- `fNode` and `fGroup` for rendering movable graph elements.
-- `fConnection` with explicit routing sides, connection behavior, and line types.
-- Custom SVG markers via `fMarker` for relation semantics.
-- `f-background` and `f-line-alignment` for canvas readability.
-- Programmatic viewport controls: fit to screen and reset center.
-- Standalone Angular composition with local state for nodes, groups, and connections.
+- Explore a multi-package UML-style architecture map on a large canvas.
+- Drag package groups and contained classes while preserving their relations.
+- Filter the view by architectural layer.
+- Filter the view by relation kind.
+- Search across class names, stereotypes, attributes, and methods.
+- Select a class to inspect its members and connected relations.
+- Select a relation to inspect endpoints, multiplicity, and labels.
+- Use minimap, zoom, fit-to-screen, reset zoom, theme toggle, and alignment helpers.
 
-## Why This Matters For The Library
+## Foblex Flow Features Used
 
-`@foblex/flow` is domain-agnostic. This example shows how library primitives can be composed into a structured, production-style diagram surface with custom rendering and routing logic.
-You can replace UML data with any domain model and keep the same flow architecture.
+- `f-flow` and `f-canvas` as the diagram root.
+- `fZoom` for viewport interaction.
+- `fNode` for UML class cards.
+- `fGroup` for package containers.
+- `fDragHandle` for movable classes and groups.
+- `fAutoSizeToFitChildren`, `fAutoExpandOnChildHit`, and `fIncludePadding` for package-group behavior.
+- `fConnection` for UML relations with explicit source and target ids.
+- `fMarker` for custom SVG markers that encode relation semantics.
+- `fBackground`, `fCirclePattern`, `fLineAlignment`, and `fMinimap` for canvas readability and navigation.
 
-## Source Code
+## Why It Matters
 
-The full project source for this example is in:
+This is a good reference if you need more than plain boxes and arrows. The example demonstrates that the same Foblex Flow primitives used for node editors can also power architecture maps, dependency diagrams, or domain-specific modeling tools with their own semantics and visual language.
 
-- [`libs/f-pro-examples/uml-diagram-example`](https://github.com/Foblex/f-flow/tree/main/libs/f-pro-examples/uml-diagram-example)
+## Links
+
+- Source code: [apps/example-apps/uml-diagram](https://github.com/Foblex/f-flow/tree/main/apps/example-apps/uml-diagram)

@@ -1,0 +1,35 @@
+{
+  "name": "@foblex/example-uml-diagram",
+  "private": true,
+  "description": "Standalone UML diagram example app for Foblex Flow.",
+  "scripts": {
+    "dev": "npx nx serve uml-diagram --configuration development",
+    "build": "npx nx build uml-diagram",
+    "lint": "npx nx lint uml-diagram"
+  },
+  "dependencies": {
+    "@angular/animations": "18.2.13",
+    "@angular/cdk": "18.2.14",
+    "@angular/common": "18.2.13",
+    "@angular/core": "18.2.13",
+    "@angular/material": "18.2.14",
+    "@angular/platform-browser": "18.2.13",
+    "@foblex/2d": "^1.2.1",
+    "@foblex/flow": "18.4.0",
+    "@foblex/mediator": "1.1.3",
+    "@foblex/platform": "1.0.4",
+    "@foblex/utils": "1.1.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "18.2.19",
+    "@angular/cli": "18.2.19",
+    "@angular/compiler-cli": "18.2.13",
+    "angular-eslint": "20.2.0",
+    "eslint": "^9.33.0",
+    "nx": "22.2.7",
+    "typescript": "~5.5.2"
+  }
+}

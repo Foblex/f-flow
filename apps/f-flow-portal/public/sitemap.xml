@@ -529,7 +529,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://flow.foblex.com/examples/f-db-management-flow</loc>
+    <loc>https://flow.foblex.com/examples/schema-designer</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

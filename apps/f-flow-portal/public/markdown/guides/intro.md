@@ -32,7 +32,7 @@ Explore live demos built with Foblex Flow:
 
 - [Call Flow Editor](https://github.com/Foblex/f-flow-example)
 - [Logic Configuration Tool](https://flow.foblex.com/examples/ai-low-code-platform)
-- [Database Flow Manager](https://flow.foblex.com/examples/f-db-management-flow)
+- [Schema Designer](https://flow.foblex.com/examples/schema-designer)
 - [Examples overview](./examples/overview)
 
 You can also browse the source code for all demos in `libs/f-examples/**`.

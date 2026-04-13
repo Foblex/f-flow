@@ -1,0 +1,116 @@
+:host {
+  display: block;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--bracket-surface-elevated);
+  border: 1px solid var(--bracket-border);
+  border-radius: var(--bracket-radius);
+  box-shadow: var(--bracket-shadow-lg);
+  pointer-events: all;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.toolbar-label {
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bracket-text-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background-color: var(--bracket-border);
+}
+
+.layout-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--bracket-btn-bg);
+  border-radius: var(--bracket-radius-sm);
+}
+
+.layout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--bracket-radius-xs);
+  background: transparent;
+  color: var(--bracket-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--bracket-text);
+    background: var(--bracket-btn-hover);
+  }
+
+  &.active {
+    color: var(--bracket-accent);
+    background: var(--bracket-surface);
+    box-shadow: var(--bracket-shadow-sm);
+  }
+
+  mat-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--bracket-radius-xs);
+  background: transparent;
+  color: var(--bracket-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--bracket-text);
+    background: var(--bracket-btn-hover);
+  }
+
+  &:active {
+    background: var(--bracket-btn-active);
+  }
+
+  mat-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}

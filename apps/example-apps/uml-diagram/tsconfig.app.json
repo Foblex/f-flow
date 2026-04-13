@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc/apps/example-apps/uml-diagram"
+  },
+  "files": ["src/main.ts"],
+  "include": ["src/**/*.d.ts"]
+}

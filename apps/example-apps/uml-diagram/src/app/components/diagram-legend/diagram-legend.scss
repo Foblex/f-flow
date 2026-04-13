@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.legend-panel {
+  width: 192px;
+  background: var(--uml-surface-elevated);
+  backdrop-filter: blur(var(--uml-blur));
+  -webkit-backdrop-filter: blur(var(--uml-blur));
+  border: 1px solid var(--uml-border);
+  border-radius: var(--uml-radius);
+  box-shadow: var(--uml-shadow-lg);
+  pointer-events: all;
+  padding: 8px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  background: var(--uml-btn-bg);
+  border: 1px solid transparent;
+  border-radius: var(--uml-radius-sm);
+  margin-bottom: 8px;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:focus-within {
+    border-color: var(--uml-accent);
+    background: transparent;
+  }
+}
+
+.search-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: var(--uml-text-muted);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 11px;
+  color: var(--uml-text);
+  font-family: var(--uml-font);
+  min-width: 0;
+
+  &::placeholder {
+    color: var(--uml-text-muted);
+  }
+}
+
+.filter-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.layer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--uml-border);
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: var(--uml-font);
+  color: var(--uml-text-muted);
+  transition: all 0.15s ease;
+  opacity: 0.5;
+
+  &.active {
+    opacity: 1;
+    color: var(--uml-text-secondary);
+    background: var(--uml-btn-bg);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.domain.active {
+    border-color: var(--uml-domain-border);
+    color: var(--uml-domain);
+    background: var(--uml-domain-bg);
+  }
+
+  &.application.active {
+    border-color: var(--uml-application-border);
+    color: var(--uml-application);
+    background: var(--uml-application-bg);
+  }
+
+  &.infrastructure.active {
+    border-color: var(--uml-infrastructure-border);
+    color: var(--uml-infrastructure);
+    background: var(--uml-infrastructure-bg);
+  }
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  .domain & {
+    background: var(--uml-domain);
+  }
+  .application & {
+    background: var(--uml-application);
+  }
+  .infrastructure & {
+    background: var(--uml-infrastructure);
+  }
+}
+
+.divider {
+  height: 1px;
+  background: var(--uml-border);
+  margin: 8px 0;
+}
+
+.relation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px;
+}
+
+.rel-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 2px;
+  border: 1px solid transparent;
+  border-radius: var(--uml-radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  opacity: 0.3;
+
+  &.active {
+    opacity: 1;
+    background: var(--uml-btn-bg);
+    border-color: var(--uml-border);
+  }
+
+  &:hover {
+    opacity: 1;
+    background: var(--uml-btn-hover);
+  }
+}
+
+.rel-marker {
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+
+  &.composition {
+    background: var(--uml-rel-composition);
+  }
+  &.aggregation {
+    background: var(--uml-rel-aggregation);
+  }
+  &.association {
+    background: var(--uml-rel-association);
+  }
+  &.inheritance {
+    background: var(--uml-rel-inheritance);
+  }
+  &.dependency {
+    background: none;
+    border-top: 2px dashed var(--uml-rel-dependency);
+  }
+  &.realization {
+    background: none;
+    border-top: 2px dashed var(--uml-rel-realization);
+  }
+
+  &.dashed {
+    height: 0;
+  }
+}
+
+.rel-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--uml-text-muted);
+  letter-spacing: 0.02em;
+}

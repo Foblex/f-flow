@@ -48,16 +48,16 @@ export const SHOWCASE: IShowcaseItem[] = [
     ],
   },
   {
-    name: 'DB Management System',
+    name: 'Schema Designer',
     tags: ['Dev Tools'],
     description:
-      'Database-oriented workflow interface for managing and interacting with data through a visual editor.',
+      'Visual schema design interface with editable entities, relations, and richer editor interactions.',
     imageUrl: './showcase/images/db-management-flow.light.png',
     imageUrlDark: './showcase/images/db-management-flow.dark.png',
     links: [
       {
         text: 'Demo',
-        url: 'https://flow.foblex.com/examples/f-db-management-flow',
+        url: 'https://flow.foblex.com/examples/schema-designer',
       },
       { text: 'Sources', url: 'https://github.com/Foblex/f-flow' },
     ],
