@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## Unreleased
 
+### Highlights
+
+- **Workspace reorganized around Nx apps/libs** - the repository now uses independent `apps/*` and `libs/*` projects instead of the older flat workspace layout, which makes example apps, portal builds, and package publishing easier to reason about.
+- **Layout engine support expanded** - Foblex Flow now ships a shared layout-engine abstraction, published Dagre and ELK adapters, and dedicated manual plus auto-layout examples for both engines.
+- **Render lifecycle became explicit** - `fNodesRendered` and `fFullRendered` are now emitted separately, with the internal flow render lifecycle extracted into dedicated handlers instead of staying embedded in `FFlowComponent`.
+- **Reference apps were rebuilt as standalone Angular apps** - Schema Designer, UML Diagram, Tournament Bracket, and Call Center Flow now live under `apps/example-apps/*`, have dedicated portal pages, and can be built or served independently.
+- **Cypress coverage was extended around editor interactions** - regression tests now cover palette node creation, assign-node-on-drop flows, connector side behavior, resize-linked redraws, and drag-to-group scenarios.
+
+### Features
+
+- Add the core layout-engine integration surface plus `provideFLayout(...)`.
+- Publish `@foblex/flow-dagre-layout` and `@foblex/flow-elk-layout`.
+- Add Dagre and ELK examples in both direct-layout and auto-layout variants.
+- Add `fNodesRendered` and `fFullRendered` outputs for finer-grained flow render lifecycle tracking.
+- Ship built-in connection markers and keep connection redraw fully inside the main `f-flow` package.
+- Add standalone reference apps for schema design, UML architecture diagrams, tournament brackets, and call-center IVR routing.
+
+### Improvements
+
+- Split the old examples workspace into independently buildable Nx projects, including standalone example apps and portal-driven embeds.
+- Automate portal prerender route generation, sitemap generation, and embedded-page verification in the portal toolchain.
+- Standardize portal reference-app previews, markdown example pages, and per-app `README.md` files for the standalone examples.
+- Expand end-to-end regression coverage for interaction-heavy example scenarios.
+
+### Fixes
+
+- Correct group bounds calculations and flow surface sizing so grouped layouts and viewport sizing stay in sync.
+
+### Documentation
+
+- Add and refresh standalone example documentation for Schema Designer, UML Diagram, Tournament Bracket, and Call Center Flow.
+- Update the main README, examples overview, and portal metadata to reflect layout-engine demos and the expanded reference-app lineup.
+
 ### ⚠️ Breaking Changes
 
 - Remove the deprecated `f-connection-worker` public API. Connection redraw keeps using the built-in chunked pipeline and may still use the internal worker path for large diagrams.

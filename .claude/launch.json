@@ -3,8 +3,11 @@
   "configurations": [
     {
       "name": "portal",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["nx", "serve", "portal"],
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm use 22.19.0 && npx nx serve portal"
+      ],
       "port": 4200
     },
     {
