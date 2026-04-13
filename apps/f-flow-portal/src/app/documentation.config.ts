@@ -36,6 +36,7 @@ export const DOCUMENTATION_CONFIGURATION = {
       interactionGroup(),
       helpersGroup(),
       seoPagesGroup(),
+      servicesGroup(),
     ),
     provideComponents([
       defineLazyComponent(
@@ -248,6 +249,18 @@ function introductionGroup(): INavigationGroup {
       pageTitle: 'Foblex Flow Roadmap and Release Timeline',
       description:
         'Track what is planned, what is already on the way, and which releases shipped each major Foblex Flow capability.',
+    },
+  ]);
+}
+
+function servicesGroup(): INavigationGroup {
+  return defineNavigationGroup('Services', [
+    {
+      link: 'consulting',
+      text: 'Custom Development and Consulting',
+      pageTitle: 'Custom Development and Consulting - Foblex Flow',
+      description:
+        'The Foblex team builds custom Angular node editors, workflow builders, and interactive diagram interfaces on top of Foblex Flow.',
     },
   ]);
 }

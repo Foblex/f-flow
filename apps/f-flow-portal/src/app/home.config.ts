@@ -42,6 +42,10 @@ export const HOME_CONFIGURATION = {
         text: 'Showcase',
         routerLink: '/showcase/overview',
       },
+      {
+        text: 'Hire Us',
+        routerLink: '/docs/consulting',
+      },
     ]),
     provideHomeFeatures([
       {

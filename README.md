@@ -148,6 +148,19 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 - [Roadmap](https://github.com/Foblex/f-flow/blob/main/ROADMAP.md)
 - [Changelog](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md)
 
+## Custom Development and Consulting
+
+Need a custom Angular node editor, workflow builder, or interactive diagram?
+
+The Foblex team offers consulting, custom development, and integration support. Whether you need a production-ready editor built from scratch or hands-on help integrating Foblex Flow into your product, we bring deep Angular and node-based UI expertise to every engagement.
+
+- Custom node editors and workflow builders
+- Architecture review and integration planning
+- Migration from other frameworks to Foblex Flow
+- Priority support and dedicated development
+
+[Learn more](https://flow.foblex.com/docs/consulting) | [Contact us: support@foblex.com](mailto:support@foblex.com)
+
 ## Community and Support
 
 - [GitHub Repository](https://github.com/Foblex/f-flow)
