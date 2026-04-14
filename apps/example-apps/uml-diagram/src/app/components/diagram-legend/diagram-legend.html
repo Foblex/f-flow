@@ -1,0 +1,92 @@
+<div class="legend-panel">
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Search..."
+      [value]="state.searchQuery()"
+      (input)="onSearchInput($event)"
+    />
+  </div>
+
+  <div class="filter-group">
+    <button
+      class="layer-chip domain"
+      [class.active]="isLayerVisible('domain')"
+      (click)="onToggleLayer('domain')"
+    >
+      <span class="chip-dot"></span>
+      Domain
+    </button>
+    <button
+      class="layer-chip application"
+      [class.active]="isLayerVisible('application')"
+      (click)="onToggleLayer('application')"
+    >
+      <span class="chip-dot"></span>
+      Application
+    </button>
+    <button
+      class="layer-chip infrastructure"
+      [class.active]="isLayerVisible('infrastructure')"
+      (click)="onToggleLayer('infrastructure')"
+    >
+      <span class="chip-dot"></span>
+      Infra
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="relation-grid">
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('composition')"
+      (click)="onToggleRelation('composition')"
+    >
+      <span class="rel-marker composition"></span>
+      <span class="rel-label">Comp</span>
+    </button>
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('aggregation')"
+      (click)="onToggleRelation('aggregation')"
+    >
+      <span class="rel-marker aggregation"></span>
+      <span class="rel-label">Aggr</span>
+    </button>
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('association')"
+      (click)="onToggleRelation('association')"
+    >
+      <span class="rel-marker association"></span>
+      <span class="rel-label">Assoc</span>
+    </button>
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('inheritance')"
+      (click)="onToggleRelation('inheritance')"
+    >
+      <span class="rel-marker inheritance"></span>
+      <span class="rel-label">Inher</span>
+    </button>
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('dependency')"
+      (click)="onToggleRelation('dependency')"
+    >
+      <span class="rel-marker dependency dashed"></span>
+      <span class="rel-label">Dep</span>
+    </button>
+    <button
+      class="rel-chip"
+      [class.active]="isRelationVisible('realization')"
+      (click)="onToggleRelation('realization')"
+    >
+      <span class="rel-marker realization dashed"></span>
+      <span class="rel-label">Real</span>
+    </button>
+  </div>
+</div>

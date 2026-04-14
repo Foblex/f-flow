@@ -1,0 +1,58 @@
+@let model = viewModel(); @if (model) {
+
+<flow-action-panel (processAction)="processAction($event)" (resetFlow)="reset()" />
+<flow-palette />
+<f-flow
+  fDraggable
+  (fFullRendered)="editorLoaded()"
+  (fMoveNodes)="moveNodes($event)"
+  (fCreateConnection)="createConnection($event)"
+  (fReassignConnection)="reassignConnection($event)"
+  (fCreateNode)="createNode($event)"
+  (fSelectionChange)="changeSelection($event)"
+>
+  <f-background>
+    <f-circle-pattern />
+  </f-background>
+  <f-line-alignment [fAlignThreshold]="20" />
+  <f-selection-area />
+  <f-canvas
+    fZoom
+    [scale]="model?.transform?.scale"
+    [position]="model?.transform?.position"
+    [debounceTime]="fCanvasChangeEventDebounce"
+    (fCanvasChange)="changeCanvasTransform($event)"
+  >
+    @for (connection of connections(); track connection.id) {
+    <f-connection
+      fBehavior="fixed"
+      [fConnectionId]="connection.id"
+      [fOffset]="32"
+      fType="segment"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+      fInputSide="calculate"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    }
+    <f-connection-for-create fType="segment" [fOffset]="0">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+    @for (node of nodes(); track node.id) {
+    <flow-node
+      fNode
+      [fNodeId]="node.id"
+      [viewModel]="node"
+      fNodeInput
+      [fInputId]="node.input"
+      [fInputDisabled]="!node.input"
+      [fNodePosition]="node.position"
+      (removeConnection)="removeConnection($event)"
+    >
+    </flow-node>
+    }
+  </f-canvas>
+  <f-minimap [fMinSize]="2000" />
+</f-flow>
+}

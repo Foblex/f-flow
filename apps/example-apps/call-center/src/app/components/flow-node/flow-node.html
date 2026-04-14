@@ -1,0 +1,38 @@
+@let model = viewModel();
+
+<flow-node-header
+  [(expanded)]="expanded"
+  (expandedChange)="toggle($event)"
+  [type]="model.type"
+  [description]="model.description"
+  fDragHandle
+/>
+@if (expanded()) {
+<div class="node-form" fDragBlocker>
+  @switch (model.type) { @case (nodeType.USER_INPUT) {
+  <flow-node-ivr-form [formControl]="form" />
+  } @case (nodeType.PLAY_TEXT) {
+  <flow-node-play-text-form [formControl]="form" />
+  } @case (nodeType.CHECK_SCHEDULE) {
+  <flow-node-schedule-form [formControl]="form" />
+  } @case (nodeType.QUEUE_CALL) {
+  <flow-node-queue-form [formControl]="form" />
+  } @case (nodeType.TO_OPERATOR) {
+  <flow-node-operator-form [formControl]="form" />
+  } @case (nodeType.TRANSFER_CALL) {
+  <flow-node-transfer-form [formControl]="form" />
+  } @case (nodeType.VOICE_MAIL) {
+  <flow-node-voicemail-form [formControl]="form" />
+  } }
+</div>
+
+<flow-node-body-outputs
+  [outputs]="model.outputs"
+  (removeConnection)="removeConnection.emit($event)"
+/>
+} @else {
+<flow-node-footer-outputs
+  [outputs]="model.outputs"
+  (removeConnection)="removeConnection.emit($event)"
+/>
+}

@@ -1,0 +1,24 @@
+<div fNodeInput [fInputId]="column().id" fInputConnectableSide="left"></div>
+<div fNodeOutput [fOutputId]="column().id" fOutputConnectableSide="right" [isSelfConnectable]="false"></div>
+
+<div class="key-badge">
+  @if (column().key === eColumnKey.PRIMARY) {
+    <mat-icon class="key-primary">key_vertical</mat-icon>
+  } @else if (column().key === eColumnKey.UNIQUE) {
+    <mat-icon class="key-unique">ac_unit</mat-icon>
+  } @else if (column().key === eColumnKey.INDEX) {
+    <mat-icon class="key-index">list</mat-icon>
+  }
+</div>
+
+<mat-form-field class="column-name" appearance="fill">
+  <input matInput [ngModel]="column().name" (ngModelChange)="onNameChange($event)" />
+</mat-form-field>
+
+<mat-form-field class="column-type" appearance="fill">
+  <mat-select [ngModel]="column().type" (ngModelChange)="onTypeChange($event)" panelClass="select-panel">
+    @for (type of columnTypes(); track type) {
+      <mat-option [value]="type">{{ type }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

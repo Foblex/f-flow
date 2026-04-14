@@ -1,0 +1,29 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "portal-e2e",
+  "projectType": "application",
+  "root": "apps/f-flow-portal-e2e",
+  "sourceRoot": "apps/f-flow-portal-e2e/cypress",
+  "implicitDependencies": ["portal"],
+  "tags": ["scope:portal", "type:e2e"],
+  "targets": {
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "start-server-and-test \"nx run portal:serve --configuration development --host=127.0.0.1\" http-get://127.0.0.1:4200 \"cypress run --config-file apps/f-flow-portal-e2e/cypress.config.ts\""
+      }
+    },
+    "open": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cypress open --config-file apps/f-flow-portal-e2e/cypress.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/f-flow-portal-e2e/**/*.ts\""
+      }
+    }
+  }
+}

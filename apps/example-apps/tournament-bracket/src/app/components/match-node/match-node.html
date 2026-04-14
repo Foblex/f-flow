@@ -1,0 +1,18 @@
+<div
+  class="match-card"
+  [class.highlighted]="isHighlighted()"
+  [class.dimmed]="isDimmed()"
+  [class.selected]="isSelected()"
+  tabindex="0"
+  (click)="onCardClick($event)"
+  (keydown.enter)="onCardKeydown($event)"
+  (keydown.space)="onCardKeydown($event)"
+>
+  <match-header [match]="match()" />
+
+  <div class="match-body">
+    @for (competitor of match().competitors; track competitor.name + $index; let last = $last) {
+    <competitor-row [competitor]="competitor" [isLast]="last" (teamClicked)="onTeamClick($event)" />
+    }
+  </div>
+</div>

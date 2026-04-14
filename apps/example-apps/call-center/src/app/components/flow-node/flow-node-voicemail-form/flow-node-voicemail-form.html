@@ -1,0 +1,15 @@
+<ng-container [formGroup]="form">
+  <div class="node-form">
+    <mat-form-field>
+      <textarea matInput placeholder="Greeting message" rows="2" formControlName="greeting">
+      </textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Max duration" formControlName="maxDuration">
+        @for (d of durations; track d.key) {
+        <mat-option [value]="d.key">{{ d.value }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>

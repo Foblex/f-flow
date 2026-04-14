@@ -1,0 +1,149 @@
+:host {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--editor-bg);
+}
+
+::ng-deep f-flow {
+  .f-background {
+    circle {
+      fill: var(--editor-canvas-dot);
+    }
+  }
+
+  .f-connection {
+    .f-connection-drag-handle {
+      fill: transparent;
+    }
+
+    .f-connection-selection {
+      fill: none;
+      stroke: transparent;
+      stroke-width: 20;
+      cursor: pointer;
+    }
+
+    .f-connection-path {
+      fill: none;
+      stroke: var(--editor-connection);
+      stroke-width: 1.5;
+    }
+
+    .f-marker {
+      path,
+      circle {
+        fill: var(--editor-connection);
+      }
+    }
+
+    &.f-selected {
+      .f-connection-path {
+        stroke: var(--editor-connection-selected);
+        stroke-width: 2;
+      }
+
+      .f-marker {
+        path,
+        circle {
+          fill: var(--editor-connection-selected);
+        }
+      }
+    }
+
+    &:hover {
+      .f-connection-selection {
+        stroke: var(--editor-primary);
+        opacity: 0.08;
+      }
+    }
+
+    &.f-snap-connection {
+      .f-connection-path {
+        stroke: var(--editor-snap-connection);
+        stroke-width: 1.5px;
+      }
+
+      .f-marker {
+        path,
+        circle {
+          fill: var(--editor-snap-connection);
+        }
+      }
+
+      .f-connection-selection {
+        fill: transparent !important;
+        stroke: transparent !important;
+      }
+    }
+
+    &.f-connection-for-create {
+      .f-connection-selection {
+        fill: transparent !important;
+        stroke: transparent !important;
+      }
+    }
+  }
+
+  .f-magnetic-lines {
+    .f-line {
+      border: 0.5px dashed var(--editor-alignment-line);
+    }
+  }
+
+  .f-selection-area {
+    background-color: var(--editor-primary-soft);
+    border: 1px solid var(--editor-primary);
+    border-radius: 2px;
+  }
+
+  .f-minimap {
+    background-color: var(--editor-surface);
+    border: 1px solid var(--editor-border);
+    border-radius: var(--editor-radius-sm);
+    bottom: 16px;
+    right: 16px;
+    width: 120px;
+    height: 80px;
+    box-shadow: var(--editor-shadow);
+
+    .f-minimap-node,
+    .f-minimap-group {
+      fill: var(--editor-text-secondary);
+
+      &.f-selected {
+        fill: var(--editor-primary);
+      }
+    }
+
+    .f-minimap-group {
+      opacity: 0.3;
+    }
+
+    .f-minimap-view {
+      fill: var(--editor-primary-soft);
+      stroke: var(--editor-primary);
+      stroke-width: 1;
+    }
+  }
+}
+
+.f-group {
+  display: block;
+  background-color: var(--editor-group-bg);
+  border: 1px solid transparent;
+  border-radius: var(--editor-radius);
+  padding: 44px 24px;
+
+  .group-label {
+    color: var(--editor-group-text);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: absolute;
+    top: 14px;
+    left: 16px;
+  }
+}

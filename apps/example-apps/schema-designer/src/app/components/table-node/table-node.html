@@ -1,0 +1,6 @@
+<table-header [table]="table()" fDragHandle />
+<div class="columns">
+  @for (column of table().columns; track column.id) {
+    <column-row [column]="column" [tableId]="table().id" [columnTypes]="columnTypes" />
+  }
+</div>

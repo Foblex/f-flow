@@ -1,0 +1,23 @@
+<div class="toolbar">
+  <button class="toolbar-btn" (click)="zoomIn()" title="Zoom in">
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+  <button class="toolbar-btn" (click)="zoomOut()" title="Zoom out">
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+
+  <div class="toolbar-divider"></div>
+
+  <button class="toolbar-btn" (click)="resetView()" title="Reset view">
+    <mat-icon>filter_center_focus</mat-icon>
+  </button>
+  <button class="toolbar-btn" (click)="fitToScreen()" title="Fit to screen">
+    <mat-icon>fit_screen</mat-icon>
+  </button>
+
+  <div class="toolbar-divider"></div>
+
+  <button class="toolbar-btn" (click)="toggleTheme()" title="Toggle theme">
+    <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</div>

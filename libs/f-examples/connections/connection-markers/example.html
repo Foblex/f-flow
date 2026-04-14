@@ -1,0 +1,160 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas>
+    <!-- Built-in markers are the quickest option when the default circle and arrow are enough. -->
+    <f-connection [fReassignDisabled]="true" fOutputId="1" fInputId="2" fBehavior="floating">
+      <f-connection-marker-circle [type]="eMarkerType.START_ALL_STATES" />
+      <f-connection-marker-arrow [type]="eMarkerType.END_ALL_STATES" />
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 0 }"
+      fNodeOutput
+      fOutputId="1"
+      fOutputConnectableSide="right"
+    >
+      I'm a node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 0 }"
+      fNodeInput
+      fInputId="2"
+      fInputConnectableSide="left"
+    >
+      I'm a node
+    </div>
+
+    <!-- Use svg[fMarker] when marker geometry, viewBox, and dimensions must be fully custom. -->
+    <f-connection [fReassignDisabled]="true" fOutputId="3" fInputId="4" fBehavior="floating">
+      <svg
+        viewBox="0 0 9 9"
+        fMarker
+        [type]="eMarkerType.START_ALL_STATES"
+        class="connection-marker"
+        [height]="9"
+        [width]="9"
+        [refX]="1.5"
+        [refY]="4.2"
+        markerUnits="strokeWidth"
+      >
+        <rect y="4.24219" width="6" height="6" transform="rotate(-45 0 4.24219)" />
+      </svg>
+      <svg
+        viewBox="0 0 6 7"
+        fMarker
+        [type]="eMarkerType.END_ALL_STATES"
+        class="connection-marker"
+        [height]="7"
+        [width]="6"
+        [refX]="5.5"
+        [refY]="3.5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path d="M5.99961 7L0 3.5L5.99961 0V7Z" />
+      </svg>
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 150 }"
+      fNodeOutput
+      fOutputId="3"
+      fOutputConnectableSide="right"
+    >
+      I'm a node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 150 }"
+      fNodeInput
+      fInputId="4"
+      fInputConnectableSide="left"
+    >
+      I'm a node
+    </div>
+
+    <!-- Define separate normal and selected markers only when selected connections need their own visuals. -->
+    <f-connection [fReassignDisabled]="true" fOutputId="5" fInputId="6" fBehavior="floating">
+      <svg
+        viewBox="0 0 6 7"
+        fMarker
+        [type]="eMarkerType.START"
+        class="connection-marker"
+        [height]="7"
+        [width]="6"
+        [refX]="0.5"
+        [refY]="3.5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
+      </svg>
+      <svg
+        viewBox="0 0 6 7"
+        fMarker
+        [type]="eMarkerType.SELECTED_START"
+        class="connection-marker"
+        [height]="7"
+        [width]="6"
+        [refX]="0.5"
+        [refY]="3.5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
+      </svg>
+      <svg
+        viewBox="0 0 6 7"
+        fMarker
+        [type]="eMarkerType.END"
+        class="connection-marker"
+        [height]="7"
+        [width]="6"
+        [refX]="5.5"
+        [refY]="3.5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
+      </svg>
+      <svg
+        viewBox="0 0 6 7"
+        fMarker
+        [type]="eMarkerType.SELECTED_END"
+        class="connection-marker"
+        [height]="7"
+        [width]="6"
+        [refX]="5.5"
+        [refY]="3.5"
+        markerUnits="strokeWidth"
+        orient="auto"
+      >
+        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
+      </svg>
+    </f-connection>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 0, y: 300 }"
+      fNodeOutput
+      fOutputId="5"
+      fOutputConnectableSide="right"
+    >
+      I'm a node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 300 }"
+      fNodeInput
+      fInputId="6"
+      fInputConnectableSide="left"
+    >
+      I'm a node
+    </div>
+  </f-canvas>
+</f-flow>

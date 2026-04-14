@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-connection-behaviours",
+  "root": "libs/f-examples/connections/connection-behaviours",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/connection-behaviours",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/connection-behaviours/**/*.ts\" \"libs/f-examples/connections/connection-behaviours/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

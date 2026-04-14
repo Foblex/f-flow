@@ -1,0 +1,40 @@
+{
+  "name": "@foblex/flow-dagre-layout",
+  "version": "18.4.0",
+  "description": "Dagre layout engine adapter for Foblex Flow.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "Siarhei Huzarevich",
+  "homepage": "https://flow.foblex.com",
+  "docs": "https://flow.foblex.com/examples/dagre-layout",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Foblex/f-flow.git"
+  },
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "angular",
+    "flow",
+    "dagre",
+    "layout",
+    "graph",
+    "diagram",
+    "foblex"
+  ],
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.3.0",
+    "@angular/core": ">=17.3.0",
+    "@foblex/2d": "^1.2.2",
+    "@foblex/flow": "^18.4.0"
+  },
+  "dependencies": {
+    "dagre": "^0.8.5",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

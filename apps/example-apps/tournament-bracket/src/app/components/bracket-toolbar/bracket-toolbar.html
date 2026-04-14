@@ -1,0 +1,42 @@
+<div class="toolbar">
+  <div class="toolbar-group">
+    <span class="toolbar-label">Layout</span>
+    <div class="layout-switcher">
+      @for (option of layoutOptions; track option.algorithm) {
+      <button
+        class="layout-btn"
+        [class.active]="currentAlgorithm() === option.algorithm"
+        [matTooltip]="option.label"
+        (click)="onLayoutChange(option.algorithm)"
+      >
+        <mat-icon>{{ option.icon }}</mat-icon>
+      </button>
+      }
+    </div>
+  </div>
+
+  <div class="toolbar-divider"></div>
+
+  <div class="toolbar-group">
+    <button class="icon-btn" matTooltip="Zoom in" (click)="onZoomIn()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button class="icon-btn" matTooltip="Zoom out" (click)="onZoomOut()">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <button class="icon-btn" matTooltip="Reset zoom" (click)="onResetZoom()">
+      <mat-icon>crop_free</mat-icon>
+    </button>
+    <button class="icon-btn" matTooltip="Fit to screen" (click)="onFitToScreen()">
+      <mat-icon>fit_screen</mat-icon>
+    </button>
+  </div>
+
+  <div class="toolbar-divider"></div>
+
+  <div class="toolbar-group">
+    <button class="icon-btn" matTooltip="Toggle theme" (click)="onToggleTheme()">
+      <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </div>
+</div>

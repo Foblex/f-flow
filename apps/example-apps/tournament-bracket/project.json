@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "tournament-bracket",
+  "projectType": "application",
+  "root": "apps/example-apps/tournament-bracket",
+  "sourceRoot": "apps/example-apps/tournament-bracket/src",
+  "tags": ["scope:examples", "type:app", "kind:standalone-example"],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/example-apps/tournament-bracket",
+        "index": "apps/example-apps/tournament-bracket/src/index.html",
+        "browser": "apps/example-apps/tournament-bracket/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/example-apps/tournament-bracket/tsconfig.app.json",
+        "assets": [],
+        "styles": ["apps/example-apps/tournament-bracket/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["tools/sass-aliases"]
+        },
+        "scripts": []
+      },
+      "configurations": {
+        "production": {},
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4303
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "tournament-bracket:build:production"
+        },
+        "development": {
+          "buildTarget": "tournament-bracket:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "tournament-bracket:build"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/example-apps/tournament-bracket/src/**/*.ts\" \"apps/example-apps/tournament-bracket/src/**/*.html\""
+      }
+    }
+  }
+}

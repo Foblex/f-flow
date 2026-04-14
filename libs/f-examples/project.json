@@ -1,0 +1,19 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-examples",
+  "root": "libs/f-examples",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples",
+  "tags": [
+    "scope:examples",
+    "type:group"
+  ],
+  "targets": {
+    "lint-all": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/**/*.ts\" \"libs/f-examples/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+<div class="match-header" [class]="match().bracket">
+  <div class="header-left">
+    <span class="phase-badge">{{ bracketLabel() }}</span>
+    <span class="phase-name">{{ match().phase }}</span>
+  </div>
+  <div class="header-right">
+    <span class="match-date">{{ match().date | date:'MMM d, HH:mm' }}</span>
+    @if (match().status === 'live') {
+    <span class="live-indicator"></span>
+    }
+  </div>
+</div>

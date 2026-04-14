@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/f-elk-layout",
+  "assets": ["./README.md"],
+  "allowedNonPeerDependencies": ["elkjs"],
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}

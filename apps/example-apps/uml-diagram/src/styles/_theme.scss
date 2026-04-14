@@ -1,0 +1,118 @@
+:root {
+  --uml-font:
+    'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --uml-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+
+  --uml-bg: #f0f2f7;
+  --uml-surface: #ffffff;
+  --uml-surface-elevated: rgba(255, 255, 255, 0.82);
+  --uml-border: rgba(0, 0, 0, 0.08);
+  --uml-border-subtle: rgba(0, 0, 0, 0.04);
+  --uml-border-hover: rgba(0, 0, 0, 0.14);
+
+  --uml-text: #111827;
+  --uml-text-secondary: #4b5563;
+  --uml-text-muted: #9ca3af;
+
+  --uml-accent: #6366f1;
+  --uml-accent-soft: rgba(99, 102, 241, 0.08);
+
+  --uml-domain: #3b82f6;
+  --uml-domain-bg: rgba(59, 130, 246, 0.05);
+  --uml-domain-border: rgba(59, 130, 246, 0.22);
+  --uml-domain-node-bg: #f0f5ff;
+  --uml-domain-node-border: #93b4f6;
+
+  --uml-application: #10b981;
+  --uml-application-bg: rgba(16, 185, 129, 0.05);
+  --uml-application-border: rgba(16, 185, 129, 0.22);
+  --uml-application-node-bg: #ecfdf5;
+  --uml-application-node-border: #6ee7b7;
+
+  --uml-infrastructure: #f59e0b;
+  --uml-infrastructure-bg: rgba(245, 158, 11, 0.05);
+  --uml-infrastructure-border: rgba(245, 158, 11, 0.22);
+  --uml-infrastructure-node-bg: #fffbeb;
+  --uml-infrastructure-node-border: #fbbf24;
+
+  --uml-rel-composition: #ef4444;
+  --uml-rel-aggregation: #f59e0b;
+  --uml-rel-association: #3b82f6;
+  --uml-rel-inheritance: #8b5cf6;
+  --uml-rel-dependency: #14b8a6;
+  --uml-rel-realization: #06b6d4;
+
+  --uml-grid-color: rgba(0, 0, 0, 0.04);
+  --uml-connection-color: #94a3b8;
+
+  --uml-btn-bg: rgba(0, 0, 0, 0.03);
+  --uml-btn-hover: rgba(0, 0, 0, 0.06);
+  --uml-btn-active: rgba(0, 0, 0, 0.09);
+
+  --uml-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --uml-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --uml-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --uml-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --uml-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+
+  --uml-radius: 12px;
+  --uml-radius-sm: 8px;
+  --uml-radius-xs: 4px;
+
+  --uml-blur: 16px;
+
+  &.dark {
+    --uml-bg: #0a0c12;
+    --uml-surface: #151921;
+    --uml-surface-elevated: rgba(21, 25, 33, 0.82);
+    --uml-border: rgba(255, 255, 255, 0.08);
+    --uml-border-subtle: rgba(255, 255, 255, 0.04);
+    --uml-border-hover: rgba(255, 255, 255, 0.14);
+
+    --uml-text: #f1f5f9;
+    --uml-text-secondary: #94a3b8;
+    --uml-text-muted: #475569;
+
+    --uml-accent: #818cf8;
+    --uml-accent-soft: rgba(129, 140, 248, 0.12);
+
+    --uml-domain: #60a5fa;
+    --uml-domain-bg: rgba(96, 165, 250, 0.06);
+    --uml-domain-border: rgba(96, 165, 250, 0.2);
+    --uml-domain-node-bg: #172036;
+    --uml-domain-node-border: #3b6fcf;
+
+    --uml-application: #34d399;
+    --uml-application-bg: rgba(52, 211, 153, 0.06);
+    --uml-application-border: rgba(52, 211, 153, 0.2);
+    --uml-application-node-bg: #13261e;
+    --uml-application-node-border: #2a9d6f;
+
+    --uml-infrastructure: #fbbf24;
+    --uml-infrastructure-bg: rgba(251, 191, 36, 0.06);
+    --uml-infrastructure-border: rgba(251, 191, 36, 0.2);
+    --uml-infrastructure-node-bg: #261e0f;
+    --uml-infrastructure-node-border: #b8860b;
+
+    --uml-rel-composition: #f87171;
+    --uml-rel-aggregation: #fbbf24;
+    --uml-rel-association: #60a5fa;
+    --uml-rel-inheritance: #a78bfa;
+    --uml-rel-dependency: #2dd4bf;
+    --uml-rel-realization: #22d3ee;
+
+    --uml-grid-color: rgba(255, 255, 255, 0.03);
+    --uml-connection-color: #475569;
+
+    --uml-btn-bg: rgba(255, 255, 255, 0.04);
+    --uml-btn-hover: rgba(255, 255, 255, 0.08);
+    --uml-btn-active: rgba(255, 255, 255, 0.12);
+
+    --uml-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --uml-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --uml-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --uml-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+    --uml-shadow-node: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+}

@@ -1,0 +1,114 @@
+<f-flow fDraggable (fFullRendered)="flowRendered()" (click)="onCanvasClick()">
+  <f-background>
+    <f-circle-pattern />
+  </f-background>
+  <f-line-alignment></f-line-alignment>
+
+  <f-canvas fZoom [fZoomMinimum]="0.15" [fZoomMaximum]="2.5">
+    @for (connection of state.visibleConnections(); track connection.id) {
+    <f-connection
+      class="uml-relation"
+      [umlRelationClass]="connection.kind"
+      [class.connection-highlighted]="isConnectionHighlighted(connection.id)"
+      [class.connection-dimmed]="isConnectionDimmed(connection.id)"
+      [fConnectionId]="connection.id"
+      [fReassignDisabled]="true"
+      [fSelectionDisabled]="true"
+      fBehavior="fixed"
+      fType="segment"
+      [fOutputId]="connection.from"
+      [fInputId]="connection.to"
+    >
+      @if (connection.kind === 'composition' || connection.kind === 'aggregation') {
+      <svg
+        class="uml-marker uml-marker-diamond"
+        [class.is-filled]="connection.kind === 'composition'"
+        viewBox="0 0 10 10"
+        fMarker
+        [type]="eMarkerType.START"
+        [height]="10"
+        [width]="10"
+        [refX]="10"
+        [refY]="5"
+      >
+        <path d="M5,0 L10,5 L5,10 L0,5 Z"></path>
+      </svg>
+      } @if (connection.kind === 'inheritance' || connection.kind === 'realization') {
+      <svg
+        class="uml-marker uml-marker-triangle"
+        [class.is-open]="connection.kind === 'realization'"
+        viewBox="0 0 12 10"
+        fMarker
+        [type]="eMarkerType.END"
+        [height]="10"
+        [width]="12"
+        [refX]="11"
+        [refY]="5"
+      >
+        <path d="M0,0 L12,5 L0,10 Z"></path>
+      </svg>
+      } @if (connection.kind !== 'inheritance' && connection.kind !== 'realization') {
+      <svg
+        class="uml-marker uml-marker-arrow"
+        viewBox="0 0 8 8"
+        fMarker
+        [type]="eMarkerType.END"
+        [height]="8"
+        [width]="8"
+        [refX]="7"
+        [refY]="4"
+      >
+        <path d="M0,0 L8,4 L0,8 Z"></path>
+      </svg>
+      }
+    </f-connection>
+    } @for (pkg of state.visiblePackages(); track pkg.id) {
+    <section
+      class="uml-group"
+      [umlLayerClass]="pkg.layer"
+      fGroup
+      fDragHandle
+      [fIncludePadding]="true"
+      fAutoSizeToFitChildren
+      fAutoExpandOnChildHit
+      [fGroupId]="pkg.id"
+      [fGroupPosition]="pkg.position!"
+      [fGroupSize]="pkg.size!"
+    >
+      <uml-package-group [package]="pkg" />
+    </section>
+    } @for (cls of state.visibleClasses(); track cls.id) {
+    <article
+      class="uml-node"
+      [umlLayerClass]="cls.layer"
+      fNode
+      fDragHandle
+      [fNodeId]="cls.id"
+      [fNodeParentId]="cls.packageId"
+      [fNodePosition]="cls.position!"
+      fNodeOutput
+      [fOutputId]="cls.id"
+      fNodeInput
+      [fInputId]="cls.id"
+    >
+      <uml-class-node
+        [umlClass]="cls"
+        [isHighlighted]="isClassHighlighted(cls.id)"
+        [isDimmed]="isClassDimmed(cls.id)"
+        [isSelected]="isClassSelected(cls.id)"
+        [connectionCount]="getConnectionCount(cls.id)"
+        (classClick)="onClassClick($event)"
+      />
+    </article>
+    }
+  </f-canvas>
+
+  <f-minimap [fMinSize]="2000" />
+</f-flow>
+
+<uml-diagram-legend />
+<uml-diagram-toolbar />
+
+@if (hasDetailPanel()) {
+<uml-class-detail-panel />
+}

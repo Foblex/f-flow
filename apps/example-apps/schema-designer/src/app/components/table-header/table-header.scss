@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background-color: var(--editor-primary-muted);
+  cursor: move;
+  gap: 8px;
+  border-bottom: 1px solid var(--editor-border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+:host-context(.f-selected) {
+  background-color: var(--editor-primary-soft);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+
+  .table-icon {
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    color: var(--editor-primary);
+    flex-shrink: 0;
+  }
+
+  .table-name {
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+
+  .action-delete:hover {
+    color: var(--editor-red);
+  }
+}

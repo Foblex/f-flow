@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-copy-paste",
+  "root": "libs/f-examples/advanced/copy-paste",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/advanced/copy-paste",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:advanced"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/advanced/copy-paste/**/*.ts\" \"libs/f-examples/advanced/copy-paste/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-connection-waypoints",
+  "root": "libs/f-examples/connections/connection-waypoints",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/connection-waypoints",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/connection-waypoints/**/*.ts\" \"libs/f-examples/connections/connection-waypoints/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

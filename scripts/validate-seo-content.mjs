@@ -2,21 +2,25 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, join, relative, sep } from 'node:path';
 
 const ROOT = process.cwd();
-const MARKDOWN_ROOT = join(ROOT, 'public', 'markdown');
-const SITEMAP_PATH = join(ROOT, 'public', 'sitemap.xml');
+const MARKDOWN_ROOT = join(ROOT, 'apps', 'f-flow-portal', 'public', 'markdown');
+const SITEMAP_PATH = join(ROOT, 'tmp', 'sitemap.xml');
 const CANONICAL_ORIGIN = 'https://flow.foblex.com';
 
 const markdownFiles = walkMarkdownFiles(MARKDOWN_ROOT);
 const sitemap = readFileSync(SITEMAP_PATH, 'utf8');
 const issues = [];
 const noindexRoutes = [];
+const expectedRoutes = new Set(['/']);
 
 for (const filePath of markdownFiles) {
   const content = readFileSync(filePath, 'utf8');
+  const route = toRoutePath(filePath);
+
+  if (route && !/^noindex:\s*true\s*$/m.test(content)) {
+    expectedRoutes.add(route);
+  }
 
   if (/^noindex:\s*true\s*$/m.test(content)) {
-    const route = toRoutePath(filePath);
-
     if (route) {
       noindexRoutes.push(route);
     }
@@ -25,7 +29,15 @@ for (const filePath of markdownFiles) {
 
 for (const route of noindexRoutes) {
   if (sitemap.includes(`<loc>${CANONICAL_ORIGIN}${route}</loc>`)) {
-    issues.push(`public/sitemap.xml: noindex route ${route} must not appear in the sitemap`);
+    issues.push(`tmp/sitemap.xml: noindex route ${route} must not appear in the sitemap`);
+  }
+}
+
+for (const route of expectedRoutes) {
+  const loc = route === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${route}`;
+
+  if (!sitemap.includes(`<loc>${loc}</loc>`)) {
+    issues.push(`tmp/sitemap.xml: expected route ${route} is missing from the sitemap`);
   }
 }
 
@@ -62,6 +74,11 @@ function walkMarkdownFiles(directory) {
 function toRoutePath(filePath) {
   const relativePath = relative(MARKDOWN_ROOT, filePath);
   const [section, ...rest] = relativePath.split(sep);
+
+  if (!rest.length) {
+    return null;
+  }
+
   const slug = basename(rest.join(sep), '.md');
 
   switch (section) {

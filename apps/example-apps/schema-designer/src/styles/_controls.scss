@@ -1,0 +1,187 @@
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 4px;
+  border: none;
+  border-radius: var(--editor-radius-xs);
+  appearance: none;
+  background-color: transparent;
+  color: var(--editor-text-secondary);
+  cursor: pointer;
+  font-family: var(--editor-font);
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: all;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--editor-text);
+    background-color: var(--editor-btn-bg);
+  }
+
+  &:active {
+    background-color: var(--editor-btn-active);
+  }
+
+  mat-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+    color: inherit;
+    font-size: 16px;
+  }
+
+  span {
+    color: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+}
+
+.menu-panel {
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  position: static;
+  padding: 4px;
+  outline: 0;
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius-sm);
+  background-color: var(--editor-surface-elevated);
+  box-shadow: var(--editor-shadow-lg);
+
+  .cdk-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 148px;
+    min-height: unset;
+    width: 100%;
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--editor-radius-xs);
+    outline: none;
+    background: transparent;
+    color: var(--editor-text);
+    cursor: pointer;
+    font-family: var(--editor-font);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+
+    &:hover {
+      background-color: var(--editor-primary-muted);
+    }
+
+    .mat-icon {
+      display: block;
+      width: 16px;
+      height: 16px;
+      color: var(--editor-text-secondary);
+      font-size: 16px;
+    }
+  }
+}
+
+.mat-mdc-form-field {
+  --mdc-filled-text-field-container-shape: var(--editor-radius-xs);
+  --mdc-filled-text-field-container-color: transparent;
+  --mat-form-field-state-layer-color: transparent;
+  --mat-form-field-container-text-font: var(--editor-font);
+  --mat-form-field-container-text-size: 12px;
+  --mat-form-field-container-text-tracking: 0;
+  --mat-form-field-container-text-weight: 400;
+  --mdc-filled-text-field-input-text-color: var(--editor-text);
+
+  width: 100%;
+
+  .mdc-text-field {
+    padding: 0 4px;
+
+    .mat-mdc-form-field-flex {
+      .mat-mdc-select {
+        --mat-select-enabled-trigger-text-color: var(--editor-text-muted);
+        --mat-select-trigger-text-font: var(--editor-font);
+        --mat-select-trigger-text-size: 11px;
+        --mat-select-trigger-text-weight: 500;
+        --mat-select-trigger-text-tracking: 0.03em;
+
+        .mat-mdc-select-value {
+          text-align: right;
+        }
+
+        .mat-mdc-select-arrow-wrapper {
+          display: none;
+        }
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: unset;
+        padding: 0;
+      }
+    }
+
+    .mdc-line-ripple {
+      display: none;
+    }
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  &.mat-focused {
+    --mdc-filled-text-field-container-color: var(--editor-primary-soft);
+  }
+
+  &.mat-form-field-invalid {
+    --mdc-filled-text-field-container-color: var(--editor-red-soft);
+  }
+}
+
+.select-panel {
+  --mat-select-panel-background-color: var(--editor-surface-elevated);
+  --mat-select-container-elevation-shadow: var(--editor-shadow-lg);
+  --mat-option-label-text-font: var(--editor-font);
+  --mat-option-label-text-tracking: 0;
+  --mat-option-label-text-weight: 400;
+  --mat-option-selected-state-label-text-color: var(--editor-text);
+  --mat-option-label-text-color: var(--editor-text);
+  --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--editor-text);
+  --mat-option-selected-state-layer-color: var(--editor-primary-soft);
+  --mat-option-hover-state-layer-color: var(--editor-primary-muted);
+  --mat-option-focus-state-layer-color: var(--editor-primary-muted);
+
+  --mat-option-label-text-size: calc(12px * var(--flow-scale, 1));
+  --mat-option-label-text-line-height: calc(16px * var(--flow-scale, 1));
+  --mat-option-padding: calc(4px * var(--flow-scale, 1)) calc(10px * var(--flow-scale, 1));
+
+  border: 1px solid var(--editor-border);
+  border-radius: var(--editor-radius-sm);
+
+  &.mat-mdc-select-panel {
+    padding: 4px;
+
+    .mat-mdc-option {
+      min-height: unset;
+      padding: var(--mat-option-padding);
+      border-radius: var(--editor-radius-xs);
+      text-align: right;
+
+      .mdc-list-item__primary-text {
+        width: 100%;
+        text-align: right;
+      }
+
+      .mat-pseudo-checkbox {
+        display: none;
+      }
+    }
+  }
+}

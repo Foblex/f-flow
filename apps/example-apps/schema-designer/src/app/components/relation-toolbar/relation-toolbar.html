@@ -1,0 +1,18 @@
+<div class="badge">{{ connection().type }}</div>
+<div class="actions">
+  <button class="icon-btn" (click)="changeType($event, eRelationType.ONE_TO_ONE)" matTooltip="One to one">
+    <span>1:1</span>
+  </button>
+  <button class="icon-btn" (click)="changeType($event, eRelationType.ONE_TO_MANY)" matTooltip="One to many">
+    <span>1:N</span>
+  </button>
+  <button class="icon-btn" (click)="changeType($event, eRelationType.MANY_TO_ONE)" matTooltip="Many to one">
+    <span>N:1</span>
+  </button>
+  <button class="icon-btn" (click)="changeType($event, eRelationType.MANY_TO_MANY)" matTooltip="Many to many">
+    <span>N:N</span>
+  </button>
+  <button class="icon-btn action-delete" (click)="remove($event)" matTooltip="Remove connection">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

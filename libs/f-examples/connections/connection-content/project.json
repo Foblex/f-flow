@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-connection-content",
+  "root": "libs/f-examples/connections/connection-content",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/connection-content",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/connection-content/**/*.ts\" \"libs/f-examples/connections/connection-content/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

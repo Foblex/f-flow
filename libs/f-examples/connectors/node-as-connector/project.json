@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-node-as-connector",
+  "root": "libs/f-examples/connectors/node-as-connector",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connectors/node-as-connector",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connectors"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connectors/node-as-connector/**/*.ts\" \"libs/f-examples/connectors/node-as-connector/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

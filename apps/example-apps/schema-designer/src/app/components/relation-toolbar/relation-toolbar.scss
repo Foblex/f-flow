@@ -1,0 +1,79 @@
+::ng-deep f-flow {
+  .f-connection {
+    .f-connection-content {
+      padding: 3px 8px;
+      border-radius: var(--editor-radius-sm);
+      background-color: var(--editor-surface);
+      color: var(--editor-text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--editor-font);
+      letter-spacing: 0.02em;
+      border: 1px solid var(--editor-border);
+
+      .actions {
+        display: none;
+      }
+
+      .badge {
+        cursor: pointer;
+        display: block;
+      }
+    }
+
+    &.f-selected {
+      .f-connection-content {
+        color: var(--editor-primary);
+        border-color: var(--editor-primary);
+      }
+    }
+  }
+
+  &:not(.f-dragging) {
+    .f-connection {
+      &.f-selected {
+        .f-connection-content {
+          z-index: 1;
+          padding: 0;
+          background-color: transparent;
+          border: none;
+
+          .actions {
+            display: flex;
+          }
+
+          .badge {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.actions {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  gap: 2px;
+  border-radius: var(--editor-radius-sm);
+  background-color: var(--editor-surface);
+  border: 1px solid var(--editor-border);
+  box-shadow: var(--editor-shadow-md);
+  transform: translate(-50%, -200%);
+
+  .icon-btn {
+    min-width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .action-delete {
+    margin-left: 8px;
+
+    &:hover {
+      color: var(--editor-red);
+    }
+  }
+}

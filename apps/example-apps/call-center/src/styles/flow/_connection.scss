@@ -1,0 +1,59 @@
+:root {
+  --conn-color-normal: var(--c-border-muted);
+  --conn-color-selected: var(--c-primary);
+
+  --conn-handle-fill: transparent;
+
+  --conn-selection-stroke: var(--c-selection-overlay);
+  --conn-selection-stroke-width: 20px;
+
+  --conn-path-stroke-width: 2px;
+
+  --conn-text-selected: var(--c-primary);
+  --conn-selection-selected: var(--c-contrast);
+}
+
+.f-connection {
+  .f-connection-drag-handle {
+    fill: var(--conn-handle-fill);
+  }
+
+  .f-connection-selection {
+    stroke: var(--conn-selection-stroke);
+    stroke-width: var(--conn-selection-stroke-width);
+    fill: none;
+  }
+
+  .f-connection-path {
+    stroke-width: var(--conn-path-stroke-width);
+    fill: none;
+    stroke: var(--conn-color-normal);
+  }
+
+  .f-marker {
+    path {
+      fill: var(--conn-color-normal);
+    }
+  }
+
+  &.f-selected {
+    .f-connection-path {
+      stroke: var(--conn-color-selected);
+      stroke-width: 2.5px;
+    }
+
+    .f-connection-text {
+      fill: var(--conn-text-selected);
+    }
+
+    .f-connection-selection {
+      stroke: var(--conn-selection-selected);
+    }
+
+    .f-marker {
+      path {
+        fill: var(--conn-color-selected);
+      }
+    }
+  }
+}

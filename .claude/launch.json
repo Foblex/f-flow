@@ -1,0 +1,38 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portal",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm use 22.19.0 && npx nx serve portal"
+      ],
+      "port": 4200
+    },
+    {
+      "name": "uml-diagram",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "uml-diagram"],
+      "port": 4304
+    },
+    {
+      "name": "tournament-bracket",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "tournament-bracket"],
+      "port": 4303
+    },
+    {
+      "name": "schema-designer",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "schema-designer"],
+      "port": 4301
+    },
+    {
+      "name": "call-center",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["nx", "serve", "call-center"],
+      "port": 4305
+    }
+  ]
+}

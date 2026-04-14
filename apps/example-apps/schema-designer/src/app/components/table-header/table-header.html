@@ -1,0 +1,12 @@
+<div class="header-left">
+  <mat-icon class="table-icon">table_chart</mat-icon>
+  <span class="table-name">{{ table().name }}</span>
+</div>
+<div class="header-actions">
+  <button class="icon-btn" (click)="createColumn()" title="Add column">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button class="icon-btn action-delete" (click)="removeTable()" title="Remove table">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

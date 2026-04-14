@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "layout-dagre",
+  "projectType": "library",
+  "root": "libs/f-layout/dagre",
+  "sourceRoot": "libs/f-layout/dagre/src",
+  "tags": ["scope:layout", "type:publishable"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/f-dagre-layout"],
+      "options": {
+        "project": "libs/f-layout/dagre/ng-package.json",
+        "tsConfig": "libs/f-layout/dagre/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/f-layout/dagre/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-layout/dagre/**/*.ts\" \"libs/f-layout/dagre/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/f-dagre-layout"],
+      "options": {
+        "command": "tsc -p libs/f-layout/dagre/tsconfig.schematics.json && copyfiles -u 3 \"libs/f-layout/dagre/schematics/*/schema.json\" \"libs/f-layout/dagre/schematics/collection.json\" dist/f-dagre-layout"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["package"],
+      "options": {
+        "command": "cd dist/f-dagre-layout && npm publish"
+      }
+    }
+  }
+}

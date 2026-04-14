@@ -30,7 +30,7 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 - Easy starting path: most editors begin with `f-flow`, `f-canvas`, nodes, connectors, and connections.
 - Angular-first API that fits Angular apps instead of wrapping a React-style state model.
 - Built for real editor interactions: drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment helpers, and waypoints.
-- Advanced modules are optional: caching, virtualization, and the connection worker are scaling tools, not day-one requirements.
+- Advanced modules are optional: caching and virtualization are scaling tools, not day-one requirements.
 - Custom nodes, connectors, and connections for domain-specific graph UIs.
 - Your app stays in control of graph state, validation rules, permissions, and persistence.
 - Suitable for both lightweight diagrams and full workflow-builder products.
@@ -46,7 +46,7 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 ## Examples
 
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform) - A flagship front-end-only AI low-code IDE demo with custom nodes, JSON import/export, multiple themes, config panels with validation, validation feedback on nodes, undo/redo, persistence, multi-select, and animated connections.
-- [DB Management](https://flow.foblex.com/examples/f-db-management-flow) - A database-oriented workflow builder with richer interactions and UI patterns.
+- [Schema Designer](https://flow.foblex.com/examples/schema-designer) - A richer schema editor demo with nodes, relations, and CRUD-style interactions.
 - [UML Diagram](https://flow.foblex.com/examples/uml-diagram-example) - An Angular example for architecture and UML-style graph interfaces.
 - [Tournament Bracket](https://flow.foblex.com/examples/tournament-bracket) - A specialized bracket UI built on the same node-based primitives.
 - [All Examples](https://flow.foblex.com/examples/overview) - Focused examples for connections, selection, minimap, layout, alignment, and other editor features.
@@ -134,7 +134,7 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 ## Quick FAQ
 
 - **Is Foblex Flow hard to use?** No. The core setup is small and Angular-native.
-- **Do I need caching, virtualization, or the connection worker?** No. Most editors do not need them on day one. They are optional scaling tools for larger scenes.
+- **Do I need caching or virtualization?** No. Most editors do not need them on day one. They are optional scaling tools for larger scenes.
 - **Who is it for?** Angular teams building node editors, workflow builders, interactive diagrams, and other graph-based product UIs.
 
 ## Resources
@@ -147,6 +147,19 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 - [Showcase](https://flow.foblex.com/showcase/overview)
 - [Roadmap](https://github.com/Foblex/f-flow/blob/main/ROADMAP.md)
 - [Changelog](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md)
+
+## Custom Development and Consulting
+
+Need a custom Angular node editor, workflow builder, or interactive diagram?
+
+The Foblex team offers consulting, custom development, and integration support. Whether you need a production-ready editor built from scratch or hands-on help integrating Foblex Flow into your product, we bring deep Angular and node-based UI expertise to every engagement.
+
+- Custom node editors and workflow builders
+- Architecture review and integration planning
+- Migration from other frameworks to Foblex Flow
+- Priority support and dedicated development
+
+[Learn more](https://flow.foblex.com/docs/consulting) | [Contact us: support@foblex.com](mailto:support@foblex.com)
 
 ## Community and Support
 

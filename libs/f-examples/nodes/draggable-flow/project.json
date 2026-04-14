@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-draggable-flow",
+  "root": "libs/f-examples/nodes/draggable-flow",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/nodes/draggable-flow",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:nodes"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/nodes/draggable-flow/**/*.ts\" \"libs/f-examples/nodes/draggable-flow/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

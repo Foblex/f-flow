@@ -1,0 +1,82 @@
+:root {
+  --node-min-width: 240px;
+  --node-text: var(--c-text);
+  --node-bg: var(--c-surface-1);
+  --node-border: var(--c-border);
+  --node-radius: var(--radius-md);
+  --node-pad-x: 14px;
+  --node-selected-shadow: var(--shadow-selected);
+
+  --out-size: 18px;
+  --out-radius: 50%;
+  --out-bg: var(--c-surface-3);
+  --out-border: var(--c-border);
+  --out-text: var(--c-text-subtle);
+
+  --out-connected-border: var(--c-primary);
+  --out-connected-bg: var(--c-primary);
+  --out-connected-text: #ffffff;
+  --out-connected-hover: var(--c-primary-hover);
+  --out-connected-active: var(--c-primary-active);
+}
+
+.f-node {
+  min-width: var(--node-min-width);
+  color: var(--node-text);
+  border: 1px solid var(--node-border);
+  border-radius: var(--node-radius);
+  background-color: var(--node-bg);
+  padding: 0 var(--node-pad-x);
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition-fast);
+
+  &.f-selected {
+    box-shadow: var(--node-selected-shadow);
+  }
+
+  &.invalid {
+    box-shadow: var(--node-invalid-shadow) !important;
+  }
+}
+
+.f-node-output {
+  width: var(--out-size);
+  height: var(--out-size);
+  background-color: var(--out-bg);
+  border-radius: var(--out-radius);
+  border: 1.5px solid var(--out-border);
+  color: var(--out-text);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .mat-icon {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    color: inherit;
+    display: none;
+  }
+
+  &.f-node-output-connected {
+    cursor: pointer;
+    border-color: var(--out-connected-border);
+    background-color: var(--out-connected-bg);
+    color: var(--out-connected-text);
+
+    &:hover {
+      background-color: var(--out-connected-hover);
+      transform: scale(1.15);
+    }
+
+    &:active {
+      background-color: var(--out-connected-active);
+    }
+
+    .mat-icon {
+      display: block;
+    }
+  }
+}

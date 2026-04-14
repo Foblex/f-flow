@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-connection-rules",
+  "root": "libs/f-examples/connectors/connection-rules",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connectors/connection-rules",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connectors"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connectors/connection-rules/**/*.ts\" \"libs/f-examples/connectors/connection-rules/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

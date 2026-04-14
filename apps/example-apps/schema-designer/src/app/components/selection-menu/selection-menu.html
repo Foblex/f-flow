@@ -1,0 +1,65 @@
+<ng-template>
+  <div class="menu-shell" [class.menu-shell--submenu-open]="isKeyMenuOpen()" (mouseleave)="closeSubmenu()">
+    <div #rootMenu="cdkMenu" cdkMenu class="menu-panel">
+      @if (targetColumnId()) {
+        <button
+          type="button"
+          class="cdk-menu-item menu-item--submenu"
+          aria-haspopup="menu"
+          [attr.aria-expanded]="isKeyMenuOpen()"
+          (mouseenter)="openKeyMenu()"
+          (focus)="openKeyMenu()"
+          (click)="openKeyMenu()"
+          (keydown.enter)="openKeyMenu()"
+          (keydown.arrowright)="openKeyMenu()"
+        >
+          <span>Key</span>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      }
+      @if (!targetTableId() && !targetConnectionId()) {
+        <button type="button" cdkMenuItem (mouseenter)="closeSubmenu()" (focus)="closeSubmenu()" (cdkMenuItemTriggered)="createTable()">
+          <span>Create Table</span>
+          <mat-icon>add</mat-icon>
+        </button>
+      }
+      @if (targetTableId()) {
+        <button type="button" cdkMenuItem (mouseenter)="closeSubmenu()" (focus)="closeSubmenu()" (cdkMenuItemTriggered)="createColumn()">
+          <span>Create Column</span>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button type="button" cdkMenuItem (mouseenter)="closeSubmenu()" (focus)="closeSubmenu()" (cdkMenuItemTriggered)="deleteSelection()">
+          <span>{{ targetColumnId() ? 'Delete Column' : 'Delete Table' }}</span>
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
+      @if (targetConnectionId()) {
+        <button type="button" cdkMenuItem (mouseenter)="closeSubmenu()" (focus)="closeSubmenu()" (cdkMenuItemTriggered)="deleteSelection()">
+          <span>Delete Connection</span>
+          <mat-icon>delete</mat-icon>
+        </button>
+      }
+    </div>
+
+    @if (isKeyMenuOpen()) {
+      <div class="menu-panel menu-panel--submenu" role="menu" aria-label="Key">
+        <button type="button" class="cdk-menu-item" (click)="setColumnKey(eColumnKey.PRIMARY, rootMenu)">
+          <span>Primary Key</span>
+          <mat-icon>key_vertical</mat-icon>
+        </button>
+        <button type="button" class="cdk-menu-item" (click)="setColumnKey(eColumnKey.UNIQUE, rootMenu)">
+          <span>Unique Key</span>
+          <mat-icon>ac_unit</mat-icon>
+        </button>
+        <button type="button" class="cdk-menu-item" (click)="setColumnKey(eColumnKey.INDEX, rootMenu)">
+          <span>Index</span>
+          <mat-icon>list</mat-icon>
+        </button>
+        <button type="button" class="cdk-menu-item" (click)="setColumnKey(null, rootMenu)">
+          <span>Clear Key</span>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
+</ng-template>

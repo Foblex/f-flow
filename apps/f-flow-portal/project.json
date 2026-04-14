@@ -1,0 +1,106 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "portal",
+  "projectType": "application",
+  "root": "apps/f-flow-portal",
+  "sourceRoot": "apps/f-flow-portal/src",
+  "tags": ["scope:portal", "type:app"],
+  "targets": {
+    "build": {
+      "dependsOn": ["generate-artifacts"],
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "prerender": {
+          "routesFile": "tmp/portal-routes.txt"
+        },
+        "outputPath": "dist/f-flow-portal",
+        "index": "apps/f-flow-portal/src/index.html",
+        "browser": "apps/f-flow-portal/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/f-flow-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/f-flow-portal/public"
+          },
+          {
+            "glob": "sitemap.xml",
+            "input": "tmp",
+            "output": "."
+          }
+        ],
+        "styles": ["apps/f-flow-portal/src/styles/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["tools/sass-aliases"]
+        },
+        "scripts": [],
+        "server": "apps/f-flow-portal/src/main.server.ts",
+        "ssr": {
+          "entry": "apps/f-flow-portal/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kB",
+              "maximumError": "4MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kB",
+              "maximumError": "20kB"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "generate-artifacts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/generate-portal-artifacts.mjs"
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "portal:build:production"
+        },
+        "development": {
+          "buildTarget": "portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "portal:build"
+      }
+    },
+    "serve-ssr": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "node dist/f-flow-portal/server/server.mjs"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"apps/f-flow-portal/src/**/*.ts\" \"apps/f-flow-portal/src/**/*.html\" \"apps/f-flow-portal/server.ts\""
+      }
+    }
+  }
+}

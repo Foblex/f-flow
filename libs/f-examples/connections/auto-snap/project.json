@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-auto-snap",
+  "root": "libs/f-examples/connections/auto-snap",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connections/auto-snap",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connections"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connections/auto-snap/**/*.ts\" \"libs/f-examples/connections/auto-snap/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

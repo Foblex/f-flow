@@ -1,0 +1,12 @@
+<ng-container [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Phone number" formControlName="phoneNumber" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Ring timeout" formControlName="ringTimeout">
+      @for (t of ringTimeouts; track t.key) {
+      <mat-option [value]="t.key">{{ t.value }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</ng-container>

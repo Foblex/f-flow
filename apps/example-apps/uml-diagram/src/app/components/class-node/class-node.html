@@ -1,0 +1,45 @@
+<div
+  class="class-card"
+  [class.highlighted]="isHighlighted()"
+  [class.dimmed]="isDimmed()"
+  [class.selected]="isSelected()"
+  tabindex="0"
+  (click)="onCardClick($event)"
+  (keydown.enter)="onCardKeydown($event)"
+  (keydown.space)="onCardKeydown($event)"
+>
+  <div class="class-header">
+    @if (umlClass().stereotype) {
+    <div class="class-stereotype">&laquo;{{ umlClass().stereotype }}&raquo;</div>
+    }
+    <div class="class-name" [class.is-abstract]="umlClass().isAbstract">{{ umlClass().name }}</div>
+  </div>
+
+  @if (umlClass().attributes.length) {
+  <div class="class-section">
+    @for (attr of umlClass().attributes; track attr.name) {
+    <div class="member">
+      <span class="vis">{{ attr.visibility }}</span>
+      <span class="name">{{ attr.name }}</span>
+      <span class="type">{{ attr.type }}</span>
+    </div>
+    }
+  </div>
+  } @if (umlClass().methods.length) {
+  <div class="class-section">
+    @for (method of umlClass().methods; track method.name) {
+    <div class="member">
+      <span class="vis">{{ method.visibility }}</span>
+      <span class="name">{{ method.name }}<span class="params">({{ method.params }})</span></span>
+      <span class="type">{{ method.returnType }}</span>
+    </div>
+    }
+  </div>
+  } @if (umlClass().notes?.length) {
+  <div class="class-notes">
+    @for (note of umlClass().notes; track note) {
+    <span class="note-tag">{{ note }}</span>
+    }
+  </div>
+  }
+</div>

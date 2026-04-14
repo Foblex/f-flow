@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-limiting-connections",
+  "root": "libs/f-examples/connectors/limiting-connections",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connectors/limiting-connections",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connectors"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connectors/limiting-connections/**/*.ts\" \"libs/f-examples/connectors/limiting-connections/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<div class="competitor-row" [class.is-winner]="competitor().isWinner" [class.is-last]="isLast()">
+  <div class="competitor-info">
+    <button class="competitor-name" type="button" (click)="onTeamNameClick($event)">
+      {{ competitor().name }}
+    </button>
+  </div>
+  <div class="competitor-score" [class.is-winner]="competitor().isWinner">
+    {{ competitor().score }}
+  </div>
+</div>

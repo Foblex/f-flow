@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-background-example",
+  "root": "libs/f-examples/extensions/background-example",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/extensions/background-example",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:extensions"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/extensions/background-example/**/*.ts\" \"libs/f-examples/extensions/background-example/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

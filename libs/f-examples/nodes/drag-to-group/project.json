@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-drag-to-group",
+  "root": "libs/f-examples/nodes/drag-to-group",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/nodes/drag-to-group",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:nodes"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/nodes/drag-to-group/**/*.ts\" \"libs/f-examples/nodes/drag-to-group/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

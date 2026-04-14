@@ -31,7 +31,7 @@ Stay up to date and help shape the future via [GitHub Discussions](https://githu
   Shipped projected `f-connection-gradient`, smarter redraw caching for unchanged routes and markers, production-safe blob worker loading, and the roadmap/docs refresh around the new connection model.
 
 - **[v18.2.0](https://github.com/Foblex/f-flow/releases/tag/v18.2.0)** - **2026-03-09**  
-  Shipped `fCache`, `*fVirtualFor`, `f-connection-worker`, `fNodeRenderLimit`, chunked connection redraws, and wheel zoom during active drag sessions.
+  Shipped `fCache`, `*fVirtualFor`, the first `f-connection-worker` release, `fNodeRenderLimit`, chunked connection redraws, and wheel zoom during active drag sessions.
 
 - **[v18.1.0](https://github.com/Foblex/f-flow/releases/tag/v18.1.0)** - **2026-02-16**  
   Shipped `f-magnetic-lines`, `f-magnetic-rects`, the AI Low-Code Platform reference app, and a major documentation refresh.

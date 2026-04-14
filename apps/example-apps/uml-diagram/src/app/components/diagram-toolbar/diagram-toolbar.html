@@ -1,0 +1,21 @@
+<div class="toolbar">
+  <div class="toolbar-group">
+    <button class="toolbar-btn" matTooltip="Zoom in" (click)="onZoomIn()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button class="toolbar-btn" matTooltip="Zoom out" (click)="onZoomOut()">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <div class="toolbar-divider"></div>
+    <button class="toolbar-btn" matTooltip="Reset zoom" (click)="onResetZoom()">
+      <mat-icon>center_focus_strong</mat-icon>
+    </button>
+    <button class="toolbar-btn" matTooltip="Fit to screen" (click)="onFitToScreen()">
+      <mat-icon>fit_screen</mat-icon>
+    </button>
+    <div class="toolbar-divider"></div>
+    <button class="toolbar-btn" matTooltip="Toggle theme" (click)="onToggleTheme()">
+      <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </div>
+</div>

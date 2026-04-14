@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+.package-tab {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+}
+
+.package-name {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--uml-text-secondary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

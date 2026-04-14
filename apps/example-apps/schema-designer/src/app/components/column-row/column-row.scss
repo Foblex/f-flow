@@ -1,0 +1,67 @@
+:host {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 10px;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: var(--editor-primary-muted);
+  }
+
+  &.selected {
+    background-color: var(--editor-primary-soft);
+  }
+}
+
+.key-badge {
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .key-primary {
+    color: var(--editor-amber);
+  }
+
+  .key-unique {
+    color: var(--editor-cyan);
+  }
+
+  .key-index {
+    color: var(--editor-text-muted);
+  }
+}
+
+.column-name {
+  min-width: 80px;
+}
+
+.column-type {
+  min-width: 70px;
+  max-width: 80px;
+}
+
+.f-node-input, .f-node-output {
+  position: absolute;
+  background-color: transparent;
+  width: 48px;
+  height: 100%;
+}
+
+.f-node-input {
+  left: -10px;
+}
+
+.f-node-output {
+  right: -10px;
+}

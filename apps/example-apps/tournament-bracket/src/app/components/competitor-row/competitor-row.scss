@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.competitor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-top: 1px solid var(--bracket-border-subtle);
+  transition: background-color 0.15s ease;
+
+  &.is-winner {
+    .competitor-name {
+      color: var(--bracket-text);
+      font-weight: 600;
+    }
+  }
+
+  &.is-last {
+    border-radius: 0 0 var(--bracket-radius) var(--bracket-radius);
+  }
+}
+
+.competitor-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.competitor-name {
+  display: inline-flex;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--bracket-text-secondary);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--bracket-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+.competitor-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: var(--bracket-radius-xs);
+  background-color: var(--bracket-score-bg);
+  color: var(--bracket-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  &.is-winner {
+    background-color: var(--bracket-accent-soft);
+    color: var(--bracket-accent);
+  }
+}

@@ -1,0 +1,16 @@
+@for (output of outputs(); track output.id) {
+<div
+  fNodeOutput
+  fOutputConnectableSide="bottom"
+  [fOutputId]="output.id"
+  [isSelfConnectable]="false"
+  tabindex="0"
+  role="button"
+  aria-label="Remove connection"
+  (click)="removeOutputConnection(output.id)"
+  (keydown.enter)="removeOutputConnection(output.id)"
+  (keydown.space)="removeOutputConnection(output.id, $event)"
+>
+  <mat-icon>close</mat-icon>
+</div>
+}

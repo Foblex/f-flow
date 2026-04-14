@@ -1,0 +1,25 @@
+<ng-container [formGroup]="form">
+  <div class="node-form">
+    <div class="form-row">
+      <mat-form-field>
+        <input matInput type="time" formControlName="startTime" placeholder="Start" />
+      </mat-form-field>
+      <span class="form-row-separator">&ndash;</span>
+      <mat-form-field>
+        <input matInput type="time" formControlName="endTime" placeholder="End" />
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-select placeholder="Timezone" formControlName="timezone">
+          @for (tz of timezones; track tz) {
+          <mat-option [value]="tz">{{ tz }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-checkbox formControlName="weekends" color="primary">Include weekends</mat-checkbox>
+    </div>
+  </div>
+</ng-container>

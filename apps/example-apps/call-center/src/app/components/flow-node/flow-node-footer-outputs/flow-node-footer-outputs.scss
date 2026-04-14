@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding-bottom: 2px;
+
+  .f-node-output {
+    margin-bottom: -12px;
+  }
+}

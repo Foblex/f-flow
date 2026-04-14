@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-resize-handle",
+  "root": "libs/f-examples/nodes/resize-handle",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/nodes/resize-handle",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:nodes"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/nodes/resize-handle/**/*.ts\" \"libs/f-examples/nodes/resize-handle/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

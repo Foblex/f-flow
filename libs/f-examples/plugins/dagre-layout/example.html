@@ -1,0 +1,37 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    @for (connection of connections(); track connection.id) {
+    <f-connection
+      [fConnectionId]="connection.id"
+      [fOutputId]="connection.source"
+      [fInputId]="connection.target"
+      [fOutputSide]="connectionSides().source"
+      [fInputSide]="connectionSides().target"
+      fType="segment"
+      fBehavior="fixed"
+    >
+      <f-connection-marker-circle />
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (node of nodes(); track node.id) {
+    <div
+      fNode
+      [fNodeId]="node.id"
+      [fNodePosition]="node.position!"
+      fDragHandle
+      fNodeInput
+      [fInputId]="node.id"
+      fNodeOutput
+      [fOutputId]="node.id"
+    >
+      {{ node.label }}
+    </div>
+    }
+  </f-canvas>
+</f-flow>
+<example-toolbar>
+  <example-select label="Direction" [(value)]="direction" [options]="directions" />
+  <example-select label="Algorithm" [(value)]="algorithm" [options]="algorithms" />
+  <example-select label="Spacing" [(value)]="spacing" [options]="spacings" />
+  <button class="f-button primary" (click)="addNode()">Add Node</button>
+</example-toolbar>

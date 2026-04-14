@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(rm -rf domain)",
+      "Bash(rm -rf components/flow/db-management-flow.component.*)",
+      "Bash(rm -rf components/table)",
+      "Bash(rm -rf components/toolbar/db-management-toolbar.component.*)",
+      "Bash(rm -rf components/context-menu/db-management-context-menu.component.*)",
+      "Bash(npx nx:*)"
+    ]
+  }
+}

@@ -1,44 +1,22 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "paths": {
-      "@portal-ui": [
-        "./src/app/portal-ui/index.ts"
-      ],
-      "@portal-ui/*": [
-        "./src/app/portal-ui/*"
-      ],
-      "@foblex/flow": [
-        "./projects/f-flow/src/public-api.ts"
-      ],
-//      "@foblex/m-render": [
-//        "./projects/m-render/src/public-api.ts"
-//      ],
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./apps/f-flow-portal/tsconfig.app.json"
     },
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+    {
+      "path": "./libs/f-flow/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/f-flow/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/f-layout/dagre/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/f-layout/elk/tsconfig.lib.json"
+    }
+  ]
 }

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-connector-outlet",
+  "root": "libs/f-examples/connectors/connector-outlet",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connectors/connector-outlet",
+  "tags": [
+    "scope:examples",
+    "type:example",
+    "category:connectors"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connectors/connector-outlet/**/*.ts\" \"libs/f-examples/connectors/connector-outlet/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

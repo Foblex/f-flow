@@ -1,0 +1,14 @@
+@for (item of nodes(); track item.type) {
+<button
+  fExternalItem
+  mat-icon-button
+  [matTooltip]="item.name"
+  matTooltipPosition="right"
+  [style.color]="item.color"
+  [fData]="item.type"
+  [fDisabled]="item.disabled"
+  [disabled]="item.disabled"
+>
+  <mat-icon>{{ item.icon }}</mat-icon>
+</button>
+}

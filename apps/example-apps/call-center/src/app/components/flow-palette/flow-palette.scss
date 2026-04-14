@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 10;
+
+  background-color: var(--c-surface-1);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-xl);
+  padding: 4px;
+  gap: 2px;
+  box-shadow: var(--shadow-md);
+
+  .mat-mdc-icon-button {
+    width: 34px !important;
+    height: 34px !important;
+
+    .mat-mdc-button-touch-target {
+      width: 34px !important;
+      height: 34px !important;
+    }
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:disabled,
+    &.f-external-item-disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.f-external-item {
+  z-index: 20;
+}

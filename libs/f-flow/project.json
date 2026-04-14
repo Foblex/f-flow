@@ -1,0 +1,67 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-flow",
+  "projectType": "library",
+  "root": "libs/f-flow",
+  "sourceRoot": "libs/f-flow/src",
+  "tags": ["scope:flow", "type:publishable"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/f-flow"],
+      "options": {
+        "project": "libs/f-flow/ng-package.json",
+        "tsConfig": "libs/f-flow/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/f-flow/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "libs/f-flow/tsconfig.spec.json",
+        "polyfills": ["zone.js", "zone.js/testing"]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-flow/**/*.ts\" \"libs/f-flow/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/f-flow"],
+      "options": {
+        "command": "tsc -p libs/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"libs/f-flow/schematics/*/schema.json\" \"libs/f-flow/schematics/*/files/**\" \"libs/f-flow/schematics/collection.json\" dist/f-flow"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["package"],
+      "options": {
+        "command": "cd dist/f-flow && npm publish"
+      }
+    },
+    "pack": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/f-flow",
+        "command": "npm pack"
+      }
+    },
+    "verify-npm": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/verify-npm.mjs"
+      }
+    }
+  }
+}
