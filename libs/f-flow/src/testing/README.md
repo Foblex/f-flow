@@ -14,7 +14,7 @@ Unified Jasmine/Karma testing infrastructure for `libs/f-flow`.
 
 ## Public API
 
-Exported from `@foblex/flow` via `public-api.ts`:
+Available for workspace and library tests via the local `src/testing/*` files:
 
 - `createPureHarness()`
 - `configureDiTest()`, `injectFromDi()`, `valueProvider()`
@@ -47,20 +47,24 @@ Rule:
 - No `as any` in specs.
 - If a cast escape hatch is needed, keep it in `testing/internal/*` only.
 
-## External usage
+## Packaging note
 
-Consumers can import the same kit from `@foblex/flow`:
+These helpers must not be exported from the published primary `@foblex/flow` entry point.
 
-```ts
-import { configureDiTest, createMediatorHarness, nodeFactory } from '@foblex/flow';
-```
+Why:
+
+- some helpers intentionally depend on `@angular/core/testing`
+- exporting them from the main package pulls `TestBed` into the published runtime bundle
+- that breaks setups such as Native Federation microfrontends that do not allow runtime resolution of Angular testing APIs
+
+Keep this kit local to tests unless it is moved into a dedicated separately packaged testing entry point.
 
 ## Examples
 
 ### PURE test (no TestBed)
 
 ```ts
-import { createPureHarness } from '@foblex/flow';
+import { createPureHarness } from './index';
 
 const pure = createPureHarness();
 const point = pure.point(10, 20);
@@ -79,7 +83,7 @@ import {
   SelectExecution,
   SelectRequest,
   FComponentsStore,
-} from '@foblex/flow';
+} from './index';
 
 configureDiTest({ providers: [SelectExecution] });
 const mediator = createMediatorHarness();
@@ -91,7 +95,7 @@ mediator.execute<void>(new SelectRequest(['n1'], []));
 ### COMPONENT test (template/style compilation enabled intentionally)
 
 ```ts
-import { configureComponentTest } from '@foblex/flow';
+import { configureComponentTest } from './index';
 import { MyComponent } from './my.component';
 
 const fixture = await configureComponentTest(MyComponent, {

@@ -2,7 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["jasmine"]
+    "types": ["jasmine"],
+    "paths": {
+      "@foblex/flow": ["libs/f-flow/src/public-api.spec.ts"]
+    }
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

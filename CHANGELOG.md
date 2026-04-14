@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Fixes
 
 - Correct group bounds calculations and flow surface sizing so grouped layouts and viewport sizing stay in sync.
+- Stop exporting testing helpers from the published primary package so runtime bundles no longer pull `TestBed` / `@angular/core/testing`, which restores compatibility with Native Federation and similar microfrontend setups.
 
 ### Documentation
 
