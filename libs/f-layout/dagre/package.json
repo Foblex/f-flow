@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow-dagre-layout",
-  "version": "18.4.0",
+  "version": "18.5.0",
   "description": "Dagre layout engine adapter for Foblex Flow.",
   "main": "index.js",
   "types": "index.d.ts",
