@@ -48,6 +48,20 @@
       "options": {
         "command": "cd dist/f-flow && npm publish"
       }
+    },
+    "pack": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "cwd": "dist/f-flow",
+        "command": "npm pack"
+      }
+    },
+    "verify-npm": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/verify-npm.mjs"
+      }
     }
   }
 }
