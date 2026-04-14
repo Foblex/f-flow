@@ -4,6 +4,7 @@ export default defineConfig({
   video: true,
   screenshotOnRunFailure: true,
   e2e: {
+    baseUrl: 'http://127.0.0.1:4200',
     specPattern: 'apps/f-flow-portal-e2e/cypress/e2e/**/*.cy.ts',
     supportFile: 'apps/f-flow-portal-e2e/cypress/support/e2e.ts',
     setupNodeEvents(_on, _config) {
