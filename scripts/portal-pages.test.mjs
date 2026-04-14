@@ -13,6 +13,7 @@ const PORTAL_BROWSER = join(ROOT, 'dist', 'f-flow-portal', 'browser');
 
 const EMBEDDED_REFERENCE_APPS = [
   'schema-designer',
+  'call-center',
   'tournament-bracket',
   'uml-diagram-example',
 ];
@@ -277,6 +278,8 @@ function getEmbeddedAppDistPath(appName) {
   switch (appName) {
     case 'schema-designer':
       return join(ROOT, 'dist', 'apps', 'example-apps', 'schema-designer', 'browser', 'index.html');
+    case 'call-center':
+      return join(ROOT, 'dist', 'apps', 'example-apps', 'call-center', 'browser', 'index.html');
     case 'tournament-bracket':
       return join(ROOT, 'dist', 'apps', 'example-apps', 'tournament-bracket', 'browser', 'index.html');
     case 'uml-diagram-example':
