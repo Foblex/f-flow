@@ -131,6 +131,7 @@ describe('Portal prerendered pages', () => {
         assert.equal(response.status, 200);
         assert.match(response.contentType, /text\/html/u);
         assert.match(response.body, /<app-root/u);
+        assert.match(response.body, /<base href="\.\/"/u);
         assert.match(response.body, /main\.js/u);
       });
     }
