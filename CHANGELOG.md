@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## Unreleased
+## [18.5.0](https://github.com/Foblex/f-flow/compare/v18.4.0...v18.5.0) (2026-04-14)
 
 ### Highlights
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. See [standa
 - **Render lifecycle became explicit** - `fNodesRendered` and `fFullRendered` are now emitted separately, with the internal flow render lifecycle extracted into dedicated handlers instead of staying embedded in `FFlowComponent`.
 - **Reference apps were rebuilt as standalone Angular apps** - Schema Designer, UML Diagram, Tournament Bracket, and Call Center Flow now live under `apps/example-apps/*`, have dedicated portal pages, and can be built or served independently.
 - **Cypress coverage was extended around editor interactions** - regression tests now cover palette node creation, assign-node-on-drop flows, connector side behavior, resize-linked redraws, and drag-to-group scenarios.
+- **Connection worker internals were decomposed and hardened** - the worker-backed redraw path was split into smaller pipeline pieces and kept integrated inside the broader connection redraw system.
 
 ### Features
 
@@ -27,6 +28,7 @@ All notable changes to this project will be documented in this file. See [standa
 - Automate portal prerender route generation, sitemap generation, and embedded-page verification in the portal toolchain.
 - Standardize portal reference-app previews, markdown example pages, and per-app `README.md` files for the standalone examples.
 - Expand end-to-end regression coverage for interaction-heavy example scenarios.
+- Decompose the connection-worker redraw flow into smaller worker/runtime/pipeline units without removing the worker-backed strategy itself.
 
 ### Fixes
 
@@ -36,15 +38,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 - Add and refresh standalone example documentation for Schema Designer, UML Diagram, Tournament Bracket, and Call Center Flow.
 - Update the main README, examples overview, and portal metadata to reflect layout-engine demos and the expanded reference-app lineup.
-
-### ⚠️ Breaking Changes
-
-- Remove the deprecated `f-connection-worker` public API. Connection redraw keeps using the built-in chunked pipeline and may still use the internal worker path for large diagrams.
-
-### Migration Notes
-
-- Remove imports that target `f-connection-worker` or `F_CONNECTION_WORKER_FEATURES`.
-- No runtime replacement is required. Connection redraw behavior stays built in to `f-flow`.
 
 ## [18.4.0](https://github.com/Foblex/f-flow/compare/v18.3.0...v18.4.0) (2026-04-02)
 

@@ -45,6 +45,10 @@ export const BLOG_CONFIGURATION = {
         () => import('@foblex/examples/extensions/auto-pan/example'),
       ),
       defineLazyComponent(
+        'dagre-layout-auto',
+        () => import('@foblex/examples/plugins/dagre-layout-auto/example'),
+      ),
+      defineLazyComponent(
         'ai-low-code-platform',
         () => import('@foblex/pro-examples/ai-low-code-platform/ai-low-code-platform'),
       ),
@@ -222,6 +226,21 @@ function overviewGroup(): INavigationGroup {
 
 function releasesGroup(): INavigationGroup {
   return defineNavigationGroup('Releases', [
+    {
+      link: 'foblex-flow-v18-5-0-layout-engines-explicit-render-lifecycle-and-standalone-reference-apps',
+      text: 'v18.5.0',
+      pageTitle:
+        'Foblex Flow v18.5.0: Layout Engines, Explicit Render Lifecycle, and Standalone Reference Apps',
+      description:
+        'Foblex Flow v18.5 introduces Dagre and ELK layout packages, explicit render lifecycle outputs, standalone reference apps, and a stronger portal/docs toolchain.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v18-5-0-layout-engines-explicit-render-lifecycle-and-standalone-reference-apps',
+      image: 'https://flow.foblex.com/previews/examples/dagre-layout.light.png',
+      image_type: 'image/png',
+      image_width: 1600,
+      image_height: 1200,
+      date: new Date('2026-04-14T12:00:00.000Z'),
+    },
     {
       link: 'foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom',
       text: 'v18.4.0',

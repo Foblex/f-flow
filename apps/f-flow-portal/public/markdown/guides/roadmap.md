@@ -2,7 +2,7 @@
 
 This page combines the current roadmap with the shipped release timeline, so you can see both what is next and what has already landed.
 
-It is synchronized with the release history through **v18.4.0 (2026-04-02)**.
+It is synchronized with the release history through **v18.5.0 (2026-04-14)**.
 
 ## Description
 
@@ -16,15 +16,19 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Current Status
 
-| Status                     | Item                             | Notes                                                                                                                                                          |
-| -------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✅ **Released in v18.4.0** | **Viewport UX + Theme Defaults** | Added `f-auto-pan`, shipped the default theme entrypoint, smoothed trackpad pinch-to-zoom, and refreshed example portal controls/docs.                         |
-| 🚧 **In Progress**         | **Freeform Connections**         | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88) |
-| 🧭 **Planned**             | **Grid-Aware Resize Handles**    | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                 |
+| Status                     | Item                                   | Notes                                                                                                                                                          |
+| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ **Released in v18.5.0** | **Layout Engines + Reference Apps**    | Added the shared layout integration surface, published Dagre and ELK adapters, introduced explicit render lifecycle outputs, and promoted major demos into standalone apps. |
+| 🚧 **In Progress**         | **Freeform Connections**               | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88) |
+| 🧭 **Planned**             | **Grid-Aware Resize Handles**          | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                 |
 
 ## Release Timeline
 
 ### 2026
+
+- **[v18.5.0](https://github.com/Foblex/f-flow/releases/tag/v18.5.0)** - **2026-04-14**  
+  Platform and layout release: shared layout integration, published Dagre and ELK adapters, explicit `fNodesRendered` / `fFullRendered`, standalone reference apps, and a stronger portal/docs toolchain.  
+  Examples: [Dagre Auto Layout](https://flow.foblex.com/examples/dagre-layout-auto), [ELK.js Auto Layout](https://flow.foblex.com/examples/elk-layout-auto), [Schema Designer](https://flow.foblex.com/examples/schema-designer), [Call Center Flow](https://flow.foblex.com/examples/call-center)
 
 - **[v18.4.0](https://github.com/Foblex/f-flow/releases/tag/v18.4.0)** - **2026-04-02**  
   Interaction and styling release: `f-auto-pan`, the shipped default theme entrypoint, smoother trackpad pinch zoom, refreshed example controls, and additional connector-geometry hardening.  
@@ -107,7 +111,7 @@ For migration details and breaking changes, always check the [Changelog](https:/
 - **Performance and scale**: `v18.3.0`, `v18.2.0`, `v17.9.5`, `v12.5.0`
 - **Connection authoring and routing**: `v18.3.0`, `v18.0.0`, `17.8.5`, `v17.8.0`, `v16.0.0`, `V12.2.0`
 - **Editor UX and interactions**: `v18.4.0`, `v18.1.0`, `v17.7.0`, `v17.6.0`, `v17.5.0`, `v17.4.0`, `v17.1.1`
-- **Platform and integration**: `v18.4.0`, `v18.3.0`, `v16.0.0`, `v17.5.0`, `v18.1.0`
+- **Platform and integration**: `v18.5.0`, `v18.4.0`, `v18.3.0`, `v16.0.0`, `v17.5.0`, `v18.1.0`
 
 ## Related Links
 
