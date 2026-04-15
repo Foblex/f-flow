@@ -135,6 +135,7 @@
     "elkjs": "^0.9.3",
     "express": "^4.21.2",
     "html2canvas": "^1.4.1",
+    "modern-screenshot": "^4.6.8",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
