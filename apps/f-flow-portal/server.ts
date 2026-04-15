@@ -64,6 +64,16 @@ export function app(): express.Express {
 
   server.use((req, res, next) => {
     const [pathOnly, query = ''] = req.url.split('?', 2);
+
+    // Raw markdown sources stay served — the m-render runtime fetches them
+    // to render docs/examples — but must not be indexed. Tagging the
+    // response lets search engines that already picked up these files
+    // (soft 404s in GSC) drop them. robots.txt stays permissive so Google
+    // can re-crawl and see the noindex signal.
+    if (isRawMarkdownPath(pathOnly)) {
+      res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    }
+
     const legacyRedirect = resolveLegacyRedirect(pathOnly);
 
     if (legacyRedirect) {
@@ -155,6 +165,10 @@ function isAssetPath(pathname: string): boolean {
   return /\.[A-Za-z0-9]{1,8}$/.test(pathname);
 }
 
+function isRawMarkdownPath(pathname: string): boolean {
+  return pathname.startsWith('/markdown/') && pathname.endsWith('.md');
+}
+
 function resolveLegacyRedirect(pathname: string): string | null {
   const normalized = normalizeRoutePath(pathname);
 
@@ -170,6 +184,16 @@ function resolveLegacyRedirect(pathname: string): string | null {
 
   if (normalized === '/examples/f-db-management-flow') {
     return '/examples/schema-designer';
+  }
+
+  // Old root-level slugs GSC still references. Each was renamed/relocated;
+  // mapping them explicitly turns tail-end 404s into 301s.
+  if (normalized === '/connection-behaviours') {
+    return '/examples/connection-behaviours';
+  }
+
+  if (normalized === '/examples/external-item') {
+    return '/docs/f-external-item-directive';
   }
 
   return null;
