@@ -1,4 +1,7 @@
 describe('ElkLayoutAuto', () => {
+  // ELK relayouts are noticeably slower on CI than the initial render.
+  const layoutTimeout = 15000;
+
   function getSelect(label: string) {
     return cy.contains('.label', label).closest('example-select').find('select');
   }
@@ -19,7 +22,7 @@ describe('ElkLayoutAuto', () => {
   }
 
   function expectNodeDirection(sourceLabel: string, targetLabel: string, direction: string) {
-    cy.document().should((document) => {
+    cy.document({ timeout: layoutTimeout }).should((document) => {
       const source = getNodePosition(document, sourceLabel);
       const target = getNodePosition(document, targetLabel);
 
@@ -48,27 +51,27 @@ describe('ElkLayoutAuto', () => {
   });
 
   it('should relayout across all directions', () => {
-    cy.get('.f-node', { timeout: 15000 }).should('have.length', 10);
+    cy.get('.f-node', { timeout: layoutTimeout }).should('have.length', 10);
     getSelect('Direction').find('option').should('have.length', 4);
     expectNodeDirection('Node1', 'Node2', 'TOP_BOTTOM');
 
-    getSelect('Direction').select('BOTTOM_TOP');
+    getSelect('Direction').select('BOTTOM_TOP').should('have.value', 'BOTTOM_TOP');
     expectNodeDirection('Node1', 'Node2', 'BOTTOM_TOP');
 
-    getSelect('Direction').select('LEFT_RIGHT');
+    getSelect('Direction').select('LEFT_RIGHT').should('have.value', 'LEFT_RIGHT');
     expectNodeDirection('Node1', 'Node2', 'LEFT_RIGHT');
 
-    getSelect('Direction').select('RIGHT_LEFT');
+    getSelect('Direction').select('RIGHT_LEFT').should('have.value', 'RIGHT_LEFT');
     expectNodeDirection('Node1', 'Node2', 'RIGHT_LEFT');
   });
 
   it('should relayout automatically after adding a node', () => {
-    cy.get('.f-node', { timeout: 15000 }).should('have.length', 10);
+    cy.get('.f-node', { timeout: layoutTimeout }).should('have.length', 10);
     getSelect('Algorithm').find('option').should('have.length', 12);
 
     cy.contains('.f-button', 'Add Node').click({ force: true });
 
-    cy.get('.f-node', { timeout: 15000 }).should('have.length', 11);
+    cy.get('.f-node', { timeout: layoutTimeout }).should('have.length', 11);
     cy.contains('.f-node', 'Node11')
       .should('have.attr', 'style')
       .and('not.contain', 'translate(0px,0px)');
