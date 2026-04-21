@@ -1,0 +1,43 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+
+  /*
+   * Wrapped in `& {}` so Sass doesn't warn about a declaration
+   * emitted after the mixin's nested media-query rules; the wrapper
+   * also keeps the `padding-top: 0` override after the mixin's
+   * `padding` shorthand in the compiled CSS order.
+   */
+  & {
+    padding-top: 0;
+  }
+}
+
+.facts {
+  max-width: 1248px;
+  margin: 0 auto;
+  border-top: 1px solid var(--divider-color);
+  padding: 32px 0 0;
+
+  p {
+    margin: 0;
+    max-width: 960px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--secondary-text);
+  }
+
+  strong {
+    color: var(--primary-text);
+    font-weight: 600;
+  }
+
+  code {
+    font-family: var(--font-family-mono);
+    font-size: 0.85em;
+    background: var(--alpha-06);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+}

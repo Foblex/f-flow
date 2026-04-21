@@ -1,0 +1,67 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* Four items on desktop means 4-up on wide screens, 2x2 on tablets. */
+  @media (min-width: 1080px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  padding: 26px 24px 24px;
+  background: var(--page-background-color);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--border-radius, 14px);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+
+  &:hover {
+    border-color: var(--primary-text);
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--secondary-text);
+    text-wrap: pretty;
+  }
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  color: var(--primary-text);
+  background: var(--alpha-06);
+  border: 1px solid var(--divider-color);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,80 @@
+:host {
+  position: relative;
+  display: block;
+  padding: 0 24px;
+  margin: 24px 0 64px;
+  scroll-margin-top: 24px;
+
+  @media (min-width: 640px) {
+    padding: 0 48px;
+  }
+  @media (min-width: 960px) {
+    padding: 0 64px;
+  }
+}
+
+.band {
+  max-width: 1248px;
+  margin: 0 auto;
+  background: var(--soft-background);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--border-radius, 14px);
+  padding: 48px 24px;
+  text-align: center;
+
+  @media (min-width: 960px) {
+    padding: 72px 32px;
+  }
+}
+
+.band-inner {
+  position: relative;
+}
+
+h2 {
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 0 0 14px;
+  text-wrap: balance;
+
+  @media (min-width: 960px) {
+    font-size: 36px;
+  }
+}
+
+.lede {
+  margin: 0 auto 26px;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--secondary-text);
+  max-width: 580px;
+  text-wrap: pretty;
+}
+
+.ctas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .f-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cta-icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.fine {
+  margin: 20px 0 0;
+  font-size: 12px;
+  color: var(--tertiary-text);
+  letter-spacing: 0.01em;
+}

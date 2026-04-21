@@ -1,0 +1,67 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  @include s.card-base;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-decoration: none;
+  color: inherit;
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: var(--secondary-text);
+    line-height: 1.55;
+  }
+}
+
+.thumb {
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  background: var(--soft-background);
+  border: 1px solid var(--divider-color);
+}
+
+.thumb-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.open-link {
+  @include s.portal-link;
+  margin-top: auto;
+}

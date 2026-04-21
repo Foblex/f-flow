@@ -1,0 +1,77 @@
+<div class="build-card">
+  <header class="build-header">
+    @if (data().data?.step) {
+    <div class="step-num">{{ data().data?.step }}</div>
+    }
+    <div class="step-content">
+      <h4 class="step-title">{{ data().data?.title }}</h4>
+      @if (data().data?.meta) {
+      <div class="step-meta">{{ data().data?.meta }}</div>
+      }
+    </div>
+  </header>
+
+  <div class="build-body">
+    @if (data().data?.bullets?.length) {
+    <ul class="build-bullets">
+      @for (bullet of data().data?.bullets; track bullet) {
+      <li>
+        <span class="build-check" aria-hidden="true">
+          <svg
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="2.5 7.5 5.5 10.5 11.5 4" />
+          </svg>
+        </span>
+        {{ bullet }}
+      </li>
+      }
+    </ul>
+    } @if (data().data?.chips?.length) {
+    <div class="build-chips">
+      @for (chip of data().data?.chips; track chip.title) {
+      <span class="build-chip">
+        <span class="chip-icon" aria-hidden="true">
+          @switch (chip.icon) { @case ('refresh') {
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M2.5 8.5a5.5 5.5 0 0 0 10 3l1 1.5" />
+            <path d="M13.5 7.5A5.5 5.5 0 0 0 3.5 4.5l-1-1.5" />
+            <path d="M13.5 2v3h-3" />
+            <path d="M2.5 14v-3h3" />
+          </svg>
+          } @case ('clock') {
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="8" cy="8" r="5.5" />
+            <polyline points="8 5 8 8 10 9.5" />
+          </svg>
+          } }
+        </span>
+        <strong>{{ chip.title }}</strong>
+        <span class="chip-meta">· {{ chip.meta }}</span>
+      </span>
+      }
+    </div>
+    }
+  </div>
+</div>
+<service-node-connector position="top" fNodeInput [fInputId]="data().uid" />
+<service-node-connector position="bottom" fNodeOutput [fOutputId]="data().uid" />

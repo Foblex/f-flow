@@ -1,0 +1,13 @@
+<div class="head-main">
+  @if (kicker()) {
+  <div class="kicker">{{ kicker() }}</div>
+  }
+  <h2>{{ title() }}</h2>
+  @if (description()) {
+  <p class="description">{{ description() }}</p>
+  }
+</div>
+
+@if (linkText() && linkRouterLink()) {
+<a class="head-link" [routerLink]="linkRouterLink()">{{ linkText() }} →</a>
+}

@@ -1,0 +1,56 @@
+<div class="inner">
+  <div class="copy">
+    <!-- Primary CTA replaces the former "Book a 30-min call" with a direct
+         email contact — the whole services page funnels clients into
+         support@foblex.com rather than a booking link. -->
+
+    <h1>Ship your Angular node editor with the team that built the library.</h1>
+    <p class="sub">
+      We take a limited number of engagements per quarter to build node-based editors, low-code
+      platforms, and AI agent UIs on Foblex Flow — from architecture reviews to full product
+      partnerships.
+    </p>
+
+    <div class="trust" aria-label="Project snapshot">
+      @for (item of trust(); track $index) {
+      <span class="trust-item">
+        @if (item.labelBefore) {
+        <span class="muted">{{ item.label }}</span>
+        <span class="mono">{{ item.value }}</span>
+        } @else if (item.value && item.label) {
+        <span class="mono">{{ item.value }}</span>
+        <span class="muted">{{ item.label }}</span>
+        } @else if (item.value) {
+        <span class="mono">{{ item.value }}</span>
+        } @else {
+        <span>{{ item.label }}</span>
+        }
+      </span>
+      }
+    </div>
+
+    <div class="ctas">
+      <a class="f-button primary" href="#contact" (click)="onContact($event)">
+        <svg
+          class="cta-icon"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="2.5" y="4.5" width="15" height="11" rx="2" />
+          <path d="m3 6 7 5 7-5" />
+        </svg>
+        Get in touch
+      </a>
+      <a class="email-link" href="mailto:support@foblex.com">
+        or email us directly: support&#64;foblex.com ↗
+      </a>
+    </div>
+  </div>
+
+  <div id="services-flow-anchor-container" class="anchor" aria-hidden="true"></div>
+</div>

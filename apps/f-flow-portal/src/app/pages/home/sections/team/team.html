@@ -1,0 +1,70 @@
+<section-head
+  kicker="The team"
+  title="An independent studio building first-class Angular tooling."
+  description="Foblex Flow is our flagship library - developed and maintained full-time since 2022, with a predictable release cadence, strict SemVer, an open roadmap, and direct support for teams running it in production."
+  [centered]="true"
+/>
+
+<div class="avatars">
+  @for (member of members; track member.id) {
+  <div class="avatar">
+    <div class="circle">{{ member.initials }}</div>
+    <div class="name">{{ member.name }}</div>
+    <div class="role">{{ member.role }}</div>
+  </div>
+  }
+</div>
+
+@if (contributors().length) {
+<section class="contributors" aria-labelledby="contributors-heading">
+  <h3 id="contributors-heading">Our contributors</h3>
+  <p class="contributors-sub">Community engineers who have shipped code into Foblex Flow.</p>
+  <ul class="contributors-grid">
+    @for (contributor of contributors(); track contributor.login) {
+    <li>
+      <a
+        class="contributor"
+        [href]="contributor.htmlUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="contributor.login + ' on GitHub'"
+        [title]="'Open ' + contributor.login + ' on GitHub'"
+      >
+        <img
+          class="contributor-avatar"
+          [src]="contributor.avatarUrl + '&s=80'"
+          [alt]="contributor.login + ' avatar'"
+          loading="lazy"
+          decoding="async"
+          width="40"
+          height="40"
+        />
+        <span class="contributor-login">{{ contributor.login }}</span>
+      </a>
+    </li>
+    }
+  </ul>
+  <a
+    class="contributors-see-all"
+    [href]="contributorsGraphUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    @if (overflowCount() > 0) { See all {{ contributors().length + overflowCount() }} contributors
+    on GitHub → } @else { See all contributors on GitHub → }
+  </a>
+</section>
+}
+
+<div class="links">
+  <a
+    class="f-button"
+    href="https://github.com/Foblex/f-flow"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="f-icon github"></span>GitHub
+  </a>
+  <a class="f-button" routerLink="/services">Talk to the team</a>
+  <a class="f-button" routerLink="/blog/overview">Articles</a>
+</div>

@@ -1,9 +1,13 @@
 @use '@angular/material' as mat;
+// Portal-wide base styles (typography, tokens, utility classes) shipped
+// with m-render. Use `@use` instead of the deprecated `@import` — rules
+// and selectors from the module are still emitted globally, the change
+// is purely about adopting the modern Sass module system.
+@use 'assets/styles/styles';
 
 @include mat.core();
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import '@foblex/m-render/assets/styles/styles.scss';
 
 .f-zoom-in-icon {
   mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Zm-30-76.93V-550h-77.69v-60h77.69v-77.69h60V-610h77.69v60h-77.69v77.69h-60Z"/></svg>');
@@ -42,6 +46,32 @@
   flex: 1;
 }
 
+/**
+ * Trust-badge pill rendered ABOVE the leading h1 on every docs-backed
+ * page (docs, examples, showcase, blog). Keeps one compact line of
+ * production-readiness signals at the very top of each page — version,
+ * Angular compatibility, license. Uses `display: block; width: fit-content`
+ * so the pill sits on its own line above the title instead of inline
+ * next to it. Pages that don't open with an h1 silently skip.
+ */
+.doc-content > h1:first-child::before {
+  content: 'v18.5.0 · Angular 17.3+ · MIT';
+  display: block;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--alpha-06);
+  border: 1px solid var(--divider-color);
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--secondary-text);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+
 :root {
   --ff-example-control-height: 30px;
   --ff-example-control-radius: 6px;
@@ -56,8 +86,7 @@
   --ff-example-control-border-color-hover: rgba(13, 13, 13, 0.18);
   --ff-example-control-border-color-focus: rgba(99, 102, 241, 0.5);
   --ff-example-control-panel-background: #ffffff;
-  --ff-example-control-panel-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --ff-example-control-panel-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
   --ff-example-control-panel-hairline: 0 0 0 1px rgba(13, 13, 13, 0.06);
   --ff-example-control-option-background-hover: rgba(99, 102, 241, 0.06);
   --ff-example-control-option-background-selected: rgba(99, 102, 241, 0.08);
@@ -72,8 +101,7 @@
   --ff-example-control-border-color-hover: rgba(255, 255, 255, 0.18);
   --ff-example-control-border-color-focus: rgba(129, 140, 248, 0.5);
   --ff-example-control-panel-background: #1e2330;
-  --ff-example-control-panel-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --ff-example-control-panel-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
   --ff-example-control-panel-hairline: 0 0 0 1px rgba(255, 255, 255, 0.06);
   --ff-example-control-option-background-hover: rgba(129, 140, 248, 0.08);
   --ff-example-control-option-background-selected: rgba(129, 140, 248, 0.1);

@@ -1,0 +1,46 @@
+@defer {
+<f-flow
+  fDraggable
+  (fFullRendered)="loaded()"
+  (fDragStarted)="dragStarted()"
+  (fDragEnded)="dragEnded()"
+>
+  <f-background>
+    <f-rect-pattern
+      hSize="80"
+      vSize="80"
+      hColor="var(--hero-grid-soft)"
+      vColor="var(--hero-grid-soft)"
+    />
+  </f-background>
+  <f-canvas [position]="canvasPosition()" [scale]="scale()">
+    @for (connection of connections; track connection) {
+    <f-connection
+      class="hero-connection"
+      [class.dashed]="connection.style === connectionStyle.DASHED"
+      [class.animated]="connection.style === connectionStyle.ANIMATED"
+      [fReassignDisabled]="true"
+      [fSelectionDisabled]="true"
+      [fBehavior]="connection.behaviour"
+      [fType]="connection.type"
+      [fOutputId]="connection.source"
+      [fOutputSide]="connection.sourceSide || 'calculate'"
+      [fInputId]="connection.target"
+      [fInputSide]="connection.targetSide || 'calculate'"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (node of nodes; track node.uid) {
+    <hero-wrapper-node
+      [data]="node"
+      fNode
+      [fNodeId]="node.uid"
+      fDragHandle
+      [fNodeRotate]="node.rotate"
+      [fNodePosition]="node.position"
+      (fNodePositionChange)="changeNodePosition($event, node)"
+    />
+    }
+  </f-canvas>
+</f-flow>
+}

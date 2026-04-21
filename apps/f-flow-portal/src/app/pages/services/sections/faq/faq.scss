@@ -1,0 +1,65 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+}
+
+.faq {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--divider-color);
+}
+
+details {
+  border-bottom: 1px solid var(--divider-color);
+}
+
+summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--primary-text);
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--primary-1);
+  }
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.chev {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  background: var(--tertiary-text);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat center / contain;
+  transition:
+    transform 0.2s ease,
+    background 0.15s ease;
+}
+
+details[open] .chev {
+  transform: rotate(180deg);
+  background: var(--primary-text);
+}
+
+.body {
+  padding: 0 4px 22px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--secondary-text);
+  max-width: 680px;
+  text-wrap: pretty;
+}

@@ -1,0 +1,66 @@
+/**
+ * Services uses the same full-page flow-backdrop pattern as home: a
+ * three-row grid (header / body / footer) with the services-flow canvas
+ * spanning every row via `grid-row: 1 / -1`. Pointer events fall through
+ * the hero's whitespace to the flow underneath; every other section
+ * opts back into pointer-events so its interactive content keeps
+ * working.
+ */
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--background-color);
+  color: var(--primary-text);
+}
+
+.flow-background {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+portal-header {
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 5;
+}
+
+.body {
+  grid-column: 1;
+  grid-row: 2;
+  z-index: 3;
+  /* Transparent to pointer events so drags landing on hero whitespace
+     fall through to services-flow. Opted back in for every section
+     except services-hero (which handles pointer-events itself in its
+     own host/stylesheet). */
+  pointer-events: none;
+}
+
+.body > *:not(services-hero) {
+  pointer-events: auto;
+}
+
+portal-footer {
+  grid-column: 1;
+  grid-row: 3;
+  z-index: 3;
+}
+
+/**
+ * Every section rendered inside `.body` gets an anchor wrapper so
+ * footer links like `/services#faq` can scroll the right section to
+ * the top of the services host's scroll container. `scroll-margin-top`
+ * keeps a small breathing gap above the anchored section when the
+ * browser scrolls it into view.
+ */
+.anchor-target {
+  scroll-margin-top: 24px;
+}

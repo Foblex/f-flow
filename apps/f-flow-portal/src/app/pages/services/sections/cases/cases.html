@@ -1,0 +1,31 @@
+<section-head
+  kicker="In production"
+  title="Real products, real teams."
+  description="Commercial apps and third-party projects shipping on Foblex Flow today — the same production deployments featured on the home showcase."
+  linkText="See the full showcase"
+  linkRouterLink="/showcase/overview"
+/>
+
+<div class="grid">
+  @for (card of cases(); track card.title) {
+  <a class="case" [href]="card.url" target="_blank" rel="noopener noreferrer">
+    <div class="thumb">
+      <img
+        class="thumb-image"
+        [src]="card.image"
+        [alt]="card.title + ' — Foblex Flow showcase'"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="body">
+      @if (card.tag) {
+      <span class="tag">{{ card.tag }}</span>
+      }
+      <h4>{{ card.title }}</h4>
+      <p>{{ card.description }}</p>
+      <span class="view-link">View →</span>
+    </div>
+  </a>
+  }
+</div>

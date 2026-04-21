@@ -1,0 +1,53 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+.step-card {
+  width: 520px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 22px 28px;
+  background: var(--services-card-bg);
+  border: 1px solid var(--services-card-border);
+  border-radius: 18px;
+  box-shadow: var(--services-card-shadow);
+  color: var(--services-card-text);
+}
+
+.step-num {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--services-badge-bg);
+  color: var(--services-badge-text);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-family-mono);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.step-content {
+  min-width: 0;
+}
+
+.step-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--services-card-text);
+}
+
+.step-meta {
+  margin-top: 6px;
+  font-family: var(--font-family-mono);
+  font-size: 13.5px;
+  color: var(--services-card-muted);
+  letter-spacing: -0.005em;
+}

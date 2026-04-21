@@ -1,0 +1,13 @@
+<div class="step-card">
+  @if (data().data?.step) {
+  <div class="step-num">{{ data().data?.step }}</div>
+  }
+  <div class="step-content">
+    <h4 class="step-title">{{ data().data?.title }}</h4>
+    @if (data().data?.meta) {
+    <div class="step-meta">{{ data().data?.meta }}</div>
+    }
+  </div>
+</div>
+<service-node-connector position="top" fNodeInput [fInputId]="data().uid" />
+<service-node-connector position="bottom" fNodeOutput [fOutputId]="data().uid" />

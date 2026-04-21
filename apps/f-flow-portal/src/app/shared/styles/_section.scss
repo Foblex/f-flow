@@ -1,0 +1,46 @@
+/* ============================================================
+   Shared portal section layout + head typography.
+   Used by f-home-* and f-services-* section components.
+   ============================================================ */
+
+@mixin section-frame {
+  position: relative;
+  display: block;
+  padding: 56px 24px;
+  max-width: 1312px;
+  margin: 0 auto;
+
+  @media (min-width: 640px) {
+    padding: 64px 48px;
+  }
+
+  @media (min-width: 960px) {
+    padding: 80px 64px;
+  }
+}
+
+@mixin card-base {
+  background: var(--page-background-color);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--border-radius, 14px);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: var(--dark-divider-color);
+    box-shadow: var(--shadow-1);
+  }
+}
+
+@mixin portal-link {
+  color: var(--f-link-primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--f-link-primary-hover-color);
+    text-decoration: underline;
+  }
+}

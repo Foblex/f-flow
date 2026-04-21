@@ -1,0 +1,5 @@
+@let viewModel = data(); @switch (viewModel.type) { @case ('step') {
+<service-step-node [data]="viewModel" />
+} @case ('build') {
+<service-build-node [data]="viewModel" />
+} }

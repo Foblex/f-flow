@@ -1,0 +1,53 @@
+:host {
+  position: relative;
+  display: block;
+  padding: 0 24px;
+  margin-bottom: 48px;
+
+  @media (min-width: 640px) {
+    padding: 0 48px;
+  }
+  @media (min-width: 960px) {
+    padding: 0 64px;
+  }
+}
+
+.band {
+  max-width: 1248px;
+  margin: 0 auto;
+  background: var(--soft-background);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--border-radius, 14px);
+  padding: 40px 24px;
+  text-align: center;
+
+  @media (min-width: 960px) {
+    padding: 64px 32px;
+  }
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  margin: 0 0 22px;
+  text-wrap: balance;
+
+  @media (min-width: 960px) {
+    font-size: 32px;
+  }
+}
+
+.ctas {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .f-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}

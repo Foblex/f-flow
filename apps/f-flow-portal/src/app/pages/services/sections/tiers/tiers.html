@@ -1,0 +1,45 @@
+<section-head
+  kicker="Engagements"
+  title="Three ways to work with us."
+  description="Fixed scope, fixed price, fixed duration. You choose the tier that fits — or email us and we'll figure it out together."
+/>
+
+<div class="grid">
+  @for (tier of tiers; track tier.name) {
+  <article class="tier" [class.featured]="tier.featured">
+    @if (tier.badge) {
+    <span class="tier-badge">{{ tier.badge }}</span>
+    }
+    <h3 class="tier-name">{{ tier.name }}</h3>
+    <p class="tier-fit">{{ tier.fitFor }}</p>
+
+    <div class="tier-price-row">
+      <span class="tier-price">{{ tier.price }}</span>
+      <span class="tier-price-sep" aria-hidden="true">·</span>
+      <span class="tier-duration">{{ tier.duration }}</span>
+    </div>
+
+    <p class="tier-desc">{{ tier.description }}</p>
+
+    <ul class="tier-list">
+      @for (bullet of tier.bullets; track bullet) {
+      <li><span class="check"></span>{{ bullet }}</li>
+      }
+    </ul>
+
+    <a
+      class="f-button tier-cta"
+      [class.primary]="tier.featured"
+      href="#contact"
+      (click)="onContact($event)"
+    >
+      {{ tier.cta }}
+    </a>
+  </article>
+  }
+</div>
+
+<div class="foot">
+  <p>Unsure which tier fits? Email us and we'll help you pick.</p>
+  <a class="f-button" href="#contact" (click)="onContact($event)">Email us</a>
+</div>

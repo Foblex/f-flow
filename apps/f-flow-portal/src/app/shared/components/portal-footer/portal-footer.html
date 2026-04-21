@@ -1,0 +1,51 @@
+<div class="content">
+  <div class="cols">
+    <div class="brand">
+      <f-brand-link
+        class="logo-link"
+        [title]="title()"
+        [logo]="logo()"
+        [logoAlt]="title() + ' Logo'"
+      />
+      <p>{{ tagline() }}</p>
+    </div>
+    @for (column of columns(); track column.title) {
+    <div class="col">
+      <h5>{{ column.title }}</h5>
+      <ul>
+        @for (link of column.links; track link.text) {
+        <li>
+          @if (link.routerLink) {
+          <a [routerLink]="link.routerLink" [fragment]="link.fragment">{{ link.text }}</a>
+          } @else if (link.href) {
+          <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.text }}</a>
+          } @else {
+          <span>{{ link.text }}</span>
+          }
+        </li>
+        }
+      </ul>
+    </div>
+    }
+  </div>
+
+  <div class="bottom">
+    @for (chunk of bottomMeta(); track $index; let last = $last) {
+    <span>{{ chunk }}</span>
+    @if (!last || showMRenderCredit()) {
+    <span class="dot"></span>
+    } } @if (showMRenderCredit()) {
+    <span>
+      Created with Foblex
+      <a
+        class="f-text-link f-text-link-primary"
+        href="https://m-render.foblex.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        MRender
+      </a>
+    </span>
+    }
+  </div>
+</div>

@@ -1,0 +1,209 @@
+/**
+ * Hero content block. The actual hero-flow background canvas lives at
+ * the page shell level (portal-home grid), spanning the full document
+ * height so the interactive flow is visible behind every section.
+ *
+ * Here we only lay out the hero copy and the flow anchor. Pointer
+ * events pass through the section's whitespace to the flow canvas
+ * underneath; interactive elements (copy block, image anchor) flip
+ * pointer-events back on to stay clickable.
+ */
+:host {
+  position: relative;
+  display: block;
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 32px;
+  padding: 32px 24px 48px;
+  max-width: 1248px;
+  margin: 0 auto;
+  /* The hero container itself must not catch pointer events so drags
+     that land on hero whitespace (not on the copy or the image anchor)
+     fall through to the hero-flow canvas underneath. `.copy` flips
+     pointer-events back on for the interactive headline/stats/CTAs. */
+  pointer-events: none;
+
+  @media (min-width: 640px) {
+    padding: 48px 48px 64px;
+  }
+
+  @media (min-width: 960px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    padding: 64px 64px 72px;
+  }
+}
+
+.copy {
+  width: 100%;
+  pointer-events: all;
+  text-align: center;
+
+  > * {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 960px) {
+    flex: 1 1 0;
+    text-align: left;
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+
+/* The image anchor is only a positioning reference for the flow canvas
+   (querySelector('#hero-flow-anchor-container')) — keep it
+   non-interactive so the flow behind it receives drags. */
+.image {
+  pointer-events: none;
+
+  @media (min-width: 960px) {
+    flex: 1 1 0;
+  }
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0 0 16px;
+  text-wrap: balance;
+
+  background: linear-gradient(135deg, var(--primary-text) 0%, var(--secondary-text) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  @media (min-width: 640px) {
+    font-size: 40px;
+  }
+  @media (min-width: 960px) {
+    font-size: 52px;
+  }
+}
+
+.sub {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--secondary-text);
+  max-width: 520px;
+  margin: 0 auto 24px;
+
+  @media (min-width: 960px) {
+    margin-left: 0;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 auto 24px;
+  justify-content: center;
+
+  @media (min-width: 960px) {
+    justify-content: flex-start;
+  }
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--f-badge-border-radius, 4px);
+  background: var(--alpha-06);
+  color: var(--primary-text);
+  font-size: var(--f-badge-compact-font-size, 12px);
+  font-weight: var(--f-badge-font-weight, 600);
+  height: var(--f-badge-height, 22px);
+  white-space: nowrap;
+
+  .mono {
+    font-family: var(--font-family-mono);
+    font-weight: 600;
+  }
+  .muted {
+    color: var(--secondary-text);
+    font-weight: 500;
+  }
+}
+
+.install {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px 7px 14px;
+  border-radius: var(--code-view-border-radius, 8px);
+  background: var(--code-view-background);
+  border: 1px solid var(--code-view-border-color);
+  font-family: var(--font-family-mono);
+  font-size: 13px;
+  color: var(--primary-text);
+  margin-bottom: 24px;
+
+  .prompt {
+    color: var(--tertiary-text);
+    user-select: none;
+  }
+
+  code {
+    font-family: inherit;
+    font-size: 13px;
+  }
+
+  .copy {
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--divider-color);
+    background: transparent;
+    color: var(--tertiary-text);
+    border-radius: 6px;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+
+    &:hover {
+      color: var(--primary-text);
+      background: var(--alpha-04);
+    }
+  }
+
+  &.copied .copy {
+    color: var(--success-2);
+    border-color: var(--success-2);
+  }
+}
+
+.ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .f-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @media (min-width: 960px) {
+    justify-content: flex-start;
+  }
+}

@@ -32,26 +32,30 @@
         ],
         "styles": ["apps/f-flow-portal/src/styles/styles.scss"],
         "stylePreprocessorOptions": {
-          "includePaths": ["tools/sass-aliases"]
+          "includePaths": ["tools/sass-aliases", "libs/m-render/src"]
         },
         "scripts": [],
-        "server": "apps/f-flow-portal/src/main.server.ts",
+        "define": {
+          "process.env.VSCODE_TEXTMATE_DEBUG": "false"
+        },
+        "server": "apps/f-flow-portal/src/server/main.server.ts",
         "ssr": {
           "entry": "apps/f-flow-portal/server.ts"
-        }
+        },
+        "allowedCommonJsDependencies": ["dagre", "elkjs/lib/elk.bundled"]
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kB",
+              "maximumWarning": "1.5MB",
               "maximumError": "4MB"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kB",
-              "maximumError": "20kB"
+              "maximumWarning": "20kB",
+              "maximumError": "50kB"
             }
           ],
           "outputHashing": "all"

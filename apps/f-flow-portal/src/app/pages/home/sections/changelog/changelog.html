@@ -1,0 +1,19 @@
+<section-head
+  kicker="Shipped recently"
+  title="A steady release cadence, with breaking changes kept to a minimum."
+/>
+
+<div class="grid">
+  @for (item of items; track item.version) {
+  <a class="card" [routerLink]="item.routerLink">
+    <div class="head">
+      <span class="ver">{{ item.version }}</span>
+      <span class="date">{{ item.date }}</span>
+    </div>
+    <p>{{ item.description }}</p>
+    <span class="read-link">Read release notes →</span>
+  </a>
+  }
+</div>
+
+<a class="see-all-link" routerLink="/blog/overview">See all articles →</a>

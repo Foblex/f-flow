@@ -1,0 +1,46 @@
+<div class="content">
+  <f-brand-link class="brand" [title]="title()" [logo]="logo()" [logoAlt]="title() + ' Logo'" />
+
+  <div class="right">
+    <nav class="nav" aria-label="Primary">
+      <a routerLink="/docs/get-started">Docs</a>
+      <a routerLink="/examples/overview">Examples</a>
+      <a routerLink="/showcase/overview">Showcase</a>
+      <a routerLink="/blog/overview">Articles</a>
+      <a
+        routerLink="/services"
+        [class.active]="currentPage() === 'services'"
+        [attr.aria-current]="currentPage() === 'services' ? 'page' : null"
+      >
+        Services
+      </a>
+    </nav>
+
+    <div class="divider nav-divider"></div>
+
+    <button theme-button aria-label="Change theme"></button>
+
+    <div class="divider"></div>
+
+    <div class="media-links">
+      <a
+        class="media-link"
+        href="https://github.com/Foblex/f-flow"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Foblex Flow on GitHub"
+      >
+        <span class="f-icon github"></span>
+      </a>
+      <a
+        class="media-link"
+        href="https://x.com/foblexflow"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Foblex Flow on X (Twitter)"
+      >
+        <span class="f-icon twitter"></span>
+      </a>
+    </div>
+  </div>
+</div>
