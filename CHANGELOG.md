@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## Unreleased
+
+### ⚠ BREAKING CHANGES
+
+- **virtualization:** removed the `fVirtualForTrackBy` input on `*fVirtualFor`. The input was declared but never wired into the directive's rendering path, so providing a `trackBy` function had no effect. Templates that reference it must drop the expression (e.g. `*fVirtualFor="let item of items(); trackBy trackFn;"` → `*fVirtualFor="let item of items();"`). No runtime behavior changes — identity reconciliation was never actually performed.
+
 ## [18.5.0](https://github.com/Foblex/f-flow/compare/v18.4.0...v18.5.0) (2026-04-14)
 
 ### Highlights

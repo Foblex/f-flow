@@ -8,9 +8,6 @@ import {
 } from '@angular/core';
 import { FCanvasComponent, FFlowComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
 import { FCheckboxComponent } from '@foblex/m-render';
 import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
 
@@ -28,17 +25,7 @@ type Cell = {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FZoomDirective,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    FCheckboxComponent,
-    ExampleToolbar,
-    ExampleSelect,
-  ],
+  imports: [FFlowModule, FZoomDirective, FCheckboxComponent, ExampleToolbar, ExampleSelect],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -72,8 +59,6 @@ export class Example {
 
     return result;
   });
-
-  protected readonly trackCell = (_: number, c: Cell) => c.cIndex + '-' + c.rIndex;
 
   protected readonly connections = computed<Edge[]>(() => {
     const total = this.totalNodes();
