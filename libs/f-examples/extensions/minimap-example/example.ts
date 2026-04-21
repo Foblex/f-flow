@@ -1,20 +1,15 @@
-import {ChangeDetectionStrategy, Component, viewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
-import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'minimap-example',
-  styleUrls: [ './example.scss' ],
+  styleUrls: ['./example.scss'],
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatIcon
-  ]
+  imports: [FFlowModule],
 })
 export class Example {
-
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
   protected onLoaded(): void {

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FFlowModule } from '@foblex/flow';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -7,7 +6,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './ai-low-code-platform.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule],
 })
 export class AiLowCodePlatform {
   protected url = inject(DomSanitizer).bypassSecurityTrustResourceUrl(
