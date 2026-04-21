@@ -28,6 +28,7 @@ let uniqueId = 0;
 const _DEBOUNCE_TIME = 3;
 
 @Directive({
+  standalone: false,
   selector: '[fNode]',
   exportAs: 'fComponent',
   host: {

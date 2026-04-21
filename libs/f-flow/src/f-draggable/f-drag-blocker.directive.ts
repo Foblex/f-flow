@@ -3,6 +3,7 @@ import {
 } from "@angular/core";
 
 @Directive({
+  standalone: false,
   selector: "[fDragBlocker]",
   host: {
     class: `f-drag-blocker`,

@@ -26,6 +26,7 @@ import {
 let uniqueId = 0;
 
 @Component({
+  standalone: false,
   selector: 'f-connection',
   exportAs: 'fComponent',
   templateUrl: './f-connection.component.html',

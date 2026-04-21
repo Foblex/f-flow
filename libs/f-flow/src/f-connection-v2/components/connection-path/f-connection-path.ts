@@ -5,6 +5,7 @@ import { createConnectionDomIdentifier, createGradientDomUrl } from '../../utils
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 
 @Component({
+  standalone: false,
   selector: 'path[f-connection-path]',
   template: '',
   styleUrls: ['./f-connection-path.scss'],
