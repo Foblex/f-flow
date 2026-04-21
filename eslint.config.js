@@ -104,4 +104,18 @@ module.exports = tseslint.config(
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
   },
+  {
+    files: [
+      'libs/f-flow/src/f-connection/**/*.ts',
+      'libs/f-flow/src/f-connection-v2/**/*.ts',
+      'libs/f-flow/src/f-connectors/**/*.ts',
+      'libs/f-flow/src/f-draggable/f-drag-blocker.directive.ts',
+      'libs/f-flow/src/f-draggable/f-draggable.directive.ts',
+      'libs/f-flow/src/f-line-alignment/**/*.ts',
+      'libs/f-flow/src/f-node/**/*.ts',
+    ],
+    rules: {
+      '@angular-eslint/prefer-standalone': 'off',
+    },
+  },
 );
