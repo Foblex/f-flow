@@ -1,0 +1,24 @@
+@if (viewModel) {
+  @if (src()) {
+    <div class="media">
+      <img
+        [src]="src()"
+        [alt]="viewModel.description || viewModel.text"
+        [title]="viewModel.text"
+        [attr.width]="viewModel.image_width || null"
+        [attr.height]="viewModel.image_height || null">
+    </div>
+  }
+
+  <div class="content">
+    @if (viewModel.badge) {
+      <div class="meta">
+        <span class="f-badge sm {{viewModel.badge.type}}">{{ viewModel.badge.text }}</span>
+      </div>
+    }
+
+    <div class="title">{{ viewModel.text }}</div>
+    <div class="description">{{ viewModel.description }}</div>
+  </div>
+}
+

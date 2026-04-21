@@ -1,0 +1,74 @@
+:host {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-top: 1px solid var(--divider-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+
+  &.collapsed, &.no-title {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+header {
+  font-weight: 700;
+  color: var(--tertiary-text);
+  flex-grow: 1;
+  padding: 0 8px 8px;
+  line-height: 18px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.caret {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: -4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  color: var(--tertiary-text);
+  cursor: pointer;
+  transition: color 0.25s, background-color 0.25s;
+  flex-shrink: 0;
+}
+
+:host {
+  &:hover .caret {
+    color: var(--secondary-text);
+    background-color: var(--gray-soft);
+  }
+
+  &:hover .caret:hover {
+    color: var(--primary-text);
+  }
+
+  .caret-icon {
+    font-size: 18px;
+    transform: rotate(90deg);
+    transition: transform 0.25s;
+    mask-size: 100% 100%;
+    background-color: currentColor;
+    color: inherit;
+    width: 18px;
+    height: 18px;
+  }
+
+  &.collapsed .caret-icon {
+    transform: rotate(0);
+  }
+}

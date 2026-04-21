@@ -1,0 +1,46 @@
+:host {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+  animation: 1s linear forwards 0.5s fadeIn;
+}
+
+.docs-cookies-popup {
+  padding: 1rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--divider-color);
+  color: var(--primary-text);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  max-width: 310px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  box-shadow: var(--shadow-3);
+
+  > div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    margin-block-start: 1rem;
+  }
+}
+
+.f-button {
+  outline: none;
+  border: none;
+  height: unset;
+  line-height: 26px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 100%;
+    visibility: visible;
+  }
+}

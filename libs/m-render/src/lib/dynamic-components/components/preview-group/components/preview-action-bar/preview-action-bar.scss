@@ -1,0 +1,18 @@
+.filters-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-top: 20px;
+  gap: 12px;
+}
+
+.filters-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 20px;
+  row-gap: 10px;
+  min-width: 0;
+}

@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100%;
+  gap: 0;
+}
+
+.f-backdrop  {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  z-index: var(--z-index-backdrop);
+  background: var(--backdrop-color);
+  backdrop-filter: blur(6px);
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  @media (min-width: 960px) {
+    position: unset;
+  }
+}
+
+.popover {
+  position: fixed;
+  min-width: 120px;
+  bottom: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  background-color: var(--surface-glass-strong);
+  border: 1px solid var(--divider-color);
+  box-shadow: var(--shadow-2);
+  color: var(--primary-text);
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  z-index: var(--z-index-popover);
+  opacity: 1;
+}
+

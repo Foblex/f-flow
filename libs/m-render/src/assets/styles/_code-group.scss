@@ -1,0 +1,96 @@
+.m-render {
+  h1 + .f-code-group, h2 + .f-code-group, h3 + .f-code-group, h4 + .f-code-group, h5 + .f-code-group, h6 + .f-code-group {
+    margin-top: 12px;
+  }
+
+  .f-code-group + .f-code-group {
+    margin-top: 16px;
+  }
+
+  .f-code-group {
+    display: block;
+    border: 1px solid var(--code-view-border-color);
+    border-radius: var(--code-group-border-radius);
+    background-color: var(--code-group-tabs-background);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    .f-code-group-tabs {
+      position: relative;
+      display: flex;
+      padding: 0 12px;
+      background-color: var(--code-group-tabs-background);
+      border-bottom: 1px solid var(--code-group-tabs-border-color);
+      overflow-x: auto;
+
+      button {
+        border: 2px solid transparent;
+        border-left: none;
+        border-right: none;
+        outline: none;
+        background: none;
+        padding: 0 12px;
+        line-height: 48px;
+        font-size: var(--code-group-tab-button-font-size);
+        font-weight: 500;
+        color: var(--code-group-tab-button-text-color);
+        cursor: pointer;
+
+        &.active {
+          color: var(--code-group-tab-button-active-text-color);
+          border-bottom-color: var(--code-group-tab-button-active-border-color);
+        }
+      }
+    }
+
+    .f-code-group-body {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      background-color: var(--code-view-background);
+      height: calc(100% - 52px);
+      overflow: auto;
+      position: relative;
+
+      > .f-code-view,
+      > .f-example-view {
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background-color: transparent;
+      }
+
+      > .f-code-view pre code {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+@media (hover: hover) {
+  .m-render {
+    .f-code-group {
+      .f-code-group-body > .f-code-view .f-copy-button {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      &:hover .f-code-group-body > .f-code-view .f-copy-button {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
+@media (max-width: 959px) {
+  .m-render {
+    .f-code-group {
+      width: calc(100% + (var(--page-padding) * 2));
+      margin-inline: calc(var(--page-padding) * -1);
+      border-radius: 0;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@let eLink = editLink();
+@let pLink = previousLink();
+@let nLink = nextLink();
+
+@if (eLink) {
+  <a class="footer-edit-link f-text-link f-text-link-primary" [href]="eLink">
+    <span class="edit-link-icon f-icon edit"></span>
+    {{ navigation.editLink?.text || 'Edit this page on GitHub' }}
+  </a>
+}
+
+@if (pLink || nLink) {
+  <nav class="footer-navigation">
+    @if (pLink) {
+      <a footer-navigation-button
+         [href]="pLink.link"
+         [description]="navigation.previous"
+         [link]="pLink">
+      </a>
+    }
+    @if (nLink) {
+      <a footer-navigation-button class="next"
+         [href]="nLink.link"
+         [description]="navigation.next"
+         [link]="nLink">
+      </a>
+    }
+  </nav>
+}

@@ -1,0 +1,14 @@
+@if (filters().length) {
+  <div class="filters-row">
+    <div class="filters-group" role="radiogroup" aria-label="Filter preview items">
+      @for (filter of filters(); track filter) {
+        <f-radio-button
+          [name]="filterGroupName"
+          [checked]="activeFilter() === filter"
+          (change)="onFilterChange(filter)">{{ filter | titlecase }}</f-radio-button>
+      }
+    </div>
+    <div class="flex-space"></div>
+    <f-checkbox [checked]="isSortByDateChecked()" (change)="onSortByDateChange($event)">Sort by Newness</f-checkbox>
+  </div>
+}

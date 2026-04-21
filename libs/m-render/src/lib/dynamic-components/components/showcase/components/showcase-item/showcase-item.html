@@ -1,0 +1,30 @@
+@let data = model();
+
+@if (data) {
+  @if (src()) {
+    <div class="media">
+      <img [src]="src()" [alt]="data.description || data.name" [title]="data.name">
+    </div>
+  }
+
+  <div class="content">
+    @if (data.tags?.length) {
+      <div class="meta">
+        @for (tag of data.tags; track tag) {
+          <span class="f-badge sm tip">{{ tag }}</span>
+        }
+      </div>
+    }
+
+    <div class="title">{{ data.name }}</div>
+    <div class="description">{{ data.description }}</div>
+
+    @if (data.links.length) {
+      <div class="links">
+        @for (link of data.links; track link.text) {
+          <a class="f-text-link f-text-link-primary" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.text }}</a>
+        }
+      </div>
+    }
+  </div>
+}

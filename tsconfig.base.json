@@ -11,7 +11,9 @@
       "@foblex/pro-examples/*": ["./libs/f-pro-examples/*"],
       "@foblex/flow": ["./libs/f-flow/src/public-api.ts"],
       "@foblex/flow-dagre-layout": ["./libs/f-layout/dagre/src/public-api.ts"],
-      "@foblex/flow-elk-layout": ["./libs/f-layout/elk/src/public-api.ts"]
+      "@foblex/flow-elk-layout": ["./libs/f-layout/elk/src/public-api.ts"],
+      "@foblex/m-render": ["./libs/m-render/src/index.ts"],
+      "@foblex/m-render/*": ["./libs/m-render/src/*"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

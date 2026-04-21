@@ -1,0 +1,49 @@
+.m-render .doc-content a,
+.f-text-link {
+  border-radius: var(--f-link-radius);
+  cursor: pointer;
+  font-weight: var(--f-link-font-weight);
+  overflow-wrap: anywhere;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease,
+    text-decoration-color 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--f-link-focus-color);
+    outline-offset: 1px;
+  }
+}
+
+.m-render .doc-content a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentcolor 70%, transparent);
+  text-underline-offset: var(--f-link-underline-offset);
+
+  &:hover {
+    color: color-mix(in srgb, currentcolor 80%, transparent);
+  }
+}
+
+.f-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.f-text-link-primary {
+  color: var(--f-link-primary-color);
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--f-link-primary-hover-color);
+  }
+
+  &[data-underline] {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, currentcolor 70%, transparent);
+    text-underline-offset: var(--f-link-underline-offset);
+  }
+}

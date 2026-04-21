@@ -1,0 +1,84 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--radio-button-text);
+
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  &:hover {
+    .f-radio-button-container {
+      border-color: var(--radio-button-border-color-hover);
+    }
+  }
+
+  .f-radio-button-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--radio-button-size);
+    height: var(--radio-button-size);
+    margin-top: 2px;
+    border-radius: 50%;
+    border: 1px solid var(--radio-button-border-color);
+    background-color: var(--radio-button-background);
+    transition:
+      border-color .15s ease,
+      background-color .15s ease;
+
+    .f-radio-button-inner-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--radio-button-inner-circle-size);
+      height: var(--radio-button-inner-circle-size);
+      border-radius: 50%;
+      background-color: var(--radio-button-inner-circle-color);
+      transform: translate(-50%, -50%) scale(0);
+      transition:
+        transform .15s ease,
+        background-color .15s ease;
+    }
+  }
+
+  label {
+    user-select: none;
+    line-height: inherit;
+  }
+
+  &.f-radio-button-checked {
+    .f-radio-button-container {
+      border-color: var(--radio-button-checked-background);
+      background-color: var(--radio-button-checked-background);
+
+      .f-radio-button-inner-circle {
+        transform: translate(-50%, -50%) scale(1);
+        animation: f-radio-button-scale-in .22s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+    }
+  }
+}
+
+@keyframes f-radio-button-scale-in {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

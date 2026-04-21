@@ -1,0 +1,94 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 860px;
+
+  @media (min-width: 1280px) {
+    width: calc(100% - var(--on-page-navigation-width) - var(--page-padding) - var(--docs-content-offset-desktop));
+    margin-left: var(--docs-content-offset-desktop);
+  }
+
+  &.expand-no-toc {
+    @media (min-width: 1280px) {
+      width: calc(100% - var(--docs-content-offset-desktop));
+      max-width: 1060px;
+    }
+  }
+
+  &.empty-navigation {
+    margin: auto;
+    max-width: 980px;
+
+    @media (min-width: 1280px) {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.origin-link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 28px;
+  border: 1px solid var(--divider-color);
+  border-radius: calc(var(--border-radius) + 2px);
+  padding: 14px 16px;
+  background: var(--surface-glass-strong);
+  box-shadow: var(--shadow-1);
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.origin-link-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: var(--primary-text);
+  color: var(--neutral-inverse);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.origin-link-icon::before {
+  content: 'SRC';
+}
+
+.origin-link-content {
+  min-width: 0;
+}
+
+.origin-link-label {
+  display: block;
+  color: var(--secondary-text);
+  font-weight: 600;
+}
+
+.origin-link-url {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 2px;
+}
+
+@media (max-width: 639px) {
+  .origin-link {
+    margin-top: 24px;
+    border-radius: 8px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .origin-link-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+}

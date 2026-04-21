@@ -1,0 +1,94 @@
+:host {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  color: var(--checkbox-text);
+
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  &:hover {
+    .f-checkbox-container {
+      border-color: var(--checkbox-border-color-hover);
+    }
+  }
+
+  .f-checkbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    flex-shrink: 0;
+    margin-top: 1px;
+    border: 1px solid var(--checkbox-border-color);
+    border-radius: var(--checkbox-border-radius);
+    background-color: var(--checkbox-background);
+    transition:
+      border-color .15s ease,
+      background-color .15s ease;
+
+    .f-checkbox-checkmark {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0;
+      transform: scale(0.7);
+      transition:
+        opacity .15s ease,
+        transform .15s ease,
+        color .15s ease;
+
+      .f-checkbox-checkmark-path {
+        stroke: var(--checkbox-checkmark-color);
+        stroke-width: 2.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 32;
+        stroke-dashoffset: 32;
+      }
+    }
+  }
+
+  label {
+    user-select: none;
+    line-height: inherit;
+  }
+
+  &.f-checkbox-checked {
+    .f-checkbox-container {
+      border-color: var(--checkbox-checked-background);
+      background-color: var(--checkbox-checked-background);
+
+      .f-checkbox-checkmark {
+        opacity: 1;
+        transform: scale(1);
+
+        .f-checkbox-checkmark-path {
+          animation: f-checkbox-check-draw .22s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+      }
+    }
+  }
+}
+
+@keyframes f-checkbox-check-draw {
+  from {
+    stroke-dashoffset: 32;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}

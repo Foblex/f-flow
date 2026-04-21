@@ -1,0 +1,25 @@
+@let views = data();
+
+@if (views.length > 1) {
+  <div class="f-code-group-tabs">
+    @for (data of views; track data) {
+      <button class="f-tab-button" [class.active]="$index === index()" (click)="tabClick($index)">
+        {{ data.tab }}
+      </button>
+    }
+  </div>
+}
+
+<div class="f-code-group-body">
+  @for (data of views; track data) {
+
+    @let isExampleView = data.type === containerType.EXAMPLE;
+    @let display = $index === index() ? 'block' : 'none';
+
+    @if (isExampleView) {
+      <external-component [style.display]="display" [data]="data" />
+    } @else {
+      <code-view [style.display]="display" [data]="data" />
+    }
+  }
+</div>

@@ -1,0 +1,63 @@
+.m-render .doc-content {
+  table {
+    width: 100%;
+    margin: 2em 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+    font-size: 0.875em;
+    line-height: 1.7142857;
+
+    th {
+      border: 0;
+      border-bottom: 1px solid var(--dark-divider-color);
+      padding-block: 8px;
+      padding-inline: 8px;
+      color: var(--primary-text);
+      font-weight: 600;
+      line-height: 20px;
+      text-align: start;
+
+      &:first-child {
+        padding-inline-start: 0;
+      }
+
+      &:last-child {
+        padding-inline-end: 0;
+      }
+    }
+
+    td {
+      border: 0;
+      border-bottom: 1px solid var(--divider-color);
+      padding-block: 10px;
+      padding-inline: 8px;
+      color: var(--primary-text);
+      background: none;
+
+      &:first-child {
+        padding-inline-start: 0;
+      }
+
+      &:last-child {
+        padding-inline-end: 0;
+      }
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      font-family: var(--font-family-mono);
+      font-size: var(--not-pre-code-font-size);
+      background-color: var(--not-pre-code-background);
+      box-shadow: inset 0 0 0 1px var(--not-pre-code-border-color);
+      color: inherit;
+      padding: 1px 0.3rem;
+      border-radius: 0.25rem;
+      font-weight: 500;
+    }
+  }
+}
