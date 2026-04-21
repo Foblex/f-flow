@@ -1,6 +1,6 @@
 ---
-title: "Projects Built with Foblex Flow"
-description: "See real products and open-source references built with Foblex Flow for workflow builders, AI tools, and Angular graph interfaces."
+title: "Built with Foblex Flow — Angular Apps and Products in Production"
+description: "Real products shipping with Foblex Flow: contact-center platforms, AI agent orchestration, low-code tools, and developer utilities."
 summary: "Showcase of real products and references built with Foblex Flow."
 primaryKeyword: "angular node editor showcase"
 schemaType: "CollectionPage"

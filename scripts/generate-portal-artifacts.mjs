@@ -72,7 +72,11 @@ async function collectMarkdownEntries(directoryPath) {
 }
 
 function buildRoutes(entries) {
-  const routes = new Set(['/']);
+  // Portal-owned pages that are NOT backed by a markdown file but
+  // must still be prerendered at build time. Keep in sync with
+  // app.routes.ts and with the "Portal-owned pages" block in the
+  // sitemap below.
+  const routes = new Set(['/', '/services']);
 
   entries.forEach((entry) => {
     routes.add(entry.route);
@@ -92,6 +96,14 @@ function buildSitemap(entries) {
       lastmod: latestLastmod,
       changefreq: 'weekly',
       priority: '1.0',
+    },
+    // Portal-owned pages not backed by a markdown file. Keep in sync
+    // with app.routes.ts.
+    {
+      loc: `${CANONICAL_ORIGIN}/services`,
+      lastmod: latestLastmod,
+      changefreq: 'monthly',
+      priority: '0.9',
     },
     ...visibleEntries.map((entry) => ({
       loc: `${CANONICAL_ORIGIN}${entry.route}`,
