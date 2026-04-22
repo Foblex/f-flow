@@ -1,0 +1,30 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Foblex Flow",
+  "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces",
+  "folders": ["apps/f-flow-portal/public/markdown", "libs/f-flow/src", "libs/f-layout"],
+  "excludeFolders": [
+    "node_modules",
+    "dist",
+    "apps/f-flow-portal-e2e",
+    "apps/f-flow-portal/src",
+    "**/testing",
+    "**/__tests__"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "commitlint.config.js",
+    "package-lock.json"
+  ],
+  "rules": [
+    "Use standalone components with FFlowModule import",
+    "The library does NOT own graph state — your app owns nodes, groups, connections, ids, validation, and persistence",
+    "Connections are connector-to-connector (fOutputId → fInputId), not generic node-to-node edges",
+    "Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge()",
+    "Handle events from fDraggable (fCreateConnection, fReassignConnection, fMoveNodes, etc.) to update your own state",
+    "Prefer non-deprecated event property names: sourceId/targetId over fOutputId/fInputId in FCreateConnectionEvent",
+    "Import from @foblex/flow, not internal paths"
+  ]
+}

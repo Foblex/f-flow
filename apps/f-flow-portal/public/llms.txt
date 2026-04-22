@@ -19,6 +19,41 @@
 - [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility)
 - [React Flow vs Foblex Flow](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams): Honest comparison for Angular teams
 
+## API Reference
+
+- [f-flow Component](https://flow.foblex.com/docs/f-flow-component): Root container, flow state, selection, redraw
+- [f-canvas Component](https://flow.foblex.com/docs/f-canvas-component): Viewport, pan/zoom, fitToScreen, centering
+- [fNode Directive](https://flow.foblex.com/docs/f-node-directive): Draggable nodes, position, size, rotation
+- [fGroup Directive](https://flow.foblex.com/docs/f-group-directive): Node grouping, hierarchy, auto-sizing
+- [fNodeOutput Directive](https://flow.foblex.com/docs/f-node-output-directive): Output connectors, connection rules
+- [fNodeInput Directive](https://flow.foblex.com/docs/f-node-input-directive): Input connectors, categories, multiplicity
+- [fNodeOutlet Directive](https://flow.foblex.com/docs/f-node-outlet-directive): Shared outlet connectors
+- [f-connection Component](https://flow.foblex.com/docs/f-connection-component): Connection rendering, types, behavior
+- [f-connection-for-create](https://flow.foblex.com/docs/f-connection-for-create-component): Drag-to-connect preview
+- [f-snap-connection](https://flow.foblex.com/docs/f-snap-connection-component): Snap helper during connection drag
+- [f-connection-waypoints](https://flow.foblex.com/docs/f-connection-waypoints-component): Editable bend points
+- [Connection Markers](https://flow.foblex.com/docs/f-connection-marker-directive): Arrow, circle, and custom SVG markers
+- [fDraggable Directive](https://flow.foblex.com/docs/f-draggable-directive): All pointer interactions, events, triggers
+- [fDragHandle Directive](https://flow.foblex.com/docs/f-drag-handle-directive): Drag-start surface
+- [fResizeHandle Directive](https://flow.foblex.com/docs/f-resize-handle-directive): Resize handles with directions
+- [fRotateHandle Directive](https://flow.foblex.com/docs/f-rotate-handle-directive): Rotation handles
+- [fZoom Directive](https://flow.foblex.com/docs/f-zoom-directive): Wheel, pinch, and double-click zoom
+- [f-minimap Component](https://flow.foblex.com/docs/f-minimap-component): Overview navigator
+- [f-background Component](https://flow.foblex.com/docs/f-background-component): Canvas background patterns
+- [f-selection-area](https://flow.foblex.com/docs/f-selection-area-component): Rectangle multi-select
+- [fExternalItem Directive](https://flow.foblex.com/docs/f-external-item-directive): Drag from palette to canvas
+- [f-auto-pan Component](https://flow.foblex.com/docs/f-auto-pan-component): Edge-based auto-scroll
+- [f-magnetic-lines](https://flow.foblex.com/docs/f-magnetic-lines-component): Alignment guide lines
+- [Connection Rules](https://flow.foblex.com/docs/connection-rules): Restricting valid connections
+- [Event System](https://flow.foblex.com/docs/event-system): Final-result events, triggers, CSS state classes
+
+## Styling
+
+- [Default Theme and Styling](https://flow.foblex.com/docs/default-theme-and-styling): Theme setup, installation
+- [Styling Tokens and Overrides](https://flow.foblex.com/docs/styling-tokens-and-overrides): CSS custom properties (`--ff-*`)
+- [Styling Mixins and Scoping](https://flow.foblex.com/docs/styling-mixins-and-scoping): SCSS mixins API
+- [Styling Recipes](https://flow.foblex.com/docs/styling-recipes): Common styling patterns
+
 ## Use cases
 
 - [Angular Node-Based UI Library](https://flow.foblex.com/docs/angular-node-based-ui-library)
@@ -33,6 +68,10 @@
 - [Schema Designer](https://flow.foblex.com/examples/schema-designer)
 - [Call Center Flow](https://flow.foblex.com/examples/call-center)
 - [UML Diagram](https://flow.foblex.com/examples/uml-diagram-example)
+
+## Full reference
+
+- [llms-full.txt](https://flow.foblex.com/llms-full.txt): Complete inline API reference with all inputs, outputs, methods, types, code examples, and styling documentation
 
 ## Services
 
