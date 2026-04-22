@@ -1,0 +1,17 @@
+<a routerLink class="navigation-header">
+  <img [src]="image" width="24" height="24" alt="logo" class="logo"/> {{ title }}
+</a>
+
+@for (group of navigation; track group) {
+  <f-navigation-group [title]="group.text">
+    @for (item of group.items; track item.link) {
+      <a f-navigation-item [href]="item.link" [class.active]="item.link === value">
+        <div class="text-ellipsis">{{ item.text }}</div>
+        @if (item.badge) {
+          <span class="f-badge {{ item.badge.type }}">{{ item.badge.text }}</span>
+        }
+      </a>
+    }
+  </f-navigation-group>
+}
+

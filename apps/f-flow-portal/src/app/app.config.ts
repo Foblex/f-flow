@@ -14,7 +14,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { GTagService, provideGTag, provideTheme } from '@foblex/m-render';
+import { F_ACCEPT_COOKIES_KEY, GTagService, provideGTag, provideTheme } from '@foblex/m-render';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
 
@@ -24,10 +24,6 @@ export class ClientErrorHandler implements ErrorHandler {
     console.error('[ClientErrorHandler]', error);
   }
 }
-
-// Must match @foblex/m-render's F_ACCEPT_COOKIES_KEY. Hardcoded to avoid
-// pulling the cookie-popup lazy chunk into the bootstrap bundle.
-const M_ACCEPTS_COOKIES_KEY = 'm-accepts-cookies';
 
 /**
  * Patches a bug in @foblex/m-render's CookiePopup: on returning visits its
@@ -56,7 +52,7 @@ function provideReturningVisitorConsentBridge(): Provider {
         gtag.initialize();
 
         try {
-          const accepted = doc.defaultView?.localStorage.getItem(M_ACCEPTS_COOKIES_KEY) === 'true';
+          const accepted = doc.defaultView?.localStorage.getItem(F_ACCEPT_COOKIES_KEY) === 'true';
           if (accepted) {
             gtag.updateConsent(true);
           }
@@ -77,8 +73,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     { provide: ErrorHandler, useClass: ClientErrorHandler },
     provideGTag({
-      id: 'AW-16677977117',
-      extraIds: ['G-CEND4J0WYF'],
+      id: 'G-CEND4J0WYF',
+      extraIds: ['AW-16677977117'],
       autoPageview: true,
     }),
     provideReturningVisitorConsentBridge(),

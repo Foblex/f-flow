@@ -1,0 +1,32 @@
+:host {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    overflow-wrap: break-word;
+    color: var(--secondary-text);
+    max-width: 200px;
+
+    a {
+      display: block;
+      line-height: var(--on-page-navigation-item-height);
+      font-size: 13px;
+      color: inherit;
+      font-weight: 500;
+      transition: color .2s ease;
+    }
+
+    &:hover {
+      color: var(--primary-text);
+    }
+
+    &.active {
+      color: var(--primary-text);
+    }
+  }
+
+  li + ul {
+    padding: 0 0 0 14px;
+  }
+}

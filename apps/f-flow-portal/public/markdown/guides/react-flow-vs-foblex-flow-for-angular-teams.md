@@ -1,6 +1,6 @@
 ---
-title: "React Flow vs Foblex Flow for Angular Teams"
-description: "Compare React Flow and Foblex Flow when your Angular team wants a simple native starting path, editor interactions, SSR-aware rendering, and app-owned state."
+title: "React Flow vs Foblex Flow — Honest Comparison for Angular Teams"
+description: "Side-by-side comparison of React Flow (with Angular wrapper) and Foblex Flow. Framework fit, bundle size, SSR, migration notes, and when each is the right choice."
 summary: "A practical comparison for Angular teams choosing between React Flow and Foblex Flow without assuming advanced-only use cases."
 primaryKeyword: "react flow vs foblex flow angular"
 schemaType: "TechArticle"

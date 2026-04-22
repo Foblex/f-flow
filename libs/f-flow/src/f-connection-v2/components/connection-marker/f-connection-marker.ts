@@ -9,6 +9,7 @@ import {
 } from '../../../domain';
 
 @Directive({
+  standalone: false,
   selector: 'svg[fMarker]',
   host: {
     class: 'f-component f-marker',

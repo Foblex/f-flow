@@ -1,0 +1,10 @@
+<section-head kicker="Why Foblex Flow" title="Angular-first. Composable. Built for real editors." />
+
+<div class="grid">
+  @for (card of cards; track card.title) {
+  <article class="card">
+    <h3>{{ card.title }}</h3>
+    <p>{{ card.description }}</p>
+  </article>
+  }
+</div>

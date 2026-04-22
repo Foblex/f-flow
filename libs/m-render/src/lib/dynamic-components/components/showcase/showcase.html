@@ -1,0 +1,15 @@
+<div class="filters-panel">
+  <div class="filters-group" role="radiogroup" aria-label="Filter showcase items">
+    @for (filter of filterOptions(); track filter.label) {
+      <f-radio-button
+        [name]="filterGroupName"
+        [checked]="activeTag() === filter.value"
+        (change)="onFilterChange(filter.value)">{{ filter.label }}</f-radio-button>
+    }
+  </div>
+</div>
+<div class="showcase-list">
+  @for (item of items(); track item.imageUrl) {
+    <showcase-item [model]="item"/>
+  }
+</div>

@@ -1,21 +1,19 @@
 import { Routes } from '@angular/router';
-import { provideDocumentation, provideHomePage } from '@foblex/m-render';
-import { HOME_CONFIGURATION } from './home.config';
-import { DOCUMENTATION_CONFIGURATION } from './documentation.config';
-import { EXAMPLES_CONFIGURATION } from './examples.config';
-import { SHOWCASE_CONFIGURATION } from './showcase.config';
-import { BLOG_CONFIGURATION } from './blog.config';
+import { provideDocumentation } from '@foblex/m-render';
+import { DOCUMENTATION_CONFIGURATION } from './config/documentation-config';
+import { EXAMPLES_CONFIGURATION } from './config/examples-config';
+import { SHOWCASE_CONFIGURATION } from './config/showcase-config';
+import { BLOG_CONFIGURATION } from './config/blog-config';
 
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('@foblex/m-render').then((m) =>
-        m.HOME_ROUTES.map((route) => ({
-          ...route,
-          providers: [provideHomePage(HOME_CONFIGURATION)],
-        })),
-      ),
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+  },
+  {
+    path: 'services',
+    loadComponent: () => import('./pages/services/services').then((m) => m.Services),
   },
   {
     path: 'docs',
@@ -89,7 +87,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () =>
-      import('./not-found-page/not-found-page.component').then((m) => m.NotFoundPageComponent),
+    loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
   },
 ];

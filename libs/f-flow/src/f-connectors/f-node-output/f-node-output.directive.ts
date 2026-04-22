@@ -26,6 +26,7 @@ import { EFConnectableSide } from '../../f-connection-v2';
 let uniqueId = 0;
 
 @Directive({
+  standalone: false,
   selector: '[fNodeOutput]',
   exportAs: 'fNodeOutput',
   host: {

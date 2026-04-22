@@ -1,0 +1,20 @@
+.m-render {
+  .f-preview-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 24px;
+    pointer-events: all;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 959px) {
+  .m-render {
+    .f-preview-group {
+      width: calc(100% + (var(--page-padding) * 2));
+      margin-inline: calc(var(--page-padding) * -1);
+    }
+  }
+}

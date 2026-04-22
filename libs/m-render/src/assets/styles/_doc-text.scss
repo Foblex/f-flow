@@ -1,0 +1,149 @@
+.m-render .doc-content {
+  overflow-wrap: anywhere;
+
+  h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    font-weight: 600;
+    outline: none;
+    color: var(--primary-text);
+  }
+
+  h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.75em;
+    letter-spacing: -0.04rem;
+    line-height: 1.222;
+  }
+
+  h2 {
+    border-top: 1px solid var(--doc-divider-color);
+    padding-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+    line-height: 1.222;
+  }
+
+  h3 {
+    margin-top: 1.125rem;
+    margin-bottom: 0.625rem;
+    font-size: 1.25em;
+    line-height: 1.3;
+  }
+
+  h4, h5, h6 {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  h4, h5 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h6 {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p, summary {
+    margin: 1em 0;
+    line-height: 1.5;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ul, ol {
+    margin: 0.5em 0 1em;
+    padding-left: 1.625em;
+
+    > li > :first-child {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    > li ul,
+    > li ol {
+      margin-top: 0.25em !important;
+    }
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  ul > li,
+  ol > li {
+    padding-left: 0.375em;
+    margin: 0.5em 0;
+
+    &::marker {
+      color: var(--secondary-text);
+      font-size: 1em;
+      font-weight: 500;
+    }
+  }
+
+  li {
+    min-height: 1.5em;
+    margin: 0.5em 0;
+  }
+
+  blockquote {
+    position: relative;
+    margin: 1.5em 0;
+    padding: 0.25em 0 0.25rem 1.5rem;
+    color: var(--secondary-text);
+    font-weight: 400;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: 0.25rem;
+      border-radius: 2px;
+      background: var(--doc-blockquote-bar-color);
+      content: "";
+    }
+
+    p {
+      margin: 0.5em 0 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  hr {
+    margin: 2em 0;
+    border: none;
+    border-top: 1px solid var(--doc-divider-color);
+  }
+
+  :not(pre) > code {
+    padding: 1px 0.3rem;
+    border-radius: 0.25rem;
+    background-color: var(--not-pre-code-background);
+    box-shadow: inset 0 0 0 1px var(--not-pre-code-border-color);
+    color: inherit;
+    font-family: var(--font-family-mono);
+    font-size: var(--not-pre-code-font-size);
+    font-weight: 500;
+    line-height: inherit;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+}

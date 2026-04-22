@@ -3,6 +3,7 @@ import { EFResizeHandleType } from './e-f-resize-handle-type';
 import { castToEnum } from '@foblex/utils';
 
 @Directive({
+  standalone: false,
   selector: '[fResizeHandle]',
   host: {
     class: `f-resize-handle f-component`,

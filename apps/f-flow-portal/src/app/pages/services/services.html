@@ -1,0 +1,46 @@
+<services-flow class="flow-background" />
+<portal-header [logo]="logo" [title]="title" currentPage="services" />
+
+<div class="body">
+  <services-hero (contactClick)="scrollToContact()" />
+
+  <div id="engagements" class="anchor-target">
+    <services-tiers (contactClick)="scrollToContact()" />
+  </div>
+
+  <div id="why" class="anchor-target">
+    <services-why />
+  </div>
+
+  <div id="cases" class="anchor-target">
+    <services-cases />
+  </div>
+
+  <div id="process" class="anchor-target">
+    <services-steps />
+  </div>
+
+  <div id="faq" class="anchor-target">
+    <services-faq />
+  </div>
+
+  <div id="team" class="anchor-target">
+    <services-team />
+  </div>
+
+  <div id="contact" #contactAnchor class="anchor-target">
+    <services-final />
+  </div>
+</div>
+
+<portal-footer
+  [logo]="logo"
+  [title]="title"
+  [tagline]="tagline"
+  [columns]="footerColumns"
+  [showMRenderCredit]="false"
+/>
+
+@defer (when isBrowser) {
+<cookie-popup />
+}

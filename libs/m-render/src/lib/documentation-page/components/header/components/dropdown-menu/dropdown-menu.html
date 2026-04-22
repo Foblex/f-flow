@@ -1,0 +1,42 @@
+<span class="label" cdk-overlay-origin
+      (click)="toggle()"
+      (mouseenter)="mouseEnter()"
+      (mouseleave)="mouseLeave()"
+      #overlayOrigin="cdkOverlayOrigin">
+   <span class="f-icon more-horizontal"></span>
+</span>
+
+<ng-template
+  cdk-connected-overlay
+  [cdkConnectedOverlayLockPosition]="true"
+  [cdkConnectedOverlayHasBackdrop]="false"
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayDisableClose]="false"
+  [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayOffsetY]="-10"
+  (backdropClick)="close()"
+>
+  <div class="dropdown-panel"
+       (mouseenter)="mouseEnter()"
+       (mouseleave)="mouseLeave()">
+    @if (navigation().length) {
+      <div class="navigation-wrapper">
+        @for (item of navigation(); track item.link) {
+          <a [routerLink]="item.link" [class.active]="item.isActive"><span>{{ item.text }}</span></a>
+        }
+      </div>
+    }
+    <div class="appearance">
+      <span>Appearance</span>
+      <button theme-button></button>
+    </div>
+    <div class="social-links">
+      <media-links/>
+    </div>
+
+  </div>
+</ng-template>
+

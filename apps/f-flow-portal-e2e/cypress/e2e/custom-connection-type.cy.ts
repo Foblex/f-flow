@@ -6,7 +6,7 @@ describe('CustomConnectionType', () => {
 
   it('should render custom builders', () => {
     cy.get('f-connection').should('have.length', 2);
-    cy.get('f-connection[ng-reflect-f-type="offset_straight"]').should('have.length', 1);
-    cy.get('f-connection[ng-reflect-f-type="circle"]').should('have.length', 1);
+    cy.get('f-connection[data-f-connection-type="offset_straight"]').should('have.length', 1);
+    cy.get('f-connection[data-f-connection-type="circle"]').should('have.length', 1);
   });
 });

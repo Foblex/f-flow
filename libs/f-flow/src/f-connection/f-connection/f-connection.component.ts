@@ -26,6 +26,7 @@ import {
 let uniqueId = 0;
 
 @Component({
+  standalone: false,
   selector: 'f-connection',
   exportAs: 'fComponent',
   templateUrl: './f-connection.component.html',
@@ -33,6 +34,7 @@ let uniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.id]': 'fId()',
+    '[attr.data-f-connection-type]': 'fType',
     class: 'f-component f-connection',
     '[class.f-connection-selection-disabled]': 'fSelectionDisabled()',
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled()',

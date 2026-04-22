@@ -1,10 +1,10 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr';
+import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
-import bootstrap from './src/main.server';
+import bootstrap from './src/server/main.server';
 
 const EMBEDDED_REFERENCE_APPS = {
   'db-management-flow': '../../apps/example-apps/schema-designer/browser',
@@ -184,6 +184,13 @@ function resolveLegacyRedirect(pathname: string): string | null {
 
   if (normalized === '/examples/f-db-management-flow') {
     return '/examples/schema-designer';
+  }
+
+  // The old consulting page was nested under /docs — a $5K–$50K sales
+  // target deserves a first-class top-level route. Preserve external
+  // links with a 301.
+  if (normalized === '/docs/consulting') {
+    return '/services';
   }
 
   // Old root-level slugs GSC still references. Each was renamed/relocated;

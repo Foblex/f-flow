@@ -5,9 +5,6 @@ import {
   FConnectionContent,
   FFlowModule,
 } from '@foblex/flow';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
 import { KeyValue } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
@@ -18,17 +15,7 @@ import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    MatFormField,
-    MatLabel,
-    MatOption,
-    MatSelect,
-    FConnectionContent,
-    FormsModule,
-    ExampleToolbar,
-    ExampleSelect,
-  ],
+  imports: [FFlowModule, FConnectionContent, FormsModule, ExampleToolbar, ExampleSelect],
 })
 export class Example {
   protected readonly positions: KeyValue<number, string>[] = [

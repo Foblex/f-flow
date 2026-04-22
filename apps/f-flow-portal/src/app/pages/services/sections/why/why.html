@@ -1,0 +1,73 @@
+<section-head
+  kicker="Why us"
+  title="Four reasons teams work with us."
+  description="We're not a generalist agency and we're not cheap. Here's what you get by working with the people who wrote the library."
+/>
+
+<div class="grid">
+  @for (item of items; track item.title) {
+  <div class="card">
+    <div class="icon">
+      @switch (item.icon) { @case ('authors') {
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="8 6 3 11 8 16" />
+        <polyline points="16 6 21 11 16 16" />
+        <line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+      } @case ('focus') {
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+      </svg>
+      } @case ('fixed-scope') {
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M4 5h12l3 4v10a1 1 0 0 1-1 1H4Z" />
+        <path d="M4 5h8v4H4z" />
+        <path d="M8 14h8" />
+        <path d="M8 18h5" />
+      </svg>
+      } @case ('ownership') {
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="4" y="11" width="16" height="10" rx="2" />
+        <path d="M8 11V8a4 4 0 0 1 7.5-2" />
+      </svg>
+      } }
+    </div>
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.description }}</p>
+  </div>
+  }
+</div>

@@ -1,0 +1,17 @@
+<section-head
+  kicker="Team"
+  title="The people who'll do the work."
+  description="You talk to the engineers who write the code — no account managers, no middle layer. Every engagement is worked by one of the three of us."
+  [centered]="true"
+/>
+
+<div class="avatars">
+  @for (member of members; track member.id) {
+  <div class="member">
+    <div class="circle">{{ member.initials }}</div>
+    <div class="name">{{ member.name }}</div>
+    <div class="role">{{ member.role }}</div>
+    <p class="bio">{{ member.bio }}</p>
+  </div>
+  }
+</div>

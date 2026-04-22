@@ -29,6 +29,7 @@ import {
 let uniqueId = 0;
 
 @Component({
+  standalone: false,
   selector: 'f-snap-connection',
   templateUrl: './f-snap-connection.component.html',
   styleUrls: ['./f-snap-connection.component.scss'],

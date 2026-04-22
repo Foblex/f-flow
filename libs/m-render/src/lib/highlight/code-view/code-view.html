@@ -1,0 +1,18 @@
+<div class="f-code-controls">
+  <button class="f-copy-button"
+          type="button"
+          [attr.aria-label]="copyButtonLabel()"
+          [attr.title]="copyButtonLabel()"
+          (click)="onCopyClick()">
+    <span class="f-copy-icon" [class.hidden]="isCopied()" aria-hidden="true"></span>
+    <span class="f-copy-success-icon" [class.visible]="isCopied()" aria-hidden="true"></span>
+  </button>
+</div>
+@if (visibleLanguage()) {
+  <span class="f-code-language" [attr.title]="visibleLanguage()" aria-hidden="true">{{ visibleLanguage() }}</span>
+}
+@if (content()) {
+  <div class="f-code-scroll">
+    <highlight [content]="content()" [language]="syntaxLanguage()"/>
+  </div>
+}

@@ -1,0 +1,28 @@
+:host {
+  font-weight: 500;
+  color: var(--secondary-text);
+  flex-grow: 1;
+  padding: 8px 10px;
+  line-height: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: calc(var(--border-radius) - 2px);
+  //transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--primary-text);
+    background-color: var(--gray-soft);
+  }
+
+  &.active {
+    color: var(--primary-text);
+    background-color: var(--soft-background);
+  }
+}

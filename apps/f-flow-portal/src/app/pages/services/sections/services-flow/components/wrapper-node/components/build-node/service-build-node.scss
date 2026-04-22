@@ -1,0 +1,147 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+.build-card {
+  width: 520px;
+  background: var(--services-card-bg);
+  border: 1.5px solid var(--services-card-border-strong);
+  border-radius: 18px;
+  box-shadow: var(--services-card-shadow-strong);
+  color: var(--services-card-text);
+  overflow: hidden;
+}
+
+.build-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 22px 28px;
+}
+
+.step-num {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--services-badge-bg);
+  color: var(--services-badge-text);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-family-mono);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.step-content {
+  min-width: 0;
+}
+
+.step-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.step-meta {
+  margin-top: 6px;
+  font-family: var(--font-family-mono);
+  font-size: 13.5px;
+  color: var(--services-card-muted);
+}
+
+.build-body {
+  padding: 10px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 1.5px dashed var(--services-card-border);
+  margin: 0 28px;
+}
+
+/* Use side padding via margin on body; keep header full-width. */
+.build-card .build-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.build-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--services-card-text);
+  }
+}
+
+.build-check {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--services-accent);
+  flex: 0 0 auto;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.build-chips {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.build-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: var(--services-badge-bg);
+  color: var(--services-card-text);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1;
+
+  strong {
+    font-weight: 700;
+    color: var(--services-card-text);
+  }
+
+  .chip-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: var(--services-accent);
+    background: var(--services-card-bg);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  .chip-meta {
+    color: var(--services-card-muted);
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,42 @@
+@defer (when isBrowser()) {
+<f-flow
+  fDraggable
+  (fFullRendered)="loaded()"
+  (fDragStarted)="dragStarted()"
+  (fDragEnded)="dragEnded()"
+>
+  <f-background>
+    <f-rect-pattern
+      hSize="80"
+      vSize="80"
+      hColor="var(--services-grid-soft)"
+      vColor="var(--services-grid-soft)"
+    />
+  </f-background>
+  <f-canvas [position]="canvasPosition()" [scale]="scale()">
+    @for (connection of connections; track connection) {
+    <f-connection
+      [fReassignDisabled]="true"
+      [fSelectionDisabled]="true"
+      [fOffset]="24"
+      [fBehavior]="connection.behaviour"
+      [fType]="connection.type"
+      [fOutputId]="connection.source"
+      [fOutputSide]="connection.sourceSide || 'calculate'"
+      [fInputId]="connection.target"
+      [fInputSide]="connection.targetSide || 'calculate'"
+    />
+    } @for (node of nodes; track node.uid) {
+    <service-wrapper-node
+      [data]="node"
+      fNode
+      [fNodeId]="node.uid"
+      fDragHandle
+      [fNodeRotate]="node.rotate"
+      [fNodePosition]="node.position"
+      (fNodePositionChange)="changeNodePosition($event, node)"
+    />
+    }
+  </f-canvas>
+</f-flow>
+}

@@ -1,0 +1,13 @@
+<section-head kicker="FAQ" title="Frequently asked questions." [centered]="true" />
+
+<div class="faq" (toggle)="onFaqToggle($event)">
+  @for (item of items; track item.q) {
+  <details>
+    <summary>
+      <span>{{ item.q }}</span>
+      <span class="chev"></span>
+    </summary>
+    <div class="body">{{ item.a }}</div>
+  </details>
+  }
+</div>

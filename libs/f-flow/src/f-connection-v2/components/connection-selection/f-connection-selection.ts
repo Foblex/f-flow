@@ -4,6 +4,7 @@ import { createConnectionSelectionDomIdentifier } from '../../utils';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
 
 @Component({
+  standalone: false,
   selector: 'path[fConnectionSelection]',
   template: '',
   styleUrls: ['./f-connection-selection.scss'],

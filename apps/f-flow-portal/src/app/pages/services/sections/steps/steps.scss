@@ -1,0 +1,105 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1080px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+.step {
+  padding: 24px 22px 26px;
+  background: var(--page-background-color);
+  border: 1px solid var(--divider-color);
+  border-radius: var(--border-radius, 14px);
+  position: relative;
+
+  h3 {
+    margin: 14px 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+  p {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--secondary-text);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.step-num {
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  color: var(--tertiary-text);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--alpha-06);
+  border: 1px solid var(--divider-color);
+  color: var(--primary-text);
+  display: grid;
+  place-items: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.step-meta {
+  font-family: var(--font-family-mono);
+  font-size: 11px;
+  color: var(--tertiary-text);
+  margin-bottom: 10px;
+}
+
+/**
+ * Visual connector between steps — renders only in the 4-up desktop
+ * layout. A thin horizontal dashed line from each card's right edge to
+ * the next card signals a sequence without needing full-width SVG
+ * arrows. Hidden on tablet/mobile where the grid collapses.
+ */
+.step-connector {
+  display: none;
+
+  @media (min-width: 1080px) {
+    display: block;
+    position: absolute;
+    top: 44px;
+    right: -24px;
+    width: 24px;
+    height: 0;
+    border-top: 1.5px dashed var(--divider-color);
+  }
+}

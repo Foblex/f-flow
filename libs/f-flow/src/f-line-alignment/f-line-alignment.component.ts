@@ -12,6 +12,7 @@ import { F_MAGNETIC_LINES, FMagneticLinesBase } from '../f-magnetic-lines';
  * Will be removed in v19.0.0.
  */
 @Component({
+  standalone: false,
   selector: 'f-line-alignment',
   template: '',
   styleUrls: ['./f-line-alignment.component.scss'],

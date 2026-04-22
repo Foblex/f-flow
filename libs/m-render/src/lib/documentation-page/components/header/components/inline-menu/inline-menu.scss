@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+a {
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary-text);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 36px;
+  border-radius: 999px;
+  transition: background-color .2s ease, color .2s ease;
+
+  &:hover {
+    color: var(--primary-text);
+    background-color: var(--gray-soft);
+  }
+
+  &.active {
+    color: var(--primary-text);
+    background-color: var(--soft-background);
+  }
+}

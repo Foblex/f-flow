@@ -3,6 +3,7 @@ import { IPoint } from '@foblex/2d';
 import { F_CONNECTION_DRAG_HANDLE_END, FConnectionDragHandleBase } from './models';
 
 @Component({
+  standalone: false,
   selector: 'circle[f-connection-drag-handle-end]',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,

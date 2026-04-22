@@ -1,0 +1,19 @@
+<hero-flow class="flow-background" />
+<portal-header [logo]="logo" [title]="title" currentPage="home" />
+
+<div class="body">
+  <home-hero />
+  <home-why />
+  <home-showcase />
+  <home-ref-apps />
+  <home-changelog />
+  <home-team />
+  <project-facts />
+  <home-final-cta />
+</div>
+
+<portal-footer [logo]="logo" [title]="title" [tagline]="tagline" [columns]="footerColumns" />
+
+@defer (when isBrowser) {
+<cookie-popup />
+}

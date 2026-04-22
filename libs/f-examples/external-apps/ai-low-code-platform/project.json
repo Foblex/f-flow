@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "pro-example-ai-low-code-platform",
+  "root": "libs/f-examples/external-apps/ai-low-code-platform",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/external-apps/ai-low-code-platform",
+  "tags": ["scope:pro-example", "type:library"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/external-apps/ai-low-code-platform/**/*.ts\" \"libs/f-examples/external-apps/ai-low-code-platform/**/*.html\""
+      }
+    }
+  }
+}

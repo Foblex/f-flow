@@ -28,10 +28,12 @@ let uniqueId = 0;
 const _DEBOUNCE_TIME = 3;
 
 @Directive({
+  standalone: false,
   selector: '[fNode]',
   exportAs: 'fComponent',
   host: {
     '[attr.data-f-node-id]': 'fId()',
+    '[attr.data-f-node-parent-id]': 'fParentId()',
     class: 'f-node f-component',
     '[class.f-node-dragging-disabled]': 'fDraggingDisabled()',
     '[class.f-node-selection-disabled]': 'fSelectionDisabled()',

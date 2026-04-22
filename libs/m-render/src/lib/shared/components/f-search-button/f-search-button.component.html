@@ -1,0 +1,5 @@
+@if (configuration()) {
+  <div #searchContainer class="search-container"></div>
+} @else {
+  <a class="f-icon search fallback-search" [routerLink]="[]" fragment="search" aria-label="Search"></a>
+}

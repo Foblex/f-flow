@@ -4,7 +4,7 @@
 
   <f-canvas fZoom>
     @if (virtualization()) {
-    <ng-container ngProjectAs="[fNodes]" *fVirtualFor="let cell of cells(); trackBy trackCell;">
+    <ng-container ngProjectAs="[fNodes]" *fVirtualFor="let cell of cells();">
       <div
         fNode
         [fNodePosition]="{ x: 160 * cell.cIndex, y: cell.rIndex * 120 }"

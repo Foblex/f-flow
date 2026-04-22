@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/libs/m-render",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "assets": [
+    { "input": "src/assets/styles", "glob": "**/*.scss", "output": "assets/styles" },
+    { "input": "src/assets/fonts", "glob": "**/*", "output": "assets/fonts" }
+  ]
+}

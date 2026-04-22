@@ -1,0 +1,122 @@
+.m-render {
+  --token-tag: var(--code-syntax-4);
+  --token-attr-name: var(--code-syntax-4);
+  --token-attr-value: var(--code-syntax-3);
+  --token-string: var(--code-syntax-3);
+  --token-punctuation: var(--code-syntax-muted);
+  --token-keyword: var(--code-syntax-2);
+  --token-function: var(--code-syntax-1);
+  --token-number: var(--code-syntax-5);
+  --token-operator: var(--code-syntax-muted);
+  --token-interpolation: var(--code-syntax-5);
+  --token-expression: var(--code-view-text-color);
+  --token-comment: var(--code-syntax-comment);
+  --token-selector: var(--code-syntax-4);
+  --token-variable: var(--code-syntax-4);
+}
+
+.m-render {
+  .token.tag {
+    color: var(--token-tag);
+  }
+
+  .token.attr-name {
+    color: var(--token-attr-name);
+  }
+
+  .token.attr-value {
+    color: var(--token-attr-value);
+  }
+
+  .token.angular-control-flow-attribute,
+  .token.angular-control-flow-block {
+    color: var(--token-keyword);
+  }
+
+  .token.angular-interpolation .expression,
+  .token.language-ts {
+    color: var(--token-expression);
+  }
+
+  .language-ts .token.keyword {
+    color: var(--token-keyword);
+  }
+
+  .language-ts .token.class-name {
+    color: var(--token-function);
+  }
+
+  .language-ts .token.function {
+    color: var(--token-tag);
+  }
+
+  .language-ts .token.operator {
+    color: var(--token-operator);
+  }
+
+  .language-ts .token.punctuation {
+    color: var(--token-punctuation);
+  }
+
+  .language-ts .token.string {
+    color: var(--token-string);
+  }
+
+  .language-ts .token.number {
+    color: var(--token-number);
+  }
+
+  .token.comment {
+    color: var(--token-comment);
+    font-style: italic;
+  }
+}
+
+.m-render {
+  .language-scss .token.selector,
+  .language-css .token.selector {
+    color: var(--token-selector, var(--primary-text));
+  }
+
+  .language-scss .token.property,
+  .language-css .token.property {
+    color: var(--token-attr-name);
+  }
+
+  .language-scss .token.value,
+  .language-scss .token.attr-value,
+  .language-css .token.value,
+  .language-css .token.attr-value {
+    color: var(--token-attr-value);
+  }
+
+  .language-scss .token.variable {
+    color: var(--token-variable, var(--code-syntax-4));
+  }
+
+  .language-scss .token.keyword {
+    color: var(--token-keyword);
+    font-weight: bold;
+  }
+
+  .language-scss .token.function {
+    color: var(--token-function);
+  }
+
+  .language-scss .token.punctuation {
+    color: var(--token-punctuation);
+  }
+
+  .language-scss .token.string {
+    color: var(--token-string);
+  }
+
+  .language-scss .token.comment {
+    color: var(--token-comment);
+    font-style: italic;
+  }
+}
+
+.inline-focus {
+  display: inline;
+}

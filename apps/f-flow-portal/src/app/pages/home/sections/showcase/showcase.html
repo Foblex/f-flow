@@ -1,0 +1,31 @@
+<section-head
+  kicker="Production"
+  title="Teams building with Foblex Flow"
+  description="From contact-center platforms to AI agent orchestration — Angular apps shipping with Foblex Flow today."
+  linkText="See the full showcase"
+  linkRouterLink="/showcase/overview"
+/>
+
+<div class="grid">
+  @for (card of cards(); track card.title) {
+  <a class="card" [href]="card.url" target="_blank" rel="noopener noreferrer">
+    <div class="thumb">
+      <img
+        class="thumb-image"
+        [src]="card.image"
+        [alt]="card.title + ' — Foblex Flow showcase'"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="body">
+      @if (card.tag) {
+      <span class="tag">{{ card.tag }}</span>
+      }
+      <h4>{{ card.title }}</h4>
+      <p>{{ card.description }}</p>
+      <span class="view-link">View →</span>
+    </div>
+  </a>
+  }
+</div>

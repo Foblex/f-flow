@@ -13,6 +13,16 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.on('uncaught:exception', (error: Error) => {
+  if (
+    error.message.includes('ResizeObserver loop completed with undelivered notifications') ||
+    error.message.includes('ResizeObserver loop limit exceeded')
+  ) {
+    return false;
+  }
+
+  return true;
+});

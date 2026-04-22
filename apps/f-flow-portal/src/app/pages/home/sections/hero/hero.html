@@ -1,0 +1,48 @@
+<div class="hero">
+  <div class="copy">
+    <h1>The node-based UI toolkit for Angular.</h1>
+    <p class="sub">
+      Every primitive you need to ship workflow builders, AI pipelines, and visual editors — nodes,
+      connections, selection, zoom, minimap. Signal-based, SSR-aware, MIT licensed.
+    </p>
+
+    <div class="stats" aria-label="Project stats">
+      @for (stat of stats(); track $index) {
+      <span class="stat">
+        <span class="mono">{{ stat.value }}</span>
+        @if (stat.label) {
+        <span class="muted">{{ stat.label }}</span>
+        }
+      </span>
+      }
+    </div>
+
+    <div class="install" [class.copied]="copied()">
+      <span class="prompt">$</span>
+      <code>{{ installCommand }}</code>
+      <button type="button" class="copy" aria-label="Copy install command" (click)="copyInstall()">
+        <svg
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="ctas">
+      <a class="f-button primary" routerLink="/docs/get-started">Get Started</a>
+      <a class="f-button" routerLink="/examples/overview">See live examples</a>
+    </div>
+  </div>
+
+  <hero-flow-anchor class="image" />
+</div>

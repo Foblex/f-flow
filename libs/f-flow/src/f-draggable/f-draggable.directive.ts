@@ -69,6 +69,7 @@ import {
 import { DragMinimapFinalizeRequest, DragMinimapPreparationRequest } from './drag-minimap';
 
 @Directive({
+  standalone: false,
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
   providers: [FDragHandlerResult, DragHandlerInjector],

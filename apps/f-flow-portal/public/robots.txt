@@ -1,3 +1,24 @@
+# The site actively seeks AI-referred discovery, so LLM crawlers are
+# opted in explicitly. Remove entries below to block a crawler.
 User-agent: *
 Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 Sitemap: https://flow.foblex.com/sitemap.xml

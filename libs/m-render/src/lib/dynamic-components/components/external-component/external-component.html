@@ -1,0 +1,29 @@
+@if (canToggleFullscreen()) {
+  <button class="f-fullscreen-button"
+          type="button"
+          [class.exit]="isFullscreen()"
+          [attr.aria-label]="fullscreenLabel()"
+          [attr.title]="fullscreenLabel()"
+          (click)="toggleFullscreen()"></button>
+}
+
+@if (iframeResourceUrl()) {
+  <iframe class="f-example-iframe"
+          [src]="iframeResourceUrl()"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allow="fullscreen"
+          allowfullscreen></iframe>
+}
+
+<ng-container #container />
+
+@if (isLoading()) {
+  <div class="f-example-loading-overlay" role="status" aria-live="polite" aria-label="Loading preview">
+    <div class="f-loading-dots" aria-hidden="true">
+      <span class="f-loading-dot"></span>
+      <span class="f-loading-dot"></span>
+      <span class="f-loading-dot"></span>
+    </div>
+  </div>
+}

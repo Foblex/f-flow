@@ -1,0 +1,82 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  text-align: center;
+  @include s.section-frame;
+}
+
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 960px;
+
+  @media (min-width: 640px) {
+    gap: 32px;
+  }
+  @media (min-width: 960px) {
+    gap: 56px;
+  }
+}
+
+/**
+ * Compact stacked layout mirrors the home-page team section so the two
+ * pages share the same visual language for the same three people.
+ */
+.member {
+  text-align: center;
+  flex: 0 0 auto;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 640px) {
+    width: 240px;
+  }
+}
+
+.circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary-text);
+  background: var(--alpha-06);
+  border: 1px solid var(--divider-color);
+  letter-spacing: -0.02em;
+  margin: 0 auto 14px;
+
+  @media (min-width: 640px) {
+    width: 88px;
+    height: 88px;
+    font-size: 26px;
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary-text);
+}
+
+.role {
+  font-family: var(--font-family-mono);
+  font-size: 11.5px;
+  color: var(--tertiary-text);
+  margin-top: 2px;
+}
+
+.bio {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--secondary-text);
+  text-wrap: pretty;
+}

@@ -29,6 +29,7 @@ import {
 let uniqueId = 0;
 
 @Component({
+  standalone: false,
   selector: 'f-connection-for-create',
   templateUrl: './f-connection-for-create.component.html',
   styleUrls: ['./f-connection-for-create.component.scss'],

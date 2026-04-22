@@ -1,0 +1,92 @@
+:host {
+  // Palette mirrors the home hero-flow so the two pages share the
+  // same cold blue/white brand language. No services-specific accent
+  // is introduced; the flow lives in the same visual family as the
+  // home cluster.
+  --services-card-bg: rgba(255, 255, 255, 0.98);
+  --services-card-bg-alt: rgba(244, 247, 255, 0.98);
+  --services-card-border: rgba(129, 156, 214, 0.18);
+  --services-card-border-strong: rgba(129, 156, 214, 0.32);
+  --services-card-shadow: 0 18px 30px rgba(127, 152, 214, 0.12);
+  --services-card-shadow-strong: 0 28px 54px rgba(127, 152, 214, 0.18);
+  --services-card-text: #1a1f2e;
+  --services-card-muted: rgba(120, 136, 170, 0.95);
+
+  --services-badge-bg: #dbe6ff;
+  --services-badge-text: #3d58a4;
+  --services-accent: #5b89e9;
+
+  --services-flow-connection: rgba(129, 156, 214, 0.55);
+  --services-grid-soft: rgba(175, 197, 236, 0.22);
+}
+
+:host-context(.dark) {
+  --services-card-bg: rgba(17, 21, 34, 0.96);
+  --services-card-bg-alt: rgba(24, 30, 46, 0.96);
+  --services-card-border: rgba(103, 128, 184, 0.26);
+  --services-card-border-strong: rgba(103, 128, 184, 0.44);
+  --services-card-shadow: 0 18px 30px rgba(3, 6, 14, 0.32);
+  --services-card-shadow-strong: 0 28px 54px rgba(3, 6, 14, 0.5);
+  --services-card-text: #e8ecf5;
+  --services-card-muted: rgba(180, 203, 247, 0.7);
+
+  --services-badge-bg: rgba(91, 137, 233, 0.22);
+  --services-badge-text: #a8c1f2;
+  --services-accent: #7aa1ff;
+
+  --services-flow-connection: rgba(122, 161, 255, 0.4);
+  --services-grid-soft: rgba(76, 94, 138, 0.16);
+}
+
+:host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  z-index: 2;
+  display: block;
+  overflow: hidden;
+  animation: servicesFadeIn 1s ease-in-out;
+
+  ::ng-deep f-flow {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    .f-connection {
+      color: var(--services-flow-connection);
+
+      .f-connection-drag-handle,
+      .f-connection-selection {
+        fill: none;
+      }
+
+      /**
+       * All engagement-flow connections render as subtle dotted guides
+       * — no arrow markers, no animation. The line is a pure visual
+       * tether between sequential cards, mirroring classic process
+       * diagrams where the cards do the talking.
+       */
+      .f-connection-path {
+        stroke: var(--services-flow-connection);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-dasharray: 2 7;
+        fill: none;
+      }
+    }
+  }
+}
+
+.f-drag-handle {
+  cursor: move;
+}
+
+@keyframes servicesFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

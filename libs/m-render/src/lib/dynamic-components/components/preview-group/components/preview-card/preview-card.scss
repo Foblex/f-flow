@@ -1,0 +1,128 @@
+@mixin two-lines-ellipsis() {
+  width: 100%;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+:host {
+  --f-preview-card-radius: calc(var(--border-radius) + 2px);
+  --f-preview-card-media-radius: calc(var(--border-radius) - 2px);
+
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--f-preview-card-radius);
+  text-decoration: none !important;
+  color: inherit !important;
+  cursor: pointer;
+  user-select: none;
+  isolation: isolate;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--alpha-12);
+    border-radius: inherit;
+    background-color: var(--background-color);
+    content: "";
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  &:hover {
+    &::before {
+      border-color: var(--divider-color);
+      background-color: var(--alt-background);
+    }
+
+    img {
+      transform: scale(1.02);
+    }
+  }
+
+  &:active::before {
+    transform: scale(0.985);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::before {
+      border-color: var(--primary-1);
+      box-shadow:
+        0 0 0 3px var(--primary-soft),
+        var(--shadow-1);
+    }
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .media {
+    overflow: hidden;
+    border: 1px solid var(--divider-color);
+    border-radius: var(--f-preview-card-media-radius);
+    background-color: var(--soft-background);
+    aspect-ratio: 16 / 9;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .media + .content {
+    padding-top: 14px;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    min-height: var(--f-badge-compact-height);
+    margin-bottom: 2px;
+  }
+
+  .title {
+    margin: 0;
+    color: var(--primary-text);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    @include two-lines-ellipsis();
+  }
+
+  .description {
+    margin: 0 !important;
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--secondary-text);
+    @include two-lines-ellipsis();
+  }
+
+  @media (min-width: 640px) {
+    width: calc((100% - 24px) / 2);
+  }
+}

@@ -26,7 +26,7 @@ describe('DragToGroup', () => {
               .wait(500)
               .trigger('pointerup', { clientX: toX, clientY: toY, force: true });
 
-            cy.wrap($node).invoke('attr', 'ng-reflect-f-parent-id').should('equal', 'g1');
+            cy.wrap($node).invoke('attr', 'data-f-node-parent-id').should('equal', 'g1');
           });
       });
   });

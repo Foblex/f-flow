@@ -1,0 +1,171 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  text-align: center;
+  @include s.section-frame;
+}
+
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin: 0 auto 32px;
+  max-width: 760px;
+
+  @media (min-width: 640px) {
+    gap: 48px;
+  }
+}
+
+.avatar {
+  text-align: center;
+  flex: 0 0 auto;
+  width: 160px;
+}
+
+.circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary-text);
+  background: var(--alpha-06);
+  border: 1px solid var(--divider-color);
+  letter-spacing: -0.02em;
+  margin: 0 auto 12px;
+
+  @media (min-width: 640px) {
+    width: 88px;
+    height: 88px;
+    font-size: 26px;
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary-text);
+}
+
+.role {
+  font-size: 12px;
+  color: var(--tertiary-text);
+  margin-top: 2px;
+}
+
+/**
+ * Community contributors sub-section, sits between the main
+ * maintainers and the CTA button row. Small avatars in a wrapping grid
+ * so the list reads as a community credit, not a team page.
+ */
+.contributors {
+  max-width: 860px;
+  margin: 0 auto 36px;
+  padding: 28px 16px 0;
+  border-top: 1px solid var(--divider-color);
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--secondary-text);
+  }
+}
+
+.contributors-sub {
+  margin: 0 auto 20px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--tertiary-text);
+  max-width: 640px;
+  text-wrap: pretty;
+}
+
+.contributors-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 12px;
+}
+
+.contributor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--divider-color);
+  background: var(--page-background-color);
+  color: var(--primary-text);
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover {
+    border-color: var(--primary-text);
+    background: var(--alpha-06);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-1);
+    outline-offset: 2px;
+  }
+}
+
+.contributors-see-all {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--f-link-primary-color);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--f-link-primary-hover-color);
+    text-decoration: underline;
+  }
+}
+
+.contributor-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--alpha-06);
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.contributor-login {
+  font-family: var(--font-family-mono);
+  font-weight: 500;
+}
+
+.links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .f-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}

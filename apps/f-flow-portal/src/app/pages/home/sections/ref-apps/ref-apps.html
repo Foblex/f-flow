@@ -1,0 +1,26 @@
+<section-head
+  kicker="Reference apps"
+  title="What you can build"
+  description="Four full-source reference apps ship with Foblex Flow. Open them live, read the code, and steal patterns for your own editor."
+/>
+
+<div class="grid">
+  @for (card of cards(); track card.title) {
+  <a class="card" [routerLink]="card.routerLink">
+    <div class="thumb">
+      <img
+        class="thumb-image"
+        [src]="card.image"
+        [alt]="card.title + ' preview'"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="body">
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.description }}</p>
+      <span class="open-link">Open the example →</span>
+    </div>
+  </a>
+  }
+</div>
