@@ -355,6 +355,35 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - If the exact folder is mixed, prefer the dominant pattern inside `libs/f-flow/src` for library code and the dominant pattern inside the surrounding example/app area for consumer code.
 - If ambiguity remains after that, preserve existing public API compatibility and choose the option that requires the smallest new abstraction footprint.
 
+## AI documentation maintenance (llms.txt)
+
+The file `llms.txt` at the repository root is the AI-consumable documentation that Context7 and other AI tools index. The file `context7.json` configures how Context7 crawls this repository.
+
+### When to update llms.txt
+
+- When a public API surface changes: new or removed inputs, outputs, methods, selectors, or types.
+- When a new component, directive, or service is added to the public API.
+- When a component/directive is deprecated or removed.
+- When default values change for existing inputs.
+- When new enums, interfaces, or type aliases are added to the public API.
+- When breaking changes are introduced in a new major/minor version.
+
+### How to update llms.txt
+
+- Keep the existing document structure: sections, tables, code examples.
+- Update the version number at the top when bumping the package version.
+- Add new components/directives in the API Reference section following the existing table format.
+- Update the Angular Version Compatibility table when compatibility changes.
+- Keep code examples accurate and using current API names (prefer non-deprecated property names).
+- Do not remove documentation for features that still exist.
+- Do not add internal/private APIs. Only document what is exported through `public-api.ts`.
+
+### When to update context7.json
+
+- When new documentation folders are added that Context7 should crawl.
+- When folders should be excluded from crawling.
+- When usage rules change for AI consumers.
+
 ## Possible conventions that need manual confirmation
 
 - The repository is mixed between standalone declarables and `FFlowModule` compatibility. New library code often uses standalone APIs, but module support remains active and heavily used by examples.
