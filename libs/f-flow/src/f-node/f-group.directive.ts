@@ -32,6 +32,7 @@ const _DEBOUNCE_TIME = 3;
   exportAs: 'fComponent',
   host: {
     '[attr.data-f-group-id]': 'fId()',
+    '[attr.data-f-group-parent-id]': 'fParentId()',
     class: 'f-group f-component',
     '[class.f-group-dragging-disabled]': 'fDraggingDisabled()',
     '[class.f-group-selection-disabled]': 'fSelectionDisabled()',
