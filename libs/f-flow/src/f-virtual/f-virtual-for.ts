@@ -76,20 +76,22 @@ export class FVirtualFor<T> implements OnChanges, OnDestroy {
         const total = this.fVirtualForOf.length;
         const start = performance.now();
 
-        // Calibration batch — always run at least a few views so we have a
-        // live measurement to work with, even if the previous frame's rate
-        // was stale.
         const calibrationEnd = Math.min(total, index + CALIBRATION_SIZE);
-        while (index < calibrationEnd) {
+        let measuredViews = 0;
+        while (
+          index < calibrationEnd &&
+          (measuredViews === 0 || performance.now() - start < FRAME_BUDGET)
+        ) {
           this._insertView(index);
           index++;
+          measuredViews++;
         }
 
         const elapsed = performance.now() - start;
         const done = index >= total;
 
         if (!done && elapsed < FRAME_BUDGET) {
-          const msPerView = elapsed / CALIBRATION_SIZE;
+          const msPerView = elapsed / measuredViews;
           const remainingBudget = (FRAME_BUDGET - elapsed) * SAFETY_FACTOR;
           const predicted = msPerView > 0 ? Math.floor(remainingBudget / msPerView) : 0;
           const limit = Math.min(total, index + predicted);

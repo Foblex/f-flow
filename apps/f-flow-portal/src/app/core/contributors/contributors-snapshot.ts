@@ -29,13 +29,6 @@ export interface ContributorsSnapshot {
  * thinking those accounts have actually contributed. The home-team
  * template hides the whole sub-section when the list is empty.
  */
-/**
- * Empty fallback used when every upstream call to the GitHub API
- * fails. Unlike the Stats snapshot we do NOT fake default contributor
- * names — showing fictitious usernames would mislead visitors into
- * thinking those accounts have actually contributed. The home-team
- * template hides the whole sub-section when the list is empty.
- */
 export const CONTRIBUTORS_FALLBACK: ContributorsSnapshot = {
   list: [],
   fetchedAt: null,

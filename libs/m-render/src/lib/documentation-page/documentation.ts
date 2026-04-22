@@ -11,17 +11,15 @@ import { RouterOutlet } from '@angular/router';
 import {
   F_PREVIEW_NAVIGATION_PROVIDER,
   HeaderComponent,
-  IToggleNavigationComponent, MEDIA_LINKS_PROVIDER,
+  IToggleNavigationComponent,
+  MEDIA_LINKS_PROVIDER,
   NavigationPanelComponent,
   ScrollableContainer,
   TOGGLE_NAVIGATION_COMPONENT,
 } from './components';
 import { DocumentationStore } from './services';
-import {
-  HEADER_CONFIGURATION_PROVIDER, IS_BROWSER_PLATFORM,
-  PopoverService,
-  ThemeService,
-} from '../common';
+import { HEADER_CONFIGURATION_PROVIDER, IS_BROWSER_PLATFORM, PopoverService } from '../common';
+import { ThemeService } from '../theme';
 import { FMetaService } from './analytics';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CookiePopup } from '../analytics/cookie-popup/cookie-popup';
@@ -93,8 +91,7 @@ export class Documentation implements IToggleNavigationComponent, OnInit, OnDest
     }
     this._themeService?.initialize();
     this._gTagService?.initialize();
-    this._metaService.changes().pipe(takeUntilDestroyed(this._destroyRef))
-      .subscribe();
+    this._metaService.changes().pipe(takeUntilDestroyed(this._destroyRef)).subscribe();
   }
 
   public onToggleNavigation(value: boolean): void {

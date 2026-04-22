@@ -50,8 +50,11 @@
     target="_blank"
     rel="noopener noreferrer"
   >
-    @if (overflowCount() > 0) { See all {{ contributors().length + overflowCount() }} contributors
-    on GitHub → } @else { See all contributors on GitHub → }
+    @if (overflowCount() > 0) {
+    <span>See all {{ contributors().length + overflowCount() }} contributors on GitHub →</span>
+    } @else {
+    <span>See all contributors on GitHub →</span>
+    }
   </a>
 </section>
 }

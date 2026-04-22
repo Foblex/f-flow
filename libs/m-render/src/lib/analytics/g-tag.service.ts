@@ -1,8 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/naming-convention -- gtag API and window markers require snake_case / underscore-wrapped identifiers */
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ConsentState, GTAG_CONFIG, GTagConfig } from './provide-g-tag';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 type GTagWindow = Window & {
   dataLayer?: unknown[];
@@ -15,6 +17,7 @@ export class GTagService {
   private readonly _config = inject<GTagConfig>(GTAG_CONFIG);
   private readonly _document = inject(DOCUMENT);
   private readonly _router = inject(Router, { optional: true });
+  private readonly _destroyRef = inject(DestroyRef);
   private _initialized = false;
   private _configuredIds = new Set<string>();
 
@@ -42,9 +45,14 @@ export class GTagService {
     this._configAll([this._config.id, ...(this._config.extraIds ?? [])]);
 
     if (this._config.autoPageview && this._router) {
-      this._router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-        this.pageview();
-      });
+      this._router.events
+        .pipe(
+          filter((e) => e instanceof NavigationEnd),
+          takeUntilDestroyed(this._destroyRef),
+        )
+        .subscribe(() => {
+          this.pageview();
+        });
     }
 
     this._initialized = true;
@@ -103,7 +111,7 @@ export class GTagService {
   private _configAll(ids: string[]): void {
     const gtag = this._window()?.gtag;
     if (!gtag) return;
-    ids.filter(Boolean).forEach(id => {
+    ids.filter(Boolean).forEach((id) => {
       if (this._configuredIds.has(id)) return;
       gtag('config', id);
       this._configuredIds.add(id);
