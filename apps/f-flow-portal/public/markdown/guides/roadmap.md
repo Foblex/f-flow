@@ -16,11 +16,16 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Current Status
 
-| Status                     | Item                                   | Notes                                                                                                                                                          |
-| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✅ **Released in v18.5.0** | **Layout Engines + Reference Apps**    | Added the shared layout integration surface, published Dagre and ELK adapters, introduced explicit render lifecycle outputs, and promoted major demos into standalone apps. |
-| 🚧 **In Progress**         | **Freeform Connections**               | Create connections without explicitly defined inputs/outputs. Connect from/to any node edge. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88) |
-| 🧭 **Planned**             | **Grid-Aware Resize Handles**          | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                 |
+| Status                     | Item                                                 | Notes                                                                                                                                                                               |
+| -------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ **Released in v18.5.0** | **Layout Engines + Reference Apps**                  | Added the shared layout integration surface, published Dagre and ELK adapters, introduced explicit render lifecycle outputs, and promoted major demos into standalone apps.         |
+| 🚧 **In Progress**         | **Freeform Connections**                             | Unified `<f-connector>` replacing the input/output split — a single connector that can send, receive, or do both. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88) |
+| 🧭 **Planned**             | **Smart Auto-Layout on Resize**                      | When a node expands or collapses, nearby nodes shift to keep the layout clean — no manual cleanup after a resize.                                                                   |
+| 🧭 **Planned**             | **Path Highlighting**                                | Trace and highlight upstream, downstream, or full connected paths from any node. Class-based — your CSS defines the look.                                                           |
+| 🧭 **Planned**             | **Flow Execution Animation**                         | Animate execution along the graph — from a predefined sequence or driven by real runtime events. Ideal for AI pipelines and live workflows.                                         |
+| 🧭 **Planned**             | **Layer Ordering**                                   | Reorder built-in layers (groups, connections, nodes) to match your editor's visual style.                                                                                           |
+| 🧭 **Planned**             | **Config-driven Architecture (`provideFoblexFlow`)** | Modern Angular provider API — `provideFoblexFlow(withMinimap(), withMagneticLines(), ...)`. Tree-shakeable, centralized, idiomatic.                                                 |
+| 🧭 **Planned**             | **Grid-Aware Resize Handles**                        | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                                      |
 
 ## Release Timeline
 
