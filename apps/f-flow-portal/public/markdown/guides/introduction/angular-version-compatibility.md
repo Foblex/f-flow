@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-04-06"
-updatedAt: "2026-04-06"
+updatedAt: "2026-04-26"
 ---
 
 # Angular Version Compatibility

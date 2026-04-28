@@ -17,6 +17,13 @@ interface IChangelogItem {
  */
 const CHANGELOG: IChangelogItem[] = [
   {
+    version: 'v18.6.0',
+    date: 'April 2026',
+    description:
+      'Smart Auto-Layout on Resize: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, and collision rules.',
+    routerLink: '/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
+  },
+  {
     version: 'v18.5.0',
     date: 'April 2026',
     description:
@@ -30,14 +37,6 @@ const CHANGELOG: IChangelogItem[] = [
     description:
       'Opt-in f-auto-pan plugin, default theme entrypoint, smoother trackpad pinch-to-zoom, and refreshed example portal controls.',
     routerLink: '/blog/foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom',
-  },
-  {
-    version: 'v18.3.0',
-    date: 'March 2026',
-    description:
-      'Projected connection gradients, smarter redraws, production-worker hardening, and refreshed roadmap/docs guidance.',
-    routerLink:
-      '/blog/foblex-flow-v18-3-0-projected-connection-gradients-smarter-redraws-and-production-worker-hardening',
   },
 ];
 

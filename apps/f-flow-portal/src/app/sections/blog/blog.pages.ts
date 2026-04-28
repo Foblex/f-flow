@@ -29,6 +29,23 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v18-6-0-smart-auto-layout-on-resize',
+    text: 'v18.6.0',
+    group: 'Releases',
+    date: new Date('2026-04-26T12:00:00.000Z'),
+    seo: {
+      title: 'Foblex Flow v18.6.0: Smart Auto-Layout on Resize',
+      description:
+        'Foblex Flow v18.6 ships the new `withReflowOnResize` plugin: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, delta source, and collision rules.',
+      canonical: 'https://flow.foblex.com/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
+      image: 'https://flow.foblex.com/previews/examples/reflow-on-resize.light.png',
+      imageType: 'image/png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v18-5-0-layout-engines-explicit-render-lifecycle-and-standalone-reference-apps',
     text: 'v18.5.0',
     group: 'Releases',
@@ -218,6 +235,24 @@ export const BLOG_PAGES: IPageDefinition[] = [
       ogType: 'article',
     },
   },
+  {
+    slug: 'designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data',
+    text: 'Part 3: Designing a Stateless Library',
+    group: 'Inside Foblex Flow',
+    date: new Date('2026-04-24T12:00:00.000Z'),
+    seo: {
+      title: 'Designing a Stateless Library — How Foblex Flow Avoids Owning Your Data',
+      description:
+        'Why Foblex Flow does not own your nodes, edges, or graph state — and how that decision shapes persistence, undo/redo, optimistic updates, and collaboration in your editor.',
+      canonical:
+        'https://flow.foblex.com/blog/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data',
+      image: 'https://flow.foblex.com/site-preview.png',
+      imageType: 'image/png',
+      imageWidth: 1688,
+      imageHeight: 937,
+      ogType: 'article',
+    },
+  },
 
   // -------- Building AI Low-Code Platform --------
   {
@@ -336,6 +371,14 @@ export const BLOG_COMPONENTS = [
   defineLazyComponent(
     'dagre-layout-auto',
     () => import('@foblex/examples/plugins/f-layout/dagre-layout-auto/example'),
+  ),
+  defineLazyComponent(
+    'reflow-basics',
+    () => import('@foblex/examples/plugins/reflow-on-resize/basics/example'),
+  ),
+  defineLazyComponent(
+    'reflow-mode',
+    () => import('@foblex/examples/plugins/reflow-on-resize/mode/example'),
   ),
   defineLazyComponent(
     'ai-low-code-platform',
