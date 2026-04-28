@@ -169,13 +169,23 @@ function parseAttrs(input) {
 }
 
 function decodeHtml(s) {
-  return s
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'")
-    .replaceAll('&apos;', "'");
+  return s.replaceAll(/&(amp|lt|gt|quot|#39|apos);/g, (_, entity) => {
+    switch (entity) {
+      case 'amp':
+        return '&';
+      case 'lt':
+        return '<';
+      case 'gt':
+        return '>';
+      case 'quot':
+        return '"';
+      case '#39':
+      case 'apos':
+        return "'";
+      default:
+        return _;
+    }
+  });
 }
 
 function diffSeo(baseline, local) {

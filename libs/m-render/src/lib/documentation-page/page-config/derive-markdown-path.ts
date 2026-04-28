@@ -23,8 +23,26 @@ export function derivePageMarkdownPath(page: IPageDefinition): string | null {
 }
 
 function toKebabCase(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/giu, '-')
-    .replace(/^-+|-+$/gu, '');
+  let result = '';
+  let needsSeparator = false;
+
+  for (const char of value.toLowerCase()) {
+    if (isAsciiAlphaNumeric(char)) {
+      if (needsSeparator && result) {
+        result += '-';
+      }
+      result += char;
+      needsSeparator = false;
+    } else if (result) {
+      needsSeparator = true;
+    }
+  }
+
+  return result;
+}
+
+function isAsciiAlphaNumeric(value: string): boolean {
+  const code = value.charCodeAt(0);
+
+  return (code >= 48 && code <= 57) || (code >= 97 && code <= 122);
 }

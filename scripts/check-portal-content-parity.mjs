@@ -176,16 +176,27 @@ function extractContent(html) {
 }
 
 function decodeHtml(s) {
-  return s
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'")
-    .replaceAll('&apos;', "'")
-    .replaceAll('&nbsp;', ' ')
-    .replaceAll(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
-    .replaceAll(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)));
+  return s.replaceAll(/&(amp|lt|gt|quot|#39|apos|nbsp|#\d+|#x[0-9a-fA-F]+);/g, (_, entity) => {
+    switch (entity) {
+      case 'amp':
+        return '&';
+      case 'lt':
+        return '<';
+      case 'gt':
+        return '>';
+      case 'quot':
+        return '"';
+      case '#39':
+      case 'apos':
+        return "'";
+      case 'nbsp':
+        return ' ';
+      default:
+        return entity.startsWith('#x')
+          ? String.fromCharCode(parseInt(entity.slice(2), 16))
+          : String.fromCharCode(Number(entity.slice(1)));
+    }
+  });
 }
 
 function firstDivergence(baseline, local) {
