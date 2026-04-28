@@ -4,7 +4,7 @@ import {
   INSTANCES,
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
-} from '../f-storage';
+} from '../../../f-storage';
 import { F_MAGNETIC_LINES, FMagneticLinesBase } from '../f-magnetic-lines';
 
 /**

@@ -1,4 +1,4 @@
-import { IFFlowState } from '../../domain';
+import { IFFlowState } from '../../../../domain';
 import { IFLayoutConnection, IFLayoutGraph, IFLayoutNode } from '../models';
 
 export interface IFlowLayoutNormalizationResult extends IFLayoutGraph {

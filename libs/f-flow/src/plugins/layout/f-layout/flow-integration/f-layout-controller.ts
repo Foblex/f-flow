@@ -3,8 +3,8 @@ import { PointExtensions } from '@foblex/2d';
 import { EFLayoutMode } from '../enums';
 import { FLayoutEngine } from '../f-layout-engine';
 import { IFLayoutNodePosition } from '../models';
-import { FComponentsStore } from '../../f-storage';
-import { FFlowBase } from '../../f-flow';
+import { FComponentsStore } from '../../../../f-storage';
+import { FFlowBase } from '../../../../f-flow';
 import { normalizeFlowLayoutData } from './normalize-flow-layout-data';
 
 const FLOW_LAYOUT_DEBOUNCE_MS = 1;

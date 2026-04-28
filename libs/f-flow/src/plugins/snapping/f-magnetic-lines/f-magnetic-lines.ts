@@ -13,7 +13,7 @@ import {
   INSTANCES,
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
-} from '../f-storage';
+} from '../../../f-storage';
 
 @Component({
   selector: 'f-magnetic-lines',

@@ -111,7 +111,7 @@ module.exports = tseslint.config(
       'libs/f-flow/src/f-connectors/**/*.ts',
       'libs/f-flow/src/f-draggable/f-drag-blocker.directive.ts',
       'libs/f-flow/src/f-draggable/f-draggable.directive.ts',
-      'libs/f-flow/src/f-line-alignment/**/*.ts',
+      'libs/f-flow/src/plugins/snapping/f-line-alignment/**/*.ts',
       'libs/f-flow/src/f-node/**/*.ts',
     ],
     rules: {

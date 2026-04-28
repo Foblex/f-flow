@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { RemoveFlowFromStoreRequest } from './remove-flow-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FLayoutController } from '../../../f-layout';
+import { FLayoutController } from '../../../plugins/layout/f-layout';
 
 /**
  * Execution that removes a Flow from the FComponentsStore.
