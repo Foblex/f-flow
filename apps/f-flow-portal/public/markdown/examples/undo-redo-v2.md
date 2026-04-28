@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Use @foblex/mutator for stronger history management in editors."
-primaryKeyword: "angular undo redo state history example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

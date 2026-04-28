@@ -1,10 +1,4 @@
 ---
-title: "Foblex Flow Articles"
-description: "Release notes, architecture articles, and Angular tutorials for node editors, workflow builders, and graph UI development with Foblex Flow."
-summary: "Article archive for releases, architecture write-ups, and Angular editor tutorials."
-primaryKeyword: "angular node editor blog"
-schemaType: "CollectionPage"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-14"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Rotate Angular diagram nodes with a dedicated handle and controlled interaction."
-primaryKeyword: "angular rotate handle example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

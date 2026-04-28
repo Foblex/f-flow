@@ -1,10 +1,4 @@
 ---
-title: "Angular Node Editor Library"
-description: "Build Angular node editors with Foblex Flow using a small starting path, then add richer interaction patterns only when you need them."
-summary: "A practical guide to using Foblex Flow as an Angular node editor library without starting from an overly complex setup."
-primaryKeyword: "angular node editor library"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

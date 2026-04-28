@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Auto-pan the viewport while dragging near the edge of the flow."
-primaryKeyword: "angular auto pan diagram example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-26"
 updatedAt: "2026-03-26"
 ---

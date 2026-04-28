@@ -10,7 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CookiePopup, GTagService, IS_BROWSER_PLATFORM, ThemeService } from '@foblex/m-render';
-import { PORTAL_APP_NAME, PORTAL_LOGO } from '../../config/portal-config';
+import { PORTAL_SHELL } from '../../portal-shell';
 import { Seo } from '../../core/seo';
 import { StructuredData } from '../../core/structured-data';
 import { PortalFooter, PortalHeader, IFooterColumn } from '../../shared';
@@ -47,8 +47,8 @@ export class Services implements OnInit, AfterViewInit {
 
   protected readonly isBrowser = inject(IS_BROWSER_PLATFORM);
 
-  protected readonly logo = PORTAL_LOGO;
-  protected readonly title = PORTAL_APP_NAME;
+  protected readonly logo = PORTAL_SHELL.logo;
+  protected readonly title = PORTAL_SHELL.appName;
 
   protected readonly tagline =
     'Angular-native node-based UI library for workflow builders, AI pipelines, and visual editors.';

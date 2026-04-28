@@ -1,10 +1,4 @@
 ---
-title: "Angular Node-Based UI Library"
-description: "Foblex Flow is an Angular-native node-based UI library for teams that want to start simple in Angular and grow into richer graph interfaces later."
-summary: "Use Foblex Flow when you need Angular-native graph UI primitives with a simple starting path and room to grow."
-primaryKeyword: "angular node-based ui library"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

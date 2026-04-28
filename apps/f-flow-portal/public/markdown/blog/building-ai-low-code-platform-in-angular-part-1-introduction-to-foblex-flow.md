@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/building-visual-interfaces-in-angular-introducing-foblex-flow-5a508e0b4a15"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Building Visual Interfaces in Angular — Introducing Foblex Flow"
-description: "Start this Angular tutorial series on building node-based UIs, workflow builders, and visual editors with Foblex Flow in Angular apps."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Series introduction to Foblex Flow as an Angular-native node-based UI library."
-primaryKeyword: "angular node based ui tutorial"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-06-15"
 updatedAt: "2026-03-08"
 ---

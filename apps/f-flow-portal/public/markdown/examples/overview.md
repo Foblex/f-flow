@@ -1,10 +1,4 @@
 ---
-title: "Foblex Flow Examples for Angular Node Editors and Workflow Builders"
-description: "Explore Foblex Flow examples for Angular teams, from simple starting points to full reference apps for node editors, workflow builders, and interactive diagrams."
-summary: "Overview of Foblex Flow examples, from simple Angular starting points to full reference apps."
-primaryKeyword: "angular node editor examples"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-13"
 ---

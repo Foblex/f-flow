@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Build branded Angular nodes with custom templates and controls."
-primaryKeyword: "angular custom node example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

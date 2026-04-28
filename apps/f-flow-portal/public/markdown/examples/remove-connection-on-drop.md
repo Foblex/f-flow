@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Remove an existing connection by dragging and dropping it onto an invalid or removal target."
-primaryKeyword: "angular remove connection on drop example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

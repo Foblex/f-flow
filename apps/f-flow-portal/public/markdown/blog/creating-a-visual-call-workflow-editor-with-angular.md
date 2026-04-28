@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/creating-a-visual-call-workflow-editor-with-angular-eb89d08815ff"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Creating a visual call workflow editor with Angular"
-description: "Build a visual call workflow editor in Angular with Foblex Flow, including node models, draggable nodes, and editable connections."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Tutorial for building a call workflow editor with Angular and Foblex Flow."
-primaryKeyword: "angular call workflow editor tutorial"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2024-03-28"
 updatedAt: "2026-03-08"
 ---

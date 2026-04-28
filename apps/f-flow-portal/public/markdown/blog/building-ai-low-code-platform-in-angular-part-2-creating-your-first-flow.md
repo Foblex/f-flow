@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/design-node-based-interfaces-in-angular-a-beginners-guide-with-foblex-flow-b3160ac3edbb"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Design Node-Based Interfaces in Angular — A Beginner’s Guide with Foblex Flow"
-description: "Render your first Angular flow with draggable nodes and connections using Foblex Flow, the foundation for workflow builders and node editors."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Build the first working flow in Angular with nodes and connections."
-primaryKeyword: "angular workflow builder tutorial"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-06-23"
 updatedAt: "2026-03-08"
 ---

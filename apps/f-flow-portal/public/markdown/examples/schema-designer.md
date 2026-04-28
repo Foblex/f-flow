@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Visual schema designer example with nodes, relations, and CRUD-style interactions."
-primaryKeyword: "angular schema designer example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-13"
 ---

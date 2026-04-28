@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Define a reusable custom connection type with its own rendering and interaction model."
-primaryKeyword: "angular custom connection type example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

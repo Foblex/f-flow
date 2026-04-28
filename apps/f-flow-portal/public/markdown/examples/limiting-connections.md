@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Restrict how many connections a node or port can accept in an Angular diagram."
-primaryKeyword: "angular limiting connections example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

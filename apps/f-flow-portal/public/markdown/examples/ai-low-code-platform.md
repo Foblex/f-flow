@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Flagship front-end-only AI low-code IDE demo showing most Foblex Flow capabilities plus themes, JSON import/export, config panels, validation, and persistence."
-primaryKeyword: "angular workflow builder example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-09"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Create a new node when a dragged connection is dropped into empty space."
-primaryKeyword: "angular create node on connection drop example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

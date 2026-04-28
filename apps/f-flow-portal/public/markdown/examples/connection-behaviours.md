@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Customize how different connection types behave in the same Angular graph editor."
-primaryKeyword: "angular connection behaviors example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

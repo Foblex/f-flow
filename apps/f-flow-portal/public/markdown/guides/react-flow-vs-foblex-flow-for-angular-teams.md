@@ -1,10 +1,4 @@
 ---
-title: "React Flow vs Foblex Flow — Honest Comparison for Angular Teams"
-description: "Side-by-side comparison of React Flow (with Angular wrapper) and Foblex Flow. Framework fit, bundle size, SSR, migration notes, and when each is the right choice."
-summary: "A practical comparison for Angular teams choosing between React Flow and Foblex Flow without assuming advanced-only use cases."
-primaryKeyword: "react flow vs foblex flow angular"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

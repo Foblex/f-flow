@@ -1,14 +1,6 @@
 ---
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-custom-content-on-connections-and-smarter-validation-in-angular-4a9bc7129d86"
 originLabel: "Originally published on Medium"
-title: "Foblex Flow 17.8 — Custom Content on Connections and Smarter Validation in Angular"
-description: "Foblex Flow 17.8 adds connection content and smarter validation rules for Angular workflow builders, node editors, and diagram interfaces."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for connection content and validation improvements in Foblex Flow 17.8."
-primaryKeyword: "angular connection content"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-09-15"
 updatedAt: "2026-03-08"
 ---

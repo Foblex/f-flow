@@ -1,14 +1,6 @@
 ---
 origin: "https://medium.com/@shuzarevich/foblex-flow-v18-1-0-magnetic-plugins-ai-low-code-platform-example-and-a-major-docs-refresh-1182c7e7fde1"
 originLabel: "Originally published on Medium"
-title: "Foblex Flow v18.1.0 Magnetic Plugins, AI Low-Code Platform Example, and a Major Docs Refresh"
-description: "Foblex Flow v18.1 adds Magnetic Lines, Magnetic Rects, a stronger AI workflow example, and refreshed Angular documentation."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for Magnetic Lines, Magnetic Rects, docs refresh, and the AI low-code example."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-02-16"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Project gradient strokes into Angular diagram connections and switch their start/end colors live."
-primaryKeyword: "angular connection gradients example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-11"
 ---

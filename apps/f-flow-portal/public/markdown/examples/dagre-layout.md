@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Automatic directed graph layout with Dagre and Foblex Flow."
-primaryKeyword: "angular dagre layout example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-08"
 ---

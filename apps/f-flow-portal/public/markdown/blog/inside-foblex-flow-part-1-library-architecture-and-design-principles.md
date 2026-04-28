@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-1-library-architecture-and-design-principles-3c0a6ed81087"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Inside Foblex Flow — Part 1: Library Architecture and Design Principles"
-description: "Inside Foblex Flow Part 1 explains the architecture and design principles behind an Angular-native node-based UI library."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Architecture and design principles behind Foblex Flow."
-primaryKeyword: "angular node editor architecture"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-08-19"
 updatedAt: "2026-03-08"
 ---

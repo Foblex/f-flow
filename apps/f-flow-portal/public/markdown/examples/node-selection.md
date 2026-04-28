@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Select single and multiple nodes with clicks and keyboard modifiers in Angular."
-primaryKeyword: "angular node selection example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

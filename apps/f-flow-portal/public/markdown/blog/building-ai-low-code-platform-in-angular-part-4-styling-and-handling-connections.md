@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-4-styling-and-handling-connections-79e1ef769a5d"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Building AI Low-Code Platform in Angular — Part 4: Styling and Handling Connections"
-description: "Style Angular flow connections, add markers, and support connection reassignment with Foblex Flow for richer workflow builder UX."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Connection styling and interaction patterns for Angular node-based UIs."
-primaryKeyword: "angular connection styling tutorial"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-08-06"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Restrict which connectors can connect and show valid targets during drag."
-primaryKeyword: "angular connection rules example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

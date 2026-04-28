@@ -1,12 +1,4 @@
 ---
-title: "Foblex Flow v18.2.0: Caching, Virtualization, Connection Worker, and a Major Performance Refresh"
-description: "Foblex Flow v18.2 adds optional caching, progressive virtualization, worker-assisted connection calculation, zoom during drag, and broader redraw optimizations for large Angular editors."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for fCache, *fVirtualFor, the connection worker, zoom during drag, and large-scene performance improvements."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-09"
 updatedAt: "2026-03-09"
 ---

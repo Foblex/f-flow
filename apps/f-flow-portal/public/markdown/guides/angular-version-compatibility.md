@@ -1,10 +1,4 @@
 ---
-title: "Angular Version Compatibility"
-description: "Which Foblex Flow version to use with Angular 12 through Angular 20+, including legacy, transition, and current signal-based lines."
-summary: "Compatibility matrix with ready-to-use Foblex Flow install commands and companion package versions for each Angular line."
-primaryKeyword: "foblex flow angular compatibility"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-06"
 updatedAt: "2026-04-06"
 ---

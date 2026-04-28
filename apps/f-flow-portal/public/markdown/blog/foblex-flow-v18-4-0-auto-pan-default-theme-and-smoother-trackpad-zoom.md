@@ -1,12 +1,4 @@
 ---
-title: "Foblex Flow v18.4.0: Auto-Pan, Default Theme, and Smoother Trackpad Zoom"
-description: "Foblex Flow v18.4 introduces the opt-in f-auto-pan plugin, ships a default theme entrypoint, smooths trackpad pinch-to-zoom, and refreshes example portal controls and docs."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for f-auto-pan, the shipped default theme, smoother trackpad zoom, and the refreshed example portal controls."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-02"
 updatedAt: "2026-04-02"
 ---

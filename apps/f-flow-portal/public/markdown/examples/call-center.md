@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Call-center flow builder example with IVR routing, queueing, operator handoff, transfer, voicemail, and product-style canvas controls."
-primaryKeyword: "angular call center flow builder example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-13"
 updatedAt: "2026-04-13"
 ---

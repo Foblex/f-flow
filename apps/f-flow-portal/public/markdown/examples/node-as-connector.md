@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Use a node itself as an interactive connector in an Angular graph editor."
-primaryKeyword: "angular node as connector example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

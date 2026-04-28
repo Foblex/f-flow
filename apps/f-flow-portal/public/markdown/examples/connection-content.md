@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Attach labels, actions, and status widgets directly to connections."
-primaryKeyword: "angular connection content example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/call-center-flow-editor-now-updated-with-angular-20-signals-3f10ae63ffa0"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Call Center Flow Editor — now updated with Angular 20 & Signals"
-description: "See how a visual call flow editor built with Foblex Flow was updated to Angular 20, Signals, undo/redo, and a cleaner editing UX."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Angular 20 refresh of a call flow editor built on top of Foblex Flow."
-primaryKeyword: "angular call flow editor"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-09-03"
 updatedAt: "2026-03-08"
 ---

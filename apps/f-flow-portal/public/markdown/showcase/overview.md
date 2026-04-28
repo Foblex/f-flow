@@ -1,10 +1,4 @@
 ---
-title: "Built with Foblex Flow — Angular Apps and Products in Production"
-description: "Real products shipping with Foblex Flow: contact-center platforms, AI agent orchestration, low-code tools, and developer utilities."
-summary: "Showcase of real products and references built with Foblex Flow."
-primaryKeyword: "angular node editor showcase"
-schemaType: "CollectionPage"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-09"
 updatedAt: "2026-03-09"
 ---

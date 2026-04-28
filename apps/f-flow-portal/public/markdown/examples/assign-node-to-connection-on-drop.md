@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Insert a node into an existing edge by dropping it directly onto the connection."
-primaryKeyword: "angular assign node to connection example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,12 +1,4 @@
 ---
-title: "Foblex Flow v18.3.0: Projected Connection Gradients, Smarter Redraws, and Production Worker Hardening"
-description: "Foblex Flow v18.3 introduces projected connection gradients, reduces redundant redraw work, fixes connection worker production loading, and refreshes roadmap/docs guidance."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for projected f-connection-gradient, smarter connection redraw caching, and production-safe connection worker startup."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-17"
 updatedAt: "2026-03-17"
 ---

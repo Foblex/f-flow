@@ -2,10 +2,6 @@
 toc: false
 wideContent: true
 noindex: true
-summary: "Legacy node positioning helper example kept for backward reference."
-primaryKeyword: "angular legacy positioning helpers example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Place connectors inside nodes to build compact Angular graph interfaces."
-primaryKeyword: "angular connector inside node example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

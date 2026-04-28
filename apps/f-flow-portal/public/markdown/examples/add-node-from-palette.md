@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Drag new node types from a palette into the flow canvas."
-primaryKeyword: "angular node palette example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

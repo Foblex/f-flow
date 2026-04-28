@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Create new connections by dragging between connectors."
-primaryKeyword: "angular drag to connect example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

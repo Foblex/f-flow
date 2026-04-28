@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/foblex-flow-17-7-smarter-grouping-copy-paste-and-undo-redo-in-angular-9220bc65b961"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Foblex Flow 17.7 — Smarter Grouping, Copy/Paste, and Undo/Redo in Angular"
-description: "Foblex Flow 17.7 adds grouping improvements, copy/paste, and undo/redo patterns for Angular node editors and workflow builders."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for grouping, copy/paste, and history support in Foblex Flow 17.7."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-08-25"
 updatedAt: "2026-03-08"
 ---

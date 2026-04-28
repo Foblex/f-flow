@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-2-drag-and-drop-architecture-in-angular-without-cdk-bfe3dce097a3"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Inside Foblex Flow — Part 2: Drag-and-Drop Architecture in Angular Without CDK"
-description: "Inside Foblex Flow Part 2 explains the custom drag-and-drop architecture behind Angular node editors, connections, and canvas interactions."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Custom drag-and-drop engine architecture in Foblex Flow."
-primaryKeyword: "angular drag and drop architecture"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-08-23"
 updatedAt: "2026-03-08"
 ---

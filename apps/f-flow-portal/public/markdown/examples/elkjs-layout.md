@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Use ELK.js to compute richer manual layouts for graph UIs."
-primaryKeyword: "angular elk layout example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-08"
 ---

@@ -58,7 +58,8 @@ export class FMetaService {
     const item = this._findDocItemByUrl(this._findDocGroupByUrl(currentUrl), currentUrl);
 
     if (item) {
-      data.title = `${item.pageTitle || item.text} | ${defaultData.app_name}`;
+      const baseTitle = item.pageTitle || item.text;
+      data.title = item.pageTitleIsFinal ? baseTitle : `${baseTitle} | ${defaultData.app_name}`;
       data.url = this._buildAbsoluteUrl(currentUrl);
       data.canonical = item.canonical;
       data.description = item.description || defaultData.description;
@@ -66,6 +67,9 @@ export class FMetaService {
       data.image_width = item.image_width || defaultData.image_width;
       data.image_height = item.image_height || defaultData.image_height;
       data.image_type = item.image_type || defaultData.image_type;
+      if (item.og_type) {
+        data.type = item.og_type;
+      }
     }
 
     if (!data.url) {
@@ -81,26 +85,31 @@ export class FMetaService {
   }
 
   private _findDocGroupByUrl(url: string): INavigationGroup | undefined {
-    return (this._configuration.navigation || []).find((g: INavigationGroup) => g.items.find((i: INavigationItem) => url.endsWith(i.link)));
+    return (this._configuration.navigation || []).find((g: INavigationGroup) =>
+      g.items.find((i: INavigationItem) => url.endsWith(i.link)),
+    );
   }
 
-  private _findDocItemByUrl(group: INavigationGroup | undefined, url: string): INavigationItem | undefined {
+  private _findDocItemByUrl(
+    group: INavigationGroup | undefined,
+    url: string,
+  ): INavigationItem | undefined {
     return (group?.items || []).find((i: INavigationItem) => url.endsWith(i.link));
   }
 
   private _buildAbsoluteUrl(url: string): string {
     try {
-     return new URL(url, this._location.origin).toString();
+      return new URL(url, this._location.origin).toString();
     } catch {
-     return this._location.origin + url;
+      return this._location.origin + url;
     }
   }
 
   private _toAbsoluteUrl(maybeRelative: string): string {
     try {
-     return new URL(maybeRelative, this._location.origin).toString();
+      return new URL(maybeRelative, this._location.origin).toString();
     } catch {
-     return maybeRelative;
+      return maybeRelative;
     }
   }
 
@@ -136,12 +145,21 @@ export class FMetaService {
     this._headTag.updateTag({ property: 'og:title', content: seo?.og_title || title });
     this._headTag.updateTag({ property: 'og:site_name', content: siteName });
     this._headTag.updateTag({ property: 'og:locale', content: locale });
-    this._headTag.updateTag({ property: 'og:description', content: seo?.og_description || description });
+    this._headTag.updateTag({
+      property: 'og:description',
+      content: seo?.og_description || description,
+    });
     this._headTag.updateTag({ property: 'og:image', content: image });
     this._headTag.updateTag({ property: 'og:image:secure_url', content: image });
     this._headTag.updateTag({ property: 'og:image:type', content: imageType });
-    this._headTag.updateTag({ property: 'og:image:width', content: imageWidth ? imageWidth.toString() : '' });
-    this._headTag.updateTag({ property: 'og:image:height', content: imageHeight ? imageHeight.toString() : '' });
+    this._headTag.updateTag({
+      property: 'og:image:width',
+      content: imageWidth ? imageWidth.toString() : '',
+    });
+    this._headTag.updateTag({
+      property: 'og:image:height',
+      content: imageHeight ? imageHeight.toString() : '',
+    });
 
     this._headTag.updateNameTag({ name: 'keywords', content: keywords });
     this._headTag.updateNameTag({ name: 'robots', content: robots });
@@ -158,7 +176,8 @@ export class FMetaService {
       return seo.robots;
     }
 
-    const hasDirectiveOverride = typeof seo?.noindex === 'boolean' || typeof seo?.nofollow === 'boolean';
+    const hasDirectiveOverride =
+      typeof seo?.noindex === 'boolean' || typeof seo?.nofollow === 'boolean';
     if (!hasDirectiveOverride) {
       return defaultRobots || '';
     }
@@ -168,9 +187,9 @@ export class FMetaService {
     const defaultTokens = (defaultRobots || '')
       .split(',')
       .map((x) => x.trim())
-      .filter((x) => x && ![ 'index', 'noindex', 'follow', 'nofollow' ].includes(x.toLowerCase()));
+      .filter((x) => x && !['index', 'noindex', 'follow', 'nofollow'].includes(x.toLowerCase()));
 
-    return [ indexValue, followValue, ...defaultTokens ].join(', ');
+    return [indexValue, followValue, ...defaultTokens].join(', ');
   }
 
   private _normalizeCurrentPath(url: string): string {

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Smart auto-layout on resize – neighbouring nodes shift automatically when a node grows or shrinks."
-primaryKeyword: "angular reflow on resize example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-25"
 updatedAt: "2026-04-26"
 ---

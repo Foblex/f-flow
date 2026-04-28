@@ -1,10 +1,4 @@
 ---
-title: "Angular Diagram Library"
-description: "Use Foblex Flow as an Angular diagram library when you need interactive diagrams with a simple starting path and room for richer graph behavior."
-summary: "Why Foblex Flow is a strong fit for interactive Angular diagrams that may start small and grow later."
-primaryKeyword: "angular diagram library"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

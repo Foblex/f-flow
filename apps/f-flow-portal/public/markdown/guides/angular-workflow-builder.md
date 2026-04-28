@@ -1,10 +1,4 @@
 ---
-title: "Angular Workflow Builder"
-description: "Build an Angular workflow builder with Foblex Flow using a simple core flow surface first, then add validation, minimaps, and richer editor features later."
-summary: "How to use Foblex Flow as the interaction layer for Angular workflow builders without overbuilding the first version."
-primaryKeyword: "angular workflow builder"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

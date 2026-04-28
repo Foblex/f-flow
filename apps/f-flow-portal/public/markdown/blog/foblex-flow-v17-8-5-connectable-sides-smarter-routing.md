@@ -1,14 +1,6 @@
 ---
 origin: "https://medium.com/@shuzarevich/foblex-flow-17-8-5-connectable-sides-for-smarter-routing-in-angular-36e49407b78a"
 originLabel: "Originally published on Medium"
-title: "Foblex Flow 17.8.5— Connectable Sides for Smarter Routing in Angular"
-description: "Foblex Flow 17.8.5 adds connectable side controls so Angular teams can route node connections with more precision and less visual noise."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for connectable side control in Foblex Flow 17.8.5."
-primaryKeyword: "angular connection routing"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-10-05"
 updatedAt: "2026-03-08"
 ---

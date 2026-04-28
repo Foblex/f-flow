@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Track drag start and end events for nodes and edges in Angular graph editors."
-primaryKeyword: "angular drag start end events example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Layered UML and architecture diagram example with package groups, search, filters, custom relation markers, and detail panels."
-primaryKeyword: "angular uml diagram example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-13"
 ---

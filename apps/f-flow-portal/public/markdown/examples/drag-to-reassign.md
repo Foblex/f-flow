@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Reassign existing edges without deleting and recreating them."
-primaryKeyword: "angular connection reassignment example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

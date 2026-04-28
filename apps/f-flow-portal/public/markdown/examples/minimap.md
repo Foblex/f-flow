@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Navigate large canvases with an interactive minimap."
-primaryKeyword: "angular minimap example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Add history controls so users can revert diagram edits."
-primaryKeyword: "angular undo redo example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Automatic graph relayout with ELK.js and Foblex Flow auto mode."
-primaryKeyword: "angular elk auto layout example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-09"
 updatedAt: "2026-04-09"
 ---

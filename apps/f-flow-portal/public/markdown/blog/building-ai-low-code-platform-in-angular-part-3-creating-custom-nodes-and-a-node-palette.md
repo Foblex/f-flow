@@ -1,14 +1,6 @@
 ---
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette-2377435effce"
 originLabel: "Originally published on JavaScript in Plain English"
-title: "Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette"
-description: "Build custom Angular nodes, interactive connectors, and a node palette with Foblex Flow to move from a basic demo to a real editor."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Custom nodes and palette patterns for Angular editors built with Foblex Flow."
-primaryKeyword: "angular custom node editor tutorial"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2025-07-05"
 updatedAt: "2026-03-08"
 ---

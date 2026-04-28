@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Use outlet connectors to control where edges leave a node in Angular graph UIs."
-primaryKeyword: "angular connector outlet example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-03-08"
 ---

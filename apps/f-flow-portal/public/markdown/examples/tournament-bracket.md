@@ -1,10 +1,6 @@
 ---
 toc: false
 wideContent: true
-summary: "Tournament bracket example built on top of the same graph primitives."
-primaryKeyword: "angular tournament bracket example"
-schemaType: "TechArticle"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-03-08"
 updatedAt: "2026-04-13"
 ---

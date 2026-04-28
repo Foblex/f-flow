@@ -1,12 +1,4 @@
 ---
-title: "Foblex Flow v18.5.0: Layout Engines, Explicit Render Lifecycle, and Standalone Reference Apps"
-description: "Foblex Flow v18.5 introduces Dagre and ELK layout packages, explicit render lifecycle outputs, standalone reference apps, and a stronger portal/docs toolchain."
-ogType: "article"
-twitterCard: "summary_large_image"
-summary: "Release notes for layout-engine adapters, explicit render lifecycle outputs, standalone reference apps, and the portal/docs refresh."
-primaryKeyword: "angular node editor release"
-schemaType: "Article"
-author: "Siarhei Huzarevich"
 publishedAt: "2026-04-14"
 updatedAt: "2026-04-14"
 ---
