@@ -16,7 +16,7 @@ import {
   FZoomDirective,
 } from '@foblex/flow';
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'stress-test-with-connections',
@@ -24,7 +24,7 @@ import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FZoomDirective, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FZoomDirective, FToolbarComponent, FSelectComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

@@ -8,7 +8,7 @@ import {
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
-import { ExampleToolbar } from '@foblex/portal-ui';
+import { FToolbarComponent } from '@foblex/m-render';
 
 interface INode {
   id: string;
@@ -65,7 +65,7 @@ const STATE = {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, ExampleToolbar],
+  imports: [FFlowModule, FToolbarComponent],
 })
 export class Example {
   private readonly _flow = viewChild.required(FFlowComponent);

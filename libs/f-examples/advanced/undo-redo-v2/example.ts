@@ -25,7 +25,7 @@ import {
 import { IPoint } from '@foblex/2d';
 import { Mutator } from '@foblex/mutator';
 import { generateGuid } from '@foblex/utils';
-import { ExampleToolbar } from '@foblex/portal-ui';
+import { FToolbarComponent } from '@foblex/m-render';
 
 interface INode {
   id: string;
@@ -88,7 +88,7 @@ const DEFAULT_STATE: IState = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [FlowState],
-  imports: [FFlowModule, ExampleToolbar],
+  imports: [FFlowModule, FToolbarComponent],
 })
 export class Example implements OnInit {
   protected readonly state = inject(FlowState);

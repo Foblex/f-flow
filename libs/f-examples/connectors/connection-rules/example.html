@@ -53,12 +53,8 @@
     </div>
   </f-canvas>
 </f-flow>
-<example-toolbar>
-  <example-select [(value)]="input" [options]="inputs()" label="Can be connected to Input" />
-  <example-select
-    [(value)]="category"
-    [options]="categories()"
-    label="Can be connected to Category"
-  />
+<f-toolbar>
+  <f-select [(value)]="input" [options]="inputs()" label="Can be connected to Input" />
+  <f-select [(value)]="category" [options]="categories()" label="Can be connected to Category" />
   <button class="f-button primary" (click)="deleteConnections()">Delete Connections</button>
-</example-toolbar>
+</f-toolbar>

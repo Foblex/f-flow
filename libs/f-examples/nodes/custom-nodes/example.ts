@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { PointExtensions } from '@foblex/2d';
 import { DOCUMENT } from '@angular/common';
-import { ExampleSelect } from '@foblex/portal-ui';
+import { FSelectComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'custom-nodes',
@@ -12,7 +12,7 @@ import { ExampleSelect } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, MatCardModule, MatButton, FZoomDirective, ExampleSelect],
+  imports: [FFlowModule, MatCardModule, MatButton, FZoomDirective, FSelectComponent],
 })
 export class Example implements OnDestroy {
   private readonly _canvas = viewChild(FCanvasComponent);

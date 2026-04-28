@@ -9,7 +9,7 @@ describe('NodeSelection', () => {
     cy.get('.f-node').first().click({ force: true });
 
     cy.get('.f-node.f-selected').should('have.length', 1);
-    cy.get('example-overlay').should('contain.text', 'Selection changed: node1');
+    cy.get('f-overlay').should('contain.text', 'Selection changed: node1');
 
     cy.contains('.f-node', 'Disabled selection').click({ force: true });
     cy.contains('.f-node', 'Disabled selection').should('not.have.class', 'f-selected');

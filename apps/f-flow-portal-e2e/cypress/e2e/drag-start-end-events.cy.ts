@@ -5,7 +5,7 @@ describe('DragStartEndEvents', () => {
   });
 
   it('should append move-node and drag-ended events to log', () => {
-    cy.get('example-overlay').should('contain.text', 'Event list');
+    cy.get('f-overlay').should('contain.text', 'Event list');
 
     cy.get('.f-node')
       .first()
@@ -21,7 +21,7 @@ describe('DragStartEndEvents', () => {
           .trigger('pointerup', { clientX: startX + 80, clientY: startY + 30, force: true });
       });
 
-    cy.get('example-overlay').should('contain.text', 'move-node');
-    cy.get('example-overlay').should('contain.text', 'drag-ended');
+    cy.get('f-overlay').should('contain.text', 'move-node');
+    cy.get('f-overlay').should('contain.text', 'drag-ended');
   });
 });

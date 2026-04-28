@@ -5,8 +5,6 @@
     "outDir": "./dist/out-tsc",
     "strict": true,
     "paths": {
-      "@foblex/portal-ui": ["./libs/portal-ui/src/index.ts"],
-      "@foblex/portal-ui/*": ["./libs/portal-ui/src/*"],
       "@foblex/examples/*": ["./libs/f-examples/*"],
       "@foblex/pro-examples/*": ["./libs/f-pro-examples/*"],
       "@foblex/flow": ["./libs/f-flow/src/public-api.ts"],

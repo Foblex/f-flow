@@ -3,13 +3,16 @@
     <f-connection-for-create fBehavior="floating"></f-connection-for-create>
 
     @for (connection of connections; track connection.to) {
-      <f-connection [fReassignDisabled]="true"
-                    [fOutputId]="connection.from" [fInputId]="connection.to"
-                    fBehavior="floating">
-      </f-connection>
+    <f-connection
+      [fReassignDisabled]="true"
+      [fOutputId]="connection.from"
+      [fInputId]="connection.to"
+      fBehavior="floating"
+    >
+    </f-connection>
     }
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 80 }" >
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 80 }">
       <div fNodeOutput fOutputId="1" class="top-right"></div>
       <div fNodeOutput fOutputId="2" class="right"></div>
       <div fNodeOutput fOutputId="3" class="bottom-right"></div>
@@ -20,13 +23,17 @@
     </div>
 
     <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 0 }" fNodeInput fInputId="1">I'm node</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 100 }" fNodeInput fInputId="2">I'm node</div>
-    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 200 }" fNodeInput fInputId="3">I'm node</div>
-
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 100 }" fNodeInput fInputId="2">
+      I'm node
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 200 }" fNodeInput fInputId="3">
+      I'm node
+    </div>
   </f-canvas>
 </f-flow>
-<example-toolbar>
+<f-toolbar>
   <button class="f-button primary" (click)="onDeleteConnections()">Delete Connections</button>
-  <f-checkbox [checked]="isConnectionFromOutlet" (change)="onConnectionFromOutletChange($event)">Draw connection from outlet
+  <f-checkbox [checked]="isConnectionFromOutlet" (change)="onConnectionFromOutletChange($event)"
+    >Draw connection from outlet
   </f-checkbox>
-</example-toolbar>
+</f-toolbar>

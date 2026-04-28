@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
+import { FCheckboxComponent, FToolbarComponent } from '@foblex/m-render';
 import { IRect } from '@foblex/2d';
-import { ExampleToolbar } from '@foblex/portal-ui';
 
 @Component({
   selector: 'grouping',
@@ -10,7 +9,7 @@ import { ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar],
+  imports: [FFlowModule, FCheckboxComponent, FToolbarComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

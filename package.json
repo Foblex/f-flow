@@ -42,7 +42,7 @@
     "test": "nx test f-flow",
     "test:portal-pages": "npm run build:example-apps && npx nx build portal --configuration development && node --test scripts/portal-pages.test.mjs",
     "test:ci": "nx test f-flow --watch=false --browsers=ChromeHeadless",
-    "lint": "nx run-many -t lint --projects=f-flow,layout-dagre,layout-elk,portal-ui,portal-e2e",
+    "lint": "nx run-many -t lint --projects=f-flow,layout-dagre,layout-elk,portal-e2e",
     "lint:workspace": "nx run-many -t lint --all",
     "lint:portal": "nx run portal:lint",
     "lint:examples": "nx run f-examples:lint-all",

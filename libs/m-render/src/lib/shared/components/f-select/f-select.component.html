@@ -1,10 +1,10 @@
 @if (label()) {
-<span class="label">{{ label() }}</span>
+  <span class="label">{{ label() }}</span>
 }
 <div class="control">
   <select [value]="valueAsString()" (change)="change($event)">
     @for (option of options(); track option.key) {
-    <option [value]="option.key" [selected]="isSelected(option.key)">{{ option.value }}</option>
+      <option [value]="option.key" [selected]="isSelected(option.key)">{{ option.value }}</option>
     }
   </select>
   <div class="select-arrow" aria-hidden="true">

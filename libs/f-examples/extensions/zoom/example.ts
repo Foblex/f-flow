@@ -1,23 +1,16 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'zoom',
-  styleUrls: [ './example.scss' ],
+  styleUrls: ['./example.scss'],
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FCheckboxComponent,
-    FZoomDirective,
-    ExampleToolbar
-  ]
+  imports: [FFlowModule, FCheckboxComponent, FZoomDirective, FToolbarComponent],
 })
 export class Example {
-
   @ViewChild(FCanvasComponent, { static: true })
   protected fCanvas!: FCanvasComponent;
 

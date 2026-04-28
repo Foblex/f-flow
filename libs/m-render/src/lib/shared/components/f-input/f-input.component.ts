@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 
 @Component({
-  selector: 'example-input',
-  templateUrl: 'example-input.html',
-  styleUrl: './example-input.scss',
+  selector: 'f-input',
+  templateUrl: './f-input.component.html',
+  styleUrl: './f-input.component.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExampleInput {
+export class FInputComponent {
   public readonly label = input<string | undefined>();
   public readonly value = model<number>(0);
 

@@ -5,8 +5,7 @@ import {
   FFlowModule,
   FReassignConnectionEvent,
 } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleInput, ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FInputComponent, FToolbarComponent } from '@foblex/m-render';
 
 interface SourceTarget {
   source?: string;
@@ -19,7 +18,7 @@ interface SourceTarget {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar, ExampleInput],
+  imports: [FFlowModule, FCheckboxComponent, FToolbarComponent, FInputComponent],
 })
 export class Example {
   private readonly _canvas = viewChild(FCanvasComponent);

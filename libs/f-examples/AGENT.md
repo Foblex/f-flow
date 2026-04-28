@@ -62,7 +62,7 @@ Treat these as additional references for more stateful or event-heavy examples:
 - Import `FFlowModule` in the example component. Every current example does this.
 - Add extra imports only for the specific demo need:
   - Angular Material controls
-  - `@foblex/portal-ui` helpers such as `ExampleToolbar`, `ExampleSelect`, `ExampleInput`, `ExampleExternalPalette`
+  - `@foblex/m-render` control helpers such as `FToolbarComponent`, `FSelectComponent`, `FInputComponent`, `FExternalPaletteComponent`
   - extra Foblex declarables when the example explicitly demonstrates them
 - Keep example-only interfaces and lightweight helper types in the same `.ts` file unless the example becomes genuinely multi-part.
 
@@ -104,7 +104,7 @@ Treat these as additional references for more stateful or event-heavy examples:
 - Use Angular built-in control flow. Current examples use `@for`, `@if`, and tracking expressions.
 - Do not introduce `*ngIf`, `*ngFor`, or `*ngSwitch` in new example templates.
 - When rendering node or connection collections, use `@for (...; track ...)`.
-- If the example has controls, place them outside the flow in `<example-toolbar>`.
+- If the example has controls, place them outside the flow in `<f-toolbar>`.
 - If the example has an external drag source or other surrounding UI, keep that UI outside the flow and colocated in the same template.
 
 ## Event API usage
@@ -133,7 +133,7 @@ Treat these as additional references for more stateful or event-heavy examples:
 
 - Most examples center or fit the canvas in `loaded()`. Keep that behavior in new examples unless the demo explicitly requires a different initial state.
 - Keep example data small and readable unless the example is specifically a stress/performance demo.
-- When the example demonstrates configuration toggles, back them with local signals or models and expose them through `ExampleToolbar`.
+- When the example demonstrates configuration toggles, back them with local signals or models and expose them through `FToolbarComponent`.
 - Keep the example focused on one feature or one clear scenario. Do not combine unrelated features in one demo.
 
 ## Docs and registration

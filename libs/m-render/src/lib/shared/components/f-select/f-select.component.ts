@@ -4,13 +4,13 @@ import { KeyValue } from '@angular/common';
 type Options<T> = T[] | KeyValue<T, unknown>[];
 
 @Component({
-  selector: 'example-select',
-  templateUrl: 'example-select.html',
-  styleUrl: './example-select.scss',
+  selector: 'f-select',
+  templateUrl: './f-select.component.html',
+  styleUrl: './f-select.component.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExampleSelect<T> {
+export class FSelectComponent<T> {
   public readonly label = input<string | undefined>();
   public readonly value = model<T | undefined | null>(undefined);
   public readonly options = input<KeyValue<T, unknown>[], Options<T>>([], {

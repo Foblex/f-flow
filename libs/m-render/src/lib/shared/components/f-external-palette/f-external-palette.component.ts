@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
-  selector: 'example-external-palette',
+  selector: 'f-external-palette',
   standalone: true,
-  templateUrl: './example-external-palette.html',
-  styleUrls: ['./example-external-palette.scss'],
+  templateUrl: './f-external-palette.component.html',
+  styleUrls: ['./f-external-palette.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExampleExternalPalette {
+export class FExternalPaletteComponent {
   public description = input('');
 }

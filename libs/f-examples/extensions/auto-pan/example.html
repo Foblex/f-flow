@@ -62,12 +62,12 @@
   </f-canvas>
 </f-flow>
 
-<example-toolbar>
+<f-toolbar>
   <f-checkbox [checked]="enabled()" (change)="onEnabledChange($event)">Enable Auto Pan</f-checkbox>
   <f-checkbox [checked]="acceleration()" (change)="onAccelerationChange($event)">
     Acceleration
   </f-checkbox>
 
-  <example-input label="Edge Threshold" [(value)]="edgeThreshold" />
-  <example-input label="Speed" [(value)]="speed" />
-</example-toolbar>
+  <f-input label="Edge Threshold" [(value)]="edgeThreshold" />
+  <f-input label="Speed" [(value)]="speed" />
+</f-toolbar>

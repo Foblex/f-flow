@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowComponent, FFlowModule, FSelectionChangeEvent } from '@foblex/flow';
-import { ExampleOverlay, ExampleToolbar } from '@foblex/portal-ui';
+import { FOverlayComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'node-selection',
@@ -8,7 +8,7 @@ import { ExampleOverlay, ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, ExampleToolbar, ExampleOverlay],
+  imports: [FFlowModule, FToolbarComponent, FOverlayComponent],
 })
 export class Example {
   private readonly _flow = viewChild(FFlowComponent);

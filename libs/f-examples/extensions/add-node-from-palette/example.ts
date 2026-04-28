@@ -8,8 +8,7 @@ import {
   FFlowModule,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleExternalPalette, ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FExternalPaletteComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'add-node-from-palette',
@@ -23,8 +22,8 @@ import { ExampleExternalPalette, ExampleToolbar } from '@foblex/portal-ui';
     FExternalItemPlaceholder,
     FExternalItemPreview,
     FCheckboxComponent,
-    ExampleToolbar,
-    ExampleExternalPalette,
+    FToolbarComponent,
+    FExternalPaletteComponent,
   ],
 })
 export class Example {
