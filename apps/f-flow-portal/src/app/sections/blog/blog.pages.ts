@@ -34,11 +34,11 @@ export const BLOG_PAGES: IPageDefinition[] = [
     group: 'Releases',
     date: new Date('2026-04-26T12:00:00.000Z'),
     seo: {
-      title: 'Foblex Flow v18.6.0: Smart Auto-Layout on Resize',
+      title: 'Foblex Flow v18.6.0: Reflow on Resize and Layer Ordering',
       description:
-        'Foblex Flow v18.6 ships the new `withReflowOnResize` plugin: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, delta source, and collision rules.',
+        'Foblex Flow v18.6 ships the new `withReflowOnResize` plugin — neighbouring nodes shift automatically when a source resizes, configurable along mode, scope, axis, delta source, and collision — and Layer Ordering, which exposes the stacking of groups, connections, and nodes through `[fLayers]` and `withFCanvas({ layers })`.',
       canonical: 'https://flow.foblex.com/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
-      image: 'https://flow.foblex.com/previews/examples/reflow-on-resize.light.png',
+      image: './previews/examples/reflow-on-resize.light.png',
       imageType: 'image/png',
       imageWidth: 2116,
       imageHeight: 1200,
@@ -368,6 +368,10 @@ export const BLOG_COMPONENTS = [
     () => import('@foblex/examples/extensions/add-node-from-palette/example'),
   ),
   defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
+  defineLazyComponent(
+    'canvas-layers',
+    () => import('@foblex/examples/extensions/canvas-layers/example'),
+  ),
   defineLazyComponent(
     'dagre-layout-auto',
     () => import('@foblex/examples/plugins/f-layout/dagre-layout-auto/example'),
