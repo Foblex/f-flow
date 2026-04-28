@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import {
   EFMarkerType,
+  EFReflowCollision,
+  EFReflowDeltaSource,
   FCanvasChangeEvent,
   FCanvasComponent,
   FCreateConnectionEvent,
@@ -19,6 +21,8 @@ import {
   FReassignConnectionEvent,
   FSelectionChangeEvent,
   FZoomDirective,
+  provideFFlow,
+  withReflowOnResize,
 } from '@foblex/flow';
 import { FormsModule } from '@angular/forms';
 import { FlowNode } from '../flow-node/flow-node';
@@ -36,7 +40,19 @@ import { FlowStore } from '../../store/flow-store';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FFlowModule, FlowNode, FlowActionPanel, FlowPalette, FormsModule],
-  providers: [FlowStore],
+  providers: [
+    FlowStore,
+    provideFFlow(
+      { id: 'main' },
+      withReflowOnResize({
+        collision: EFReflowCollision.STOP,
+        deltaSource: EFReflowDeltaSource.EDGE_BASED,
+        spacing: { vertical: 24 },
+        maxCascadeDepth: 8,
+        maxAbsoluteShiftPerPlan: 10000,
+      }),
+    ),
+  ],
   host: {
     '(keydown)': 'onKeyDown($event)',
     'tabindex': '-1',
