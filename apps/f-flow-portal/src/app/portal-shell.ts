@@ -14,6 +14,7 @@ export const PORTAL_SHELL: IPortalShellConfig = {
   origin: 'https://flow.foblex.com',
   notFoundMarkdown: './markdown/404.md',
   header: {
+    search: true,
     navigation: [
       { link: '/docs/get-started', active: '/docs', text: 'Docs' },
       { link: '/examples/overview', active: '/examples', text: 'Examples' },

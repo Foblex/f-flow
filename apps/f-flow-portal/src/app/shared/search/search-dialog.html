@@ -1,0 +1,74 @@
+@if (isOpen()) {
+<div class="backdrop" (click)="onBackdropClick($event)">
+  <div class="dialog" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="search-row">
+      <span class="search-icon material-symbols-outlined">search</span>
+      <input
+        #queryInput
+        class="query"
+        type="search"
+        placeholder="Search docs, examples, articles..."
+        autocomplete="off"
+        spellcheck="false"
+        [ngModel]="query()"
+        (ngModelChange)="query.set($event)"
+      />
+      <button type="button" class="close" (click)="close()" aria-label="Close search">Esc</button>
+    </div>
+
+    @if (status() === 'loading' || isSearching() || (query() && !hasResults() && status() ===
+    'ready')) {
+    <div class="status-row">
+      @if (status() === 'loading') {
+      <span class="status">Loading search index…</span>
+      } @else if (isSearching()) {
+      <span class="status">Searching…</span>
+      } @else {
+      <span class="status">No matches for “{{ query() }}”</span>
+      }
+    </div>
+    } @if (hasResults()) {
+    <ul class="results" role="listbox">
+      @for (result of results(); let i = $index; track result.document.slug) {
+      <li
+        role="option"
+        class="result"
+        [class.highlighted]="highlight() === i"
+        [attr.aria-selected]="highlight() === i"
+        (mouseenter)="highlight.set(i)"
+        (click)="go(result)"
+      >
+        <div class="result-meta">
+          <span class="badge">{{ sectionLabel(result.document.section) }}</span>
+          @if (result.document.group) {
+          <span class="group">{{ result.document.group }}</span>
+          }
+        </div>
+        <div class="result-title">{{ result.document.title }}</div>
+        @if (result.document.excerpt; as excerpt) {
+        <div class="result-excerpt">
+          @for (segment of highlightSegments(excerpt); track $index) { @if (segment.match) {
+          <mark>{{ segment.text }}</mark>
+          } @else { {{ segment.text }} } }
+        </div>
+        } @else if (result.document.description) {
+        <div class="result-excerpt">{{ result.document.description }}</div>
+        }
+      </li>
+      }
+    </ul>
+    }
+
+    <footer class="dialog-footer">
+      <span class="hint-key">↑↓</span>
+      <span>Navigate</span>
+      <span class="hint-key">↵</span>
+      <span>Open</span>
+      <span class="hint-key">/</span>
+      <span>Search</span>
+      <span class="hint-key">Esc</span>
+      <span>Close</span>
+    </footer>
+  </div>
+</div>
+}

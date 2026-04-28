@@ -114,7 +114,10 @@
   display: inline-grid;
   place-items: center;
   color: var(--secondary-text);
+  background: transparent;
+  border: 0;
   border-radius: 8px;
+  cursor: pointer;
   transition:
     color 0.15s ease,
     background-color 0.15s ease;

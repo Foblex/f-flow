@@ -35,6 +35,7 @@ export function buildDocumentationConfiguration(
     header: {
       navigation: shell.header.navigation,
       mediaLinks: shell.header.mediaLinks,
+      search: shell.header.search,
     },
     meta: buildSectionMeta(shell, section),
     markdownPaths: buildMarkdownPaths(section),

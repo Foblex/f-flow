@@ -14,9 +14,16 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { F_ACCEPT_COOKIES_KEY, GTagService, provideGTag, provideTheme } from '@foblex/m-render';
+import {
+  F_ACCEPT_COOKIES_KEY,
+  GTagService,
+  provideGTag,
+  provideTheme,
+  SEARCH_TRIGGER,
+} from '@foblex/m-render';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
+import { SearchService } from './shared/search';
 
 @Injectable()
 export class ClientErrorHandler implements ErrorHandler {
@@ -86,6 +93,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: MAT_SELECT_CONFIG,
       useValue: { overlayPanelClass: 'example-select-panel', disableOptionCentering: true },
+    },
+    {
+      provide: SEARCH_TRIGGER,
+      useFactory: () => {
+        const search = inject(SearchService);
+
+        return { open: () => search.open() };
+      },
     },
   ],
 };

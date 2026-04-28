@@ -24,6 +24,13 @@ export interface IPortalShellConfig {
   header: {
     navigation: IHeaderMenuLink[];
     mediaLinks: IMediaLink[];
+
+    /**
+     * Show a search trigger in the m-render-driven page header
+     * (docs/examples/blog/showcase). The button delegates clicks to
+     * the app-side `SEARCH_TRIGGER` injection token.
+     */
+    search?: boolean;
   };
 
   /** Defaults applied to section meta when a page does not override them. */
