@@ -1,14 +1,18 @@
 :host {
-  width: fit-content;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
   flex-wrap: wrap;
   gap: var(--ff-example-control-gap, 8px);
+  z-index: 1;
+}
+
+:host(.f-toolbar-chrome-bar) {
+  width: fit-content;
+  align-items: flex-end;
+  justify-content: flex-end;
   position: absolute;
   inset-block-start: 12px;
   inset-inline-end: 12px;
-  z-index: 1;
 
   border: 1px solid var(--page-shell-border-color);
   border-radius: 10px;

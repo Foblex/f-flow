@@ -45,8 +45,14 @@ Production-ready examples that show the full power of Foblex Flow.
 ::: preview-group
 [Nodes]
 [Connectors]
-[Connections]
-[Extensions]
-[Plugins]
-[Advanced]
+[Connections - Editing]
+[Connections - Appearance]
+[Connections - Routing]
+[Viewport]
+[Editor Helpers]
+[Layout Engines]
+[Reflow]
+[Editor State]
+[Events]
+[Performance]
 :::

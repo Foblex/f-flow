@@ -5,5 +5,6 @@ export * from './f-radio-button/f-radio-button.component';
 export * from './f-input/f-input.component';
 export * from './f-select/f-select.component';
 export * from './f-toolbar/f-toolbar.component';
+export * from './f-events-panel/f-events-panel.component';
 export * from './f-overlay/f-overlay.component';
 export * from './f-external-palette/f-external-palette.component';

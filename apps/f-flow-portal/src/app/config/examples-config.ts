@@ -502,7 +502,7 @@ function connectorsGroup() {
 }
 
 function connectionsEditingGroup() {
-  return defineNavigationGroup('Connections — Editing', [
+  return defineNavigationGroup('Connections - Editing', [
     {
       link: 'drag-to-connect',
       text: 'Drag to Connect',
@@ -582,7 +582,7 @@ function connectionsEditingGroup() {
 }
 
 function connectionsAppearanceGroup() {
-  return defineNavigationGroup('Connections — Appearance', [
+  return defineNavigationGroup('Connections - Appearance', [
     {
       link: 'connection-types',
       pageTitle:
@@ -673,7 +673,7 @@ function connectionsAppearanceGroup() {
 }
 
 function connectionsRoutingGroup() {
-  return defineNavigationGroup('Connections — Routing', [
+  return defineNavigationGroup('Connections - Routing', [
     {
       link: 'connection-waypoints',
       pageTitle:

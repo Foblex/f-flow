@@ -1,6 +1,6 @@
 <f-flow
   fDraggable
-  (fLoaded)="onLoaded()"
+  (fFullRendered)="onLoaded()"
   (fDragStarted)="onDragStarted($event)"
   (fDragEnded)="onDragEnded()"
   (fCreateConnection)="onConnectionCreated($event)"
@@ -8,34 +8,7 @@
 >
   <f-canvas fZoom>
     <f-connection-for-create fBehavior="fixed" fType="segment">
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.SELECTED_END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
+      <f-connection-marker-arrow />
     </f-connection-for-create>
     @for (connection of connections; track connection.id) {
     <f-connection
@@ -45,34 +18,7 @@
       fBehavior="fixed"
       fType="segment"
     >
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.SELECTED_END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
+      <f-connection-marker-arrow />
     </f-connection>
     } @for (node of nodes; track node.id; let index = $index) {
     <div fNode [fNodePosition]="node.position" fDragHandle fConnectOnNode="false">
@@ -107,9 +53,4 @@
     }
   </f-canvas>
 </f-flow>
-<f-overlay>
-  <div>Event list:</div>
-  @for (item of events(); track item) {
-  <div>{{ item }}</div>
-  }
-</f-overlay>
+<f-events-panel title="Drag &amp; connection events" alignTop [events]="events()" />

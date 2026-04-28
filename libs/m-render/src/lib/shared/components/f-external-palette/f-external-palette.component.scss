@@ -1,10 +1,10 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   width: fit-content;
   border: 1px solid var(--page-shell-border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--surface-glass-strong);
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.02),
@@ -14,7 +14,22 @@
   position: absolute;
   left: 12px;
   top: 12px;
-  padding: 10px;
+  padding: 12px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px 6px;
+}
+
+.head .title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary-text, #8f8f8f);
 }
 
 .content {

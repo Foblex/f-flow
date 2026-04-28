@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-
-type FToolbarAlign = 'start' | 'end';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'f-toolbar',
@@ -9,10 +7,7 @@ type FToolbarAlign = 'start' | 'end';
   styleUrl: './f-toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.f-toolbar-start]': 'align() === "start"',
-    '[class.f-toolbar-end]': 'align() === "end"',
+    class: 'f-drag-blocker f-toolbar-chrome-bar',
   },
 })
-export class FToolbarComponent {
-  public readonly align = input<FToolbarAlign>('end');
-}
+export class FToolbarComponent {}

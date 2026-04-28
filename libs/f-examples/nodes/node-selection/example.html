@@ -33,14 +33,9 @@
     </div>
   </f-canvas>
 </f-flow>
-<f-toolbar align="start" fDragBlocker>
+<f-toolbar>
   <button class="f-button primary" (click)="selectNode()">Select Node</button>
   <button class="f-button primary" (click)="selectConnection()">Select Connection</button>
 </f-toolbar>
 
-<f-overlay>
-  <div>Events:</div>
-  @for (item of events(); track item) {
-  <div>Selection changed: {{ item }}</div>
-  }
-</f-overlay>
+<f-events-panel title="Selection log" [events]="events()" />
