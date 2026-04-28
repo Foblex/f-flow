@@ -1,4 +1,4 @@
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 export class ResizeNodeFinalizeRequest {
   static readonly fToken = Symbol('ResizeNodeFinalizeRequest');

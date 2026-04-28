@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPoint, Point } from '@foblex/2d';
-import { DragHandlerBase } from './infrastructure';
+import { DragHandlerBase, IPointerEvent } from './infrastructure';
 import { ISelectable } from '../mixins';
-import { IPointerEvent } from '../drag-toolkit';
-import { storePointerEvent } from './auto-pan/stored-pointer-event';
 
 @Injectable()
 export class FDraggableDataContext {
@@ -18,8 +16,6 @@ export class FDraggableDataContext {
   public draggableItems: DragHandlerBase<unknown>[] = [];
 
   public autoPanFrameId: number | null = null;
-
-  public lastPointerEvent: IPointerEvent | null = null;
 
   public lastPointerPosition: IPoint | null = null;
 
@@ -37,7 +33,6 @@ export class FDraggableDataContext {
     this.onPointerDownScale = 1;
     this.onPointerDownPosition = new Point(0, 0);
     this.autoPanFrameId = null;
-    this.lastPointerEvent = null;
     this.lastPointerPosition = null;
     this.isAutoPanCanvasMoved = false;
   }
@@ -46,9 +41,8 @@ export class FDraggableDataContext {
     this.isSelectedChanged = true;
   }
 
-  public rememberPointerEvent(event: IPointerEvent): void {
-    this.lastPointerEvent = storePointerEvent(event);
-    this.lastPointerPosition = this.lastPointerEvent.getPosition();
+  public rememberPointerPosition(event: IPointerEvent): void {
+    this.lastPointerPosition = event.getPosition();
   }
 
   public isEmpty(): boolean {

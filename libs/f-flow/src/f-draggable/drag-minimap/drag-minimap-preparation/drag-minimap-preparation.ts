@@ -9,7 +9,7 @@ import { DragMinimapHandler } from '../drag-minimap-handler';
 import { DragHandlerInjector } from '../../infrastructure';
 import { CalculateFlowPointFromMinimapPointRequest } from '../calculate-flow-point-from-minimap-point';
 import { FMinimapState } from '../../../domain';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(DragMinimapPreparationRequest)

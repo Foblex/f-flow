@@ -1,4 +1,4 @@
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 import { FEventTrigger } from '../../../../domain';
 
 export class DragConnectionWaypointPreparationRequest {

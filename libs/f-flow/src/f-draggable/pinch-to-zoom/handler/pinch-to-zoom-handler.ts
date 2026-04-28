@@ -4,7 +4,7 @@ import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';
 import { FZoomBase } from '../../../f-zoom';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 const PINCH_MOVEMENT_THRESHOLD = 0.5;
 
@@ -24,7 +24,7 @@ export class PinchToZoomHandler extends DragHandlerBase<unknown> {
   }
 
   private get _zoomComponent(): FZoomBase {
-    return this._store.instances.require(INSTANCES.ZOOM)
+    return this._store.instances.require(INSTANCES.ZOOM);
   }
 
   private _startDistance: number | null = null;

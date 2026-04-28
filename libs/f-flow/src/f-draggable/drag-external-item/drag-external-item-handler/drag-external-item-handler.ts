@@ -12,7 +12,7 @@ import { IDragExternalItemDragResult } from '../i-drag-external-item-drag-result
 import { DragExternalItemCreatePreviewRequest } from '../drag-external-item-create-preview';
 import { DragExternalItemCreatePlaceholderRequest } from '../drag-external-item-create-placeholder';
 import { FExternalItemBase } from '../../../f-external-item';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   protected readonly type = 'external-item';

@@ -11,15 +11,16 @@ import {
   IConnectorRectRef,
 } from '../../../../domain';
 import { FDragHandlerResult } from '../../../infrastructure';
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-result';
 import { ReassignConnectionHandler } from '../reassign-connection-handler';
 
 @Injectable()
 @FExecutionRegister(ReassignConnectionFinalizeRequest)
-export class ReassignConnectionFinalize
-  implements IExecution<ReassignConnectionFinalizeRequest, void>
-{
+export class ReassignConnectionFinalize implements IExecution<
+  ReassignConnectionFinalizeRequest,
+  void
+> {
   private readonly _dragResult =
     inject<FDragHandlerResult<IReassignConnectionDragResult>>(FDragHandlerResult);
   private readonly _mediator = inject(FMediator);

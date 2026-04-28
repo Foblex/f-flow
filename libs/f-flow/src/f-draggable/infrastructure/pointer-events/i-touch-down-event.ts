@@ -1,7 +1,6 @@
 import { IPointerEvent } from './i-pointer-event';
 
 export class ITouchDownEvent extends IPointerEvent {
-
   constructor(event: TouchEvent) {
     super(event);
   }
@@ -14,9 +13,9 @@ export class ITouchDownEvent extends IPointerEvent {
     return false;
   }
 
-  public getPosition(): { x: number, y: number } {
+  public getPosition(): { x: number; y: number } {
     const touches = (this.originalEvent as TouchEvent).touches;
 
-    return { x: touches[ 0 ].clientX, y: touches[ 0 ].clientY };
+    return { x: touches[0].clientX, y: touches[0].clientY };
   }
 }

@@ -10,9 +10,8 @@ import {
   resolveAutoPanMode,
   TAutoPanMode,
 } from '../auto-pan.utils';
-import { IPointerEvent } from '../../../drag-toolkit';
 import { StopAutoPanRequest } from '../stop-auto-pan';
-import { SyncAutoPanRequest } from '../sync-auto-pan';
+import { ScheduleAutoPanFrameRequest } from '../schedule-auto-pan-frame';
 
 @Injectable()
 @FExecutionRegister(RunAutoPanFrameRequest)
@@ -38,7 +37,7 @@ export class RunAutoPanFrame implements IExecution<RunAutoPanFrameRequest, void>
 
     this._applyCanvasDelta(delta, mode);
     this._replayLastPointerMove();
-    this._mediator.execute<void>(new SyncAutoPanRequest());
+    this._mediator.execute<void>(new ScheduleAutoPanFrameRequest());
   }
 
   private _applyCanvasDelta(delta: IPoint, mode: TAutoPanMode): void {
@@ -58,22 +57,22 @@ export class RunAutoPanFrame implements IExecution<RunAutoPanFrameRequest, void>
   }
 
   private _replayLastPointerMove(): void {
-    const event = this._dragContext.lastPointerEvent;
-    if (!event) {
+    const pointerPosition = this._dragContext.lastPointerPosition;
+    if (!pointerPosition) {
       return;
     }
 
-    const difference = this._getPointerPositionInCanvas(event)
+    const difference = this._getPointerPositionInCanvas(pointerPosition)
       .div(this._dragContext.onPointerDownScale)
       .sub(this._dragContext.onPointerDownPosition);
 
     this._dragContext.draggableItems.forEach((item) => {
-      item.onPointerMove({ ...difference }, event);
+      item.onPointerMove({ ...difference });
     });
   }
 
-  private _getPointerPositionInCanvas(event: IPointerEvent): Point {
-    return Point.fromPoint(event.getPosition()).elementTransform(this._store.flowHost);
+  private _getPointerPositionInCanvas(pointerPosition: IPoint): Point {
+    return Point.fromPoint(pointerPosition).elementTransform(this._store.flowHost);
   }
 
   private _canAutoPan(mode: TAutoPanMode | null): mode is TAutoPanMode {

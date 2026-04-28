@@ -11,13 +11,13 @@ import {
   valueProvider,
 } from '../../../testing';
 import { DragHandlerBase } from '../../infrastructure';
-import { SyncAutoPan } from './sync-auto-pan';
-import { SyncAutoPanRequest } from './sync-auto-pan-request';
+import { ScheduleAutoPanFrame } from './schedule-auto-pan-frame';
+import { ScheduleAutoPanFrameRequest } from './schedule-auto-pan-frame-request';
 import { RunAutoPanFrameRequest } from '../run-auto-pan-frame';
 import { StopAutoPanRequest } from '../stop-auto-pan';
 
-describe('SyncAutoPan', () => {
-  let execution: SyncAutoPan;
+describe('ScheduleAutoPanFrame', () => {
+  let execution: ScheduleAutoPanFrame;
   let dragContext: FDraggableDataContext;
   let store: FComponentsStore;
   let mediator: { execute: jasmine.Spy };
@@ -30,10 +30,10 @@ describe('SyncAutoPan', () => {
     frameCallback = null;
 
     configureDiTest({
-      providers: [SyncAutoPan, valueProvider(FMediator, mediator as unknown as FMediator)],
+      providers: [ScheduleAutoPanFrame, valueProvider(FMediator, mediator as unknown as FMediator)],
     });
 
-    execution = injectFromDi(SyncAutoPan);
+    execution = injectFromDi(ScheduleAutoPanFrame);
     dragContext = injectFromDi(FDraggableDataContext);
     store = injectFromDi(FComponentsStore);
 
@@ -56,7 +56,7 @@ describe('SyncAutoPan', () => {
     dragContext.draggableItems = [createHandlerStub('drag-node')];
     dragContext.lastPointerPosition = { x: 395, y: 60 };
 
-    execution.handle(new SyncAutoPanRequest());
+    execution.handle(new ScheduleAutoPanFrameRequest());
 
     expect(dragContext.autoPanFrameId).toBe(7);
 
@@ -70,7 +70,7 @@ describe('SyncAutoPan', () => {
     dragContext.draggableItems = [createHandlerStub('drag-node')];
     dragContext.lastPointerPosition = { x: 200, y: 60 };
 
-    execution.handle(new SyncAutoPanRequest());
+    execution.handle(new ScheduleAutoPanFrameRequest());
 
     expect(window.requestAnimationFrame).not.toHaveBeenCalled();
     expect(mediator.execute).toHaveBeenCalledWith(jasmine.any(StopAutoPanRequest));

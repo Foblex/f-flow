@@ -1,5 +1,5 @@
 import { FEventTrigger } from '../../../../domain';
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 
 export class CreateConnectionPreparationRequest {
   static readonly fToken = Symbol('CreateConnectionPreparationRequest');

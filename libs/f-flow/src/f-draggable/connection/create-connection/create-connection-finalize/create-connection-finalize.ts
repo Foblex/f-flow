@@ -15,7 +15,7 @@ import { FCreateConnectionEvent } from '../f-create-connection-event';
 import { CreateConnectionHandler } from '../create-connection-handler';
 import { FDragHandlerResult } from '../../../infrastructure';
 import { ICreateConnectionDragResult } from '../i-create-connection-drag-result';
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from '../../../../domain';
 
 @Injectable()

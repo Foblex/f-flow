@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { SyncAutoPanRequest } from './sync-auto-pan-request';
+import { ScheduleAutoPanFrameRequest } from './schedule-auto-pan-frame-request';
 import { StopAutoPanRequest } from '../stop-auto-pan';
 import { RunAutoPanFrameRequest } from '../run-auto-pan-frame';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
@@ -9,13 +9,13 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { calculateAutoPanDelta, resolveAutoPanMode } from '../auto-pan.utils';
 
 @Injectable()
-@FExecutionRegister(SyncAutoPanRequest)
-export class SyncAutoPan implements IExecution<SyncAutoPanRequest, void> {
+@FExecutionRegister(ScheduleAutoPanFrameRequest)
+export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
 
-  public handle(_request: SyncAutoPanRequest): void {
+  public handle(_request: ScheduleAutoPanFrameRequest): void {
     if (!this._canAutoPan() || !this._hasAutoPanDelta()) {
       this._mediator.execute<void>(new StopAutoPanRequest());
 

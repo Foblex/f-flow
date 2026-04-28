@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { IPointerEvent } from '../../../drag-toolkit';
-import { SyncAutoPanRequest } from '../../../f-draggable/auto-pan';
+import { IPointerEvent } from '../../../f-draggable/infrastructure';
 
 /**
  * Execution that handles pointer move events during a drag operation.
@@ -15,23 +14,20 @@ import { SyncAutoPanRequest } from '../../../f-draggable/auto-pan';
 @Injectable()
 @FExecutionRegister(OnPointerMoveRequest)
 export class OnPointerMove implements IExecution<OnPointerMoveRequest, void> {
-  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
+  private readonly _dragContext = inject(FDraggableDataContext);
 
   private get _hostElement(): HTMLElement {
     return this._store.fDraggable?.hostElement as HTMLElement;
   }
 
-  private readonly _dragContext = inject(FDraggableDataContext);
-
   public handle({ event }: OnPointerMoveRequest): void {
-    this._dragContext.rememberPointerEvent(event);
+    this._dragContext.rememberPointerPosition(event);
 
     this._setDifferenceToDraggableItems(
       this._getDifferenceBetweenPointerAndPointerDown(event),
       event,
     );
-    this._mediator.execute<void>(new SyncAutoPanRequest());
   }
 
   private _setDifferenceToDraggableItems(difference: IPoint, event: IPointerEvent): void {

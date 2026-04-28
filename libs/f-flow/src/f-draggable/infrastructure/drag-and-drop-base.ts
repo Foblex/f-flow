@@ -5,7 +5,7 @@ import {
   ITouchDownEvent,
   ITouchMoveEvent,
 } from './pointer-events';
-import { EventExtensions } from './event.extensions';
+import { EventExtensions } from './event-extensions';
 import { inject, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
