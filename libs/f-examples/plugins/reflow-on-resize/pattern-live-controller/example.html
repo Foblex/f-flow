@@ -1,0 +1,18 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 150 }">
+      <div fResizeHandle fResizeHandleType="top"></div>
+      <div fResizeHandle fResizeHandleType="bottom"></div>
+      <div class="node-content">Source</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 0 }">Above</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 300 }">Below</div>
+  </f-canvas>
+</f-flow>
+
+<f-toolbar>
+  <button class="f-button primary" (click)="toggleEnabled()">
+    {{ enabled() ? 'Disable reflow' : 'Enable reflow' }}
+  </button>
+</f-toolbar>

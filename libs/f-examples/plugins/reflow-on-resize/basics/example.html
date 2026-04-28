@@ -1,0 +1,16 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }">
+      <button class="f-button" (click)="toggleNode()">Toggle</button>
+      <div>Source</div>
+
+      @if (expanded()) {
+      <div>Data 1</div>
+      <div>Data 2</div>
+      }
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }">Node 1</div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 250 }">Node 2</div>
+  </f-canvas>
+</f-flow>

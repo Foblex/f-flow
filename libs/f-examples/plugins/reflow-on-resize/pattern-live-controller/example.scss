@@ -1,0 +1,19 @@
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
+
+::ng-deep f-flow {
+  @include flow-theme.connection($scoped: false);
+  @include flow-theme.connection-markers($scoped: false);
+}
+
+.f-node {
+  @include flow-theme.node($selectorless: true);
+  width: unset;
+  min-width: 150px;
+}
+
+@include flow-theme.connector($scoped: false);
+@include flow-theme.resize-handle($scoped: false);

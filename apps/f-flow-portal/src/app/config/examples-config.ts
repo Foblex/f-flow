@@ -131,16 +131,47 @@ export const EXAMPLES_CONFIGURATION: IDocumentationConfiguration = {
     ),
     defineLazyComponent(
       'dagre-layout',
-      () => import('@foblex/examples/plugins/dagre-layout/example'),
+      () => import('@foblex/examples/plugins/f-layout/dagre-layout/example'),
     ),
     defineLazyComponent(
       'dagre-layout-auto',
-      () => import('@foblex/examples/plugins/dagre-layout-auto/example'),
+      () => import('@foblex/examples/plugins/f-layout/dagre-layout-auto/example'),
     ),
-    defineLazyComponent('elk-layout', () => import('@foblex/examples/plugins/elk-layout/example')),
+    defineLazyComponent(
+      'elk-layout',
+      () => import('@foblex/examples/plugins/f-layout/elk-layout/example'),
+    ),
     defineLazyComponent(
       'elk-layout-auto',
-      () => import('@foblex/examples/plugins/elk-layout-auto/example'),
+      () => import('@foblex/examples/plugins/f-layout/elk-layout-auto/example'),
+    ),
+    defineLazyComponent(
+      'reflow-basics',
+      () => import('@foblex/examples/plugins/reflow-on-resize/basics/example'),
+    ),
+    defineLazyComponent(
+      'reflow-mode',
+      () => import('@foblex/examples/plugins/reflow-on-resize/mode/example'),
+    ),
+    defineLazyComponent(
+      'reflow-scope',
+      () => import('@foblex/examples/plugins/reflow-on-resize/scope/example'),
+    ),
+    defineLazyComponent(
+      'reflow-collision',
+      () => import('@foblex/examples/plugins/reflow-on-resize/collision/example'),
+    ),
+    defineLazyComponent(
+      'reflow-delta-source',
+      () => import('@foblex/examples/plugins/reflow-on-resize/delta-source/example'),
+    ),
+    defineLazyComponent(
+      'reflow-axis',
+      () => import('@foblex/examples/plugins/reflow-on-resize/axis/example'),
+    ),
+    defineLazyComponent(
+      'reflow-pattern-live',
+      () => import('@foblex/examples/plugins/reflow-on-resize/pattern-live-controller/example'),
     ),
     defineLazyComponent(
       'selection-area',
@@ -879,6 +910,20 @@ function pluginsGroup() {
         text: 'New',
         type: 'success',
       },
+    },
+    {
+      link: 'reflow-on-resize',
+      text: 'Reflow on Resize',
+      pageTitle: 'Angular Diagram Example – Smart Auto-Layout on Resize with Foblex Flow',
+      description:
+        'Auto-shift neighbouring nodes when a node resizes or its content expands. Mode, scope, collision, axis, and delta-source — every option with a focused demo.',
+      date: new Date('2026-04-25 12:00:00'),
+      badge: { text: 'New', type: 'success' },
+      image: './previews/examples/reflow-on-resize.light.png',
+      image_dark: './previews/examples/reflow-on-resize.dark.png',
+      image_width: 2116,
+      image_height: 1200,
+      image_type: 'image/png',
     },
   ]);
 }
