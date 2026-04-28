@@ -1,4 +1,4 @@
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 
 export class DragConnectionWaypointFinalizeRequest {
   static readonly fToken = Symbol('DragConnectionWaypointFinalizeRequest');

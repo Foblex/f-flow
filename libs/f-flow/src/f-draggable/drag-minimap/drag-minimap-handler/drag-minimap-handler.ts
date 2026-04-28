@@ -44,7 +44,7 @@ export class DragMinimapHandler extends DragHandlerBase<unknown> {
     }
 
     this._lastDelta = delta;
-    this._store.fCanvas?.setPosition(
+    this._store.fCanvas?._setPosition(
       this._getNewPosition(Point.fromPoint(this._eventPoint).add(delta)),
     );
     this._store.fCanvas?.redraw();

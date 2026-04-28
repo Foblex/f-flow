@@ -32,24 +32,39 @@
     --ff-grouping-drop-target-border-color: var(--ff-color-grouping-drop-target-border);
     --ff-grouping-drop-target-border-style: dashed;
     --ff-grouping-drop-target-border-width: 1px;
-    --ff-grouping-drop-target-border-color-active: var(--ff-color-grouping-drop-target-border-active);
+    --ff-grouping-drop-target-border-color-active: var(
+      --ff-color-grouping-drop-target-border-active
+    );
     --ff-grouping-drop-target-border-style-active: dashed;
     --ff-grouping-drop-target-border-width-active: 2px;
 
-    --ff-handle-background-color: var(--ff-color-surface-card);
-    --ff-handle-border-color: var(--ff-color-border-strong);
-    --ff-handle-color: var(--ff-color-text-secondary);
-    --ff-handle-size: 12px;
-    --ff-handle-radius: var(--ff-radius-control);
+    /* Resize handle — UI chrome, accent-blue fill so it cannot be confused
+       with a connector socket. White stroke separates it from the node
+       edge; the 1px outer ring pins the silhouette against any background. */
+    --ff-resize-handle-size: 8px;
+    --ff-resize-handle-fill: var(--ff-color-accent);
+    --ff-resize-handle-stroke: var(--ff-color-surface-card);
+    --ff-resize-handle-ring: var(--ff-color-accent);
+    --ff-resize-handle-radius: 1px;
+    --ff-resize-handle-fill-active: var(--ff-color-surface-card);
+
+    /* Rotate handle — quiet white circle, lives above the node connected
+       by a thin guide line. Becomes accent on hover/active. */
     --ff-rotate-handle-size: 16px;
+    --ff-rotate-handle-offset: 40px;
+    --ff-rotate-handle-background-color: var(--ff-color-surface-card);
+    --ff-rotate-handle-border-color: var(--ff-color-border-strong);
+    --ff-rotate-handle-guide-color: var(--ff-color-border-strong);
 
     --ff-connector-background-color: var(--ff-color-surface-card);
-    --ff-connector-border-color: var(--ff-color-border-default);
+    --ff-connector-border-color: var(--ff-color-text-secondary);
     --ff-connector-connected-color: var(--ff-color-connector-connected);
     --ff-connector-accent-color: var(--ff-color-accent);
     --ff-connector-disabled-color: var(--ff-color-disabled-surface);
     --ff-connector-disabled-border-color: var(--ff-color-disabled-border);
-    --ff-connector-size: 16px;
+    --ff-connector-size: 14px;
+    --ff-connector-border-width: 2px;
+    --ff-connector-input-radius: var(--ff-radius-4);
     --ff-connector-node-ring-color: var(--ff-canvas-background-color);
 
     --ff-outlet-background-color: var(--ff-color-surface-muted);

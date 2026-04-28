@@ -7,15 +7,18 @@ import { F_AUTO_PAN_PROVIDERS } from './f-auto-pan';
 import { F_CONNECTORS_PROVIDERS } from './f-connectors';
 import { FDragBlockerDirective, FDraggableDirective } from './f-draggable';
 import { F_SELECTION_AREA_PROVIDERS } from './f-selection-area';
-import { F_LINE_ALIGNMENT_PROVIDERS } from './f-line-alignment';
 import { F_MINIMAP_PROVIDERS } from './f-minimap';
 import { F_FLOW_PROVIDERS } from './f-flow';
 import { F_CANVAS_PROVIDERS } from './f-canvas';
 import { F_ZOOM_PROVIDERS } from './f-zoom';
 import { F_EXTERNAL_ITEM_PROVIDERS } from './f-external-item';
-import { F_MAGNETIC_LINES_PROVIDERS } from './f-magnetic-lines';
-import { F_MAGNETIC_RECTS_PROVIDERS } from './f-magnetic-rects';
+import {
+  F_LINE_ALIGNMENT_PROVIDERS,
+  F_MAGNETIC_LINES_PROVIDERS,
+  F_MAGNETIC_RECTS_PROVIDERS,
+} from './plugins/snapping';
 import { F_VIRTUAL_FOR_PROVIDERS } from './f-virtual';
+import { FReflowIgnore } from './plugins';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,8 @@ import { F_VIRTUAL_FOR_PROVIDERS } from './f-virtual';
 
     ...F_VIRTUAL_FOR_PROVIDERS,
 
+    FReflowIgnore,
+
     CommonModule,
   ],
   exports: [
@@ -67,6 +72,8 @@ import { F_VIRTUAL_FOR_PROVIDERS } from './f-virtual';
     ...F_NODE_PROVIDERS,
 
     ...F_VIRTUAL_FOR_PROVIDERS,
+
+    FReflowIgnore,
 
     FDragBlockerDirective,
     FDraggableDirective,

@@ -60,13 +60,20 @@
   width: var(--ff-connector-size);
   height: var(--ff-connector-size);
   box-sizing: border-box;
-  border: 1px solid var(--ff-connector-border-color);
+  border: var(--ff-connector-border-width) solid var(--ff-connector-border-color);
   border-radius: $radius;
   background: var(--ff-connector-background-color);
-  box-shadow: 0 0 0 2px var(--ff-connector-node-ring-color);
   pointer-events: all;
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   @include _socket-positioning();
+
+  &:hover {
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--ff-connector-accent-color) 22%, transparent);
+  }
 
   &.f-connector-connectable {
     border-color: var(--ff-connector-accent-color);
@@ -84,6 +91,7 @@
   &.f-node-output-disabled {
     background: var(--ff-connector-disabled-color);
     border-color: var(--ff-connector-disabled-border-color);
+    box-shadow: none;
   }
 }
 
@@ -101,7 +109,7 @@
 
       .f-node-input {
         &:not(.f-node) {
-          border-radius: var(--ff-radius-socket-square);
+          border-radius: var(--ff-connector-input-radius);
         }
       }
 

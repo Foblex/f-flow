@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CookiePopup, GTagService, IS_BROWSER_PLATFORM, ThemeService } from '@foblex/m-render';
-import { PORTAL_APP_NAME, PORTAL_LOGO } from '../../config/portal-config';
+import { PORTAL_SHELL } from '../../portal-shell';
 import { Seo } from '../../core/seo';
 import { Stats } from '../../core/stats';
 import { StructuredData } from '../../core/structured-data';
 import { PortalFooter, PortalHeader, IFooterColumn } from '../../shared';
 import {
   Changelog,
+  Features,
   FinalCta,
   Hero,
   HeroFlow,
@@ -29,6 +30,7 @@ import {
     HeroFlow,
     Hero,
     Why,
+    Features,
     Showcase,
     RefApps,
     Changelog,
@@ -46,8 +48,8 @@ export class Home implements OnInit {
 
   protected readonly isBrowser = inject(IS_BROWSER_PLATFORM);
 
-  protected readonly logo = PORTAL_LOGO;
-  protected readonly title = PORTAL_APP_NAME;
+  protected readonly logo = PORTAL_SHELL.logo;
+  protected readonly title = PORTAL_SHELL.appName;
 
   protected readonly tagline =
     'Angular-native node-based UI library for workflow builders, AI pipelines, and visual editors.';

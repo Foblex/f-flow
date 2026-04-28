@@ -10,12 +10,34 @@
   align-items: center;
 }
 
-.fallback-search {
-  display: block;
-  width: 20px;
-  height: 20px;
-  color: var(--sponsor);
+.trigger-search {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--secondary-text);
   cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover {
+    color: var(--primary-text);
+    background-color: var(--gray-soft);
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.4;
+  }
+
+  .f-icon {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 :host ::ng-deep .DocSearch-Button {
@@ -29,7 +51,10 @@
   background: var(--button-default-bg);
   color: var(--button-default-text);
   box-shadow: var(--shadow-1);
-  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
   justify-content: flex-start;
 }
 

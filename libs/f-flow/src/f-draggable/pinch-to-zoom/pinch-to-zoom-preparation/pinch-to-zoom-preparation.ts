@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { PinchToZoomPreparationRequest } from './pinch-to-zoom-preparation-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { Point } from '@foblex/2d';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';

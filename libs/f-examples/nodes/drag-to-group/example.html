@@ -1,6 +1,6 @@
 <f-flow
   fDraggable
-  (fLoaded)="loaded()"
+  (fFullRendered)="loaded()"
   (fDropToGroup)="dropToGroup($event)"
   (fCreateNode)="createNode($event)"
 >
@@ -34,10 +34,10 @@
     }
   </f-canvas>
 </f-flow>
-<example-external-palette>
+<f-external-palette>
   <div fExternalItem>Drag to Group</div>
-</example-external-palette>
-<example-toolbar>
+</f-external-palette>
+<f-toolbar>
   <f-checkbox [checked]="includePaddings()" (change)="changePaddings()"
     >Include Paddings</f-checkbox
   >
@@ -47,4 +47,4 @@
   <f-checkbox [checked]="autoExpandOnChildHit()" (change)="changeExpandOnChildHit()"
     >Auto Expand on Child Hit</f-checkbox
   >
-</example-toolbar>
+</f-toolbar>

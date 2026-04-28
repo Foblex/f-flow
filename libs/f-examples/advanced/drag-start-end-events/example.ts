@@ -9,7 +9,7 @@ import {
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 import { FDragStartedEvent } from '@foblex/flow';
-import { ExampleOverlay } from '@foblex/portal-ui';
+import { FEventsPanelComponent, IFEventLogEntry } from '@foblex/m-render';
 
 @Component({
   selector: 'drag-start-end-events',
@@ -17,14 +17,14 @@ import { ExampleOverlay } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FZoomDirective, ExampleOverlay],
+  imports: [FFlowModule, FZoomDirective, FEventsPanelComponent],
 })
 export class Example {
   protected fCanvas = viewChild(FCanvasComponent);
 
   protected readonly eMarkerType = EFMarkerType;
 
-  protected events = signal<string[]>([]);
+  protected events = signal<IFEventLogEntry[]>([]);
 
   protected nodes = [
     {
@@ -51,24 +51,17 @@ export class Example {
   }
 
   protected onDragStarted(event: FDragStartedEvent): void {
-    this.events.update((x) => {
-      x = x.concat(`EVENT: ${event.fEventType}, DATA: ${JSON.stringify(event.fData)}`);
-
-      return x;
-    });
+    this._log('dragStarted', `${event.fEventType} ${JSON.stringify(event.fData)}`);
   }
 
   protected onDragEnded(): void {
-    this.events.update((x) => {
-      x.push(`EVENT: drag-ended`);
-
-      return x;
-    });
+    this._log('dragEnded');
   }
 
   protected onConnectionCreated(event: FCreateConnectionEvent): void {
     if (event.fInputId) {
       this._createConnection(event.fOutputId, event.fInputId);
+      this._log('createConnection', `${event.fOutputId} → ${event.fInputId}`);
     }
   }
 
@@ -76,6 +69,7 @@ export class Example {
     if (event.newTargetId) {
       this._removeConnection(event.connectionId);
       this._createConnection(event.oldSourceId, event.newTargetId);
+      this._log('reassignConnection', `${event.oldSourceId} → ${event.newTargetId}`);
     }
   }
 
@@ -86,5 +80,19 @@ export class Example {
 
   private _createConnection(source: string, target: string): void {
     this.connections.push({ id: generateGuid(), source, target });
+  }
+
+  private _log(name: string, value?: string): void {
+    this.events.update((log) => [{ timestamp: this._timestamp(), name, value }, ...log]);
+  }
+
+  private _timestamp(): string {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    const ms = String(now.getMilliseconds()).padStart(3, '0');
+
+    return `${hh}:${mm}:${ss}.${ms}`;
   }
 }

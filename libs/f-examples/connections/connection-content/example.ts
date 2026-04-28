@@ -7,7 +7,7 @@ import {
 } from '@foblex/flow';
 import { KeyValue } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'connection-content',
@@ -15,7 +15,7 @@ import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FConnectionContent, FormsModule, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FConnectionContent, FormsModule, FToolbarComponent, FSelectComponent],
 })
 export class Example {
   protected readonly positions: KeyValue<number, string>[] = [

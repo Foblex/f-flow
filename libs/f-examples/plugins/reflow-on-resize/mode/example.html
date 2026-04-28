@@ -1,0 +1,51 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    <f-connection
+      fOutputId="src-out"
+      fInputId="a-in"
+      fInputSide="calculate"
+      fOutputSide="calculate"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    <f-connection fOutputId="a-out" fInputId="b-in" fInputSide="calculate" fOutputSide="calculate">
+      <f-connection-marker-arrow />
+    </f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }" fNodeOutput fOutputId="src-out">
+      <div fResizeHandle fResizeHandleType="left"></div>
+      <div fResizeHandle fResizeHandleType="top"></div>
+      <div fResizeHandle fResizeHandleType="right"></div>
+      <div fResizeHandle fResizeHandleType="bottom"></div>
+      <div class="node-content">Source</div>
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 200, y: 0 }"
+      fNodeInput
+      fInputId="a-in"
+      fNodeOutput
+      fOutputId="a-out"
+    >
+      <div class="node-content">Connected</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 130 }" fNodeInput fInputId="b-in">
+      <div class="node-content">Connected</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 260 }">
+      <div class="node-content">Unconnected</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 260 }">
+      <div class="node-content">Unconnected</div>
+    </div>
+  </f-canvas>
+</f-flow>
+
+<f-toolbar>
+  <f-select [(value)]="mode" [options]="modes" label="Mode" />
+</f-toolbar>

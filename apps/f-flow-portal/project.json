@@ -74,6 +74,27 @@
         "command": "node scripts/generate-portal-artifacts.mjs"
       }
     },
+    "build-search-index": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/f-flow-portal/public/search-index.json"],
+      "options": {
+        "command": "node scripts/build-search-index.mjs"
+      }
+    },
+    "seo-parity": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-artifacts"],
+      "options": {
+        "command": "node scripts/check-portal-seo-parity.mjs"
+      }
+    },
+    "content-parity": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-artifacts"],
+      "options": {
+        "command": "node scripts/check-portal-content-parity.mjs"
+      }
+    },
     "serve": {
       "continuous": true,
       "executor": "@angular-devkit/build-angular:dev-server",

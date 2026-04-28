@@ -63,23 +63,23 @@ export class Example implements OnInit, OnDestroy {
     return event.shiftKey;
   };
 
-  protected connectionTrigger = (event: FTriggerEvent) => {
+  protected connectionTrigger = (_event: FTriggerEvent) => {
     return this._isFKeyPressed;
   };
 
-  private _triggersListener: Function[] = [];
+  private _triggersListener: (() => void)[] = [];
   private _isFKeyPressed = false;
 
   public ngOnInit(): void {
     this._triggersListener.push(
-      this._rendered.listen(this._document, 'keydown', (event) => {
+      this._rendered.listen(this._document, 'keydown', (event: KeyboardEvent) => {
         if (event.key === 'F' || event.code === 'KeyF') {
           this._isFKeyPressed = true;
         }
       }),
     );
     this._triggersListener.push(
-      this._rendered.listen(this._document, 'keyup', (event) => {
+      this._rendered.listen(this._document, 'keyup', (event: KeyboardEvent) => {
         if (event.key === 'F' || event.code === 'KeyF') {
           this._isFKeyPressed = false;
         }

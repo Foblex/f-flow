@@ -8,7 +8,7 @@ import { DragCanvasHandler } from '../drag-canvas-handler';
 import { FNodeBase } from '../../../f-node';
 import { FEventTrigger, isValidEventTrigger } from '../../../domain';
 import { DragHandlerInjector } from '../../infrastructure';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(DragCanvasPreparationRequest)

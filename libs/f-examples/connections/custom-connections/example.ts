@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule } from '@foblex/flow';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 import { KeyValue } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { KeyValue } from '@angular/common';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FToolbarComponent, FSelectComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

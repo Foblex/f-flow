@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-canvas-layers",
+  "root": "libs/f-examples/extensions/canvas-layers",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/extensions/canvas-layers",
+  "tags": ["scope:examples", "type:example", "category:extensions"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/extensions/canvas-layers/**/*.ts\" \"libs/f-examples/extensions/canvas-layers/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

@@ -3,10 +3,14 @@
     <f-connection-for-create fType="segment"></f-connection-for-create>
     <f-snap-connection [fSnapThreshold]="50" fType="segment"></f-snap-connection>
 
-    @for (connection of connections; track connection.inputId)  {
-      <f-connection [fReassignDisabled]="true" fType="segment"
-                    [fOutputId]="connection.outputId" [fInputId]="connection.inputId">
-      </f-connection>
+    @for (connection of connections; track connection.inputId) {
+    <f-connection
+      [fReassignDisabled]="true"
+      fType="segment"
+      [fOutputId]="connection.outputId"
+      [fInputId]="connection.inputId"
+    >
+    </f-connection>
     }
 
     <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 24 }">
@@ -21,9 +25,8 @@
       <div fNodeInput fInputConnectableSide="bottom" class="bottom"></div>
       I'm a node
     </div>
-
   </f-canvas>
 </f-flow>
-<example-toolbar>
+<f-toolbar>
   <button class="f-button primary" (click)="onDeleteConnections()">Delete Connections</button>
-</example-toolbar>
+</f-toolbar>

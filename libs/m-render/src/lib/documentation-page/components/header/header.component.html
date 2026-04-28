@@ -1,18 +1,10 @@
 @if (emptyNavigation) {
-  <f-brand-link class="empty-navigation-title"
-                [routerLink]="''"
-                [title]="title"
-                [logo]="image" />
+  <f-brand-link class="empty-navigation-title" [routerLink]="''" [title]="title" [logo]="image" />
 } @else {
   <div class="portal-title">
     <button hamburger-button></button>
     <div class="title text-ellipsis">{{ title }}</div>
   </div>
-}
-
-@if (config.search) {
-  <f-search-button [configuration]="config.searchConfiguration"></f-search-button>
-  <div class="divider search-divider"></div>
 }
 
 <div class="collapsable-row" #container>
@@ -21,7 +13,9 @@
       <inline-menu />
       <div class="divider"></div>
     }
-
+    @if (config.search) {
+      <f-search-button [configuration]="config.searchConfiguration"></f-search-button>
+    }
     <button theme-button></button>
     <div class="divider"></div>
     <media-links />

@@ -1,4 +1,4 @@
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 export class DragCanvasFinalizeRequest {
   static readonly fToken = Symbol('DragCanvasFinalizeRequest');

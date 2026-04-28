@@ -26,13 +26,9 @@ describe('ConnectionGradients', () => {
           .eq(1)
           .invoke('attr', 'stop-color')
           .then((initialEndColor) => {
-            cy.contains('example-select', 'Gradient Start')
-              .find('select')
-              .select('Sky', { force: true });
+            cy.contains('f-select', 'Gradient Start').find('select').select('Sky', { force: true });
 
-            cy.contains('example-select', 'Gradient End')
-              .find('select')
-              .select('Amber', { force: true });
+            cy.contains('f-select', 'Gradient End').find('select').select('Amber', { force: true });
 
             cy.get('.f-connection')
               .first()

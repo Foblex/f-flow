@@ -38,7 +38,7 @@ import {
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
 } from '../domain';
-import { StopAutoPanRequest } from './auto-pan';
+import { ScheduleAutoPanFrameRequest, StopAutoPanRequest } from './auto-pan';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
 import { EOperationSystem, PlatformService } from '@foblex/platform';
@@ -55,7 +55,7 @@ import {
   FDropToGroupEvent,
 } from './drop-to-group';
 import { RotateNodeFinalizeRequest, RotateNodePreparationRequest } from './rotate-node';
-import { IPointerEvent } from '../drag-toolkit';
+import { IPointerEvent } from './infrastructure';
 import { isDragBlocker } from './is-drag-blocker';
 import { PinchToZoomFinalizeRequest, PinchToZoomPreparationRequest } from './pinch-to-zoom';
 import { FDragStartedEvent } from './f-drag-started-event';
@@ -250,6 +250,7 @@ export class FDraggableDirective
 
   public override onPointerMove(event: IPointerEvent): void {
     this._mediator.execute<void>(new OnPointerMoveRequest(event));
+    this._mediator.execute<void>(new ScheduleAutoPanFrameRequest());
   }
 
   public override onPointerUp(event: IPointerEvent): void {

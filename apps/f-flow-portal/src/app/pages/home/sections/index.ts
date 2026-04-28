@@ -1,4 +1,5 @@
 export * from './changelog';
+export * from './features';
 export * from './final-cta';
 export * from './hero';
 export * from './hero-flow';

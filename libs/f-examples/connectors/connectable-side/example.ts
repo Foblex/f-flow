@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { EFConnectableSide, FCanvasComponent, FFlowModule } from '@foblex/flow';
-import { ExampleToolbar } from '@foblex/portal-ui';
+import { FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'connectable-side',
@@ -8,7 +8,7 @@ import { ExampleToolbar } from '@foblex/portal-ui';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, ExampleToolbar],
+  imports: [FFlowModule, FToolbarComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

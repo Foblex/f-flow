@@ -13,7 +13,7 @@ import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FNodeBase } from '../../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../../domain';
-import { FMagneticRectsBase } from '../../../../f-magnetic-rects';
+import { FMagneticRectsBase } from '../../../../plugins/snapping/f-magnetic-rects';
 
 @Injectable()
 @FExecutionRegister(MagneticRectsPreparationRequest)

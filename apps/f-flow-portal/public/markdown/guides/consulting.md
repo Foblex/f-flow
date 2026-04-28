@@ -1,6 +1,4 @@
 ---
-title: Moved to /services - Foblex Flow
-description: The Foblex Flow consulting page has moved to /services.
 noindex: true
 ---
 

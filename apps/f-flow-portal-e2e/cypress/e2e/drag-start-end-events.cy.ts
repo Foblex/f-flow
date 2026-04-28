@@ -5,7 +5,8 @@ describe('DragStartEndEvents', () => {
   });
 
   it('should append move-node and drag-ended events to log', () => {
-    cy.get('example-overlay').should('contain.text', 'Event list');
+    // Header (title input on FEventsPanelComponent — see node-selection example for the simpler 'Selection log' case).
+    cy.get('f-events-panel').should('contain.text', 'Drag & connection events');
 
     cy.get('.f-node')
       .first()
@@ -21,7 +22,11 @@ describe('DragStartEndEvents', () => {
           .trigger('pointerup', { clientX: startX + 80, clientY: startY + 30, force: true });
       });
 
-    cy.get('example-overlay').should('contain.text', 'move-node');
-    cy.get('example-overlay').should('contain.text', 'drag-ended');
+    // The dragStarted log row shows `<fEventType> <data>` in its value column,
+    // so 'move-node' (the legacy event type for node drag — DRAG_NODE_HANDLER_TYPE)
+    // must appear somewhere in the panel text.
+    cy.get('f-events-panel').should('contain.text', 'move-node');
+    // The dragEnded log row uses 'dragEnded' as the event name in the new panel layout.
+    cy.get('f-events-panel').should('contain.text', 'dragEnded');
   });
 });

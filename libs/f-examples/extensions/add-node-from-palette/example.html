@@ -1,17 +1,17 @@
 <f-flow fDraggable (fLoaded)="onLoaded()" (fCreateNode)="onCreateNode($event)">
   <f-canvas fZoom>
     @for (node of nodes(); track node.id) {
-      <div fNode [fNodePosition]="node.position" fDragHandle>{{ node.text }}</div>
+    <div fNode [fNodePosition]="node.position" fDragHandle>{{ node.text }}</div>
     }
   </f-canvas>
 </f-flow>
-<example-toolbar>
+<f-toolbar>
   <f-checkbox [checked]="matchSize()" (change)="previewMatchSizeChange($event)"
     >Is preview match size</f-checkbox
   >
-</example-toolbar>
+</f-toolbar>
 
-<example-external-palette>
+<f-external-palette>
   <div fExternalItem fData="Data 1" [fPreviewMatchSize]="matchSize()">External item with data</div>
   <div fExternalItem [fPreviewMatchSize]="matchSize()">External item</div>
   <div fExternalItem [fPreviewMatchSize]="matchSize()">
@@ -28,7 +28,7 @@
   <div fExternalItem [fPreview]="previewTemplate" [fPreviewMatchSize]="matchSize()">
     With preview 2
   </div>
-</example-external-palette>
+</f-external-palette>
 
 <ng-template #placeholderTemplate>
   <div class="external-item-placeholder">Placeholder 2</div>

@@ -9,8 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { IHeaderSearchConfiguration, IS_BROWSER_PLATFORM } from '../../../common';
-import { RouterLink } from '@angular/router';
+import { IHeaderSearchConfiguration, IS_BROWSER_PLATFORM, SEARCH_TRIGGER } from '../../../common';
 
 @Component({
   selector: 'f-search-button',
@@ -18,20 +17,23 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./f-search-button.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterLink,
-  ],
 })
 export class FSearchButtonComponent implements AfterViewInit, OnDestroy {
   public readonly configuration = input<IHeaderSearchConfiguration | undefined>(undefined);
 
   private readonly _isBrowser = inject(IS_BROWSER_PLATFORM);
   private readonly _document = inject(DOCUMENT);
+  private readonly _trigger = inject(SEARCH_TRIGGER, { optional: true });
   private readonly _containerRef = viewChild<ElementRef<HTMLElement>>('searchContainer');
+
+  protected readonly hasTrigger = !!this._trigger;
 
   private _instance: IDocSearchInstance | null = null;
 
   public async ngAfterViewInit(): Promise<void> {
+    // When the app provides a custom SEARCH_TRIGGER, render a plain
+    // button that delegates to it — no Algolia bootstrapping needed.
+    if (this._trigger) return;
     if (!this._isBrowser) return;
 
     const docsearch = await loadDocSearch(this._document);
@@ -52,6 +54,10 @@ export class FSearchButtonComponent implements AfterViewInit, OnDestroy {
       insights: config.insights ?? true,
       searchParameters: config.searchParameters,
     });
+  }
+
+  protected onTriggerClick(): void {
+    this._trigger?.open();
   }
 
   public ngOnDestroy(): void {
@@ -84,14 +90,15 @@ async function loadDocSearch(documentRef: Document): Promise<DocSearchFactory | 
   }
 
   cachedDocSearchFactory = (async () => {
-    await Promise.all([
-      appendStyle(documentRef),
-      appendScript(documentRef),
-    ]);
+    await Promise.all([appendStyle(documentRef), appendScript(documentRef)]);
 
-    const docsearch = (documentRef.defaultView as Window & {
-      docsearch?: DocSearchFactory;
-    } | null)?.docsearch;
+    const docsearch = (
+      documentRef.defaultView as
+        | (Window & {
+            docsearch?: DocSearchFactory;
+          })
+        | null
+    )?.docsearch;
 
     return typeof docsearch === 'function' ? docsearch : null;
   })();
@@ -127,6 +134,7 @@ function appendStyle(documentRef: Document): Promise<void> {
   link.rel = 'stylesheet';
   link.href = DOCSEARCH_STYLE_URL;
   documentRef.head.appendChild(link);
+
   return Promise.resolve();
 }
 

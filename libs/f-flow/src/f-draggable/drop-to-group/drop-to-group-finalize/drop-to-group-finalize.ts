@@ -6,7 +6,7 @@ import { DropToGroupHandler } from '../drop-to-group-handler';
 import { FComponentsStore } from '../../../f-storage';
 import { DragNodeHandler } from '../../drag-node';
 import { FDropToGroupEvent } from '../f-drop-to-group-event';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(DropToGroupFinalizeRequest)

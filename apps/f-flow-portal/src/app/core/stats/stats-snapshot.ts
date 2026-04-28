@@ -27,10 +27,10 @@ export interface StatsSnapshot {
  * a long time, we still render truthful figures instead of em-dashes.
  */
 export const STATS_FALLBACK: StatsSnapshot = {
-  stars: 473,
-  weeklyInstalls: 9_000,
-  yearlyInstalls: 350_000,
-  version: 'v18.5.0',
+  stars: 478,
+  weeklyInstalls: 14_000,
+  yearlyInstalls: 366_000,
+  version: 'v18.6.0',
   license: 'MIT',
 };
 

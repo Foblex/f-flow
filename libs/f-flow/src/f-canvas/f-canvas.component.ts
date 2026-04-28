@@ -12,12 +12,16 @@ import {
   OnDestroy,
   OnInit,
   output,
+  untracked,
   viewChild,
 } from '@angular/core';
-import { F_CANVAS, FCanvasBase } from './f-canvas-base';
+import { F_CANVAS, FCanvasBase } from './models';
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
-import { FCanvasChangeEvent } from './domain';
+import { FCanvasChangeEvent } from './models';
 import { FMediator } from '@foblex/mediator';
+import { EFCanvasLayer } from './enums';
+import { resolveLayerOrder } from './layers';
+import { F_CANVAS_CONFIG } from './utils';
 import {
   AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
@@ -36,6 +40,7 @@ import {
 } from '../domain';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../f-storage';
 import { FFlowBase } from '../f-flow';
+import { F_DEFAULT_LAYER_ORDER } from './constants';
 
 /**
  * Component representing a canvas in the F-Flow framework.
@@ -59,9 +64,9 @@ import { FFlowBase } from '../f-flow';
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
-  private readonly _componentsStore = inject(FComponentsStore);
-  private readonly _elementReference = inject(ElementRef);
+  private readonly _components = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
+  private readonly _config = inject(F_CANVAS_CONFIG, { optional: true });
 
   private _flowId: string | undefined;
 
@@ -75,9 +80,36 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   public readonly debounceTime = input<number, unknown>(0, { transform: numberAttribute });
   public override debounce = computed(() => (this.debounceTime() < 0 ? 0 : this.debounceTime()));
 
-  public override get hostElement(): HTMLElement {
-    return this._elementReference.nativeElement;
-  }
+  /**
+   * Stacking order of the built-in layers (groups, connections, nodes),
+   * read bottom to top. The first entry sits underneath, the last entry
+   * sits on top. Defaults to the order shipped before v18.6:
+   * `[GROUPS, CONNECTIONS, NODES]`.
+   *
+   * When `withFCanvas({ layers })` is provided in the component's
+   * injector, this input falls back to that value; passing `fLayers`
+   * directly always wins. Missing layers are appended in their default
+   * position so every canvas renders all three regardless of input.
+   */
+  public readonly fLayers = input<EFCanvasLayer[] | undefined>(undefined);
+
+  /**
+   * Final layer order rendered in the template. The three sibling
+   * containers are emitted in this order, which (combined with
+   * `isolation: isolate` on each of them) is what visually stacks
+   * groups, connections, and nodes — no per-container z-index involved.
+   */
+  protected readonly resolvedLayers = computed<EFCanvasLayer[]>(() => {
+    const fromInput = this.fLayers();
+    if (fromInput && fromInput.length > 0) {
+      return resolveLayerOrder(fromInput);
+    }
+    if (this._config?.layers) {
+      return resolveLayerOrder(this._config.layers);
+    }
+
+    return [...F_DEFAULT_LAYER_ORDER];
+  });
 
   public override fGroupsContainer =
     viewChild.required<ElementRef<HTMLElement>>('fGroupsContainer');
@@ -100,7 +132,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private _positionChange(): void {
     effect(
       () => {
-        this._mediator.execute(new InputCanvasPositionRequest(this.transform, this.position()));
+        const position = this.position();
+        untracked(() => {
+          this._mediator.execute(new InputCanvasPositionRequest(this.transform, position));
+        });
       },
       { injector: this._injector },
     );
@@ -109,7 +144,10 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private _scaleChange(): void {
     effect(
       () => {
-        this._mediator.execute(new InputCanvasScaleRequest(this.transform, this.scale()));
+        const scale = this.scale();
+        untracked(() => {
+          this._mediator.execute(new InputCanvasScaleRequest(this.transform, scale));
+        });
       },
       { injector: this._injector },
     );
@@ -208,8 +246,8 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private _afterRedraw(callback: () => void): void {
     this._mediator.execute(
       new WaitForConnectionsRenderedRequest(
-        this._componentsStore.connectionsRevision,
-        this._componentsStore.nodesRevision,
+        this._components.connectionsRevision,
+        this._components.nodesRevision,
         () => afterNextRender(callback, { injector: this._injector }),
         this.destroyRef,
       ),

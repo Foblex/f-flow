@@ -1,4 +1,4 @@
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../../f-draggable/infrastructure';
 
 export class OnPointerMoveRequest {
   static readonly fToken = Symbol('OnPointerMoveRequest');

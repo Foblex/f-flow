@@ -1,0 +1,19 @@
+<div class="head">
+  <span class="title">{{ title() }}</span>
+  @if (events().length > 0) {
+    <span class="count">{{ events().length }}</span>
+  }
+</div>
+
+<div class="body">
+  @for (entry of events(); track $index) {
+    <div class="log-line">
+      <span class="ts">{{ entry.timestamp }}</span>
+      <span class="evt">{{ entry.name }}</span>
+      @if (entry.value) {
+        <span class="val">{{ entry.value }}</span>
+      }
+    </div>
+  }
+  <ng-content />
+</div>

@@ -6,7 +6,7 @@ import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
-import { IPointerEvent } from '../../drag-toolkit';
+import { IPointerEvent } from '../infrastructure';
 import { FConnectionBase } from '../../f-connection-v2';
 
 /**

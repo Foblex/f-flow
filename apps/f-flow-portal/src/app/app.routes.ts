@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { provideDocumentation } from '@foblex/m-render';
-import { DOCUMENTATION_CONFIGURATION } from './config/documentation-config';
-import { EXAMPLES_CONFIGURATION } from './config/examples-config';
-import { SHOWCASE_CONFIGURATION } from './config/showcase-config';
-import { BLOG_CONFIGURATION } from './config/blog-config';
+import { DOCUMENTATION_CONFIGURATION } from './sections/docs';
+import { EXAMPLES_CONFIGURATION } from './sections/examples';
+import { SHOWCASE_CONFIGURATION } from './sections/showcase';
+import { BLOG_CONFIGURATION } from './sections/blog';
 
 export const routes: Routes = [
   {

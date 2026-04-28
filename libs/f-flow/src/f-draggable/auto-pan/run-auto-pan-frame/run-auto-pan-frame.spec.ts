@@ -1,6 +1,6 @@
 import { Point } from '@foblex/2d';
 import { FMediator } from '@foblex/mediator';
-import { IMouseEvent } from '../../../drag-toolkit';
+import { IMouseEvent } from '../../infrastructure';
 import { FDraggableBase } from '../../f-draggable-base';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FAutoPanBase } from '../../../f-auto-pan';
@@ -15,8 +15,8 @@ import {
 import { DragHandlerBase } from '../../infrastructure';
 import { RunAutoPanFrame } from './run-auto-pan-frame';
 import { RunAutoPanFrameRequest } from './run-auto-pan-frame-request';
+import { ScheduleAutoPanFrameRequest } from '../schedule-auto-pan-frame';
 import { StopAutoPanRequest } from '../stop-auto-pan';
-import { SyncAutoPanRequest } from '../sync-auto-pan';
 
 describe('RunAutoPanFrame', () => {
   let execution: RunAutoPanFrame;
@@ -57,7 +57,7 @@ describe('RunAutoPanFrame', () => {
     dragContext.draggableItems = [createHandlerStub('create-connection', moveSpy)];
     dragContext.onPointerDownScale = 1;
     dragContext.onPointerDownPosition = new Point(120, 80);
-    dragContext.rememberPointerEvent(createMouseEvent(395, 80));
+    dragContext.rememberPointerPosition(createMouseEvent(395, 80));
 
     execution.handle(new RunAutoPanFrameRequest());
 
@@ -68,14 +68,14 @@ describe('RunAutoPanFrame', () => {
     expect(dragContext.isAutoPanCanvasMoved).toBeTrue();
     expect(store.fCanvas?.redraw).toHaveBeenCalled();
     expect(moveSpy).toHaveBeenCalled();
-    expect(mediator.execute).toHaveBeenCalledWith(jasmine.any(SyncAutoPanRequest));
+    expect(mediator.execute).toHaveBeenCalledWith(jasmine.any(ScheduleAutoPanFrameRequest));
   });
 
   it('should keep pointer down position fixed for selection area', () => {
     dragContext.draggableItems = [createHandlerStub('selection-area')];
     dragContext.onPointerDownScale = 1;
     dragContext.onPointerDownPosition = new Point(40, 50);
-    dragContext.rememberPointerEvent(createMouseEvent(395, 50));
+    dragContext.rememberPointerPosition(createMouseEvent(395, 50));
 
     execution.handle(new RunAutoPanFrameRequest());
 
@@ -86,7 +86,7 @@ describe('RunAutoPanFrame', () => {
 
   it('should stop auto-pan for unsupported drag kinds', () => {
     dragContext.draggableItems = [createHandlerStub('drag-external-item')];
-    dragContext.rememberPointerEvent(createMouseEvent(395, 80));
+    dragContext.rememberPointerPosition(createMouseEvent(395, 80));
 
     execution.handle(new RunAutoPanFrameRequest());
 

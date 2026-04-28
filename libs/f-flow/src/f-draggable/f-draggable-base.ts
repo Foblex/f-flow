@@ -12,7 +12,7 @@ import {
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
 import { FDropToGroupEvent } from './drop-to-group';
-import { DragAndDropBase } from '../drag-toolkit';
+import { DragAndDropBase } from './infrastructure';
 import { FMoveNodesEvent } from './drag-node';
 import { FDragStartedEvent } from './f-drag-started-event';
 import { FNodeConnectionsIntersectionEvent, FNodeIntersectedWithConnections } from './domain';

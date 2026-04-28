@@ -17,6 +17,7 @@ import { RESIZE_NODE_HANDLER_KIND, RESIZE_NODE_HANDLER_TYPE } from '../is-resize
 import { IResizeNodeConnectionHandlers } from './i-resize-node-connection-handlers';
 import { FConnectorBase } from '../../../f-connectors';
 import { SetFCacheNodeRectRequest } from '../../../f-cache';
+import { FReflowOrchestrator } from '../../../plugins/layout/f-reflow-on-resize';
 
 @Injectable()
 export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData> {
@@ -27,6 +28,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   }
 
   private readonly _mediator = inject(FMediator);
+  private readonly _reflowOrchestrator = inject(FReflowOrchestrator);
 
   private _baselineRect!: IRect;
   private _constraints!: IResizeConstraint;
@@ -73,6 +75,8 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   public override onPointerUp(): void {
     const rect = this._lastRect ?? this._fallbackRectFromModel();
     this._nodeOrGroup.sizeChange.emit(rect);
+
+    this._reflowOrchestrator.handleResize(this._nodeOrGroup, this._baselineRect);
 
     requestAnimationFrame(() => this._nodeOrGroup.refresh());
   }

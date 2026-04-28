@@ -13,7 +13,7 @@ import {
 } from '../../../domain';
 import { isClosestElementHasClass } from '@foblex/utils';
 import { DragNodeHandler } from '../drag-node-handler';
-import { IPointerEvent } from '../../../drag-toolkit';
+import { IPointerEvent } from '../../infrastructure';
 import { MagneticLinesPreparationRequest } from '../magnetic-lines';
 import { MagneticRectsPreparationRequest } from '../magnetic-rects';
 

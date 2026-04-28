@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FCreateNodeEvent, FDropToGroupEvent, FFlowModule } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleExternalPalette, ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FExternalPaletteComponent, FToolbarComponent } from '@foblex/m-render';
 
 interface INode {
   id: string;
@@ -15,7 +14,7 @@ interface INode {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FCheckboxComponent, ExampleToolbar, ExampleExternalPalette],
+  imports: [FFlowModule, FCheckboxComponent, FToolbarComponent, FExternalPaletteComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

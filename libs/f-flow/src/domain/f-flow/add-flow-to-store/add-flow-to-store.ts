@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { AddFlowToStoreRequest } from './add-flow-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FLayoutController } from '../../../f-layout';
+import { FLayoutController } from '../../../plugins/layout/f-layout';
 
 /**
  * Execution that adds a Flow to the FComponentsStore.

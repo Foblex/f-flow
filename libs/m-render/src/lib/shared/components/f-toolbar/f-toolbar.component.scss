@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ff-example-control-gap, 8px);
+  z-index: 1;
+}
+
+:host(.f-toolbar-chrome-bar) {
+  width: fit-content;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+
+  border: 1px solid var(--page-shell-border-color);
+  border-radius: 10px;
+  background: var(--surface-glass-strong);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.02),
+    var(--shadow-2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 6px;
+
+  &.f-toolbar-start {
+    inset-inline-start: 12px;
+    inset-inline-end: auto;
+    justify-content: flex-start;
+  }
+}

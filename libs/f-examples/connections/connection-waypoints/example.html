@@ -2,7 +2,11 @@
   <f-canvas>
     <f-connection [fReassignDisabled]="true" fType="straight" fOutputId="1" fInputId="2">
       @if (waypointsOn()) {
-        <f-connection-waypoints [(waypoints)]="waypointsStraight" radius="8" [visibility]="waypointsVisibility()"/>
+      <f-connection-waypoints
+        [(waypoints)]="waypointsStraight"
+        radius="8"
+        [visibility]="waypointsVisibility()"
+      />
       }
     </f-connection>
     <div
@@ -28,7 +32,11 @@
 
     <f-connection [fReassignDisabled]="true" fType="segment" fOutputId="3" fInputId="4">
       @if (waypointsOn()) {
-        <f-connection-waypoints [(waypoints)]="waypointsSegment" radius="4" [visibility]="waypointsVisibility()"/>
+      <f-connection-waypoints
+        [(waypoints)]="waypointsSegment"
+        radius="4"
+        [visibility]="waypointsVisibility()"
+      />
       }
     </f-connection>
     <div
@@ -54,7 +62,11 @@
 
     <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="5" fInputId="6">
       @if (waypointsOn()) {
-        <f-connection-waypoints [(waypoints)]="waypointsBezier" radius="6" [visibility]="waypointsVisibility()"/>
+      <f-connection-waypoints
+        [(waypoints)]="waypointsBezier"
+        radius="6"
+        [visibility]="waypointsVisibility()"
+      />
       }
     </f-connection>
     <div
@@ -80,7 +92,10 @@
 
     <f-connection [fReassignDisabled]="true" fType="adaptive-curve" fOutputId="7" fInputId="8">
       @if (waypointsOn()) {
-        <f-connection-waypoints [(waypoints)]="waypointsAdaptiveCurve" [visibility]="waypointsVisibility()"/>
+      <f-connection-waypoints
+        [(waypoints)]="waypointsAdaptiveCurve"
+        [visibility]="waypointsVisibility()"
+      />
       }
     </f-connection>
     <div
@@ -106,11 +121,11 @@
   </f-canvas>
 </f-flow>
 
-<example-toolbar>
+<f-toolbar>
   <f-checkbox (change)="toggleWaypointsVisibility()" [checked]="waypointsVisibility()">
     Show waypoints
   </f-checkbox>
   <f-checkbox (change)="toggleWaypointsOn()" [checked]="waypointsOn()">
     Enable waypoints
   </f-checkbox>
-</example-toolbar>
+</f-toolbar>

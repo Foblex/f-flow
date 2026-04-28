@@ -9,7 +9,11 @@ describe('NodeSelection', () => {
     cy.get('.f-node').first().click({ force: true });
 
     cy.get('.f-node.f-selected').should('have.length', 1);
-    cy.get('example-overlay').should('contain.text', 'Selection changed: node1');
+    // FEventsPanelComponent renders each entry as `<name> <value>` columns.
+    // The example logs `name: 'selectionChange'` with `value: 'node1'`, so the
+    // panel must contain both substrings after the click.
+    cy.get('f-events-panel').should('contain.text', 'selectionChange');
+    cy.get('f-events-panel').should('contain.text', 'node1');
 
     cy.contains('.f-node', 'Disabled selection').click({ force: true });
     cy.contains('.f-node', 'Disabled selection').should('not.have.class', 'f-selected');

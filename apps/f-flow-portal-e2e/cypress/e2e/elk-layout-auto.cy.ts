@@ -3,7 +3,7 @@ describe('ElkLayoutAuto', () => {
   const layoutTimeout = 15000;
 
   function getSelect(label: string) {
-    return cy.contains('.label', label).closest('example-select').find('select');
+    return cy.contains('.label', label).closest('f-select').find('select');
   }
 
   function getNodePosition(document: Document, label: string) {

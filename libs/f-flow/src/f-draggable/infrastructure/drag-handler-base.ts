@@ -1,7 +1,7 @@
 import { IPoint } from '@foblex/2d';
-import { IPointerEvent } from '../../drag-toolkit';
 import { FDragStartedEvent } from '../f-drag-started-event';
 import { IDragSessionContext, IDragSessionFeature } from './i-drag-session-feature';
+import { IPointerEvent } from './pointer-events';
 
 export abstract class DragHandlerBase<TData> {
   protected abstract readonly type: string;

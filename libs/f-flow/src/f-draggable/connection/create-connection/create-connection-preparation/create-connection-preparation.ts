@@ -8,13 +8,14 @@ import { CreateConnectionFromOutletPreparationRequest } from './from-outlet-prep
 import { CreateConnectionFromOutputPreparationRequest } from './from-output-preparation';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FEventTrigger, isValidEventTrigger } from '../../../../domain';
-import { IPointerEvent } from '../../../../drag-toolkit';
+import { IPointerEvent } from '../../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionPreparationRequest)
-export class CreateConnectionPreparation
-  implements IHandler<CreateConnectionPreparationRequest, void>
-{
+export class CreateConnectionPreparation implements IHandler<
+  CreateConnectionPreparationRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);

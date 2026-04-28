@@ -8,8 +8,7 @@ import {
 } from '@angular/core';
 import { FCanvasComponent, FFlowComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 
 type Edge = { source: number; target: number };
 
@@ -25,7 +24,7 @@ type Cell = {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FZoomDirective, FCheckboxComponent, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FZoomDirective, FCheckboxComponent, FToolbarComponent, FSelectComponent],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

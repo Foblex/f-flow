@@ -13,8 +13,8 @@ import { FConnectionMarkerRegistry } from './f-connection-marker-registry';
 import { fInstanceKey, FSingleRegistryBase } from './base';
 import { FZoomBase } from '../f-zoom';
 import { FSelectionAreaBase } from '../f-selection-area';
-import { FMagneticLinesBase } from '../f-magnetic-lines';
-import { FMagneticRectsBase } from '../f-magnetic-rects';
+import { FMagneticLinesBase } from '../plugins/snapping/f-magnetic-lines';
+import { FMagneticRectsBase } from '../plugins/snapping/f-magnetic-rects';
 import { FMinimapBase } from '../f-minimap';
 import { FAutoPanBase } from '../f-auto-pan';
 

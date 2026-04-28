@@ -1,5 +1,5 @@
 import { FNodeBase } from '../../../../../f-node';
-import { IPointerEvent } from '../../../../../drag-toolkit';
+import { IPointerEvent } from '../../../../infrastructure';
 
 export class CreateConnectionFromOutputPreparationRequest {
   static readonly fToken = Symbol('CreateConnectionFromOutputPreparationRequest');

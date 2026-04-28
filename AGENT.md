@@ -19,7 +19,10 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 ### Project structure
 
 - `libs/f-flow/src/` is the primary source of truth for library architecture and naming.
-- Top-level library slices are feature-oriented and colocated: `f-flow`, `f-canvas`, `f-node`, `f-connectors`, `f-connection`, `f-connection-v2`, `f-draggable`, `f-storage`, `f-cache`, `f-minimap`, `f-zoom`, `f-selection-area`, `f-external-item`, `f-magnetic-lines`, `f-magnetic-rects`, `f-virtual`, `f-auto-pan`, `f-backgroud`, `domain`, `drag-toolkit`, `reactivity`, `mixins`, `testing`, `utils`.
+- Top-level library slices are feature-oriented and colocated: `f-flow`, `f-canvas`, `f-node`, `f-connectors`, `f-connection`, `f-connection-v2`, `f-draggable`, `f-storage`, `f-cache`, `f-minimap`, `f-zoom`, `f-selection-area`, `f-external-item`, `f-virtual`, `f-auto-pan`, `f-backgroud`, `domain`, `plugins`, `reactivity`, `mixins`, `testing`, `utils`.
+- `f-draggable/infrastructure/` contains low-level drag handlers, pointer event wrappers, and drag sequence primitives used by draggable interactions and adjacent input features.
+- `plugins/layout/` contains layout-changing features such as `f-layout` and `f-reflow-on-resize`.
+- `plugins/snapping/` contains positioning-assistance features such as `f-line-alignment`, `f-magnetic-lines`, and `f-magnetic-rects`.
 - `domain/` contains internal mediator-driven operations and feature execution classes.
 - `f-storage/`, `f-cache/`, and `reactivity/` are internal runtime support layers, not app-facing graph state layers.
 - `libs/f-examples` and `libs/f-pro-examples` are consumer-style examples of the library.

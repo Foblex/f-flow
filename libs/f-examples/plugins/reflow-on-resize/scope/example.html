@@ -1,0 +1,73 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    <f-connection
+      fOutputId="src-out"
+      fInputId="ext-a-in"
+      fInputSide="calculate"
+      fOutputSide="calculate"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    <f-connection
+      fOutputId="island-x-out"
+      fInputId="island-y-in"
+      fInputSide="calculate"
+      fOutputSide="calculate"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+
+    <div
+      fGroup
+      fDragHandle
+      fGroupId="workflow"
+      [fGroupPosition]="{ x: 0, y: 30 }"
+      [fGroupSize]="{ width: 240, height: 280 }"
+    ></div>
+
+    <div
+      fNode
+      fDragHandle
+      fNodeParentId="workflow"
+      [fNodePosition]="{ x: 30, y: 60 }"
+      fNodeOutput
+      fOutputId="src-out"
+    >
+      <div fResizeHandle fResizeHandleType="left"></div>
+      <div fResizeHandle fResizeHandleType="top"></div>
+      <div fResizeHandle fResizeHandleType="right"></div>
+      <div fResizeHandle fResizeHandleType="bottom"></div>
+      <div class="node-content">Source</div>
+    </div>
+
+    <div fNode fDragHandle fNodeParentId="workflow" [fNodePosition]="{ x: 30, y: 170 }">
+      <div class="node-content">Group sibling</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 60 }" fNodeInput fInputId="ext-a-in">
+      <div class="node-content">External connected</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 160 }">
+      <div class="node-content">Node</div>
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 270 }"
+      fNodeOutput
+      fOutputId="island-x-out"
+    >
+      <div class="node-content">Node</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 300, y: 400 }" fNodeInput fInputId="island-y-in">
+      <div class="node-content">Node</div>
+    </div>
+  </f-canvas>
+</f-flow>
+
+<f-toolbar>
+  <f-select [(value)]="scope" [options]="scopes" label="Scope" />
+</f-toolbar>

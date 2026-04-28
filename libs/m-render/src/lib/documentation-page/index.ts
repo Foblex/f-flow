@@ -4,6 +4,8 @@ export * from './components';
 
 export * from './domain';
 
+export * from './page-config';
+
 export * from './services';
 
 export * from './utils';

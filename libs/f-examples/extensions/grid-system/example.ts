@@ -1,24 +1,17 @@
-import {ChangeDetectionStrategy, Component, signal, viewChild, ViewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { FCanvasComponent, FFlowModule, FZoomDirective } from '@foblex/flow';
-import { FCheckboxComponent } from '@foblex/m-render';
-import { ExampleToolbar } from '@foblex/portal-ui';
+import { FCheckboxComponent, FToolbarComponent } from '@foblex/m-render';
 
 @Component({
   selector: 'grid-system',
-  styleUrls: [ './example.scss' ],
+  styleUrls: ['./example.scss'],
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-    FCheckboxComponent,
-    FZoomDirective,
-    ExampleToolbar,
-  ]
+  imports: [FFlowModule, FCheckboxComponent, FZoomDirective, FToolbarComponent],
 })
 export class Example {
-
-  protected adjustCellSizeWhileDragging = signal(false)
+  protected adjustCellSizeWhileDragging = signal(false);
 
   protected readonly fCanvas = viewChild(FCanvasComponent);
 
