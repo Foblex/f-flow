@@ -50,6 +50,8 @@ import { BrowserService } from '@foblex/platform';
 import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 import { F_CACHE_OPTIONS } from '../f-cache';
+import { F_FLOW_CONFIG } from '../provide-f-flow';
+import { F_REFLOW_PROVIDERS } from '../plugins/layout/f-reflow-on-resize';
 
 let uniqueId = 0;
 const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
@@ -71,6 +73,7 @@ const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
     ...COMMON_PROVIDERS,
     FDraggableDataContext,
     ...F_DRAGGABLE_PROVIDERS,
+    ...F_REFLOW_PROVIDERS,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,8 +85,11 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _componentsStore = inject(FComponentsStore);
   private readonly _cache = inject(F_CACHE_OPTIONS);
   private readonly _injector = inject(Injector);
+  private readonly _flowConfig = inject(F_FLOW_CONFIG, { optional: true });
 
-  public override fId = input<string>(`f-flow-${uniqueId++}`, { alias: 'fFlowId' });
+  public override fId = input<string>(this._flowConfig?.id ?? `f-flow-${uniqueId++}`, {
+    alias: 'fFlowId',
+  });
   public override fCache = input(false, { transform: booleanAttribute });
 
   public override readonly hostElement = inject(ElementRef).nativeElement;

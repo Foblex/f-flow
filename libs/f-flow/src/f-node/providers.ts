@@ -5,7 +5,6 @@ import { FDragHandleDirective } from './f-drag-handle.directive';
 import { FRotateHandleDirective } from './f-rotate-handle';
 
 export const F_NODE_PROVIDERS = [
-
   FGroupDirective,
 
   FNodeDirective,

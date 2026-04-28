@@ -5,8 +5,6 @@ export * from './f-canvas';
 
 export * from './domain';
 
-export * from './drag-toolkit';
-
 export * from './f-connection';
 export * from './f-connection-v2';
 export * from './f-connectors';
@@ -15,10 +13,10 @@ export * from './f-draggable';
 
 export * from './f-external-item';
 
-export * from './f-line-alignment';
-export * from './f-layout';
-export * from './f-magnetic-lines';
-export * from './f-magnetic-rects';
+export * from './plugins/layout';
+export * from './plugins/snapping';
+
+export * from './provide-f-flow';
 
 export * from './f-minimap';
 
