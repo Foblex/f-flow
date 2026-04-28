@@ -7,6 +7,7 @@ import { StructuredData } from '../../core/structured-data';
 import { PortalFooter, PortalHeader, IFooterColumn } from '../../shared';
 import {
   Changelog,
+  Features,
   FinalCta,
   Hero,
   HeroFlow,
@@ -29,6 +30,7 @@ import {
     HeroFlow,
     Hero,
     Why,
+    Features,
     Showcase,
     RefApps,
     Changelog,
