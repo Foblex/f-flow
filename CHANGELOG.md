@@ -9,15 +9,19 @@ All notable changes to this project will be documented in this file. See [standa
 ### Highlights
 
 - **Smart Auto-Layout on Resize** — the new `withReflowOnResize` plugin watches every node's size and shifts surrounding nodes the moment one grows or shrinks, so dynamic layouts stay clean without a manual relayout call. The behaviour is configurable via five orthogonal knobs (mode, scope, axis, delta source, collision) plus a `FReflowController` for runtime overrides and an `fReflowIgnore` directive for nodes that must stay pinned.
+- **Layer Ordering** — the order of the three built-in canvas layers (groups, connections, nodes) is now configurable. Pass `[fLayers]` per canvas, or set the app-wide default through `withFCanvas({ layers })` inside `provideFFlow(...)`. The default stays groups → connections → nodes, so existing apps are unaffected.
 
 ### Features
 
 - **reflow:** add the `withReflowOnResize` provider feature plus `FReflowController`, `fReflowIgnore` directive, and a planner that combines mode (CENTER_OF_MASS / X_RANGE / DOWNSTREAM_CONNECTIONS), scope (GLOBAL / GROUP / CONNECTED_SUBGRAPH), axis (BOTH / VERTICAL / HORIZONTAL), delta source (EDGE_BASED / CENTER_BASED), and collision (STOP / CHAIN_PUSH) into one declarative reflow plan.
+- **canvas:** add the `EFCanvasLayer` enum, the `[fLayers]` input on `<f-canvas>`, and the `withFCanvas({ layers })` provider feature for app-wide layer ordering. Per-canvas input takes precedence over the provider value; missing layers fall back to their default position; unknown values and duplicates are silently dropped.
 - **examples:** add seven dedicated `/examples/reflow-on-resize` sub-demos covering the basic case and each knob (mode, scope, collision, delta source, axis, runtime controller).
+- **examples:** add `/examples/canvas-layers` with three buttons that promote groups, connections, or nodes to the top while preserving the relative order of the other two layers.
 
 ### Documentation
 
 - Add `examples/reflow-on-resize` page with live demos for each knob and a runtime controller walkthrough.
+- Add `examples/canvas-layers` page describing both `[fLayers]` and `withFCanvas({ layers })` and the precedence between them.
 
 ### ⚠ BREAKING CHANGES
 

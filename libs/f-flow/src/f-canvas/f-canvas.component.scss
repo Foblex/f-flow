@@ -14,7 +14,11 @@
   }
 }
 
-.f-connections-container {
+// Each layer container is absolutely positioned so its [style.z-index]
+// (set by FCanvasComponent based on `fLayers` / `withFCanvas({ layers })`)
+// participates in stacking and creates a context for its descendants.
+.f-groups-container,
+.f-connections-container,
+.f-nodes-container {
   position: absolute;
-  z-index: 2;
 }

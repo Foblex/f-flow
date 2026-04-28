@@ -1,0 +1,43 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom [fLayers]="layers()">
+    <div
+      fGroupId="group1"
+      fGroup
+      [fGroupPosition]="{ x: -40, y: -60 }"
+      [fGroupSize]="{ width: 520, height: 360 }"
+      fDragHandle
+    >
+      <div class="node-content">Group</div>
+    </div>
+
+    <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle fNodeParentId="group1">
+      <div fNodeOutput fOutputId="a-out" class="right"></div>
+      <div class="node-content">Node 1</div>
+    </div>
+
+    <div fNode [fNodePosition]="{ x: 200, y: 100 }" fDragHandle>
+      <div fNodeInput fInputId="b-in" class="left"></div>
+      <div fNodeOutput fOutputId="b-out" class="right"></div>
+      <div class="node-content">Node 2</div>
+    </div>
+
+    <div fNode [fNodePosition]="{ x: 500, y: 120 }" fDragHandle>
+      <div fNodeInput fInputId="c-in" class="left"></div>
+      <div class="node-content">Node 3</div>
+    </div>
+
+    <f-connection fOutputId="a-out" fInputId="b-in" fType="adaptive-curve" fBehavior="fixed_center">
+      <f-connection-marker-arrow />
+    </f-connection>
+    <f-connection fOutputId="b-out" fInputId="c-in" fType="adaptive-curve" fBehavior="fixed_center">
+      <f-connection-marker-arrow />
+    </f-connection>
+  </f-canvas>
+</f-flow>
+<f-toolbar>
+  <button type="button" class="f-button primary" (click)="bringNodesToTop()">Nodes on top</button>
+  <button type="button" class="f-button primary" (click)="bringConnectionsToTop()">
+    Connections on top
+  </button>
+  <button type="button" class="f-button primary" (click)="bringGroupsToTop()">Groups on top</button>
+</f-toolbar>

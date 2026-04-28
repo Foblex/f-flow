@@ -28,7 +28,7 @@ export class DragCanvasHandler extends DragHandlerBase<unknown> {
   }
 
   public onPointerMove(difference: IPoint): void {
-    this._store.fCanvas?.setPosition(Point.fromPoint(this._onPointerDownPosition).add(difference));
+    this._store.fCanvas?._setPosition(Point.fromPoint(this._onPointerDownPosition).add(difference));
     this._store.fCanvas?.redraw();
   }
 

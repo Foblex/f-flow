@@ -38,7 +38,7 @@ export class DragMinimapPreparation implements IExecution<DragMinimapPreparation
     const startCanvasPosition = Point.fromPoint(this._store.transform.position);
     const flowRect = RectExtensions.fromElement(this._flowHost);
 
-    this._canvas.setPosition(this._calculateCanvasPosition(flowRect, eventPoint, state));
+    this._canvas._setPosition(this._calculateCanvasPosition(flowRect, eventPoint, state));
     this._canvas.redraw();
     this._canvas.emitCanvasChangeEvent();
 

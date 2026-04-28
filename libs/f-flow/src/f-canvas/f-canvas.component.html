@@ -1,14 +1,14 @@
 <ng-container>
-  <div #fGroupsContainer>
+  <div #fGroupsContainer class="f-groups-container" [style.z-index]="groupsZIndex()">
     <ng-content select="[fGroup], [fGroups]" />
   </div>
-  <div #fConnectionsContainer class="f-connections-container">
+  <div #fConnectionsContainer class="f-connections-container" [style.z-index]="connectionsZIndex()">
     <ng-content select="f-snap-connection" />
     <ng-content select="f-connection, [fConnections]" />
     <ng-content select="f-connection-for-create" />
   </div>
 
-  <div #fNodesContainer>
+  <div #fNodesContainer class="f-nodes-container" [style.z-index]="nodesZIndex()">
     <ng-content select="[fNode], [fNodes]" />
   </div>
 </ng-container>

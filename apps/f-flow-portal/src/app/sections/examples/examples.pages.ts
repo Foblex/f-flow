@@ -546,6 +546,23 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       imageType: 'image/png',
     },
   },
+  {
+    slug: 'canvas-layers',
+    text: 'Canvas Layer Ordering',
+    group: 'Viewport',
+    date: new Date('2026-04-26 12:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Canvas Layer Ordering — Stack Groups, Connections, and Nodes in Any Order',
+      description:
+        'Reorder the three built-in canvas layers (groups, connections, nodes) per instance via [fLayers] or app-wide via withFCanvas. Configurable for tinted group overlays, edge-clickable connections, and custom render stacks.',
+      image: './previews/examples/canvas-layers.light.png',
+      imageDark: './previews/examples/canvas-layers.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      imageType: 'image/png',
+    },
+  },
 
   // -------- Editor Helpers --------
   {
@@ -949,6 +966,10 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
  * scope for this migration.
  */
 export const EXAMPLES_COMPONENTS = [
+  defineLazyComponent(
+    'canvas-layers',
+    () => import('@foblex/examples/extensions/canvas-layers/example'),
+  ),
   defineLazyComponent('custom-nodes', () => import('@foblex/examples/nodes/custom-nodes/example')),
   defineLazyComponent('drag-handle', () => import('@foblex/examples/nodes/drag-handle/example')),
   defineLazyComponent(
