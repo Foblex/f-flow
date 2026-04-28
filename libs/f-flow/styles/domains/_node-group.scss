@@ -133,13 +133,37 @@
 @mixin resize-handle($scoped: true) {
   @include _node-group-scope($scoped) {
     .f-resize-handle {
+      /* Tiny accent-blue grip with white stroke and a 1px outer ring —
+         deliberately loud so it can never be confused with a connector
+         socket. The double box-shadow is the silhouette: the inner ring
+         pins the shape against any surface, the outer drop-shadow sells
+         "lift". Hover/active expand the ring into a halo. */
       position: absolute;
-      width: var(--ff-handle-size);
-      height: var(--ff-handle-size);
+      width: var(--ff-resize-handle-size);
+      height: var(--ff-resize-handle-size);
       box-sizing: border-box;
-      border: 1px solid var(--ff-handle-border-color);
-      border-radius: var(--ff-handle-radius);
-      background: var(--ff-handle-background-color);
+      border: 1.5px solid var(--ff-resize-handle-stroke);
+      border-radius: var(--ff-resize-handle-radius);
+      background: var(--ff-resize-handle-fill);
+      box-shadow:
+        0 0 0 1px var(--ff-resize-handle-ring),
+        0 1px 2px rgba(15, 15, 13, 0.18);
+      transition:
+        background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        box-shadow:
+          0 0 0 1px var(--ff-resize-handle-ring),
+          0 0 0 5px color-mix(in oklch, var(--ff-resize-handle-ring) 25%, transparent);
+      }
+
+      &:active {
+        background: var(--ff-resize-handle-fill-active);
+        box-shadow:
+          0 0 0 2px var(--ff-resize-handle-ring),
+          0 0 0 6px color-mix(in oklch, var(--ff-resize-handle-ring) 28%, transparent);
+      }
 
       &.f-resize-handle-left {
         left: 0;
@@ -203,20 +227,53 @@
 @mixin rotate-handle($scoped: true) {
   @include _node-group-scope($scoped) {
     .f-rotate-handle {
+      /* Quiet white circle floating above the node, connected by a thin
+         guide line so the affordance reads as "rotate-from-here". On
+         hover it picks up an accent border + halo; on active it fills
+         accent and switches the cursor to grabbing. */
       position: absolute;
       left: 50%;
-      top: -40px;
+      top: calc(var(--ff-rotate-handle-offset) * -1);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: var(--ff-rotate-handle-size);
       height: var(--ff-rotate-handle-size);
       box-sizing: border-box;
-      border: 1px solid var(--ff-handle-border-color);
+      border: 1px solid var(--ff-rotate-handle-border-color);
       border-radius: 50%;
-      background: var(--ff-handle-background-color);
+      background: var(--ff-rotate-handle-background-color);
       transform: translateX(-50%);
       cursor: grab;
+      transition:
+        background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Guide line that bridges the gap between handle and node edge. */
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        width: 1px;
+        height: calc(var(--ff-rotate-handle-offset) - var(--ff-rotate-handle-size));
+        background: var(--ff-rotate-handle-guide-color);
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+
+      &:hover {
+        border-color: var(--ff-color-accent);
+        box-shadow: 0 0 0 4px color-mix(in oklch, var(--ff-color-accent) 22%, transparent);
+      }
+
+      &:active {
+        background: var(--ff-color-accent);
+        border-color: var(--ff-color-accent);
+        cursor: grabbing;
+        box-shadow: 0 0 0 4px color-mix(in oklch, var(--ff-color-accent) 22%, transparent);
+      }
     }
   }
 }
