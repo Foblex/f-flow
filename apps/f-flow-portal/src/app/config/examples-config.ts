@@ -14,12 +14,18 @@ export const EXAMPLES_CONFIGURATION: IDocumentationConfiguration = {
   navigation: [
     overviewGroup(),
     nodesGroup(),
-    connectorGroup(),
-    connectionGroup(),
-    extensionGroup(),
-    pluginsGroup(),
-    advancedGroup(),
-    proExamplesGroup(),
+    connectorsGroup(),
+    connectionsEditingGroup(),
+    connectionsAppearanceGroup(),
+    connectionsRoutingGroup(),
+    viewportGroup(),
+    editorHelpersGroup(),
+    layoutEnginesGroup(),
+    reflowGroup(),
+    editorStateGroup(),
+    eventsGroup(),
+    performanceGroup(),
+    referenceAppsGroup(),
   ],
   components: [
     defineLazyComponent(
@@ -407,7 +413,7 @@ function nodesGroup() {
   ]);
 }
 
-function connectorGroup() {
+function connectorsGroup() {
   return defineNavigationGroup('Connectors', [
     {
       link: 'node-as-connector',
@@ -495,8 +501,8 @@ function connectorGroup() {
   ]);
 }
 
-function connectionGroup() {
-  return defineNavigationGroup('Connections', [
+function connectionsEditingGroup() {
+  return defineNavigationGroup('Connections — Editing', [
     {
       link: 'drag-to-connect',
       text: 'Drag to Connect',
@@ -572,6 +578,11 @@ function connectionGroup() {
       image_type: 'image/png',
       date: new Date('2025-01-31 17:16:33'),
     },
+  ]);
+}
+
+function connectionsAppearanceGroup() {
+  return defineNavigationGroup('Connections — Appearance', [
     {
       link: 'connection-types',
       pageTitle:
@@ -642,6 +653,28 @@ function connectionGroup() {
       },
     },
     {
+      link: 'connection-gradients',
+      text: 'Connection Gradients',
+      pageTitle: 'Angular Diagram Example – Projected Connection Gradients',
+      description:
+        'Configure projected SVG gradients for Angular diagram connections and switch start/end colors live in a focused Foblex Flow example.',
+      image: './previews/examples/custom-connections.light.png',
+      image_dark: './previews/examples/custom-connections.dark.png',
+      image_width: 791,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2026-03-11 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+  ]);
+}
+
+function connectionsRoutingGroup() {
+  return defineNavigationGroup('Connections — Routing', [
+    {
       link: 'connection-waypoints',
       pageTitle:
         'Connection Waypoints in Foblex Flow – Add and Drag Waypoints for Any Connection Type',
@@ -657,23 +690,6 @@ function connectionGroup() {
       badge: {
         text: 'New',
         type: 'success',
-      },
-    },
-    {
-      link: 'connection-gradients',
-      text: 'Connection Gradients',
-      pageTitle: 'Angular Diagram Example – Projected Connection Gradients',
-      description:
-        'Configure projected SVG gradients for Angular diagram connections and switch start/end colors live in a focused Foblex Flow example.',
-      image: './previews/examples/custom-connections.light.png',
-      image_dark: './previews/examples/custom-connections.dark.png',
-      image_width: 791,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2026-03-11 12:00:00'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
       },
     },
     {
@@ -697,8 +713,44 @@ function connectionGroup() {
   ]);
 }
 
-function extensionGroup() {
-  return defineNavigationGroup('Extensions', [
+function viewportGroup() {
+  return defineNavigationGroup('Viewport', [
+    {
+      link: 'minimap',
+      text: 'Minimap',
+      description:
+        'Show a minimap to navigate large diagrams. Viewport sync, performance tips and Angular example.',
+      image: './previews/examples/minimap-example.light.png',
+      image_dark: './previews/examples/minimap-example.dark.png',
+      image_width: 821,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2025-07-23 13:28:05'),
+    },
+    {
+      link: 'zoom',
+      text: 'Zoom',
+      description:
+        'Zoom your canvas via mouse wheel, double click, buttons, and pinch-to-zoom (trackpad/touchscreen) with smooth limits and responsive UX.',
+      image: './previews/examples/zoom.light.png',
+      image_dark: './previews/examples/zoom.dark.png',
+      image_width: 821,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2026-01-25 00:00:00'),
+    },
+    {
+      link: 'background',
+      text: 'Background',
+      description:
+        'Add SVG background patterns to the flow diagrams in Angular, using built-in rect and circle presets or a fully custom pattern for complex, branded backgrounds.',
+      image: './previews/examples/background-example.light.png',
+      image_dark: './previews/examples/background-example.dark.png',
+      image_width: 821,
+      image_height: 600,
+      image_type: 'image/png',
+      date: new Date('2025-11-29 14:49:44'),
+    },
     {
       link: 'auto-pan',
       text: 'Auto Pan',
@@ -715,18 +767,11 @@ function extensionGroup() {
         type: 'success',
       },
     },
-    {
-      link: 'add-node-from-palette',
-      text: 'Add Node from Palette',
-      description:
-        'Drag nodes from an external palette into the canvas. Data binding, events and Angular implementation.',
-      image: './previews/examples/add-node-from-palette.light.png',
-      image_dark: './previews/examples/add-node-from-palette.dark.png',
-      image_width: 781,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-02-09 12:37:27'),
-    },
+  ]);
+}
+
+function editorHelpersGroup() {
+  return defineNavigationGroup('Editor Helpers', [
     {
       link: 'selection-area',
       text: 'Selection Area',
@@ -738,23 +783,6 @@ function extensionGroup() {
       image_height: 600,
       image_type: 'image/png',
       date: new Date('2024-10-06 13:57:22'),
-    },
-    {
-      link: 'help-in-positioning',
-      text: 'Help in Positioning (Legacy)',
-      pageTitle: 'Angular Diagram Example – Legacy Node Alignment Helpers (Deprecated)',
-      description:
-        'Legacy node alignment helper example kept for reference. For new projects, use Magnetic Lines and Magnetic Rects instead.',
-      image: './previews/examples/help-in-positioning.light.png',
-      image_dark: './previews/examples/help-in-positioning.dark.png',
-      image_width: 821,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-02-09 12:37:27'),
-      badge: {
-        text: 'Deprecated',
-        type: 'danger',
-      },
     },
     {
       link: 'magnetic-lines',
@@ -803,46 +831,39 @@ function extensionGroup() {
       date: new Date('2025-02-09 12:37:27'),
     },
     {
-      link: 'minimap',
-      text: 'Minimap',
+      link: 'add-node-from-palette',
+      text: 'Add Node from Palette',
       description:
-        'Show a minimap to navigate large diagrams. Viewport sync, performance tips and Angular example.',
-      image: './previews/examples/minimap-example.light.png',
-      image_dark: './previews/examples/minimap-example.dark.png',
-      image_width: 821,
+        'Drag nodes from an external palette into the canvas. Data binding, events and Angular implementation.',
+      image: './previews/examples/add-node-from-palette.light.png',
+      image_dark: './previews/examples/add-node-from-palette.dark.png',
+      image_width: 781,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2025-07-23 13:28:05'),
+      date: new Date('2025-02-09 12:37:27'),
     },
     {
-      link: 'zoom',
-      text: 'Zoom',
+      link: 'help-in-positioning',
+      text: 'Help in Positioning (Legacy)',
+      pageTitle: 'Angular Diagram Example – Legacy Node Alignment Helpers (Deprecated)',
       description:
-        'Zoom your canvas via mouse wheel, double click, buttons, and pinch-to-zoom (trackpad/touchscreen) with smooth limits and responsive UX.',
-      image: './previews/examples/zoom.light.png',
-      image_dark: './previews/examples/zoom.dark.png',
+        'Legacy node alignment helper example kept for reference. For new projects, use Magnetic Lines and Magnetic Rects instead.',
+      image: './previews/examples/help-in-positioning.light.png',
+      image_dark: './previews/examples/help-in-positioning.dark.png',
       image_width: 821,
       image_height: 600,
       image_type: 'image/png',
-      date: new Date('2026-01-25 00:00:00'),
-    },
-    {
-      link: 'background',
-      text: 'Background',
-      description:
-        'Add SVG background patterns to the flow diagrams in Angular, using built-in rect and circle presets or a fully custom pattern for complex, branded backgrounds.',
-      image: './previews/examples/background-example.light.png',
-      image_dark: './previews/examples/background-example.dark.png',
-      image_width: 821,
-      image_height: 600,
-      image_type: 'image/png',
-      date: new Date('2025-11-29 14:49:44'),
+      date: new Date('2025-02-09 12:37:27'),
+      badge: {
+        text: 'Deprecated',
+        type: 'danger',
+      },
     },
   ]);
 }
 
-function pluginsGroup() {
-  return defineNavigationGroup('Plugins', [
+function layoutEnginesGroup() {
+  return defineNavigationGroup('Layout Engines', [
     {
       link: 'dagre-layout',
       text: 'Dagre Layout',
@@ -911,6 +932,11 @@ function pluginsGroup() {
         type: 'success',
       },
     },
+  ]);
+}
+
+function reflowGroup() {
+  return defineNavigationGroup('Reflow', [
     {
       link: 'reflow-on-resize',
       text: 'Reflow on Resize',
@@ -928,39 +954,8 @@ function pluginsGroup() {
   ]);
 }
 
-function advancedGroup() {
-  return defineNavigationGroup('Advanced', [
-    {
-      link: 'stress-test',
-      text: 'Large Scene Performance',
-      pageTitle:
-        'Angular Diagram Performance Example – Large Scene Performance with Cache and Virtualization',
-      image: './previews/examples/stress-test.light.png',
-      image_dark: './previews/examples/stress-test.dark.png',
-      description:
-        'Measure large scene performance with 200 to 5000 nodes, optional cache, progressive virtualization, and toggleable connections in Angular Foblex Flow.',
-      image_width: 2140,
-      image_height: 1200,
-      image_type: 'image/png',
-      date: new Date('2026-03-09 12:00:00'),
-    },
-    {
-      link: 'stress-test-with-connections',
-      text: 'Connection Redraw Performance',
-      pageTitle: 'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
-      image: './previews/examples/stress-test-with-connections.light.png',
-      image_dark: './previews/examples/stress-test-with-connections.dark.png',
-      description:
-        'Measure dense fan-out connection redraws with switchable behaviors, path types, live updates, and custom markers in an Angular Foblex Flow example.',
-      image_width: 2140,
-      image_height: 1200,
-      image_type: 'image/png',
-      date: new Date('2026-03-09 12:00:00'),
-      badge: {
-        text: 'Updated',
-        type: 'info',
-      },
-    },
+function editorStateGroup() {
+  return defineNavigationGroup('Editor State', [
     {
       link: 'copy-paste',
       text: 'Cut/Copy/Paste',
@@ -997,6 +992,11 @@ function advancedGroup() {
       image_type: 'image/png',
       date: new Date('2025-08-23 17:23:57'),
     },
+  ]);
+}
+
+function eventsGroup() {
+  return defineNavigationGroup('Events', [
     {
       link: 'drag-start-end-events',
       text: 'Drag Start/End Events',
@@ -1025,7 +1025,43 @@ function advancedGroup() {
   ]);
 }
 
-function proExamplesGroup() {
+function performanceGroup() {
+  return defineNavigationGroup('Performance', [
+    {
+      link: 'stress-test',
+      text: 'Large Scene Performance',
+      pageTitle:
+        'Angular Diagram Performance Example – Large Scene Performance with Cache and Virtualization',
+      image: './previews/examples/stress-test.light.png',
+      image_dark: './previews/examples/stress-test.dark.png',
+      description:
+        'Measure large scene performance with 200 to 5000 nodes, optional cache, progressive virtualization, and toggleable connections in Angular Foblex Flow.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+    },
+    {
+      link: 'stress-test-with-connections',
+      text: 'Connection Redraw Performance',
+      pageTitle: 'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
+      image: './previews/examples/stress-test-with-connections.light.png',
+      image_dark: './previews/examples/stress-test-with-connections.dark.png',
+      description:
+        'Measure dense fan-out connection redraws with switchable behaviors, path types, live updates, and custom markers in an Angular Foblex Flow example.',
+      image_width: 2140,
+      image_height: 1200,
+      image_type: 'image/png',
+      date: new Date('2026-03-09 12:00:00'),
+      badge: {
+        text: 'Updated',
+        type: 'info',
+      },
+    },
+  ]);
+}
+
+function referenceAppsGroup() {
   return defineNavigationGroup('Reference Apps', [
     {
       text: 'AI Low-Code Platform',
