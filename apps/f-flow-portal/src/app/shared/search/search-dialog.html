@@ -1,5 +1,5 @@
 @if (isOpen()) {
-<div class="backdrop" (click)="onBackdropClick($event)">
+<div class="backdrop" tabindex="-1" (click)="onBackdropClick($event)" (keydown.escape)="close()">
   <div class="dialog" role="dialog" aria-modal="true" aria-label="Search">
     <div class="search-row">
       <span class="search-icon material-symbols-outlined">search</span>
@@ -35,8 +35,11 @@
         class="result"
         [class.highlighted]="highlight() === i"
         [attr.aria-selected]="highlight() === i"
+        tabindex="0"
         (mouseenter)="highlight.set(i)"
         (click)="go(result)"
+        (keydown.enter)="go(result)"
+        (keydown.space)="$event.preventDefault(); go(result)"
       >
         <div class="result-meta">
           <span class="badge">{{ sectionLabel(result.document.section) }}</span>
