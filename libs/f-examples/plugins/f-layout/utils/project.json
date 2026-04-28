@@ -4,11 +4,7 @@
   "root": "libs/f-examples/plugins/utils",
   "projectType": "library",
   "sourceRoot": "libs/f-examples/plugins/utils",
-  "tags": [
-    "scope:examples",
-    "type:shared",
-    "category:plugins"
-  ],
+  "tags": ["scope:examples", "type:shared", "category:plugins"],
   "targets": {
     "lint": {
       "executor": "nx:run-commands",

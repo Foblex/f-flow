@@ -20,7 +20,7 @@ import {
   provideFLayout,
 } from '@foblex/flow';
 import { PointExtensions } from '@foblex/2d';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 import { map, Observable, take } from 'rxjs';
 import {
   EElkLayoutAlgorithm,
@@ -51,7 +51,7 @@ import { fromPromise } from 'rxjs/internal/observable/innerFrom';
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, FZoomDirective, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FZoomDirective, FToolbarComponent, FSelectComponent],
   providers: [provideFLayout(ElkLayoutEngine)],
 })
 export class Example implements OnInit {

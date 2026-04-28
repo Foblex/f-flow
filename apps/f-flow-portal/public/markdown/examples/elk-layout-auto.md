@@ -35,13 +35,13 @@ That is why this example does not pass node sizes into `generateGraph(...)`. Rea
 ## Example
 
 ::: ng-component <elk-layout-auto></elk-layout-auto> [height]="600"
-[example.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/elk-layout-auto/example.html
-[example.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/elk-layout-auto/example.ts
-[example.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/elk-layout-auto/example.scss
-[apply-layout.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/apply-layout.ts
-[generate-graph.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/generate-graph.ts
-[layout-connection-sides.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/layout-connection-sides.ts
-[layout-controls.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/layout-controls.ts
+[example.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/elk-layout-auto/example.html
+[example.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/elk-layout-auto/example.ts
+[example.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/elk-layout-auto/example.scss
+[apply-layout.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/apply-layout.ts
+[generate-graph.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/generate-graph.ts
+[layout-connection-sides.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/layout-connection-sides.ts
+[layout-controls.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/layout-controls.ts
 :::
 
 ## Install

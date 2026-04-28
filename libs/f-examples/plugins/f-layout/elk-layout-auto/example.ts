@@ -17,17 +17,18 @@ import {
   FCanvasComponent,
   FFlowComponent,
   FFlowModule,
+  FZoomDirective,
   IFLayoutWritebackPayload,
   provideFLayout,
 } from '@foblex/flow';
-import { DagreLayoutEngine, EDagreLayoutAlgorithm } from '@foblex/flow-dagre-layout';
-import { ExampleSelect, ExampleToolbar } from '@foblex/portal-ui';
+import { EElkLayoutAlgorithm, ElkLayoutEngine } from '@foblex/flow-elk-layout';
+import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 import { applyLayout } from '../utils/apply-layout';
 import { IConnection, IGraph, INode, generateGraph } from '../utils/generate-graph';
-import { getDirectionalLayoutConnectionSides } from '../utils/layout-connection-sides';
+import { getElkLayoutConnectionSides } from '../utils/layout-connection-sides';
 import {
-  DAGRE_LAYOUT_ALGORITHM_OPTIONS,
   ELayoutSpacingPreset,
+  ELK_LAYOUT_ALGORITHM_OPTIONS,
   LAYOUT_DIRECTION_OPTIONS,
   LAYOUT_SPACING_OPTIONS,
   LAYOUT_SPACING_PRESETS,
@@ -35,14 +36,14 @@ import {
 } from '../utils/layout-controls';
 
 @Component({
-  selector: 'dagre-layout-auto',
+  selector: 'elk-layout-auto',
   styleUrls: ['./example.scss'],
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FFlowModule, ExampleToolbar, ExampleSelect],
+  imports: [FFlowModule, FZoomDirective, FToolbarComponent, FSelectComponent],
   providers: [
-    provideFLayout(DagreLayoutEngine, {
+    provideFLayout(ElkLayoutEngine, {
       mode: EFLayoutMode.AUTO,
       options: {
         nodeGap: LAYOUT_SPACING_PRESETS[ELayoutSpacingPreset.SPACIOUS].nodeGap,
@@ -52,7 +53,7 @@ import {
   ],
 })
 export class Example implements OnInit {
-  private readonly _layout = inject(DagreLayoutEngine);
+  private readonly _layout = inject(ElkLayoutEngine);
   private readonly _injector = inject(Injector);
 
   private readonly _flow = viewChild(FFlowComponent);
@@ -61,11 +62,11 @@ export class Example implements OnInit {
   private readonly _nodeCount = signal(10);
 
   protected readonly directions = LAYOUT_DIRECTION_OPTIONS;
-  protected readonly algorithms = DAGRE_LAYOUT_ALGORITHM_OPTIONS;
+  protected readonly algorithms = ELK_LAYOUT_ALGORITHM_OPTIONS;
   protected readonly spacings = LAYOUT_SPACING_OPTIONS;
 
   // The template still renders application-owned graph state.
-  // Auto mode does not replace your state model, it only updates positions for it.
+  // Auto mode does not own your graph, it only recalculates positions for it.
   protected readonly nodes = signal<INode[]>([]);
   protected readonly connections = signal<IConnection[]>([]);
 
@@ -74,7 +75,7 @@ export class Example implements OnInit {
   protected readonly direction = signal<EFLayoutDirection>(
     this._layout.interactiveOptions().direction,
   );
-  protected readonly algorithm = signal<EDagreLayoutAlgorithm>(
+  protected readonly algorithm = signal<EElkLayoutAlgorithm>(
     this._layout.interactiveOptions().algorithm,
   );
   protected readonly spacing = signal<ELayoutSpacingPreset>(
@@ -84,7 +85,7 @@ export class Example implements OnInit {
     ),
   );
   protected readonly connectionSides = computed(() =>
-    getDirectionalLayoutConnectionSides(this.direction()),
+    getElkLayoutConnectionSides(this.direction(), this.algorithm()),
   );
 
   public ngOnInit(): void {
@@ -154,7 +155,7 @@ export class Example implements OnInit {
 
   private _rebuildGraph(): void {
     // Toolbar options still come from the component, but the layout itself is delegated to auto mode.
-    // We update engine options, render the fresh graph, and let Flow trigger Dagre afterwards.
+    // We update engine options, render the fresh graph, and let Flow trigger ELK.js afterwards.
     this._layout.setInteractiveOptions(this._calculateLayoutOptions());
     this._showGraph(this._createGraph());
   }
@@ -174,7 +175,7 @@ export class Example implements OnInit {
     // Resetting Flow allows `fFullRendered` to fire again for the freshly rendered graph.
     this._flow()?.reset();
 
-    // After this render completes, auto mode measures nodes, runs Dagre, and updates positions via `writeback`.
+    // After this render completes, auto mode measures nodes, runs ELK.js, and updates positions via `writeback`.
     this.nodes.set(graph.nodes);
     this.connections.set(graph.connections);
   }

@@ -22,13 +22,13 @@ The important split is:
 ## Example
 
 ::: ng-component <dagre-layout></dagre-layout> [height]="600"
-[example.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/dagre-layout/example.html
-[example.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/dagre-layout/example.ts
-[example.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/dagre-layout/example.scss
-[apply-layout.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/apply-layout.ts
-[generate-graph.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/generate-graph.ts
-[layout-connection-sides.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/layout-connection-sides.ts
-[layout-controls.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/utils/layout-controls.ts
+[example.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/dagre-layout/example.html
+[example.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/dagre-layout/example.ts
+[example.scss] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/dagre-layout/example.scss
+[apply-layout.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/apply-layout.ts
+[generate-graph.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/generate-graph.ts
+[layout-connection-sides.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/layout-connection-sides.ts
+[layout-controls.ts] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/plugins/f-layout/utils/layout-controls.ts
 :::
 
 ## Install

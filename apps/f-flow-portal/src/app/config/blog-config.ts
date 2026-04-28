@@ -27,7 +27,7 @@ export const BLOG_CONFIGURATION: IDocumentationConfiguration = {
     defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
     defineLazyComponent(
       'dagre-layout-auto',
-      () => import('@foblex/examples/plugins/dagre-layout-auto/example'),
+      () => import('@foblex/examples/plugins/f-layout/dagre-layout-auto/example'),
     ),
     defineLazyComponent(
       'ai-low-code-platform',

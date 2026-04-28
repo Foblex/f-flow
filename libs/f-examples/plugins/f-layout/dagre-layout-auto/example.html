@@ -29,9 +29,9 @@
     }
   </f-canvas>
 </f-flow>
-<example-toolbar>
-  <example-select label="Direction" [(value)]="direction" [options]="directions" />
-  <example-select label="Algorithm" [(value)]="algorithm" [options]="algorithms" />
-  <example-select label="Spacing" [(value)]="spacing" [options]="spacings" />
+<f-toolbar>
+  <f-select label="Direction" [(value)]="direction" [options]="directions" />
+  <f-select label="Algorithm" [(value)]="algorithm" [options]="algorithms" />
+  <f-select label="Spacing" [(value)]="spacing" [options]="spacings" />
   <button class="f-button primary" (click)="addNode()">Add Node</button>
-</example-toolbar>
+</f-toolbar>
