@@ -3,16 +3,13 @@ import { FCanvasComponent, FFlowModule } from '@foblex/flow';
 
 @Component({
   selector: 'help-in-positioning',
-  styleUrls: [ './example.scss' ],
+  styleUrls: ['./example.scss'],
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FFlowModule,
-  ]
+  imports: [FFlowModule],
 })
 export class Example {
-
   @ViewChild(FCanvasComponent, { static: true })
   public fCanvas!: FCanvasComponent;
 
