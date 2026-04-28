@@ -14,11 +14,21 @@
   }
 }
 
-// Each layer container is absolutely positioned so its [style.z-index]
-// (set by FCanvasComponent based on `fLayers` / `withFCanvas({ layers })`)
-// participates in stacking and creates a context for its descendants.
+// Each layer container is its own stacking context (`isolation: isolate`)
+// so the per-element z-indices set in `f-flow.component.scss` on `.f-node`,
+// `.f-group`, and `.f-connection-content` stay scoped to their layer
+// instead of competing across layers. The actual stacking order between
+// the three layers is controlled by their DOM order in the template
+// (driven by `[fLayers]` / `withFCanvas({ layers })`), not by z-index.
 .f-groups-container,
 .f-connections-container,
 .f-nodes-container {
+  isolation: isolate;
+}
+
+// Connections-container stays absolutely positioned to preserve the
+// containing block its descendant SVGs rely on (matches every release
+// before v18.6).
+.f-connections-container {
   position: absolute;
 }

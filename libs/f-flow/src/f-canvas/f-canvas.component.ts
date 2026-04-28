@@ -93,6 +93,12 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    */
   public readonly fLayers = input<EFCanvasLayer[] | undefined>(undefined);
 
+  /**
+   * Final layer order rendered in the template. The three sibling
+   * containers are emitted in this order, which (combined with
+   * `isolation: isolate` on each of them) is what visually stacks
+   * groups, connections, and nodes — no per-container z-index involved.
+   */
   protected readonly resolvedLayers = computed<EFCanvasLayer[]>(() => {
     const fromInput = this.fLayers();
     if (fromInput && fromInput.length > 0) {
@@ -104,16 +110,6 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
 
     return [...F_DEFAULT_LAYER_ORDER];
   });
-
-  protected readonly groupsZIndex = computed(() => this._zIndexFor(EFCanvasLayer.GROUPS));
-  protected readonly connectionsZIndex = computed(() => this._zIndexFor(EFCanvasLayer.CONNECTIONS));
-  protected readonly nodesZIndex = computed(() => this._zIndexFor(EFCanvasLayer.NODES));
-
-  private _zIndexFor(layer: EFCanvasLayer): number {
-    // +1 so every layer has a non-zero z-index and creates a real
-    // stacking context for its descendants.
-    return this.resolvedLayers().indexOf(layer) + 1;
-  }
 
   public override fGroupsContainer =
     viewChild.required<ElementRef<HTMLElement>>('fGroupsContainer');

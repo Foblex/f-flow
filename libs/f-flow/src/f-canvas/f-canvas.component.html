@@ -1,14 +1,23 @@
 <ng-container>
-  <div #fGroupsContainer class="f-groups-container" [style.z-index]="groupsZIndex()">
-    <ng-content select="[fGroup], [fGroups]" />
-  </div>
-  <div #fConnectionsContainer class="f-connections-container" [style.z-index]="connectionsZIndex()">
-    <ng-content select="f-snap-connection" />
-    <ng-content select="f-connection, [fConnections]" />
-    <ng-content select="f-connection-for-create" />
-  </div>
-
-  <div #fNodesContainer class="f-nodes-container" [style.z-index]="nodesZIndex()">
-    <ng-content select="[fNode], [fNodes]" />
-  </div>
+  @for (layer of resolvedLayers(); track layer) {
+    @switch (layer) {
+      @case ('groups') {
+        <div #fGroupsContainer class="f-groups-container">
+          <ng-content select="[fGroup], [fGroups]" />
+        </div>
+      }
+      @case ('connections') {
+        <div #fConnectionsContainer class="f-connections-container">
+          <ng-content select="f-snap-connection" />
+          <ng-content select="f-connection, [fConnections]" />
+          <ng-content select="f-connection-for-create" />
+        </div>
+      }
+      @case ('nodes') {
+        <div #fNodesContainer class="f-nodes-container">
+          <ng-content select="[fNode], [fNodes]" />
+        </div>
+      }
+    }
+  }
 </ng-container>
