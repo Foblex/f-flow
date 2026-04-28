@@ -74,6 +74,20 @@
         "command": "node scripts/generate-portal-artifacts.mjs"
       }
     },
+    "seo-parity": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-artifacts"],
+      "options": {
+        "command": "node scripts/check-portal-seo-parity.mjs"
+      }
+    },
+    "content-parity": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["generate-artifacts"],
+      "options": {
+        "command": "node scripts/check-portal-content-parity.mjs"
+      }
+    },
     "serve": {
       "continuous": true,
       "executor": "@angular-devkit/build-angular:dev-server",

@@ -6,6 +6,7 @@ import { IMetaData } from '../analytics';
 import { IPortalShellConfig } from './i-portal-shell-config';
 import { ISectionConfig } from './i-section-config';
 import { IPageDefinition } from './i-page-definition';
+import { derivePageMarkdownPath } from './derive-markdown-path';
 
 /**
  * Build the runtime IDocumentationConfiguration from a portal shell + section.
@@ -36,7 +37,20 @@ export function buildDocumentationConfiguration(
       mediaLinks: shell.header.mediaLinks,
     },
     meta: buildSectionMeta(shell, section),
+    markdownPaths: buildMarkdownPaths(section),
   };
+}
+
+function buildMarkdownPaths(section: ISectionConfig): Record<string, string> {
+  const paths: Record<string, string> = {};
+  for (const page of section.pages) {
+    const path = derivePageMarkdownPath(page);
+    if (path) {
+      paths[page.slug] = path;
+    }
+  }
+
+  return paths;
 }
 
 function buildNavigation(section: ISectionConfig): INavigationGroup[] {

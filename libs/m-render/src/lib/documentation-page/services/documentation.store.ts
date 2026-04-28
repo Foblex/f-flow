@@ -14,8 +14,7 @@ import { IDynamicComponentItem, IShowcaseItem } from '../../dynamic-components';
 import { calculateMarkdownUrl } from '../utils';
 
 @Injectable()
-export class DocumentationStore
-  implements IMediaLinksProvider, IHeaderConfigurationStore {
+export class DocumentationStore implements IMediaLinksProvider, IHeaderConfigurationStore {
   private readonly _configuration = inject(DOCUMENTATION_CONFIGURATION);
 
   public readonly tocData = signal<TableOfContentData>(new TableOfContentData([], []));
@@ -23,10 +22,15 @@ export class DocumentationStore
   public getMarkdownUrl(markdown: string): string {
     return calculateMarkdownUrl(
       markdown,
-      (this._configuration.navigation || []),
+      this._configuration.navigation || [],
       this._configuration.docsDir,
       this._configuration.notFoundMarkdown,
+      this._configuration.markdownPaths,
     );
+  }
+
+  public getMarkdownPath(slug: string): string | undefined {
+    return this._configuration.markdownPaths?.[slug];
   }
 
   public getLogo(): string {

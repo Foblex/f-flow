@@ -68,6 +68,8 @@
     "graph": "nx graph",
     "show:projects": "nx show projects",
     "seo:check": "node scripts/generate-portal-artifacts.mjs && node scripts/validate-seo-content.mjs",
+    "seo:parity": "node scripts/check-portal-seo-parity.mjs",
+    "content:parity": "node scripts/check-portal-content-parity.mjs",
     "check:redraw-cycles": "node scripts/check-redraw-connection-cycles.mjs",
     "prepare": "husky"
   },

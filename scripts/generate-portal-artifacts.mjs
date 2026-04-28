@@ -39,11 +39,16 @@ await main();
 
 async function main() {
   const jiti = await createJitiLoader();
+  const helpers = jiti(
+    path.join(REPO_ROOT, 'libs/m-render/src/lib/documentation-page/page-config/derive-markdown-path.ts'),
+  );
+  const derivePageMarkdownPath = helpers.derivePageMarkdownPath;
+
   const entries = [];
 
   for (const section of SECTION_REGISTRY) {
     const pages = await loadSectionPages(jiti, section.id);
-    const sectionEntries = await collectSectionEntries(section, pages);
+    const sectionEntries = await collectSectionEntries(section, pages, derivePageMarkdownPath);
     entries.push(...sectionEntries);
   }
 
@@ -96,7 +101,7 @@ async function loadSectionPages(jiti, sectionId) {
   return pages;
 }
 
-async function collectSectionEntries(section, pages) {
+async function collectSectionEntries(section, pages, derivePageMarkdownPath) {
   const entries = [];
 
   for (const page of pages) {
@@ -108,7 +113,9 @@ async function collectSectionEntries(section, pages) {
       continue;
     }
 
-    const markdownPath = path.join(MARKDOWN_ROOT, section.markdownDir, `${page.slug}.md`);
+    const relative = derivePageMarkdownPath(page);
+    if (!relative) continue;
+    const markdownPath = path.join(MARKDOWN_ROOT, section.markdownDir, relative);
     const metadata = await readMarkdownMetadata(markdownPath);
     if (!metadata) {
       throw new Error(
@@ -156,21 +163,7 @@ async function reportOrphanMarkdownFiles(entries) {
 
   for (const section of SECTION_REGISTRY) {
     const dir = path.join(MARKDOWN_ROOT, section.markdownDir);
-    let names;
-    try {
-      names = await readdir(dir);
-    } catch (error) {
-      if (error.code === 'ENOENT') continue;
-      throw error;
-    }
-
-    for (const name of names) {
-      if (!name.endsWith('.md')) continue;
-      const full = path.join(dir, name);
-      if (!knownPaths.has(full)) {
-        orphans.push(path.relative(REPO_ROOT, full));
-      }
-    }
+    await collectOrphansFromDir(dir, knownPaths, orphans);
   }
 
   // 404.md is a special non-routable page used by m-render
@@ -181,6 +174,25 @@ async function reportOrphanMarkdownFiles(entries) {
     );
     for (const orphan of filtered) {
       console.warn(`  - ${orphan}`);
+    }
+  }
+}
+
+async function collectOrphansFromDir(dir, knownPaths, orphans) {
+  let entries;
+  try {
+    entries = await readdir(dir, { withFileTypes: true });
+  } catch (error) {
+    if (error.code === 'ENOENT') return;
+    throw error;
+  }
+
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await collectOrphansFromDir(full, knownPaths, orphans);
+    } else if (entry.isFile() && entry.name.endsWith('.md') && !knownPaths.has(full)) {
+      orphans.push(path.relative(REPO_ROOT, full));
     }
   }
 }
