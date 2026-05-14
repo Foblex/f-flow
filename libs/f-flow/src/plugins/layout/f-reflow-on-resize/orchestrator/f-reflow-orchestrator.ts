@@ -180,8 +180,20 @@ export class FReflowOrchestrator {
     return result;
   }
 
+  // We only emit a shift plan for nodes whose model signal matches
+  // `_position`. A mismatch means the node is mid-flight — either its
+  // `positionChanges()` effect has not yet mirrored the latest signal
+  // into `_position`, or an internal write (fit-to-children) advanced
+  // `_position` ahead of the model. Planning against a half-applied
+  // state poisons every candidate read from DOM and propagates one
+  // measured rect onto many siblings (issue #305). Skipping the rect
+  // makes the orchestrator wait until the next coherent tick.
   private _safeGetRect(node: FNodeBase): IRect | null {
     if (!node.hostElement) {
+      return null;
+    }
+    const modelPos = node.position();
+    if (modelPos.x !== node._position.x || modelPos.y !== node._position.y) {
       return null;
     }
     try {

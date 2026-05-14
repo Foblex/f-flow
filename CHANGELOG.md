@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## Unreleased
 
+### Fixes
+
+- **reflow:** stop the reflow orchestrator from planning shifts against half-applied node state. When `withReflowOnResize()` is paired with a group that uses `fAutoSizeToFitChildren` and the graph is swapped in (e.g. by replacing the `@for` source), several children of the group used to collapse onto a single DOM-measured position because the orchestrator built its plan from candidates whose `position()` signal had not yet been mirrored into `_position`. Candidates whose model and mirror are out of sync are now skipped for that tick — the orchestrator resumes once the next coherent state arrives. Fixes [#305](https://github.com/Foblex/f-flow/issues/305).
+
 ## [18.6.0](https://github.com/Foblex/f-flow/compare/v18.5.0...v18.6.0) (2026-04-26)
 
 ### Highlights
