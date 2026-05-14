@@ -1,5 +1,5 @@
 import { IPolylineContent } from './i-polyline-content';
-import { IPoint, RectExtensions } from '@foblex/2d';
+import { IPoint } from '@foblex/2d';
 import { PolylineSampler } from './polyline-sampler';
 import { PolylineContentAlign } from './polyline-content-align';
 
@@ -23,7 +23,7 @@ export class PolylineContentPlace {
     const y = point.y + normal.y * lateral;
 
     // Edge guard
-    const projectedSize = this._sizeAlongDirection(content.hostElement, tangent);
+    const projectedSize = this._sizeAlongDirection(content, tangent);
     const halfExtent = projectedSize * 0.5;
 
     const distanceFromStart = progress * sampler.totalLength;
@@ -69,10 +69,15 @@ export class PolylineContentPlace {
     return { x, y };
   }
 
-  private _sizeAlongDirection(element: HTMLElement, dir: IPoint): number {
-    const rect = RectExtensions.fromElement(element);
+  // Reads the size via `content.measureSize()` — a ResizeObserver-backed
+  // cache. This loop runs interleaved with `style.transform` writes for
+  // every label, so a `getBoundingClientRect()` here would force a
+  // synchronous layout flush per label and stall drag at a few hundred
+  // labelled connections (issue #304).
+  private _sizeAlongDirection(content: IPolylineContent, dir: IPoint): number {
+    const size = content.measureSize();
 
-    return Math.abs(dir.x) * rect.width + Math.abs(dir.y) * rect.height;
+    return Math.abs(dir.x) * size.width + Math.abs(dir.y) * size.height;
   }
 
   private _normalize180(angleDeg: number): number {
