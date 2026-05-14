@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
+- **connection-content:** stop reading `getBoundingClientRect()` inside the label placement loop. Each `fConnectionContent` directive now installs a `ResizeObserver` on its host element and reports its size via the cached value, instead of forcing a synchronous layout flush per label on every connection redraw. At a few hundred labelled connections the old read/write loop became O(N²) browser work and froze drag; the hot path now performs zero DOM reads on label hosts. Fixes [#304](https://github.com/Foblex/f-flow/issues/304).
 - **reflow:** stop the reflow orchestrator from planning shifts against half-applied node state. When `withReflowOnResize()` is paired with a group that uses `fAutoSizeToFitChildren` and the graph is swapped in (e.g. by replacing the `@for` source), several children of the group used to collapse onto a single DOM-measured position because the orchestrator built its plan from candidates whose `position()` signal had not yet been mirrored into `_position`. Candidates whose model and mirror are out of sync are now skipped for that tick — the orchestrator resumes once the next coherent state arrives. Fixes [#305](https://github.com/Foblex/f-flow/issues/305).
 
 ## [18.6.0](https://github.com/Foblex/f-flow/compare/v18.5.0...v18.6.0) (2026-04-26)
