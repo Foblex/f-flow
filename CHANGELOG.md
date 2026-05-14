@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## Unreleased
 
+## [18.6.1](https://github.com/Foblex/f-flow/compare/v18.6.0...v18.6.1) (2026-05-14)
+
 ### Fixes
 
 - **connection-content:** stop reading `getBoundingClientRect()` inside the label placement loop. Each `fConnectionContent` directive now installs a `ResizeObserver` on its host element and reports its size via the cached value, instead of forcing a synchronous layout flush per label on every connection redraw. At a few hundred labelled connections the old read/write loop became O(N²) browser work and froze drag; the hot path now performs zero DOM reads on label hosts. Fixes [#304](https://github.com/Foblex/f-flow/issues/304).
