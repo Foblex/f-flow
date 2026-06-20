@@ -628,6 +628,8 @@ Selector: `f-canvas[fZoom]`
 | fZoomMaximum | number | 4 | Maximum zoom scale |
 | fZoomStep | number | 0.1 | Wheel zoom step |
 | fZoomDblClickStep | number | 0.5 | Double-click zoom step |
+| fScrollPan | boolean | false | Two-finger scroll pans canvas |
+| fPinchStep | number | 0 | Pinch zoom step; 0 uses fZoomStep |
 
 #### Methods
 

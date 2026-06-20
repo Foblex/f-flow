@@ -1,4 +1,9 @@
-import { isGestureWheelEvent, normalizeWheelStep, resolveWheelDelta } from './wheel-zoom.utils';
+import {
+  isGestureWheelEvent,
+  isTrackpadScrollEvent,
+  normalizeWheelStep,
+  resolveWheelDelta,
+} from './wheel-zoom.utils';
 
 describe('wheel zoom utils', () => {
   it('should resolve the dominant wheel axis delta', () => {
@@ -40,6 +45,25 @@ describe('wheel zoom utils', () => {
 
     expect(normalizeWheelStep(event, 6, 0.1)).toBeCloseTo(0.01, 6);
     expect(normalizeWheelStep(event, 1, 0.1)).toBeCloseTo(1 / 600, 6);
+  });
+
+  it('should detect trackpad two-finger scroll (pan intent)', () => {
+    expect(
+      isTrackpadScrollEvent(createWheelEvent({ deltaMode: WheelEvent.DOM_DELTA_PIXEL })),
+    ).toBeTrue();
+    expect(
+      isTrackpadScrollEvent(
+        createWheelEvent({ ctrlKey: true, deltaMode: WheelEvent.DOM_DELTA_PIXEL }),
+      ),
+    ).toBeFalse();
+    expect(
+      isTrackpadScrollEvent(
+        createWheelEvent({ metaKey: true, deltaMode: WheelEvent.DOM_DELTA_PIXEL }),
+      ),
+    ).toBeFalse();
+    expect(
+      isTrackpadScrollEvent(createWheelEvent({ deltaMode: WheelEvent.DOM_DELTA_LINE })),
+    ).toBeFalse();
   });
 
   it('should ignore tiny gesture-wheel noise and cap large pinch deltas', () => {
