@@ -170,10 +170,35 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
     this._connection.redraw();
     this._connection.hide();
     this._snapConnection?.hide();
+    this._forceCanvasLayerRepaint();
 
     this._mediator.execute(
       new UnmarkConnectableConnectorsRequest(this._targets.map((x) => x.connector)),
     );
+  }
+
+  /**
+   * Force the canvas compositing layer to repaint once after the preview is hidden.
+   *
+   * The preview line is painted by an `<svg overflow: visible>` inside a zero-size host
+   * (`.f-connections-container` is 0×0). Safari/WebKit does not invalidate the ink
+   * painted outside that box, so on `display: none` the preview line — often several
+   * accumulated frames of it — stays painted until an unrelated repaint happens (e.g.
+   * moving the pointer off the flow). `f-canvas` owns the compositing layer the ink is
+   * rasterized into, so toggling it out of and back into the render tree re-rasters the
+   * whole layer and clears the remnant. The toggle is synchronous, so the element's size
+   * is unchanged by the end of the frame and no `ResizeObserver` fires. Chrome
+   * invalidates the full region on hide and is unaffected. See issue #311.
+   */
+  private _forceCanvasLayerRepaint(): void {
+    const layer = this._connection.hostElement.closest('f-canvas') as HTMLElement | null;
+    if (!layer) {
+      return;
+    }
+    const previousDisplay = layer.style.display;
+    layer.style.display = 'none';
+    void layer.offsetHeight; // force a synchronous reflow so the hidden state is committed
+    layer.style.display = previousDisplay;
   }
 
   private _resolveRotationContext(
