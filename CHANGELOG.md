@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## Unreleased
 
+### Fixes
+
+- **f-draggable:** anchor a drag to the pointer-down position instead of the point where the drag threshold was crossed, and apply that threshold-crossing move within the same event. `prepareDragSequence()` previously ran against the `pointermove` that crossed the 3px threshold, so `onPointerDownPosition` was captured several px away from the grab point. On a fast flick (cursor moved far within one frame) this offset the dragged item from the cursor for the whole drag and delayed the first visible move to the next `pointermove` — a 20–50px lag/jump. The shared drag base now prepares against the original pointer-down event and applies the first move immediately, so node dragging, canvas panning, resize, rotate, and connection creation all track the cursor from the first frame with the grab point preserved. Fixes [#309](https://github.com/Foblex/f-flow/issues/309).
+
 ## [18.6.1](https://github.com/Foblex/f-flow/compare/v18.6.0...v18.6.1) (2026-05-14)
 
 ### Fixes

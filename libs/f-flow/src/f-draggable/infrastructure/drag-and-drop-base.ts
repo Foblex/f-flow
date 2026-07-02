@@ -45,6 +45,7 @@ export abstract class DragAndDropBase {
   private _moveHandler = this._checkDragSequenceToStart;
 
   private _pointerDownElement: HTMLElement | null = null;
+  private _pointerDownEvent: IPointerEvent | null = null;
 
   /**
    * Handles the mouse down event to initiate the drag sequence.
@@ -61,6 +62,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this._pointerDownElement = mouseEvent.targetElement;
+    this._pointerDownEvent = mouseEvent;
     const result = this.onPointerDown(mouseEvent);
     if (result) {
       this._dragStartTime = Date.now();
@@ -114,6 +116,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this._pointerDownElement = touchEvent.targetElement;
+    this._pointerDownEvent = touchEvent;
     const result = this.onPointerDown(touchEvent);
     if (result) {
       this._dragStartTime = Date.now();
@@ -208,12 +211,21 @@ export abstract class DragAndDropBase {
         }
 
         event.preventDefault();
-        this.prepareDragSequence(event);
+        // Prepare the drag relative to the original pointer-down position rather than
+        // the position where the threshold happened to be crossed. On a fast flick the
+        // threshold-crossing point is already several px away from the grab point, so
+        // anchoring the drag there offsets the item from the cursor for the whole drag
+        // (issue #309).
+        this.prepareDragSequence(this._pointerDownEvent ?? event);
         this.isDragStarted = true;
         this._moveHandler = this.onPointerMove;
         if (isTouchEvent(event.originalEvent)) {
           this._lastTouchEventTime = Date.now();
         }
+        // Apply the move that crossed the threshold within the same event, so the item
+        // tracks the pointer from this frame instead of staying at its initial position
+        // until the next pointermove (which caused the visible one-frame lag/jump).
+        this.onPointerMove(event);
       }
     }
   }
@@ -249,6 +261,7 @@ export abstract class DragAndDropBase {
   private _endDragSequence(): void {
     this.isDragStarted = false;
     this._pointerDownElement = null;
+    this._pointerDownEvent = null;
 
     this._moveHandler = this._checkDragSequenceToStart;
     this._mouseListeners();
