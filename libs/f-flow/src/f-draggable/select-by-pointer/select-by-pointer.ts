@@ -8,6 +8,7 @@ import { ISelectable } from '../../mixins';
 import { FNodeBase } from '../../f-node';
 import { IPointerEvent } from '../infrastructure';
 import { FConnectionBase } from '../../f-connection-v2';
+import { SelectionAreaHandler } from '../selection-area';
 
 /**
  * Implements the functionality for selecting elements in a graphical interface.
@@ -68,7 +69,26 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
   }
 
   private _isSelectionAllowed(event: IPointerEvent): boolean {
-    return this._store.flowHost.contains(event.targetElement) && this._dragSession.isEmpty();
+    return this._store.flowHost.contains(event.targetElement) && this._isSelectionPhase(event);
+  }
+
+  /**
+   * Selection updates on pointer-down are allowed when nothing has claimed the drag yet,
+   * or when only the selection rectangle has and the gesture is not additive (no
+   * `Shift`). The latter lets a click on the empty canvas clear the selection (and a
+   * marquee replace it) under schemes that bind the selection area to a plain drag,
+   * while `Shift` keeps the current selection so the marquee stays additive — which also
+   * leaves the default `Shift`-gated selection area's pointer-down semantics unchanged.
+   */
+  private _isSelectionPhase(event: IPointerEvent): boolean {
+    if (this._dragSession.isEmpty()) {
+      return true;
+    }
+
+    return (
+      !event.originalEvent.shiftKey &&
+      this._dragSession.draggableItems.every((item) => item instanceof SelectionAreaHandler)
+    );
   }
 
   private _resolveSelectable(target: HTMLElement): ISelectable | undefined {

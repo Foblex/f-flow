@@ -41,6 +41,7 @@
 - [f-minimap Component](https://flow.foblex.com/docs/f-minimap-component): Overview navigator
 - [f-background Component](https://flow.foblex.com/docs/f-background-component): Canvas background patterns
 - [f-selection-area](https://flow.foblex.com/docs/f-selection-area-component): Rectangle multi-select
+- [Control Scheme](https://flow.foblex.com/docs/control-scheme): Configurable gesture-to-action mapping with presets
 - [fExternalItem Directive](https://flow.foblex.com/docs/f-external-item-directive): Drag from palette to canvas
 - [f-auto-pan Component](https://flow.foblex.com/docs/f-auto-pan-component): Edge-based auto-scroll
 - [f-magnetic-lines](https://flow.foblex.com/docs/f-magnetic-lines-component): Alignment guide lines

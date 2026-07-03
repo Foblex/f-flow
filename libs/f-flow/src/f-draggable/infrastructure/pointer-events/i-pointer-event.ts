@@ -26,6 +26,8 @@ export abstract class IPointerEvent {
 
   public abstract isMouseLeftButton(): boolean;
 
+  public abstract isMouseMiddleButton(): boolean;
+
   public abstract isMouseRightButton(): boolean;
 
   public preventDefault(): void {

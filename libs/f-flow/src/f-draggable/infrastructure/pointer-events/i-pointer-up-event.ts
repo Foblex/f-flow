@@ -11,6 +11,12 @@ export class IPointerUpEvent extends IPointerEvent {
     return (evt.pointerType === 'mouse' && evt.button === 0) || evt.pointerType === 'touch';
   }
 
+  public isMouseMiddleButton(): boolean {
+    const evt = this.originalEvent as PointerEvent;
+
+    return evt.pointerType === 'mouse' && evt.button === 1;
+  }
+
   public isMouseRightButton(): boolean {
     const evt = this.originalEvent as PointerEvent;
 

@@ -9,6 +9,10 @@ export class ITouchDownEvent extends IPointerEvent {
     return true;
   }
 
+  public isMouseMiddleButton(): boolean {
+    return false;
+  }
+
   public isMouseRightButton(): boolean {
     return false;
   }

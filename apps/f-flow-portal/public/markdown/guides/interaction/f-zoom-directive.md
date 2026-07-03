@@ -30,11 +30,12 @@ When used in conjunction with [`fDraggable`](f-draggable-directive), `fZoom` aut
 ### Inputs
 
 - `fZoom: boolean;` Default: `false`. Enables/disables zoom functionality.
-- `fWheelTrigger: FEventTrigger;` Default: `Always`. Predicate for mouse wheel zoom.
+- `fWheelTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `zoom` (`Always`). Predicate for mouse wheel zoom; when set it also overrides the scheme's `scrollPan` routing.
 - `fDblClickTrigger: FEventTrigger;` Default: `Always`. Predicate for double-click zoom.
 - `fZoomMinimum: number;` Default: `0.1`. Minimum zoom scale.
 - `fZoomMaximum: number;` Default: `4`. Maximum zoom scale.
 - `fZoomStep: number;` Default: `0.1`. Zoom step for wheel interaction.
+- `fPinchStep: number;` Default: `0`. Separate zoom step for trackpad pinch; falls back to `fZoomStep` when `0`.
 - `fZoomDblClickStep: number;` Default: `0.5`. Zoom step for double-click interaction.
 
 ### Outputs

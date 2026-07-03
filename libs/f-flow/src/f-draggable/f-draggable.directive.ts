@@ -38,6 +38,11 @@ import {
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
 } from '../domain';
+import {
+  F_DEFAULT_CONTROL_SCHEME,
+  FControlSchemeController,
+  IFControlScheme,
+} from '../plugins/interaction/f-control-scheme';
 import { ScheduleAutoPanFrameRequest, StopAutoPanRequest } from './auto-pan';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
@@ -81,6 +86,17 @@ export class FDraggableDirective
   private readonly _result = inject(FDragHandlerResult);
   private readonly _mediator = inject(FMediator);
   private readonly _platform = inject(PlatformService);
+  private readonly _controlScheme = inject(FControlSchemeController, { optional: true });
+
+  // Raw values of the scheme-driven trigger inputs. Each public property below stays an
+  // always-callable `FEventTrigger`: the setter stores the bound value and the getter
+  // falls back to the active control scheme's gesture — see `withControlScheme(...)`.
+  private _reassignConnectionTrigger: FEventTrigger | undefined;
+  private _createConnectionTrigger: FEventTrigger | undefined;
+  private _nodeResizeTrigger: FEventTrigger | undefined;
+  private _nodeRotateTrigger: FEventTrigger | undefined;
+  private _nodeMoveTrigger: FEventTrigger | undefined;
+  private _canvasMoveTrigger: FEventTrigger | undefined;
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
@@ -91,10 +107,22 @@ export class FDraggableDirective
   };
 
   @Input()
-  public fReassignConnectionTrigger: FEventTrigger = defaultEventTrigger;
+  public set fReassignConnectionTrigger(value: FEventTrigger) {
+    this._reassignConnectionTrigger = value;
+  }
+
+  public get fReassignConnectionTrigger(): FEventTrigger {
+    return this._reassignConnectionTrigger ?? this._scheme.reassignConnection;
+  }
 
   @Input()
-  public fCreateConnectionTrigger: FEventTrigger = defaultEventTrigger;
+  public set fCreateConnectionTrigger(value: FEventTrigger) {
+    this._createConnectionTrigger = value;
+  }
+
+  public get fCreateConnectionTrigger(): FEventTrigger {
+    return this._createConnectionTrigger ?? this._scheme.createConnection;
+  }
 
   public fConnectionWaypointsTrigger = input<FEventTrigger>(defaultEventTrigger);
 
@@ -102,19 +130,48 @@ export class FDraggableDirective
   public fMoveControlPointTrigger: FEventTrigger = defaultEventTrigger;
 
   @Input()
-  public fNodeResizeTrigger: FEventTrigger = defaultEventTrigger;
+  public set fNodeResizeTrigger(value: FEventTrigger) {
+    this._nodeResizeTrigger = value;
+  }
+
+  public get fNodeResizeTrigger(): FEventTrigger {
+    return this._nodeResizeTrigger ?? this._scheme.nodeResize;
+  }
 
   @Input()
-  public fNodeRotateTrigger: FEventTrigger = defaultEventTrigger;
+  public set fNodeRotateTrigger(value: FEventTrigger) {
+    this._nodeRotateTrigger = value;
+  }
+
+  public get fNodeRotateTrigger(): FEventTrigger {
+    return this._nodeRotateTrigger ?? this._scheme.nodeRotate;
+  }
 
   @Input()
-  public fNodeMoveTrigger: FEventTrigger = defaultEventTrigger;
+  public set fNodeMoveTrigger(value: FEventTrigger) {
+    this._nodeMoveTrigger = value;
+  }
+
+  public get fNodeMoveTrigger(): FEventTrigger {
+    return this._nodeMoveTrigger ?? this._scheme.nodeMove;
+  }
 
   @Input()
-  public fCanvasMoveTrigger: FEventTrigger = defaultEventTrigger;
+  public set fCanvasMoveTrigger(value: FEventTrigger) {
+    this._canvasMoveTrigger = value;
+  }
+
+  public get fCanvasMoveTrigger(): FEventTrigger {
+    return this._canvasMoveTrigger ?? this._scheme.canvasMove;
+  }
 
   @Input()
   public fExternalItemTrigger: FEventTrigger = defaultEventTrigger;
+
+  /** Active control scheme (provider-driven, defaults to `F_DEFAULT_CONTROL_SCHEME`). */
+  private get _scheme(): IFControlScheme {
+    return this._controlScheme?.scheme() ?? F_DEFAULT_CONTROL_SCHEME;
+  }
 
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
@@ -218,12 +275,17 @@ export class FDraggableDirective
       new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
     );
 
-    const isMouseLeftOrTouch = event.isMouseLeftButton();
-    if (!isMouseLeftOrTouch) {
+    // The left button and touch drive every interaction. The middle button joins only
+    // when the active scheme's `canvasMove` gesture claims it (e.g. middle-drag pan in
+    // the scroll-pan / drag-select schemes); with the default scheme it stays inert.
+    const isDraggableButton =
+      event.isMouseLeftButton() ||
+      (event.isMouseMiddleButton() && this._scheme.canvasMove(event.originalEvent));
+    if (!isDraggableButton) {
       this.finalizeDragSequence();
     }
 
-    return isMouseLeftOrTouch;
+    return isDraggableButton;
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {

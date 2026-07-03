@@ -1,0 +1,27 @@
+<f-flow fDraggable (fFullRendered)="loaded()">
+  <f-selection-area />
+  <f-canvas fZoom>
+    <f-connection fOutputId="a-out" fInputId="b-in" fInputSide="calculate" fOutputSide="calculate">
+      <f-connection-marker-arrow />
+    </f-connection>
+    <f-connection fOutputId="a-out" fInputId="c-in" fInputSide="calculate" fOutputSide="calculate">
+      <f-connection-marker-arrow />
+    </f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 90 }" fNodeOutput fOutputId="a-out">
+      <div class="node-content">Start</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 240, y: 0 }" fNodeInput fInputId="b-in">
+      <div class="node-content">Step A</div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 240, y: 180 }" fNodeInput fInputId="c-in">
+      <div class="node-content">Step B</div>
+    </div>
+  </f-canvas>
+</f-flow>
+
+<f-toolbar>
+  <f-select [(value)]="scheme" [options]="schemes" label="Control scheme" />
+</f-toolbar>

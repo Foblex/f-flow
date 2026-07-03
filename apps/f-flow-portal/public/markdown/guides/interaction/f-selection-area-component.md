@@ -25,7 +25,7 @@ On pointer down, the plugin checks `fTrigger`. If allowed, it shows the selectio
 
 ### Inputs
 
-- `fTrigger: FEventTrigger;` Selection-start predicate. Default trigger returns `event.shiftKey`.
+- `fTrigger: FEventTrigger;` Selection-start predicate. Default: the active [control scheme](control-scheme)'s `selection` (`event.shiftKey`).
 
 ### Outputs
 

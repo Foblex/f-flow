@@ -536,14 +536,14 @@ Selector: `f-flow[fDraggable]`
 |-------|------|---------|-------------|
 | fDraggableDisabled | boolean | false | Disable all interactions |
 | fMultiSelectTrigger | FEventTrigger | Ctrl/Cmd key | Predicate for multi-select |
-| fReassignConnectionTrigger | FEventTrigger | always | Predicate for connection reassign |
-| fCreateConnectionTrigger | FEventTrigger | always | Predicate for connection create |
+| fReassignConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection reassign |
+| fCreateConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection create |
 | fConnectionWaypointsTrigger | FEventTrigger | always | Predicate for waypoint manipulation |
 | fMoveControlPointTrigger | FEventTrigger | always | Predicate for bezier control points |
-| fNodeResizeTrigger | FEventTrigger | always | Predicate for node resize |
-| fNodeRotateTrigger | FEventTrigger | always | Predicate for node rotation |
-| fNodeMoveTrigger | FEventTrigger | always | Predicate for node drag |
-| fCanvasMoveTrigger | FEventTrigger | always | Predicate for canvas pan |
+| fNodeResizeTrigger | FEventTrigger | active scheme (always) | Predicate for node resize |
+| fNodeRotateTrigger | FEventTrigger | active scheme (always) | Predicate for node rotation |
+| fNodeMoveTrigger | FEventTrigger | active scheme (always) | Predicate for node drag |
+| fCanvasMoveTrigger | FEventTrigger | active scheme (primary button) | Predicate for canvas pan |
 | fExternalItemTrigger | FEventTrigger | always | Predicate for external item drag |
 | fEmitOnNodeIntersect | boolean | false | Emit intersection events |
 | vCellSize | number | 1 | Vertical grid snap size |
@@ -622,11 +622,12 @@ Selector: `f-canvas[fZoom]`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fZoom | boolean | false | Enable zoom |
-| fWheelTrigger | FEventTrigger | always | Predicate for wheel zoom |
+| fWheelTrigger | FEventTrigger | active scheme (always) | Predicate for wheel zoom; overrides the scheme's scrollPan routing when set |
 | fDblClickTrigger | FEventTrigger | always | Predicate for double-click zoom |
 | fZoomMinimum | number | 0.1 | Minimum zoom scale |
 | fZoomMaximum | number | 4 | Maximum zoom scale |
 | fZoomStep | number | 0.1 | Wheel zoom step |
+| fPinchStep | number | 0 | Trackpad pinch zoom step; falls back to fZoomStep |
 | fZoomDblClickStep | number | 0.5 | Double-click zoom step |
 
 #### Methods
@@ -701,11 +702,23 @@ Selector: `f-selection-area`
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| fTrigger | FEventTrigger | Shift key | Predicate for activation |
+| fTrigger | FEventTrigger | active scheme (Shift key) | Predicate for activation |
 
 Selection results emit via `fSelectionChange` on `fDraggable`.
 
 CSS Class: `.f-selection-area`
+
+---
+
+### Control Scheme (withControlScheme)
+
+Provider feature that maps gestures to canvas actions for `fDraggable`, `fZoom`, and `f-selection-area` together. Installed via `provideFFlow(withControlScheme(scheme))`; without it the flow uses `F_DEFAULT_CONTROL_SCHEME`. Per-instance trigger inputs override the active scheme.
+
+`IFControlScheme` fields: `nodeMove`, `canvasMove` (also gates middle-mouse participation), `selection`, `createConnection`, `reassignConnection`, `nodeResize`, `nodeRotate` — all `FEventTrigger` predicates — plus `scrollPan: boolean` (plain wheel/two-finger scroll pans; Ctrl/Cmd+wheel or pinch zooms) and `zoom: FEventTrigger`.
+
+Presets: `F_DEFAULT_CONTROL_SCHEME` (drag pans, wheel zooms, Shift+drag selects), `F_SCROLL_PAN_CONTROL_SCHEME` (Miro-like: scroll pans, drag on empty canvas selects, middle-drag pans), `F_DRAG_SELECT_CONTROL_SCHEME` (draw.io-like: wheel zooms, drag on empty canvas selects, middle-drag pans).
+
+Runtime API: `FControlSchemeController` with `scheme: Signal<IFControlScheme>`, `getScheme()`, and `setScheme(config)` (merges partial gestures; a full preset replaces the scheme). Trigger helpers: `primaryButtonEventTrigger`, `middleButtonEventTrigger`, `isOnFlowBackground`.
 
 ---
 

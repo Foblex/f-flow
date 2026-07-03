@@ -350,6 +350,16 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Enable drag-to-select with a rectangular selection area. Supports multi-select UX for complex diagrams and editors.',
     },
   },
+  {
+    slug: 'control-scheme',
+    text: 'Control Scheme',
+    group: 'Interaction',
+    seo: {
+      title: 'Control Scheme - Configurable Gesture-to-Action Mapping',
+      description:
+        'Provide a control scheme through provideFFlow to map gestures to canvas actions: pan, zoom, selection and node interactions, with Miro-like and draw.io-like presets.',
+    },
+  },
 
   // -------- Helpers --------
   {

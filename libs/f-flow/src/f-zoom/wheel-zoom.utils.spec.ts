@@ -1,4 +1,9 @@
-import { isGestureWheelEvent, normalizeWheelStep, resolveWheelDelta } from './wheel-zoom.utils';
+import {
+  isGestureWheelEvent,
+  normalizeWheelStep,
+  resolveScrollPanDelta,
+  resolveWheelDelta,
+} from './wheel-zoom.utils';
 
 describe('wheel zoom utils', () => {
   it('should resolve the dominant wheel axis delta', () => {
@@ -61,6 +66,24 @@ describe('wheel zoom utils', () => {
         0.1,
       ),
     ).toBeCloseTo(0.05, 6);
+  });
+
+  it('should resolve both scroll-pan axes in pixels', () => {
+    expect(resolveScrollPanDelta(createWheelEvent({ deltaX: 40, deltaY: -25 }))).toEqual({
+      x: 40,
+      y: -25,
+    });
+  });
+
+  it('should normalize line and page delta modes to pixels for scroll-pan', () => {
+    expect(
+      resolveScrollPanDelta(createWheelEvent({ deltaY: 3, deltaMode: WheelEvent.DOM_DELTA_LINE }))
+        .y,
+    ).toBe(48);
+    expect(
+      resolveScrollPanDelta(createWheelEvent({ deltaY: 2, deltaMode: WheelEvent.DOM_DELTA_PAGE }))
+        .y,
+    ).toBe(800);
   });
 });
 

@@ -8,6 +8,7 @@ import { InputCanvasScale } from './input-canvas-scale';
 import { AddCanvasToStore } from './add-canvas-to-store';
 import { RemoveCanvasFromStore } from './remove-canvas-from-store';
 import { RedrawCanvasWithAnimation } from './redraw-canvas-with-animation';
+import { ScrollCanvas } from './scroll-canvas';
 
 /**
  * This file exports all the canvas-related executions that can be used in the FCanvas feature.
@@ -30,6 +31,8 @@ export const F_CANVAS_FEATURES = [
   ResetScale,
 
   ResetScaleAndCenter,
+
+  ScrollCanvas,
 
   UpdateScale,
 ];
