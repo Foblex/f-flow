@@ -5,6 +5,7 @@ import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-res
 import { FMediator } from '@foblex/mediator';
 import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../../f-connection-v2';
 import { FComponentsStore } from '../../../../f-storage';
+import { requireSourceConnector, requireTargetConnector } from '../../../../f-connectors';
 import { FSnapConnectionComponent } from '../../../../f-connection';
 import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../../domain';
 import { IReassignHandler, rectFromPoint } from './i-reassign-handler';
@@ -43,11 +44,13 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
 
     this._sourceRef = this._mediator.execute<IConnectorRectRef>(
       new GetConnectorRectReferenceRequest(
-        this._store.outputs.require(this._connection.fOutputId()),
+        requireSourceConnector(this._store, this._connection.sourceId()),
       ),
     );
     this._targetRef = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(this._store.inputs.require(this._connection.fInputId())),
+      new GetConnectorRectReferenceRequest(
+        requireTargetConnector(this._store, this._connection.targetId()),
+      ),
     );
 
     this._reassignHandler =

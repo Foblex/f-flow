@@ -25,6 +25,7 @@ import { EFConnectableSide } from '../../f-connection-v2';
 
 let uniqueId = 0;
 
+/** @deprecated Use fConnector with fConnectorType="target". */
 @Directive({
   standalone: false,
   selector: '[fNodeInput]',

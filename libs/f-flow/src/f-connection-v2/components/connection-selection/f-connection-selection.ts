@@ -26,8 +26,8 @@ export class FConnectionSelection extends FConnectionSelectionBase {
   public get connectionForSelectionId(): string {
     return createConnectionSelectionDomIdentifier(
       this._connection.fId(),
-      this._connection.fOutputId(),
-      this._connection.fInputId(),
+      this._connection.sourceId(),
+      this._connection.targetId(),
     );
   }
 

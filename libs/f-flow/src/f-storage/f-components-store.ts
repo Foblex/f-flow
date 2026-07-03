@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FFlowBase } from '../f-flow';
 import { FCanvasBase } from '../f-canvas';
 import { FBackgroundBase } from '../f-backgroud';
-import { FNodeInputBase, FNodeOutletBase, FNodeOutputBase } from '../f-connectors';
+import { FConnectorBase, FNodeInputBase, FNodeOutletBase, FNodeOutputBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
 import { ITransformModel } from '@foblex/2d';
@@ -79,6 +79,13 @@ export class FComponentsStore {
   public readonly outputs = new FConnectorRegistry<FNodeOutputBase>('Output');
   public readonly inputs = new FConnectorRegistry<FNodeInputBase>('Input');
   public readonly outlets = new FConnectorRegistry<FNodeOutletBase>('Outlet');
+
+  /**
+   * Unified registry for `[fConnector]` connectors. New code should resolve
+   * connectors here first and fall back to the legacy `outputs`/`inputs`/`outlets`
+   * registries for compatibility.
+   */
+  public readonly connectors = new FConnectorRegistry<FConnectorBase>('Connector');
 
   public readonly instances = new FSingleRegistryBase();
 

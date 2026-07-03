@@ -1,12 +1,7 @@
 import { IHandler } from '@foblex/mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
-import {
-  FConnectorBase,
-  FNodeOutletBase,
-  FNodeOutputBase,
-  isNodeOutlet,
-} from '../../../../f-connectors';
+import { FConnectorBase, FSourceConnectorBase, isOutletConnector } from '../../../../f-connectors';
 import { CreateConnectionFinalizeRequest } from './create-connection-finalize-request';
 import { FExecutionRegister, FMediator } from '@foblex/mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
@@ -44,32 +39,32 @@ export class CreateConnectionFinalize implements IHandler<CreateConnectionFinali
     return this._dragContext.draggableItems.some((x) => x instanceof CreateConnectionHandler);
   }
 
-  private _getTargetOutput(output: FConnectorBase | undefined): FConnectorBase {
-    if (!output) {
+  private _getTargetOutput(source: FConnectorBase | undefined): FConnectorBase {
+    if (!source) {
       throw new Error(
-        `Output with fOutputId ${this._result.getData().fOutputId} not found. Make sure there is no f-connection to a non-existent fOutput.`,
+        `Source connector with id ${this._result.getData().fOutputId} not found. Make sure there is no f-connection to a non-existent connector.`,
       );
     }
 
-    return isNodeOutlet(output.hostElement)
-      ? this._mediator.execute<FNodeOutputBase>(
-          new ResolveConnectableOutputForOutletRequest(output as FNodeOutletBase),
+    return isOutletConnector(source)
+      ? this._mediator.execute<FSourceConnectorBase>(
+          new ResolveConnectableOutputForOutletRequest(source),
         )
-      : output;
+      : source;
   }
 
-  private _getOutput(): FNodeOutputBase | undefined {
-    return this._store.outputs.get(this._result.getData().fOutputId);
-  }
+  private _resolveSource(): FConnectorBase | undefined {
+    const id = this._result.getData().fOutputId;
 
-  private _getOutlet(): FNodeOutletBase | undefined {
-    return this._store.outlets.get(this._result.getData().fOutputId);
+    return (
+      this._store.connectors.get(id) ?? this._store.outputs.get(id) ?? this._store.outlets.get(id)
+    );
   }
 
   private _emitEvent(event: IPointerEvent): void {
     this._store.fDraggable?.fCreateConnection.emit(
       new FCreateConnectionEvent(
-        this._getTargetOutput(this._getOutput() || this._getOutlet()).fId(),
+        this._getTargetOutput(this._resolveSource()).fId(),
         this._getInputUnderPointer(event)?.fId(),
         event.getPosition(),
       ),

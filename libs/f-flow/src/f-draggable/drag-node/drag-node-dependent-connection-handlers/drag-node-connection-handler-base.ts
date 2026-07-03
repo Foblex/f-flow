@@ -5,7 +5,11 @@ import {
   IConnectorRectRef,
   ResolveConnectionEndpointRotationContextRequest,
 } from '../../../domain';
-import { FConnectorBase } from '../../../f-connectors';
+import {
+  FConnectorBase,
+  requireSourceConnector,
+  requireTargetConnector,
+} from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { inject } from '@angular/core';
 import {
@@ -35,8 +39,8 @@ export class DragNodeConnectionHandlerBase {
   public initialize(connection: FConnectionBase): void {
     this.connection = connection;
 
-    this._source = this._store.outputs.require(this.connection.fOutputId());
-    this._target = this._store.inputs.require(this.connection.fInputId());
+    this._source = requireSourceConnector(this._store, this.connection.sourceId());
+    this._target = requireTargetConnector(this._store, this.connection.targetId());
 
     this._sourceRef = this._readRectRef(this._source);
     this._targetRef = this._readRectRef(this._target);

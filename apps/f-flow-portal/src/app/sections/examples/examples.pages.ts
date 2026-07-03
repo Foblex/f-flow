@@ -1006,6 +1006,10 @@ export const EXAMPLES_COMPONENTS = [
     () => import('@foblex/examples/connectors/connector-outlet/example'),
   ),
   defineLazyComponent(
+    'unified-connector',
+    () => import('@foblex/examples/connectors/unified-connector/example'),
+  ),
+  defineLazyComponent(
     'limiting-connections',
     () => import('@foblex/examples/connectors/limiting-connections/example'),
   ),

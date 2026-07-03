@@ -80,15 +80,18 @@
   }
 
   &.f-node-output-connected,
-  &.f-node-input-connected {
+  &.f-node-input-connected,
+  &.f-connector-connected {
     background: var(--ff-connector-connected-color);
     border-color: var(--ff-connector-connected-color);
   }
 
   &.f-node-output-not-connectable,
   &.f-node-input-not-connectable,
+  &.f-connector-not-connectable,
   &.f-node-input-disabled,
-  &.f-node-output-disabled {
+  &.f-node-output-disabled,
+  &.f-connector-disabled {
     background: var(--ff-connector-disabled-color);
     border-color: var(--ff-connector-disabled-border-color);
     box-shadow: none;
@@ -101,13 +104,17 @@
   } @else {
     @include _connector-scope($scoped) {
       .f-node-input,
-      .f-node-output {
+      .f-node-output,
+      .f-connector-source,
+      .f-connector-target,
+      .f-connector-source-target {
         &:not(.f-node) {
           @include _socket-frame();
         }
       }
 
-      .f-node-input {
+      .f-node-input,
+      .f-connector-target {
         &:not(.f-node) {
           border-radius: var(--ff-connector-input-radius);
         }
@@ -115,9 +122,14 @@
 
       .f-connections-dragging {
         .f-node-input,
-        .f-node-output {
+        .f-node-output,
+        .f-connector-source,
+        .f-connector-target,
+        .f-connector-source-target {
           &:not(.f-connector-connectable) {
-            &:not(.f-node-input-connected):not(.f-node-output-connected) {
+            &:not(.f-node-input-connected):not(.f-node-output-connected):not(
+                .f-connector-connected
+              ) {
               border-color: var(--ff-connector-disabled-border-color);
             }
           }
@@ -129,7 +141,8 @@
 
 @mixin connector-outlet($scoped: true) {
   @include _connector-scope($scoped) {
-    .f-node-outlet {
+    .f-node-outlet,
+    .f-connector-outlet {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -143,7 +156,8 @@
       color: var(--ff-outlet-color);
       pointer-events: all;
 
-      &.f-node-outlet-disabled {
+      &.f-node-outlet-disabled,
+      &.f-connector-disabled {
         background: var(--ff-outlet-disabled-background-color);
         border-color: var(--ff-outlet-disabled-border-color);
         color: var(--ff-outlet-disabled-color);

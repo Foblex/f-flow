@@ -11,7 +11,13 @@ import {
   DragNodeConnectionTargetHandler,
 } from '../../drag-node-dependent-connection-handlers';
 import { IParentConnectionHandlers } from '../../drag-node-handler';
-import { FConnectorBase } from '../../../../f-connectors';
+import {
+  FConnectorBase,
+  getAllSourceConnectors,
+  getAllTargetConnectors,
+  requireSourceConnector,
+  requireTargetConnector,
+} from '../../../../f-connectors';
 import { IRoundedRect } from '@foblex/2d';
 import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
@@ -41,8 +47,12 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
     parent: FNodeBase,
     handlerPool: DragNodeConnectionHandlerBase[],
   ): IParentConnectionHandlers {
-    const outputConnectors = this._store.outputs.getAll().filter((x) => x.fNodeId === parent.fId());
-    const inputConnectors = this._store.inputs.getAll().filter((x) => x.fNodeId === parent.fId());
+    const outputConnectors = getAllSourceConnectors(this._store).filter(
+      (x) => x.fNodeId === parent.fId(),
+    );
+    const inputConnectors = getAllTargetConnectors(this._store).filter(
+      (x) => x.fNodeId === parent.fId(),
+    );
 
     if (!outputConnectors.length && !inputConnectors.length) {
       return { source: [], target: [] };
@@ -55,8 +65,8 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
     const result: IParentConnectionHandlers = { source: [], target: [] };
 
     for (const connection of this._store.connections.getAll()) {
-      const isSource = outputIds.has(connection.fOutputId());
-      const isTarget = inputIds.has(connection.fInputId());
+      const isSource = outputIds.has(connection.sourceId());
+      const isTarget = inputIds.has(connection.targetId());
       if (!isSource && !isTarget) {
         continue;
       }
@@ -68,7 +78,7 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
       }
 
       if (isSource) {
-        const sourceConnector = this._store.outputs.require(connection.fOutputId());
+        const sourceConnector = requireSourceConnector(this._store, connection.sourceId());
         result.source.push({
           handler: connectionHandler,
           connector: sourceConnector,
@@ -77,7 +87,7 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
       }
 
       if (isTarget) {
-        const targetConnector = this._store.inputs.require(connection.fInputId());
+        const targetConnector = requireTargetConnector(this._store, connection.targetId());
         result.target.push({
           handler: connectionHandler,
           connector: targetConnector,

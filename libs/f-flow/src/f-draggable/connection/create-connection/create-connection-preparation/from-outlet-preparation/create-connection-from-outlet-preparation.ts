@@ -3,16 +3,22 @@ import { IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromOutletPreparationRequest } from './create-connection-from-outlet-preparation-request';
 import { FComponentsStore } from '../../../../../f-storage';
-import { FConnectorBase, FNodeOutletBase, FNodeOutputBase } from '../../../../../f-connectors';
+import {
+  FConnectorBase,
+  FNodeOutletBase,
+  FSourceConnectorBase,
+  getAllSourceConnectors,
+} from '../../../../../f-connectors';
 import { ResolveConnectableOutputForOutletRequest } from '../../resolve-connectable-output-for-outlet';
 import { CreateConnectionCreateDragHandlerRequest } from '../create-drag-handler';
 import { FNodeBase } from '../../../../../f-node';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionFromOutletPreparationRequest)
-export class CreateConnectionFromOutletPreparation
-  implements IHandler<CreateConnectionFromOutletPreparationRequest, void>
-{
+export class CreateConnectionFromOutletPreparation implements IHandler<
+  CreateConnectionFromOutletPreparationRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -41,16 +47,16 @@ export class CreateConnectionFromOutletPreparation
   }
 
   private _getOutputs(node: FNodeBase): FConnectorBase[] {
-    return this._store.outputs.getAll().filter((x) => node.isContains(x.hostElement));
+    return getAllSourceConnectors(this._store).filter((x) => node.isContains(x.hostElement));
   }
 
-  private _resolveOutput(outlet: FNodeOutletBase): FNodeOutputBase | undefined {
-    return this._mediator.execute<FNodeOutputBase | undefined>(
+  private _resolveOutput(outlet: FNodeOutletBase): FSourceConnectorBase | undefined {
+    return this._mediator.execute<FSourceConnectorBase | undefined>(
       new ResolveConnectableOutputForOutletRequest(outlet),
     );
   }
 
-  private _startDrag(position: IPoint, source: FNodeOutputBase | FNodeOutletBase): void {
+  private _startDrag(position: IPoint, source: FSourceConnectorBase): void {
     this._mediator.execute<void>(new CreateConnectionCreateDragHandlerRequest(position, source));
   }
 }

@@ -3,6 +3,7 @@ import {
   CreateConnectionPreparation,
   CreateConnectionCreateDragHandler,
   CreateConnectionFinalize,
+  CreateConnectionFromConnectorPreparation,
   CreateConnectionFromOutletPreparation,
   ResolveConnectableOutputForOutlet,
 } from './create-connection';
@@ -16,6 +17,8 @@ export const DRAG_CONNECTIONS_PROVIDERS = [
   CreateConnectionFinalize,
 
   CreateConnectionCreateDragHandler,
+
+  CreateConnectionFromConnectorPreparation,
 
   CreateConnectionFromOutletPreparation,
 

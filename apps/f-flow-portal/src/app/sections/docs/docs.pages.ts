@@ -207,9 +207,21 @@ export const DOCS_PAGES: IPageDefinition[] = [
 
   // -------- Connectors --------
   {
+    slug: 'f-connector-directive',
+    text: 'Connector',
+    group: 'Connectors',
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'FConnectorDirective - Unified Source, Target and Outlet Connectors',
+      description:
+        'Reference for `fConnector`: one directive for source, target, source-target, and outlet connector roles, with connection rules and state classes.',
+    },
+  },
+  {
     slug: 'f-node-output-directive',
     text: 'Output',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeOutputDirective - Source Connectors for Outgoing Connections',
       description:
@@ -220,6 +232,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     slug: 'f-node-input-directive',
     text: 'Input',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeInputDirective - Target Connectors for Incoming Connections',
       description:
@@ -230,6 +243,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     slug: 'f-node-outlet-directive',
     text: 'Outlet',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeOutletDirective - Shared Output Surface for Multiple Sources',
       description:
@@ -538,6 +552,10 @@ export const DOCS_COMPONENTS = [
   defineLazyComponent(
     'connector-outlet',
     () => import('@foblex/examples/connectors/connector-outlet/example'),
+  ),
+  defineLazyComponent(
+    'unified-connector',
+    () => import('@foblex/examples/connectors/unified-connector/example'),
   ),
   defineLazyComponent(
     'connection-markers',

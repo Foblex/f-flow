@@ -1,16 +1,17 @@
 import { IHandler } from '@foblex/mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
-import { FConnectorBase, FNodeOutletBase } from '../../../../f-connectors';
+import { FConnectorBase, getAllSourceConnectors } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { ResolveConnectableOutputForOutletRequest } from './resolve-connectable-output-for-outlet-request';
 import { FExecutionRegister } from '@foblex/mediator';
 
 @Injectable()
 @FExecutionRegister(ResolveConnectableOutputForOutletRequest)
-export class ResolveConnectableOutputForOutlet
-  implements IHandler<ResolveConnectableOutputForOutletRequest, FConnectorBase | undefined>
-{
+export class ResolveConnectableOutputForOutlet implements IHandler<
+  ResolveConnectableOutputForOutletRequest,
+  FConnectorBase | undefined
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ outlet }: ResolveConnectableOutputForOutletRequest): FConnectorBase | undefined {
@@ -27,15 +28,15 @@ export class ResolveConnectableOutputForOutlet
     return output;
   }
 
-  private _findOwnerNode(outlet: FNodeOutletBase): FNodeBase | undefined {
+  private _findOwnerNode(outlet: FConnectorBase): FNodeBase | undefined {
     const host = outlet.hostElement;
 
     return this._store.nodes.getAll().find((n) => n.isContains(host));
   }
 
   private _findFirstConnectableOutputInNode(node: FNodeBase): FConnectorBase | undefined {
-    return this._store.outputs
-      .getAll()
-      .find((x) => node.isContains(x.hostElement) && x.canBeConnected);
+    return getAllSourceConnectors(this._store).find(
+      (x) => node.isContains(x.hostElement) && x.canBeConnected,
+    );
   }
 }

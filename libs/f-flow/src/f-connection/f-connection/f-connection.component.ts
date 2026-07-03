@@ -44,10 +44,20 @@ let uniqueId = 0;
 export class FConnectionComponent extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
   public override fId = input<string>(`f-connection-${uniqueId++}`, { alias: 'fConnectionId' });
 
+  public override fSourceId = input<string, unknown>('', {
+    transform: (value) => stringAttribute(value) || '',
+  });
+
+  public override fTargetId = input<string, unknown>('', {
+    transform: (value) => stringAttribute(value) || '',
+  });
+
+  /** @deprecated Use `fSourceId`. */
   public override fOutputId = input<string, unknown>('', {
     transform: (value) => stringAttribute(value) || '',
   });
 
+  /** @deprecated Use `fTargetId`. */
   public override fInputId = input<string, unknown>('', {
     transform: (value) => stringAttribute(value) || '',
   });
@@ -73,12 +83,26 @@ export class FConnectionComponent extends FConnectionBase implements OnInit, OnC
     transform: booleanAttribute,
   });
 
+  public override fSourceSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fSourceSide', EFConnectionConnectableSide);
+    },
+  });
+
+  public override fTargetSide = input(EFConnectionConnectableSide.DEFAULT, {
+    transform: (x) => {
+      return castToEnum(x, 'fTargetSide', EFConnectionConnectableSide);
+    },
+  });
+
+  /** @deprecated Use `fTargetSide`. */
   public override fInputSide = input(EFConnectionConnectableSide.DEFAULT, {
     transform: (x) => {
       return castToEnum(x, 'fInputSide', EFConnectionConnectableSide);
     },
   });
 
+  /** @deprecated Use `fSourceSide`. */
   public override fOutputSide = input(EFConnectionConnectableSide.DEFAULT, {
     transform: (x) => {
       return castToEnum(x, 'fOutputSide', EFConnectionConnectableSide);

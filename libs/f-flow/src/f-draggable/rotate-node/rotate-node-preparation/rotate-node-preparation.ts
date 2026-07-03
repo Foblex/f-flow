@@ -13,6 +13,7 @@ import {
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
 import { FNodeBase, isRotateHandle } from '../../../f-node';
+import { requireSourceConnector, requireTargetConnector } from '../../../f-connectors';
 import { RotateNodeHandler } from '../rotate-node-handler';
 import { DragHandlerInjector } from '../../infrastructure';
 import {
@@ -99,7 +100,7 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(nodeOrGroup))
       .map((x) => {
-        const connector = this._store.inputs.require(x.fInputId());
+        const connector = requireTargetConnector(this._store, x.targetId());
         const connectorRef = this._mediator.execute<IConnectorRectRef>(
           new GetConnectorRectReferenceRequest(connector),
         );
@@ -117,7 +118,7 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
     return this._mediator
       .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(nodeOrGroup))
       .map((x) => {
-        const connector = this._store.outputs.require(x.fOutputId());
+        const connector = requireSourceConnector(this._store, x.sourceId());
         const connectorRef = this._mediator.execute<IConnectorRectRef>(
           new GetConnectorRectReferenceRequest(connector),
         );

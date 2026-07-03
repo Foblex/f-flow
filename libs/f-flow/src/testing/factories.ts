@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import { EFConnectableSide, FConnectionBase } from '../f-connection-v2';
-import { FConnectorBase, FConnectorKind } from '../f-connectors';
+import { FConnectorBase, FConnectorKind, FConnectorType } from '../f-connectors';
 import { FCanvasBase } from '../f-canvas';
 import { FNodeBase } from '../f-node';
 import { FFlowBase } from '../f-flow';
@@ -403,6 +403,7 @@ class FlowFactoryBuilder {
 class ConnectorFactoryBuilder {
   private _id = 'connector';
   private _kind: FConnectorKind = 'input';
+  private _connectorType?: FConnectorType;
   private _nodeId = 'node';
   private _nodeHost: HTMLElement | SVGElement = document.createElement('div');
   private _hostElement: HTMLElement | SVGElement = document.createElement('div');
@@ -417,6 +418,14 @@ class ConnectorFactoryBuilder {
 
   public kind(value: FConnectorKind): this {
     this._kind = value;
+
+    return this;
+  }
+
+  /** Builds a unified `[fConnector]`-style connector: sets kind to `connector`. */
+  public connectorType(value: FConnectorType): this {
+    this._kind = 'connector';
+    this._connectorType = value;
 
     return this;
   }
@@ -455,9 +464,11 @@ class ConnectorFactoryBuilder {
     let isConnected = false;
     const toConnector: FConnectorBase[] = [];
     const hostElement = this._hostElement;
+    const connectorType = this._connectorType;
 
     const connector = {
       kind: this._kind,
+      ...(connectorType ? { fConnectorType: () => connectorType } : {}),
       fId: readonlySignal(this._id),
       fNodeId: this._nodeId,
       fNodeHost: this._nodeHost,

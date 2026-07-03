@@ -3,6 +3,7 @@ import { AttachSourceConnectionDragHandlersToNodeRequest } from './attach-source
 import { FComponentsStore } from '../../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
+import { getAllSourceConnectors } from '../../../../f-connectors';
 import {
   DragNodeConnectionBothSidesHandler,
   DragNodeConnectionHandlerBase,
@@ -13,9 +14,10 @@ import { DragHandlerInjector } from '../../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(AttachSourceConnectionDragHandlersToNodeRequest)
-export class AttachSourceConnectionDragHandlersToNode
-  implements IExecution<AttachSourceConnectionDragHandlersToNodeRequest, void>
-{
+export class AttachSourceConnectionDragHandlersToNode implements IExecution<
+  AttachSourceConnectionDragHandlersToNodeRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragInjector = inject(DragHandlerInjector);
 
@@ -32,12 +34,11 @@ export class AttachSourceConnectionDragHandlersToNode
   public _getOutputConnections(nodeOrGroup: FNodeBase): FConnectionBase[] {
     const ids = new Set(this._getNodeOutputIds(nodeOrGroup));
 
-    return this._connections.filter((x) => ids.has(x.fOutputId()));
+    return this._connections.filter((x) => ids.has(x.sourceId()));
   }
 
   private _getNodeOutputIds(nodeOrGroup: FNodeBase): string[] {
-    return this._store.outputs
-      .getAll()
+    return getAllSourceConnectors(this._store)
       .filter((x) => nodeOrGroup.isContains(x.hostElement))
       .map((x) => x.fId());
   }
@@ -66,7 +67,7 @@ export class AttachSourceConnectionDragHandlersToNode
     connection: FConnectionBase,
   ): DragNodeConnectionHandlerBase {
     let result: DragNodeConnectionHandlerBase;
-    if (inputIds.includes(connection.fInputId())) {
+    if (inputIds.includes(connection.targetId())) {
       result = this._dragInjector.createInstance(DragNodeConnectionBothSidesHandler);
     } else {
       result = this._dragInjector.createInstance(DragNodeConnectionSourceHandler);

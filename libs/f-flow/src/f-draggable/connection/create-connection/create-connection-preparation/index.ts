@@ -1,5 +1,7 @@
 export * from './create-drag-handler';
 
+export * from './from-connector-preparation';
+
 export * from './from-outlet-preparation';
 
 export * from './from-output-preparation';

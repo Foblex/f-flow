@@ -25,9 +25,10 @@
 - [f-canvas Component](https://flow.foblex.com/docs/f-canvas-component): Viewport, pan/zoom, fitToScreen, centering
 - [fNode Directive](https://flow.foblex.com/docs/f-node-directive): Draggable nodes, position, size, rotation
 - [fGroup Directive](https://flow.foblex.com/docs/f-group-directive): Node grouping, hierarchy, auto-sizing
-- [fNodeOutput Directive](https://flow.foblex.com/docs/f-node-output-directive): Output connectors, connection rules
-- [fNodeInput Directive](https://flow.foblex.com/docs/f-node-input-directive): Input connectors, categories, multiplicity
-- [fNodeOutlet Directive](https://flow.foblex.com/docs/f-node-outlet-directive): Shared outlet connectors
+- [fConnector Directive](https://flow.foblex.com/docs/f-connector-directive): Unified connector (source/target/source-target/outlet), replaces fNodeOutput/fNodeInput/fNodeOutlet
+- [fNodeOutput Directive](https://flow.foblex.com/docs/f-node-output-directive): Output connectors, connection rules (deprecated — use fConnector)
+- [fNodeInput Directive](https://flow.foblex.com/docs/f-node-input-directive): Input connectors, categories, multiplicity (deprecated — use fConnector)
+- [fNodeOutlet Directive](https://flow.foblex.com/docs/f-node-outlet-directive): Shared outlet connectors (deprecated — use fConnector)
 - [f-connection Component](https://flow.foblex.com/docs/f-connection-component): Connection rendering, types, behavior
 - [f-connection-for-create](https://flow.foblex.com/docs/f-connection-for-create-component): Drag-to-connect preview
 - [f-snap-connection](https://flow.foblex.com/docs/f-snap-connection-component): Snap helper during connection drag

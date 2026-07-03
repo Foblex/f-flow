@@ -1,4 +1,5 @@
 import {
+  computed,
   contentChild,
   contentChildren,
   Directive,
@@ -49,9 +50,21 @@ export abstract class FConnectionBase
 
   public abstract override fId: Signal<string>;
 
+  /** @deprecated Use `fSourceId`. */
   public abstract fOutputId: Signal<string>;
 
+  /** @deprecated Use `fTargetId`. */
   public abstract fInputId: Signal<string>;
+
+  public readonly fSourceId: Signal<string> = signal('');
+
+  public readonly fTargetId: Signal<string> = signal('');
+
+  /** Resolved source connector id: `fSourceId` if set, otherwise the deprecated `fOutputId`. */
+  public readonly sourceId: Signal<string> = computed(() => this.fSourceId() || this.fOutputId());
+
+  /** Resolved target connector id: `fTargetId` if set, otherwise the deprecated `fInputId`. */
+  public readonly targetId: Signal<string> = computed(() => this.fTargetId() || this.fInputId());
 
   public abstract fRadius: number;
 
@@ -97,6 +110,7 @@ export abstract class FConnectionBase
 
   public readonly fWaypoints = contentChild(F_CONNECTION_WAYPOINTS);
 
+  /** @deprecated Use `fTargetSide`. */
   public readonly fInputSide: Signal<EFConnectionConnectableSide> = signal(
     EFConnectionConnectableSide.DEFAULT,
   );
@@ -105,8 +119,31 @@ export abstract class FConnectionBase
 
   private _sourceSide = EFConnectableSide.AUTO;
 
+  /** @deprecated Use `fSourceSide`. */
   public readonly fOutputSide: Signal<EFConnectionConnectableSide> = signal(
     EFConnectionConnectableSide.DEFAULT,
+  );
+
+  public readonly fSourceSide: Signal<EFConnectionConnectableSide> = signal(
+    EFConnectionConnectableSide.DEFAULT,
+  );
+
+  public readonly fTargetSide: Signal<EFConnectionConnectableSide> = signal(
+    EFConnectionConnectableSide.DEFAULT,
+  );
+
+  /** Resolved source side: `fSourceSide` if set, otherwise the deprecated `fOutputSide`. */
+  public readonly sourceSide: Signal<EFConnectionConnectableSide> = computed(() =>
+    this.fSourceSide() !== EFConnectionConnectableSide.DEFAULT
+      ? this.fSourceSide()
+      : this.fOutputSide(),
+  );
+
+  /** Resolved target side: `fTargetSide` if set, otherwise the deprecated `fInputSide`. */
+  public readonly targetSide: Signal<EFConnectionConnectableSide> = computed(() =>
+    this.fTargetSide() !== EFConnectionConnectableSide.DEFAULT
+      ? this.fTargetSide()
+      : this.fInputSide(),
   );
 
   private _targetSide = EFConnectableSide.AUTO;

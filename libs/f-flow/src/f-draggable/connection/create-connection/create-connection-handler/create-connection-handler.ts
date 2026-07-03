@@ -1,7 +1,7 @@
 import { FMediator } from '@foblex/mediator';
 import { IPoint, IRoundedRect, PointExtensions, RectExtensions, RoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FConnectorBase, FNodeOutletBase, FNodeOutputBase } from '../../../../f-connectors';
+import { FConnectorBase, FSourceConnectorBase } from '../../../../f-connectors';
 import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';
 import { ICreateConnectionEventData } from '../i-create-connection-event-data';
 import {
@@ -22,8 +22,6 @@ import {
   ResolveConnectionEndpointRotationContextRequest,
   UnmarkConnectableConnectorsRequest,
 } from '../../../../domain';
-
-type FSourceConnector = FNodeOutputBase | FNodeOutletBase;
 
 @Injectable()
 export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEventData> {
@@ -48,11 +46,11 @@ export class CreateConnectionHandler extends DragHandlerBase<ICreateConnectionEv
   }
 
   private _targets: IConnectorRectRef[] = [];
-  private _sourceRef!: IConnectorRectRef<FSourceConnector>;
+  private _sourceRef!: IConnectorRectRef<FSourceConnectorBase>;
   private _pointerDown = new RoundedRect();
 
-  public initialize(source: FSourceConnector, pointer: IPoint): void {
-    this._sourceRef = this._mediator.execute<IConnectorRectRef<FSourceConnector>>(
+  public initialize(source: FSourceConnectorBase, pointer: IPoint): void {
+    this._sourceRef = this._mediator.execute<IConnectorRectRef<FSourceConnectorBase>>(
       new GetConnectorRectReferenceRequest(source),
     );
     this._pointerDown = RoundedRect.fromRect(RectExtensions.initialize(pointer.x, pointer.y));

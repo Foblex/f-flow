@@ -1,0 +1,80 @@
+<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="onCreateConnection($event)">
+  <f-canvas>
+    <f-connection-for-create fBehavior="floating"></f-connection-for-create>
+
+    @for (connection of connections; track connection.to) {
+    <f-connection
+      [fReassignDisabled]="true"
+      [fSourceId]="connection.from"
+      [fTargetId]="connection.to"
+      fBehavior="floating"
+    >
+    </f-connection>
+    }
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 80 }">
+      <div
+        fConnector
+        fConnectorType="source"
+        fConnectorId="out-1"
+        [fConnectorMultiple]="false"
+        class="top-right"
+      ></div>
+      <div
+        fConnector
+        fConnectorType="source"
+        fConnectorId="out-2"
+        [fConnectorMultiple]="false"
+        class="right"
+      ></div>
+      <div
+        fConnector
+        fConnectorType="source"
+        fConnectorId="out-3"
+        [fConnectorMultiple]="false"
+        class="bottom-right"
+      ></div>
+      I'm node with outlet
+      <div fConnector fConnectorType="outlet" [fConnectionFromOutlet]="isConnectionFromOutlet">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+    </div>
+
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 0 }"
+      fConnector
+      fConnectorType="target"
+      fConnectorId="in-1"
+    >
+      I'm node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 100 }"
+      fConnector
+      fConnectorType="target"
+      fConnectorId="in-2"
+    >
+      I'm node
+    </div>
+    <div
+      fNode
+      fDragHandle
+      [fNodePosition]="{ x: 300, y: 200 }"
+      fConnector
+      fConnectorType="target"
+      fConnectorId="in-3"
+    >
+      I'm node
+    </div>
+  </f-canvas>
+</f-flow>
+<f-toolbar>
+  <button class="f-button primary" (click)="onDeleteConnections()">Delete Connections</button>
+  <f-checkbox [checked]="isConnectionFromOutlet" (change)="onConnectionFromOutletChange($event)"
+    >Draw connection from outlet
+  </f-checkbox>
+</f-toolbar>

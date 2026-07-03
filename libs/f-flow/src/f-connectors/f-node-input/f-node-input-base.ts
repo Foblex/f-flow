@@ -6,7 +6,7 @@ export const F_NODE_INPUT = new InjectionToken<FNodeInputBase>('F_NODE_INPUT');
 @Directive()
 export abstract class FNodeInputBase extends FConnectorBase {
   public override kind: FConnectorKind = 'input';
-  public abstract category: Signal<string | undefined>;
+  public abstract override category: Signal<string | undefined>;
 
   public abstract multiple: Signal<boolean>;
 

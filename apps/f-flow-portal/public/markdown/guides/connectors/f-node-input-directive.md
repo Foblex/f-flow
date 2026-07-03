@@ -3,6 +3,8 @@
 **Selector:** `[fNodeInput]`  
 **Class:** `FNodeInputDirective`
 
+> **Deprecated since v19.** Use the unified [`fConnector`](f-connector-directive) directive with `fConnectorType="target"` instead. `fNodeInput` keeps working, but new code should use `fConnector`.
+
 `FNodeInputDirective` marks an element as an **incoming connector** for a node. Inputs are the **targets** that connections can attach to during “drag to connect” and when rendering persisted connections.
 
 Inputs must live inside a node (`[fNode]`) which is rendered inside [`f-canvas`](f-canvas-component) and [`f-flow`](f-flow-component).
@@ -19,7 +21,7 @@ Use a dedicated element when your node has **multiple inputs** or when each port
     <div fNode [fNodePosition]="{ x: 320, y: 80 }">
       <div fDragHandle class="title">Node</div>
 
-      <div class="port" fNodeInput fInputId="in-1">
+      <div fNodeInput fInputId="in-1">
         Input
       </div>
     </div>

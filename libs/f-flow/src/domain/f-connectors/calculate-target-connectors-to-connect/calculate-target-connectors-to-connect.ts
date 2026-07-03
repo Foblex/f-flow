@@ -3,9 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import {
   FConnectorBase,
-  FNodeInputBase,
-  FNodeOutletBase,
-  FNodeOutputBase,
+  FSourceConnectorBase,
+  getAllTargetConnectors,
 } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
@@ -20,14 +19,15 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CalculateTargetConnectorsToConnectRequest)
-export class CalculateTargetConnectorsToConnect
-  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorRectRef[]>
-{
+export class CalculateTargetConnectorsToConnect implements IExecution<
+  CalculateTargetConnectorsToConnectRequest,
+  IConnectorRectRef[]
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _targets(): FNodeInputBase[] {
-    return this._store.inputs.getAll();
+  private get _targets(): FConnectorBase[] {
+    return getAllTargetConnectors(this._store);
   }
 
   public handle({
@@ -48,7 +48,7 @@ export class CalculateTargetConnectorsToConnect
     return refs;
   }
 
-  private _getConnectableTargets(source: FNodeOutputBase | FNodeOutletBase): FConnectorBase[] {
+  private _getConnectableTargets(source: FSourceConnectorBase): FConnectorBase[] {
     // 1) Connection limits (strict whitelist)
     if (source.hasConnectionLimits) {
       return this._targets.filter((x) => source.canConnectTo(x));

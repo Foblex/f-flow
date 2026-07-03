@@ -344,7 +344,53 @@ Selector: `[fGroup]`
 
 ---
 
+### fConnector (FConnectorDirective)
+
+Unified connector that replaces `fNodeOutput`, `fNodeInput`, and `fNodeOutlet`. One id per connector; behavior is controlled by `fConnectorType`.
+
+Selector: `[fConnector]`
+
+```ts
+type FConnectorType = 'source' | 'target' | 'source-target' | 'outlet';
+```
+
+- `source` — can start a connection and be used as `fSourceId`
+- `target` — can accept a connection and be used as `fTargetId`
+- `source-target` (default) — one id supports both behaviors
+- `outlet` — shared start surface; the emitted `FCreateConnectionEvent.sourceId` is the resolved real source connector id from the same node
+
+#### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| fConnectorId | InputSignal\<string\> | f-connector-{id} | Unique connector id |
+| fConnectorType | InputSignal\<FConnectorType\> | source-target | Connector behavior |
+| fConnectorDisabled | InputSignal\<boolean\> | false | Disable this connector |
+| fConnectorMultiple | InputSignal\<boolean\> | true | Allow multiple connections |
+| fConnectorCategory | InputSignal\<string \| undefined\> | undefined | Optional category for connection rules |
+| fConnectorConnectableSide | EFConnectableSide | AUTO | Preferred dock side |
+| fConnectorSelfConnectable | boolean | true | Allow same-node connection (source/source-target) |
+| fCanBeConnectedTo | InputSignal\<string[]\> | [] | Allow-list of target ids or categories (replaces fCanBeConnectedInputs) |
+| fConnectionFromOutlet | InputSignal\<boolean\> | false | Outlet only: draw the preview line from the outlet rect |
+
+#### Host Attributes
+
+`data-f-connector-id`, `data-f-connector-type`
+
+#### CSS Classes
+
+`.f-connector`, `.f-connector-source`, `.f-connector-target`, `.f-connector-source-target`, `.f-connector-outlet`, `.f-connector-disabled`, `.f-connector-connected`, `.f-connector-connectable`, `.f-connector-not-connectable`, `.f-connector-multiple`
+
+```html
+<div fConnector fConnectorId="a"></div>
+<f-connection fSourceId="a" fTargetId="b"></f-connection>
+```
+
+---
+
 ### fNodeOutput (FNodeOutputDirective)
+
+**Deprecated:** use `fConnector` with `fConnectorType="source"`.
 
 Marks an element as an output connector — the source endpoint for connections.
 
@@ -369,6 +415,8 @@ Selector: `[fNodeOutput]`
 
 ### fNodeInput (FNodeInputDirective)
 
+**Deprecated:** use `fConnector` with `fConnectorType="target"`.
+
 Marks an element as an input connector — the target endpoint for connections.
 
 Selector: `[fNodeInput]`
@@ -390,6 +438,8 @@ Selector: `[fNodeInput]`
 ---
 
 ### fNodeOutlet (FNodeOutletDirective)
+
+**Deprecated:** use `fConnector` with `fConnectorType="outlet"`.
 
 Single shared start-connection point for nodes with multiple outputs.
 
@@ -421,8 +471,14 @@ Selector: `f-connection`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fConnectionId | InputSignal\<string\> | f-connection-{id} | Unique connection id |
-| fOutputId | InputSignal\<string\> | required | Source output connector id |
-| fInputId | InputSignal\<string\> | required | Target input connector id |
+| fSourceId | InputSignal\<string\> | required | Source connector id |
+| fTargetId | InputSignal\<string\> | required | Target connector id |
+| fSourceSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override source dock side |
+| fTargetSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override target dock side |
+| fOutputId | InputSignal\<string\> | '' | Deprecated: use fSourceId |
+| fInputId | InputSignal\<string\> | '' | Deprecated: use fTargetId |
+| fOutputSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Deprecated: use fSourceSide |
+| fInputSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Deprecated: use fTargetSide |
 | fReassignDisabled | InputSignal\<boolean\> | false | Disable drag-to-reassign |
 | fSelectionDisabled | InputSignal\<boolean\> | false | Disable selection |
 | fBehavior | InputSignal\<EFConnectionBehavior\> | FIXED | Connection behavior (FIXED or FLOATING) |

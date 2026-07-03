@@ -5,6 +5,7 @@ import { DetectConnectionsUnderDragNodeRequest } from './detect-connections-unde
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeConnectionsIntersectionEvent } from '../../index';
 import { FNodeBase } from '../../../f-node';
+import { getAllSourceConnectors, getAllTargetConnectors } from '../../../f-connectors';
 import { GetNormalizedConnectorRectRequest } from '../../../domain';
 import { FConnectionBase } from '../../../f-connection-v2';
 
@@ -53,7 +54,8 @@ export class DetectConnectionsUnderDragNode implements IExecution<
   }
 
   private _collectConnectableConnectorIds(node: FNodeBase, kind: 'target' | 'source'): Set<string> {
-    const list = kind === 'source' ? this._store.outputs.getAll() : this._store.inputs.getAll();
+    const list =
+      kind === 'source' ? getAllSourceConnectors(this._store) : getAllTargetConnectors(this._store);
 
     const ids = new Set<string>();
     for (const c of list) {
@@ -73,8 +75,8 @@ export class DetectConnectionsUnderDragNode implements IExecution<
 
     for (const connection of this._store.connections.getAll()) {
       if (
-        outputConnectorIds.has(connection.fOutputId()) ||
-        inputConnectorIds.has(connection.fInputId())
+        outputConnectorIds.has(connection.sourceId()) ||
+        inputConnectorIds.has(connection.targetId())
       ) {
         ids.add(connection.fId());
       }

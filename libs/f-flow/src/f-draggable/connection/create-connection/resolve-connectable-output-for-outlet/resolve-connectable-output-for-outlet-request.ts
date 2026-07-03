@@ -1,6 +1,6 @@
-import { FNodeOutletBase } from '../../../../f-connectors';
+import { FConnectorBase } from '../../../../f-connectors';
 
 export class ResolveConnectableOutputForOutletRequest {
   static readonly fToken = Symbol('ResolveConnectableOutputForOutletRequest');
-  constructor(public readonly outlet: FNodeOutletBase) {}
+  constructor(public readonly outlet: FConnectorBase) {}
 }

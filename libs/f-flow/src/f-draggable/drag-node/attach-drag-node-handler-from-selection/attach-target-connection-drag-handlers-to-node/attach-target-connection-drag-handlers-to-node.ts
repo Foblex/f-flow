@@ -3,6 +3,7 @@ import { AttachTargetConnectionDragHandlersToNodeRequest } from './attach-target
 import { FComponentsStore } from '../../../../f-storage';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../../f-node';
+import { getAllTargetConnectors } from '../../../../f-connectors';
 import {
   DragNodeConnectionBothSidesHandler,
   DragNodeConnectionHandlerBase,
@@ -13,9 +14,10 @@ import { DragHandlerInjector } from '../../../infrastructure';
 
 @Injectable()
 @FExecutionRegister(AttachTargetConnectionDragHandlersToNodeRequest)
-export class AttachTargetConnectionDragHandlersToNode
-  implements IExecution<AttachTargetConnectionDragHandlersToNodeRequest, void>
-{
+export class AttachTargetConnectionDragHandlersToNode implements IExecution<
+  AttachTargetConnectionDragHandlersToNodeRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragInjector = inject(DragHandlerInjector);
 
@@ -32,12 +34,11 @@ export class AttachTargetConnectionDragHandlersToNode
   private _getInputConnections(nodeOrGroup: FNodeBase): FConnectionBase[] {
     const ids = new Set(this._getNodeInputIds(nodeOrGroup));
 
-    return this._connections.filter((x) => ids.has(x.fInputId()));
+    return this._connections.filter((x) => ids.has(x.targetId()));
   }
 
   private _getNodeInputIds(nodeOrGroup: FNodeBase): string[] {
-    return this._store.inputs
-      .getAll()
+    return getAllTargetConnectors(this._store)
       .filter((x) => nodeOrGroup.isContains(x.hostElement))
       .map((x) => x.fId());
   }
@@ -66,7 +67,7 @@ export class AttachTargetConnectionDragHandlersToNode
     connection: FConnectionBase,
   ): DragNodeConnectionHandlerBase {
     let result: DragNodeConnectionHandlerBase | undefined;
-    if (outputIds.includes(connection.fOutputId())) {
+    if (outputIds.includes(connection.sourceId())) {
       result = this._dragInjector.createInstance(DragNodeConnectionBothSidesHandler);
     } else {
       result = this._dragInjector.createInstance(DragNodeConnectionTargetHandler);

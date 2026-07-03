@@ -2,12 +2,18 @@ import { IHasHostElement } from '../i-has-host-element';
 import { Signal } from '@angular/core';
 import { EFConnectableSide } from '../f-connection-v2/enums/e-f-connectable-side';
 
-export type FConnectorKind = 'input' | 'output' | 'outlet';
+export type FConnectorKind = 'input' | 'output' | 'outlet' | 'connector';
 
 export abstract class FConnectorBase implements IHasHostElement {
   public abstract readonly kind: FConnectorKind;
 
   public abstract fId: Signal<string>;
+
+  /**
+   * Optional category used to match a target connector against
+   * source connection limits (`fCanBeConnectedTo` / `fCanBeConnectedInputs`).
+   */
+  public category?: Signal<string | undefined>;
 
   public abstract fNodeId: string;
 

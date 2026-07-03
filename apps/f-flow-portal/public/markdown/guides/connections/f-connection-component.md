@@ -3,8 +3,10 @@
 **Selector:** `f-connection`  
 **Class:** `FConnectionComponent`
 
-`FConnectionComponent` renders a **connection** (edge) between a source connector (`fOutputId`) and a target connector (`fInputId`).
+`FConnectionComponent` renders a **connection** (edge) between a source connector (`fSourceId`) and a target connector (`fTargetId`).
 In most apps, connections are **persisted** in your own state (array/map) and rendered from that state on each change.
+
+> **API note (v19+).** The endpoint inputs are now `fSourceId` / `fTargetId` and the side hints are `fSourceSide` / `fTargetSide`. The legacy names `fOutputId` / `fInputId` / `fOutputSide` / `fInputSide` are **deprecated** but keep working.
 
 Connections must be placed inside [`f-canvas`](f-canvas-component) (which itself must be inside [`f-flow`](f-flow-component)).
 
@@ -21,7 +23,7 @@ For the **drag preview** while the user is creating a new link, use
 
 ## How it works
 
-- The connection resolves its endpoints by `fOutputId` and `fInputId`.
+- The connection resolves its endpoints by `fSourceId` and `fTargetId`.
 - It builds an SVG path using the chosen `fType` and `fBehavior`.
 - During interactions the library updates visuals smoothly internally.
 - **Your app typically persists changes on final events** (for example after a reassign drag ends).
@@ -34,11 +36,23 @@ For the **drag preview** while the user is creating a new link, use
   Connection identifier. Default: `f-connection-${uniqueId++}`.  
   Use a **stable** id if you want selection state to survive rerenders.
 
-- `fOutputId: InputSignal<string>;`  
-  Source connector id (from `[fNodeOutput]` or `[fNodeOutlet]`).
+- `fSourceId: InputSignal<string>;`  
+  Source connector id (from `[fConnector]`, or legacy `[fNodeOutput]`).
 
-- `fInputId: InputSignal<string>;`  
-  Target connector id (from `[fNodeInput]`).
+- `fTargetId: InputSignal<string>;`  
+  Target connector id (from `[fConnector]`, or legacy `[fNodeInput]`).
+
+- `fSourceSide: InputSignal<EFConnectionConnectableSide>;`  
+  Default: `DEFAULT`. Per-connection override for the side the connection docks to at the **source** connector (default/top/right/bottom/left).
+
+- `fTargetSide: InputSignal<EFConnectionConnectableSide>;`  
+  Default: `DEFAULT`. Per-connection override for the side the connection docks to at the **target** connector.
+
+- `fOutputId: InputSignal<string>;` _(deprecated — use `fSourceId`)_
+
+- `fInputId: InputSignal<string>;` _(deprecated — use `fTargetId`)_
+
+- `fOutputSide` / `fInputSide` _(deprecated — use `fSourceSide` / `fTargetSide`)_
 
 - `fReassignDisabled: InputSignal<boolean>;`  
   Default: `false`.  
@@ -95,6 +109,18 @@ enum EFConnectionType {
 }
 ```
 
+#### EFConnectionConnectableSide
+
+```typescript
+enum EFConnectionConnectableSide {
+  DEFAULT = 'default',
+  TOP = 'top',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+```
+
 ## Styling
 
 These classes are useful when styling the SVG and interaction affordances:
@@ -117,7 +143,7 @@ The gradient config owns its own colors, while the actual SVG `linearGradient` i
 `f-connection` itself no longer owns gradient colors.
 
 ```html
-<f-connection fOutputId="out-1" fInputId="in-1">
+<f-connection fSourceId="out-1" fTargetId="in-1">
   <f-connection-gradient
     fStartColor="#4f46e5"
     fEndColor="#06b6d4"
@@ -139,7 +165,7 @@ Migration from the old API:
 ></f-connection>
 
 <!-- New -->
-<f-connection fOutputId="out-1" fInputId="in-1">
+<f-connection fSourceId="out-1" fTargetId="in-1">
   <f-connection-gradient
     fStartColor="#4f46e5"
     fEndColor="#06b6d4"
@@ -149,7 +175,7 @@ Migration from the old API:
 
 ## Notes and pitfalls
 
-- `fOutputId` / `fInputId` must point to **existing connectors**; otherwise the connection cannot resolve endpoints.
+- `fSourceId` / `fTargetId` must point to **existing connectors**; otherwise the connection cannot resolve endpoints.
 - If you use a custom `fType`, ensure the corresponding connection type is registered (see the custom type example).
 - Keep `fSelectionDisabled` and `fReassignDisabled` explicit per connection for predictable UX in mixed graphs.
 
