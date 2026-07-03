@@ -11,7 +11,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
-import { F_NODE } from '../../f-node';
+import { injectConnectorNode } from '../inject-connector-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -42,7 +42,7 @@ export class FNodeInputDirective extends FNodeInputBase implements OnInit, OnCha
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   private readonly _mediator = inject(FMediator);
-  private readonly _node = inject(F_NODE);
+  private readonly _node = injectConnectorNode('[fNodeInput]');
 
   public override fId = input<string, unknown>(`f-node-input-${uniqueId++}`, {
     alias: 'fInputId',

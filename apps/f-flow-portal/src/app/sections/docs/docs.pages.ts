@@ -66,6 +66,26 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Track what is planned, what is already on the way, and which releases shipped each major Foblex Flow capability.',
     },
   },
+  {
+    slug: 'errors',
+    text: 'Errors and Warnings',
+    group: 'Introduction',
+    seo: {
+      title: 'Foblex Flow Errors and Warnings - FF Diagnostic Codes',
+      description:
+        'Reference for FFxxxx diagnostic codes: unresolved connection endpoints, zero-height hosts, connectors outside nodes — causes and fixes.',
+    },
+  },
+  {
+    slug: 'ai',
+    text: 'AI Agents',
+    group: 'Introduction',
+    seo: {
+      title: 'Using AI Agents with Foblex Flow - llms.txt, Bundled Rules and Diagnostics',
+      description:
+        'Set up LLMs and AI coding agents for Foblex Flow: AGENTS.md rules installed by ng add, the AI guide bundled in the npm package, llms.txt, Context7, and FF diagnostic codes.',
+    },
+  },
 
   // -------- Styling --------
   {

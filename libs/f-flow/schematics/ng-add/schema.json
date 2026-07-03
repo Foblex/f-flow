@@ -3,5 +3,11 @@
   "$id": "NgAdd",
   "title": "Foblex Flow ng-add",
   "type": "object",
-  "properties": {}
+  "properties": {
+    "skipAgentRules": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip writing the Foblex Flow section into the workspace AGENTS.md (AI agent rules)."
+    }
+  }
 }

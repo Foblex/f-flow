@@ -92,6 +92,22 @@ A minimal interactive flow consists of:
 </f-flow>
 ```
 
+The component that hosts this template must import `FFlowModule` — `f-flow`, `f-canvas`, `fNode`, the connectors, and `f-connection` are only reachable through the module:
+
+```typescript
+import { Component } from '@angular/core';
+import { FFlowModule } from '@foblex/flow';
+
+@Component({
+  selector: 'app-flow',
+  standalone: true,
+  imports: [FFlowModule],
+  templateUrl: './flow.html',
+  styleUrl: './flow.scss',
+})
+export class Flow {}
+```
+
 ## Default theme
 
 The quickest styling path is to keep the shipped theme connected.

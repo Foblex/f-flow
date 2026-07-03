@@ -22,9 +22,11 @@ import {
   COMMON_PROVIDERS,
   GetCurrentSelectionRequest,
   GetNormalizedPointRequest,
+  fWarnOnce,
   ICurrentSelection,
   IFFlowState,
   IFFlowStateOptions,
+  isFDevMode,
   IsDragStartedRequest,
   NotifyFullRenderedRequest,
   NotifyNodesRenderedRequest,
@@ -114,6 +116,27 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     }
     this._listenNodesChanges();
     this._listenConnectionsChanges();
+    this._warnWhenHostHasNoHeight();
+  }
+
+  /**
+   * A zero-height host is the most common "blank canvas" mistake — everything compiles
+   * and renders, but nothing is visible. Checked once after the first paint.
+   */
+  private _warnWhenHostHasNoHeight(): void {
+    if (!isFDevMode()) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      if (this.hostElement.clientHeight === 0) {
+        fWarnOnce(
+          'FF1002',
+          this.fId(),
+          `<f-flow> "${this.fId()}" has zero height, so the flow is invisible. Give it a height, e.g. "f-flow { display: block; height: 600px; }".`,
+        );
+      }
+    });
   }
 
   public _listenCacheChanges(): void {

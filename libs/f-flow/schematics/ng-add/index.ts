@@ -14,8 +14,76 @@ const KNOWN_THEME_STYLE_PATHS = new Set([
   '@foblex/flow/styles/default.scss',
 ]);
 
-export function ngAdd(): Rule {
-  return chain([addDependencies(), addDefaultTheme(), installDependencies()]);
+const AGENT_RULES_PATH = 'AGENTS.md';
+const AGENT_RULES_BEGIN = '<!-- BEGIN:foblex-flow-agent-rules -->';
+const AGENT_RULES_END = '<!-- END:foblex-flow-agent-rules -->';
+const AGENT_RULES_BLOCK = `${AGENT_RULES_BEGIN}
+
+## Foblex Flow (\`@foblex/flow\`)
+
+Before writing any code that uses \`@foblex/flow\`, read the AI guide bundled with the
+package: \`node_modules/@foblex/flow/AI.md\`. It contains the verified API surface, hard
+rules (no React Flow patterns, the app owns graph state), a minimal working setup, and a
+checklist of common silent failures.
+
+Additional references:
+
+- Complete LLM-readable API reference: https://flow.foblex.com/llms-full.txt
+- Docs index for agents: https://flow.foblex.com/llms.txt
+- Diagnostic codes (\`FFxxxx\` console warnings/errors): https://flow.foblex.com/docs/errors
+- Styling rules: \`node_modules/@foblex/flow/STYLING.md\`
+
+${AGENT_RULES_END}`;
+
+interface NgAddOptions {
+  skipAgentRules?: boolean;
+}
+
+export function ngAdd(options: NgAddOptions = {}): Rule {
+  return chain([
+    addDependencies(),
+    addDefaultTheme(),
+    ...(options.skipAgentRules ? [] : [addAgentRules()]),
+    installDependencies(),
+  ]);
+}
+
+/**
+ * Writes a marker-delimited Foblex Flow section into the workspace `AGENTS.md`, so AI
+ * coding agents (Cursor, Copilot, Claude Code, Codex, …) read the bundled
+ * `node_modules/@foblex/flow/AI.md` before generating code. Re-running `ng add` only
+ * rewrites the managed block; the rest of the file is left untouched.
+ */
+function addAgentRules(): Rule {
+  return (tree: Tree, context: SchematicContext) => {
+    const existing = tree.exists(AGENT_RULES_PATH)
+      ? (tree.read(AGENT_RULES_PATH)?.toString() ?? '')
+      : null;
+
+    if (existing === null) {
+      tree.create(AGENT_RULES_PATH, `# AGENTS.md\n\n${AGENT_RULES_BLOCK}\n`);
+      context.logger.info(`✅ Created "${AGENT_RULES_PATH}" with Foblex Flow agent rules.`);
+
+      return tree;
+    }
+
+    const begin = existing.indexOf(AGENT_RULES_BEGIN);
+    const end = existing.indexOf(AGENT_RULES_END);
+
+    const updated =
+      begin >= 0 && end > begin
+        ? existing.slice(0, begin) +
+          AGENT_RULES_BLOCK +
+          existing.slice(end + AGENT_RULES_END.length)
+        : `${existing.replace(/\s*$/, '')}\n\n${AGENT_RULES_BLOCK}\n`;
+
+    if (updated !== existing) {
+      tree.overwrite(AGENT_RULES_PATH, updated);
+      context.logger.info(`✅ Updated Foblex Flow agent rules in "${AGENT_RULES_PATH}".`);
+    }
+
+    return tree;
+  };
 }
 
 function addDependencies(): Rule {

@@ -9,7 +9,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
-import { F_NODE } from '../../f-node';
+import { injectConnectorNode } from '../inject-connector-node';
 import { FMediator } from '@foblex/mediator';
 import { AddConnectorToStoreRequest, RemoveConnectorFromStoreRequest } from '../../domain';
 import { stringAttribute } from '../../utils';
@@ -33,7 +33,7 @@ export class FNodeOutletDirective extends FNodeOutletBase implements OnInit, OnD
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   private readonly _mediator = inject(FMediator);
-  private readonly _node = inject(F_NODE);
+  private readonly _node = injectConnectorNode('[fNodeOutlet]');
 
   public override fId = input<string, unknown>(`f-node-outlet-${uniqueId++}`, {
     alias: 'fOutletId',

@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v18.5.0 (April 2026)
+- **Current version**: v18.6.1 (May 2026)
 - **Weekly installs**: ~16K
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -231,6 +231,7 @@ Selector: `f-canvas`
 | position | InputSignal\<IPoint\> | { x: 0, y: 0 } | Canvas pan position |
 | scale | InputSignal\<number\> | 1 | Canvas zoom scale |
 | debounceTime | InputSignal\<number\> | 0 | Debounce ms for fCanvasChange |
+| fLayers | EFCanvasLayer[] | [GROUPS, CONNECTIONS, NODES] | Stacking order of the built-in layers, bottom to top; app-wide default via provideFFlow(withFCanvas({ layers })) |
 
 #### Outputs
 
@@ -1141,6 +1142,39 @@ Performance optimization that caches node and connector geometry to avoid redund
   </f-canvas>
 </f-flow>
 ```
+
+### Reflow on Resize (withReflowOnResize)
+
+Automatic layout maintenance: when a node grows or shrinks, surrounding nodes shift to keep spacing. Configured as a provider feature; runtime overrides via `FReflowController`.
+
+```typescript
+import { provideFFlow, withReflowOnResize, EFReflowMode, FReflowController } from '@foblex/flow';
+
+@Component({
+  providers: [provideFFlow(withReflowOnResize({ mode: EFReflowMode.CENTER_OF_MASS }))],
+})
+export class MyFlow {
+  private readonly _reflow = inject(FReflowController);
+  // this._reflow.setConfig({ spacing: { vertical: 24 } });
+}
+```
+
+Config knobs (`IFReflowOnResizeConfig`): `enabled`, `mode` (`EFReflowMode.CENTER_OF_MASS | X_RANGE | DOWNSTREAM_CONNECTIONS`), `scope` (`EFReflowScope.GLOBAL | GROUP | CONNECTED_SUBGRAPH`), `axis` (`EFReflowAxis.BOTH | VERTICAL | HORIZONTAL`), `deltaSource` (`EFReflowDeltaSource.EDGE_BASED | CENTER_BASED`), `collision` (`EFReflowCollision.STOP | CHAIN_PUSH`), `spacing { vertical, horizontal }`, `maxCascadeDepth`, `maxAbsoluteShiftPerPlan`. Nodes marked with the `fReflowIgnore` directive stay pinned. Docs: https://flow.foblex.com/examples/reflow-on-resize
+
+### Canvas Layer Ordering (fLayers)
+
+The three built-in canvas layers (groups, connections, nodes) can be re-stacked per canvas or app-wide:
+
+```html
+<f-canvas [fLayers]="[eLayer.GROUPS, eLayer.NODES, eLayer.CONNECTIONS]"></f-canvas>
+```
+
+```typescript
+import { provideFFlow, withFCanvas, EFCanvasLayer } from '@foblex/flow';
+providers: [provideFFlow(withFCanvas({ layers: [EFCanvasLayer.GROUPS, EFCanvasLayer.NODES, EFCanvasLayer.CONNECTIONS] }))];
+```
+
+Order is read bottom to top; the `[fLayers]` input wins over the provider value; missing layers append in their default position. Default: `[GROUPS, CONNECTIONS, NODES]`. Docs: https://flow.foblex.com/examples/canvas-layers
 
 ### Layout Engine Integration
 

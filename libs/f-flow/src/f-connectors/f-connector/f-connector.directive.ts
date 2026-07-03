@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
-import { F_NODE } from '../../f-node';
+import { injectConnectorNode } from '../inject-connector-node';
 import {
   AddConnectorToStoreRequest,
   F_CSS_CLASS,
@@ -65,7 +65,7 @@ export class FConnectorDirective
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   private readonly _mediator = inject(FMediator);
-  private readonly _node = inject(F_NODE);
+  private readonly _node = injectConnectorNode('[fConnector]');
 
   public override readonly kind: FConnectorKind = 'connector';
 
