@@ -40,6 +40,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 - Your app updates state, Angular rerenders.
 - Connections are connector-to-connector (fOutputId → fInputId), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
+- Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
 
 ## 4. Installation
 

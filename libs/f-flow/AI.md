@@ -82,7 +82,26 @@ The default theme is wired by `ng add @foblex/flow` (adds `node_modules/@foblex/
 - Do **not** assume a built-in graph store. The app owns state.
 - Connections are connector-to-connector, not generic node-to-node edges.
 - Template connections use `fSourceId -> fTargetId` referencing `fConnectorId` values (legacy: `fOutputId -> fInputId` referencing output/input ids).
-- Do **not** interpret `[fNodes]` or `[fConnections]` as graph-state inputs. In this package they are content-projection markers used with `ngProjectAs` in some examples.
+- Do **not** interpret `[fNodes]` or `[fConnections]` as graph-state inputs. They are content-projection slot markers used with `ngProjectAs` (see the nested control flow rule below).
+- **Nested control flow requires `ngProjectAs`.** Nodes, groups, or connections rendered inside nested template blocks (`@for` in `@if`, `@for` in `@for`, `@if` in `@if`, or a wrapper element) are NOT projected into the canvas — Angular creates them detached, geometry collapses to 0×0, and nothing renders, with no error. Wrap such blocks:
+
+  ```html
+  @if (isEditable()) {
+    <ng-container ngProjectAs="[fNodes]">
+      @for (node of nodes(); track node.id) {
+        <div fNode [fNodePosition]="node.position">{{ node.label }}</div>
+      }
+    </ng-container>
+    <ng-container ngProjectAs="[fConnections]">
+      @for (c of connections(); track c.id) {
+        <f-connection [fSourceId]="c.source" [fTargetId]="c.target" />
+      }
+    </ng-container>
+  }
+  ```
+
+  Use `"[fNodes]"` for nodes, `"[fGroups]"` for groups, `"[fConnections]"` for connections. A single top-level `@for` / `@if` directly inside `<f-canvas>` needs no wrapper.
+
 - Examples may include app-specific state, layout logic, persistence, undo/redo, toolbars, or validation. Those are example implementations, not built-in package features.
 - Some exports are low-level, compatibility-oriented, or testing-oriented. Do not treat every export from `@foblex/flow` as the recommended app-facing API.
 - If a symbol, selector, event, or behavior is not confirmed in the installed package, say: `not found in @foblex/flow`.
@@ -107,7 +126,8 @@ When the flow compiles but looks wrong, verify in this order:
 4. **Nothing is draggable / no events fire**: `fDraggable` missing on `<f-flow>`.
 5. **Wheel does nothing**: `fZoom` missing on `<f-canvas>` (zoom is opt-in).
 6. **Node ignores position**: `[fNodePosition]` must be a property binding to `{ x, y }`, and nodes must be direct content of `<f-canvas>`.
-7. **NullInjectorError mentioning F_NODE**: a connector is placed outside an `[fNode]` element.
+7. **`[f-flow][FF1003]` error**: a connector is placed outside an `[fNode]` / `[fGroup]` element.
+8. **Nodes/connections exist in state but nothing renders, no errors** (`FF1004` warns in dev mode): flow content sits inside nested `@if`/`@for` blocks without `<ng-container ngProjectAs="[fNodes]">` (`"[fGroups]"` / `"[fConnections]"`) — see the Hard Rules section.
 
 To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.
 

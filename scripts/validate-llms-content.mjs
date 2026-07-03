@@ -51,6 +51,7 @@ const REQUIRED_SYMBOLS = [
   'EFCanvasLayer',
   'fVirtualFor',
   'FCreateConnectionEvent',
+  'ngProjectAs',
 ];
 
 const llms = readFileSync(LLMS_PATH, 'utf8');

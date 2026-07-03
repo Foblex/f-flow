@@ -41,6 +41,32 @@ Any nonzero layout height works (flex/grid tracks included). See [Get Started](g
 </div>
 ```
 
+## FF1004
+
+**Warning: flow content is not projected into the canvas.**
+
+A node, group, or connection is rendered inside a template block that Angular does not project into `<f-canvas>` — typically **nested control flow** (`@for` inside `@if`, `@for` inside `@for`, `@if` inside `@if`) or a wrapper element. Angular still creates the instances (they register with the flow), but their elements never attach to the document: geometry collapses to 0×0 and nothing is visible. Without this warning the failure is completely silent — there is no Angular error.
+
+Fix: wrap the block with an `ng-container` that tells Angular which canvas slot the content belongs to:
+
+```html
+@if (isEditable()) {
+  <ng-container ngProjectAs="[fNodes]">
+    @for (node of nodes(); track node.id) {
+      <div fNode [fNodePosition]="node.position">{{ node.label }}</div>
+    }
+  </ng-container>
+
+  <ng-container ngProjectAs="[fConnections]">
+    @for (connection of connections(); track connection.id) {
+      <f-connection [fSourceId]="connection.source" [fTargetId]="connection.target" />
+    }
+  </ng-container>
+}
+```
+
+Use `ngProjectAs="[fNodes]"` for nodes, `"[fGroups]"` for groups, `"[fConnections]"` for connections. A single top-level `@for` / `@if` directly inside `<f-canvas>` projects fine and needs no wrapper.
+
 ## Verifying a flow programmatically
 
 To assert a flow is fully wired (useful in tests and for AI agents):
