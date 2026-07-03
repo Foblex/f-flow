@@ -46,6 +46,7 @@ export abstract class DragAndDropBase {
 
   private _pointerDownElement: HTMLElement | null = null;
   private _pointerDownEvent: IPointerEvent | null = null;
+  private _lastMouseMoveEvent: IMouseEvent | null = null;
 
   /**
    * Handles the mouse down event to initiate the drag sequence.
@@ -172,7 +173,24 @@ export abstract class DragAndDropBase {
    * @param event - The mouse event that triggered the move.
    */
   private _onMouseMove = (event: MouseEvent) => {
-    this._moveHandler(new IMouseEvent(event));
+    // A native <select> dropdown (and other OS-level popups) swallows the pointerup
+    // that would end the sequence, leaving these listeners armed: the next mousemove
+    // arrives with no button pressed and would start a phantom drag that follows the
+    // cursor until an unrelated pointerup (e.g. a right-click) is delivered. Treat a
+    // buttonless move as the missed pointerup — finalized at the last position the
+    // button was actually held at — and end the sequence.
+    if (event.buttons === 0) {
+      if (this.isDragStarted) {
+        this.onPointerUp(this._lastMouseMoveEvent ?? new IMouseEvent(event));
+      }
+      this._endDragSequence();
+
+      return;
+    }
+
+    const pointerEvent = new IMouseEvent(event);
+    this._lastMouseMoveEvent = pointerEvent;
+    this._moveHandler(pointerEvent);
   };
 
   /**
@@ -262,6 +280,7 @@ export abstract class DragAndDropBase {
     this.isDragStarted = false;
     this._pointerDownElement = null;
     this._pointerDownEvent = null;
+    this._lastMouseMoveEvent = null;
 
     this._moveHandler = this._checkDragSequenceToStart;
     this._mouseListeners();
