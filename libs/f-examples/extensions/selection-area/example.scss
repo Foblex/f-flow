@@ -10,5 +10,4 @@
 
 @include flow-theme.node($selectorless: false);
 @include flow-theme.connector($scoped: false);
-
 @include flow-theme.selection-area();
