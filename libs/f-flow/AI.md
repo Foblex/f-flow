@@ -128,8 +128,24 @@ When the flow compiles but looks wrong, verify in this order:
 6. **Node ignores position**: `[fNodePosition]` must be a property binding to `{ x, y }`, and nodes must be direct content of `<f-canvas>`.
 7. **`[f-flow][FF1003]` error**: a connector is placed outside an `[fNode]` / `[fGroup]` element.
 8. **Nodes/connections exist in state but nothing renders, no errors** (`FF1004` warns in dev mode): flow content sits inside nested `@if`/`@for` blocks without `<ng-container ngProjectAs="[fNodes]">` (`"[fGroups]"` / `"[fConnections]"`) — see the Hard Rules section.
+9. **Handles/selection/connect present but inert** (`FF1005`): `fDraggable` is missing on `<f-flow>` while `fDragHandle` / `f-selection-area` / `f-connection-for-create` / resize / rotate are used.
+10. **Connections attach to the wrong place** (`FF1006`): a connector is hidden with CSS (`display: none`) — its geometry is a 0×0 point. Conditionally render instead of hiding.
+11. **Node moves but its bindings never fire** (`FF1007`): an `fNode` element is nested inside another node element. One `fNode` per node; hierarchy is id-based (`fNodeParentId`), not DOM-based.
+12. **Group behaviors don't apply** (`FF1008`): `fNodeParentId` / `fGroupParentId` references an id no rendered group has.
+13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` called before the first `(fFullRendered)`.
 
 To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.
+
+## Additional Rules
+
+- The library runs outside the Angular zone: its events do not trigger change detection. With OnPush or zoneless apps, replace arrays/objects (new references) instead of mutating, and call `markForCheck()` where needed.
+- Always set stable, app-owned ids on nodes and connections; auto-generated ids (`f-connection-3`) cannot be mapped back to your model and break selection/persistence across re-renders.
+- Style flow internals (connection paths, minimap, markers) in global styles or via `::ng-deep` — component-scoped CSS never reaches them. Wire the default theme via `ng add`.
+- Do not combine `fAutoSizeToFitChildren` with restoring a persisted group size in the same render: pass `false` while restoring, enable it afterwards.
+- With several `<f-flow>` instances on one page, keep `fDraggable` enabled only on the active flow.
+- Connections define `SELECTED_START` / `SELECTED_END` marker variants in addition to `START` / `END`, or markers disappear when the connection is selected.
+- An empty `fCanBeConnectedTo` allow-list means "no restriction", not "allow nothing"; category strings must match exactly.
+- Above ~500 nodes enable `[fCache]` on `<f-flow>` and render nodes with `*fVirtualFor` inside `<ng-container ngProjectAs="[fNodes]">`.
 
 ## Naming Distinction
 

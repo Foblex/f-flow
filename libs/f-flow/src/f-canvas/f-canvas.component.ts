@@ -26,12 +26,14 @@ import {
   AddCanvasToStoreRequest,
   CenterGroupOrNodeRequest,
   FitToFlowRequest,
+  fWarnOnce,
   GetFlowRequest,
   InputCanvasPositionRequest,
   InputCanvasScaleRequest,
   isMobile,
   RemoveCanvasFromStoreRequest,
   ResetScaleAndCenterRequest,
+  RenderLifecycleState,
   ResetScaleRequest,
   SetBackgroundTransformRequest,
   transitionEnd,
@@ -67,6 +69,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private readonly _components = inject(FComponentsStore);
   private readonly _injector = inject(Injector);
   private readonly _config = inject(F_CANVAS_CONFIG, { optional: true });
+  private readonly _renderLifecycle = inject(RenderLifecycleState, { optional: true });
 
   private _flowId: string | undefined;
 
@@ -180,7 +183,22 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * @param groupOrNodeId - The ID of the group or node to center.
    * @param animated - If true, the centering will be animated; otherwise, it will be instantaneous.
    */
+  /**
+   * FF1009 — viewport helpers called before the first `fFullRendered` compute against an
+   * incomplete node set and produce a wrong initial viewport. Warned once per method.
+   */
+  private _warnWhenCalledBeforeFullRender(method: string): void {
+    if (this._renderLifecycle && !this._renderLifecycle.isFullRendered) {
+      fWarnOnce(
+        'FF1009',
+        method,
+        `${method} was called before the flow finished rendering, so it computes against an incomplete node set. Call it from the (fFullRendered) output of <f-flow>.`,
+      );
+    }
+  }
+
   public centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void {
+    this._warnWhenCalledBeforeFullRender('centerGroupOrNode()');
     this._afterRedraw(() => {
       this._mediator.execute(new CenterGroupOrNodeRequest(groupOrNodeId, animated));
     });
@@ -195,6 +213,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     padding: IPoint = PointExtensions.initialize(),
     animated: boolean = true,
   ): void {
+    this._warnWhenCalledBeforeFullRender('fitToScreen()');
     this._afterRedraw(() => {
       this._mediator.execute(new FitToFlowRequest(padding, animated));
     });
@@ -208,6 +227,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * This is useful for providing a smooth user experience when resetting the view.
    */
   public resetScaleAndCenter(animated: boolean = true): void {
+    this._warnWhenCalledBeforeFullRender('resetScaleAndCenter()');
     this._afterRedraw(() => {
       this._mediator.execute(new ResetScaleAndCenterRequest(animated));
     });

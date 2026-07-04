@@ -33,6 +33,7 @@ import {
   QueueConnectionRedrawRequest,
   RedrawConnectionsRequest,
   RemoveFlowFromStoreRequest,
+  RunDevDiagnosticsRequest,
   ResetRenderLifecycleRequest,
   SelectAllRequest,
   SelectRequest,
@@ -174,42 +175,8 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
           ),
         );
         this._mediator.execute<void>(new EmitConnectionsChangesRequest());
-        this._warnWhenItemsAreDetached();
+        this._mediator.execute(new RunDevDiagnosticsRequest());
       });
-  }
-
-  /**
-   * A registered node/group/connection whose host element is not attached to the
-   * document means Angular created it but could not project it into the canvas — the
-   * classic silent failure of rendering flow content inside nested `@if` / `@for`
-   * blocks without `ngProjectAs`. Everything registers, geometry collapses to 0×0, and
-   * nothing is visible. Checked after each settled nodes change; warned once per item.
-   */
-  private _warnWhenItemsAreDetached(): void {
-    if (!isFDevMode()) {
-      return;
-    }
-
-    for (const node of this._componentsStore.nodes.getAll()) {
-      if (!node.hostElement.isConnected) {
-        const isGroup = node.hostElement.hasAttribute('fGroup');
-        fWarnOnce(
-          'FF1004',
-          node.fId(),
-          `${isGroup ? '[fGroup]' : '[fNode]'} "${node.fId()}" is rendered inside a template block that Angular does not project into <f-canvas> (usually nested @if/@for). Wrap the block with <ng-container ngProjectAs="${isGroup ? '[fGroups]' : '[fNodes]'}">.`,
-        );
-      }
-    }
-
-    for (const connection of this._componentsStore.connections.getAll()) {
-      if (!connection.hostElement.isConnected) {
-        fWarnOnce(
-          'FF1004',
-          connection.fId(),
-          `<f-connection> "${connection.fId()}" is rendered inside a template block that Angular does not project into <f-canvas> (usually nested @if/@for). Wrap the block with <ng-container ngProjectAs="[fConnections]">.`,
-        );
-      }
-    }
   }
 
   private _listenConnectionsChanges(): void {

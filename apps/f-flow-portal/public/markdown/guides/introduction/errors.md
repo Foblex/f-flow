@@ -67,6 +67,58 @@ Fix: wrap the block with an `ng-container` that tells Angular which canvas slot 
 
 Use `ngProjectAs="[fNodes]"` for nodes, `"[fGroups]"` for groups, `"[fConnections]"` for connections. A single top-level `@for` / `@if` directly inside `<f-canvas>` projects fine and needs no wrapper.
 
+## FF1005
+
+**Warning: interaction feature without `fDraggable`.**
+
+An interaction feature (`<f-selection-area>`, `<f-connection-for-create>`, `<f-snap-connection>`, `[fDragHandle]`, `[fResizeHandle]`, `[fRotateHandle]`) is present, but `<f-flow>` has no `fDraggable` directive — every pointer interaction is silently inert and no interaction events are emitted.
+
+Fix: add `fDraggable` to the root:
+
+```html
+<f-flow fDraggable>
+  ...
+</f-flow>
+```
+
+## FF1006
+
+**Warning: connector hidden with CSS.**
+
+A connector is registered but hidden (`display: none`), so its geometry is a 0×0 point: connections attach to the wrong place or nowhere, and viewport helpers compute wrong bounds. Hiding registered flow elements with CSS (including `[hidden]`) corrupts geometry silently.
+
+Fix: conditionally render the connector (or its node) from state instead of hiding it — wrapping control-flow blocks with `ngProjectAs` where needed (see FF1004).
+
+## FF1007
+
+**Warning: node nested inside another node.**
+
+An `[fNode]` / `[fGroup]` element is a DOM descendant of another node element — usually a wrapper `div` with `fNode fDragHandle` around a component that also declares `fNode`. The outer node wins the drag and bindings on the inner one never fire.
+
+Fix: exactly one `fNode` per node, as siblings inside `<f-canvas>`; hierarchy is id-based via `fNodeParentId` / `fGroupParentId`, not DOM-based.
+
+## FF1008
+
+**Warning: parent id not found.**
+
+`fNodeParentId` / `fGroupParentId` references an id that no rendered node or group has, so hierarchy behaviors (containment, group drag, auto-size) silently do not apply. The warning lists the registered ids.
+
+Fix: reference an existing group id, and keep ids stable across re-renders.
+
+## FF1009
+
+**Warning: viewport helper called before the first render.**
+
+`fitToScreen()`, `resetScaleAndCenter()`, or `centerGroupOrNode()` was called before the flow finished rendering (e.g. from `ngOnInit` / `ngAfterViewInit`), so it computes against an incomplete node set and produces a wrong initial viewport.
+
+Fix: call viewport helpers from the `(fFullRendered)` output:
+
+```html
+<f-flow fDraggable (fFullRendered)="canvas.fitToScreen()">
+  <f-canvas #canvas> ... </f-canvas>
+</f-flow>
+```
+
 ## Verifying a flow programmatically
 
 To assert a flow is fully wired (useful in tests and for AI agents):

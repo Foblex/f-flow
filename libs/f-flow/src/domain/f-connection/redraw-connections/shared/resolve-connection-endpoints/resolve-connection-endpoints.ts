@@ -41,10 +41,15 @@ export class ResolveConnectionEndpoints implements IExecution<
    * so the console points straight at the fix.
    */
   private _warnUnresolved(connectionId: string, inputName: string, id: string): void {
+    // An id like "node.outputId" is almost always an unevaluated template expression.
+    const bracketHint = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*)+$/.test(id)
+      ? ` The id looks like an unevaluated expression — did you mean a property binding, e.g. [${inputName}]="${id}"?`
+      : '';
+
     fWarnOnce(
       'FF1001',
       `${connectionId}|${inputName}|${id}`,
-      `<f-connection> "${connectionId}": ${inputName} "${id}" does not match any rendered connector, so the connection is not drawn. Registered connector ids: ${this._registeredIds()}.`,
+      `<f-connection> "${connectionId}": ${inputName} "${id}" does not match any rendered connector, so the connection is not drawn.${bracketHint} Registered connector ids: ${this._registeredIds()}.`,
     );
   }
 
