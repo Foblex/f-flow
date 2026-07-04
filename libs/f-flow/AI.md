@@ -73,7 +73,7 @@ The default theme is wired by `ng add @foblex/flow` (adds `node_modules/@foblex/
 - `fDraggable` on `<f-flow>`: enables pointer interactions and emits interaction events.
 - `fZoom` on `<f-canvas>`: opt-in wheel / double-click / pinch zoom.
 - `<f-selection-area>`: opt-in rectangle multi-select.
-- `provideFFlow(...)` with features: `withControlScheme(...)` (gesture-to-action mapping, presets `F_DEFAULT_CONTROL_SCHEME`, `F_SCROLL_PAN_CONTROL_SCHEME`, `F_DRAG_SELECT_CONTROL_SCHEME`), `withReflowOnResize(...)` (auto layout on node resize), `withFCanvas(...)` (canvas defaults such as layer order).
+- `provideFFlow(...)` with features: `withConnectionFlow('click')` (click-to-connect gesture alongside drag; custom gestures implement `IFConnectionFlow` and drive `FCreateConnectionSession`), `withControlScheme(...)` (gesture-to-action mapping, presets `F_DEFAULT_CONTROL_SCHEME`, `F_SCROLL_PAN_CONTROL_SCHEME`, `F_DRAG_SELECT_CONTROL_SCHEME`), `withReflowOnResize(...)` (auto layout on node resize), `withFCanvas(...)` (canvas defaults such as layer order).
 
 ## Hard Rules
 

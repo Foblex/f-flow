@@ -52,6 +52,7 @@ const REQUIRED_SYMBOLS = [
   'fVirtualFor',
   'FCreateConnectionEvent',
   'ngProjectAs',
+  'withConnectionFlow',
 ];
 
 const llms = readFileSync(LLMS_PATH, 'utf8');

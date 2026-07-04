@@ -71,6 +71,8 @@
 
 ## Examples
 
+- [Click to Connect](https://flow.foblex.com/examples/click-to-connect): Click source, then target — withConnectionFlow('click')
+
 - [All Examples Overview](https://flow.foblex.com/examples/overview): 50+ interactive examples
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform): Reference app
 - [Schema Designer](https://flow.foblex.com/examples/schema-designer)

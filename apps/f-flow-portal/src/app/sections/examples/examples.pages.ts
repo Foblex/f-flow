@@ -261,6 +261,18 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'click-to-connect',
+    text: 'Click to Connect',
+    group: 'Connectors',
+    date: new Date('2026-07-04 12:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Angular Diagram Example – Click-to-Connect Connections with Foblex Flow',
+      description:
+        'Create connections by clicking: click a source connector, follow the preview line, click a target to commit. Installed via provideFFlow(withConnectionFlow) alongside drag-to-connect.',
+    },
+  },
+  {
     slug: 'drag-to-reassign',
     text: 'Drag to Reassign',
     group: 'Connections - Editing',
@@ -1008,6 +1020,10 @@ export const EXAMPLES_COMPONENTS = [
   defineLazyComponent(
     'unified-connector',
     () => import('@foblex/examples/connectors/unified-connector/example'),
+  ),
+  defineLazyComponent(
+    'click-to-connect',
+    () => import('@foblex/examples/connectors/click-to-connect/example'),
   ),
   defineLazyComponent(
     'limiting-connections',

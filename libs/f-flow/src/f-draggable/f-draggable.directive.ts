@@ -4,6 +4,7 @@ import {
   Directive,
   EventEmitter,
   inject,
+  Injector,
   input,
   Input,
   numberAttribute,
@@ -43,6 +44,7 @@ import {
   FControlSchemeController,
   IFControlScheme,
 } from '../plugins/interaction/f-control-scheme';
+import { F_CONNECTION_FLOW, IFConnectionFlow } from '../plugins/interaction/f-connection-flow';
 import { ScheduleAutoPanFrameRequest, StopAutoPanRequest } from './auto-pan';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
@@ -87,6 +89,9 @@ export class FDraggableDirective
   private readonly _mediator = inject(FMediator);
   private readonly _platform = inject(PlatformService);
   private readonly _controlScheme = inject(FControlSchemeController, { optional: true });
+  private readonly _connectionFlowType = inject(F_CONNECTION_FLOW, { optional: true });
+  private readonly _injector = inject(Injector);
+  private _connectionFlow: IFConnectionFlow | null = null;
 
   // Raw values of the scheme-driven trigger inputs. Each public property below stays an
   // always-callable `FEventTrigger`: the setter stores the bound value and the getter
@@ -243,6 +248,16 @@ export class FDraggableDirective
 
   public ngAfterViewInit(): void {
     super.subscribe();
+
+    // The strategy type comes from the consumer's providers, but its dependencies live
+    // at the f-flow injector — instantiate it here so both are visible.
+    if (this._connectionFlowType) {
+      this._connectionFlow = Injector.create({
+        providers: [this._connectionFlowType],
+        parent: this._injector,
+      }).get(this._connectionFlowType);
+      this._connectionFlow.initialize();
+    }
   }
 
   public override onPointerDown(event: IPointerEvent): boolean {
@@ -353,6 +368,7 @@ export class FDraggableDirective
   }
 
   public ngOnDestroy(): void {
+    this._connectionFlow?.destroy();
     this._mediator.execute<void>(new StopAutoPanRequest());
     this._mediator.execute<void>(new RemoveDndFromStoreRequest());
     super.unsubscribe();

@@ -769,6 +769,10 @@ CSS Class: `.f-selection-area`
 
 ---
 
+### Connection Flow (withConnectionFlow)
+
+Selects the connection-creation gesture. `provideFFlow(withConnectionFlow('click'))` adds click-to-connect: click a source connector, the preview follows the cursor, click a connectable target to commit; Escape or clicking elsewhere cancels; drag-to-connect keeps working alongside. A custom `Type<IFConnectionFlow>` (initialize/destroy) can implement any gesture by driving the shared `FCreateConnectionSession` (`begin`, `update`, `resolveTarget`, `complete`, `cancel`) — preview, snapping, validation and the `fCreateConnection` emission stay identical across gestures. Requires `<f-connection-for-create>` like the drag gesture.
+
 ### Control Scheme (withControlScheme)
 
 Provider feature that maps gestures to canvas actions for `fDraggable`, `fZoom`, and `f-selection-area` together. Installed via `provideFFlow(withControlScheme(scheme))`; without it the flow uses `F_DEFAULT_CONTROL_SCHEME`. Per-instance trigger inputs override the active scheme.
