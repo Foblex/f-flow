@@ -132,7 +132,7 @@ When the flow compiles but looks wrong, verify in this order:
 10. **Connections attach to the wrong place** (`FF1006`): a connector is hidden with CSS (`display: none`) — its geometry is a 0×0 point. Conditionally render instead of hiding.
 11. **Node moves but its bindings never fire** (`FF1007`): an `fNode` element is nested inside another node element. One `fNode` per node; hierarchy is id-based (`fNodeParentId`), not DOM-based.
 12. **Group behaviors don't apply** (`FF1008`): `fNodeParentId` / `fGroupParentId` references an id no rendered group has.
-13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` called before the first `(fFullRendered)`.
+13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
 
 To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.
 

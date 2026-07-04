@@ -107,14 +107,14 @@ Fix: reference an existing group id, and keep ids stable across re-renders.
 
 ## FF1009
 
-**Warning: viewport helper called before the first render.**
+**Warning: viewport helper called before nodes were rendered.**
 
-`fitToScreen()`, `resetScaleAndCenter()`, or `centerGroupOrNode()` was called before the flow finished rendering (e.g. from `ngOnInit` / `ngAfterViewInit`), so it computes against an incomplete node set and produces a wrong initial viewport.
+`fitToScreen()`, `resetScaleAndCenter()`, or `centerGroupOrNode()` was called before the nodes were rendered (e.g. from `ngOnInit` / `ngAfterViewInit`), so it computes against an incomplete node set and produces a wrong initial viewport.
 
-Fix: call viewport helpers from the `(fFullRendered)` output:
+These helpers compute from the nodes bounding box, so `(fNodesRendered)` is the earliest safe moment — connections do not affect the result. `(fFullRendered)` also works:
 
 ```html
-<f-flow fDraggable (fFullRendered)="canvas.fitToScreen()">
+<f-flow fDraggable (fNodesRendered)="canvas.fitToScreen()">
   <f-canvas #canvas> ... </f-canvas>
 </f-flow>
 ```
