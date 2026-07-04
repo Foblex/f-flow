@@ -263,7 +263,7 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
   {
     slug: 'click-to-connect',
     text: 'Click to Connect',
-    group: 'Connectors',
+    group: 'Connections - Editing',
     date: new Date('2026-07-04 12:00:00'),
     badge: { text: 'New', type: 'success' },
     seo: {

@@ -614,4 +614,5 @@ export const DOCS_COMPONENTS = [
     'minimap-example',
     () => import('@foblex/examples/extensions/minimap-example/example'),
   ),
+  defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
 ];
