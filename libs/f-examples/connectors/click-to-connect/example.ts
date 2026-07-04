@@ -26,9 +26,7 @@ interface IConnection {
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
-  protected readonly connections = signal<IConnection[]>([
-    { id: generateGuid(), source: 'source-1', target: 'target-1' },
-  ]);
+  protected readonly connections = signal<IConnection[]>([]);
 
   protected loaded(): void {
     this._canvas().resetScaleAndCenter(false);
