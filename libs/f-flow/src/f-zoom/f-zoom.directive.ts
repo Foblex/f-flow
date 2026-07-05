@@ -32,7 +32,12 @@ import {
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
 } from '../f-storage';
-import { normalizeWheelStep, resolveWheelDelta } from './wheel-zoom.utils';
+import {
+  isGestureWheelEvent,
+  isTrackpadScrollEvent,
+  normalizeWheelStep,
+  resolveWheelDelta,
+} from './wheel-zoom.utils';
 
 @Directive({
   selector: 'f-canvas[fZoom]',
@@ -68,6 +73,12 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
 
   @Input({ alias: 'fZoomDblClickStep', transform: numberAttribute })
   public override dblClickStep: number = 0.5;
+
+  @Input({ transform: booleanAttribute })
+  public fScrollPan: boolean = false;
+
+  @Input({ alias: 'fPinchStep', transform: numberAttribute })
+  public pinchStep: number = 0;
 
   private get _flowHost(): HTMLElement {
     return this._store.flowHost;
@@ -124,6 +135,12 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
       return;
     }
 
+    if (this.fScrollPan && isTrackpadScrollEvent(event)) {
+      this._panByWheel(event);
+
+      return;
+    }
+
     const delta = resolveWheelDelta(event);
     if (delta === 0) {
       return;
@@ -143,12 +160,27 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   };
 
   private _normalizeWheelStep(event: WheelEvent, delta: number): number {
-    return normalizeWheelStep(event, delta, this.step);
+    const step = isGestureWheelEvent(event) && this.pinchStep > 0 ? this.pinchStep : this.step;
+
+    return normalizeWheelStep(event, delta, step);
   }
 
   private _calculateDirection(delta: number): number {
     return delta > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
   }
+
+  private _panByWheel(event: WheelEvent): void {
+    const canvas = this._canvas;
+    if (!canvas) {
+      return;
+    }
+
+    const pos = canvas.transform.position;
+    canvas._setPosition(PointExtensions.initialize(pos.x - event.deltaX, pos.y - event.deltaY));
+    canvas.redraw();
+    canvas.emitCanvasChangeEvent();
+  }
+
   private _onDoubleClick = (event: MouseEvent) => {
     if (!isValidEventTrigger(event, this.fDblClickTrigger)) {
       return;

@@ -19,6 +19,15 @@ export function isGestureWheelEvent(event: WheelEvent): boolean {
   return (event.ctrlKey || event.metaKey) && event.deltaMode === WheelEvent.DOM_DELTA_PIXEL;
 }
 
+/**
+ * Returns true for trackpad two-finger scroll events (pan intent).
+ * Pinch-to-zoom arrives as DOM_DELTA_PIXEL + ctrlKey; plain trackpad scroll
+ * arrives as DOM_DELTA_PIXEL without any modifier key.
+ */
+export function isTrackpadScrollEvent(event: WheelEvent): boolean {
+  return event.deltaMode === WheelEvent.DOM_DELTA_PIXEL && !event.ctrlKey && !event.metaKey;
+}
+
 function normalizeMouseWheelStep(delta: number, step: number): number {
   const intensity = Math.abs(delta) / 100;
   const normalized = clamp(intensity, DEFAULT_WHEEL_INTENSITY_MIN, DEFAULT_WHEEL_INTENSITY_MAX);

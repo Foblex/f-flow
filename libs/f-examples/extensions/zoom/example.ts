@@ -18,6 +18,7 @@ export class Example {
   protected fZoom!: FZoomDirective;
 
   protected isZoomEnabled: boolean = true;
+  protected isScrollPanEnabled: boolean = false;
 
   protected onLoaded(): void {
     this.fCanvas.resetScaleAndCenter(false);
@@ -33,5 +34,9 @@ export class Example {
 
   protected onZoomOnMouseWheelChanged(checked: boolean): void {
     this.isZoomEnabled = checked;
+  }
+
+  protected onScrollPanChanged(checked: boolean): void {
+    this.isScrollPanEnabled = checked;
   }
 }
