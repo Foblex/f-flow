@@ -1,5 +1,4 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "projects": {
     "starter": {
@@ -14,8 +13,7 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.json",
-            "styles": ["src/styles.scss", "node_modules/@foblex/flow/styles/default.scss"],
-            "polyfills": ["zone.js"]
+            "styles": ["src/styles.scss", "node_modules/@foblex/flow/styles/default.scss"]
           }
         },
         "serve": {
