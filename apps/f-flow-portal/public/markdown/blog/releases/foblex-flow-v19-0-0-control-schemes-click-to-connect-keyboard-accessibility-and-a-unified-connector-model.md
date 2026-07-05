@@ -38,7 +38,8 @@ Three presets ship out of the box: the default (drag pans, wheel zooms, `Shift`+
 
 This release also closes two long-standing viewport requests along the way: plain-wheel scrolling pans the canvas in scroll-pan schemes, and trackpad pinch gets its own zoom step.
 
-✅ Live demo: https://flow.foblex.com/examples/control-schemes
+::: ng-component <control-schemes></control-schemes> [height]="600"
+:::
 
 ## Click-to-Connect, and the Engine Behind It
 
@@ -52,7 +53,8 @@ Drag-to-connect keeps working alongside. `Escape` or clicking elsewhere cancels;
 
 The interesting part is underneath. Both gestures now drive the same **FCreateConnectionSession** — a gesture-independent engine that owns the preview line, snapping, connectable marking, target resolution, and the `fCreateConnection` emission. A custom gesture is a class with `initialize()` and `destroy()` that drives the session; validation and events come for free. The keyboard layer below is the proof that this works: it is just a third gesture on the same engine.
 
-✅ Live demo: https://flow.foblex.com/examples/click-to-connect
+::: ng-component <click-to-connect></click-to-connect> [height]="600"
+:::
 
 ## Accessibility
 
@@ -72,8 +74,10 @@ With it on: arrows move the selection spatially over nodes _and_ connections, `S
 
 The golden rule did not move: the library **never mutates your data**. `Delete` tells you what the user wants removed. You decide what to do.
 
-✅ Live demo: https://flow.foblex.com/examples/accessibility
-📚 Guide: https://flow.foblex.com/docs/accessibility
+::: ng-component <accessibility></accessibility> [height]="600"
+:::
+
+The full keyboard map and every configuration option live in the [Accessibility guide](https://flow.foblex.com/docs/accessibility).
 
 ## One Connector Instead of Three
 
@@ -85,7 +89,8 @@ The legacy connector API grew three directives — `fNodeInput`, `fNodeOutput`, 
 
 One id per connector; `fConnectorType` decides the behavior (`source`, `target`, `source-target`, `outlet`). Connections get canonical `fSourceId`/`fTargetId` inputs. The legacy directives and `fOutputId`/`fInputId` keep working — deprecated, not removed — so migration is at your pace.
 
-✅ Live demo: https://flow.foblex.com/examples/unified-connector
+::: ng-component <unified-connector></unified-connector> [height]="600"
+:::
 
 ## The Editor Now Explains Itself — to Humans and to Agents
 
@@ -131,15 +136,15 @@ And if you like what I'm building, please consider starring the repo ⭐
 
 It helps the project a lot.
 
-## ✅ Release links
+## Release Links
 
-- Release: https://github.com/Foblex/f-flow/releases/tag/v19.0.0
-- Changelog: https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md
-- Control schemes demo: https://flow.foblex.com/examples/control-schemes
-- Click-to-connect demo: https://flow.foblex.com/examples/click-to-connect
-- Accessibility demo: https://flow.foblex.com/examples/accessibility
-- Unified connector demo: https://flow.foblex.com/examples/unified-connector
-- Accessibility guide: https://flow.foblex.com/docs/accessibility
-- Control scheme guide: https://flow.foblex.com/docs/control-scheme
-- Error reference: https://flow.foblex.com/docs/errors
-- AI agents guide: https://flow.foblex.com/docs/ai
+- Release: <https://github.com/Foblex/f-flow/releases/tag/v19.0.0>
+- Changelog: <https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md>
+- Control Schemes example: <https://flow.foblex.com/examples/control-schemes>
+- Click to Connect example: <https://flow.foblex.com/examples/click-to-connect>
+- Accessibility example: <https://flow.foblex.com/examples/accessibility>
+- Unified Connector example: <https://flow.foblex.com/examples/unified-connector>
+- Accessibility guide: <https://flow.foblex.com/docs/accessibility>
+- Control Scheme guide: <https://flow.foblex.com/docs/control-scheme>
+- Error reference: <https://flow.foblex.com/docs/errors>
+- AI agents guide: <https://flow.foblex.com/docs/ai>

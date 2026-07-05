@@ -662,6 +662,11 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       title: 'Angular Diagram Example – Accessible Flow Editor with Foblex Flow',
       description:
         'Keyboard-operable flow editor: spatial navigation, topology walk along connections, grab-and-move, keyboard connection creation, and screen-reader announcements — built into every flow.',
+      image: './previews/examples/accessibility.light.png',
+      imageDark: './previews/examples/accessibility.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      imageType: 'image/png',
     },
   },
   {
