@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## Unreleased
+## [19.0.0](https://github.com/Foblex/f-flow/compare/v18.6.1...v19.0.0) (2026-07-05)
+
+### Highlights
+
+- **Control Schemes** — `withControlScheme(...)` maps gestures to canvas actions for the whole editor at once, with Miro-like and draw.io-like presets and runtime switching through `FControlSchemeController`.
+- **Connection Flows** — `withConnectionFlow('click')` adds click-to-connect alongside drag, built on the new gesture-independent `FCreateConnectionSession` that custom gestures can drive too.
+- **Accessibility** — ARIA semantics in every flow by default, plus an opt-in keyboard layer (`withA11y()`): spatial arrow navigation over nodes and connections, grab-and-move, keyboard connection creation, screen-reader announcements, remappable keys, localizable messages.
+- **Unified Connector Model** — one `[fConnector]` directive replaces the `fNodeInput`/`fNodeOutput`/`fNodeOutlet` trio; connections gain canonical `fSourceId`/`fTargetId`. Legacy APIs keep working, deprecated.
+- **AI-Ready Toolchain** — dev-mode diagnostics with stable `FF1001`–`FF1009` codes, agent rules installed by `ng add`, and CI-validated LLM docs shipped inside the npm package.
 
 ### Features
 
