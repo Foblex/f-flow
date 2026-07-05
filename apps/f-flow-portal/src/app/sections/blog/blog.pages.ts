@@ -29,6 +29,25 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+    text: 'v19.0.0',
+    group: 'Releases',
+    date: new Date('2026-07-05T12:00:00.000Z'),
+    seo: {
+      title:
+        'Foblex Flow v19.0.0: Control Schemes, Click-to-Connect, Keyboard Accessibility, and a Unified Connector Model',
+      description:
+        'Foblex Flow v19 opens up how the editor is driven: withControlScheme with Miro-like and draw.io-like presets, click-to-connect on the gesture-independent FCreateConnectionSession, an opt-in keyboard accessibility layer via withA11y with screen-reader announcements and keyboard connection creation, the unified fConnector directive, and FF-coded dev diagnostics with agent-ready docs.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+      image: './previews/examples/control-schemes.light.png',
+      imageType: 'image/png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v18-6-0-smart-auto-layout-on-resize',
     text: 'v18.6.0',
     group: 'Releases',
