@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow",
-  "version": "18.6.1",
+  "version": "19.0.0",
   "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -29,7 +29,17 @@
     "workflow",
     "graph ui",
     "interactive graph",
-    "foblex"
+    "foblex",
+    "node-editor",
+    "react flow alternative",
+    "react-flow angular",
+    "graph editor",
+    "visual programming",
+    "angular workflow",
+    "drag and drop",
+    "flow builder",
+    "angular diagram",
+    "no-code"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.schematics.json",

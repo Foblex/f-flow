@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v18.6.1 (May 2026)
+- **Current version**: v19.0.0 (May 2026)
 - **Weekly installs**: ~16K
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT

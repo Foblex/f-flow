@@ -11,6 +11,15 @@
   <a href="https://github.com/Foblex/f-flow/actions/workflows/tests-ci.yml">
     <img src="https://github.com/Foblex/f-flow/actions/workflows/tests-ci.yml/badge.svg" alt="Build Status"/>
   </a>
+  <a href="https://www.npmjs.com/package/@foblex/flow">
+    <img src="https://img.shields.io/npm/dw/@foblex/flow.svg?label=Downloads&color=blue" alt="NPM Weekly Downloads"/>
+  </a>
+  <a href="https://github.com/Foblex/f-flow/stargazers">
+    <img src="https://img.shields.io/github/stars/Foblex/f-flow.svg?label=Stars&color=gold" alt="GitHub Stars"/>
+  </a>
+  <a href="https://github.com/Foblex/f-flow/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/@foblex/flow.svg?label=License&color=green" alt="MIT License"/>
+  </a>
 </p>
 
 <h1 align="center">Foblex Flow</h1>
@@ -23,7 +32,13 @@ Foblex Flow gives Angular teams a simple way to start building graph-based produ
 
 Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces while keeping your own state, validation, persistence, and domain logic.
 
-Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.2, check the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first and pin the matching Foblex Flow line before installing.
+<p align="center">
+  <a href="https://flow.foblex.com/examples/overview">
+    <img src="https://flow.foblex.com/previews/examples/reflow-on-resize.light.png" alt="Foblex Flow — Angular node editor with draggable nodes and connections" width="720"/>
+  </a>
+</p>
+
+Current `19.x` releases target Angular `17.3+`. If your app is on Angular 12-17.2, check the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first and pin the matching Foblex Flow line before installing.
 
 ## Why Foblex Flow
 
@@ -34,6 +49,22 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 - Custom nodes, connectors, and connections for domain-specific graph UIs.
 - Your app stays in control of graph state, validation rules, permissions, and persistence.
 - Suitable for both lightweight diagrams and full workflow-builder products.
+
+## Feature Overview
+
+| Area          | What ships out of the box                                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Editing       | Drag & drop nodes and groups, drag/click/keyboard connection creation, reassign, waypoints, resize, rotate, snap & alignment guides, magnetic lines                       |
+| Navigation    | Pan, wheel/pinch/double-click zoom, minimap, auto-pan at edges, fit-to-screen, configurable control schemes (Miro-like, draw.io-like presets)                             |
+| Selection     | Click, marquee, multi-select, select-all, selection events — your app decides what selection means                                                                        |
+| Accessibility | ARIA semantics by default; opt-in keyboard layer: spatial navigation, move, delete, and connection creation without a mouse, screen-reader announcements, remappable keys |
+| Layout        | Dagre and ELK auto-layout packages, reflow-on-resize, layer ordering                                                                                                      |
+| Scale         | Node virtualization, render caching, background workers — optional, for large scenes                                                                                      |
+| Customization | Fully templated nodes/connections/connectors, themable via CSS tokens/SCSS mixins, custom markers, connection gradients and labels                                        |
+| Integration   | Event-driven API (`fCreateConnection`, `fMoveNodes`, `fDeleteSelected`, …) — the library never mutates your data; SSR-safe, zoneless-ready                                |
+| AI tooling    | `llms.txt`, bundled `AI.md`, `ng add` writes agent rules, dev diagnostics with stable `FFxxxx` error codes                                                                |
+
+Coming from React Flow? Read the honest comparison: [React Flow vs Foblex Flow for Angular teams](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams).
 
 ## What You Can Build
 
@@ -53,7 +84,7 @@ Current `18.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 
 ## Install
 
-These install commands are for the current `18.x` line. For Angular 12-17.2 apps, use the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first so you do not accidentally install a newer incompatible line.
+These install commands are for the current `19.x` line. For Angular 12-17.2 apps, use the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first so you do not accidentally install a newer incompatible line.
 
 ```bash
 ng add @foblex/flow
@@ -104,32 +135,22 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 ```html
 <f-flow fDraggable>
   <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <f-connection fSourceId="a-out" fTargetId="b-in"></f-connection>
 
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 24, y: 24 }"
-      fNodeOutput
-      fOutputId="output1"
-      fOutputConnectableSide="right"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }">
       Drag me
+      <div fConnector fConnectorType="source" fConnectorId="a-out"></div>
     </div>
 
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 244, y: 24 }"
-      fNodeInput
-      fInputId="input1"
-      fInputConnectableSide="left"
-    >
-      Drag me
+    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }">
+      Drag me too
+      <div fConnector fConnectorType="target" fConnectorId="b-in"></div>
     </div>
   </f-canvas>
 </f-flow>
 ```
+
+That is the whole mental model: `f-flow` hosts the editor, `f-canvas` pans and zooms, any element becomes a node with `fNode`, connectors attach edges. Everything below is opt-in.
 
 ## Quick FAQ
 
