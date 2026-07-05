@@ -29,8 +29,20 @@ export function fDiagnosticMessage(code: string, message: string): string {
  * Emits a dev-mode console warning once per `code + key` pair, so redraw loops do not
  * spam the console. No-op in production builds.
  */
+let _suppressed = false;
+
+/**
+ * Silences dev-mode diagnostic WARNINGS for the current runtime — intended for the
+ * library's own test suites, where fixtures legitimately violate the checks (zero
+ * height hosts, detached projections) and the noise would drown real warnings.
+ * Errors are not affected. No-op in production builds.
+ */
+export function fSuppressDevWarnings(suppress: boolean): void {
+  _suppressed = suppress;
+}
+
 export function fWarnOnce(code: string, key: string, message: string): void {
-  if (!isFDevMode()) {
+  if (!isFDevMode() || _suppressed) {
     return;
   }
 

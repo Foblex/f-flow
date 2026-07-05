@@ -52,13 +52,14 @@ export class Example {
   }
 
   protected createConnection(event: FCreateConnectionEvent): void {
-    if (!event.targetId) {
+    const targetId = event.targetId;
+    if (!targetId) {
       return;
     }
 
     this.connections.update((connections) => [
       ...connections,
-      { id: generateGuid(), source: event.sourceId, target: event.targetId! },
+      { id: generateGuid(), source: event.sourceId, target: targetId },
     ]);
   }
 
