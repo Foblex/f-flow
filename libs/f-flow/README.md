@@ -83,6 +83,12 @@ Coming from React Flow? Read the honest comparison: [React Flow vs Foblex Flow f
 - [Tournament Bracket](https://flow.foblex.com/examples/tournament-bracket) - A specialized bracket UI built on the same node-based primitives.
 - [All Examples](https://flow.foblex.com/examples/overview) - Focused examples for connections, selection, minimap, layout, alignment, and other editor features.
 
+## Try It Online
+
+No local setup needed — the minimal starter runs in the browser:
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/Foblex/f-flow/tree/main/starters/minimal-flow)
+
 ## Install
 
 These install commands are for the current `19.x` line. For Angular 12-17.2 apps, use the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first so you do not accidentally install a newer incompatible line.

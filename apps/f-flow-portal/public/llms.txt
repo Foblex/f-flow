@@ -66,6 +66,10 @@
 ## Use cases
 
 - [Angular Node-Based UI Library](https://flow.foblex.com/docs/angular-node-based-ui-library)
+- [Angular Flowchart Library](https://flow.foblex.com/docs/angular-flowchart-library): Editable flowcharts with draggable steps and wired connections
+- [Angular AI Agent Builder](https://flow.foblex.com/docs/angular-ai-agent-builder): Visual AI pipelines and low-code LLM tools on Foblex Flow
+- [React Flow Alternative for Angular](https://flow.foblex.com/docs/react-flow-alternative-for-angular): How the nodes/edges model maps to Angular-native templates
+- [ngx-graph Alternative](https://flow.foblex.com/docs/ngx-graph-alternative): Maintained editor with a migration path from ngx-graph
 - [Angular Node Editor Library](https://flow.foblex.com/docs/angular-node-editor-library)
 - [Angular Workflow Builder](https://flow.foblex.com/docs/angular-workflow-builder)
 - [Angular Diagram Library](https://flow.foblex.com/docs/angular-diagram-library)

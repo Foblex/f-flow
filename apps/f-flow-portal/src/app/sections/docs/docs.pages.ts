@@ -503,6 +503,50 @@ export const DOCS_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'angular-ai-agent-builder',
+    text: 'Angular AI Agent Builder',
+    group: 'Use Cases',
+    seo: {
+      titleIsFinal: true,
+      title: 'Angular AI Agent Builder',
+      description:
+        'Build visual AI agent pipelines, RAG flows and low-code LLM tools in Angular with Foblex Flow: typed connections, form-rich nodes, keyboard accessibility, and an open-source reference IDE demo.',
+    },
+  },
+  {
+    slug: 'angular-flowchart-library',
+    text: 'Angular Flowchart Library',
+    group: 'Use Cases',
+    seo: {
+      titleIsFinal: true,
+      title: 'Angular Flowchart Library',
+      description:
+        'Foblex Flow is an Angular-native flowchart library for editable flowcharts: draggable steps, wired connections, validation rules, auto-layout, and accessibility — MIT licensed and actively maintained.',
+    },
+  },
+  {
+    slug: 'react-flow-alternative-for-angular',
+    text: 'React Flow Alternative',
+    group: 'Use Cases',
+    seo: {
+      titleIsFinal: true,
+      title: 'React Flow Alternative for Angular',
+      description:
+        'Angular-native alternative to React Flow: how the nodes/edges mental model maps to Foblex Flow templates, what wrapping React costs, and what Foblex Flow ships that React Flow does not.',
+    },
+  },
+  {
+    slug: 'ngx-graph-alternative',
+    text: 'ngx-graph Alternative',
+    group: 'Use Cases',
+    seo: {
+      titleIsFinal: true,
+      title: 'ngx-graph Alternative — Maintained Angular Graph Editor',
+      description:
+        'ngx-graph is unmaintained; Foblex Flow is the actively maintained Angular-native alternative with editing, auto-layout via Dagre/ELK, and a mechanical migration path from ngx-graph nodes and links.',
+    },
+  },
+  {
     slug: 'react-flow-vs-foblex-flow-for-angular-teams',
     text: 'React Flow vs Foblex Flow',
     group: 'Use Cases',

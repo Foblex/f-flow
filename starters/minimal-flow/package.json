@@ -1,0 +1,29 @@
+{
+  "name": "foblex-flow-starter",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@foblex/2d": "^1.2.2",
+    "@foblex/flow": "^19.0.0",
+    "@foblex/mediator": "^1.1.3",
+    "@foblex/platform": "^1.0.4",
+    "@foblex/utils": "^1.1.1",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "^0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.0.0",
+    "@angular/cli": "^20.0.0",
+    "typescript": "~5.8.0"
+  }
+}

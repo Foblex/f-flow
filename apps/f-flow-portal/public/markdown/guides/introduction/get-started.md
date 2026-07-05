@@ -4,6 +4,8 @@ Build your first interactive diagram in Angular: **install Foblex Flow**, render
 
 This is the default starting path for most Angular teams. You do not need caching or virtualization on day one.
 
+Prefer trying without a local setup? Open the [minimal starter on StackBlitz](https://stackblitz.com/github/Foblex/f-flow/tree/main/starters/minimal-flow) — a running editor with two nodes and connection creation.
+
 ## Description
 
 This guide is the shortest path from installation to a working flow. You will:

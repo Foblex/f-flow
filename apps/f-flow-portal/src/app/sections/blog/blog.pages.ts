@@ -221,6 +221,24 @@ export const BLOG_PAGES: IPageDefinition[] = [
     },
   },
 
+  {
+    slug: 'angular-diagram-and-flow-libraries-compared-2026',
+    text: 'Libraries Compared (2026)',
+    group: 'Articles',
+    date: new Date('2026-07-05T14:00:00.000Z'),
+    seo: {
+      title: 'Angular Diagram and Flow Libraries Compared (2026)',
+      description:
+        "A maintainer's honest map of Angular diagramming in 2026: Foblex Flow, ngx-vflow, ng-diagram, ngx-graph, React Flow via wrapper, GoJS, JointJS+ and Syncfusion — who wins which trade-off, including where Foblex Flow loses.",
+      canonical: 'https://flow.foblex.com/blog/angular-diagram-and-flow-libraries-compared-2026',
+      image: './site-preview.png',
+      imageType: 'image/png',
+      imageWidth: 1688,
+      imageHeight: 937,
+      ogType: 'article',
+    },
+  },
+
   // -------- Feature Deep Dives --------
   {
     slug: 'selection-instead-of-focus-keyboard-accessibility-in-an-angular-node-editor',
