@@ -53,6 +53,7 @@ const REQUIRED_SYMBOLS = [
   'FCreateConnectionEvent',
   'ngProjectAs',
   'withConnectionFlow',
+  'withA11y',
 ];
 
 const llms = readFileSync(LLMS_PATH, 'utf8');

@@ -39,6 +39,7 @@ import {
   PrepareDragSequenceRequest,
   RemoveDndFromStoreRequest,
 } from '../domain';
+import { FDeleteSelectedEvent } from './f-delete-selected-event';
 import {
   F_DEFAULT_CONTROL_SCHEME,
   FControlSchemeController,
@@ -180,6 +181,9 @@ export class FDraggableDirective
 
   @Output()
   public override fSelectionChange = new EventEmitter<FSelectionChangeEvent>();
+
+  @Output()
+  public override fDeleteSelected = new EventEmitter<FDeleteSelectedEvent>();
 
   /** @deprecated Use `fNodeConnectionsIntersection` */
   @Output()

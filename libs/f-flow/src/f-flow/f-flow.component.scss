@@ -7,6 +7,15 @@
   pointer-events: all;
   user-select: none;
   touch-action: none;
+
+  // The host holds DOM focus for the keyboard layer, but the selected item is the
+  // visual state — no ring around the whole canvas. A transparent (not `none`)
+  // outline stays invisible normally yet is repainted with system colors in
+  // Windows High Contrast / forced-colors mode.
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid transparent;
+  }
 }
 
 ::ng-deep {

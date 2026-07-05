@@ -51,6 +51,7 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 - `fCreateConnection: EventEmitter<FCreateConnectionEvent>;` Emits when a new connection is created.
 - `fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;` Emits when connection waypoints change.
 - `fDropToGroup: EventEmitter<FDropToGroupEvent>;` Emits when items are dropped into a group.
+- `fDeleteSelected: EventEmitter<FDeleteSelectedEvent>;` Emits when the user requests removal of the current selection (keyboard `Delete`/`Backspace`); remove the items from your data — the library never mutates the graph.
 - `fDragStarted: EventEmitter<FDragStartedEvent>;` Emits when a drag sequence starts.
 - `fDragEnded: EventEmitter<void>;` Emits when a drag sequence ends.
 

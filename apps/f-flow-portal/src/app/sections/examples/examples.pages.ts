@@ -653,6 +653,18 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'accessibility',
+    text: 'Accessibility',
+    group: 'Editor Helpers',
+    date: new Date('2026-07-04 18:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Angular Diagram Example – Accessible Flow Editor with Foblex Flow',
+      description:
+        'Keyboard-operable flow editor: spatial navigation, topology walk along connections, grab-and-move, keyboard connection creation, and screen-reader announcements — built into every flow.',
+    },
+  },
+  {
     slug: 'help-in-positioning',
     text: 'Help in Positioning (Legacy)',
     group: 'Editor Helpers',
@@ -1189,6 +1201,10 @@ export const EXAMPLES_COMPONENTS = [
   defineLazyComponent(
     'add-node-from-palette',
     () => import('@foblex/examples/extensions/add-node-from-palette/example'),
+  ),
+  defineLazyComponent(
+    'accessibility',
+    () => import('@foblex/examples/extensions/accessibility/example'),
   ),
   defineLazyComponent(
     'drag-start-end-events',

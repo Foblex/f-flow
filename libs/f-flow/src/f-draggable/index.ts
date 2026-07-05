@@ -28,6 +28,8 @@ export * from './selection-area';
 
 export * from './f-drag-blocker.directive';
 
+export * from './f-delete-selected-event';
+
 export * from './f-drag-started-event';
 
 export * from './f-draggable.directive';

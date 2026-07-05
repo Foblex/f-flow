@@ -1,0 +1,31 @@
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
+
+::ng-deep f-flow {
+  @include flow-theme.connection($scoped: false);
+  @include flow-theme.connection-markers($scoped: false);
+}
+
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);
+
+.f-node {
+  padding: 16px 24px;
+}
+
+.hint {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ff-node-color);
+  background: var(--ff-node-background-color);
+  border: 1px solid var(--ff-node-border-color);
+  border-radius: 4px;
+}

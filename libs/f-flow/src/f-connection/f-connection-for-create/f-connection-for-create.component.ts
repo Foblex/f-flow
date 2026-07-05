@@ -36,6 +36,7 @@ let uniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'f-component f-connection f-connection-for-create',
+    'aria-hidden': 'true',
   },
   providers: [
     { provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FConnectionForCreateComponent },

@@ -46,6 +46,7 @@
 - [f-background Component](https://flow.foblex.com/docs/f-background-component): Canvas background patterns
 - [f-selection-area](https://flow.foblex.com/docs/f-selection-area-component): Rectangle multi-select
 - [Control Scheme](https://flow.foblex.com/docs/control-scheme): Configurable gesture-to-action mapping with presets
+- [Accessibility](https://flow.foblex.com/docs/accessibility): ARIA semantics always on; withA11y() adds keyboard navigation, movement, and connection creation
 - [fExternalItem Directive](https://flow.foblex.com/docs/f-external-item-directive): Drag from palette to canvas
 - [f-auto-pan Component](https://flow.foblex.com/docs/f-auto-pan-component): Edge-based auto-scroll
 - [f-magnetic-lines](https://flow.foblex.com/docs/f-magnetic-lines-component): Alignment guide lines
@@ -72,6 +73,7 @@
 ## Examples
 
 - [Click to Connect](https://flow.foblex.com/examples/click-to-connect): Click source, then target — withConnectionFlow('click')
+- [Accessibility](https://flow.foblex.com/examples/accessibility): Keyboard-operable editor with screen-reader announcements — opt-in via withA11y()
 
 - [All Examples Overview](https://flow.foblex.com/examples/overview): 50+ interactive examples
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform): Reference app

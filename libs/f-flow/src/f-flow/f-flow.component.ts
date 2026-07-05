@@ -55,6 +55,7 @@ import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connecti
 import { F_CACHE_OPTIONS } from '../f-cache';
 import { F_FLOW_CONFIG } from '../provide-f-flow';
 import { F_REFLOW_PROVIDERS } from '../plugins/layout/f-reflow-on-resize';
+import { FA11yAnnouncer, FA11yController } from '../plugins/a11y';
 
 let uniqueId = 0;
 const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
@@ -77,6 +78,8 @@ const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
     FDraggableDataContext,
     ...F_DRAGGABLE_PROVIDERS,
     ...F_REFLOW_PROVIDERS,
+    FA11yAnnouncer,
+    FA11yController,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,6 +92,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _cache = inject(F_CACHE_OPTIONS);
   private readonly _injector = inject(Injector);
   private readonly _flowConfig = inject(F_FLOW_CONFIG, { optional: true });
+  private readonly _a11y = inject(FA11yController);
 
   public override fId = input<string>(this._flowConfig?.id ?? `f-flow-${uniqueId++}`, {
     alias: 'fFlowId',
@@ -117,6 +121,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     }
     this._listenNodesChanges();
     this._listenConnectionsChanges();
+    this._a11y.initialize();
     this._warnWhenHostHasNoHeight();
   }
 
@@ -259,6 +264,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public ngOnDestroy(): void {
+    this._a11y.destroy();
     this._mediator.execute(new RemoveFlowFromStoreRequest(this));
   }
 }

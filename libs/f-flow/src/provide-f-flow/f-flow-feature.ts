@@ -8,6 +8,7 @@ export enum EFFlowFeatureKind {
   CANVAS = 'canvas',
   CONTROL_SCHEME = 'control-scheme',
   CONNECTION_FLOW = 'connection-flow',
+  A11Y = 'a11y',
 }
 
 /**

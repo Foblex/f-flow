@@ -1,0 +1,47 @@
+<f-flow
+  fDraggable
+  aria-label="Order processing diagram"
+  (fNodesRendered)="loaded()"
+  (fCreateConnection)="createConnection($event)"
+  (fMoveNodes)="moveNodes($event)"
+  (fDeleteSelected)="deleteSelection($event)"
+>
+  <f-canvas fZoom>
+    <f-connection-for-create fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+    <f-snap-connection fBehavior="fixed" fType="segment" [fSnapThreshold]="40">
+      <f-connection-marker-arrow />
+    </f-snap-connection>
+
+    @for (connection of connections(); track connection.id) {
+    <f-connection
+      [fConnectionId]="connection.id"
+      [fSourceId]="connection.source"
+      [fTargetId]="connection.target"
+      fBehavior="fixed"
+      fType="segment"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (node of nodes(); track node.id) {
+    <div
+      fNode
+      fDragHandle
+      [attr.aria-label]="node.label"
+      [fNodeId]="node.id"
+      [fNodePosition]="node.position"
+    >
+      {{ node.label }}
+      <div fConnector [fConnectorId]="node.id + '-input'" class="left"></div>
+      <div fConnector [fConnectorId]="node.id + '-output'" class="right"></div>
+    </div>
+    }
+  </f-canvas>
+</f-flow>
+
+<div class="hint">
+  Click the canvas (or Tab to it), then: arrows — select the nearest node (Shift extends the
+  selection), Ctrl + arrow — follow a connection, hold Space + arrows — move (release to drop), C —
+  connect, Delete — remove, +/−/0 — zoom, Escape — clear.
+</div>

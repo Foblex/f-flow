@@ -394,6 +394,16 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Provide a control scheme through provideFFlow to map gestures to canvas actions: pan, zoom, selection and node interactions, with Miro-like and draw.io-like presets.',
     },
   },
+  {
+    slug: 'accessibility',
+    text: 'Accessibility',
+    group: 'Interaction',
+    seo: {
+      title: 'Accessibility - Keyboard Operation and Screen Reader Support',
+      description:
+        'Built-in ARIA semantics and an opt-in keyboard layer: spatial navigation, grab-and-move, keyboard connection creation, localizable announcements, and remappable keys via withA11y.',
+    },
+  },
 
   // -------- Helpers --------
   {

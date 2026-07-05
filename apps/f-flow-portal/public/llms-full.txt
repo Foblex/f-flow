@@ -769,6 +769,16 @@ CSS Class: `.f-selection-area`
 
 ---
 
+### Accessibility (withA11y)
+
+Every flow ships an accessibility layer; no setup needed. Semantics always run: nodes/groups/connections receive `role`, `aria-roledescription`, accessible names (a connection gets "Connection from X to Y"; set `aria-label` yourself to override — the library only fills missing attributes), standing keyboard instructions via `aria-describedby`, and a live region announces selection, movement, connection and deletion (WCAG 4.1.3); the minimap and connection previews are `aria-hidden`.
+
+The keyboard layer is OPT-IN — installing `provideFFlow(withA11y())` enables it (existing apps with their own key handling stay untouched): the `f-flow` host becomes the single tab stop (`role="application"` so screen readers hand arrow keys to the canvas); arrows move the SELECTION to the nearest node spatially — DOM focus stays on the host, the active item is exposed via `aria-activedescendant` (`Shift`+arrow extends the selection, `Home`/`End` first/last); `Ctrl`+arrow walks the topology — the connection is focused and selected first, then the node on its other end; `Ctrl`+`A` selects all, `Escape` clears; `Space` moves the selection — hold it and arrow (release drops) or tap to grab / tap to drop (`Shift` = coarse step, `Escape` reverts, the drop emits `fMoveNodes`); `C` starts a connection from the selected node (exactly one node must be selected) driving the shared `FCreateConnectionSession` — arrows move between connectable targets spatially with preview and snap, `Enter` emits `fCreateConnection`, `Escape` cancels; `Delete`/`Backspace` emits `fDeleteSelected: FDeleteSelectedEvent` (the library never mutates your data); `+`/`-`/`0` zoom. Native controls inside nodes (inputs, buttons, links) are never hijacked.
+
+`withA11y(config)` also tunes the layer: `keyboard: false` keeps keys off while customizing the rest, `moveStep`/`coarseMoveStep` set movement steps, `messages: Partial<IFA11yMessages>` localizes every announcement and attached string, `keys: IFA11yKeys` rebinds actions (`grab`/`connect`/`deleteSelected`/`selectAll`/`zoomIn`/`zoomOut`/`zoomReset`; empty array disables one; arrows/Enter/Escape are fixed). Focus styling: nodes/groups get a `:focus-visible` outline (`--ff-focus-ring-color`), focused connections use the selected stroke.
+
+---
+
 ### Connection Flow (withConnectionFlow)
 
 Selects the connection-creation gesture. `provideFFlow(withConnectionFlow('click'))` adds click-to-connect: click a source connector, the preview follows the cursor, click a connectable target to commit; Escape or clicking elsewhere cancels; drag-to-connect keeps working alongside. A custom `Type<IFConnectionFlow>` (initialize/destroy) can implement any gesture by driving the shared `FCreateConnectionSession` (`begin`, `update`, `resolveTarget`, `complete`, `cancel`) — preview, snapping, validation and the `fCreateConnection` emission stay identical across gestures. Requires `<f-connection-for-create>` like the drag gesture.
