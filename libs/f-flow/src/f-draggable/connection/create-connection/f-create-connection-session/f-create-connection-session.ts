@@ -289,6 +289,11 @@ export class FCreateConnectionSession {
    * invalidates the full region on hide and is unaffected. See issue #311.
    */
   private _forceCanvasLayerRepaint(): void {
+    // The remnant-ink bug is WebKit-specific; other engines invalidate the region on
+    // hide, so they skip the synchronous layout flush entirely.
+    if (!_isWebKit()) {
+      return;
+    }
     const layer = this._connection?.hostElement.closest('f-canvas') as HTMLElement | null;
     if (!layer) {
       return;
@@ -306,4 +311,12 @@ export class FCreateConnectionSession {
       new ResolveConnectionEndpointRotationContextRequest(connector),
     );
   }
+}
+
+function _isWebKit(): boolean {
+  return (
+    typeof navigator !== 'undefined' &&
+    /AppleWebKit/.test(navigator.userAgent) &&
+    !/Chrome|Chromium|Edg\//.test(navigator.userAgent)
+  );
 }

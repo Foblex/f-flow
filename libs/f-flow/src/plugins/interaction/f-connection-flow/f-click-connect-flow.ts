@@ -2,6 +2,7 @@ import { inject, Injectable, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FMediator } from '@foblex/mediator';
 import { IPoint, ITransformModel, Point, PointExtensions } from '@foblex/2d';
+import { isValidEventTrigger } from '../../../domain';
 import { IFConnectionFlow } from './i-f-connection-flow';
 import { FComponentsStore } from '../../../f-storage';
 import {
@@ -84,6 +85,15 @@ export class FClickConnectFlow implements IFConnectionFlow {
 
     const target = event.target as HTMLElement;
     if (!this._store.flowHost?.contains(target)) {
+      return;
+    }
+    // Click-to-connect obeys the same public gates as the drag gesture: the
+    // fDraggableDisabled input and the createConnection trigger of the active scheme.
+    const draggable = this._store.fDraggable;
+    if (!draggable || draggable.disabled) {
+      return;
+    }
+    if (!this._isArmed && !isValidEventTrigger(event, draggable.fCreateConnectionTrigger)) {
       return;
     }
     if (isDragBlocker(target) || target.closest('[fLockedContext]')) {
