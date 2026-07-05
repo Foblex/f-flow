@@ -113,7 +113,6 @@ async function main() {
       {
         model: MODEL_ID,
         dim: indexed[0]?.vector.length ?? 0,
-        builtAt: new Date().toISOString(),
         documents: indexed,
       },
       null,

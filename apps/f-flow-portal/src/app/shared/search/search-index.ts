@@ -17,7 +17,6 @@ export interface ISearchDocument {
 export interface ISearchIndex {
   model: string;
   dim: number;
-  builtAt: string;
   documents: ISearchDocument[];
 }
 
