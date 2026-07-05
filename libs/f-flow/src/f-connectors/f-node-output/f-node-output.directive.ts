@@ -11,7 +11,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { F_NODE_OUTPUT, FNodeOutputBase } from './f-node-output-base';
-import { F_NODE } from '../../f-node';
+import { injectConnectorNode } from '../inject-connector-node';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
 import {
@@ -25,6 +25,7 @@ import { EFConnectableSide } from '../../f-connection-v2';
 
 let uniqueId = 0;
 
+/** @deprecated Use fConnector with fConnectorType="source". */
 @Directive({
   standalone: false,
   selector: '[fNodeOutput]',
@@ -42,7 +43,7 @@ export class FNodeOutputDirective extends FNodeOutputBase implements OnInit, OnC
   public readonly hostElement = inject(ElementRef).nativeElement;
 
   private readonly _mediator = inject(FMediator);
-  private readonly _node = inject(F_NODE);
+  private readonly _node = injectConnectorNode('[fNodeOutput]');
 
   public override fId = input<string, unknown>(`f-node-output-${uniqueId++}`, {
     alias: 'fOutputId',

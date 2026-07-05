@@ -25,6 +25,9 @@ export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromS
       case 'outlet':
         this._removeOutlet(instance);
         break;
+      case 'connector':
+        this._removeConnector(instance);
+        break;
       default:
         throw new Error(`Unknown connector kind: ${instance.kind}`);
     }
@@ -46,6 +49,13 @@ export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromS
 
   private _removeOutlet(component: FConnectorBase): void {
     this._store.outlets.removeById(component.fId());
+    this._store.emitNodeChanges();
+
+    this._geometryUnregister(component);
+  }
+
+  private _removeConnector(component: FConnectorBase): void {
+    this._store.connectors.removeById(component.fId());
     this._store.emitNodeChanges();
 
     this._geometryUnregister(component);

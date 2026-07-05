@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v18.5.0 (April 2026)
+- **Current version**: v18.6.1 (May 2026)
 - **Weekly installs**: ~16K
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -40,6 +40,8 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 - Your app updates state, Angular rerenders.
 - Connections are connector-to-connector (fOutputId → fInputId), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
+- Dev-mode diagnostics: the library warns with stable FFxxxx codes (see https://flow.foblex.com/docs/errors) on the most common silent failures — unresolved connection ids (FF1001), zero-height host (FF1002), connector outside a node (FF1003), content not projected into the canvas (FF1004), interaction features without fDraggable (FF1005), CSS-hidden connectors (FF1006), nested fNode elements (FF1007), dangling parent ids (FF1008), viewport helpers called before nodes rendered (FF1009; call from fNodesRendered or fFullRendered).
+- Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
 
 ## 4. Installation
 
@@ -231,6 +233,7 @@ Selector: `f-canvas`
 | position | InputSignal\<IPoint\> | { x: 0, y: 0 } | Canvas pan position |
 | scale | InputSignal\<number\> | 1 | Canvas zoom scale |
 | debounceTime | InputSignal\<number\> | 0 | Debounce ms for fCanvasChange |
+| fLayers | EFCanvasLayer[] | [GROUPS, CONNECTIONS, NODES] | Stacking order of the built-in layers, bottom to top; app-wide default via provideFFlow(withFCanvas({ layers })) |
 
 #### Outputs
 
@@ -344,7 +347,53 @@ Selector: `[fGroup]`
 
 ---
 
+### fConnector (FConnectorDirective)
+
+Unified connector that replaces `fNodeOutput`, `fNodeInput`, and `fNodeOutlet`. One id per connector; behavior is controlled by `fConnectorType`.
+
+Selector: `[fConnector]`
+
+```ts
+type FConnectorType = 'source' | 'target' | 'source-target' | 'outlet';
+```
+
+- `source` — can start a connection and be used as `fSourceId`
+- `target` — can accept a connection and be used as `fTargetId`
+- `source-target` (default) — one id supports both behaviors
+- `outlet` — shared start surface; the emitted `FCreateConnectionEvent.sourceId` is the resolved real source connector id from the same node
+
+#### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| fConnectorId | InputSignal\<string\> | f-connector-{id} | Unique connector id |
+| fConnectorType | InputSignal\<FConnectorType\> | source-target | Connector behavior |
+| fConnectorDisabled | InputSignal\<boolean\> | false | Disable this connector |
+| fConnectorMultiple | InputSignal\<boolean\> | true | Allow multiple connections |
+| fConnectorCategory | InputSignal\<string \| undefined\> | undefined | Optional category for connection rules |
+| fConnectorConnectableSide | EFConnectableSide | AUTO | Preferred dock side |
+| fConnectorSelfConnectable | boolean | true | Allow same-node connection (source/source-target) |
+| fCanBeConnectedTo | InputSignal\<string[]\> | [] | Allow-list of target ids or categories (replaces fCanBeConnectedInputs) |
+| fConnectionFromOutlet | InputSignal\<boolean\> | false | Outlet only: draw the preview line from the outlet rect |
+
+#### Host Attributes
+
+`data-f-connector-id`, `data-f-connector-type`
+
+#### CSS Classes
+
+`.f-connector`, `.f-connector-source`, `.f-connector-target`, `.f-connector-source-target`, `.f-connector-outlet`, `.f-connector-disabled`, `.f-connector-connected`, `.f-connector-connectable`, `.f-connector-not-connectable`, `.f-connector-multiple`
+
+```html
+<div fConnector fConnectorId="a"></div>
+<f-connection fSourceId="a" fTargetId="b"></f-connection>
+```
+
+---
+
 ### fNodeOutput (FNodeOutputDirective)
+
+**Deprecated:** use `fConnector` with `fConnectorType="source"`.
 
 Marks an element as an output connector — the source endpoint for connections.
 
@@ -369,6 +418,8 @@ Selector: `[fNodeOutput]`
 
 ### fNodeInput (FNodeInputDirective)
 
+**Deprecated:** use `fConnector` with `fConnectorType="target"`.
+
 Marks an element as an input connector — the target endpoint for connections.
 
 Selector: `[fNodeInput]`
@@ -390,6 +441,8 @@ Selector: `[fNodeInput]`
 ---
 
 ### fNodeOutlet (FNodeOutletDirective)
+
+**Deprecated:** use `fConnector` with `fConnectorType="outlet"`.
 
 Single shared start-connection point for nodes with multiple outputs.
 
@@ -421,8 +474,14 @@ Selector: `f-connection`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fConnectionId | InputSignal\<string\> | f-connection-{id} | Unique connection id |
-| fOutputId | InputSignal\<string\> | required | Source output connector id |
-| fInputId | InputSignal\<string\> | required | Target input connector id |
+| fSourceId | InputSignal\<string\> | required | Source connector id |
+| fTargetId | InputSignal\<string\> | required | Target connector id |
+| fSourceSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override source dock side |
+| fTargetSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override target dock side |
+| fOutputId | InputSignal\<string\> | '' | Deprecated: use fSourceId |
+| fInputId | InputSignal\<string\> | '' | Deprecated: use fTargetId |
+| fOutputSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Deprecated: use fSourceSide |
+| fInputSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Deprecated: use fTargetSide |
 | fReassignDisabled | InputSignal\<boolean\> | false | Disable drag-to-reassign |
 | fSelectionDisabled | InputSignal\<boolean\> | false | Disable selection |
 | fBehavior | InputSignal\<EFConnectionBehavior\> | FIXED | Connection behavior (FIXED or FLOATING) |
@@ -536,14 +595,14 @@ Selector: `f-flow[fDraggable]`
 |-------|------|---------|-------------|
 | fDraggableDisabled | boolean | false | Disable all interactions |
 | fMultiSelectTrigger | FEventTrigger | Ctrl/Cmd key | Predicate for multi-select |
-| fReassignConnectionTrigger | FEventTrigger | always | Predicate for connection reassign |
-| fCreateConnectionTrigger | FEventTrigger | always | Predicate for connection create |
+| fReassignConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection reassign |
+| fCreateConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection create |
 | fConnectionWaypointsTrigger | FEventTrigger | always | Predicate for waypoint manipulation |
 | fMoveControlPointTrigger | FEventTrigger | always | Predicate for bezier control points |
-| fNodeResizeTrigger | FEventTrigger | always | Predicate for node resize |
-| fNodeRotateTrigger | FEventTrigger | always | Predicate for node rotation |
-| fNodeMoveTrigger | FEventTrigger | always | Predicate for node drag |
-| fCanvasMoveTrigger | FEventTrigger | always | Predicate for canvas pan |
+| fNodeResizeTrigger | FEventTrigger | active scheme (always) | Predicate for node resize |
+| fNodeRotateTrigger | FEventTrigger | active scheme (always) | Predicate for node rotation |
+| fNodeMoveTrigger | FEventTrigger | active scheme (always) | Predicate for node drag |
+| fCanvasMoveTrigger | FEventTrigger | active scheme (primary button) | Predicate for canvas pan |
 | fExternalItemTrigger | FEventTrigger | always | Predicate for external item drag |
 | fEmitOnNodeIntersect | boolean | false | Emit intersection events |
 | vCellSize | number | 1 | Vertical grid snap size |
@@ -622,14 +681,13 @@ Selector: `f-canvas[fZoom]`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fZoom | boolean | false | Enable zoom |
-| fWheelTrigger | FEventTrigger | always | Predicate for wheel zoom |
+| fWheelTrigger | FEventTrigger | active scheme (always) | Predicate for wheel zoom; overrides the scheme's scrollPan routing when set |
 | fDblClickTrigger | FEventTrigger | always | Predicate for double-click zoom |
 | fZoomMinimum | number | 0.1 | Minimum zoom scale |
 | fZoomMaximum | number | 4 | Maximum zoom scale |
 | fZoomStep | number | 0.1 | Wheel zoom step |
+| fPinchStep | number | 0 | Trackpad pinch zoom step; falls back to fZoomStep |
 | fZoomDblClickStep | number | 0.5 | Double-click zoom step |
-| fScrollPan | boolean | false | Two-finger scroll pans canvas |
-| fPinchStep | number | 0 | Pinch zoom step; 0 uses fZoomStep |
 
 #### Methods
 
@@ -703,11 +761,37 @@ Selector: `f-selection-area`
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| fTrigger | FEventTrigger | Shift key | Predicate for activation |
+| fTrigger | FEventTrigger | active scheme (Shift key) | Predicate for activation |
 
 Selection results emit via `fSelectionChange` on `fDraggable`.
 
 CSS Class: `.f-selection-area`
+
+---
+
+### Accessibility (withA11y)
+
+Every flow ships an accessibility layer; no setup needed. Semantics always run: nodes/groups/connections receive `role`, `aria-roledescription`, accessible names (a connection gets "Connection from X to Y"; set `aria-label` yourself to override — the library only fills missing attributes), standing keyboard instructions via `aria-describedby`, and a live region announces selection, movement, connection and deletion (WCAG 4.1.3); the minimap and connection previews are `aria-hidden`.
+
+The keyboard layer is OPT-IN — installing `provideFFlow(withA11y())` enables it (existing apps with their own key handling stay untouched): the `f-flow` host becomes the single tab stop (`role="application"` so screen readers hand arrow keys to the canvas); arrows move the SELECTION to the nearest node spatially — DOM focus stays on the host, the active item is exposed via `aria-activedescendant` (`Shift`+arrow extends the selection, `Home`/`End` first/last); `Ctrl`+arrow walks the topology — the connection is focused and selected first, then the node on its other end; `Ctrl`+`A` selects all, `Escape` clears; `Space` moves the selection — hold it and arrow (release drops) or tap to grab / tap to drop (`Shift` = coarse step, `Escape` reverts, the drop emits `fMoveNodes`); `C` starts a connection from the selected node (exactly one node must be selected) driving the shared `FCreateConnectionSession` — arrows move between connectable targets spatially with preview and snap, `Enter` emits `fCreateConnection`, `Escape` cancels; `Delete`/`Backspace` emits `fDeleteSelected: FDeleteSelectedEvent` (the library never mutates your data); `+`/`-`/`0` zoom. Native controls inside nodes (inputs, buttons, links) are never hijacked.
+
+`withA11y(config)` also tunes the layer: `keyboard: false` keeps keys off while customizing the rest, `moveStep`/`coarseMoveStep` set movement steps, `messages: Partial<IFA11yMessages>` localizes every announcement and attached string, `keys: IFA11yKeys` rebinds actions (`grab`/`connect`/`deleteSelected`/`selectAll`/`zoomIn`/`zoomOut`/`zoomReset`; empty array disables one; arrows/Enter/Escape are fixed). Focus styling: nodes/groups get a `:focus-visible` outline (`--ff-focus-ring-color`), focused connections use the selected stroke.
+
+---
+
+### Connection Flow (withConnectionFlow)
+
+Selects the connection-creation gesture. `provideFFlow(withConnectionFlow('click'))` adds click-to-connect: click a source connector, the preview follows the cursor, click a connectable target to commit; Escape or clicking elsewhere cancels; drag-to-connect keeps working alongside. A custom `Type<IFConnectionFlow>` (initialize/destroy) can implement any gesture by driving the shared `FCreateConnectionSession` (`begin`, `update`, `resolveTarget`, `complete`, `cancel`) — preview, snapping, validation and the `fCreateConnection` emission stay identical across gestures. Requires `<f-connection-for-create>` like the drag gesture.
+
+### Control Scheme (withControlScheme)
+
+Provider feature that maps gestures to canvas actions for `fDraggable`, `fZoom`, and `f-selection-area` together. Installed via `provideFFlow(withControlScheme(scheme))`; without it the flow uses `F_DEFAULT_CONTROL_SCHEME`. Per-instance trigger inputs override the active scheme.
+
+`IFControlScheme` fields: `nodeMove`, `canvasMove` (also gates middle-mouse participation), `selection`, `createConnection`, `reassignConnection`, `nodeResize`, `nodeRotate` — all `FEventTrigger` predicates — plus `scrollPan: boolean` (plain wheel/two-finger scroll pans; Ctrl/Cmd+wheel or pinch zooms) and `zoom: FEventTrigger`.
+
+Presets: `F_DEFAULT_CONTROL_SCHEME` (drag pans, wheel zooms, Shift+drag selects), `F_SCROLL_PAN_CONTROL_SCHEME` (Miro-like: scroll pans, drag on empty canvas selects, middle-drag pans), `F_DRAG_SELECT_CONTROL_SCHEME` (draw.io-like: wheel zooms, drag on empty canvas selects, middle-drag pans).
+
+Runtime API: `FControlSchemeController` with `scheme: Signal<IFControlScheme>`, `getScheme()`, and `setScheme(config)` (merges partial gestures; a full preset replaces the scheme). Trigger helpers: `primaryButtonEventTrigger`, `middleButtonEventTrigger`, `isOnFlowBackground`.
 
 ---
 
@@ -1074,6 +1158,39 @@ Performance optimization that caches node and connector geometry to avoid redund
   </f-canvas>
 </f-flow>
 ```
+
+### Reflow on Resize (withReflowOnResize)
+
+Automatic layout maintenance: when a node grows or shrinks, surrounding nodes shift to keep spacing. Configured as a provider feature; runtime overrides via `FReflowController`.
+
+```typescript
+import { provideFFlow, withReflowOnResize, EFReflowMode, FReflowController } from '@foblex/flow';
+
+@Component({
+  providers: [provideFFlow(withReflowOnResize({ mode: EFReflowMode.CENTER_OF_MASS }))],
+})
+export class MyFlow {
+  private readonly _reflow = inject(FReflowController);
+  // this._reflow.setConfig({ spacing: { vertical: 24 } });
+}
+```
+
+Config knobs (`IFReflowOnResizeConfig`): `enabled`, `mode` (`EFReflowMode.CENTER_OF_MASS | X_RANGE | DOWNSTREAM_CONNECTIONS`), `scope` (`EFReflowScope.GLOBAL | GROUP | CONNECTED_SUBGRAPH`), `axis` (`EFReflowAxis.BOTH | VERTICAL | HORIZONTAL`), `deltaSource` (`EFReflowDeltaSource.EDGE_BASED | CENTER_BASED`), `collision` (`EFReflowCollision.STOP | CHAIN_PUSH`), `spacing { vertical, horizontal }`, `maxCascadeDepth`, `maxAbsoluteShiftPerPlan`. Nodes marked with the `fReflowIgnore` directive stay pinned. Docs: https://flow.foblex.com/examples/reflow-on-resize
+
+### Canvas Layer Ordering (fLayers)
+
+The three built-in canvas layers (groups, connections, nodes) can be re-stacked per canvas or app-wide:
+
+```html
+<f-canvas [fLayers]="[eLayer.GROUPS, eLayer.NODES, eLayer.CONNECTIONS]"></f-canvas>
+```
+
+```typescript
+import { provideFFlow, withFCanvas, EFCanvasLayer } from '@foblex/flow';
+providers: [provideFFlow(withFCanvas({ layers: [EFCanvasLayer.GROUPS, EFCanvasLayer.NODES, EFCanvasLayer.CONNECTIONS] }))];
+```
+
+Order is read bottom to top; the `[fLayers]` input wins over the provider value; missing layers append in their default position. Default: `[GROUPS, CONNECTIONS, NODES]`. Docs: https://flow.foblex.com/examples/canvas-layers
 
 ### Layout Engine Integration
 

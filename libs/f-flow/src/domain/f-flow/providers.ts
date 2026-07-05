@@ -1,5 +1,6 @@
 import { AddFlowToStore } from './add-flow-to-store';
 import { RemoveFlowFromStore } from './remove-flow-from-store';
+import { RunDevDiagnostics } from './run-dev-diagnostics';
 import { GetFlow } from './get-flow';
 import { GET_FLOW_STATE_PROVIDERS } from './calculate-flow-state';
 import {
@@ -25,6 +26,8 @@ export const F_FLOW_FEATURES = [
   ...GET_FLOW_STATE_PROVIDERS,
 
   RemoveFlowFromStore,
+
+  RunDevDiagnostics,
 
   RenderLifecycleState,
   NotifyNodesRendered,

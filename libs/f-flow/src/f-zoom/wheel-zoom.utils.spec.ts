@@ -1,7 +1,7 @@
 import {
   isGestureWheelEvent,
-  isTrackpadScrollEvent,
   normalizeWheelStep,
+  resolveScrollPanDelta,
   resolveWheelDelta,
 } from './wheel-zoom.utils';
 
@@ -47,25 +47,6 @@ describe('wheel zoom utils', () => {
     expect(normalizeWheelStep(event, 1, 0.1)).toBeCloseTo(1 / 600, 6);
   });
 
-  it('should detect trackpad two-finger scroll (pan intent)', () => {
-    expect(
-      isTrackpadScrollEvent(createWheelEvent({ deltaMode: WheelEvent.DOM_DELTA_PIXEL })),
-    ).toBeTrue();
-    expect(
-      isTrackpadScrollEvent(
-        createWheelEvent({ ctrlKey: true, deltaMode: WheelEvent.DOM_DELTA_PIXEL }),
-      ),
-    ).toBeFalse();
-    expect(
-      isTrackpadScrollEvent(
-        createWheelEvent({ metaKey: true, deltaMode: WheelEvent.DOM_DELTA_PIXEL }),
-      ),
-    ).toBeFalse();
-    expect(
-      isTrackpadScrollEvent(createWheelEvent({ deltaMode: WheelEvent.DOM_DELTA_LINE })),
-    ).toBeFalse();
-  });
-
   it('should ignore tiny gesture-wheel noise and cap large pinch deltas', () => {
     const event = createWheelEvent({
       ctrlKey: true,
@@ -85,6 +66,24 @@ describe('wheel zoom utils', () => {
         0.1,
       ),
     ).toBeCloseTo(0.05, 6);
+  });
+
+  it('should resolve both scroll-pan axes in pixels', () => {
+    expect(resolveScrollPanDelta(createWheelEvent({ deltaX: 40, deltaY: -25 }))).toEqual({
+      x: 40,
+      y: -25,
+    });
+  });
+
+  it('should normalize line and page delta modes to pixels for scroll-pan', () => {
+    expect(
+      resolveScrollPanDelta(createWheelEvent({ deltaY: 3, deltaMode: WheelEvent.DOM_DELTA_LINE }))
+        .y,
+    ).toBe(48);
+    expect(
+      resolveScrollPanDelta(createWheelEvent({ deltaY: 2, deltaMode: WheelEvent.DOM_DELTA_PAGE }))
+        .y,
+    ).toBe(800);
   });
 });
 

@@ -231,7 +231,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connectable Side',
     group: 'Connectors',
     date: new Date('2025-09-29 14:17:29'),
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular Diagram Connectors – Control Connectable Sides (Top, Right, Bottom, Left)',
       description:
@@ -259,6 +258,18 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       imageWidth: 806,
       imageHeight: 600,
       imageType: 'image/png',
+    },
+  },
+  {
+    slug: 'click-to-connect',
+    text: 'Click to Connect',
+    group: 'Connections - Editing',
+    date: new Date('2026-07-04 12:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Angular Diagram Example – Click-to-Connect Connections with Foblex Flow',
+      description:
+        'Create connections by clicking: click a source connector, follow the preview line, click a target to commit. Installed via provideFFlow(withConnectionFlow) alongside drag-to-connect.',
     },
   },
   {
@@ -413,7 +424,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connection Content',
     group: 'Connections - Appearance',
     date: new Date('2025-09-15 18:23:26'),
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular Diagram Example – Connection Content on Edges',
       description:
@@ -430,7 +440,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connection Gradients',
     group: 'Connections - Appearance',
     date: new Date('2026-03-11 12:00:00'),
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular Diagram Example – Projected Connection Gradients',
       description:
@@ -449,7 +458,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connection Waypoints',
     group: 'Connections - Routing',
     date: new Date('2026-01-25 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Connection Waypoints in Foblex Flow – Add and Drag Waypoints for Any Connection Type',
       description:
@@ -466,7 +474,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connection Connectable Side',
     group: 'Connections - Routing',
     date: new Date('2025-10-11 14:17:29'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title:
         'Angular Diagram Connections – Control Connection Sides (Top, Right, Bottom, Left, Calculate)',
@@ -586,7 +593,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Magnetic Lines',
     group: 'Editor Helpers',
     date: new Date('2026-02-15 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Node Editor – Magnetic Snap Lines & Alignment Guides (Foblex Flow)',
       description:
@@ -603,7 +609,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Magnetic Rects',
     group: 'Editor Helpers',
     date: new Date('2026-02-15 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Node Editor – Equal Spacing Guides (Figma-Like) with Magnetic Rects',
       description:
@@ -648,6 +653,23 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'accessibility',
+    text: 'Accessibility',
+    group: 'Editor Helpers',
+    date: new Date('2026-07-04 18:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Angular Diagram Example – Accessible Flow Editor with Foblex Flow',
+      description:
+        'Keyboard-operable flow editor: spatial navigation, topology walk along connections, grab-and-move, keyboard connection creation, and screen-reader announcements — built into every flow.',
+      image: './previews/examples/accessibility.light.png',
+      imageDark: './previews/examples/accessibility.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      imageType: 'image/png',
+    },
+  },
+  {
     slug: 'help-in-positioning',
     text: 'Help in Positioning (Legacy)',
     group: 'Editor Helpers',
@@ -671,7 +693,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Dagre Layout',
     group: 'Layout Engines',
     date: new Date('2025-09-14 14:01:26'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Dagre Graph Layout Example',
       description:
@@ -688,7 +709,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Dagre Auto Layout',
     group: 'Layout Engines',
     date: new Date('2026-04-09 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Dagre Auto Layout Example',
       description:
@@ -705,7 +725,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'ELK.js Layout',
     group: 'Layout Engines',
     date: new Date('2025-02-08 14:01:26'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular ELK.js Graph Layout Example',
       description:
@@ -722,7 +741,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'ELK.js Auto Layout',
     group: 'Layout Engines',
     date: new Date('2026-04-09 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular ELK.js Auto Layout Example',
       description:
@@ -741,7 +759,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Reflow on Resize',
     group: 'Reflow',
     date: new Date('2026-04-25 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Diagram Example – Smart Auto-Layout on Resize with Foblex Flow',
       description:
@@ -837,6 +854,23 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       imageType: 'image/png',
     },
   },
+  {
+    slug: 'control-schemes',
+    text: 'Control Schemes',
+    group: 'Events',
+    date: new Date('2026-07-03 12:00:00'),
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Angular Diagram Example – Switchable Control Schemes with Foblex Flow',
+      description:
+        'Switch between the default, Miro-like, and draw.io-like control schemes at runtime: scroll or wheel to pan and zoom, middle-mouse drag to pan, and drag on the empty canvas to box-select.',
+      image: './previews/examples/control-schemes.light.png',
+      imageDark: './previews/examples/control-schemes.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      imageType: 'image/png',
+    },
+  },
 
   // -------- Performance --------
   {
@@ -861,7 +895,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Connection Redraw Performance',
     group: 'Performance',
     date: new Date('2026-03-09 12:00:00'),
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular Flowchart Performance Example – Connection Redraws and Routing Modes',
       description:
@@ -880,7 +913,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'AI Low-Code Platform',
     group: 'Reference Apps',
     date: new Date('2026-03-09 12:00:00'),
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular AI Low-Code IDE Example – Flagship Product-Style Demo with Foblex Flow',
       description:
@@ -896,7 +928,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     slug: 'schema-designer',
     text: 'Schema Designer',
     group: 'Reference Apps',
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Schema Designer',
       description:
@@ -912,7 +943,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     slug: 'call-center',
     text: 'Call Center Flow',
     group: 'Reference Apps',
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Angular Call Center Flow Builder Example – IVR, Queue, Transfer, and Voicemail',
       description:
@@ -928,7 +958,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     slug: 'uml-diagram-example',
     text: 'UML Diagram',
     group: 'Reference Apps',
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'UML Diagram',
       description:
@@ -944,7 +973,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     slug: 'tournament-bracket',
     text: 'Tournament Bracket',
     group: 'Reference Apps',
-    badge: { text: 'Updated', type: 'info' },
     seo: {
       title: 'Tournament Bracket',
       description:
@@ -1005,6 +1033,14 @@ export const EXAMPLES_COMPONENTS = [
   defineLazyComponent(
     'connector-outlet',
     () => import('@foblex/examples/connectors/connector-outlet/example'),
+  ),
+  defineLazyComponent(
+    'unified-connector',
+    () => import('@foblex/examples/connectors/unified-connector/example'),
+  ),
+  defineLazyComponent(
+    'click-to-connect',
+    () => import('@foblex/examples/connectors/click-to-connect/example'),
   ),
   defineLazyComponent(
     'limiting-connections',
@@ -1172,12 +1208,20 @@ export const EXAMPLES_COMPONENTS = [
     () => import('@foblex/examples/extensions/add-node-from-palette/example'),
   ),
   defineLazyComponent(
+    'accessibility',
+    () => import('@foblex/examples/extensions/accessibility/example'),
+  ),
+  defineLazyComponent(
     'drag-start-end-events',
     () => import('@foblex/examples/advanced/drag-start-end-events/example'),
   ),
   defineLazyComponent(
     'custom-event-triggers',
     () => import('@foblex/examples/advanced/custom-event-triggers/example'),
+  ),
+  defineLazyComponent(
+    'control-schemes',
+    () => import('@foblex/examples/advanced/control-schemes/example'),
   ),
   defineLazyComponent(
     'ai-low-code-platform',

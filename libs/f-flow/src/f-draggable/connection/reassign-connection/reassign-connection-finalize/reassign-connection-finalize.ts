@@ -76,10 +76,10 @@ export class ReassignConnectionFinalize implements IExecution<
     const connection = data.connection;
 
     if (data.draggedEnd === 'target') {
-      return connection.fInputId() !== next.fId();
+      return connection.targetId() !== next.fId();
     }
 
-    return connection.fOutputId() !== next.fId();
+    return connection.sourceId() !== next.fId();
   }
 
   private _buildEvent(
@@ -92,9 +92,9 @@ export class ReassignConnectionFinalize implements IExecution<
     return new FReassignConnectionEvent(
       connection.fId(),
       data.draggedEnd,
-      connection.fOutputId(),
+      connection.sourceId(),
       data.draggedEnd === 'source' ? next?.fId() : undefined,
-      connection.fInputId(),
+      connection.targetId(),
       data.draggedEnd === 'target' ? next?.fId() : undefined,
       event.getPosition(),
     );

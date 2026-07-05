@@ -66,6 +66,26 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Track what is planned, what is already on the way, and which releases shipped each major Foblex Flow capability.',
     },
   },
+  {
+    slug: 'errors',
+    text: 'Errors and Warnings',
+    group: 'Introduction',
+    seo: {
+      title: 'Foblex Flow Errors and Warnings - FF Diagnostic Codes',
+      description:
+        'Reference for FFxxxx diagnostic codes: unresolved connection endpoints, zero-height hosts, connectors outside nodes — causes and fixes.',
+    },
+  },
+  {
+    slug: 'ai',
+    text: 'AI Agents',
+    group: 'Introduction',
+    seo: {
+      title: 'Using AI Agents with Foblex Flow - llms.txt, Bundled Rules and Diagnostics',
+      description:
+        'Set up LLMs and AI coding agents for Foblex Flow: AGENTS.md rules installed by ng add, the AI guide bundled in the npm package, llms.txt, Context7, and FF diagnostic codes.',
+    },
+  },
 
   // -------- Styling --------
   {
@@ -207,9 +227,21 @@ export const DOCS_PAGES: IPageDefinition[] = [
 
   // -------- Connectors --------
   {
+    slug: 'f-connector-directive',
+    text: 'Connector',
+    group: 'Connectors',
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'FConnectorDirective - Unified Source, Target and Outlet Connectors',
+      description:
+        'Reference for `fConnector`: one directive for source, target, source-target, and outlet connector roles, with connection rules and state classes.',
+    },
+  },
+  {
     slug: 'f-node-output-directive',
     text: 'Output',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeOutputDirective - Source Connectors for Outgoing Connections',
       description:
@@ -220,6 +252,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     slug: 'f-node-input-directive',
     text: 'Input',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeInputDirective - Target Connectors for Incoming Connections',
       description:
@@ -230,6 +263,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     slug: 'f-node-outlet-directive',
     text: 'Outlet',
     group: 'Connectors',
+    badge: { text: 'Deprecated', type: 'danger' },
     seo: {
       title: 'FNodeOutletDirective - Shared Output Surface for Multiple Sources',
       description:
@@ -348,6 +382,26 @@ export const DOCS_PAGES: IPageDefinition[] = [
       title: 'FSelectionArea - Rectangle Multi-Select for Nodes and Connections',
       description:
         'Enable drag-to-select with a rectangular selection area. Supports multi-select UX for complex diagrams and editors.',
+    },
+  },
+  {
+    slug: 'control-scheme',
+    text: 'Control Scheme',
+    group: 'Interaction',
+    seo: {
+      title: 'Control Scheme - Configurable Gesture-to-Action Mapping',
+      description:
+        'Provide a control scheme through provideFFlow to map gestures to canvas actions: pan, zoom, selection and node interactions, with Miro-like and draw.io-like presets.',
+    },
+  },
+  {
+    slug: 'accessibility',
+    text: 'Accessibility',
+    group: 'Interaction',
+    seo: {
+      title: 'Accessibility - Keyboard Operation and Screen Reader Support',
+      description:
+        'Built-in ARIA semantics and an opt-in keyboard layer: spatial navigation, grab-and-move, keyboard connection creation, localizable announcements, and remappable keys via withA11y.',
     },
   },
 
@@ -530,6 +584,10 @@ export const DOCS_COMPONENTS = [
     () => import('@foblex/examples/connectors/connector-outlet/example'),
   ),
   defineLazyComponent(
+    'unified-connector',
+    () => import('@foblex/examples/connectors/unified-connector/example'),
+  ),
+  defineLazyComponent(
     'connection-markers',
     () => import('@foblex/examples/connections/connection-markers/example'),
   ),
@@ -566,4 +624,5 @@ export const DOCS_COMPONENTS = [
     'minimap-example',
     () => import('@foblex/examples/extensions/minimap-example/example'),
   ),
+  defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
 ];

@@ -3,11 +3,13 @@
 **Selector:** `[fNodeOutlet]`  
 **Class:** `FNodeOutletDirective`
 
+> **Deprecated since v19.** Use the unified [`fConnector`](f-connector-directive) directive with `fConnectorType="outlet"` instead (`isConnectionFromOutlet` becomes `fConnectionFromOutlet`, `fCanBeConnectedInputs` becomes `fCanBeConnectedTo`). `fNodeOutlet` keeps working, but new code should use `fConnector`.
+
 `FNodeOutletDirective` adds a **single shared “start connection” point** for a node.  
 It is a **UX helper for creating connections** — it lets users begin a drag from one place even if the node has multiple outputs.
 
 > Important: **Outlet is not the final source of a persisted connection.**  
-> After creation, the connection still must be assigned to a конкретному **`fNodeOutput`** (i.e. a real output id is used in `fOutputId`).
+> After creation, the connection still must be assigned to a specific **`fNodeOutput`** (i.e. a real output id is used in `fOutputId`).
 
 ## Why it exists
 

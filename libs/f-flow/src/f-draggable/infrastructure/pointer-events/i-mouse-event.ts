@@ -9,6 +9,10 @@ export class IMouseEvent extends IPointerEvent {
     return (this.originalEvent as MouseEvent).button === 0;
   }
 
+  public isMouseMiddleButton(): boolean {
+    return (this.originalEvent as MouseEvent).button === 1;
+  }
+
   public isMouseRightButton(): boolean {
     return (this.originalEvent as MouseEvent).buttons === 2;
   }

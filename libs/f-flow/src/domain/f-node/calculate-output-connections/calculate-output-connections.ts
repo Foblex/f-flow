@@ -3,6 +3,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { CalculateOutputConnectionsRequest } from './calculate-output-connections-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
+import { getAllSourceConnectors } from '../../../f-connectors';
 import { FConnectionBase } from '../../../f-connection-v2';
 
 /**
@@ -10,9 +11,10 @@ import { FConnectionBase } from '../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CalculateOutputConnectionsRequest)
-export class CalculateOutputConnections
-  implements IExecution<CalculateOutputConnectionsRequest, FConnectionBase[]>
-{
+export class CalculateOutputConnections implements IExecution<
+  CalculateOutputConnectionsRequest,
+  FConnectionBase[]
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ nodeOrGroup }: CalculateOutputConnectionsRequest): FConnectionBase[] {
@@ -23,7 +25,7 @@ export class CalculateOutputConnections
 
   private _collectOutputIds(nodeOrGroup: FNodeBase): Set<string> {
     const ids = new Set<string>();
-    const connectors = this._store.outputs.getAll();
+    const connectors = getAllSourceConnectors(this._store);
     for (const connector of connectors) {
       if (nodeOrGroup.isContains(connector.hostElement)) {
         ids.add(connector.fId());
@@ -37,7 +39,7 @@ export class CalculateOutputConnections
     const result: FConnectionBase[] = [];
     const connections = this._store.connections.getAll();
     for (const conn of connections) {
-      if (ids.has(conn.fOutputId())) {
+      if (ids.has(conn.sourceId())) {
         result.push(conn);
       }
     }

@@ -3,7 +3,7 @@
 **Selector:** `f-canvas[fZoom]`  
 **Class:** `FZoomDirective`
 
-`FZoomDirective` adds wheel, double-click, **pinch-to-zoom** (multitouch), and optional two-finger pan capabilities, and exposes a small imperative zoom API.
+`FZoomDirective` adds wheel, double-click, and **pinch-to-zoom** (multitouch) capabilities, and exposes a small imperative zoom API.
 
 ## Why / Use cases
 
@@ -30,14 +30,13 @@ When used in conjunction with [`fDraggable`](f-draggable-directive), `fZoom` aut
 ### Inputs
 
 - `fZoom: boolean;` Default: `false`. Enables/disables zoom functionality.
-- `fWheelTrigger: FEventTrigger;` Default: `Always`. Predicate for mouse wheel zoom.
+- `fWheelTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `zoom` (`Always`). Predicate for mouse wheel zoom; when set it also overrides the scheme's `scrollPan` routing.
 - `fDblClickTrigger: FEventTrigger;` Default: `Always`. Predicate for double-click zoom.
 - `fZoomMinimum: number;` Default: `0.1`. Minimum zoom scale.
 - `fZoomMaximum: number;` Default: `4`. Maximum zoom scale.
 - `fZoomStep: number;` Default: `0.1`. Zoom step for wheel interaction.
+- `fPinchStep: number;` Default: `0`. Separate zoom step for trackpad pinch; falls back to `fZoomStep` when `0`.
 - `fZoomDblClickStep: number;` Default: `0.5`. Zoom step for double-click interaction.
-- `fScrollPan: boolean;` Default: `false`. When enabled, two-finger scroll pans the canvas instead of zooming. Pinch gesture continues to zoom.
-- `fPinchStep: number;` Default: `0`. Zoom step for pinch gestures. When `0`, falls back to `fZoomStep`.
 
 ### Outputs
 

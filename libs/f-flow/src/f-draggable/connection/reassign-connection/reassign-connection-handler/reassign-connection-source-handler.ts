@@ -77,7 +77,7 @@ export class ReassignConnectionSourceHandler implements IReassignHandler {
     }
 
     // Target is fixed, so snap-preview always ends at current target.
-    snap.fInputId.set(this._connection.fInputId());
+    snap.fInputId.set(this._connection.targetId());
     snap.initialize();
   }
 

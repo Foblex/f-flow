@@ -42,8 +42,8 @@ export class FConnectionPath extends FConnectionPathBase {
   public get attrConnectionId(): string {
     return createConnectionDomIdentifier(
       this._connection.fId(),
-      this._connection.fOutputId(),
-      this._connection.fInputId(),
+      this._connection.sourceId(),
+      this._connection.targetId(),
     );
   }
 

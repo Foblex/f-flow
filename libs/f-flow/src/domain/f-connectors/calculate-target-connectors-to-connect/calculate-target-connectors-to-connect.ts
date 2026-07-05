@@ -3,15 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import {
   FConnectorBase,
-  FNodeInputBase,
-  FNodeOutletBase,
-  FNodeOutputBase,
+  FSourceConnectorBase,
+  getAllTargetConnectors,
 } from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
 import { IPoint } from '@foblex/2d';
+import { filterConnectableTargets } from './filter-connectable-targets';
 import { EFConnectableSide } from '../../../f-connection-v2';
 
 /**
@@ -20,14 +20,15 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CalculateTargetConnectorsToConnectRequest)
-export class CalculateTargetConnectorsToConnect
-  implements IExecution<CalculateTargetConnectorsToConnectRequest, IConnectorRectRef[]>
-{
+export class CalculateTargetConnectorsToConnect implements IExecution<
+  CalculateTargetConnectorsToConnectRequest,
+  IConnectorRectRef[]
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _targets(): FNodeInputBase[] {
-    return this._store.inputs.getAll();
+  private get _targets(): FConnectorBase[] {
+    return getAllTargetConnectors(this._store);
   }
 
   public handle({
@@ -48,21 +49,8 @@ export class CalculateTargetConnectorsToConnect
     return refs;
   }
 
-  private _getConnectableTargets(source: FNodeOutputBase | FNodeOutletBase): FConnectorBase[] {
-    // 1) Connection limits (strict whitelist)
-    if (source.hasConnectionLimits) {
-      return this._targets.filter((x) => source.canConnectTo(x));
-    }
-
-    // 2) Basic connectable filter
-    let targets = this._targets.filter((x) => x.canBeConnected);
-
-    // 3) Self-connection rule
-    if (!source.isSelfConnectable) {
-      targets = targets.filter((x) => x.fNodeId !== source.fNodeId);
-    }
-
-    return targets;
+  private _getConnectableTargets(source: FSourceConnectorBase): FConnectorBase[] {
+    return filterConnectableTargets(source, this._targets);
   }
 
   private _scheduleApplyCalculatedSides(refs: IConnectorRectRef[], pointer: IPoint): void {

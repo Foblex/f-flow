@@ -30,6 +30,9 @@ export class AddConnectorToStore implements IExecution<AddConnectorToStoreReques
       case 'outlet':
         this._addOutlet(instance);
         break;
+      case 'connector':
+        this._addConnector(instance);
+        break;
       default:
         throw new Error(`Unknown connector kind: ${instance.kind}`);
     }
@@ -51,6 +54,13 @@ export class AddConnectorToStore implements IExecution<AddConnectorToStoreReques
 
   private _addOutlet(component: FConnectorBase): void {
     this._store.outlets.add(component as FNodeOutletBase);
+    this._store.emitNodeChanges();
+
+    this._geometryRegister(component);
+  }
+
+  private _addConnector(component: FConnectorBase): void {
+    this._store.connectors.add(component);
     this._store.emitNodeChanges();
 
     this._geometryRegister(component);

@@ -2,6 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node-request';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../../f-storage';
+import {
+  getAllSourceConnectors,
+  getAllTargetConnectors,
+  requireSourceConnector,
+  requireTargetConnector,
+} from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { FConnectionBase } from '../../../../f-connection-v2';
 import {
@@ -19,9 +25,10 @@ import { IResizeConstraint, IResizeLimit } from '../../constraint';
 
 @Injectable()
 @FExecutionRegister(AttachResizeConnectionDragHandlersToNodeRequest)
-export class AttachResizeConnectionDragHandlersToNode
-  implements IExecution<AttachResizeConnectionDragHandlersToNodeRequest, void>
-{
+export class AttachResizeConnectionDragHandlersToNode implements IExecution<
+  AttachResizeConnectionDragHandlersToNodeRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _dragInjector = inject(DragHandlerInjector);
@@ -70,8 +77,7 @@ export class AttachResizeConnectionDragHandlersToNode
     const nodeIds = new Set(nodes.map((x) => x.fId()));
 
     return new Set(
-      this._store.outputs
-        .getAll()
+      getAllSourceConnectors(this._store)
         .filter((x) => nodeIds.has(x.fNodeId))
         .map((x) => x.fId()),
     );
@@ -81,8 +87,7 @@ export class AttachResizeConnectionDragHandlersToNode
     const nodeIds = new Set(nodes.map((x) => x.fId()));
 
     return new Set(
-      this._store.inputs
-        .getAll()
+      getAllTargetConnectors(this._store)
         .filter((x) => nodeIds.has(x.fNodeId))
         .map((x) => x.fId()),
     );
@@ -94,8 +99,12 @@ export class AttachResizeConnectionDragHandlersToNode
     involvedTargetIds: Set<string>,
     connectionHandlerPool: Map<string, ResizeNodeConnectionHandlerBase>,
   ): IResizeNodeConnectionHandlers {
-    const outputs = this._store.outputs.getAll().filter((x) => x.fNodeId === nodeOrGroup.fId());
-    const inputs = this._store.inputs.getAll().filter((x) => x.fNodeId === nodeOrGroup.fId());
+    const outputs = getAllSourceConnectors(this._store).filter(
+      (x) => x.fNodeId === nodeOrGroup.fId(),
+    );
+    const inputs = getAllTargetConnectors(this._store).filter(
+      (x) => x.fNodeId === nodeOrGroup.fId(),
+    );
 
     if (!outputs.length && !inputs.length) {
       return { source: [], target: [] };
@@ -107,8 +116,8 @@ export class AttachResizeConnectionDragHandlersToNode
     const result: IResizeNodeConnectionHandlers = { source: [], target: [] };
 
     for (const connection of this._store.connections.getAll()) {
-      const isSource = outputIds.has(connection.fOutputId());
-      const isTarget = inputIds.has(connection.fInputId());
+      const isSource = outputIds.has(connection.sourceId());
+      const isTarget = inputIds.has(connection.targetId());
       if (!isSource && !isTarget) {
         continue;
       }
@@ -119,7 +128,7 @@ export class AttachResizeConnectionDragHandlersToNode
       connectionHandlerPool.set(connection.fId(), connectionHandler);
 
       if (isSource) {
-        const sourceConnector = this._store.outputs.require(connection.fOutputId());
+        const sourceConnector = requireSourceConnector(this._store, connection.sourceId());
         result.source.push({
           handler: connectionHandler,
           connector: sourceConnector,
@@ -127,7 +136,7 @@ export class AttachResizeConnectionDragHandlersToNode
       }
 
       if (isTarget) {
-        const targetConnector = this._store.inputs.require(connection.fInputId());
+        const targetConnector = requireTargetConnector(this._store, connection.targetId());
         result.target.push({
           handler: connectionHandler,
           connector: targetConnector,
@@ -143,8 +152,8 @@ export class AttachResizeConnectionDragHandlersToNode
     involvedSourceIds: Set<string>,
     involvedTargetIds: Set<string>,
   ): ResizeNodeConnectionHandlerBase {
-    const isSource = involvedSourceIds.has(connection.fOutputId());
-    const isTarget = involvedTargetIds.has(connection.fInputId());
+    const isSource = involvedSourceIds.has(connection.sourceId());
+    const isTarget = involvedTargetIds.has(connection.targetId());
 
     const result =
       isSource && isTarget

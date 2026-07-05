@@ -5,23 +5,30 @@ describe('DragHandle', () => {
   });
 
   it('should drag fNode element and update its transform translate', function () {
+    // The drag anchors to the pointer-down position and the threshold-crossing move
+    // is applied immediately (#309), so the node follows the pointer from the first
+    // mousemove. The previous version of this test relied on the pre-#309 anchor
+    // (threshold point), which swallowed the first move.
     cy.wait(500)
       .get('.f-node.f-drag-handle')
+      .first()
       .then(($dragHandle: JQuery<HTMLElement>) => {
         const dragHandleRect = $dragHandle.get(0).getBoundingClientRect();
+        const centerX = dragHandleRect.x + dragHandleRect.width / 2;
+        const centerY = dragHandleRect.y + dragHandleRect.height / 2;
 
         cy.get('.f-node.f-drag-handle')
           .first()
           .trigger('mousedown', { button: 0, force: true })
-          .trigger('mousemove', { clientX: -250, clientY: 0 })
-          .trigger('pointerup', { clientX: 0, clientY: 0 });
+          .trigger('mousemove', { clientX: centerX + 150, clientY: centerY, force: true })
+          .trigger('pointerup', { clientX: centerX + 150, clientY: centerY, force: true });
 
         cy.wait(1500)
           .get('.f-node.f-drag-handle')
           .first()
           .then(($dragHandle2: JQuery<HTMLElement>) => {
             const dragHandleRect2 = $dragHandle2.get(0).getBoundingClientRect();
-            expect(Math.round(dragHandleRect.x + 250)).to.equal(Math.round(dragHandleRect2.x));
+            expect(Math.round(dragHandleRect.x + 150)).to.equal(Math.round(dragHandleRect2.x));
           });
       });
   });

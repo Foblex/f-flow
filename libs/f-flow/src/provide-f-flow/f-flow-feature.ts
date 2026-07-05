@@ -6,6 +6,9 @@ import { Provider } from '@angular/core';
 export enum EFFlowFeatureKind {
   REFLOW_ON_RESIZE = 'reflow-on-resize',
   CANVAS = 'canvas',
+  CONTROL_SCHEME = 'control-scheme',
+  CONNECTION_FLOW = 'connection-flow',
+  A11Y = 'a11y',
 }
 
 /**

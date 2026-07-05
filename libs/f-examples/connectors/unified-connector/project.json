@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "f-example-unified-connector",
+  "root": "libs/f-examples/connectors/unified-connector",
+  "projectType": "library",
+  "sourceRoot": "libs/f-examples/connectors/unified-connector",
+  "tags": ["scope:examples", "type:example", "category:connectors"],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint \"libs/f-examples/connectors/unified-connector/**/*.ts\" \"libs/f-examples/connectors/unified-connector/**/*.html\" --no-error-on-unmatched-pattern"
+      }
+    }
+  }
+}

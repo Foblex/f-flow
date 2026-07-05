@@ -19,6 +19,7 @@ import {
   FEventTrigger,
   isValidEventTrigger,
   ResetZoomRequest,
+  ScrollCanvasRequest,
   SetZoomRequest,
 } from '../domain';
 import { FCanvasBase } from '../f-canvas';
@@ -34,10 +35,15 @@ import {
 } from '../f-storage';
 import {
   isGestureWheelEvent,
-  isTrackpadScrollEvent,
   normalizeWheelStep,
+  resolveScrollPanDelta,
   resolveWheelDelta,
 } from './wheel-zoom.utils';
+import {
+  F_DEFAULT_CONTROL_SCHEME,
+  FControlSchemeController,
+  IFControlScheme,
+} from '../plugins/interaction/f-control-scheme';
 
 @Directive({
   selector: 'f-canvas[fZoom]',
@@ -51,13 +57,25 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private readonly _mediator = inject(FMediator);
   private readonly _injector = inject(Injector);
   private readonly _store = inject(FComponentsStore);
+  private readonly _controlScheme = inject(FControlSchemeController, { optional: true });
 
   private _triggersListener = EventExtensions.emptyListener();
+  private _wheelTrigger: FEventTrigger | undefined;
 
   public readonly isEnabled = input(false, { alias: 'fZoom', transform: booleanAttribute });
 
+  /**
+   * Overrides the active control scheme's wheel behavior when set — including its
+   * `scrollPan` routing. Defaults to the scheme's `zoom` gesture.
+   */
   @Input()
-  public fWheelTrigger: FEventTrigger = defaultEventTrigger;
+  public set fWheelTrigger(value: FEventTrigger) {
+    this._wheelTrigger = value;
+  }
+
+  public get fWheelTrigger(): FEventTrigger {
+    return this._wheelTrigger ?? this._scheme.zoom;
+  }
 
   @Input()
   public fDblClickTrigger: FEventTrigger = defaultEventTrigger;
@@ -71,14 +89,20 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   @Input({ alias: 'fZoomStep', transform: numberAttribute })
   public override step: number = 0.1;
 
+  /**
+   * Separate zoom step for trackpad pinch (`Ctrl`/`Cmd` + wheel with pixel delta). When
+   * `0` (default) pinch reuses `fZoomStep`.
+   */
+  @Input({ alias: 'fPinchStep', transform: numberAttribute })
+  public pinchStep: number = 0;
+
   @Input({ alias: 'fZoomDblClickStep', transform: numberAttribute })
   public override dblClickStep: number = 0.5;
 
-  @Input({ transform: booleanAttribute })
-  public fScrollPan: boolean = false;
-
-  @Input({ alias: 'fPinchStep', transform: numberAttribute })
-  public pinchStep: number = 0;
+  /** Active control scheme (provider-driven, defaults to `F_DEFAULT_CONTROL_SCHEME`). */
+  private get _scheme(): IFControlScheme {
+    return this._controlScheme?.scheme() ?? F_DEFAULT_CONTROL_SCHEME;
+  }
 
   private get _flowHost(): HTMLElement {
     return this._store.flowHost;
@@ -125,6 +149,11 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   }
 
   private _onWheel = (event: WheelEvent) => {
+    if (!this._wheelTrigger && this._scheme.scrollPan && !this._isZoomIntent(event)) {
+      this._onScrollPan(event);
+
+      return;
+    }
     if (!isValidEventTrigger(event, this.fWheelTrigger)) {
       return;
     }
@@ -132,12 +161,6 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     const targetElement = event.target as HTMLElement;
 
     if (targetElement?.closest('[fLockedContext]')) {
-      return;
-    }
-
-    if (this.fScrollPan && isTrackpadScrollEvent(event)) {
-      this._panByWheel(event);
-
       return;
     }
 
@@ -159,6 +182,21 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
     );
   };
 
+  /** Ctrl/Cmd — including trackpad pinch, which the browser reports as ctrl+wheel — zooms. */
+  private _isZoomIntent(event: WheelEvent): boolean {
+    return event.ctrlKey || event.metaKey;
+  }
+
+  private _onScrollPan(event: WheelEvent): void {
+    const targetElement = event.target as HTMLElement;
+    if (targetElement?.closest('[fLockedContext]')) {
+      return;
+    }
+    event.preventDefault();
+
+    this._mediator.execute(new ScrollCanvasRequest(resolveScrollPanDelta(event)));
+  }
+
   private _normalizeWheelStep(event: WheelEvent, delta: number): number {
     const step = isGestureWheelEvent(event) && this.pinchStep > 0 ? this.pinchStep : this.step;
 
@@ -168,19 +206,6 @@ export class FZoomDirective extends FZoomBase implements OnInit, AfterViewInit, 
   private _calculateDirection(delta: number): number {
     return delta > 0 ? EFZoomDirection.ZOOM_OUT : EFZoomDirection.ZOOM_IN;
   }
-
-  private _panByWheel(event: WheelEvent): void {
-    const canvas = this._canvas;
-    if (!canvas) {
-      return;
-    }
-
-    const pos = canvas.transform.position;
-    canvas._setPosition(PointExtensions.initialize(pos.x - event.deltaX, pos.y - event.deltaY));
-    canvas.redraw();
-    canvas.emitCanvasChangeEvent();
-  }
-
   private _onDoubleClick = (event: MouseEvent) => {
     if (!isValidEventTrigger(event, this.fDblClickTrigger)) {
       return;

@@ -29,6 +29,25 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+    text: 'v19.0.0',
+    group: 'Releases',
+    date: new Date('2026-07-05T12:00:00.000Z'),
+    seo: {
+      title:
+        'Foblex Flow v19.0.0: Control Schemes, Click-to-Connect, Keyboard Accessibility, and a Unified Connector Model',
+      description:
+        'Foblex Flow v19 opens up how the editor is driven: withControlScheme with Miro-like and draw.io-like presets, click-to-connect on the gesture-independent FCreateConnectionSession, an opt-in keyboard accessibility layer via withA11y with screen-reader announcements and keyboard connection creation, the unified fConnector directive, and FF-coded dev diagnostics with agent-ready docs.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+      image: './previews/examples/control-schemes.light.png',
+      imageType: 'image/png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v18-6-0-smart-auto-layout-on-resize',
     text: 'v18.6.0',
     group: 'Releases',
@@ -202,6 +221,62 @@ export const BLOG_PAGES: IPageDefinition[] = [
     },
   },
 
+  // -------- Feature Deep Dives --------
+  {
+    slug: 'selection-instead-of-focus-keyboard-accessibility-in-an-angular-node-editor',
+    text: 'Keyboard Accessibility',
+    group: 'Feature Deep Dives',
+    date: new Date('2026-07-05T12:00:00.000Z'),
+    seo: {
+      title: 'Selection Instead of Focus: Keyboard Accessibility in an Angular Node Editor',
+      description:
+        'The design decisions behind the Foblex Flow accessibility layer: why arrow keys drive the selection instead of a focus cursor, edge-based spatial navigation over nodes and connections, aria-activedescendant on the canvas, and keyboard connection creation on the shared gesture engine.',
+      canonical:
+        'https://flow.foblex.com/blog/selection-instead-of-focus-keyboard-accessibility-in-an-angular-node-editor',
+      image: './previews/examples/accessibility.light.png',
+      imageType: 'image/png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      ogType: 'article',
+    },
+  },
+  {
+    slug: 'one-connector-instead-of-three-the-design-behind-the-unified-fconnector-model',
+    text: 'Unified Connector Model',
+    group: 'Feature Deep Dives',
+    date: new Date('2026-07-05T12:00:00.000Z'),
+    seo: {
+      title: 'One Connector Instead of Three: The Design Behind the Unified fConnector Model',
+      description:
+        'Why Foblex Flow v19 replaces fNodeInput, fNodeOutput and fNodeOutlet with a single fConnector directive: behavior as a property instead of a taxonomy, one id namespace, source-target ports by default, and a deprecation-based migration that costs nothing until you opt in.',
+      canonical:
+        'https://flow.foblex.com/blog/one-connector-instead-of-three-the-design-behind-the-unified-fconnector-model',
+      image: './site-preview.png',
+      imageType: 'image/png',
+      imageWidth: 1688,
+      imageHeight: 937,
+      ogType: 'article',
+    },
+  },
+  {
+    slug: 'muscle-memory-as-configuration-the-design-behind-foblex-flow-control-schemes',
+    text: 'Control Schemes',
+    group: 'Feature Deep Dives',
+    date: new Date('2026-07-05T12:00:00.000Z'),
+    seo: {
+      title: 'Muscle Memory as Configuration: The Design Behind Foblex Flow Control Schemes',
+      description:
+        'Why gesture mapping in Foblex Flow v19 became one provided policy object: Miro-like and draw.io-like presets, runtime switching through FControlSchemeController, the trigger-input precedence rule, and where the scheme boundary deliberately stops.',
+      canonical:
+        'https://flow.foblex.com/blog/muscle-memory-as-configuration-the-design-behind-foblex-flow-control-schemes',
+      image: './previews/examples/control-schemes.light.png',
+      imageType: 'image/png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      ogType: 'article',
+    },
+  },
+
   // -------- Inside Foblex Flow --------
   {
     slug: 'inside-foblex-flow-part-1-library-architecture-and-design-principles',
@@ -366,6 +441,22 @@ export const BLOG_COMPONENTS = [
   defineLazyComponent(
     'add-node-from-palette',
     () => import('@foblex/examples/extensions/add-node-from-palette/example'),
+  ),
+  defineLazyComponent(
+    'accessibility',
+    () => import('@foblex/examples/extensions/accessibility/example'),
+  ),
+  defineLazyComponent(
+    'click-to-connect',
+    () => import('@foblex/examples/connectors/click-to-connect/example'),
+  ),
+  defineLazyComponent(
+    'control-schemes',
+    () => import('@foblex/examples/advanced/control-schemes/example'),
+  ),
+  defineLazyComponent(
+    'unified-connector',
+    () => import('@foblex/examples/connectors/unified-connector/example'),
   ),
   defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
   defineLazyComponent(

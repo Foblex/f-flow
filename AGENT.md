@@ -375,6 +375,8 @@ The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-po
 
 - `llms.txt` is the short index following the [llms.txt spec](https://llmstxt.org): H1 title, blockquote, H2 sections with `- [Link](url): description` entries. Keep it as a link directory — no inline API content.
 - `llms-full.txt` is the full inline reference with all inputs, outputs, methods, types, and code examples. Keep the existing numbered section structure and table format.
+- `scripts/validate-llms-content.mjs` (part of `npm run seo:check`, runs on prebuild) enforces freshness: the stated version must match `libs/f-flow/package.json`, every docs page from `docs.pages.ts` must be linked in `llms.txt`, and every symbol in its `REQUIRED_SYMBOLS` list must appear in `llms-full.txt`. When shipping a new headline public API, add its key symbol to `REQUIRED_SYMBOLS`.
+- The consumer-facing `libs/f-flow/AI.md` ships inside the npm package (`ng-package.json` assets) — update it alongside the llms files for the same triggers; it is what agents read from `node_modules/@foblex/flow/AI.md`.
 - Update the version number when bumping the package version.
 - Add new components/directives in the API Reference section following the existing table format.
 - Update the Angular Version Compatibility table when compatibility changes.

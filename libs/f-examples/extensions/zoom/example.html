@@ -1,5 +1,5 @@
 <f-flow fDraggable (fLoaded)="onLoaded()">
-  <f-canvas [fZoom]="isZoomEnabled" [fScrollPan]="isScrollPanEnabled">
+  <f-canvas [fZoom]="isZoomEnabled">
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
     <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>
       <div fNodeOutput fOutputId="output1" class="right"></div>
@@ -16,8 +16,5 @@
   <button class="f-button primary" (click)="onZoomOut()">Zoom Out</button>
   <f-checkbox [checked]="isZoomEnabled" (change)="onZoomOnMouseWheelChanged($event)"
     >Enable Wheel and Dbl Click</f-checkbox
-  >
-  <f-checkbox [checked]="isScrollPanEnabled" (change)="onScrollPanChanged($event)"
-    >Two-finger pan</f-checkbox
   >
 </f-toolbar>

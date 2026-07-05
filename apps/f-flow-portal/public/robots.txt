@@ -21,4 +21,8 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+# LLM-readable documentation
+# https://flow.foblex.com/llms.txt
+# https://flow.foblex.com/llms-full.txt
+
 Sitemap: https://flow.foblex.com/sitemap.xml

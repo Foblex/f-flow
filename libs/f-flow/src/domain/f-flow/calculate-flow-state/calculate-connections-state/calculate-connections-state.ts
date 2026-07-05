@@ -10,9 +10,10 @@ import { FConnectionBase } from '../../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CalculateConnectionsStateRequest)
-export class CalculateConnectionsState
-  implements IExecution<CalculateConnectionsStateRequest, IFFlowStateConnection[]>
-{
+export class CalculateConnectionsState implements IExecution<
+  CalculateConnectionsStateRequest,
+  IFFlowStateConnection[]
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle(_request: CalculateConnectionsStateRequest): IFFlowStateConnection[] {
@@ -22,8 +23,8 @@ export class CalculateConnectionsState
   private _mapToConnectionState(x: FConnectionBase): IFFlowStateConnection {
     return {
       id: x.fId(),
-      fOutputId: x.fOutputId(),
-      fInputId: x.fInputId(),
+      fOutputId: x.sourceId(),
+      fInputId: x.targetId(),
       fType: x.fType,
       fBehavior: x.fBehavior,
       isSelected: x.isSelected(),

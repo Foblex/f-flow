@@ -1,0 +1,26 @@
+@use '@foblex/flow/styles' as flow-theme;
+
+::ng-deep {
+  @include flow-theme.theme-tokens();
+}
+
+::ng-deep f-flow {
+  @include flow-theme.connection($scoped: false);
+}
+
+@include flow-theme.node($selectorless: false);
+@include flow-theme.connector($scoped: false);
+
+.f-connector-outlet {
+  position: absolute;
+  border: 0.2px solid var(--ff-node-border-color);
+  background-color: var(--ff-node-background-color);
+  top: 50%;
+  right: -90px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+
+  .mat-icon {
+    display: block;
+  }
+}

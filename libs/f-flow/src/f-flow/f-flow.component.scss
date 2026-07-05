@@ -7,6 +7,32 @@
   pointer-events: all;
   user-select: none;
   touch-action: none;
+
+  // The host holds DOM focus for the keyboard layer, but the selected item is the
+  // visual state — no ring around the whole canvas. A transparent (not `none`)
+  // outline stays invisible normally yet is repainted with system colors in
+  // Windows High Contrast / forced-colors mode.
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid transparent;
+  }
+}
+
+// During an active drag the pointer often rides the edge of a connection: the
+// creation preview ends at the cursor and a reassigned endpoint follows it, so hover
+// hit-testing flips between the path and the background every frame — flickering
+// :hover styles and the cursor. Connections take no part in drop targeting (drops
+// resolve against connectors), so they give up pointer events for the drag's duration.
+:host(.f-dragging),
+:host(.f-connections-dragging) {
+  // The connection host is already inert; the hit targets are its children
+  // (.f-connection-group with pointer-events: all, the stroke paths, waypoint
+  // handles), so the drag-time opt-out must reach them.
+  ::ng-deep .f-connection .f-connection-group,
+  ::ng-deep .f-connection .f-connection-content,
+  ::ng-deep .f-connection svg * {
+    pointer-events: none !important;
+  }
 }
 
 ::ng-deep {

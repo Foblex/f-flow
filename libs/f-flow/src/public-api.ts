@@ -13,6 +13,8 @@ export * from './f-draggable';
 
 export * from './f-external-item';
 
+export * from './plugins/a11y';
+export * from './plugins/interaction';
 export * from './plugins/layout';
 export * from './plugins/snapping';
 

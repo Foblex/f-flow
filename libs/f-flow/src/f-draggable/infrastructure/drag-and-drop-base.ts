@@ -45,6 +45,8 @@ export abstract class DragAndDropBase {
   private _moveHandler = this._checkDragSequenceToStart;
 
   private _pointerDownElement: HTMLElement | null = null;
+  private _pointerDownEvent: IPointerEvent | null = null;
+  private _lastMouseMoveEvent: IMouseEvent | null = null;
 
   /**
    * Handles the mouse down event to initiate the drag sequence.
@@ -61,6 +63,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this._pointerDownElement = mouseEvent.targetElement;
+    this._pointerDownEvent = mouseEvent;
     const result = this.onPointerDown(mouseEvent);
     if (result) {
       this._dragStartTime = Date.now();
@@ -114,6 +117,7 @@ export abstract class DragAndDropBase {
       return;
     }
     this._pointerDownElement = touchEvent.targetElement;
+    this._pointerDownEvent = touchEvent;
     const result = this.onPointerDown(touchEvent);
     if (result) {
       this._dragStartTime = Date.now();
@@ -169,7 +173,24 @@ export abstract class DragAndDropBase {
    * @param event - The mouse event that triggered the move.
    */
   private _onMouseMove = (event: MouseEvent) => {
-    this._moveHandler(new IMouseEvent(event));
+    // A native <select> dropdown (and other OS-level popups) swallows the pointerup
+    // that would end the sequence, leaving these listeners armed: the next mousemove
+    // arrives with no button pressed and would start a phantom drag that follows the
+    // cursor until an unrelated pointerup (e.g. a right-click) is delivered. Treat a
+    // buttonless move as the missed pointerup — finalized at the last position the
+    // button was actually held at — and end the sequence.
+    if (event.buttons === 0) {
+      if (this.isDragStarted) {
+        this.onPointerUp(this._lastMouseMoveEvent ?? new IMouseEvent(event));
+      }
+      this._endDragSequence();
+
+      return;
+    }
+
+    const pointerEvent = new IMouseEvent(event);
+    this._lastMouseMoveEvent = pointerEvent;
+    this._moveHandler(pointerEvent);
   };
 
   /**
@@ -208,12 +229,21 @@ export abstract class DragAndDropBase {
         }
 
         event.preventDefault();
-        this.prepareDragSequence(event);
+        // Prepare the drag relative to the original pointer-down position rather than
+        // the position where the threshold happened to be crossed. On a fast flick the
+        // threshold-crossing point is already several px away from the grab point, so
+        // anchoring the drag there offsets the item from the cursor for the whole drag
+        // (issue #309).
+        this.prepareDragSequence(this._pointerDownEvent ?? event);
         this.isDragStarted = true;
         this._moveHandler = this.onPointerMove;
         if (isTouchEvent(event.originalEvent)) {
           this._lastTouchEventTime = Date.now();
         }
+        // Apply the move that crossed the threshold within the same event, so the item
+        // tracks the pointer from this frame instead of staying at its initial position
+        // until the next pointermove (which caused the visible one-frame lag/jump).
+        this.onPointerMove(event);
       }
     }
   }
@@ -249,6 +279,8 @@ export abstract class DragAndDropBase {
   private _endDragSequence(): void {
     this.isDragStarted = false;
     this._pointerDownElement = null;
+    this._pointerDownEvent = null;
+    this._lastMouseMoveEvent = null;
 
     this._moveHandler = this._checkDragSequenceToStart;
     this._mouseListeners();

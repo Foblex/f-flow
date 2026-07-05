@@ -1,0 +1,42 @@
+<f-flow fDraggable (fNodesRendered)="loaded()" (fCreateConnection)="createConnection($event)">
+  <f-canvas fZoom>
+    <f-connection-for-create fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+    <f-snap-connection fBehavior="fixed" fType="segment" [fSnapThreshold]="40">
+      <f-connection-marker-arrow />
+    </f-snap-connection>
+
+    @for (connection of connections(); track connection.id) {
+    <f-connection
+      [fConnectionId]="connection.id"
+      [fSourceId]="connection.source"
+      [fTargetId]="connection.target"
+      fBehavior="fixed"
+      fType="segment"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    }
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }">
+      Source A
+      <div fConnector fConnectorId="source-1" class="right"></div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 150 }">
+      Source B
+      <div fConnector fConnectorId="source-2" class="right"></div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 280, y: 0 }">
+      Target A
+      <div fConnector fConnectorId="target-1" class="left"></div>
+    </div>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 280, y: 150 }">
+      Target B
+      <div fConnector fConnectorId="target-2" class="left"></div>
+    </div>
+  </f-canvas>
+</f-flow>

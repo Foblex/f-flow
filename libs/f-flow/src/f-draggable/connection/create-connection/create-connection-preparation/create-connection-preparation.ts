@@ -1,12 +1,14 @@
 import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
-import { isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
+import { isConnector, isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { CreateConnectionPreparationRequest } from './create-connection-preparation-request';
+import { CreateConnectionFromConnectorPreparationRequest } from './from-connector-preparation';
 import { CreateConnectionFromOutletPreparationRequest } from './from-outlet-preparation';
 import { CreateConnectionFromOutputPreparationRequest } from './from-output-preparation';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
+import { FCreateConnectionSession } from '../f-create-connection-session';
 import { FEventTrigger, isValidEventTrigger } from '../../../../domain';
 import { IPointerEvent } from '../../../infrastructure';
 
@@ -19,15 +21,17 @@ export class CreateConnectionPreparation implements IHandler<
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
+  private readonly _session = inject(FCreateConnectionSession);
 
   public handle({ event, fTrigger }: CreateConnectionPreparationRequest): void {
     if (!this._isValidConditions() || !this._isValidTrigger(event, fTrigger)) {
       return;
     }
 
-    const isOutlet = isNodeOutlet(event.targetElement);
-    const isOutput = !isOutlet && isNodeOutput(event.targetElement);
-    if (!isOutlet && !isOutput) {
+    const isUnifiedConnector = isConnector(event.targetElement);
+    const isOutlet = !isUnifiedConnector && isNodeOutlet(event.targetElement);
+    const isOutput = !isUnifiedConnector && !isOutlet && isNodeOutput(event.targetElement);
+    if (!isUnifiedConnector && !isOutlet && !isOutput) {
       return;
     }
 
@@ -36,7 +40,11 @@ export class CreateConnectionPreparation implements IHandler<
       return;
     }
 
-    if (isOutlet) {
+    if (isUnifiedConnector) {
+      this._mediator.execute<void>(
+        new CreateConnectionFromConnectorPreparationRequest(event, node),
+      );
+    } else if (isOutlet) {
       this._mediator.execute<void>(new CreateConnectionFromOutletPreparationRequest(event, node));
     } else {
       this._mediator.execute<void>(new CreateConnectionFromOutputPreparationRequest(event, node));
@@ -48,7 +56,13 @@ export class CreateConnectionPreparation implements IHandler<
   }
 
   private _isValidConditions(): boolean {
-    return this._dragContext.isEmpty() && !!this._store.connections.getForCreate();
+    // A session armed by another gesture (e.g. click-to-connect) must not be
+    // shadowed by a parallel drag-driven preview.
+    return (
+      this._dragContext.isEmpty() &&
+      !this._session.isActive &&
+      !!this._store.connections.getForCreate()
+    );
   }
 
   private _isValidTrigger(event: IPointerEvent, fTrigger: FEventTrigger): boolean {

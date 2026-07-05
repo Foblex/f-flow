@@ -171,8 +171,8 @@ export class FReflowOrchestrator {
 
     const result: IReflowConnection[] = [];
     for (const conn of this._store.connections.getAll()) {
-      const outputNodeId = connectorToNode.get(conn.fOutputId());
-      const inputNodeId = connectorToNode.get(conn.fInputId());
+      const outputNodeId = connectorToNode.get(conn.sourceId());
+      const inputNodeId = connectorToNode.get(conn.targetId());
       if (!outputNodeId || !inputNodeId) continue;
       result.push({ outputNodeId, inputNodeId });
     }

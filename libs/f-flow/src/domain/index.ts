@@ -34,6 +34,8 @@ export * from './create-dom-element';
 
 export * from './css-cls';
 
+export * from './f-diagnostics';
+
 export * from './f-event-trigger';
 
 export * from './is-mobile';

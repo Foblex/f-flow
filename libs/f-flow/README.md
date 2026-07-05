@@ -149,6 +149,11 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 - [Roadmap](https://github.com/Foblex/f-flow/blob/main/ROADMAP.md)
 - [Changelog](https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md)
 
+### For AI Agents and LLMs
+
+- [llms.txt](https://flow.foblex.com/llms.txt) — docs index for agents; [llms-full.txt](https://flow.foblex.com/llms-full.txt) — complete LLM-readable API reference
+- [AI usage guide](https://github.com/Foblex/f-flow/blob/main/libs/f-flow/AI.md) — strict code-generation rules, also shipped inside this package at `node_modules/@foblex/flow/AI.md`
+
 ## Community and Support
 
 - [GitHub Repository](https://github.com/Foblex/f-flow)

@@ -9,9 +9,10 @@ import { CreateConnectionHandler } from '../../create-connection-handler';
 
 @Injectable()
 @FExecutionRegister(CreateConnectionCreateDragHandlerRequest)
-export class CreateConnectionCreateDragHandler
-  implements IHandler<CreateConnectionCreateDragHandlerRequest, void>
-{
+export class CreateConnectionCreateDragHandler implements IHandler<
+  CreateConnectionCreateDragHandlerRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _dragInjector = inject(DragHandlerInjector);

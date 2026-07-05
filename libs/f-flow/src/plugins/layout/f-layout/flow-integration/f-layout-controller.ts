@@ -270,7 +270,7 @@ export class FLayoutController {
   private _buildConnectionSignature(store: FComponentsStore): string {
     return store.connections
       .getAll()
-      .map((connection) => `${connection.fId()}:${connection.fOutputId()}:${connection.fInputId()}`)
+      .map((connection) => `${connection.fId()}:${connection.sourceId()}:${connection.targetId()}`)
       .sort()
       .join('|');
   }

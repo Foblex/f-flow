@@ -1,7 +1,11 @@
 import { CalculateSourceConnectorsToConnectRequest } from './calculate-source-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { FConnectorBase, FNodeInputBase, FNodeOutputBase } from '../../../f-connectors';
+import {
+  FConnectorBase,
+  FSourceConnectorBase,
+  getAllSourceConnectors,
+} from '../../../f-connectors';
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
@@ -15,14 +19,15 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CalculateSourceConnectorsToConnectRequest)
-export class CalculateSourceConnectorsToConnect
-  implements IExecution<CalculateSourceConnectorsToConnectRequest, IConnectorRectRef[]>
-{
+export class CalculateSourceConnectorsToConnect implements IExecution<
+  CalculateSourceConnectorsToConnectRequest,
+  IConnectorRectRef[]
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
-  private get _sources(): FNodeOutputBase[] {
-    return this._store.outputs.getAll();
+  private get _sources(): FSourceConnectorBase[] {
+    return getAllSourceConnectors(this._store);
   }
 
   public handle({
@@ -43,7 +48,7 @@ export class CalculateSourceConnectorsToConnect
     return refs;
   }
 
-  private _getConnectableSources(target: FNodeInputBase): FConnectorBase[] {
+  private _getConnectableSources(target: FConnectorBase): FConnectorBase[] {
     return this._sources.filter((x) => {
       let result = x.canBeConnected;
       if (result && x.hasConnectionLimits) {

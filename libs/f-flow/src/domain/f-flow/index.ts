@@ -8,4 +8,6 @@ export * from './remove-flow-from-store';
 
 export * from './render-lifecycle';
 
+export * from './run-dev-diagnostics';
+
 export * from './providers';

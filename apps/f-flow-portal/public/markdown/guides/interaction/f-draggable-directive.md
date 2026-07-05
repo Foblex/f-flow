@@ -27,14 +27,14 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 
 - `fDraggableDisabled: boolean;` Default: `false`. Disables all drag interactions.
 - `fMultiSelectTrigger: FEventTrigger;` Default: `(event) => isMac ? event.metaKey : event.ctrlKey`. Trigger for multi-selection.
-- `fReassignConnectionTrigger: FEventTrigger;` Default: `always`. Trigger for reassigning connections.
-- `fCreateConnectionTrigger: FEventTrigger;` Default: `always`. Trigger for creating connections.
+- `fReassignConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `reassignConnection` (`always`). Trigger for reassigning connections.
+- `fCreateConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `createConnection` (`always`). Trigger for creating connections.
 - `fConnectionWaypointsTrigger: FEventTrigger;` Default: `always`. Trigger for moving connection waypoints.
 - `fMoveControlPointTrigger: FEventTrigger;` Default: `always`. Trigger for moving control points (bezier).
-- `fNodeResizeTrigger: FEventTrigger;` Default: `always`. Trigger for resizing nodes.
-- `fNodeRotateTrigger: FEventTrigger;` Default: `always`. Trigger for rotating nodes.
-- `fNodeMoveTrigger: FEventTrigger;` Default: `always`. Trigger for moving nodes.
-- `fCanvasMoveTrigger: FEventTrigger;` Default: `always`. Trigger for panning the canvas.
+- `fNodeResizeTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `nodeResize` (`always`). Trigger for resizing nodes.
+- `fNodeRotateTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `nodeRotate` (`always`). Trigger for rotating nodes.
+- `fNodeMoveTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `nodeMove` (`always`). Trigger for moving nodes.
+- `fCanvasMoveTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `canvasMove` (primary button). Trigger for panning the canvas.
 - `fExternalItemTrigger: FEventTrigger;` Default: `always`. Trigger for dragging external items.
 - `fEmitOnNodeIntersect: boolean;` Default: `false`. Whether to emit node intersection events.
 - `vCellSize: number;` Default: `1`. Vertical grid snapping size.
@@ -51,6 +51,7 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 - `fCreateConnection: EventEmitter<FCreateConnectionEvent>;` Emits when a new connection is created.
 - `fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;` Emits when connection waypoints change.
 - `fDropToGroup: EventEmitter<FDropToGroupEvent>;` Emits when items are dropped into a group.
+- `fDeleteSelected: EventEmitter<FDeleteSelectedEvent>;` Emits when the user requests removal of the current selection (keyboard `Delete`/`Backspace`); remove the items from your data — the library never mutates the graph.
 - `fDragStarted: EventEmitter<FDragStartedEvent>;` Emits when a drag sequence starts.
 - `fDragEnded: EventEmitter<void>;` Emits when a drag sequence ends.
 

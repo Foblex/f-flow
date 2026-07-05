@@ -4,9 +4,32 @@ const GESTURE_WHEEL_DELTA_THRESHOLD = 0.5;
 const GESTURE_WHEEL_INTENSITY_DIVISOR = 60;
 const GESTURE_WHEEL_INTENSITY_MAX = 0.5;
 
+/** Approximate pixel size of one wheel "line" for `DOM_DELTA_LINE` events. */
+const WHEEL_LINE_HEIGHT = 16;
+/** Approximate pixel size of one wheel "page" for `DOM_DELTA_PAGE` events. */
+const WHEEL_PAGE_HEIGHT = 400;
+
 export function resolveWheelDelta(event: WheelEvent): number {
   // With Shift pressed many browsers emit horizontal wheel (deltaX) and keep deltaY near 0.
   return Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+}
+
+/**
+ * Resolve a two-dimensional scroll delta in CSS pixels for scroll-to-pan.
+ *
+ * Unlike {@link resolveWheelDelta} (which collapses to a single dominant axis for zoom),
+ * panning needs both axes so that trackpad two-finger scroll and Shift+wheel move the
+ * viewport diagonally/horizontally. `deltaMode` is normalized to pixels.
+ */
+export function resolveScrollPanDelta(event: WheelEvent): { x: number; y: number } {
+  const factor =
+    event.deltaMode === WheelEvent.DOM_DELTA_LINE
+      ? WHEEL_LINE_HEIGHT
+      : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+        ? WHEEL_PAGE_HEIGHT
+        : 1;
+
+  return { x: event.deltaX * factor, y: event.deltaY * factor };
 }
 
 export function normalizeWheelStep(event: WheelEvent, delta: number, step: number): number {
@@ -17,15 +40,6 @@ export function normalizeWheelStep(event: WheelEvent, delta: number, step: numbe
 
 export function isGestureWheelEvent(event: WheelEvent): boolean {
   return (event.ctrlKey || event.metaKey) && event.deltaMode === WheelEvent.DOM_DELTA_PIXEL;
-}
-
-/**
- * Returns true for trackpad two-finger scroll events (pan intent).
- * Pinch-to-zoom arrives as DOM_DELTA_PIXEL + ctrlKey; plain trackpad scroll
- * arrives as DOM_DELTA_PIXEL without any modifier key.
- */
-export function isTrackpadScrollEvent(event: WheelEvent): boolean {
-  return event.deltaMode === WheelEvent.DOM_DELTA_PIXEL && !event.ctrlKey && !event.metaKey;
 }
 
 function normalizeMouseWheelStep(delta: number, step: number): number {

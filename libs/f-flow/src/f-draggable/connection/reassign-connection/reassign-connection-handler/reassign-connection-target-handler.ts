@@ -61,7 +61,7 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
     );
 
     // Ensure current target exists (usually it already does).
-    const currentTargetId = this._connection.fInputId();
+    const currentTargetId = this._connection.targetId();
     if (currentTargetId && !this._candidates.some((x) => x.connector.fId() === currentTargetId)) {
       this._candidates.push(this._targetRef);
     }
@@ -78,7 +78,7 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
     }
 
     // Source is fixed, so snap-preview always starts at current source.
-    snap.fOutputId.set(this._connection.fOutputId());
+    snap.fOutputId.set(this._connection.sourceId());
     snap.initialize();
   }
 

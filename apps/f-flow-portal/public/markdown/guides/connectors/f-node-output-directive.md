@@ -3,6 +3,8 @@
 **Selector:** `[fNodeOutput]`  
 **Class:** `FNodeOutputDirective`
 
+> **Deprecated since v19.** Use the unified [`fConnector`](f-connector-directive) directive with `fConnectorType="source"` instead. `fNodeOutput` keeps working, but new code should use `fConnector`. Note the default difference: `fOutputMultiple` defaults to `false`, while `fConnectorMultiple` defaults to `true`.
+
 `FNodeOutputDirective` marks an element inside a node as an **output connector** - a place where users can start creating outgoing connections.
 
 Outputs must live inside a node (`[fNode]`) which is rendered inside [`f-canvas`](f-canvas-component) and [`f-flow`](f-flow-component).  
@@ -22,7 +24,7 @@ You can place fNodeOutput on a dedicated element inside the node (classic “por
     <div fNode [fNodePosition]="{ x: 120, y: 80 }">
       <div class="title" fDragHandle>Node</div>
 
-      <div class="port" fNodeOutput fOutputId="out-1">
+      <div fNodeOutput fOutputId="out-1">
         Output
       </div>
     </div>

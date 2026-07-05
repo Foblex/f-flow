@@ -32,6 +32,7 @@ import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
   exportAs: 'fComponent',
   host: {
     'class': 'f-component f-minimap',
+    'aria-hidden': 'true',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,

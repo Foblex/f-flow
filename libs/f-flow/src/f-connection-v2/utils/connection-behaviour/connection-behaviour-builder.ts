@@ -101,7 +101,7 @@ export class ConnectionBehaviourBuilder {
     vectors: IDirectionalVectors,
   ): EFConnectableSide {
     return this._resolveConnectableSide(
-      request.connection.fOutputSide(),
+      request.connection.sourceSide(),
       vectors.sourceToTargetX,
       vectors.sourceToTargetY,
       request.sourceConnectableSide,
@@ -116,7 +116,7 @@ export class ConnectionBehaviourBuilder {
     vectors: IDirectionalVectors,
   ): EFConnectableSide {
     return this._resolveConnectableSide(
-      request.connection.fInputSide(),
+      request.connection.targetSide(),
       vectors.targetToSourceX,
       vectors.targetToSourceY,
       request.targetConnectableSide,

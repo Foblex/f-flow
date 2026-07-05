@@ -16,6 +16,8 @@ export * from './reset-scale';
 
 export * from './reset-scale-and-center';
 
+export * from './scroll-canvas';
+
 export * from './update-scale';
 
 export * from './providers';

@@ -92,6 +92,22 @@ A minimal interactive flow consists of:
 </f-flow>
 ```
 
+The component that hosts this template must import `FFlowModule` — `f-flow`, `f-canvas`, `fNode`, the connectors, and `f-connection` are only reachable through the module:
+
+```typescript
+import { Component } from '@angular/core';
+import { FFlowModule } from '@foblex/flow';
+
+@Component({
+  selector: 'app-flow',
+  standalone: true,
+  imports: [FFlowModule],
+  templateUrl: './flow.html',
+  styleUrl: './flow.scss',
+})
+export class Flow {}
+```
+
 ## Default theme
 
 The quickest styling path is to keep the shipped theme connected.
@@ -206,6 +222,7 @@ Only add scaling features such as cache or virtualization once you actually need
 ## Notes / pitfalls
 
 - Nodes and connections must be inside `f-canvas`. Elements outside it will not participate in transform and interaction.
+- Nested control flow (`@for` inside `@if`, `@for` inside `@for`) is not projected into the canvas — content renders detached and invisible without errors. Wrap the block with `<ng-container ngProjectAs="[fNodes]">` (groups: `"[fGroups]"`, connections: `"[fConnections]"`). See [Errors and Warnings](errors) (FF1004).
 - `fOutputId` and `fInputId` must match connector ids exactly — otherwise the connection will not render.
 - Always define initial node positions for predictable layout.
 - Keep ids stable across re-renders if your app persists or recalculates the graph.

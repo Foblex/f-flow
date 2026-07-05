@@ -22,5 +22,9 @@ export const F_CSS_CLASS = {
     INPUT_NOT_CONNECTABLE: 'f-node-input-not-connectable',
 
     CONNECTABLE: 'f-connector-connectable',
+
+    CONNECTED: 'f-connector-connected',
+
+    NOT_CONNECTABLE: 'f-connector-not-connectable',
   },
 };

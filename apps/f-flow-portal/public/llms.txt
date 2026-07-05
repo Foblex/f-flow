@@ -5,7 +5,7 @@
 ## Key facts
 
 - Package: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- Current version: v18.5.0 (see the npm page for the live number)
+- Current version: v18.6.1 (see the npm page for the live number)
 - Weekly installs: ~16K (verify on npm for the latest number)
 - GitHub: https://github.com/Foblex/f-flow
 - License: MIT
@@ -18,6 +18,9 @@
 - [Get Started](https://flow.foblex.com/docs/get-started): Install and render your first flow in 5 minutes
 - [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility)
 - [React Flow vs Foblex Flow](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams): Honest comparison for Angular teams
+- [Roadmap](https://flow.foblex.com/docs/roadmap): Planned features and release timeline
+- [Errors and Warnings](https://flow.foblex.com/docs/errors): FFxxxx diagnostic codes with causes and fixes
+- [AI Agents](https://flow.foblex.com/docs/ai): Setting up LLMs and coding agents (AGENTS.md, bundled AI.md, llms.txt, Context7)
 
 ## API Reference
 
@@ -25,9 +28,10 @@
 - [f-canvas Component](https://flow.foblex.com/docs/f-canvas-component): Viewport, pan/zoom, fitToScreen, centering
 - [fNode Directive](https://flow.foblex.com/docs/f-node-directive): Draggable nodes, position, size, rotation
 - [fGroup Directive](https://flow.foblex.com/docs/f-group-directive): Node grouping, hierarchy, auto-sizing
-- [fNodeOutput Directive](https://flow.foblex.com/docs/f-node-output-directive): Output connectors, connection rules
-- [fNodeInput Directive](https://flow.foblex.com/docs/f-node-input-directive): Input connectors, categories, multiplicity
-- [fNodeOutlet Directive](https://flow.foblex.com/docs/f-node-outlet-directive): Shared outlet connectors
+- [fConnector Directive](https://flow.foblex.com/docs/f-connector-directive): Unified connector (source/target/source-target/outlet), replaces fNodeOutput/fNodeInput/fNodeOutlet
+- [fNodeOutput Directive](https://flow.foblex.com/docs/f-node-output-directive): Output connectors, connection rules (deprecated — use fConnector)
+- [fNodeInput Directive](https://flow.foblex.com/docs/f-node-input-directive): Input connectors, categories, multiplicity (deprecated — use fConnector)
+- [fNodeOutlet Directive](https://flow.foblex.com/docs/f-node-outlet-directive): Shared outlet connectors (deprecated — use fConnector)
 - [f-connection Component](https://flow.foblex.com/docs/f-connection-component): Connection rendering, types, behavior
 - [f-connection-for-create](https://flow.foblex.com/docs/f-connection-for-create-component): Drag-to-connect preview
 - [f-snap-connection](https://flow.foblex.com/docs/f-snap-connection-component): Snap helper during connection drag
@@ -37,15 +41,20 @@
 - [fDragHandle Directive](https://flow.foblex.com/docs/f-drag-handle-directive): Drag-start surface
 - [fResizeHandle Directive](https://flow.foblex.com/docs/f-resize-handle-directive): Resize handles with directions
 - [fRotateHandle Directive](https://flow.foblex.com/docs/f-rotate-handle-directive): Rotation handles
-- [fZoom Directive](https://flow.foblex.com/docs/f-zoom-directive): Wheel, pinch, double-click zoom, and optional two-finger trackpad pan
+- [fZoom Directive](https://flow.foblex.com/docs/f-zoom-directive): Wheel, pinch, and double-click zoom
 - [f-minimap Component](https://flow.foblex.com/docs/f-minimap-component): Overview navigator
 - [f-background Component](https://flow.foblex.com/docs/f-background-component): Canvas background patterns
 - [f-selection-area](https://flow.foblex.com/docs/f-selection-area-component): Rectangle multi-select
+- [Control Scheme](https://flow.foblex.com/docs/control-scheme): Configurable gesture-to-action mapping with presets
+- [Accessibility](https://flow.foblex.com/docs/accessibility): ARIA semantics always on; withA11y() adds keyboard navigation, movement, and connection creation
 - [fExternalItem Directive](https://flow.foblex.com/docs/f-external-item-directive): Drag from palette to canvas
 - [f-auto-pan Component](https://flow.foblex.com/docs/f-auto-pan-component): Edge-based auto-scroll
 - [f-magnetic-lines](https://flow.foblex.com/docs/f-magnetic-lines-component): Alignment guide lines
+- [f-magnetic-rects](https://flow.foblex.com/docs/f-magnetic-rects-component): Equal-spacing helpers (Figma-like) for node layout
+- [f-line-alignment](https://flow.foblex.com/docs/f-line-alignment-component): Legacy alignment helper (deprecated - use f-magnetic-lines)
 - [Connection Rules](https://flow.foblex.com/docs/connection-rules): Restricting valid connections
 - [Event System](https://flow.foblex.com/docs/event-system): Final-result events, triggers, CSS state classes
+- [Selection System](https://flow.foblex.com/docs/selection-system): Pointer, box and programmatic selection
 
 ## Styling
 
@@ -62,6 +71,9 @@
 - [Angular Diagram Library](https://flow.foblex.com/docs/angular-diagram-library)
 
 ## Examples
+
+- [Click to Connect](https://flow.foblex.com/examples/click-to-connect): Click source, then target — withConnectionFlow('click')
+- [Accessibility](https://flow.foblex.com/examples/accessibility): Keyboard-operable editor with screen-reader announcements — opt-in via withA11y()
 
 - [All Examples Overview](https://flow.foblex.com/examples/overview): 50+ interactive examples
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform): Reference app

@@ -1,3 +1,5 @@
+export * from './f-connector';
+
 export * from './f-node-input';
 
 export * from './f-node-outlet';
