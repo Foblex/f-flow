@@ -14,12 +14,15 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.json",
-            "styles": ["src/styles.scss", "node_modules/@foblex/flow/styles/default.scss"]
+            "styles": ["src/styles.scss", "node_modules/@foblex/flow/styles/default.scss"],
+            "polyfills": ["zone.js"]
           }
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": { "buildTarget": "starter:build" }
+          "options": {
+            "buildTarget": "starter:build"
+          }
         }
       }
     }
