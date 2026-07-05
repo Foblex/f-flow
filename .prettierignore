@@ -32,3 +32,4 @@ testem.log
 
  .DS_Store
 Thumbs.db
+apps/f-flow-portal/public/search-index.json
