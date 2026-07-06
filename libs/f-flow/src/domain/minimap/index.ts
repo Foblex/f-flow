@@ -1,5 +1,7 @@
 export * from './minimap-draw-nodes';
 
+export * from './minimap-node-rects';
+
 export * from './minimap-calculate-viewport';
 
 export * from './minimap-calculate-view-rect';

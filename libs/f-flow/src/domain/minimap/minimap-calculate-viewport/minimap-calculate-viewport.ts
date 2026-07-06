@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapCalculateViewportRequest } from './minimap-calculate-viewport-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { adjustRectToMinSize, IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { FCanvasBase } from '../../../f-canvas';
 import { FFlowBase } from '../../../f-flow';
 import { IMinimapViewport } from './i-minimap-viewport';
-import { CalculateNodesBoundingBoxRequest } from '../../f-node';
+import { MinimapNodeRects } from '../minimap-node-rects';
 
 @Injectable()
 @FExecutionRegister(MinimapCalculateViewportRequest)
@@ -14,8 +13,8 @@ export class MinimapCalculateViewport implements IExecution<
   MinimapCalculateViewportRequest,
   IMinimapViewport
 > {
-  private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
+  private readonly _rects = inject(MinimapNodeRects);
 
   public handle({ svg, minSize }: MinimapCalculateViewportRequest): IMinimapViewport {
     const flow = this._store.fFlow;
@@ -25,7 +24,7 @@ export class MinimapCalculateViewport implements IExecution<
       return { scale: 1, viewBox: RectExtensions.initialize(0, 0, 0, 0) };
     }
 
-    const contentRect = this._contentRectInMinimapSpace(flow, canvas, minSize);
+    const contentRect = this._contentRectInMinimapSpace(minSize);
     const minimapRect = this._minimapRectInFlowSpace(svg, flow);
 
     const scale = this._viewportScale(contentRect, minimapRect);
@@ -34,19 +33,23 @@ export class MinimapCalculateViewport implements IExecution<
     return { scale, viewBox };
   }
 
-  private _contentRectInMinimapSpace(flow: FFlowBase, canvas: FCanvasBase, minSize: number): IRect {
-    const global = this._nodesBoundingBox();
-    const inFlow = RectExtensions.elementTransform(global, flow.hostElement);
-    const inMinimap = RectExtensions.div(inFlow, canvas.transform.scale);
+  /**
+   * Model-space union of node rects shifted by the view offset — numerically
+   * the same rect the old DOM path produced (screen union normalized into the
+   * flow and divided by scale), without measuring a single element.
+   */
+  private _contentRectInMinimapSpace(minSize: number): IRect {
+    this._rects.ensureFresh();
+    const content = this._rects.contentRect() ?? RectExtensions.initialize(0, 0, 0, 0);
+    const offset = this._rects.viewOffset();
+    const inMinimap = RectExtensions.initialize(
+      content.x + offset.x,
+      content.y + offset.y,
+      content.width,
+      content.height,
+    );
 
     return adjustRectToMinSize(inMinimap, minSize);
-  }
-
-  private _nodesBoundingBox(): IRect {
-    return (
-      this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ??
-      RectExtensions.initialize(0, 0, 0, 0)
-    );
   }
 
   private _minimapRectInFlowSpace(svg: SVGSVGElement, flow: FFlowBase): IRect {

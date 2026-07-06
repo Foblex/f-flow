@@ -50,7 +50,15 @@ export class FMinimapComponent extends FMinimapBase implements AfterViewInit, On
   public readonly _minimapView = viewChild.required(FMinimapViewDirective);
 
   public readonly fMinSize = input<number>(1000);
-  public readonly fNodeRenderLimit = input<number, unknown>(1500, { transform: numberAttribute });
+
+  /**
+   * Above this node count the minimap stops rendering node rects. The limit
+   * guards against extreme graphs; since node rects are now computed from the
+   * model and reused between frames (no per-frame DOM measurement), the
+   * default is an order of magnitude higher than the old DOM-measured path
+   * allowed.
+   */
+  public readonly fNodeRenderLimit = input<number, unknown>(10000, { transform: numberAttribute });
 
   public override get state() {
     return this._flow().model;
