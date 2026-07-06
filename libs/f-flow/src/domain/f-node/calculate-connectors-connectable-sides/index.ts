@@ -10,3 +10,5 @@ export * from './utils';
 
 export * from './calculate-connectors-connectable-sides';
 export * from './calculate-connectors-connectable-sides-request';
+
+export * from './connectable-sides-scheduler';
