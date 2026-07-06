@@ -38,7 +38,9 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
       // .pipe(afterNextPaint()) // Removed: caused ~32ms lag on resize/toggle. Debounce is sufficient for DOM stability.
       .listen(destroyRef, () => {
-        this._mediator.execute<void>(new EmitConnectionsChangesRequest());
+        // Scoped: a single node's resize/state change only needs its own
+        // connections redrawn, not a whole-graph pass.
+        this._mediator.execute<void>(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
         if (!this._isDragging()) {
           this._mediator.execute(
             new InvalidateFCacheNodeRequest(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged'),

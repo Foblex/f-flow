@@ -113,7 +113,20 @@ export class FComponentsStore {
     });
   }
 
-  public emitConnectionChanges(): void {
+  /**
+   * Node ids whose connections need a redraw; `null` means "everything".
+   * Only the single-node resize/state path narrows the scope — every other
+   * emitter keeps today's full-redraw semantics.
+   */
+  private _dirtyConnectionNodeIds: Set<string> | null = null;
+
+  public emitConnectionChanges(dirtyNodeId?: string): void {
+    if (dirtyNodeId === undefined) {
+      this._dirtyConnectionNodeIds = null;
+    } else {
+      this._dirtyConnectionNodeIds?.add(dirtyNodeId);
+    }
+
     this._connectionsRevision++;
     if (this._isConnectionsNotifyScheduled) {
       return;
@@ -123,6 +136,14 @@ export class FComponentsStore {
       this._isConnectionsNotifyScheduled = false;
       this.connectionsChanges$.notify();
     });
+  }
+
+  /** Returns the accumulated scope and starts collecting a fresh one. */
+  public takeConnectionsDirtyScope(): ReadonlySet<string> | null {
+    const scope = this._dirtyConnectionNodeIds;
+    this._dirtyConnectionNodeIds = new Set();
+
+    return scope;
   }
 
   public completeConnectionsRender(revision: number, nodesRevision: number): void {

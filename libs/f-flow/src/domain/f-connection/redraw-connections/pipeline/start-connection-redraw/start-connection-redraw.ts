@@ -6,14 +6,17 @@ import { StartConnectionRedrawRequest } from './start-connection-redraw-request'
 
 @Injectable()
 @FExecutionRegister(StartConnectionRedrawRequest)
-export class StartConnectionRedraw
-  implements IExecution<StartConnectionRedrawRequest, IConnectionRedrawSession>
-{
+export class StartConnectionRedraw implements IExecution<
+  StartConnectionRedrawRequest,
+  IConnectionRedrawSession
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _state = inject(ConnectionRedrawState);
 
-  public handle(_: StartConnectionRedrawRequest): IConnectionRedrawSession {
-    this._state.resetConnectedConnectors();
+  public handle({ resetConnectedState }: StartConnectionRedrawRequest): IConnectionRedrawSession {
+    if (resetConnectedState) {
+      this._state.resetConnectedConnectors();
+    }
 
     return {
       renderTicket: this._state.beginRender(),
