@@ -4,7 +4,7 @@ import { Point } from '@foblex/2d';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { FNodeBase } from '../../../f-node';
+import { findNodeOrGroupContaining, FNodeBase } from '../../../f-node';
 import { AttachDragNodeHandlerFromSelectionRequest } from '../attach-drag-node-handler-from-selection';
 import {
   FEventTrigger,
@@ -56,19 +56,9 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
   }
 
   private _findDraggableNode(target: HTMLElement): FNodeBase | undefined {
-    const nodes = this._store.nodes.getAll();
+    const node = findNodeOrGroupContaining(this._store, target);
 
-    for (const node of nodes) {
-      if (node.fDraggingDisabled()) {
-        continue;
-      }
-
-      if (node.isContains(target)) {
-        return node;
-      }
-    }
-
-    return undefined;
+    return node && !node.fDraggingDisabled() ? node : undefined;
   }
 
   private _storePointerDownContext(event: IPointerEvent): void {

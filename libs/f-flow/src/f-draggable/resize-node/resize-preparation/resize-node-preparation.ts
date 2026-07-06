@@ -5,7 +5,7 @@ import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
-import { EFResizeHandleType, FNodeBase } from '../../../f-node';
+import { EFResizeHandleType, findNodeOrGroupContaining, FNodeBase } from '../../../f-node';
 import { ResizeNodeHandler } from '../resize-node-handler';
 import {
   getDataAttrValueFromClosestElementWithClass,
@@ -66,7 +66,7 @@ export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRe
   }
 
   private _findResizableNode(target: HTMLElement): FNodeBase | undefined {
-    const nodeOrGroup = this._store.nodes.getAll().find((x) => x.isContains(target));
+    const nodeOrGroup = findNodeOrGroupContaining(this._store, target);
     if (!nodeOrGroup) {
       return undefined;
     }

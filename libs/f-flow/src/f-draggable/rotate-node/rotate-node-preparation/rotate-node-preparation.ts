@@ -12,7 +12,7 @@ import {
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
-import { FNodeBase, isRotateHandle } from '../../../f-node';
+import { findNodeOrGroupContaining, FNodeBase, isRotateHandle } from '../../../f-node';
 import { requireSourceConnector, requireTargetConnector } from '../../../f-connectors';
 import { RotateNodeHandler } from '../rotate-node-handler';
 import { DragHandlerInjector } from '../../infrastructure';
@@ -77,17 +77,9 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
   }
 
   private _findRotatableNode(target: HTMLElement): FNodeBase | undefined {
-    for (const node of this._store.nodes.getAll()) {
-      if (node.fDraggingDisabled()) {
-        continue;
-      }
+    const node = findNodeOrGroupContaining(this._store, target);
 
-      if (node.isContains(target)) {
-        return node;
-      }
-    }
-
-    return undefined;
+    return node && !node.fDraggingDisabled() ? node : undefined;
   }
 
   private _selectBeforeRotate(node: FNodeBase): void {

@@ -5,7 +5,7 @@ import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../d
 import { FComponentsStore } from '../../f-storage';
 import { FDraggableDataContext } from '../f-draggable-data-context';
 import { ISelectable } from '../../mixins';
-import { FNodeBase } from '../../f-node';
+import { findNodeOrGroupContaining, FNodeBase } from '../../f-node';
 import { IPointerEvent } from '../infrastructure';
 import { FConnectionBase } from '../../f-connection-v2';
 import { SelectionAreaHandler } from '../selection-area';
@@ -96,7 +96,7 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
   }
 
   private _findNodeOrGroupAt(target: HTMLElement): FNodeBase | undefined {
-    return this._store.nodes.getAll().find((x) => x.isContains(target));
+    return findNodeOrGroupContaining(this._store, target);
   }
 
   private _findConnectionAt(target: HTMLElement | SVGElement): FConnectionBase | undefined {

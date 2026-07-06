@@ -5,7 +5,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DragCanvasHandler } from '../drag-canvas-handler';
-import { FNodeBase } from '../../../f-node';
+import { findNodeOrGroupContaining, FNodeBase } from '../../../f-node';
 import { FEventTrigger, isValidEventTrigger } from '../../../domain';
 import { DragHandlerInjector } from '../../infrastructure';
 import { IPointerEvent } from '../../infrastructure';
@@ -44,7 +44,7 @@ export class DragCanvasPreparation implements IExecution<DragCanvasPreparationRe
   }
 
   private _getNode(targetElement: HTMLElement): FNodeBase | undefined {
-    let result = this._store.nodes.getAll().find((x) => x.isContains(targetElement));
+    let result = findNodeOrGroupContaining(this._store, targetElement);
     if (result && result.fDraggingDisabled()) {
       result = undefined;
     }

@@ -9,7 +9,7 @@ import {
   GetNormalizedElementRectRequest,
   GetParentNodesRequest,
 } from '../../../domain';
-import { FGroupDirective, FNodeBase } from '../../../f-node';
+import { findNodeOrGroupContaining, FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { DragNodeHandler } from '../../drag-node';
@@ -34,7 +34,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
       return;
     }
 
-    const dragTargetNode = this._allNodes.find((n) => n.isContains(event.targetElement));
+    const dragTargetNode = findNodeOrGroupContaining(this._store, event.targetElement);
 
     // If this is not an external drag and we can't resolve a target node — it's an invalid state.
     if (!dragTargetNode && !this._hasExternalDrag()) {
