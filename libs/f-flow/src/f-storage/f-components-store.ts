@@ -91,14 +91,38 @@ export class FComponentsStore {
 
   public fDraggable: FDraggableBase | undefined;
 
+  private _isNodesNotifyScheduled = false;
+  private _isConnectionsNotifyScheduled = false;
+
+  /**
+   * Change notifications are coalesced to one per microtask: mounting a node
+   * with K connectors used to fire K+1 synchronous notifications, each running
+   * every listener (semantics rebuild, layout, minimap) — O(N^2) work across
+   * an N-node initial render. Revisions still increment synchronously, so code
+   * comparing revisions never observes stale values.
+   */
   public emitNodeChanges(): void {
     this._nodesRevision++;
-    this.nodesChanges$.notify();
+    if (this._isNodesNotifyScheduled) {
+      return;
+    }
+    this._isNodesNotifyScheduled = true;
+    queueMicrotask(() => {
+      this._isNodesNotifyScheduled = false;
+      this.nodesChanges$.notify();
+    });
   }
 
   public emitConnectionChanges(): void {
     this._connectionsRevision++;
-    this.connectionsChanges$.notify();
+    if (this._isConnectionsNotifyScheduled) {
+      return;
+    }
+    this._isConnectionsNotifyScheduled = true;
+    queueMicrotask(() => {
+      this._isConnectionsNotifyScheduled = false;
+      this.connectionsChanges$.notify();
+    });
   }
 
   public completeConnectionsRender(revision: number, nodesRevision: number): void {
