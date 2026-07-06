@@ -23,9 +23,10 @@ import { calculatePointerInFlow } from '../../utils';
  */
 @Injectable()
 @FExecutionRegister(GetNormalizedConnectorRectRequest)
-export class GetNormalizedConnectorRect
-  implements IExecution<GetNormalizedConnectorRectRequest, IRoundedRect>
-{
+export class GetNormalizedConnectorRect implements IExecution<
+  GetNormalizedConnectorRectRequest,
+  IRoundedRect
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
@@ -56,28 +57,27 @@ export class GetNormalizedConnectorRect
     return rect;
   }
 
+  /**
+   * Border radii are read through getComputedStyle — by far the priciest part
+   * of a connector measurement — yet they practically never change. They are
+   * cached per element and re-read only after the resize signal every node's
+   * ResizeObserver already bumps, which also covers font-size/percentage-based
+   * radii (those can only change alongside a layout change).
+   */
+  private _rawRadiiCache = new WeakMap<Element, [number, number, number, number]>();
+  private _radiiRevision = -1;
+
   private _getElementRoundedRect(element: HTMLElement | SVGElement): IRoundedRect {
-    return this._getRoundedRect(
-      RectExtensions.fromElement(element),
-      element,
-      this._getComputedStyle(element),
-    );
+    return this._getRoundedRect(RectExtensions.fromElement(element), element);
   }
 
-  private _getRoundedRect(
-    rect: IRect,
-    element: HTMLElement | SVGElement,
-    styles: CSSStyleDeclaration,
-  ): RoundedRect {
+  private _getRoundedRect(rect: IRect, element: HTMLElement | SVGElement): RoundedRect {
+    const { scale } = this._transform;
+    const rawRadii = this._resolveRawRadii(element);
     const [radius1, radius2, radius3, radius4] = this._normalizeCircularBorderRadii(
       rect.width,
       rect.height,
-      [
-        this._getSystemRadius(styles.borderTopLeftRadius, element, styles.fontSize),
-        this._getSystemRadius(styles.borderTopRightRadius, element, styles.fontSize),
-        this._getSystemRadius(styles.borderBottomRightRadius, element, styles.fontSize),
-        this._getSystemRadius(styles.borderBottomLeftRadius, element, styles.fontSize),
-      ],
+      [rawRadii[0] * scale, rawRadii[1] * scale, rawRadii[2] * scale, rawRadii[3] * scale],
     );
 
     return new RoundedRect(
@@ -92,20 +92,33 @@ export class GetNormalizedConnectorRect
     );
   }
 
+  private _resolveRawRadii(element: HTMLElement | SVGElement): [number, number, number, number] {
+    if (this._radiiRevision !== this._store.connectionsRevision) {
+      this._radiiRevision = this._store.connectionsRevision;
+      this._rawRadiiCache = new WeakMap();
+    }
+
+    let radii = this._rawRadiiCache.get(element);
+    if (!radii) {
+      const styles = this._getComputedStyle(element);
+      radii = [
+        this._toPixels(styles.borderTopLeftRadius, element, styles.fontSize),
+        this._toPixels(styles.borderTopRightRadius, element, styles.fontSize),
+        this._toPixels(styles.borderBottomRightRadius, element, styles.fontSize),
+        this._toPixels(styles.borderBottomLeftRadius, element, styles.fontSize),
+      ];
+      this._rawRadiiCache.set(element, radii);
+    }
+
+    return radii;
+  }
+
   private _getComputedStyle(element: HTMLElement | SVGElement): CSSStyleDeclaration {
     return this._browser.window.getComputedStyle(element);
   }
 
   private _toPixels(value: string, element: HTMLElement | SVGElement, fontSize: string): number {
     return this._browser.toPixels(value, element.clientWidth, element.clientHeight, fontSize) || 0;
-  }
-
-  private _getSystemRadius(
-    value: string,
-    element: HTMLElement | SVGElement,
-    fontSize: string,
-  ): number {
-    return this._toPixels(value, element, fontSize) * this._transform.scale;
   }
 
   /**
