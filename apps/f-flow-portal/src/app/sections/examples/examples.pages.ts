@@ -789,6 +789,22 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'state',
+    text: 'State',
+    group: 'Editor State',
+    date: new Date('2026-07-07 18:30:00'),
+    seo: {
+      title: 'Managed Flow State',
+      description:
+        'Built-in graph state for Angular flows: load data, gestures apply themselves, undo/redo and snapshot() included. Every behavior overridable.',
+      image: './previews/examples/undo-redo-v2.light.png',
+      imageDark: './previews/examples/undo-redo-v2.dark.png',
+      imageWidth: 799,
+      imageHeight: 600,
+      imageType: 'image/png',
+    },
+  },
+  {
     slug: 'undo-redo',
     text: 'Undo/Redo',
     group: 'Editor State',
@@ -1203,6 +1219,7 @@ export const EXAMPLES_COMPONENTS = [
     'undo-redo-v2',
     () => import('@foblex/examples/advanced/undo-redo-v2/example'),
   ),
+  defineLazyComponent('flow-state', () => import('@foblex/examples/advanced/flow-state/example')),
   defineLazyComponent(
     'add-node-from-palette',
     () => import('@foblex/examples/extensions/add-node-from-palette/example'),

@@ -1,0 +1,60 @@
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-canvas fZoom>
+    <f-connection-for-create fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+
+    <f-snap-connection [fSnapThreshold]="100" fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-snap-connection>
+
+    @for (connection of state.connections(); track connection.id) {
+    <f-connection
+      [fConnectionId]="connection.id"
+      [fSourceId]="connection.sourceId"
+      [fTargetId]="connection.targetId"
+      fBehavior="fixed"
+      fType="segment"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (node of state.nodes(); track node.id; let index = $index) {
+    <div fNode [fNodePosition]="node.position" [fNodeId]="node.id" fDragHandle>
+      {{ node.data?.text }}
+      <div
+        fConnector
+        fConnectorId="{{node.id}}-input-{{index}}"
+        fConnectorConnectableSide="left"
+        class="left"
+      ></div>
+      <div
+        fConnector
+        fConnectorId="{{node.id}}-output-{{index}}"
+        fConnectorConnectableSide="top"
+        class="top"
+      ></div>
+      <div
+        fConnector
+        fConnectorId="{{node.id}}-input-{{index+1}}"
+        fConnectorConnectableSide="right"
+        class="right"
+      ></div>
+      <div
+        fConnector
+        fConnectorId="{{node.id}}-output-{{index+1}}"
+        fConnectorConnectableSide="bottom"
+        class="bottom"
+      ></div>
+    </div>
+    }
+  </f-canvas>
+</f-flow>
+
+<f-toolbar>
+  <button class="f-button primary" (click)="state.undo()" [disabled]="!state.canUndo()">
+    Undo
+  </button>
+  <button class="f-button primary" (click)="state.redo()" [disabled]="!state.canRedo()">
+    Redo
+  </button>
+</f-toolbar>
