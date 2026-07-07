@@ -56,6 +56,7 @@ import { F_CACHE_OPTIONS } from '../f-cache';
 import { F_FLOW_CONFIG } from '../provide-f-flow';
 import { F_REFLOW_PROVIDERS } from '../plugins/layout/f-reflow-on-resize';
 import { FA11yAnnouncer, FA11yController } from '../plugins/a11y';
+import { FFlowStateController } from '../plugins/state';
 
 let uniqueId = 0;
 const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
@@ -80,6 +81,7 @@ const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
     ...F_REFLOW_PROVIDERS,
     FA11yAnnouncer,
     FA11yController,
+    FFlowStateController,
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -93,6 +95,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private readonly _injector = inject(Injector);
   private readonly _flowConfig = inject(F_FLOW_CONFIG, { optional: true });
   private readonly _a11y = inject(FA11yController);
+  private readonly _flowState = inject(FFlowStateController);
 
   public override fId = input<string>(this._flowConfig?.id ?? `f-flow-${uniqueId++}`, {
     alias: 'fFlowId',
@@ -122,6 +125,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     this._listenNodesChanges();
     this._listenConnectionsChanges();
     this._a11y.initialize();
+    this._flowState.initialize();
     this._warnWhenHostHasNoHeight();
   }
 
@@ -265,6 +269,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public ngOnDestroy(): void {
     this._a11y.destroy();
+    this._flowState.destroy();
     this._mediator.execute(new RemoveFlowFromStoreRequest(this));
   }
 }

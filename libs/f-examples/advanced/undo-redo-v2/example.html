@@ -1,117 +1,48 @@
-@let model = viewModel();
-<f-flow
-  fDraggable
-  (fLoaded)="editorLoaded()"
-  (fCreateConnection)="createConnection($event)"
-  (fReassignConnection)="reassignConnection($event)"
-  (fMoveNodes)="moveNodes($event)"
-  (fSelectionChange)="changeSelection($event)"
->
-  <f-canvas
-    fZoom
-    [scale]="model?.transform?.scale"
-    [position]="model?.transform?.position"
-    [debounceTime]="fCanvasChangeEventDebounce"
-    (fCanvasChange)="changeCanvasTransform($event)"
-  >
+<f-flow fDraggable (fLoaded)="loaded()">
+  <f-canvas fZoom>
     <f-connection-for-create fBehavior="fixed" fType="segment">
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
+      <f-connection-marker-arrow />
     </f-connection-for-create>
 
     <f-snap-connection [fSnapThreshold]="100" fBehavior="fixed" fType="segment">
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
+      <f-connection-marker-arrow />
     </f-snap-connection>
 
-    @for (connection of connections(); track connection.id) {
+    @for (connection of state.connections(); track connection.id) {
     <f-connection
       [fConnectionId]="connection.id"
-      [fOutputId]="connection.source"
-      [fInputId]="connection.target"
+      [fSourceId]="connection.sourceId"
+      [fTargetId]="connection.targetId"
       fBehavior="fixed"
       fType="segment"
     >
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
-      <svg
-        viewBox="0 0 6 7"
-        fMarker
-        [type]="eMarkerType.SELECTED_END"
-        class="connection-marker"
-        [height]="7"
-        [width]="6"
-        [refX]="5.5"
-        [refY]="3.5"
-        markerUnits="strokeWidth"
-        orient="auto"
-      >
-        <path d="M0.000391006 0L6 3.5L0.000391006 7L0.000391006 0Z" />
-      </svg>
+      <f-connection-marker-arrow />
     </f-connection>
-    } @for (node of nodes(); track node.id; let index = $index) {
+    } @for (node of state.nodes(); track node.id; let index = $index) {
     <div fNode [fNodePosition]="node.position" [fNodeId]="node.id" fDragHandle>
-      {{ node.text }}
+      {{ node.data?.text }}
       <div
-        fNodeInput
-        fInputId="{{node.id}}-input-{{index}}"
-        fInputConnectableSide="left"
+        fConnector
+        fConnectorId="{{node.id}}-input-{{index}}"
+        fConnectorConnectableSide="left"
         class="left"
       ></div>
       <div
-        fNodeOutput
-        fOutputId="{{node.id}}-output-{{index}}"
-        [isSelfConnectable]="false"
-        fOutputConnectableSide="top"
+        fConnector
+        fConnectorId="{{node.id}}-output-{{index}}"
+        fConnectorConnectableSide="top"
         class="top"
       ></div>
       <div
-        fNodeInput
-        fInputId="{{node.id}}-input-{{index+1}}"
-        fInputConnectableSide="right"
+        fConnector
+        fConnectorId="{{node.id}}-input-{{index+1}}"
+        fConnectorConnectableSide="right"
         class="right"
       ></div>
       <div
-        fNodeOutput
-        fOutputId="{{node.id}}-output-{{index+1}}"
-        [isSelfConnectable]="false"
-        fOutputConnectableSide="bottom"
+        fConnector
+        fConnectorId="{{node.id}}-output-{{index+1}}"
+        fConnectorConnectableSide="bottom"
         class="bottom"
       ></div>
     </div>

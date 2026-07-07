@@ -17,6 +17,7 @@ export * from './plugins/a11y';
 export * from './plugins/interaction';
 export * from './plugins/layout';
 export * from './plugins/snapping';
+export * from './plugins/state';
 
 export * from './provide-f-flow';
 
