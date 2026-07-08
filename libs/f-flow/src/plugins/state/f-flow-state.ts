@@ -88,6 +88,10 @@ export class FFlowState<
   /** Live selection when `selectionInHistory` is off (kept out of history). */
   private readonly _liveSelection = signal<IFStateSelection>(EMPTY_SELECTION);
 
+  /** Open-transaction depth; commits inside a batch collapse into one step. */
+  private _batchDepth = 0;
+  private _batchOpen = false;
+
   // Records are memoized so a selection-only change never re-emits the graph.
   private readonly _nodesRecord = computed(() => this._shape().nodes);
   private readonly _groupsRecord = computed(() => this._shape().groups);
@@ -325,6 +329,40 @@ export class FFlowState<
   }
 
   // ------------------------------------------------------------------
+  // Transactions — collapse several mutations into ONE undoable step
+  // ------------------------------------------------------------------
+
+  /**
+   * Opens a transaction: every `commit` until the matching `endBatch` records
+   * only ONE history step (the shape before the batch). Used by the controller
+   * to fold the events of a single drag session (e.g. move + drop-to-group, or
+   * a historized selection + move) into one undoable action. Nestable.
+   */
+  public beginBatch(): void {
+    this._batchDepth++;
+  }
+
+  /** Closes the transaction opened by `beginBatch`. */
+  public endBatch(): void {
+    if (this._batchDepth > 0) {
+      this._batchDepth--;
+    }
+    if (this._batchDepth === 0) {
+      this._batchOpen = false;
+    }
+  }
+
+  /** Runs `work` inside a transaction so all its mutations are one step. */
+  public batch<T>(work: () => T): T {
+    this.beginBatch();
+    try {
+      return work();
+    } finally {
+      this.endBatch();
+    }
+  }
+
+  // ------------------------------------------------------------------
   // Gesture handlers — the controller forwards finished gestures here.
   // Override any of them to change what a gesture means for your data.
   // ------------------------------------------------------------------
@@ -516,14 +554,21 @@ export class FFlowState<
   /**
    * Records the current shape into the history and applies the next one.
    * Route custom subclass mutations through here to make them undoable.
+   * Inside a `beginBatch`/`endBatch` transaction only the first commit records
+   * a history step, so the whole batch undoes in one go.
    */
   protected commit(next: IFStateShape<TNode, TConnection, TGroup>): void {
-    this._undoStack.push(this._shape());
-    const limit = this.config?.historyLimit ?? 50;
-    if (this._undoStack.length > limit) {
-      this._undoStack.shift();
+    if (this._batchDepth === 0 || !this._batchOpen) {
+      this._undoStack.push(this._shape());
+      const limit = this.config?.historyLimit ?? 50;
+      if (this._undoStack.length > limit) {
+        this._undoStack.shift();
+      }
+      this._redoStack.length = 0;
+      if (this._batchDepth > 0) {
+        this._batchOpen = true;
+      }
     }
-    this._redoStack.length = 0;
     this._shape.set(next);
     this._syncHistorySignals();
     this._bumpChanges();

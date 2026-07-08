@@ -71,6 +71,7 @@ Every finished gesture is forwarded into the store automatically, each as ONE un
 - Records are updated immutably, so a history entry is just an object reference — history is cheap regardless of graph size.
 - `withFlowState({ historyLimit: 100 })` caps the stack (default 50); the oldest steps fall off.
 - `load()` replaces the whole graph and resets the history — ideal for opening a document; `clearHistory()` keeps the data and drops only the steps.
+- One drag session is one step. When a single gesture ends with several events — a move plus a drop into a group, or (with `selectionInHistory`) a selection plus a move — they are folded into a single undoable action, so one `undo` reverts the whole thing.
 
 ## Reacting to changes
 
@@ -120,6 +121,11 @@ state.removeGroups(['g1']); // children are un-parented, attached connections ca
 
 state.removeNodes(['n3']); // attached connections cascade automatically
 state.removeItems(nodeIds, connectionIds); // combined removal, one step
+
+state.batch(() => {
+  state.addNodes(node);
+  state.addConnections(edge); // several mutations, one undo step
+});
 ```
 
 ## Shaping and vetoing gesture results

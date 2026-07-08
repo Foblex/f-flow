@@ -1,4 +1,4 @@
-<f-flow fDraggable (fFullRendered)="loaded()">
+<f-flow fDraggable (fFullRendered)="rendered()">
   <f-canvas fZoom>
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <f-connection-marker-arrow />
@@ -17,6 +17,7 @@
       [fGroupSize]="group.size"
       [fGroupParentId]="group.parentId"
       fAutoExpandOnChildHit
+      fAutoSizeToFitChildren
     >
       <span>Group</span>
     </div>
@@ -38,6 +39,7 @@
       [fNodePosition]="node.position"
       [fNodeParentId]="node.parentId"
       fAutoExpandOnChildHit
+      fAutoSizeToFitChildren
     >
       {{ node.text }}
       <div

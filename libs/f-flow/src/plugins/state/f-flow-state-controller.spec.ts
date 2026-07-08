@@ -31,6 +31,8 @@ interface IFakeDraggable {
   fDropToGroup: EventEmitter<FDropToGroupEvent>;
   fCreateNode: EventEmitter<FCreateNodeEvent>;
   fSelectionChange: EventEmitter<FSelectionChangeEvent>;
+  fDragStarted: EventEmitter<unknown>;
+  fDragEnded: EventEmitter<void>;
 }
 
 function createFakeDraggable(): IFakeDraggable {
@@ -42,7 +44,19 @@ function createFakeDraggable(): IFakeDraggable {
     fDropToGroup: new EventEmitter(),
     fCreateNode: new EventEmitter(),
     fSelectionChange: new EventEmitter(),
+    fDragStarted: new EventEmitter(),
+    fDragEnded: new EventEmitter(),
   };
+}
+
+/** Simulates one drag session: start-tick work, then end-tick work. */
+async function drag(d: IFakeDraggable, atStart: () => void, atEnd: () => void): Promise<void> {
+  atStart();
+  d.fDragStarted.emit(undefined);
+  await Promise.resolve();
+  atEnd();
+  d.fDragEnded.emit();
+  await Promise.resolve();
 }
 
 describe('FFlowStateController', () => {
@@ -170,12 +184,16 @@ describe('FFlowStateController', () => {
     expect(state.connections().length).toBe(1);
   });
 
-  it('deletes a group and un-parents its children as one step', () => {
+  it('deletes a group and un-parents its children as one step', async () => {
     setup();
+    // The drop and the delete are separate user actions (separate drag
+    // sessions), so let each batch close before the next.
     draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
+    await Promise.resolve();
     expect(state.getNode('a')?.parentId).toBe('group-1');
 
     draggable.fDeleteSelected.emit(new FDeleteSelectedEvent([], ['group-1'], []));
+    await Promise.resolve();
 
     expect(state.groups().length).toBe(0);
     expect(state.getNode('a')?.parentId).toBeNull();
@@ -258,6 +276,74 @@ describe('FFlowStateController', () => {
     );
     const created = state.nodes().find((n) => (n as { kind?: string }).kind === 'x');
     expect(created?.parentId).toBeNull();
+  });
+
+  it('folds move + drop-to-group of one drag into a single undo step', async () => {
+    setup();
+
+    // Both events fire on the same pointer-up, inside one drag session.
+    await drag(
+      draggable,
+      () => {},
+      () => {
+        draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 50, y: 50 } }]));
+        draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
+      },
+    );
+
+    expect(state.getNode('a')?.position).toEqual({ x: 50, y: 50 });
+    expect(state.getNode('a')?.parentId).toBe('group-1');
+
+    // ONE undo reverts BOTH the move and the reparent.
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(state.getNode('a')?.parentId).toBeUndefined();
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('folds a selection at drag-start with the move at drag-end into one step', async () => {
+    setup({ selectionInHistory: true });
+
+    // The selection is emitted at drag-start (before fDragStarted); the move
+    // lands at drag-end — different ticks, one drag.
+    await drag(
+      draggable,
+      () => draggable.fSelectionChange.emit(new FSelectionChangeEvent(['a'], [], [])),
+      () =>
+        draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 30, y: 30 } }])),
+    );
+
+    expect(state.getNode('a')?.position).toEqual({ x: 30, y: 30 });
+    expect(state.selection().nodeIds).toEqual(['a']);
+
+    // ONE undo reverts BOTH the selection and the move.
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(state.selection().nodeIds).toEqual([]);
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('keeps separate drags as separate undo steps', async () => {
+    setup();
+
+    await drag(
+      draggable,
+      () => {},
+      () =>
+        draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 10, y: 10 } }])),
+    );
+    await drag(
+      draggable,
+      () => {},
+      () =>
+        draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 20, y: 20 } }])),
+    );
+
+    expect(state.getNode('a')?.position).toEqual({ x: 20, y: 20 });
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 10, y: 10 });
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
   });
 
   it('adds a node when an external item is dropped', () => {

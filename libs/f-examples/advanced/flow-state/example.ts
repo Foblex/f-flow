@@ -21,7 +21,7 @@ interface INode extends IFStateNode {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  providers: [provideFFlow(withFlowState())],
+  providers: [provideFFlow(withFlowState({ selectionInHistory: true }))],
   imports: [FFlowModule, FToolbarComponent, FExternalPaletteComponent],
 })
 export class Example {
@@ -55,7 +55,7 @@ export class Example {
     });
   }
 
-  protected loaded(): void {
+  protected rendered(): void {
     this._canvas().resetScaleAndCenter(false);
   }
 }

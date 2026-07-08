@@ -287,4 +287,22 @@ describe('FFlowState', () => {
     // A selection-only event is not a graph change.
     expect(state.changes()).toBe(changesBefore);
   });
+
+  it('collapses a batch() of mutations into one undoable step', () => {
+    loadSample();
+
+    state.batch(() => {
+      state.addNodes({ id: 'c', position: { x: 1, y: 1 } });
+      state.moveNodes([{ id: 'a', position: { x: 9, y: 9 } }]);
+    });
+
+    expect(state.nodes().length).toBe(3);
+    expect(state.getNode('a')?.position).toEqual({ x: 9, y: 9 });
+
+    // One undo reverts BOTH the add and the move.
+    state.undo();
+    expect(state.nodes().length).toBe(2);
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(state.canUndo()).toBeFalse();
+  });
 });

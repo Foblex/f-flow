@@ -33,6 +33,12 @@ export class FFlowStateController {
   private readonly _disposers: (() => void)[] = [];
   private readonly _subscriptions: { unsubscribe(): void }[] = [];
   private _isWired = false;
+  /** A state transaction is currently open (beginBatch without endBatch). */
+  private _batchActive = false;
+  /** Inside a drag session (fDragStarted → fDragEnded). */
+  private _dragActive = false;
+  /** A microtask is queued to close a non-drag batch at the end of the tick. */
+  private _closeScheduled = false;
 
   /** Called once by `FFlowComponent` after content init (browser only). */
   public initialize(): void {
@@ -59,6 +65,9 @@ export class FFlowStateController {
     this._subscriptions.forEach((subscription) => subscription.unsubscribe());
     this._subscriptions.length = 0;
     this._isWired = false;
+    this._dragActive = false;
+    this._closeScheduled = false;
+    this._closeBatch();
     if (this._state) {
       this._state._connectorOwnerResolver = null;
     }
@@ -75,21 +84,83 @@ export class FFlowStateController {
 
     this._subscriptions.push(
       draggable.fCreateConnection.subscribe((event: FCreateConnectionEvent) =>
-        state.applyCreateConnection(event),
+        this._dispatch(() => state.applyCreateConnection(event)),
       ),
       draggable.fReassignConnection.subscribe((event: FReassignConnectionEvent) =>
-        state.applyReassignConnection(event),
+        this._dispatch(() => state.applyReassignConnection(event)),
       ),
-      draggable.fMoveNodes.subscribe((event: FMoveNodesEvent) => state.applyMoveNodes(event)),
+      draggable.fMoveNodes.subscribe((event: FMoveNodesEvent) =>
+        this._dispatch(() => state.applyMoveNodes(event)),
+      ),
       draggable.fDeleteSelected.subscribe((event: FDeleteSelectedEvent) =>
-        state.applyDeleteSelected(event),
+        this._dispatch(() => state.applyDeleteSelected(event)),
       ),
-      draggable.fDropToGroup.subscribe((event: FDropToGroupEvent) => state.applyDropToGroup(event)),
-      draggable.fCreateNode.subscribe((event: FCreateNodeEvent) => state.applyCreateNode(event)),
+      draggable.fDropToGroup.subscribe((event: FDropToGroupEvent) =>
+        this._dispatch(() => state.applyDropToGroup(event)),
+      ),
+      draggable.fCreateNode.subscribe((event: FCreateNodeEvent) =>
+        this._dispatch(() => state.applyCreateNode(event)),
+      ),
       draggable.fSelectionChange.subscribe((event: FSelectionChangeEvent) =>
-        state.applySelectionChange(event),
+        this._dispatch(() => state.applySelectionChange(event)),
       ),
+      // Drag lifecycle brackets the batch across ticks: the drag-start
+      // selection and the pointer-up move live in different ticks, so the
+      // batch must survive the gap between them.
+      draggable.fDragStarted.subscribe(() => this._onDragStarted()),
+      draggable.fDragEnded.subscribe(() => this._onDragEnded()),
     );
+  }
+
+  /**
+   * Folds every event of one drag session into a single undoable step.
+   *
+   * The events don't share a tick: the selection change is emitted at drag
+   * START (before `fDragStarted`), while the move / drop-to-group land at drag
+   * END (pointer-up). So the batch opens on the first event of the tick and,
+   * once `fDragStarted` marks a drag in progress, stays open until `fDragEnded`
+   * — spanning the whole drag. Outside a drag (e.g. a keyboard delete) it
+   * closes on the next microtask, so unrelated same-tick bursts still collapse.
+   * Programmatic app mutations don't run through here, so they stay separate.
+   */
+  private _dispatch(apply: () => void): void {
+    this._openBatch();
+    if (!this._dragActive && !this._closeScheduled) {
+      this._closeScheduled = true;
+      queueMicrotask(() => {
+        this._closeScheduled = false;
+        if (!this._dragActive) {
+          this._closeBatch();
+        }
+      });
+    }
+    apply();
+  }
+
+  private _onDragStarted(): void {
+    this._dragActive = true;
+    // The leading selection has usually opened the batch already; if not
+    // (e.g. dragging an already-selected node), open it now.
+    this._openBatch();
+  }
+
+  private _onDragEnded(): void {
+    this._dragActive = false;
+    this._closeBatch();
+  }
+
+  private _openBatch(): void {
+    if (!this._batchActive) {
+      this._batchActive = true;
+      (this._state as FFlowState).beginBatch();
+    }
+  }
+
+  private _closeBatch(): void {
+    if (this._batchActive) {
+      this._batchActive = false;
+      (this._state as FFlowState).endBatch();
+    }
   }
 
   /**
