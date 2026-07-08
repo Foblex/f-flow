@@ -12,11 +12,11 @@ export interface IFFlowStateConfig {
   historyLimit?: number;
 
   /**
-   * Whether a selection change is its own undoable step. Off by default —
-   * selecting nodes/connections does not touch the history (like xyflow or
-   * tldraw). Turn on for editors where `undo` should also walk selection
-   * (Figma/Photoshop style); `state.selection()` reflects the current
-   * selection either way.
+   * Whether a selection change is its own undoable step. On by default —
+   * `undo`/`redo` also walk selection (Figma/Photoshop style), and a drag's
+   * leading selection folds into the same step as the move. Set `false` to
+   * keep selection out of the history (like xyflow or tldraw);
+   * `state.selection()` reflects the current selection either way.
    */
   selectionInHistory?: boolean;
 
@@ -61,7 +61,7 @@ export interface IFFlowStateResolvedConfig extends IFFlowStateConfig {
 export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateResolvedConfig {
   return {
     historyLimit: 50,
-    selectionInHistory: false,
+    selectionInHistory: true,
     dropToGroup: true,
     ...config,
   };

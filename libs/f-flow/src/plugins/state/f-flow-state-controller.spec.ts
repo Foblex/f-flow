@@ -203,8 +203,8 @@ describe('FFlowStateController', () => {
     expect(state.getNode('a')?.parentId).toBe('group-1');
   });
 
-  it('tracks the live selection without touching history by default', () => {
-    setup();
+  it('tracks the live selection without touching history when selectionInHistory is off', () => {
+    setup({ selectionInHistory: false });
 
     draggable.fSelectionChange.emit(new FSelectionChangeEvent(['a'], ['group-1'], ['ab']));
 
@@ -213,7 +213,7 @@ describe('FFlowStateController', () => {
       groupIds: ['group-1'],
       connectionIds: ['ab'],
     });
-    // Off by default: a selection change is not an undoable step.
+    // Turned off: a selection change is not an undoable step.
     expect(state.canUndo()).toBeFalse();
   });
 
