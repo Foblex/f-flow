@@ -62,8 +62,8 @@ Every finished gesture is forwarded into the store automatically, each as ONE un
 - **Reassign connection** — dragging an endpoint to another connector updates `sourceId`/`targetId`.
 - **Move nodes** — a drag (including a multi-selection drag) writes all new positions as a single step, so one `undo()` returns the whole group.
 - **Delete selection** — the removal request (e.g. the `Delete` key from the [accessibility layer](./docs/accessibility)) removes the nodes together with every connection attached to them.
-- **Drop into a group** — dropped nodes and groups get the group's id as `parentId`. `withFlowState({ dropToGroup: false })` turns grouping off — the drop becomes a no-op and external items land at the top level.
-- **External item drop** — an item dragged from a palette becomes a node at the drop position, with the item's `fData` spread onto the node as its own fields; dropped over a group, it's nested there.
+- **Drop into a group** — grouping is opt-in: it's off by default, so this example enables it with `withFlowState({ dropToGroup: true })`. With it on, dropped nodes and groups get the group's id as `parentId`; leave it off and the drop is a no-op and external items land at the top level.
+- **External item drop** — an item dragged from a palette becomes a node at the drop position, with the item's `fData` spread onto the node as its own fields; dropped over a group it's nested there (because this example opted into `dropToGroup`).
 
 ## Undo/Redo built in
 

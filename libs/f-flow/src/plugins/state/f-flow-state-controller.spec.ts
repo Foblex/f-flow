@@ -185,7 +185,7 @@ describe('FFlowStateController', () => {
   });
 
   it('deletes a group and un-parents its children as one step', async () => {
-    setup();
+    setup({ dropToGroup: true });
     // The drop and the delete are separate user actions (separate drag
     // sessions), so let each batch close before the next.
     draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
@@ -230,7 +230,7 @@ describe('FFlowStateController', () => {
   });
 
   it('applies drops into groups', () => {
-    setup();
+    setup({ dropToGroup: true });
 
     draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
 
@@ -238,7 +238,7 @@ describe('FFlowStateController', () => {
   });
 
   it('nests an external item dropped over a group at the flow-space rect', () => {
-    setup();
+    setup({ dropToGroup: true });
 
     // externalItemRect is flow-space; dropPosition is the raw pointer and must
     // NOT be used for the node position (that was the off-screen-node bug).
@@ -259,8 +259,8 @@ describe('FFlowStateController', () => {
     expect(created?.position).toEqual({ x: 120, y: 80 });
   });
 
-  it('ignores group membership when dropToGroup is disabled', () => {
-    setup({ dropToGroup: false });
+  it('ignores group membership by default (dropToGroup off)', () => {
+    setup();
 
     // An existing-node drop into a group is a no-op.
     draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
@@ -279,7 +279,7 @@ describe('FFlowStateController', () => {
   });
 
   it('folds move + drop-to-group of one drag into a single undo step', async () => {
-    setup();
+    setup({ dropToGroup: true });
 
     // Both events fire on the same pointer-up, inside one drag session.
     await drag(

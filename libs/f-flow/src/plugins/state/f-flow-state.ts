@@ -33,7 +33,7 @@ export interface IFStateShape<
   selection: IFStateSelection;
 }
 
-const EMPTY_SELECTION: IFStateSelection = Object.freeze({
+const EMPTY_SELECTION = Object.freeze({
   nodeIds: [],
   groupIds: [],
   connectionIds: [],
@@ -409,10 +409,10 @@ export class FFlowState<
   }
 
   /**
-   * Nodes/groups were dropped into a group. Default: reparent them as one
-   * step. No-op when `dropToGroup` is disabled. This only touches items that
-   * already exist — a brand-new item from a palette is created by
-   * `applyCreateNode`, not here.
+   * Nodes/groups were dropped into a group. Reparents them as one step when
+   * `dropToGroup` is enabled; a no-op otherwise (it's off by default). This
+   * only touches items that already exist — a brand-new item from a palette is
+   * created by `applyCreateNode`, not here.
    */
   public applyDropToGroup(event: FDropToGroupEvent): void {
     if (this.config?.dropToGroup === false) {
@@ -519,7 +519,8 @@ export class FFlowState<
   /**
    * Builds the record for an external-item drop. The item's `fData` is spread
    * onto the node, so a palette payload becomes the node's own fields. The
-   * drop target nests the node unless `dropToGroup` is disabled.
+   * drop target nests the node only when `dropToGroup` is enabled (off by
+   * default); otherwise the node lands at the top level.
    *
    * Position comes from `externalItemRect`, which is already in flow
    * coordinates (pan/zoom corrected) for every drop — over empty canvas or

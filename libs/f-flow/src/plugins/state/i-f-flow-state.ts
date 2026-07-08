@@ -21,10 +21,10 @@ export interface IFFlowStateConfig {
   selectionInHistory?: boolean;
 
   /**
-   * Whether dropping into a group reparents (or creates) the dropped item.
-   * On by default. Turn off to make the state ignore group membership: a
-   * drop-to-group gesture becomes a no-op and an external item dropped over a
-   * group is created at the top level instead of nested.
+   * Whether dropping into a group reparents the dropped item (or nests an
+   * external item). Off by default — the state ignores group membership: a
+   * drop-to-group gesture is a no-op and an external item dropped over a group
+   * lands at the top level instead of nested. Set `true` to opt into grouping.
    */
   dropToGroup?: boolean;
 
@@ -62,7 +62,7 @@ export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateRes
   return {
     historyLimit: 50,
     selectionInHistory: true,
-    dropToGroup: true,
+    dropToGroup: false,
     ...config,
   };
 }
