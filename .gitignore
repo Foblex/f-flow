@@ -17,3 +17,4 @@ tmp
 
 cypress/videos
 cypress/screenshots
+/docs/design/

@@ -270,6 +270,11 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       title: 'Angular Diagram Example – Click-to-Connect Connections with Foblex Flow',
       description:
         'Create connections by clicking: click a source connector, follow the preview line, click a target to commit. Installed via provideFFlow(withConnectionFlow) alongside drag-to-connect.',
+      image: './previews/examples/click-to-connect.light.png',
+      imageDark: './previews/examples/click-to-connect.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
+      imageType: 'image/png',
     },
   },
   {
