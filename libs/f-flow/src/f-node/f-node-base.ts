@@ -155,6 +155,12 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
     if (this._size) {
       this.setStyle('width', '' + this._size.width + 'px');
       this.setStyle('height', '' + this._size.height + 'px');
+    } else {
+      // Size was cleared (e.g. an undo restoring an auto-fit node back to its
+      // undefined, content-driven size) — drop the stale explicit dimensions
+      // instead of leaving the last measured box frozen on the element.
+      this.removeStyle('width');
+      this.removeStyle('height');
     }
 
     this.setStyle(
