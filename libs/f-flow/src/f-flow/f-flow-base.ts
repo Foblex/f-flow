@@ -27,4 +27,6 @@ export abstract class FFlowBase implements IHasHostElement {
   public abstract redraw(): void;
 
   public abstract getState(options?: IFFlowStateOptions): IFFlowState;
+
+  public abstract select(nodes: string[], connections: string[], isSelectedChanged?: boolean): void;
 }

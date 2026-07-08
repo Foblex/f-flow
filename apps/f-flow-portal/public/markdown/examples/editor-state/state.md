@@ -9,29 +9,42 @@ updatedAt: "2026-07-07"
 
 ## Description
 
-`provideFFlow(withFlowState())` turns on the graph state built into Foblex Flow. The application loads plain data once, renders two signals with `@for`, and reads the data back whenever it needs to persist — there is not a single gesture handler in the component below.
+`provideFFlow(withFlowState())` turns on the graph state built into Foblex Flow. The application loads plain data once, renders the `nodes`, `groups` and `connections` signals with `@for`, and reads the data back whenever it needs to persist — there is not a single gesture handler in the component below.
+
+Your records are your own shape: extend the framework interface with any fields — no `data` wrapper.
 
 ```ts
+interface MyNode extends IFStateNode {
+  text: string; // your fields live right on the record
+}
+
 @Component({
   providers: [provideFFlow(withFlowState())],
 })
 export class Editor {
-  protected readonly state = injectFlowState<MyNodeData>();
+  protected readonly state = injectFlowState<MyNode>();
 
   constructor() {
-    this.state.load({ nodes: [...], connections: [...] });
+    this.state.load({ nodes: [...], groups: [...], connections: [...] });
   }
 }
 ```
 
 ```html
+@for (group of state.groups(); track group.id) {
+  <div fGroup [fGroupId]="group.id" [fGroupPosition]="group.position" [fGroupSize]="group.size"></div>
+}
 @for (node of state.nodes(); track node.id) {
-  <div fNode [fNodeId]="node.id" [fNodePosition]="node.position">{{ node.data?.text }}</div>
+  <div fNode [fNodeId]="node.id" [fNodePosition]="node.position" [fNodeParentId]="node.parentId">
+    {{ node.text }}
+  </div>
 }
 @for (connection of state.connections(); track connection.id) {
   <f-connection [fConnectionId]="connection.id" [fSourceId]="connection.sourceId" [fTargetId]="connection.targetId" />
 }
 ```
+
+Drag an item from the palette to add a node, drop a node into the group to nest it, drag between connectors to wire them, select and press `Delete` to remove — every one of those lands in the state as a single undoable step, and the component never handles the event.
 
 ## Example
 
@@ -50,7 +63,7 @@ Every finished gesture is forwarded into the store automatically, each as ONE un
 - **Move nodes** — a drag (including a multi-selection drag) writes all new positions as a single step, so one `undo()` returns the whole group.
 - **Delete selection** — the removal request (e.g. the `Delete` key from the [accessibility layer](./docs/accessibility)) removes the nodes together with every connection attached to them.
 - **Drop into a group** — dropped nodes get the group's id as `parentId`.
-- **External item drop** — an item dragged from a palette becomes a node at the drop position, with the item's payload stored in `data`.
+- **External item drop** — an item dragged from a palette becomes a node at the drop position, with the item's `fData` spread onto the node as its own fields.
 
 ## Undo/Redo built in
 
@@ -59,22 +72,52 @@ Every finished gesture is forwarded into the store automatically, each as ONE un
 - `withFlowState({ historyLimit: 100 })` caps the stack (default 50); the oldest steps fall off.
 - `load()` replaces the whole graph and resets the history — ideal for opening a document; `clearHistory()` keeps the data and drops only the steps.
 
+## Reacting to changes
+
+`state.changes()` is a signal that ticks once for every history step — a mutation, an `undo`, a `redo` or a `load`. Depend on it from a single `effect` to react to anything that touches the graph, without wiring one listener per gesture:
+
+```ts
+effect(() => {
+  this.state.changes();                          // depend on "something changed"
+  this.persist(untracked(() => this.state.snapshot()));
+});
+```
+
+Because effects coalesce, a burst of edits settles into one reaction — exactly what you want before an autosave or a network write. The per-collection signals (`nodes()`, `groups()`, `connections()`, `selection()`) stay available when you only care about one slice.
+
 ## Data in, data out
 
-- `load({ nodes, connections })` — plain arrays in. Each node record maps 1:1 onto `fNode` inputs (`id`, `position`, optional `size`, `rotate`, `parentId`) plus your own payload in `data` and a free-form `type` for `@switch`-based templates.
-- `snapshot()` — plain arrays out, with copied geometry; persist the result as-is.
-- `injectFlowState<TNodeData, TConnectionData>()` types both payloads end to end.
+- `load({ nodes, groups, connections })` — plain arrays in. The store only reads the framework keys (`id`, `position`, optional `size`, `rotate`, `parentId`) and carries the rest of your record through untouched — put your fields right on it, no `data` wrapper.
+- Groups are their own collection with the same shape, rendered with `fGroup` — a first-class kind because the library treats them separately (a group id in a selection, its own drop target). Nesting is just `parentId`.
+- `snapshot()` — plain arrays out (`nodes`, `groups`, `connections`) with copied geometry; persist the result as-is.
+- `injectFlowState<MyNode, MyConnection, MyGroup>()` types all three end to end; each argument defaults to the framework shape, so `injectFlowState<MyNode>()` is enough when only nodes carry extra fields.
+
+## Selection, and whether it belongs in the history
+
+`state.selection()` always reflects the current selection (`nodeIds`, `groupIds`, `connectionIds`) as a signal — handy for a properties panel or a context menu. Whether selecting is _undoable_ is a config switch, because editors disagree:
+
+```ts
+withFlowState({ selectionInHistory: true });
+```
+
+- Off by default — selecting does not create a history step, and `undo` walks only graph edits (xyflow, tldraw).
+- Turn it on and every selection change becomes its own step; `undo`/`redo` restore the previous highlight (Figma, Photoshop).
 
 ## Programmatic editing shares the same history
 
 Everything the gestures do is also available as methods — and every call is one undoable step:
 
 ```ts
-state.addNodes({ id: 'n3', position: { x: 400, y: 80 }, data: { text: 'New' } });
+state.addNodes({ id: 'n3', position: { x: 400, y: 80 }, text: 'New' });
 state.updateNode('n3', { position: { x: 420, y: 90 } });
-state.moveNodes([{ id: 'a', position }, { id: 'b', position }]); // one step
+state.moveNodes([{ id: 'a', position }, { id: 'b', position }]); // one step (nodes and groups)
 state.addConnections({ id: 'c1', sourceId: 'n3-out', targetId: 'a-in' });
 state.updateConnection('c1', { targetId: 'b-in' });
+
+state.addGroups({ id: 'g1', position: { x: 0, y: 0 }, size: { width: 300, height: 200 } });
+state.updateGroup('g1', { size: { width: 360, height: 240 } });
+state.removeGroups(['g1']); // children are un-parented, attached connections cascade
+
 state.removeNodes(['n3']); // attached connections cascade automatically
 state.removeItems(nodeIds, connectionIds); // combined removal, one step
 ```
@@ -87,7 +130,7 @@ For light-touch control, pass factories to the config — return `null` to rejec
 withFlowState({
   connectionFactory: (event) =>
     isAllowed(event) ? { id: uuid(), sourceId: event.sourceId, targetId: event.targetId! } : null,
-  nodeFactory: (event) => ({ id: uuid(), position: event.dropPosition!, data: event.data }),
+  nodeFactory: (event) => ({ ...event.data, id: uuid(), position: event.dropPosition! }),
 });
 ```
 
@@ -97,7 +140,7 @@ If a default does not fit, subclass the store — any CRUD method, any `apply*` 
 
 ```ts
 @Injectable()
-export class MyFlowState extends FFlowState<MyNodeData> {
+export class MyFlowState extends FFlowState<MyNode> {
   // Change what a gesture means for your data
   override applyDeleteSelected(event: FDeleteSelectedEvent): void {
     // e.g. soft-delete: mark records instead of removing them

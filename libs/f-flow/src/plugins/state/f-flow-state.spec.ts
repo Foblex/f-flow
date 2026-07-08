@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { configureDiTest, injectFromDi, valueProvider } from '@foblex/flow';
+import { FSelectionChangeEvent } from '../../f-draggable';
 import { FFlowState } from './f-flow-state';
+import { IFStateNode } from './i-f-state-models';
 import { F_FLOW_STATE_CONFIG, mergeFlowStateConfig } from './i-f-flow-state';
 
+interface INode extends IFStateNode {
+  label?: string;
+}
+
 describe('FFlowState', () => {
-  let state: FFlowState<{ label: string }>;
+  let state: FFlowState<INode>;
 
   function setup(): void {
     configureDiTest({ providers: [FFlowState] });
-    state = injectFromDi(FFlowState) as FFlowState<{ label: string }>;
+    state = injectFromDi(FFlowState) as FFlowState<INode>;
   }
 
   function loadSample(): void {
     setup();
     state.load({
       nodes: [
-        { id: 'a', position: { x: 0, y: 0 }, data: { label: 'A' } },
-        { id: 'b', position: { x: 200, y: 0 }, data: { label: 'B' } },
+        { id: 'a', position: { x: 0, y: 0 }, label: 'A' },
+        { id: 'b', position: { x: 200, y: 0 }, label: 'B' },
       ],
       connections: [{ id: 'ab', sourceId: 'a-out', targetId: 'b-in' }],
     });
@@ -67,7 +73,7 @@ describe('FFlowState', () => {
     state.updateNode('a', { position: { x: 50, y: 5 } });
 
     expect(state.getNode('a')?.position).toEqual({ x: 50, y: 5 });
-    expect(state.getNode('a')?.data).toEqual({ label: 'A' });
+    expect(state.getNode('a')?.label).toBe('A');
   });
 
   it('ignores unknown ids in moves and patches', () => {
@@ -180,5 +186,105 @@ describe('FFlowState', () => {
 
     expect(pinned.getNode('a')?.position).toEqual({ x: 0, y: 0 });
     expect(pinned.canUndo()).toBeFalse();
+  });
+
+  function loadWithGroup(): void {
+    setup();
+    state.load({
+      nodes: [
+        { id: 'a', position: { x: 20, y: 20 }, parentId: 'g1', label: 'A' },
+        { id: 'b', position: { x: 200, y: 0 }, label: 'B' },
+      ],
+      groups: [{ id: 'g1', position: { x: 0, y: 0 }, size: { width: 300, height: 200 } }],
+      connections: [{ id: 'ab', sourceId: 'a-out', targetId: 'b-in' }],
+    });
+  }
+
+  it('manages groups as their own collection', () => {
+    loadWithGroup();
+
+    expect(state.groups().map((x) => x.id)).toEqual(['g1']);
+    expect(state.getGroup('g1')?.size).toEqual({ width: 300, height: 200 });
+
+    state.addGroups({ id: 'g2', position: { x: 400, y: 0 } });
+    expect(state.groups().length).toBe(2);
+
+    state.updateGroup('g2', { position: { x: 420, y: 10 } });
+    expect(state.getGroup('g2')?.position).toEqual({ x: 420, y: 10 });
+
+    state.undo();
+    expect(state.getGroup('g2')?.position).toEqual({ x: 400, y: 0 });
+  });
+
+  it('moves a group alongside nodes in one step', () => {
+    loadWithGroup();
+
+    state.moveNodes([
+      { id: 'a', position: { x: 25, y: 25 } },
+      { id: 'g1', position: { x: 5, y: 5 } },
+    ]);
+    expect(state.getNode('a')?.position).toEqual({ x: 25, y: 25 });
+    expect(state.getGroup('g1')?.position).toEqual({ x: 5, y: 5 });
+
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 20, y: 20 });
+    expect(state.getGroup('g1')?.position).toEqual({ x: 0, y: 0 });
+  });
+
+  it('un-parents children and cascades connections when a group is removed', () => {
+    loadWithGroup();
+    state._connectorOwnerResolver = (connectorId) =>
+      connectorId.startsWith('a-') ? 'a' : connectorId.startsWith('b-') ? 'b' : undefined;
+
+    state.removeGroups(['g1']);
+
+    expect(state.groups().length).toBe(0);
+    // The child stays, but its dangling parentId is cleared.
+    expect(state.getNode('a')?.parentId).toBeNull();
+    // The group itself owns no connector here, so the connection survives.
+    expect(state.connections().length).toBe(1);
+
+    state.undo();
+    expect(state.getGroup('g1')).toBeTruthy();
+    expect(state.getNode('a')?.parentId).toBe('g1');
+  });
+
+  it('round-trips groups through snapshot()', () => {
+    loadWithGroup();
+
+    const snapshot = state.snapshot();
+    expect(snapshot.groups.map((x) => x.id)).toEqual(['g1']);
+
+    state.load({ nodes: [], groups: [], connections: [] });
+    expect(state.groups().length).toBe(0);
+
+    state.load(snapshot);
+    expect(state.groups().map((x) => x.id)).toEqual(['g1']);
+    expect(state.getNode('a')?.parentId).toBe('g1');
+  });
+
+  it('ticks changes() once per history step and on load', () => {
+    loadSample();
+    const start = state.changes();
+
+    state.addNodes({ id: 'c', position: { x: 0, y: 0 } });
+    state.undo();
+    state.redo();
+    expect(state.changes()).toBe(start + 3);
+
+    state.load({ nodes: [], connections: [] });
+    expect(state.changes()).toBe(start + 4);
+  });
+
+  it('keeps selection out of history by default but exposes it as a signal', () => {
+    loadSample();
+    const changesBefore = state.changes();
+
+    state.applySelectionChange(new FSelectionChangeEvent(['a'], [], ['ab']));
+
+    expect(state.selection().nodeIds).toEqual(['a']);
+    expect(state.canUndo()).toBeFalse();
+    // A selection-only event is not a graph change.
+    expect(state.changes()).toBe(changesBefore);
   });
 });

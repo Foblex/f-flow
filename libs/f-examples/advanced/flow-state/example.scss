@@ -11,3 +11,6 @@
 
 @include flow-theme.node($selectorless: false);
 @include flow-theme.connector($scoped: false);
+@include flow-theme.node-group($scoped: false);
+@include flow-theme.grouping($scoped: false);
+@include flow-theme.external-item-all($scoped: false);

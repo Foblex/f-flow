@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable, Injector } from '@angular/core';
 import { BrowserService } from '@foblex/platform';
 import { FComponentsStore } from '../../f-storage';
 import {
@@ -8,8 +8,9 @@ import {
   FDropToGroupEvent,
   FMoveNodesEvent,
   FReassignConnectionEvent,
+  FSelectionChangeEvent,
 } from '../../f-draggable';
-import { FFlowState } from './f-flow-state';
+import { FFlowState, IFStateSelection } from './f-flow-state';
 import { F_FLOW_STATE_CONFIG } from './i-f-flow-state';
 
 /**
@@ -27,6 +28,7 @@ export class FFlowStateController {
   private readonly _state = inject(FFlowState, { optional: true });
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);
+  private readonly _injector = inject(Injector);
 
   private readonly _disposers: (() => void)[] = [];
   private readonly _subscriptions: { unsubscribe(): void }[] = [];
@@ -44,6 +46,10 @@ export class FFlowStateController {
     if (!this._isWired) {
       // The draggable directive may register after this controller.
       this._disposers.push(this._store.nodesChanges$.listen(() => this._wireDraggableEvents()));
+    }
+
+    if (this._config.selectionInHistory) {
+      this._wireSelectionRestore();
     }
   }
 
@@ -80,6 +86,34 @@ export class FFlowStateController {
       ),
       draggable.fDropToGroup.subscribe((event: FDropToGroupEvent) => state.applyDropToGroup(event)),
       draggable.fCreateNode.subscribe((event: FCreateNodeEvent) => state.applyCreateNode(event)),
+      draggable.fSelectionChange.subscribe((event: FSelectionChangeEvent) =>
+        state.applySelectionChange(event),
+      ),
+    );
+  }
+
+  /**
+   * When selection is part of the history, `undo`/`redo` land on a shape with
+   * its own selection — push it back into the flow so the highlight follows.
+   * `isSelectedChanged: false` keeps this from re-emitting a selection change.
+   */
+  private _wireSelectionRestore(): void {
+    const state = this._state as FFlowState;
+    const ref = effect(
+      () => {
+        const selection = state.selection();
+        this._restoreSelection(selection);
+      },
+      { injector: this._injector },
+    );
+    this._disposers.push(() => ref.destroy());
+  }
+
+  private _restoreSelection(selection: IFStateSelection): void {
+    this._store.fFlow?.select(
+      [...selection.nodeIds, ...selection.groupIds],
+      selection.connectionIds,
+      false,
     );
   }
 

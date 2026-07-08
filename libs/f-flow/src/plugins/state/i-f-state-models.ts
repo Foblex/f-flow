@@ -1,35 +1,54 @@
 import { IPoint, ISize } from '@foblex/2d';
 
 /**
- * A node as the state plugin stores it. `data` carries the application
- * payload; everything else maps 1:1 onto `fNode` inputs.
+ * The framework fields the state plugin needs on a node — they map 1:1 onto
+ * `fNode` inputs. Add your own fields by extending it; the store carries them
+ * through untouched.
+ *
+ * ```typescript
+ * interface MyNode extends IFStateNode {
+ *   text: string;
+ * }
+ * ```
  */
-export interface IFStateNode<TData = unknown> {
+export interface IFStateNode {
   id: string;
   position: IPoint;
   size?: ISize;
   rotate?: number;
   parentId?: string | null;
-  /** Free-form discriminator for `@switch`-based node templates. */
-  type?: string;
-  data?: TData;
 }
 
 /**
- * A connection as the state plugin stores it. `sourceId`/`targetId` are
- * CONNECTOR ids — the same values `fSourceId`/`fTargetId` bind to.
+ * The framework fields for a group — a container rendered with `fGroup`.
+ * Extend it to attach your own fields.
  */
-export interface IFStateConnection<TData = unknown> {
+export interface IFStateGroup {
+  id: string;
+  position: IPoint;
+  size?: ISize;
+  rotate?: number;
+  parentId?: string | null;
+}
+
+/**
+ * The framework fields for a connection. `sourceId`/`targetId` are CONNECTOR
+ * ids — the same values `fSourceId`/`fTargetId` bind to. Extend it to attach
+ * your own fields.
+ */
+export interface IFStateConnection {
   id: string;
   sourceId: string;
   targetId: string;
-  /** Free-form discriminator for connection templates. */
-  type?: string;
-  data?: TData;
 }
 
 /** The whole graph, as it goes in (`load`) and comes out (`snapshot`). */
-export interface IFStateData<TNode = unknown, TConnection = unknown> {
-  nodes: IFStateNode<TNode>[];
-  connections: IFStateConnection<TConnection>[];
+export interface IFStateData<
+  TNode extends IFStateNode = IFStateNode,
+  TConnection extends IFStateConnection = IFStateConnection,
+  TGroup extends IFStateGroup = IFStateGroup,
+> {
+  nodes: TNode[];
+  connections: TConnection[];
+  groups: TGroup[];
 }

@@ -16,6 +16,7 @@ import {
   FDropToGroupEvent,
   FMoveNodesEvent,
   FReassignConnectionEvent,
+  FSelectionChangeEvent,
 } from '../../f-draggable';
 import { RectExtensions } from '@foblex/2d';
 import { FFlowState } from './f-flow-state';
@@ -29,6 +30,19 @@ interface IFakeDraggable {
   fDeleteSelected: EventEmitter<FDeleteSelectedEvent>;
   fDropToGroup: EventEmitter<FDropToGroupEvent>;
   fCreateNode: EventEmitter<FCreateNodeEvent>;
+  fSelectionChange: EventEmitter<FSelectionChangeEvent>;
+}
+
+function createFakeDraggable(): IFakeDraggable {
+  return {
+    fCreateConnection: new EventEmitter(),
+    fReassignConnection: new EventEmitter(),
+    fMoveNodes: new EventEmitter(),
+    fDeleteSelected: new EventEmitter(),
+    fDropToGroup: new EventEmitter(),
+    fCreateNode: new EventEmitter(),
+    fSelectionChange: new EventEmitter(),
+  };
 }
 
 describe('FFlowStateController', () => {
@@ -39,14 +53,7 @@ describe('FFlowStateController', () => {
 
   function setup(config?: IFFlowStateConfig): void {
     store = new FComponentsStore();
-    draggable = {
-      fCreateConnection: new EventEmitter(),
-      fReassignConnection: new EventEmitter(),
-      fMoveNodes: new EventEmitter(),
-      fDeleteSelected: new EventEmitter(),
-      fDropToGroup: new EventEmitter(),
-      fCreateNode: new EventEmitter(),
-    };
+    draggable = createFakeDraggable();
     store.fDraggable = draggable as unknown as FDraggableBase;
 
     configureDiTest({
@@ -66,8 +73,8 @@ describe('FFlowStateController', () => {
       nodes: [
         { id: 'a', position: { x: 0, y: 0 } },
         { id: 'b', position: { x: 200, y: 0 } },
-        { id: 'group-1', position: { x: 500, y: 0 } },
       ],
+      groups: [{ id: 'group-1', position: { x: 500, y: 0 }, size: { width: 300, height: 200 } }],
       connections: [{ id: 'ab', sourceId: 'a-out', targetId: 'b-in' }],
     });
   }
@@ -155,12 +162,53 @@ describe('FFlowStateController', () => {
 
     draggable.fDeleteSelected.emit(new FDeleteSelectedEvent(['a'], [], []));
 
-    expect(state.nodes().map((x) => x.id)).toEqual(['b', 'group-1']);
+    expect(state.nodes().map((x) => x.id)).toEqual(['b']);
     expect(state.connections().length).toBe(0);
 
     state.undo();
-    expect(state.nodes().length).toBe(3);
+    expect(state.nodes().length).toBe(2);
     expect(state.connections().length).toBe(1);
+  });
+
+  it('deletes a group and un-parents its children as one step', () => {
+    setup();
+    draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
+    expect(state.getNode('a')?.parentId).toBe('group-1');
+
+    draggable.fDeleteSelected.emit(new FDeleteSelectedEvent([], ['group-1'], []));
+
+    expect(state.groups().length).toBe(0);
+    expect(state.getNode('a')?.parentId).toBeNull();
+
+    state.undo();
+    expect(state.groups().map((x) => x.id)).toEqual(['group-1']);
+    expect(state.getNode('a')?.parentId).toBe('group-1');
+  });
+
+  it('tracks the live selection without touching history by default', () => {
+    setup();
+
+    draggable.fSelectionChange.emit(new FSelectionChangeEvent(['a'], ['group-1'], ['ab']));
+
+    expect(state.selection()).toEqual({
+      nodeIds: ['a'],
+      groupIds: ['group-1'],
+      connectionIds: ['ab'],
+    });
+    // Off by default: a selection change is not an undoable step.
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('makes selection an undoable step when selectionInHistory is on', () => {
+    setup({ selectionInHistory: true });
+
+    draggable.fSelectionChange.emit(new FSelectionChangeEvent(['a'], [], []));
+
+    expect(state.selection().nodeIds).toEqual(['a']);
+    expect(state.canUndo()).toBeTrue();
+
+    state.undo();
+    expect(state.selection().nodeIds).toEqual([]);
   });
 
   it('applies drops into groups', () => {
@@ -181,10 +229,11 @@ describe('FFlowStateController', () => {
       }),
     );
 
-    expect(state.nodes().length).toBe(4);
-    const created = state.nodes()[3];
+    expect(state.nodes().length).toBe(3);
+    const created = state.nodes()[2];
     expect(created.position).toEqual({ x: 5, y: 6 });
-    expect(created.data).toEqual({ kind: 'task' });
+    // The item's fData is spread onto the node as its own fields.
+    expect((created as { kind?: string }).kind).toBe('task');
   });
 
   it('wires late-registered draggable directives', () => {
@@ -209,14 +258,7 @@ describe('FFlowStateController', () => {
       }
     }
     store = new FComponentsStore();
-    draggable = {
-      fCreateConnection: new EventEmitter(),
-      fReassignConnection: new EventEmitter(),
-      fMoveNodes: new EventEmitter(),
-      fDeleteSelected: new EventEmitter(),
-      fDropToGroup: new EventEmitter(),
-      fCreateNode: new EventEmitter(),
-    };
+    draggable = createFakeDraggable();
     store.fDraggable = draggable as unknown as FDraggableBase;
     configureDiTest({
       providers: [

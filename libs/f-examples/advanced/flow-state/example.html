@@ -1,4 +1,4 @@
-<f-flow fDraggable (fLoaded)="loaded()">
+<f-flow fDraggable (fFullRendered)="loaded()">
   <f-canvas fZoom>
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <f-connection-marker-arrow />
@@ -8,7 +8,19 @@
       <f-connection-marker-arrow />
     </f-snap-connection>
 
-    @for (connection of state.connections(); track connection.id) {
+    @for (group of state.groups(); track group.id) {
+    <div
+      fGroup
+      fDragHandle
+      [fGroupId]="group.id"
+      [fGroupPosition]="group.position"
+      [fGroupSize]="group.size"
+      [fGroupParentId]="group.parentId"
+      fAutoExpandOnChildHit
+    >
+      <span>Group</span>
+    </div>
+    } @for (connection of state.connections(); track connection.id) {
     <f-connection
       [fConnectionId]="connection.id"
       [fSourceId]="connection.sourceId"
@@ -18,30 +30,37 @@
     >
       <f-connection-marker-arrow />
     </f-connection>
-    } @for (node of state.nodes(); track node.id; let index = $index) {
-    <div fNode [fNodePosition]="node.position" [fNodeId]="node.id" fDragHandle>
-      {{ node.data?.text }}
+    } @for (node of state.nodes(); track node.id) {
+    <div
+      fNode
+      fDragHandle
+      [fNodeId]="node.id"
+      [fNodePosition]="node.position"
+      [fNodeParentId]="node.parentId"
+      fAutoExpandOnChildHit
+    >
+      {{ node.text }}
       <div
         fConnector
-        fConnectorId="{{node.id}}-input-{{index}}"
+        fConnectorId="{{ node.id }}-input-left"
         fConnectorConnectableSide="left"
         class="left"
       ></div>
       <div
         fConnector
-        fConnectorId="{{node.id}}-output-{{index}}"
+        fConnectorId="{{ node.id }}-output-top"
         fConnectorConnectableSide="top"
         class="top"
       ></div>
       <div
         fConnector
-        fConnectorId="{{node.id}}-input-{{index+1}}"
+        fConnectorId="{{ node.id }}-input-right"
         fConnectorConnectableSide="right"
         class="right"
       ></div>
       <div
         fConnector
-        fConnectorId="{{node.id}}-output-{{index+1}}"
+        fConnectorId="{{ node.id }}-output-bottom"
         fConnectorConnectableSide="bottom"
         class="bottom"
       ></div>
@@ -49,6 +68,12 @@
     }
   </f-canvas>
 </f-flow>
+
+<f-external-palette>
+  @for (item of paletteItems; track item.text) {
+  <div fExternalItem [fData]="item">{{ item.text }}</div>
+  }
+</f-external-palette>
 
 <f-toolbar>
   <button class="f-button primary" (click)="state.undo()" [disabled]="!state.canUndo()">

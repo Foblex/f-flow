@@ -12,13 +12,22 @@ export interface IFFlowStateConfig {
   historyLimit?: number;
 
   /**
+   * Whether a selection change is its own undoable step. Off by default —
+   * selecting nodes/connections does not touch the history (like xyflow or
+   * tldraw). Turn on for editors where `undo` should also walk selection
+   * (Figma/Photoshop style); `state.selection()` reflects the current
+   * selection either way.
+   */
+  selectionInHistory?: boolean;
+
+  /**
    * Your own store subclass. Every `FFlowState` method — CRUD, the `apply*`
    * gesture handlers, the protected building blocks — is overridable, and the
    * auto-wiring dispatches through this class, so an override changes what a
    * gesture means for your data.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stateClass?: Type<FFlowState<any, any>>;
+  stateClass?: Type<FFlowState<any, any, any>>;
 
   /**
    * Builds the connection record when the user finishes a create-connection
@@ -37,11 +46,13 @@ export interface IFFlowStateConfig {
 
 export interface IFFlowStateResolvedConfig extends IFFlowStateConfig {
   historyLimit: number;
+  selectionInHistory: boolean;
 }
 
 export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateResolvedConfig {
   return {
     historyLimit: 50,
+    selectionInHistory: false,
     ...config,
   };
 }
