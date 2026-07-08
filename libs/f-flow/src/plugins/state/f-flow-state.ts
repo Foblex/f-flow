@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { IPoint } from '@foblex/2d';
+import { IPoint, IRect } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
 import type {
   FCreateConnectionEvent,
@@ -471,6 +471,38 @@ export class FFlowState<
     }
   }
 
+  /**
+   * A node or group reported a new measured rect (`fNodeSizeChange` /
+   * `fGroupSizeChange`) — e.g. a group auto-fitting after a child was added.
+   * Folded into the CURRENT shape WITHOUT its own history step, so the resize
+   * rides along with the action that triggered it (one `undo` reverts both).
+   */
+  public applyResize(id: string, rect: IRect): void {
+    const shape = this.currentShape();
+    const patch = {
+      position: { x: rect.x, y: rect.y },
+      size: { width: rect.width, height: rect.height },
+    };
+
+    if (shape.nodes[id]) {
+      if (_isSameGeometry(shape.nodes[id], patch)) {
+        return;
+      }
+      this.amendCurrent({
+        ...shape,
+        nodes: { ...shape.nodes, [id]: { ...shape.nodes[id], ...patch } },
+      });
+    } else if (shape.groups[id]) {
+      if (_isSameGeometry(shape.groups[id], patch)) {
+        return;
+      }
+      this.amendCurrent({
+        ...shape,
+        groups: { ...shape.groups, [id]: { ...shape.groups[id], ...patch } },
+      });
+    }
+  }
+
   // ------------------------------------------------------------------
   // Overridable building blocks
   // ------------------------------------------------------------------
@@ -574,6 +606,15 @@ export class FFlowState<
     this._bumpChanges();
   }
 
+  /**
+   * Replaces the current shape WITHOUT recording a history step, so the change
+   * folds into the last committed step. Used by `applyResize`.
+   */
+  protected amendCurrent(next: IFStateShape<TNode, TConnection, TGroup>): void {
+    this._shape.set(next);
+    this._bumpChanges();
+  }
+
   /** Connections attached to the given nodes/groups, per the connector-owner resolver. */
   protected cascadeConnectionIds(
     ownerIds: string[],
@@ -673,6 +714,18 @@ function _pruneSelection(
   }
 
   return { nodeIds, groupIds, connectionIds };
+}
+
+function _isSameGeometry(
+  record: { position: IPoint; size?: { width: number; height: number } },
+  patch: { position: IPoint; size: { width: number; height: number } },
+): boolean {
+  return (
+    record.position.x === patch.position.x &&
+    record.position.y === patch.position.y &&
+    record.size?.width === patch.size.width &&
+    record.size?.height === patch.size.height
+  );
 }
 
 /**

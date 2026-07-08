@@ -32,6 +32,8 @@ export class FFlowStateController {
 
   private readonly _disposers: (() => void)[] = [];
   private readonly _subscriptions: { unsubscribe(): void }[] = [];
+  /** Per-node/group `sizeChange` subscriptions, keyed by id. */
+  private readonly _sizeSubscriptions = new Map<string, { unsubscribe(): void }>();
   private _isWired = false;
   /** A state transaction is currently open (beginBatch without endBatch). */
   private _batchActive = false;
@@ -49,10 +51,15 @@ export class FFlowStateController {
     this._state._connectorOwnerResolver = (connectorId) => this._resolveOwnerNode(connectorId);
 
     this._wireDraggableEvents();
-    if (!this._isWired) {
-      // The draggable directive may register after this controller.
-      this._disposers.push(this._store.nodesChanges$.listen(() => this._wireDraggableEvents()));
-    }
+    this._wireSizeChanges();
+    // The draggable directive and nodes/groups register over time; re-wire on
+    // every registry change (`_wire*` are idempotent).
+    this._disposers.push(
+      this._store.nodesChanges$.listen(() => {
+        this._wireDraggableEvents();
+        this._wireSizeChanges();
+      }),
+    );
 
     if (this._config.selectionInHistory) {
       this._wireSelectionRestore();
@@ -64,6 +71,8 @@ export class FFlowStateController {
     this._disposers.length = 0;
     this._subscriptions.forEach((subscription) => subscription.unsubscribe());
     this._subscriptions.length = 0;
+    this._sizeSubscriptions.forEach((subscription) => subscription.unsubscribe());
+    this._sizeSubscriptions.clear();
     this._isWired = false;
     this._dragActive = false;
     this._closeScheduled = false;
@@ -110,6 +119,35 @@ export class FFlowStateController {
       draggable.fDragStarted.subscribe(() => this._onDragStarted()),
       draggable.fDragEnded.subscribe(() => this._onDragEnded()),
     );
+  }
+
+  /**
+   * Subscribes to every node's and group's `sizeChange` (a per-directive
+   * output, not a draggable event) so a resize — most often a group
+   * auto-fitting after a child was added — is folded into the last history
+   * step via `applyResize`. Re-runs as nodes/groups register; drops removed.
+   */
+  private _wireSizeChanges(): void {
+    const state = this._state as FFlowState;
+    const alive = new Set<string>();
+
+    for (const node of this._store.nodes.getAll()) {
+      const id = node.fId();
+      alive.add(id);
+      if (!this._sizeSubscriptions.has(id)) {
+        this._sizeSubscriptions.set(
+          id,
+          node.sizeChange.subscribe((rect) => state.applyResize(id, rect)),
+        );
+      }
+    }
+
+    for (const [id, subscription] of this._sizeSubscriptions) {
+      if (!alive.has(id)) {
+        subscription.unsubscribe();
+        this._sizeSubscriptions.delete(id);
+      }
+    }
   }
 
   /**

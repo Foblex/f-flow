@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RectExtensions } from '@foblex/2d';
 import { configureDiTest, injectFromDi, valueProvider } from '@foblex/flow';
 import { FSelectionChangeEvent } from '../../f-draggable';
 import { FFlowState } from './f-flow-state';
@@ -304,5 +305,31 @@ describe('FFlowState', () => {
     expect(state.nodes().length).toBe(2);
     expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
     expect(state.canUndo()).toBeFalse();
+  });
+
+  it('folds a resize into the last step (applyResize), not a new one', () => {
+    loadWithGroup();
+
+    state.addNodes({ id: 'c', position: { x: 5, y: 5 } }); // one history step
+    // A group auto-fit is a consequence of the add — no step of its own.
+    state.applyResize('g1', RectExtensions.initialize(10, 10, 260, 180));
+
+    expect(state.getGroup('g1')?.size).toEqual({ width: 260, height: 180 });
+    expect(state.getGroup('g1')?.position).toEqual({ x: 10, y: 10 });
+
+    // ONE undo reverts the add AND the resize.
+    state.undo();
+    expect(state.getNode('c')).toBeUndefined();
+    expect(state.getGroup('g1')?.size).toEqual({ width: 300, height: 200 });
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('ignores a resize that does not change the geometry', () => {
+    loadWithGroup(); // g1 at {0,0} sized 300x200
+    const changesBefore = state.changes();
+
+    state.applyResize('g1', RectExtensions.initialize(0, 0, 300, 200));
+
+    expect(state.changes()).toBe(changesBefore);
   });
 });
