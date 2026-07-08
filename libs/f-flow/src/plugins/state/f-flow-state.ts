@@ -370,8 +370,17 @@ export class FFlowState<
     });
   }
 
-  /** Nodes/groups were dropped into a group. Default: reparent them as one step. */
+  /**
+   * Nodes/groups were dropped into a group. Default: reparent them as one
+   * step. No-op when `dropToGroup` is disabled. This only touches items that
+   * already exist — a brand-new item from a palette is created by
+   * `applyCreateNode`, not here.
+   */
   public applyDropToGroup(event: FDropToGroupEvent): void {
+    if (this.config?.dropToGroup === false) {
+      return;
+    }
+
     const shape = this.currentShape();
     let nodes = shape.nodes;
     let groups = shape.groups;
@@ -439,14 +448,20 @@ export class FFlowState<
 
   /**
    * Builds the record for an external-item drop. The item's `fData` is spread
-   * onto the node, so a palette payload becomes the node's own fields.
+   * onto the node, so a palette payload becomes the node's own fields. The
+   * drop target nests the node unless `dropToGroup` is disabled.
+   *
+   * Position comes from `externalItemRect`, which is already in flow
+   * coordinates (pan/zoom corrected) for every drop — over empty canvas or
+   * over a node/group alike. (`dropPosition` is the raw pointer position and
+   * only present on container drops, so it isn't used here.)
    */
   protected createNodeRecord(event: FCreateNodeEvent): IFStateNode | null {
     return {
       ...(event.data as object),
       id: generateGuid(),
-      position: event.dropPosition ?? { x: event.externalItemRect.x, y: event.externalItemRect.y },
-      parentId: event.targetContainerId ?? null,
+      position: { x: event.externalItemRect.x, y: event.externalItemRect.y },
+      parentId: this.config?.dropToGroup === false ? null : (event.targetContainerId ?? null),
     };
   }
 

@@ -219,6 +219,47 @@ describe('FFlowStateController', () => {
     expect(state.getNode('a')?.parentId).toBe('group-1');
   });
 
+  it('nests an external item dropped over a group at the flow-space rect', () => {
+    setup();
+
+    // externalItemRect is flow-space; dropPosition is the raw pointer and must
+    // NOT be used for the node position (that was the off-screen-node bug).
+    draggable.fCreateNode.emit(
+      new FCreateNodeEvent(
+        RectExtensions.initialize(120, 80, 10, 10),
+        { kind: 'task' },
+        'group-1',
+        {
+          x: 900,
+          y: 900,
+        },
+      ),
+    );
+
+    const created = state.nodes().find((n) => (n as { kind?: string }).kind === 'task');
+    expect(created?.parentId).toBe('group-1');
+    expect(created?.position).toEqual({ x: 120, y: 80 });
+  });
+
+  it('ignores group membership when dropToGroup is disabled', () => {
+    setup({ dropToGroup: false });
+
+    // An existing-node drop into a group is a no-op.
+    draggable.fDropToGroup.emit(new FDropToGroupEvent('group-1', ['a'], { x: 0, y: 0 }));
+    expect(state.getNode('a')?.parentId).toBeUndefined();
+    expect(state.canUndo()).toBeFalse();
+
+    // An external item over a group is created at the top level.
+    draggable.fCreateNode.emit(
+      new FCreateNodeEvent(RectExtensions.initialize(0, 0, 10, 10), { kind: 'x' }, 'group-1', {
+        x: 0,
+        y: 0,
+      }),
+    );
+    const created = state.nodes().find((n) => (n as { kind?: string }).kind === 'x');
+    expect(created?.parentId).toBeNull();
+  });
+
   it('adds a node when an external item is dropped', () => {
     setup();
 
