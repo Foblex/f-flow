@@ -21,7 +21,7 @@ interface INode extends IFStateNode {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  providers: [provideFFlow(withFlowState({ selectionInHistory: true }))],
+  providers: [provideFFlow(withFlowState())],
   imports: [FFlowModule, FToolbarComponent, FExternalPaletteComponent],
 })
 export class Example {

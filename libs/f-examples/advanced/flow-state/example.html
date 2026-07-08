@@ -19,7 +19,7 @@
       fAutoExpandOnChildHit
       fAutoSizeToFitChildren
     >
-      <span>Group</span>
+      Group
     </div>
     } @for (connection of state.connections(); track connection.id) {
     <f-connection
@@ -37,6 +37,7 @@
       fDragHandle
       [fNodeId]="node.id"
       [fNodePosition]="node.position"
+      [fNodeSize]="node.size"
       [fNodeParentId]="node.parentId"
       fAutoExpandOnChildHit
       fAutoSizeToFitChildren

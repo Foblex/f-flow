@@ -98,11 +98,11 @@ Because effects coalesce, a burst of edits settles into one reaction — exactly
 `state.selection()` always reflects the current selection (`nodeIds`, `groupIds`, `connectionIds`) as a signal — handy for a properties panel or a context menu. Whether selecting is _undoable_ is a config switch, because editors disagree:
 
 ```ts
-withFlowState({ selectionInHistory: true });
+withFlowState({ selectionInHistory: false });
 ```
 
-- Off by default — selecting does not create a history step, and `undo` walks only graph edits (xyflow, tldraw).
-- Turn it on and every selection change becomes its own step; `undo`/`redo` restore the previous highlight (Figma, Photoshop).
+- On by default — every selection change is its own step and `undo`/`redo` restore the previous highlight (Figma, Photoshop); a drag's leading selection folds into the same step as the move.
+- Set `false` to keep selection out of the history, so `undo` walks only graph edits (xyflow, tldraw).
 
 ## Programmatic editing shares the same history
 
