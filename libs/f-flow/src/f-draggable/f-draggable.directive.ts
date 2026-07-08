@@ -81,6 +81,11 @@ import { DragMinimapFinalizeRequest, DragMinimapPreparationRequest } from './dra
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
   providers: [FDragHandlerResult, DragHandlerInjector],
+  host: {
+    // On by default: marks the flow so the grouping styles (drop-target
+    // highlight) apply. Cleared reactively when `fDropToGroup` is set to false.
+    '[class.f-drop-to-group]': 'dropToGroup()',
+  },
 })
 export class FDraggableDirective
   extends FDraggableBase
@@ -106,6 +111,12 @@ export class FDraggableDirective
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
+
+  /** Turns the drop-to-group gesture on/off. See `FDraggableBase.dropToGroup`. */
+  public override dropToGroup = input(true, {
+    transform: (value: unknown) => booleanAttribute(value),
+    alias: 'fDropToGroup',
+  });
 
   @Input()
   public fMultiSelectTrigger: FEventTrigger = (event: FTriggerEvent) => {

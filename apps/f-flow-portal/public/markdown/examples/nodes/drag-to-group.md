@@ -19,6 +19,7 @@ Drag nodes or groups into containers, build nested hierarchies, and manage dynam
 
 ## What this example shows
 
+- Turn the whole gesture on or off with the `[fDropToGroup]` input (on by default) — the "Drop to Group" toggle flips it live.
 - Move nodes or groups into another group and update parent-child relations through drag-and-drop.
 - Nest groups inside groups and nodes inside other containers when the editor needs hierarchy.
 - Create new nodes directly inside a target container via `fExternalItem`.

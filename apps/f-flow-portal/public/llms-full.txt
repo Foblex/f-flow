@@ -594,6 +594,7 @@ Selector: `f-flow[fDraggable]`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fDraggableDisabled | boolean | false | Disable all interactions |
+| fDropToGroup | boolean | true | Enable the drop-to-group gesture. When on, the flow carries the `f-drop-to-group` CSS class (grouping styles apply), dragging a node onto a group reparents it, and a dropped external item nests into the container. Set false and none of that happens (no `fDropToGroup` event). Note: the same public name `fDropToGroup` is also an output event (below) — `[fDropToGroup]` binds this input, `(fDropToGroup)` binds the event. |
 | fMultiSelectTrigger | FEventTrigger | Ctrl/Cmd key | Predicate for multi-select |
 | fReassignConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection reassign |
 | fCreateConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection create |
@@ -619,7 +620,7 @@ Selector: `f-flow[fDraggable]`
 | fCreateConnection | EventEmitter\<FCreateConnectionEvent\> | New connection created |
 | fReassignConnection | EventEmitter\<FReassignConnectionEvent\> | Connection endpoint reassigned |
 | fConnectionWaypointsChanged | OutputEmitterRef\<FConnectionWaypointsChangedEvent\> | Waypoints modified |
-| fDropToGroup | EventEmitter\<FDropToGroupEvent\> | Node dropped into group |
+| fDropToGroup | EventEmitter\<FDropToGroupEvent\> | Node dropped into group (shares its public name with the `fDropToGroup` toggle input above) |
 | fDragStarted | EventEmitter\<FDragStartedEvent\> | Any drag interaction started |
 | fDragEnded | EventEmitter\<void\> | Any drag interaction ended |
 | fNodeConnectionsIntersection | OutputEmitterRef\<FNodeConnectionsIntersectionEvent\> | Node-connection intersection detected |

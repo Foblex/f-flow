@@ -1,7 +1,8 @@
 <f-flow
   fDraggable
+  [fDropToGroup]="dropToGroup()"
   (fFullRendered)="loaded()"
-  (fDropToGroup)="dropToGroup($event)"
+  (fDropToGroup)="onDropToGroup($event)"
   (fCreateNode)="createNode($event)"
 >
   <f-canvas fZoom>
@@ -38,6 +39,7 @@
   <div fExternalItem>Drag to Group</div>
 </f-external-palette>
 <f-toolbar>
+  <f-checkbox [checked]="dropToGroup()" (change)="changeDropToGroup()">Drop to Group</f-checkbox>
   <f-checkbox [checked]="includePaddings()" (change)="changePaddings()"
     >Include Paddings</f-checkbox
   >

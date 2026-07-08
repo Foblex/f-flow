@@ -90,10 +90,14 @@
   }
 }
 
+// The drop-target highlight only makes sense when drop-to-group is enabled,
+// so it is scoped to the `f-drop-to-group` class the flow carries in that mode
+// (see `FDraggableDirective`). Setting `fDropToGroup` to false drops the class
+// and, with it, these styles.
 @mixin grouping($scoped: true) {
   @if $scoped {
     @include _node-group-scope($scoped) {
-      &.f-dragging {
+      &.f-drop-to-group.f-dragging {
         .f-node {
           @include _grouping-drop-active(var(--ff-node-padding));
         }
@@ -106,7 +110,7 @@
   } @else {
     f-flow,
     .f-flow {
-      &.f-dragging {
+      &.f-drop-to-group.f-dragging {
         .f-node {
           @include _grouping-drop-active(var(--ff-node-padding));
         }

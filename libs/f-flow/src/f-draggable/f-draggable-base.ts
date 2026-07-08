@@ -23,6 +23,15 @@ import { FEventTrigger } from '../domain';
 export abstract class FDraggableBase extends DragAndDropBase {
   public readonly hostElement = inject(ElementRef).nativeElement;
 
+  /**
+   * Enables the drop-to-group gesture (`fDropToGroup` input, `true` by default).
+   * While on, the flow carries the `f-drop-to-group` CSS class (so the grouping
+   * styles apply), dragging a node onto a group reparents it, and a dropped
+   * external item nests into the group under the pointer. Set it to `false` and
+   * none of that happens — the class is absent and no `fDropToGroup` is emitted.
+   */
+  public abstract dropToGroup: InputSignalWithTransform<boolean, unknown>;
+
   public abstract fSelectionChange: EventEmitter<FSelectionChangeEvent>;
 
   /**

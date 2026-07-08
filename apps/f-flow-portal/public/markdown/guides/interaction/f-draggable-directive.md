@@ -26,6 +26,7 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 ### Inputs
 
 - `fDraggableDisabled: boolean;` Default: `false`. Disables all drag interactions.
+- `fDropToGroup: boolean;` Default: `true`. Enables the drop-to-group gesture. While on, the flow carries the `f-drop-to-group` CSS class so the grouping styles apply, dragging a node onto a group reparents it, and a dropped external item nests into the container under the pointer. Set it to `false` and none of that happens — no `fDropToGroup` event is emitted.
 - `fMultiSelectTrigger: FEventTrigger;` Default: `(event) => isMac ? event.metaKey : event.ctrlKey`. Trigger for multi-selection.
 - `fReassignConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `reassignConnection` (`always`). Trigger for reassigning connections.
 - `fCreateConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `createConnection` (`always`). Trigger for creating connections.

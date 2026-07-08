@@ -39,6 +39,8 @@ This adds styling for the runtime classes used during drag-to-group:
 - `.f-grouping-drop-active`
 - `.f-grouping-over-boundary`
 
+These highlight styles only apply while drop-to-group is enabled. In that mode the flow carries the `f-drop-to-group` host class (the default; set `[fDropToGroup]="false"` on `fDraggable` to turn the gesture off), and `grouping()` scopes its rules to `f-flow.f-drop-to-group.f-dragging`. With the gesture off the class is absent and these styles do not apply.
+
 Customize them with:
 
 - `--ff-grouping-drop-target-border-color`
