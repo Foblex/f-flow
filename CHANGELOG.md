@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Highlights
 
 - **Managed Flow State:** opt into `provideFFlow(withFlowState())` to get typed node/group/connection signals, immutable programmatic mutations, automatic updates from supported gestures, batched undo/redo, viewport history, and persistable `load()`/`snapshot()` data. `injectFlowState<TNode, TConnection, TGroup>()` keeps application record fields typed without a `data` wrapper, and `stateClass` allows applications to override store behavior.
-- **Large-flow runtime work:** registry removals and store notifications are batched, connection redraws can be scoped to the node whose geometry changed, minimap node geometry comes from cached model-space rectangles, pointer targeting uses DOM ancestry instead of scanning every node, connector border radii are cached, and connectable-side recalculation shares one scheduler.
+- **Large-flow runtime work:** registry removals and store notifications are batched, connection redraws are scoped to affected geometry, minimap node geometry comes from cached model-space rectangles, pointer targeting uses DOM ancestry instead of scanning every node, connector border radii are cached, and connectable-side recalculation shares one scheduler.
 
 ### Features
 
@@ -16,12 +16,21 @@ All notable changes to this project will be documented in this file. See [standa
 - **f-canvas:** `resetScaleAndCenter`, `fitToScreen`, and `centerGroupOrNode` now accept an optional `emitCanvasChange` argument. Pass `false` for initialization or another application-driven viewport change that must not enter external or managed history.
 - **f-draggable:** add the `fDropToGroup` toggle (gesture default remains `true`). Managed state applies the emitted reparenting only when its separate `dropToGroup` option is enabled; that state option defaults to `false`.
 
+### Performance
+
+- **connections:** redraw only connections affected by a changed node. A group geometry change also includes connections owned by descendant nodes, so grouped moves and state-driven restores remain correct without returning to a full redraw.
+- **minimap:** draw node rectangles from cached model-space geometry instead of measuring every node element on each pass, and reconcile rectangles by node id when batched registry updates settle.
+- **storage:** coalesce component-store notifications, batch registry removals, and compact retained registry snapshots outside the teardown loop.
+- **dragging:** resolve pointer targets through DOM ancestry, cache connector border radii used during geometry normalization, and share connectable-side recalculation scheduling across drag handlers.
+
 ### Fixes
 
-- **connections:** redraw connections owned by descendant nodes when a group's geometry changes, including state-driven undo/redo of group movement.
-- **minimap:** remove stale SVG node rectangles when one node is removed and another is added before the same coalesced redraw, even when the total node count is unchanged.
-- **storage:** preserve O(n) batched registry teardown while compacting retained `getAll()` array references by the next microtask, before coalesced registry notifications run.
-- **f-connector:** preserve the existing `fConnectorSelfConnectable = true` default and cover it with a regression test.
+- **node/group auto-size:** `fAutoSizeToFitChildren` now emits the final `fNodeSizeChange` / `fGroupSizeChange`, waits until child parent ids have settled before fitting, and removes stale explicit dimensions when a bound size is cleared.
+- **drag-to-group:** when a target uses both `fAutoExpandOnChildHit` and `fAutoSizeToFitChildren`, emit only the settled auto-fit size instead of a transient expanded size followed by the final one.
+
+### Documentation
+
+- Add a maintained zoneless Angular starter under `starters/minimal-flow` for StackBlitz and refresh the README, comparison, and use-case pages for the v19 API.
 
 ### Managed state v1 scope
 
