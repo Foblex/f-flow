@@ -82,7 +82,7 @@ export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateRes
     historyLimit: 50,
     selectionInHistory: true,
     canvasTransformInHistory: true,
-    canvasTransformDebounce: 350,
+    canvasTransformDebounce: 0,
     dropToGroup: false,
     ...config,
   };

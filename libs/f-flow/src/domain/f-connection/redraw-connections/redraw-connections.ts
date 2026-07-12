@@ -72,6 +72,8 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
       return [];
     }
 
+    const hierarchyDirtyCache = new Map<string, boolean>();
+
     return this._store.connections.getAll().filter((connection) => {
       const source = findSourceConnector(this._store, connection.sourceId());
       const target = findTargetConnector(this._store, connection.targetId());
@@ -80,8 +82,51 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
         return true;
       }
 
-      return nodeIds.has(source.fNodeId) || nodeIds.has(target.fNodeId);
+      return (
+        this._isNodeHierarchyDirty(source.fNodeId, nodeIds, hierarchyDirtyCache) ||
+        this._isNodeHierarchyDirty(target.fNodeId, nodeIds, hierarchyDirtyCache)
+      );
     });
+  }
+
+  /** A group geometry change also moves every endpoint owned by its descendants. */
+  private _isNodeHierarchyDirty(
+    nodeId: string,
+    dirtyNodeIds: ReadonlySet<string>,
+    cache: Map<string, boolean>,
+  ): boolean {
+    const cached = cache.get(nodeId);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const path: string[] = [];
+    const visited = new Set<string>();
+    let currentId: string | null | undefined = nodeId;
+    let isDirty = false;
+
+    while (currentId && !visited.has(currentId)) {
+      const currentCached = cache.get(currentId);
+      if (currentCached !== undefined) {
+        isDirty = currentCached;
+        break;
+      }
+
+      path.push(currentId);
+      visited.add(currentId);
+      if (dirtyNodeIds.has(currentId)) {
+        isDirty = true;
+        break;
+      }
+
+      currentId = this._store.nodes.get(currentId)?.fParentId();
+    }
+
+    for (const id of path) {
+      cache.set(id, isDirty);
+    }
+
+    return isDirty;
   }
 
   private _createMarkersForCreate(): void {

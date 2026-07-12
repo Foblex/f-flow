@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
+- **connections:** redraw connections owned by descendant nodes when a group's geometry changes, including state-driven undo/redo of group movement.
 - **minimap:** remove stale SVG node rectangles when one node is removed and another is added before the same coalesced redraw, even when the total node count is unchanged.
 - **storage:** preserve O(n) batched registry teardown while compacting retained `getAll()` array references by the next microtask, before coalesced registry notifications run.
 - **f-connector:** preserve the existing `fConnectorSelfConnectable = true` default and cover it with a regression test.

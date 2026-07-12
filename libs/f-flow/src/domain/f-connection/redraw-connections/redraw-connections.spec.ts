@@ -4,6 +4,7 @@ import {
   connectorFactory,
   FConnectionBase,
   injectFromDi,
+  nodeFactory,
   registryAdd,
   valueProvider,
 } from '@foblex/flow';
@@ -149,6 +150,23 @@ describe('RedrawConnections', () => {
 
     it('redraws only the connections touching the dirty node', () => {
       store.emitConnectionChanges('node-a');
+
+      execution.handle(new RedrawConnectionsRequest());
+
+      const slice = _getRequests().find(
+        (request): request is RunConnectionRedrawSliceRequest =>
+          request instanceof RunConnectionRedrawSliceRequest,
+      );
+      expect(slice?.connections.map((x) => x.fId())).toEqual(['ab']);
+    });
+
+    it('redraws connections owned by descendants of a dirty group', () => {
+      registryAdd(store.nodes, nodeFactory().id('group').build());
+      registryAdd(store.nodes, nodeFactory().id('nested-group').parent('group').build());
+      registryAdd(store.nodes, nodeFactory().id('node-a').parent('nested-group').build());
+      registryAdd(store.nodes, nodeFactory().id('node-b').build());
+
+      store.emitConnectionChanges('group');
 
       execution.handle(new RedrawConnectionsRequest());
 
