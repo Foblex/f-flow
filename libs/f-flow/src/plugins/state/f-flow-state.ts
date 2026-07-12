@@ -107,6 +107,40 @@ export class FFlowState<
   /** Called when `undo` empties the history; the controller may reset the view. */
   public _onUndoToStart: (() => void) | null = null;
 
+  /**
+   * Establishes the actual canvas transform before its first user-driven
+   * change. Programmatic centering can intentionally suppress fCanvasChange,
+   * so the state may still hold an unset transform while the rendered canvas
+   * is already centered. This updates that baseline without history or a
+   * changes() tick.
+   */
+  public _initializeTransform(transform: IFStateTransform): void {
+    const next = _copyTransform(transform);
+
+    if (!this.config?.canvasTransformInHistory) {
+      if (this._liveTransform().position === undefined) {
+        this._liveTransform.set(next);
+      }
+
+      return;
+    }
+
+    const shape = this._shape();
+    if (shape.transform.position !== undefined) {
+      return;
+    }
+
+    this._shape.set({ ...shape, transform: next });
+
+    if (this._batchOpen && this._undoStack.length) {
+      const index = this._undoStack.length - 1;
+      const baseline = this._undoStack[index];
+      if (baseline.transform.position === undefined) {
+        this._undoStack[index] = { ...baseline, transform: _copyTransform(next) };
+      }
+    }
+  }
+
   /** Open-transaction depth; commits inside a batch collapse into one step. */
   private _batchDepth = 0;
   private _batchOpen = false;

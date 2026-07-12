@@ -58,7 +58,7 @@ export class FFlowStateController {
     }
 
     this._state._connectorOwnerResolver = (connectorId) => this._resolveOwnerNode(connectorId);
-    this._state._onUndoToStart = () => this._store.fFlow?.reset();
+    this._state._onUndoToStart = () => this._resetAndRenderFlow();
 
     this._wireDraggableEvents();
     this._wireCanvasEvents();
@@ -304,6 +304,7 @@ export class FFlowStateController {
       return;
     }
 
+    state._initializeTransform(start);
     state.applyTransform(current);
   }
 
@@ -344,6 +345,17 @@ export class FFlowStateController {
       selection.connectionIds,
       false,
     );
+  }
+
+  /** Resets lifecycle flags and starts a render pass for the restored initial state. */
+  private _resetAndRenderFlow(): void {
+    const flow = this._store.fFlow;
+    if (!flow) {
+      return;
+    }
+
+    flow.reset();
+    this._store.emitNodeChanges();
   }
 
   private _resolveOwnerNode(connectorId: string): string | undefined {

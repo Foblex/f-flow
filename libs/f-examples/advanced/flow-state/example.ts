@@ -21,7 +21,7 @@ interface INode extends IFStateNode {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  providers: [provideFFlow(withFlowState({ dropToGroup: true }))],
+  providers: [provideFFlow(withFlowState({ dropToGroup: true, canvasTransformDebounce: 350 }))],
   imports: [FFlowModule, FToolbarComponent, FExternalPaletteComponent],
 })
 export class Example {
@@ -54,6 +54,6 @@ export class Example {
   protected rendered(): void {
     // Initial centering is a programmatic view change, so it must not become
     // an undoable canvas event.
-    this._canvas().resetScaleAndCenter(false, false);
+    this._canvas().resetScaleAndCenter(true, false);
   }
 }

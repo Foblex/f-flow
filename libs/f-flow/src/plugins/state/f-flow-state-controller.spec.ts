@@ -1,11 +1,16 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Injectable } from '@angular/core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   configureDiTest,
   connectorFactory,
   FComponentsStore,
+  FFlowModule,
   injectFromDi,
+  injectFlowState,
+  provideFFlow,
   registryAdd,
   valueProvider,
+  withFlowState,
 } from '@foblex/flow';
 import { FConnectorBase } from '../../f-connectors';
 import { FCanvasBase, FCanvasChangeEvent } from '../../f-canvas';
@@ -406,6 +411,10 @@ describe('FFlowStateController', () => {
   it('folds a drag-time canvas transform change into the drag move step', async () => {
     setup();
 
+    // Initial centering was intentionally silent, so state.transform() is
+    // unset even though the rendered canvas already has this transform.
+    canvas.transform.position = { x: 100, y: 80 };
+
     // Simulates a node drag during which the canvas auto-panned/zoomed: the
     // canvas transform is already settled by drag end, but its (debounced)
     // fCanvasChange fires only AFTER fDragEnded. The controller reads the
@@ -426,13 +435,34 @@ describe('FFlowStateController', () => {
     // ONE undo reverts BOTH the move and the transform.
     state.undo();
     expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
-    expect(state.transform()).toEqual({ position: undefined, scale: 1 });
+    expect(state.transform()).toEqual({ position: { x: 100, y: 80 }, scale: 1 });
     expect(state.canUndo()).toBeFalse();
   });
 
-  it('resets the flow when undo returns to the start of history', async () => {
+  it('restores a silently centered canvas after its first pan is undone', async () => {
+    setup();
+    canvas.transform.position = { x: 147.5, y: 150 };
+
+    await drag(
+      draggable,
+      () => {},
+      () => {
+        canvas.transform.position = { x: 247.5, y: 190 };
+      },
+    );
+
+    expect(state.transform()).toEqual({ position: { x: 247.5, y: 190 }, scale: 1 });
+
+    state.undo();
+
+    expect(state.transform()).toEqual({ position: { x: 147.5, y: 150 }, scale: 1 });
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('resets and rerenders the flow when undo returns to the start of history', async () => {
     setup({ canvasTransformInHistory: true });
     const resetSpy = jasmine.createSpy('reset');
+    const emitNodeChangesSpy = spyOn(store, 'emitNodeChanges');
     store.fFlow = { reset: resetSpy } as unknown as FFlowBase;
 
     // Record a user pan, then undo back to the start.
@@ -444,6 +474,7 @@ describe('FFlowStateController', () => {
 
     expect(state.canUndo()).toBeFalse();
     expect(resetSpy).toHaveBeenCalledTimes(1);
+    expect(emitNodeChangesSpy).toHaveBeenCalledTimes(1);
   });
 
   it('collapses a burst of canvas changes into one step when debounced', async () => {
@@ -523,4 +554,63 @@ describe('FFlowStateController', () => {
 
     expect(state.connections().length).toBe(0);
   });
+});
+
+@Component({
+  standalone: true,
+  imports: [FFlowModule],
+  providers: [provideFFlow(withFlowState())],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: ['f-flow { display: block; height: 400px; }'],
+  template: `
+    <f-flow (fFullRendered)="rendered()">
+      <f-canvas>
+        @for (node of state.nodes(); track node.id) {
+          <div fNode [fNodeId]="node.id" [fNodePosition]="node.position"></div>
+        }
+      </f-canvas>
+    </f-flow>
+  `,
+})
+class StateRenderLifecycleHost {
+  public readonly state = injectFlowState();
+  public fullRenderedCount = 0;
+
+  constructor() {
+    this.state.load({
+      nodes: [{ id: 'a', position: { x: 0, y: 0 } }],
+      connections: [],
+    });
+  }
+
+  public rendered(): void {
+    this.fullRenderedCount++;
+  }
+}
+
+describe('FFlowState render lifecycle', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [StateRenderLifecycleHost],
+    }).compileComponents();
+  });
+
+  it('emits fFullRendered after undo restores the start of history', fakeAsync(() => {
+    const fixture = TestBed.createComponent(StateRenderLifecycleHost);
+    fixture.detectChanges();
+    tick(300);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.fullRenderedCount).toBe(1);
+
+    fixture.componentInstance.state.moveNodes([{ id: 'a', position: { x: 50, y: 50 } }]);
+    fixture.detectChanges();
+    fixture.componentInstance.state.undo();
+    fixture.detectChanges();
+    tick(300);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(fixture.componentInstance.fullRenderedCount).toBe(2);
+  }));
 });

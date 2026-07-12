@@ -5,6 +5,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { transitionEnd } from '../../transition-end';
 import { FCanvasBase } from '../../../f-canvas';
+import { TransformModelExtensions } from '@foblex/2d';
 
 /**
  * Execution that redraws the canvas with or without animation based on the request.
@@ -31,6 +32,13 @@ export class RedrawCanvasWithAnimation implements IExecution<
   }
 
   private _redrawWithAnimation(context: ECanvasRedrawContext): void {
+    const targetTransform = TransformModelExtensions.toString(this._canvas.transform);
+    if (this._canvas.hostElement.style.transform === targetTransform) {
+      this._redraw(context);
+
+      return;
+    }
+
     this._store.beginViewportAnimation();
     this._canvas?.redrawWithAnimation();
 

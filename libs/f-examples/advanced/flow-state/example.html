@@ -1,4 +1,6 @@
 <f-flow fDraggable (fFullRendered)="rendered()">
+  <f-selection-area />
+  <f-magnetic-lines />
   <f-canvas fZoom [position]="state.transform().position" [scale]="state.transform().scale">
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <f-connection-marker-arrow />
@@ -45,24 +47,28 @@
       {{ node.text }}
       <div
         fConnector
+        fConnectorSelfConnectable="false"
         fConnectorId="{{ node.id }}-input-left"
         fConnectorConnectableSide="left"
         class="left"
       ></div>
       <div
         fConnector
+        fConnectorSelfConnectable="false"
         fConnectorId="{{ node.id }}-output-top"
         fConnectorConnectableSide="top"
         class="top"
       ></div>
       <div
         fConnector
+        fConnectorSelfConnectable="false"
         fConnectorId="{{ node.id }}-input-right"
         fConnectorConnectableSide="right"
         class="right"
       ></div>
       <div
         fConnector
+        fConnectorSelfConnectable="false"
         fConnectorId="{{ node.id }}-output-bottom"
         fConnectorConnectableSide="bottom"
         class="bottom"
