@@ -78,10 +78,6 @@ export class MinimapDrawNodes implements IExecution<MinimapDrawNodesRequest, voi
   }
 
   private _removeStaleEntries(nodes: FNodeBase[]): void {
-    if (this._entries.size === nodes.length) {
-      return;
-    }
-
     const alive = new Set<FNodeBase>(nodes);
     for (const [node, entry] of this._entries) {
       if (!alive.has(node)) {

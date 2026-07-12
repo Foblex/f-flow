@@ -19,7 +19,7 @@ export class CenterGroupOrNode implements IExecution<CenterGroupOrNodeRequest, v
     return this._store.transform;
   }
 
-  public handle({ id, animated }: CenterGroupOrNodeRequest): void {
+  public handle({ id, animated, emitCanvasChange }: CenterGroupOrNodeRequest): void {
     const node = this._store.nodes.get(id);
     if (!node) {
       return;
@@ -28,7 +28,11 @@ export class CenterGroupOrNode implements IExecution<CenterGroupOrNodeRequest, v
     this._toCenter(this._getNodeRect(node), this._getFlowRect(), node._position);
 
     this._mediator.execute(
-      new RedrawCanvasWithAnimationRequest(animated, ECanvasRedrawContext.VIEWPORT_ONLY),
+      new RedrawCanvasWithAnimationRequest(
+        animated,
+        ECanvasRedrawContext.VIEWPORT_ONLY,
+        emitCanvasChange,
+      ),
     );
   }
 

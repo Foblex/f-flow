@@ -1,5 +1,5 @@
 <f-flow fDraggable (fFullRendered)="rendered()">
-  <f-canvas fZoom>
+  <f-canvas fZoom [position]="state.transform().position" [scale]="state.transform().scale">
     <f-connection-for-create fBehavior="fixed" fType="segment">
       <f-connection-marker-arrow />
     </f-connection-for-create>

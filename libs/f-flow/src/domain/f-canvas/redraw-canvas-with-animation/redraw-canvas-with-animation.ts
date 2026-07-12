@@ -13,9 +13,10 @@ import { FCanvasBase } from '../../../f-canvas';
  */
 @Injectable()
 @FExecutionRegister(RedrawCanvasWithAnimationRequest)
-export class RedrawCanvasWithAnimation
-  implements IExecution<RedrawCanvasWithAnimationRequest, void>
-{
+export class RedrawCanvasWithAnimation implements IExecution<
+  RedrawCanvasWithAnimationRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   private get _canvas(): FCanvasBase {
@@ -24,7 +25,9 @@ export class RedrawCanvasWithAnimation
 
   public handle(request: RedrawCanvasWithAnimationRequest): void {
     request.animated ? this._redrawWithAnimation(request.context) : this._redraw(request.context);
-    this._canvas?.emitCanvasChangeEvent();
+    if (request.emitCanvasChange) {
+      this._canvas?.emitCanvasChangeEvent();
+    }
   }
 
   private _redrawWithAnimation(context: ECanvasRedrawContext): void {

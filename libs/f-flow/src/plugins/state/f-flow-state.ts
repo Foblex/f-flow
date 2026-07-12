@@ -11,7 +11,13 @@ import type {
   FSelectionChangeEvent,
 } from '../../f-draggable';
 import { F_FLOW_STATE_CONFIG } from './i-f-flow-state';
-import { IFStateConnection, IFStateData, IFStateGroup, IFStateNode } from './i-f-state-models';
+import {
+  IFStateConnection,
+  IFStateData,
+  IFStateGroup,
+  IFStateNode,
+  IFStateTransform,
+} from './i-f-state-models';
 
 /** The selected items, mirrored from the flow. */
 export interface IFStateSelection {
@@ -31,6 +37,8 @@ export interface IFStateShape<
   connections: Record<string, TConnection>;
   /** Selection is part of the shape only when `selectionInHistory` is on. */
   selection: IFStateSelection;
+  /** Canvas pan/zoom; part of the shape only when `canvasTransformInHistory` is on. */
+  transform: IFStateTransform;
 }
 
 const EMPTY_SELECTION = Object.freeze({
@@ -38,6 +46,11 @@ const EMPTY_SELECTION = Object.freeze({
   groupIds: [],
   connectionIds: [],
 }) as IFStateSelection;
+
+const DEFAULT_TRANSFORM = Object.freeze({
+  position: undefined,
+  scale: 1,
+}) as IFStateTransform;
 
 /**
  * The data store of the state plugin (`provideFFlow(withFlowState())`).
@@ -52,8 +65,9 @@ const EMPTY_SELECTION = Object.freeze({
  * forwards into the `apply*` handlers — is ONE undoable history step: records
  * are updated immutably, so a history entry is just the previous shape
  * reference. `undo`/`redo` with `canUndo`/`canRedo` signals come built in;
- * `changes` ticks once per history step so a single effect can persist the
- * graph. Load data with `load(...)`, take it back with `snapshot()`.
+ * `changes` ticks once when a standalone mutation or outer batch settles, so a
+ * single effect can persist the graph. Load data with `load(...)`, take it back
+ * with `snapshot()`.
  *
  * EVERY method is designed for overriding. Subclass the store, override any
  * CRUD method, any `apply*` gesture handler or any protected building block,
@@ -79,6 +93,7 @@ export class FFlowState<
     groups: {},
     connections: {},
     selection: EMPTY_SELECTION,
+    transform: DEFAULT_TRANSFORM,
   });
   private readonly _undoStack: IFStateShape<TNode, TConnection, TGroup>[] = [];
   private readonly _redoStack: IFStateShape<TNode, TConnection, TGroup>[] = [];
@@ -87,10 +102,16 @@ export class FFlowState<
   private readonly _changes = signal(0);
   /** Live selection when `selectionInHistory` is off (kept out of history). */
   private readonly _liveSelection = signal<IFStateSelection>(EMPTY_SELECTION);
+  /** Live transform when `canvasTransformInHistory` is off (kept out of history). */
+  private readonly _liveTransform = signal<IFStateTransform>(DEFAULT_TRANSFORM);
+  /** Called when `undo` empties the history; the controller may reset the view. */
+  public _onUndoToStart: (() => void) | null = null;
 
   /** Open-transaction depth; commits inside a batch collapse into one step. */
   private _batchDepth = 0;
   private _batchOpen = false;
+  /** A mutation occurred inside the current outer batch. */
+  private _batchDirty = false;
 
   // Records are memoized so a selection-only change never re-emits the graph.
   private readonly _nodesRecord = computed(() => this._shape().nodes);
@@ -111,7 +132,12 @@ export class FFlowState<
     this.config?.selectionInHistory ? this._shape().selection : this._liveSelection(),
   );
 
-  /** Ticks once per history step (mutation, `undo`, `redo`) and on `load`. */
+  /** The current canvas transform; historized only when `canvasTransformInHistory` is on. */
+  public readonly transform = computed(() =>
+    this.config?.canvasTransformInHistory ? this._shape().transform : this._liveTransform(),
+  );
+
+  /** Ticks when a standalone mutation or outer batch settles, and on `load`. */
   public readonly changes = this._changes.asReadonly();
 
   public readonly canUndo = this._canUndo.asReadonly();
@@ -126,12 +152,16 @@ export class FFlowState<
   public load(data: Partial<IFStateData<TNode, TConnection, TGroup>>): void {
     this._undoStack.length = 0;
     this._redoStack.length = 0;
+    this._batchDirty = false;
+    const transform = _copyTransform(data.transform ?? DEFAULT_TRANSFORM);
     this._liveSelection.set(EMPTY_SELECTION);
+    this._liveTransform.set(transform);
     this._shape.set({
       nodes: _byId(data.nodes ?? []),
       groups: _byId(data.groups ?? []),
       connections: _byId(data.connections ?? []),
       selection: EMPTY_SELECTION,
+      transform,
     });
     this._syncHistorySignals();
     this._bumpChanges();
@@ -148,6 +178,7 @@ export class FFlowState<
       nodes: Object.values(nodes).map(_copyBox),
       groups: Object.values(groups).map(_copyBox),
       connections: Object.values(connections).map((connection) => ({ ...connection })),
+      transform: _copyTransform(this.transform()),
     };
   }
 
@@ -308,6 +339,10 @@ export class FFlowState<
     this._shape.set(previous);
     this._syncHistorySignals();
     this._bumpChanges();
+
+    if (!this._canUndo()) {
+      this._onUndoToStart?.();
+    }
   }
 
   public redo(): void {
@@ -349,6 +384,10 @@ export class FFlowState<
     }
     if (this._batchDepth === 0) {
       this._batchOpen = false;
+      if (this._batchDirty) {
+        this._batchDirty = false;
+        this._bumpChanges();
+      }
     }
   }
 
@@ -472,6 +511,28 @@ export class FFlowState<
   }
 
   /**
+   * The canvas was panned or zoomed (`fCanvasChange`). Historized as its own
+   * step when `canvasTransformInHistory` is on; otherwise tracked live, out of
+   * history. A no-op when the transform is unchanged, so a binding pushing the
+   * current value back can't create a redundant step.
+   */
+  public applyTransform(transform: IFStateTransform): void {
+    const next = _copyTransform(transform);
+
+    if (this.config?.canvasTransformInHistory) {
+      if (_isSameTransform(this.currentShape().transform, next)) {
+        return;
+      }
+      this.commit({ ...this.currentShape(), transform: next });
+    } else {
+      if (_isSameTransform(this._liveTransform(), next)) {
+        return;
+      }
+      this._liveTransform.set(next);
+    }
+  }
+
+  /**
    * A node or group reported a new measured rect (`fNodeSizeChange` /
    * `fGroupSizeChange`) — e.g. a group auto-fitting after a child was added.
    * Folded into the CURRENT shape WITHOUT its own history step, so the resize
@@ -570,7 +631,7 @@ export class FFlowState<
       removedConnections,
     );
 
-    this.commit({ nodes, groups, connections, selection });
+    this.commit({ nodes, groups, connections, selection, transform: shape.transform });
 
     if (!this.config?.selectionInHistory) {
       this._liveSelection.set(
@@ -604,7 +665,7 @@ export class FFlowState<
     }
     this._shape.set(next);
     this._syncHistorySignals();
-    this._bumpChanges();
+    this._markChanged();
   }
 
   /**
@@ -613,7 +674,7 @@ export class FFlowState<
    */
   protected amendCurrent(next: IFStateShape<TNode, TConnection, TGroup>): void {
     this._shape.set(next);
-    this._bumpChanges();
+    this._markChanged();
   }
 
   /** Connections attached to the given nodes/groups, per the connector-owner resolver. */
@@ -646,6 +707,15 @@ export class FFlowState<
     this._canRedo.set(this._redoStack.length > 0);
   }
 
+  private _markChanged(): void {
+    if (this._batchDepth > 0) {
+      this._batchDirty = true;
+
+      return;
+    }
+    this._bumpChanges();
+  }
+
   private _bumpChanges(): void {
     this._changes.update((value) => value + 1);
   }
@@ -661,6 +731,27 @@ function _without<T>(records: Record<string, T>, ids: Set<string>): Record<strin
   }
 
   return Object.fromEntries(Object.entries(records).filter(([id]) => !ids.has(id)));
+}
+
+/** Copies a transform so the stored value can't be mutated from outside. */
+function _copyTransform(transform: IFStateTransform): IFStateTransform {
+  return {
+    position: transform.position ? { x: transform.position.x, y: transform.position.y } : undefined,
+    scale: transform.scale,
+  };
+}
+
+function _isSameTransform(a: IFStateTransform, b: IFStateTransform): boolean {
+  return _isSamePoint(a.position, b.position) && a.scale === b.scale;
+}
+
+function _isSamePoint(a: IPoint | undefined, b: IPoint | undefined): boolean {
+  if (!a || !b) {
+    // Both unset → same; exactly one set → different.
+    return a === b;
+  }
+
+  return a.x === b.x && a.y === b.y;
 }
 
 /** Copies a box record with fresh geometry; nested payloads stay by reference. */

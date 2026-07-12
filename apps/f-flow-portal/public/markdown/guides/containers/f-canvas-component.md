@@ -56,11 +56,11 @@ A typical diagram structure is always:
 
 - `resetScale(): void;` Resets scale to `1`.
 
-- `resetScaleAndCenter(animated: boolean = true): void;` Resets scale to `1` and centers the viewport.
+- `resetScaleAndCenter(animated: boolean = true, emitCanvasChange: boolean = true): void;` Resets scale to `1` and centers the viewport. Pass `false` as the second argument for a programmatic move that must not emit `fCanvasChange`.
 
-- `fitToScreen(padding: IPoint = { x: 0, y: 0 }, animated: boolean = true): void;` Fits all nodes/groups into the viewport. Padding adds extra space around content.
+- `fitToScreen(padding: IPoint = { x: 0, y: 0 }, animated: boolean = true, emitCanvasChange: boolean = true): void;` Fits all nodes/groups into the viewport. Padding adds extra space around content; the third argument controls `fCanvasChange` emission.
 
-- `centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void;` Centers the viewport on a group or node by id.
+- `centerGroupOrNode(groupOrNodeId: string, animated: boolean = true, emitCanvasChange: boolean = true): void;` Centers the viewport on a group or node by id. The third argument controls `fCanvasChange` emission.
 
 ### Types
 
@@ -106,6 +106,25 @@ interface ITransformModel {
 - High-frequency transform updates can flood consumers if `debounceTime` is `0`; use debouncing when syncing external UI.
 - Prefer `fitToScreen` or `resetScaleAndCenter` after `fFullRendered` so nodes and connection geometry are already stable.
 
+## Programmatic viewport changes
+
+`resetScaleAndCenter`, `fitToScreen`, and `centerGroupOrNode` redraw the viewport and emit `fCanvasChange` by default. Keep that default for commands that should behave like a visible editor action and be observed by external state.
+
+For initialization or another application-driven view adjustment that must not enter managed history, pass `false` as `emitCanvasChange`:
+
+```ts
+// animated = false, emitCanvasChange = false
+this.canvas().resetScaleAndCenter(false, false);
+
+// padding, animated, emitCanvasChange
+this.canvas().fitToScreen({ x: 40, y: 40 }, true, false);
+
+// id, animated, emitCanvasChange
+this.canvas().centerGroupOrNode(nodeId, true, false);
+```
+
+Suppressing `fCanvasChange` does not skip rendering: the canvas transform, background, minimap and viewport still update. It only prevents the public change event, so listeners such as `FFlowState` do not record that programmatic move.
+
 ## Common tasks
 
 ### Fit content after the first render
@@ -120,9 +139,9 @@ Call viewport helpers after `fFullRendered`, when nodes and connections are alre
 
 ```ts
 protected onLoaded(): void {
-  this.canvas().fitToScreen({ x: 40, y: 40 }, true);
+  this.canvas().fitToScreen({ x: 40, y: 40 }, true, false);
   // or:
-  // this.canvas().resetScaleAndCenter(true);
+  // this.canvas().resetScaleAndCenter(true, false);
 }
 ```
 

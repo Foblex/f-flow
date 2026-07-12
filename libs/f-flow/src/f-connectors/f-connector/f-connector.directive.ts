@@ -101,7 +101,7 @@ export class FConnectorDirective
   public override userFConnectableSide: EFConnectableSide = EFConnectableSide.AUTO;
 
   @Input({ alias: 'fConnectorSelfConnectable', transform: booleanAttribute })
-  public override isSelfConnectable: boolean = false;
+  public override isSelfConnectable: boolean = true;
 
   /**
    * Source and outlet connection limits: ids or categories of target connectors

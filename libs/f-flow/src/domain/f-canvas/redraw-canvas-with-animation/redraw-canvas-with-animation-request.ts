@@ -5,5 +5,6 @@ export class RedrawCanvasWithAnimationRequest {
   constructor(
     public readonly animated: boolean,
     public readonly context: ECanvasRedrawContext = ECanvasRedrawContext.WITH_CONNECTION_CHANGES,
+    public readonly emitCanvasChange: boolean = true,
   ) {}
 }

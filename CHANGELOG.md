@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [19.1.0](https://github.com/Foblex/f-flow/compare/v19.0.0...v19.1.0) (Unreleased)
+
+### Highlights
+
+- **Managed Flow State:** opt into `provideFFlow(withFlowState())` to get typed node/group/connection signals, immutable programmatic mutations, automatic updates from supported gestures, batched undo/redo, viewport history, and persistable `load()`/`snapshot()` data. `injectFlowState<TNode, TConnection, TGroup>()` keeps application record fields typed without a `data` wrapper, and `stateClass` allows applications to override store behavior.
+- **Large-flow runtime work:** registry removals and store notifications are batched, connection redraws can be scoped to the node whose geometry changed, minimap node geometry comes from cached model-space rectangles, pointer targeting uses DOM ancestry instead of scanning every node, connector border radii are cached, and connectable-side recalculation shares one scheduler.
+
+### Features
+
+- **flow-state:** supported v1 gestures automatically update managed records for connection create/reassign, node/group movement, deletion, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. One drag remains one history action even when selection and movement arrive in different ticks; `changes()` increments when the outer batch settles.
+- **flow-state:** add `historyLimit`, `selectionInHistory`, `canvasTransformInHistory`, `canvasTransformDebounce`, `dropToGroup`, `connectionFactory`, `nodeFactory`, and custom `stateClass` configuration.
+- **f-canvas:** `resetScaleAndCenter`, `fitToScreen`, and `centerGroupOrNode` now accept an optional `emitCanvasChange` argument. Pass `false` for initialization or another application-driven viewport change that must not enter external or managed history.
+- **f-draggable:** add the `fDropToGroup` toggle (gesture default remains `true`). Managed state applies the emitted reparenting only when its separate `dropToGroup` option is enabled; that state option defaults to `false`.
+
+### Fixes
+
+- **minimap:** remove stale SVG node rectangles when one node is removed and another is added before the same coalesced redraw, even when the total node count is unchanged.
+- **storage:** preserve O(n) batched registry teardown while compacting retained `getAll()` array references by the next microtask, before coalesced registry notifications run.
+- **f-connector:** preserve the existing `fConnectorSelfConnectable = true` default and cover it with a regression test.
+
+### Managed state v1 scope
+
+- Rotation, connection waypoint editing, and user resize are not captured automatically in v1. Their existing outputs remain available for application-managed updates.
+- Automatic connection cascade on node/group removal resolves connector ownership from the rendered connector registry. Before connectors render (including immediate post-`load()` mutations and SSR), remove known attached connection ids explicitly inside the same `state.batch(...)`.
+
 ## [19.0.0](https://github.com/Foblex/f-flow/compare/v18.6.1...v19.0.0) (2026-07-05)
 
 ### Highlights

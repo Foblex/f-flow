@@ -99,6 +99,21 @@ describe('MinimapDrawNodes', () => {
     expect(host.querySelectorAll('rect').length).toBe(1);
   });
 
+  it('removes a stale rect when node membership changes without changing the count', () => {
+    const removed = addNode('a', 10, 20);
+    addNode('b', 300, 400);
+    draw();
+
+    store.nodes.remove(removed);
+    store.emitNodeChanges();
+    addNode('c', 600, 700);
+    draw();
+
+    const rects = Array.from(host.querySelectorAll('rect'));
+    expect(rects.length).toBe(2);
+    expect(rects.map((rect) => rect.getAttribute('x'))).toEqual(['300', '600']);
+  });
+
   it('self-heals after an external clear', () => {
     addNode('a', 10, 20);
     draw();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import {
   FCanvasComponent,
   FFlowModule,
@@ -49,13 +49,11 @@ export class Example {
         { id: 'connection1', sourceId: 'node1-output-bottom', targetId: 'node2-input-left' },
       ],
     });
-
-    effect(() => {
-      this.state.changes();
-    });
   }
 
   protected rendered(): void {
-    this._canvas().resetScaleAndCenter(false);
+    // Initial centering is a programmatic view change, so it must not become
+    // an undoable canvas event.
+    this._canvas().resetScaleAndCenter(false, false);
   }
 }

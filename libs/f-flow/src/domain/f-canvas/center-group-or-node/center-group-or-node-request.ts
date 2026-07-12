@@ -3,6 +3,6 @@ export class CenterGroupOrNodeRequest {
   constructor(
     public id: string,
     public animated: boolean,
-  ) {
-  }
+    public emitCanvasChange: boolean = true,
+  ) {}
 }

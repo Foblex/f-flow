@@ -21,6 +21,23 @@ export interface IFFlowStateConfig {
   selectionInHistory?: boolean;
 
   /**
+   * Whether a canvas pan/zoom is its own undoable step. On by default —
+   * `undo`/`redo` also walk the viewport. Set `false` to keep the transform out
+   * of history; `state.transform()` still tracks it and it's still saved in
+   * `snapshot()` / restored by `load()` either way. Bind the canvas
+   * `[position]`/`[scale]` to `state.transform()` for the restore to show.
+   */
+  canvasTransformInHistory?: boolean;
+
+  /**
+   * Debounce (ms) for recording canvas pan/zoom into history. Default `0`. A
+   * zoom or pan fires a burst of `fCanvasChange` events; a non-zero value
+   * collapses the burst into a single undoable step once it settles. A drag pan
+   * still folds into one step regardless (captured at drag end).
+   */
+  canvasTransformDebounce?: number;
+
+  /**
    * Whether dropping into a group reparents the dropped item (or nests an
    * external item). Off by default — the state ignores group membership: a
    * drop-to-group gesture is a no-op and an external item dropped over a group
@@ -47,7 +64,7 @@ export interface IFFlowStateConfig {
   /**
    * Builds the node record when an external item is dropped onto the canvas.
    * Return `null` to reject the drop. Defaults to a generated id at the drop
-   * position with the external item's payload as `data`.
+   * position with the external item's payload spread onto the record.
    */
   nodeFactory?: (event: FCreateNodeEvent) => IFStateNode | null;
 }
@@ -55,6 +72,8 @@ export interface IFFlowStateConfig {
 export interface IFFlowStateResolvedConfig extends IFFlowStateConfig {
   historyLimit: number;
   selectionInHistory: boolean;
+  canvasTransformInHistory: boolean;
+  canvasTransformDebounce: number;
   dropToGroup: boolean;
 }
 
@@ -62,6 +81,8 @@ export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateRes
   return {
     historyLimit: 50,
     selectionInHistory: true,
+    canvasTransformInHistory: true,
+    canvasTransformDebounce: 350,
     dropToGroup: false,
     ...config,
   };

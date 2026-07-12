@@ -21,6 +21,7 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
    * immediately, so id lookups never see removed instances.
    */
   private readonly _pendingRemovals = new Set<TInstance>();
+  private _isCompactionScheduled = false;
 
   /** Used only for error messages. Example: "node", "connection", "input". */
   protected abstract readonly kind: string;
@@ -95,6 +96,7 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
     // we remove by id anyway.
     this._byId.delete(id);
     this._pendingRemovals.add(existing);
+    this._scheduleCompaction();
 
     return true;
   }
@@ -111,6 +113,7 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
 
     this._byId.delete(id);
     this._pendingRemovals.add(existing);
+    this._scheduleCompaction();
 
     return existing;
   }
@@ -124,7 +127,7 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
     this._pendingRemovals.clear();
   }
 
-  /** In place, so callers holding the `getAll()` array keep seeing live data. */
+  /** Compacts in place so `getAll()` keeps one array identity across reads. */
   private _compact(): void {
     if (!this._pendingRemovals.size) {
       return;
@@ -138,5 +141,17 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
     }
     this._items.length = writeIndex;
     this._pendingRemovals.clear();
+  }
+
+  /** Settles a removal batch before coalesced registry notifications run. */
+  private _scheduleCompaction(): void {
+    if (this._isCompactionScheduled) {
+      return;
+    }
+    this._isCompactionScheduled = true;
+    queueMicrotask(() => {
+      this._isCompactionScheduled = false;
+      this._compact();
+    });
   }
 }

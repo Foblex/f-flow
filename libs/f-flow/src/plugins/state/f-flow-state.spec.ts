@@ -264,7 +264,7 @@ describe('FFlowState', () => {
     expect(state.getNode('a')?.parentId).toBe('g1');
   });
 
-  it('ticks changes() once per history step and on load', () => {
+  it('ticks changes() for settled standalone history operations and load', () => {
     loadSample();
     const start = state.changes();
 
@@ -291,6 +291,7 @@ describe('FFlowState', () => {
 
   it('collapses a batch() of mutations into one undoable step', () => {
     loadSample();
+    const changesBefore = state.changes();
 
     state.batch(() => {
       state.addNodes({ id: 'c', position: { x: 1, y: 1 } });
@@ -299,6 +300,7 @@ describe('FFlowState', () => {
 
     expect(state.nodes().length).toBe(3);
     expect(state.getNode('a')?.position).toEqual({ x: 9, y: 9 });
+    expect(state.changes()).toBe(changesBefore + 1);
 
     // One undo reverts BOTH the add and the move.
     state.undo();
@@ -331,5 +333,77 @@ describe('FFlowState', () => {
     state.applyResize('g1', RectExtensions.initialize(0, 0, 300, 200));
 
     expect(state.changes()).toBe(changesBefore);
+  });
+
+  function setupWithConfig(config: Parameters<typeof mergeFlowStateConfig>[0]): FFlowState<INode> {
+    configureDiTest({
+      providers: [FFlowState, valueProvider(F_FLOW_STATE_CONFIG, mergeFlowStateConfig(config))],
+    });
+
+    return injectFromDi(FFlowState) as FFlowState<INode>;
+  }
+
+  it('round-trips the canvas transform through snapshot() and load()', () => {
+    loadSample();
+
+    // Position is unset until the canvas is panned; a fresh snapshot reflects that.
+    expect(state.snapshot().transform).toEqual({ position: undefined, scale: 1 });
+
+    state.load({
+      nodes: [],
+      connections: [],
+      transform: { position: { x: -120, y: 40 }, scale: 1.5 },
+    });
+    expect(state.transform()).toEqual({ position: { x: -120, y: 40 }, scale: 1.5 });
+    expect(state.snapshot().transform).toEqual({ position: { x: -120, y: 40 }, scale: 1.5 });
+  });
+
+  it('tracks the transform live, out of history, when canvasTransformInHistory is off', () => {
+    const s = setupWithConfig({ canvasTransformInHistory: false });
+    s.load({ nodes: [], connections: [] });
+
+    s.applyTransform({ position: { x: 10, y: 20 }, scale: 2 });
+
+    expect(s.transform()).toEqual({ position: { x: 10, y: 20 }, scale: 2 });
+    expect(s.canUndo()).toBeFalse();
+  });
+
+  it('makes the transform an undoable step when canvasTransformInHistory is on', () => {
+    const s = setupWithConfig({ canvasTransformInHistory: true });
+    s.load({ nodes: [], connections: [], transform: { position: { x: 0, y: 0 }, scale: 1 } });
+
+    s.applyTransform({ position: { x: 100, y: 50 }, scale: 1.25 });
+    expect(s.transform()).toEqual({ position: { x: 100, y: 50 }, scale: 1.25 });
+    expect(s.canUndo()).toBeTrue();
+
+    s.undo();
+    expect(s.transform()).toEqual({ position: { x: 0, y: 0 }, scale: 1 });
+  });
+
+  it('ignores an applyTransform that does not change the transform', () => {
+    const s = setupWithConfig({ canvasTransformInHistory: true });
+    s.load({ nodes: [], connections: [], transform: { position: { x: 5, y: 5 }, scale: 1 } });
+    const changesBefore = s.changes();
+
+    s.applyTransform({ position: { x: 5, y: 5 }, scale: 1 });
+
+    expect(s.canUndo()).toBeFalse();
+    expect(s.changes()).toBe(changesBefore);
+  });
+
+  it('calls _onUndoToStart only when undo empties the history', () => {
+    const s = setupWithConfig({ canvasTransformInHistory: true });
+    s.load({ nodes: [{ id: 'a', position: { x: 0, y: 0 } }], connections: [] });
+    let calls = 0;
+    s._onUndoToStart = () => calls++;
+
+    s.addNodes({ id: 'b', position: { x: 1, y: 1 } });
+    s.addNodes({ id: 'c', position: { x: 2, y: 2 } });
+
+    s.undo(); // back one step — history not empty
+    expect(calls).toBe(0);
+
+    s.undo(); // back to the start — history empty
+    expect(calls).toBe(1);
   });
 });

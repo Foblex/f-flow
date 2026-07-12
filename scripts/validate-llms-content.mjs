@@ -54,6 +54,9 @@ const REQUIRED_SYMBOLS = [
   'ngProjectAs',
   'withConnectionFlow',
   'withA11y',
+  'withFlowState',
+  'FFlowState',
+  'injectFlowState',
 ];
 
 const llms = readFileSync(LLMS_PATH, 'utf8');

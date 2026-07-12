@@ -8,6 +8,8 @@ import {
   valueProvider,
 } from '@foblex/flow';
 import { FConnectorBase } from '../../f-connectors';
+import { FCanvasBase, FCanvasChangeEvent } from '../../f-canvas';
+import { FFlowBase } from '../../f-flow/f-flow-base';
 import {
   FCreateConnectionEvent,
   FCreateNodeEvent,
@@ -64,11 +66,24 @@ describe('FFlowStateController', () => {
   let state: FFlowState;
   let controller: FFlowStateController;
   let draggable: IFakeDraggable;
+  let canvas: {
+    fCanvasChange: EventEmitter<FCanvasChangeEvent>;
+    transform: {
+      position: { x: number; y: number };
+      scaledPosition: { x: number; y: number };
+      scale: number;
+    };
+  };
 
   function setup(config?: IFFlowStateConfig): void {
     store = new FComponentsStore();
     draggable = createFakeDraggable();
     store.fDraggable = draggable as unknown as FDraggableBase;
+    canvas = {
+      fCanvasChange: new EventEmitter<FCanvasChangeEvent>(),
+      transform: { position: { x: 0, y: 0 }, scaledPosition: { x: 0, y: 0 }, scale: 1 },
+    };
+    store.fCanvas = canvas as unknown as FCanvasBase;
 
     configureDiTest({
       providers: [
@@ -303,6 +318,7 @@ describe('FFlowStateController', () => {
 
   it('folds a selection at drag-start with the move at drag-end into one step', async () => {
     setup({ selectionInHistory: true });
+    const changesBefore = state.changes();
 
     // The selection is emitted at drag-start (before fDragStarted); the move
     // lands at drag-end — different ticks, one drag.
@@ -315,6 +331,7 @@ describe('FFlowStateController', () => {
 
     expect(state.getNode('a')?.position).toEqual({ x: 30, y: 30 });
     expect(state.selection().nodeIds).toEqual(['a']);
+    expect(state.changes()).toBe(changesBefore + 1);
 
     // ONE undo reverts BOTH the selection and the move.
     state.undo();
@@ -361,6 +378,108 @@ describe('FFlowStateController', () => {
     expect(created.position).toEqual({ x: 5, y: 6 });
     // The item's fData is spread onto the node as its own fields.
     expect((created as { kind?: string }).kind).toBe('task');
+  });
+
+  it('captures a canvas pan/zoom into the transform as an undoable step', async () => {
+    setup();
+
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: -80, y: 40 }, 1.5));
+    await Promise.resolve();
+
+    expect(state.transform()).toEqual({ position: { x: -80, y: 40 }, scale: 1.5 });
+    expect(state.canUndo()).toBeTrue();
+
+    state.undo();
+    expect(state.transform()).toEqual({ position: undefined, scale: 1 });
+  });
+
+  it('tracks the transform live when canvasTransformInHistory is off', async () => {
+    setup({ canvasTransformInHistory: false });
+
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 10, y: 10 }, 2));
+    await Promise.resolve();
+
+    expect(state.transform()).toEqual({ position: { x: 10, y: 10 }, scale: 2 });
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('folds a drag-time canvas transform change into the drag move step', async () => {
+    setup();
+
+    // Simulates a node drag during which the canvas auto-panned/zoomed: the
+    // canvas transform is already settled by drag end, but its (debounced)
+    // fCanvasChange fires only AFTER fDragEnded. The controller reads the
+    // transform at drag end so it still folds into the move's single step.
+    await drag(
+      draggable,
+      () => {},
+      () => {
+        draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 30, y: 30 } }]));
+        canvas.transform.position = { x: -50, y: -20 };
+        canvas.transform.scale = 1.2;
+      },
+    );
+
+    expect(state.getNode('a')?.position).toEqual({ x: 30, y: 30 });
+    expect(state.transform()).toEqual({ position: { x: -50, y: -20 }, scale: 1.2 });
+
+    // ONE undo reverts BOTH the move and the transform.
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(state.transform()).toEqual({ position: undefined, scale: 1 });
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('resets the flow when undo returns to the start of history', async () => {
+    setup({ canvasTransformInHistory: true });
+    const resetSpy = jasmine.createSpy('reset');
+    store.fFlow = { reset: resetSpy } as unknown as FFlowBase;
+
+    // Record a user pan, then undo back to the start.
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 40, y: 40 }, 1.5));
+    await Promise.resolve();
+    expect(state.canUndo()).toBeTrue();
+
+    state.undo();
+
+    expect(state.canUndo()).toBeFalse();
+    expect(resetSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('collapses a burst of canvas changes into one step when debounced', async () => {
+    setup({ canvasTransformDebounce: 30 });
+
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 10, y: 0 }, 1.1));
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 20, y: 0 }, 1.2));
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 30, y: 0 }, 1.3));
+
+    // Still inside the debounce window: nothing recorded yet.
+    expect(state.canUndo()).toBeFalse();
+
+    await new Promise((resolve) => setTimeout(resolve, 60));
+
+    // One step, carrying the latest value of the burst.
+    expect(state.transform()).toEqual({ position: { x: 30, y: 0 }, scale: 1.3 });
+    expect(state.canUndo()).toBeTrue();
+    state.undo();
+    expect(state.canUndo()).toBeFalse();
+  });
+
+  it('leaves the transform unset when a drag does not move the canvas', async () => {
+    setup();
+
+    // A plain node drag: the canvas transform never changes during the drag.
+    await drag(
+      draggable,
+      () => {},
+      () => draggable.fMoveNodes.emit(new FMoveNodesEvent([{ id: 'a', position: { x: 5, y: 5 } }])),
+    );
+
+    // The move is the only step; position stays unset (undefined), not the origin.
+    expect(state.transform()).toEqual({ position: undefined, scale: 1 });
+    state.undo();
+    expect(state.getNode('a')?.position).toEqual({ x: 0, y: 0 });
+    expect(state.canUndo()).toBeFalse();
   });
 
   it('wires late-registered draggable directives', () => {

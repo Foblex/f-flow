@@ -48,6 +48,18 @@ describe('FIdRegistryBase', () => {
     expect(reference.map((x) => x.fId())).toEqual(['b', 'c']);
   });
 
+  it('updates a retained getAll() reference by the next microtask', async () => {
+    const items = ['a', 'b'].map(item);
+    registry.addMany(items);
+    const reference = registry.getAll();
+
+    registry.remove(items[0]);
+    await Promise.resolve();
+
+    expect(reference.map((x) => x.fId())).toEqual(['b']);
+    expect(registry.getAll()).toBe(reference);
+  });
+
   it('re-adds the same instance to the end without duplication', () => {
     const items = ['a', 'b'].map(item);
     registry.addMany(items);
