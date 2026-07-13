@@ -42,6 +42,8 @@ In practice this gives you a clean separation:
 - Foblex Flow → UX + interaction signals
 - Your app → domain logic + state + persistence
 
+This is the default stateless contract. With the optional [Managed Flow State](./examples/state) plugin, supported events also update an explicit typed graph store automatically; the events still fire, and domain logic plus persistence remain in the application.
+
 ## Configuration (Inputs/Outputs/Methods)
 
 ### Core outputs to use

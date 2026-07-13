@@ -75,6 +75,8 @@ To attach a node to a group, set the node’s `fNodeParentId` to the group’s `
 - Children are associated to the group via `fNodeParentId` / `fGroupParentId`, which enables container behaviors (bounds restrictions, auto-size rules, auto-expand rules).
 - **Your app typically persists changes on “final” outputs** (for example `fGroupPositionChange` after a drag ends), keeping your data model as the source of truth.
 
+With the optional [Managed Flow State](./examples/state) plugin, completed move gestures update group records automatically. User resize and rotation are not captured by managed state v1, so applications using those interactions still persist their final outputs themselves.
+
 ## API
 
 ### Inputs

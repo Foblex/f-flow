@@ -803,42 +803,10 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       title: 'Managed Flow State',
       description:
         'Built-in graph state for Angular flows: load data, gestures apply themselves, undo/redo and snapshot() included. Every behavior overridable.',
-      image: './previews/examples/undo-redo-v2.light.png',
-      imageDark: './previews/examples/undo-redo-v2.dark.png',
-      imageWidth: 799,
-      imageHeight: 600,
-      imageType: 'image/png',
-    },
-  },
-  {
-    slug: 'undo-redo',
-    text: 'Undo/Redo',
-    group: 'Editor State',
-    date: new Date('2025-07-19 17:23:57'),
-    seo: {
-      title: 'Undo/Redo',
-      description:
-        'Undo/Redo basics for Angular diagrams. Snapshot patterns, node moves and connection restore with example.',
-      image: './previews/examples/undo-redo.light.png',
-      imageDark: './previews/examples/undo-redo.dark.png',
-      imageWidth: 781,
-      imageHeight: 600,
-      imageType: 'image/png',
-    },
-  },
-  {
-    slug: 'undo-redo-v2',
-    text: 'Undo/Redo V2',
-    group: 'Editor State',
-    date: new Date('2025-08-23 17:23:57'),
-    seo: {
-      title: 'Undo/Redo V2',
-      description:
-        'Undo/Redo with @foblex/mutator: state snapshots, revert node moves, restore connections. Patterns and demo.',
-      image: './previews/examples/undo-redo-v2.light.png',
-      imageDark: './previews/examples/undo-redo-v2.dark.png',
-      imageWidth: 799,
-      imageHeight: 600,
+      image: './previews/examples/state.light.png',
+      imageDark: './previews/examples/state.dark.png',
+      imageWidth: 2116,
+      imageHeight: 1200,
       imageType: 'image/png',
     },
   },
@@ -1220,11 +1188,6 @@ export const EXAMPLES_COMPONENTS = [
     () => import('@foblex/examples/extensions/grid-system/example'),
   ),
   defineLazyComponent('copy-paste', () => import('@foblex/examples/advanced/copy-paste/example')),
-  defineLazyComponent('undo-redo', () => import('@foblex/examples/advanced/undo-redo/example')),
-  defineLazyComponent(
-    'undo-redo-v2',
-    () => import('@foblex/examples/advanced/undo-redo-v2/example'),
-  ),
   defineLazyComponent('flow-state', () => import('@foblex/examples/advanced/flow-state/example')),
   defineLazyComponent(
     'add-node-from-palette',

@@ -29,6 +29,7 @@ Drag nodes or groups into containers, build nested hierarchies, and manage dynam
 ## Practical tips
 
 - Use `fDropToGroup` when your app needs to validate or persist hierarchy changes.
+- With [Managed Flow State](./examples/state), enable `withFlowState({ dropToGroup: true })` to apply the emitted hierarchy change to the plugin store automatically; it remains off by default.
 - Combine external palettes with `fCreateNode` if users should spawn nodes directly inside any container.
 - Enable auto-expand when manual group resizing would slow down editing.
 - Nesting can go deep, but groups inside nodes are still not supported.

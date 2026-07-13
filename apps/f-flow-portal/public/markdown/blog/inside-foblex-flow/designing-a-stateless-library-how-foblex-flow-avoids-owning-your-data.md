@@ -2,7 +2,7 @@
 origin: "https://medium.com/@shuzarevich/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data-e0a01bfb4419"
 originLabel: "Originally published on Medium"
 publishedAt: "2026-04-24"
-updatedAt: "2026-04-24"
+updatedAt: "2026-07-13"
 ---
 
 # Designing a Stateless Library: How Foblex Flow Avoids Owning Your Data
@@ -17,7 +17,7 @@ Your real domain model is not `{ id, x, y }`. It is a workflow step, a call rout
 
 Persistence is not "serialize the library's internal state to JSON". It is writing to your backend, your database, your existing document format.
 
-Undo/redo is not the library's job. It is a feature of your editor, tied to your command history.
+In the default stateless setup, undo/redo is not the library's job. It is a feature of your editor, tied to your command history.
 
 Optimistic updates, collaboration, offline sync — all of that lives in your app, not in a graph library.
 
@@ -25,7 +25,7 @@ When a library owns the data, every one of those concerns has to go through an a
 
 ## What Foblex Flow does instead
 
-**Foblex Flow is stateless.**
+**Foblex Flow's core is stateless by default.**
 
 The library does not hold the definition of your graph. It renders what you pass in as Angular template children, listens for user interaction on those children, and emits events when something happens. Your application decides whether to apply the change.
 
@@ -33,9 +33,21 @@ That is the whole model.
 
 - The library renders the UI layer.
 - The application owns the business logic.
-- The two communicate through events and inputs, never through a hidden internal store of your data.
+- The two communicate through events and inputs, without a hidden internal store of your data.
 
 This is not just a design preference. It is the decision that shaped every API that came after.
+
+## Optional managed state, without changing the core
+
+The default contract above remains unchanged. If an application wants the library to handle common graph bookkeeping, it can explicitly install the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin:
+
+```ts
+providers: [provideFFlow(withFlowState())];
+```
+
+`withFlowState()` provides typed node, group, connection, selection and viewport signals, plus `load()`, `snapshot()` and batched undo/redo. Supported finished gestures update that opt-in store automatically. The same public events still fire, records keep the application's own fields, and the application can override or replace the default mutation behavior.
+
+So "stateless" describes the core and the default integration mode. Managed state is an explicit provider installed by applications that prefer convenience over wiring every supported gesture themselves; it is not a hidden store imposed on every flow.
 
 ## 🎯 The key idea — what the library stores vs what the app stores
 
@@ -43,7 +55,7 @@ Most graph libraries keep a copy of your nodes and edges inside themselves. The 
 
 Foblex Flow takes a different approach.
 
-**What the library stores:**
+**What the core stores in the default mode:**
 
 - References to the `<f-node>` and `<f-connection>` instances currently in the template
 - Transform state of the canvas — zoom, pan, viewport size
@@ -51,21 +63,23 @@ Foblex Flow takes a different approach.
 - Selection state — which node and connection IDs are currently highlighted
 - Internal caches needed to draw connections and run hit-testing
 
-**What the app stores:**
+**What the app stores in the stateless mode:**
 
 - The actual list of nodes and their properties
 - The actual list of connections
 - Anything domain-specific — labels, step types, validation rules, metadata
 - Positions, if you want them persisted (the library tracks them during a drag, but the canonical value lives in your state)
-- History, for undo/redo
+- History, for undo/redo (unless the optional managed-state plugin owns this generic graph history)
 
 > 📌 In short: the library handles the **UI layer**, while your application owns the business logic.
 
+The managed-state plugin can own graph records and interaction history, but it never owns what those records mean, how they are validated, or where they are persisted.
+
 ## ⚡ The event-driven model
 
-The golden rule of Foblex Flow: the library **never mutates your data silently**.
+The golden rule of the stateless core: the library **never mutates your application-owned data silently**.
 
-Every user interaction that would change the graph is surfaced as an event. The library does not write back into your signals or services. It waits.
+Every user interaction that would change the graph is surfaced as an event. In this mode, the library does not write back into your signals or services. It waits.
 
 Concrete events on the **fDraggable** directive:
 
@@ -88,13 +102,15 @@ Rendering lifecycle is also surfaced as events on the **<f-flow>** component:
 
 That one sentence is the whole interaction contract.
 
+Installing `withFlowState()` is an explicit variation of that contract: supported gestures are applied to the provided store automatically, while their public events remain observable.
+
 ## 🧩 How this plays out in practice
 
 This is where the shape of the API diverges from what people expect the first time they try the library.
 
 People usually reach for something like `setState(…)` or `loadFromJSON(…)`. A method on the component that takes the full graph and renders it. That is the reducer-for-graphs mental model.
 
-Foblex Flow does not work that way.
+The core component does not work that way.
 
 ❌ **How people expect the API to work:**
 
@@ -146,21 +162,23 @@ protected onMoveNodes(event: FMoveNodesEvent): void {
 </f-flow>
 ```
 
-There is no `setState`. There is no hidden graph store. The template **_is_** the graph — driven by your signals, rendered by Angular, with the library wiring up interactivity on top.
+In the default mode there is no `setState` and no hidden graph store. The template **_is_** the graph — driven by your signals, rendered by Angular, with the library wiring up interactivity on top.
 
-Initialization works the same way. You do not load a flow into the library. You hydrate your own signals from your backend or file, Angular renders the template, the library picks up the `<f-node>` and `<f-connection>` children and makes them interactive. When rendering settles, `fFullRendered` fires — that is the place to call `getState()` for measured bounds and run "fit to content".
+Initialization works the same way in stateless mode. You hydrate your own signals from your backend or file, Angular renders the template, the library picks up the `<f-node>` and `<f-connection>` children and makes them interactive. When rendering settles, `fFullRendered` fires — that is the place to call `getState()` for measured bounds and run "fit to content".
 
-It is more accurate to say Foblex Flow is an **_interaction layer_** than a **_graph library_**. The graph is yours.
+With Managed Flow State, initialization becomes `state.load(...)`, the template renders `state.nodes()`, `state.groups()` and `state.connections()`, and `state.snapshot()` returns persistable graph records. The application still decides when to load and save them.
+
+It is more accurate to say the Foblex Flow core is an **_interaction layer_** than a **_graph library_**. The graph is yours unless you explicitly place its generic records in Managed Flow State.
 
 ## 🛠 Why this decision was made
 
 Every consequence of "stateless core" looks, on the surface, like a missing feature. None of them are.
 
-**Persistence is your job.** The library does not ship a `toJSON()` that serializes your graph, because it does not have your graph. You already know how to persist your own data model. Any format the library invented would be a second one to maintain, and it would never fit your domain as well as the shape you already use.
+**Persistence is your job.** The stateless core does not ship a `toJSON()` that serializes your graph, because it does not have your graph. Managed Flow State offers `snapshot()` for its opt-in records, but your application still decides the domain shape, storage format and persistence lifecycle.
 
-**Undo/redo is your job.** The library does not ship a history stack. Your app's command history is already the thing that knows what a meaningful "action" is — adding a node, editing a label, changing a validation rule. A library-level undo would either duplicate that or fight with it. The library **_supports_** undo/redo by keeping the rendered state a pure function of your data: roll back the data, the view rolls back.
+**Undo/redo belongs to the state owner.** In stateless mode, that is your application's command history: it knows that adding a node, editing a label or changing a validation rule are meaningful actions. Managed Flow State provides a generic history stack for supported graph gestures and mutations when that is enough. Domain actions outside the plugin remain the application's responsibility.
 
-**Optimistic updates are your job.** Because the library never mutates silently, optimistic UI is straightforward — write to your signal, the view updates, reconcile later if the server disagrees. There is no internal library state to keep in sync with the server truth.
+**Optimistic updates are your job.** In stateless mode, write to your signal, let the view update, and reconcile later if the server disagrees. With Managed Flow State, reconcile against the explicit plugin store instead; it is still application-scoped and inspectable rather than hidden runtime data.
 
 **Collaboration is your job.** Two users dragging the same node is a merge problem in your domain, not a rendering problem. The library hands you the gesture; your **CRDT** or your **OT** layer decides what it means, then writes to your state, and the view follows.
 
@@ -170,13 +188,13 @@ That sounds restrictive in a feature matrix, but it matters in real editors. The
 
 A node editor library can do one of two things. It can be a platform that owns the graph and hands you hooks into it. Or it can be an interaction layer that renders what you already have.
 
-Foblex Flow chose the second one on purpose. The library is not a small application you embed. It is a set of Angular primitives — `<f-flow>`, `<f-canvas>`, `fNode`, `<f-connection>` — that turn your existing data into something a user can drag, connect, and edit.
+Foblex Flow's core chose the second one on purpose. The library is not a small application you embed. It is a set of Angular primitives — `<f-flow>`, `<f-canvas>`, `fNode`, `<f-connection>` — that turn your existing data into something a user can drag, connect, and edit. Managed Flow State is an optional companion for applications that want those primitives plus a ready-made graph store.
 
-Every event the library emits is an offer. **_This happened. You decide what to do with the change._** Accept it by writing to your state and the view updates. Ignore it and nothing changes. Veto it by not writing, and the user's gesture was advisory.
+In stateless mode, every event the library emits is an offer. **_This happened. You decide what to do with the change._** Accept it by writing to your state and the view updates. Ignore it and nothing changes. Veto it by not writing, and the user's gesture was advisory. With Managed Flow State, supported gestures use the plugin's overridable handlers instead of waiting for application writeback.
 
-For me, this is the point. An editor is a conversation between a user's intent and an application's rules. A library that silently applies every gesture cuts the application out of that conversation. A library that reports gestures and waits keeps the application in charge.
+For me, this is the point. An editor is a conversation between a user's intent and an application's rules. The stateless core reports gestures and waits. The managed-state plugin applies only the supported behavior an application explicitly opted into and exposes override points where its rules differ.
 
-Small, but it shapes everything downstream. The stateless choice is why persistence, undo/redo, collaboration, and optimistic updates all live where they already lived — in your app — instead of fighting a hidden store inside the library.
+Small, but it shapes everything downstream. The stateless default is why persistence, collaboration and domain-specific history can stay in your app instead of fighting a hidden store. Managed Flow State is there when you deliberately want the library to own common graph records and interaction history without changing that default for everyone else.
 
 ## 🚀 What's next
 
@@ -197,3 +215,4 @@ It helps the project a lot.
 - `<f-flow>` component: [flow.foblex.com/docs/f-flow-component](https://flow.foblex.com/docs/f-flow-component)
 - `fNode` directive: [flow.foblex.com/docs/f-node-directive](https://flow.foblex.com/docs/f-node-directive)
 - `<f-connection>` component: [flow.foblex.com/docs/f-connection-component](https://flow.foblex.com/docs/f-connection-component)
+- Managed Flow State: [flow.foblex.com/examples/state](https://flow.foblex.com/examples/state)

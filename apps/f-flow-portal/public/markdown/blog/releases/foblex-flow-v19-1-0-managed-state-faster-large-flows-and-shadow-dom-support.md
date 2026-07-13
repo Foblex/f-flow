@@ -182,7 +182,7 @@ The result is that undo restores the graph as one coherent visual state: group, 
 
 The release also adds a maintained zoneless Angular starter under `starters/minimal-flow` for StackBlitz, expands the v19 README and package metadata, and adds comparison and use-case pages for teams evaluating Angular diagram libraries.
 
-The dedicated [Managed Flow State guide](https://flow.foblex.com/examples/state) contains the complete API, configuration table, v1 limitations, and a working example. The existing manual undo/redo example remains available for applications that prefer to own the entire history layer.
+The dedicated [Managed Flow State guide](https://flow.foblex.com/examples/state) contains the complete API, configuration table, v1 limitations, and a working example. Applications that prefer to own the entire history layer can continue using the existing event-driven APIs.
 
 ## Upgrade Notes
 

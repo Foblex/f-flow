@@ -47,6 +47,8 @@ Foblex Flow focuses on **rendering and interaction**. Your application owns the 
 - persist changes to your backend in a predictable way,
 - apply domain rules (validation, limits, permissions) where they belong.
 
+That is the default stateless integration. If you want the library to keep typed graph records and apply supported gestures automatically, install the optional [Managed Flow State](./examples/state) plugin with `provideFFlow(withFlowState())`. The core remains stateless, the plugin is opt-in, and the same public events remain available.
+
 ## Quick FAQ
 
 - **Is Foblex Flow hard to use?** No. The minimal editor path is small and stays inside normal Angular templates.

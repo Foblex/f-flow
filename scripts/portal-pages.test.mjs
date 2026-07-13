@@ -66,6 +66,12 @@ describe('Portal prerendered pages', () => {
     await assertRedirect('/blog', '/blog/overview');
   });
 
+  test('retired undo/redo examples redirect to managed state', async () => {
+    await assertRedirect('/examples/undo-redo', '/examples/state');
+    await assertRedirect('/examples/undo-redo-v2', '/examples/state');
+    await assertRedirect('/examples/undo-redo?source=legacy', '/examples/state?source=legacy');
+  });
+
   test('robots and sitemap endpoints are served correctly', async () => {
     const robots = await fetchText(`${baseUrl}/robots.txt`);
     assert.match(robots.body, /Sitemap:\s+https:\/\/flow\.foblex\.com\/sitemap\.xml/u);

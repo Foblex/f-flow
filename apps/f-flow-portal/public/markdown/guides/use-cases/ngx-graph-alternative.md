@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-13"
 ---
 
 # ngx-graph Alternative
@@ -18,7 +18,7 @@ If all you need is a static, auto-laid-out visualization and you never touch it 
 
 The models are close enough that migration is mechanical for most apps:
 
-- ngx-graph `nodes` / `links` arrays stay your source of truth — Foblex Flow never owns your data. Render them with `@for` instead of passing them to a component input.
+- In the default stateless mode, ngx-graph `nodes` / `links` arrays stay your source of truth — Foblex Flow never owns your data. Render them with `@for` instead of passing them to a component input.
 - A `node` template (`ng-template #nodeTemplate`) becomes a plain element with `fNode` and `[fNodePosition]` — with your full Angular component inside, not an SVG fragment. HTML instead of SVG is the biggest quality-of-life change: real inputs, buttons, pipes and directives inside nodes.
 - A `link` becomes `<f-connection fSourceId fTargetId>` with built-in path types (straight, segment, bezier), markers and labels.
 - Automatic layout (`dagre` in ngx-graph) maps to `@foblex/f-dagre-layout` or `@foblex/f-elkjs-layout` — run it on init or on demand, then keep user-made positions.
@@ -32,7 +32,8 @@ What has no ngx-graph equivalent — and therefore needs no migration — is eve
 - HTML nodes with real Angular content instead of SVG templates.
 - Interaction out of the box instead of view-only rendering.
 - Scaling tools (virtualization, caching, background workers) when graphs grow.
-- The library never mutates your data — events in, your decisions out, same philosophy ngx-graph users already have.
+- The stateless core never mutates your application-owned data — events in, your decisions out, same philosophy ngx-graph users already have.
+- If you do want a ready-made store after migrating, the optional [Managed Flow State](./examples/state) plugin provides typed records, supported gesture writeback, snapshots and undo/redo without becoming mandatory.
 
 ## Try it
 

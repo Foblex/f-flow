@@ -28,6 +28,8 @@ For the **drag preview** while the user is creating a new link, use
 - During interactions the library updates visuals smoothly internally.
 - **Your app typically persists changes on final events** (for example after a reassign drag ends).
 
+With the optional [Managed Flow State](./examples/state) plugin, supported connection creation and endpoint reassignment gestures update the plugin records automatically. Connection waypoint editing remains application-managed in v1.
+
 ## API
 
 ### Inputs

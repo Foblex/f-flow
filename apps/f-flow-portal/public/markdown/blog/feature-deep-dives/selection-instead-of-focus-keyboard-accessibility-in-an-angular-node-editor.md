@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-13"
 ---
 
 # Selection Instead of Focus: Keyboard Accessibility in an Angular Node Editor
@@ -61,7 +61,9 @@ Creating a connection is where the v19 architecture paid off. The click-to-conne
 
 Every connection rule — disabled connectors, categories, `fCanBeConnectedTo`, multiplicity — applies unchanged, because it is the same engine the pointer uses.
 
-The golden rule of Foblex Flow did not move an inch: the library **never mutates your data**. `Delete` emits `fDeleteSelected` with the selected ids. This happened. You decide what to do.
+The golden rule of Foblex Flow's default stateless mode did not move an inch: the library **never mutates your application-owned data**. `Delete` emits `fDeleteSelected` with the selected ids. This happened. You decide what to do.
+
+With the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin, that same deletion event is also applied to the explicit plugin store automatically. The event still fires for validation, analytics or custom behavior.
 
 ## 🛠 What Runs by Default, and What Doesn't
 

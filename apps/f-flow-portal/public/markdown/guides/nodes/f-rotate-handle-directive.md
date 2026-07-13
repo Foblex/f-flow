@@ -44,6 +44,8 @@ Place any element with `fRotateHandle` inside your node template. Often it’s a
 
 This matches the overall model of Foblex Flow: the library handles interactive rendering, and your app owns the persisted diagram state.
 
+The optional [Managed Flow State](./examples/state) plugin does not capture rotation in v1, so this final-output persistence step still applies when managed state is enabled.
+
 ## API
 
 ### Inputs

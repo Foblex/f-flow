@@ -17,26 +17,26 @@ interface IChangelogItem {
  */
 const CHANGELOG: IChangelogItem[] = [
   {
+    version: 'v19.1.0',
+    date: 'July 2026',
+    description:
+      'Managed Flow State with batched undo and redo, faster rendering for large flows, and interaction support inside Angular Elements and open Shadow DOM.',
+    routerLink: '/blog/foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
+  },
+  {
+    version: 'v19.0.0',
+    date: 'July 2026',
+    description:
+      'Control schemes, click-to-connect, keyboard accessibility, a unified connector model, and an AI-ready integration toolchain.',
+    routerLink:
+      '/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+  },
+  {
     version: 'v18.6.0',
     date: 'April 2026',
     description:
       'Smart Auto-Layout on Resize: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, and collision rules.',
     routerLink: '/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
-  },
-  {
-    version: 'v18.5.0',
-    date: 'April 2026',
-    description:
-      'Dagre and ELK layout packages, explicit render lifecycle outputs, standalone reference apps, and a stronger portal/docs toolchain.',
-    routerLink:
-      '/blog/foblex-flow-v18-5-0-layout-engines-explicit-render-lifecycle-and-standalone-reference-apps',
-  },
-  {
-    version: 'v18.4.0',
-    date: 'April 2026',
-    description:
-      'Opt-in f-auto-pan plugin, default theme entrypoint, smoother trackpad pinch-to-zoom, and refreshed example portal controls.',
-    routerLink: '/blog/foblex-flow-v18-4-0-auto-pan-default-theme-and-smoother-trackpad-zoom',
   },
 ];
 

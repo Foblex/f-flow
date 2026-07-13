@@ -46,6 +46,16 @@ export const routes: Routes = [
     redirectTo: 'examples/overview',
   },
   {
+    path: 'examples/undo-redo',
+    pathMatch: 'full',
+    redirectTo: 'examples/state',
+  },
+  {
+    path: 'examples/undo-redo-v2',
+    pathMatch: 'full',
+    redirectTo: 'examples/state',
+  },
+  {
     path: 'examples',
     loadChildren: () =>
       import('@foblex/m-render').then((m) =>

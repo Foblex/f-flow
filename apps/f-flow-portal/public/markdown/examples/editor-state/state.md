@@ -224,10 +224,9 @@ providers: [provideFFlow(withFlowState({ stateClass: MyFlowState }))];
 ## When to use it
 
 - Use the state plugin when you want the library to do the data bookkeeping: forms-over-flows, quick editors, AI-generated integrations that expect a `nodes[]`/`edges[]`-style API.
-- Keep the classic event-driven approach when the graph lives inside a larger application store you already maintain — every event keeps working exactly as before; the plugin is optional and additive. See [Undo/Redo V2](./examples/undo-redo-v2) for the manual pattern.
+- Keep the classic event-driven approach when the graph lives inside a larger application store you already maintain — every event keeps working exactly as before; the plugin is optional and additive.
 
 ## Related examples
 
-- [Undo/Redo](./examples/undo-redo)
-- [Undo/Redo V2](./examples/undo-redo-v2)
+- [Cut/Copy/Paste](./examples/copy-paste)
 - [Add Node From Palette](./examples/add-node-from-palette)

@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-13"
 ---
 
 # Muscle Memory as Configuration: The Design Behind Foblex Flow Control Schemes
@@ -62,7 +62,7 @@ A scheme maps gestures to the editor's built-in actions. It deliberately does **
 
 - invent new actions — that is what connection flows and the interaction APIs are for;
 - own the keyboard — keyboard operation is the accessibility layer's job (`withA11y()`), with its own remappable bindings;
-- touch your data — gestures end in the same events (`fMoveNodes`, `fCreateConnection`, `fSelectionChange`) your app already handles. The library maps inputs; your application still owns what they mean.
+- touch your application-owned data in the default stateless mode — gestures end in the same events (`fMoveNodes`, `fCreateConnection`, `fSelectionChange`) your app already handles. The library maps inputs; your application still owns what they mean. If [Managed Flow State](https://flow.foblex.com/examples/state) is enabled, its separate controller may apply supported finished gestures to the opt-in store.
 
 Helpers for custom schemes ship as plain functions — `primaryButtonEventTrigger`, `middleButtonEventTrigger`, `isOnFlowBackground` — because a custom scheme should read like a policy, not like event-handling code.
 

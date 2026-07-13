@@ -85,7 +85,7 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 - **[v17.7.0](https://github.com/Foblex/f-flow/releases/tag/v17.7.0)** - **2025-08-24**  
   Added smarter grouping, `fAutoSizeToFitChildren`, `fAutoExpandOnChildHit`, plus copy/paste and undo/redo reference patterns.  
-  Examples: [Grouping](https://flow.foblex.com/examples/grouping), [Drag to Group](https://flow.foblex.com/examples/drag-to-group), [Copy/Paste](https://flow.foblex.com/examples/copy-paste), [Undo/Redo V2](https://flow.foblex.com/examples/undo-redo-v2)
+  Examples: [Grouping](https://flow.foblex.com/examples/grouping), [Drag to Group](https://flow.foblex.com/examples/drag-to-group), [Copy/Paste](https://flow.foblex.com/examples/copy-paste)
 
 - **[v17.6.0](https://github.com/Foblex/f-flow/releases/tag/v17.6.0)** - **2025-07-23**  
   Reworked connection reassignment, refreshed the minimap, added debounced `fCanvasChange`, and introduced `fDragBlocker`.

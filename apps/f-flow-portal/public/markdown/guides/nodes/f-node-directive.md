@@ -44,6 +44,8 @@ Place connector directives inside the node and connect them using [`f-connection
 - During interactions (drag/resize/rotate), the library updates the node internally for smooth UX.
 - **Your app typically persists changes on “final” outputs** (for example `fNodePositionChange` after a drag ends), keeping your data model as the source of truth.
 
+With the optional [Managed Flow State](./examples/state) plugin, completed move gestures update the node records automatically. User resize and rotation are not captured by managed state v1, so applications using those interactions still persist their final outputs themselves.
+
 ## API
 
 ### Inputs

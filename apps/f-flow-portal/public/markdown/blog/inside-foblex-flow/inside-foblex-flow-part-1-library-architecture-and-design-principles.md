@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-1-library-architecture-and-design-principles-3c0a6ed81087"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-08-19"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-13"
 ---
 
 # Inside Foblex Flow — Part 1: Library Architecture and Design Principles
@@ -57,9 +57,11 @@ Most node-based libraries give you everything “out of the box”: a data store
 
 > 📌 In short: the library handles the **UI layer**, while your application owns the business logic.
 
+That remains the default stateless architecture. Since v19.1, applications can explicitly install the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin when they want typed graph records, automatic updates for supported gestures, snapshots and undo/redo. The plugin can own generic graph bookkeeping; business meaning and persistence remain application concerns.
+
 ### ⚡ Event-Driven Model
 
-The golden rule of [Foblex Flow](https://flow.foblex.com/): the library **never mutates your data silently**.
+The golden rule of the stateless [Foblex Flow](https://flow.foblex.com/) core: the library **never mutates your application-owned data silently**.
 
 Every user action is emitted as an Angular event:
 
@@ -185,6 +187,8 @@ flowchart TD
 
 The diagram illustrates the boundary: [Foblex Flow](https://flow.foblex.com/) only handles UI state, while your app owns the graph model and business logic.
 
+Managed Flow State is an explicit alternative for the graph-model side of that diagram. It does not move domain rules, validation or persistence into the core, and applications that do not provide it keep the event-driven model unchanged.
+
 ### 🧠 Philosophy: UI Handles Interactivity, Not Data
 
 The core philosophy: [Foblex Flow](https://flow.foblex.com/) is not a “platform inside a platform.”
@@ -200,9 +204,11 @@ This separation makes the library **universal**. You can build anything — 
 
 [Foblex Flow](https://flow.foblex.com/) is not a black box — it’s a **transparent tool** for building node-based UIs in Angular.
 
-- It manages interactivity, not your data.
+- By default, it manages interactivity, not your data.
 - Gives you full control over business logic.
 - Fits projects of any scale, from simple diagrams to complex low-code platforms.
+
+When manual event wiring is unnecessary, `provideFFlow(withFlowState())` adds the optional managed graph store without making it a requirement for every editor.
 
 In the next part, we’ll dive into the **drag-and-drop engine**:
 

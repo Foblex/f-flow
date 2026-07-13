@@ -5,7 +5,7 @@
 ## Key facts
 
 - Package: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- Current version: v19.0.0 (see the npm page for the live number)
+- Current version: v19.1.0 (see the npm page for the live number)
 - Weekly installs: ~16K (verify on npm for the latest number)
 - GitHub: https://github.com/Foblex/f-flow
 - License: MIT
