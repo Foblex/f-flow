@@ -9,6 +9,7 @@ export enum EFFlowFeatureKind {
   CONTROL_SCHEME = 'control-scheme',
   CONNECTION_FLOW = 'connection-flow',
   A11Y = 'a11y',
+  STATE = 'state',
 }
 
 /**

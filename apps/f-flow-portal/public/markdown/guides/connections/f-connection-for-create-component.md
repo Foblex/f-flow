@@ -17,6 +17,8 @@ Typical use cases:
 
 Do not persist business state from this component directly; use `fCreateConnection` output from [`fDraggable`](f-draggable-directive) to create real `f-connection` entries.
 
+In the default stateless mode your event handler creates that record. With the optional [Managed Flow State](./examples/state) plugin, a valid finished gesture creates it in the plugin store automatically, subject to `connectionFactory`.
+
 ## How it works
 
 The component is registered as a special connection instance and controlled by drag logic. During a drag session, internal `fOutputId`/`fInputId` signals update from pointer context; after finalize, the preview is hidden again.

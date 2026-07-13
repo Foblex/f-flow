@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { afterNextRender, inject, Injectable, Injector } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
@@ -26,6 +26,7 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
 > {
   private readonly _mediator = inject(FMediator);
   private readonly _reflowOrchestrator = inject(FReflowOrchestrator);
+  private readonly _injector = inject(Injector);
 
   /**
    * Handles the request to update the node's connectors based on state or size changes.
@@ -38,7 +39,9 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
     new FChannelHub(new FResizeChannel(hostElement), stateChanges)
       // .pipe(afterNextPaint()) // Removed: caused ~32ms lag on resize/toggle. Debounce is sufficient for DOM stability.
       .listen(destroyRef, () => {
-        this._mediator.execute<void>(new EmitConnectionsChangesRequest());
+        // Scoped: a single node's resize/state change only needs its own
+        // connections redrawn, not a whole-graph pass.
+        this._mediator.execute<void>(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
         if (!this._isDragging()) {
           this._mediator.execute(
             new InvalidateFCacheNodeRequest(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged'),
@@ -46,7 +49,21 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
 
           this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
 
-          this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
+          // Auto-fit must read FRESH child parentage. On a state-driven change
+          // (e.g. undo re-parenting a child out), the fit would otherwise run
+          // inside this same synchronous tick — before Angular propagates the
+          // new `[fNodeParentId]` into the child directives — and count a
+          // just-removed child, re-shrinking the group. Deferring only the fit
+          // to the next render hook (same CD cycle, before paint) lets it see
+          // the settled parentage. Content/plain resizes keep today's sync path.
+          if (nodeOrGroup.fAutoSizeToFitChildren()) {
+            afterNextRender(
+              () => this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup)),
+              { injector: this._injector },
+            );
+          } else {
+            this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
+          }
 
           this._reflowOrchestrator.handleResize(nodeOrGroup);
         }

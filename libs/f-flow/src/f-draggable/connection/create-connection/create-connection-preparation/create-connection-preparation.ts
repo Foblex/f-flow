@@ -2,7 +2,7 @@ import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { isConnector, isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
-import { FNodeBase } from '../../../../f-node';
+import { findNodeOrGroupContaining, FNodeBase } from '../../../../f-node';
 import { CreateConnectionPreparationRequest } from './create-connection-preparation-request';
 import { CreateConnectionFromConnectorPreparationRequest } from './from-connector-preparation';
 import { CreateConnectionFromOutletPreparationRequest } from './from-outlet-preparation';
@@ -52,7 +52,7 @@ export class CreateConnectionPreparation implements IHandler<
   }
 
   private _findOwnerNode(target: HTMLElement | SVGElement): FNodeBase | undefined {
-    return this._store.nodes.getAll().find((n) => n.isContains(target));
+    return findNodeOrGroupContaining(this._store, target);
   }
 
   private _isValidConditions(): boolean {

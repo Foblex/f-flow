@@ -182,6 +182,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * Centers the specified group or node on the canvas.
    * @param groupOrNodeId - The ID of the group or node to center.
    * @param animated - If true, the centering will be animated; otherwise, it will be instantaneous.
+   * @param emitCanvasChange - If false, does not emit `fCanvasChange` for this programmatic move.
    */
   /**
    * FF1009 — viewport helpers compute from the nodes bounding box, so calling them
@@ -199,10 +200,16 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     }
   }
 
-  public centerGroupOrNode(groupOrNodeId: string, animated: boolean = true): void {
+  public centerGroupOrNode(
+    groupOrNodeId: string,
+    animated: boolean = true,
+    emitCanvasChange: boolean = true,
+  ): void {
     this._warnWhenCalledBeforeNodesRender('centerGroupOrNode()');
     this._afterRedraw(() => {
-      this._mediator.execute(new CenterGroupOrNodeRequest(groupOrNodeId, animated));
+      this._mediator.execute(
+        new CenterGroupOrNodeRequest(groupOrNodeId, animated, emitCanvasChange),
+      );
     });
   }
 
@@ -210,14 +217,16 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * Fits the canvas to the screen by adjusting the scale and position.
    * @param padding - paddings from the bounds of the canvas
    * @param animated - If true, the fit will be animated; otherwise, it will be instantaneous.
+   * @param emitCanvasChange - If false, does not emit `fCanvasChange` for this programmatic move.
    */
   public fitToScreen(
     padding: IPoint = PointExtensions.initialize(),
     animated: boolean = true,
+    emitCanvasChange: boolean = true,
   ): void {
     this._warnWhenCalledBeforeNodesRender('fitToScreen()');
     this._afterRedraw(() => {
-      this._mediator.execute(new FitToFlowRequest(padding, animated));
+      this._mediator.execute(new FitToFlowRequest(padding, animated, emitCanvasChange));
     });
   }
 
@@ -226,12 +235,13 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * This method is used to restore the canvas to its default scale and position,
    * allowing users to quickly return to a standard view of the canvas content.
    * @param animated - If true, the reset will be animated; otherwise, it will be instantaneous.
+   * @param emitCanvasChange - If false, does not emit `fCanvasChange` for this programmatic move.
    * This is useful for providing a smooth user experience when resetting the view.
    */
-  public resetScaleAndCenter(animated: boolean = true): void {
+  public resetScaleAndCenter(animated: boolean = true, emitCanvasChange: boolean = true): void {
     this._warnWhenCalledBeforeNodesRender('resetScaleAndCenter()');
     this._afterRedraw(() => {
-      this._mediator.execute(new ResetScaleAndCenterRequest(animated));
+      this._mediator.execute(new ResetScaleAndCenterRequest(animated, emitCanvasChange));
     });
   }
 

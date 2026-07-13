@@ -2,7 +2,7 @@
 
 This page combines the current roadmap with the shipped release timeline, so you can see both what is next and what has already landed.
 
-It is synchronized with the release history through **v18.6.0 (2026-04-26)**.
+It is synchronized with the published release history through **v19.1.0 (2026-07-13)**.
 
 ## Description
 
@@ -16,20 +16,32 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Current Status
 
-| Status                     | Item                                                 | Notes                                                                                                                                                                                                                                 |
-| -------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ✅ **Released in v18.6.0** | **Smart Auto-Layout on Resize**                      | The new `withReflowOnResize` plugin shifts nearby nodes when a source resizes, configurable along mode, scope, axis, delta source, and collision. See [examples/reflow-on-resize](https://flow.foblex.com/examples/reflow-on-resize). |
-| ✅ **Released in v18.6.0** | **Layer Ordering**                                   | The order of groups, connections, and nodes inside `<f-canvas>` is now configurable via `[fLayers]` or the app-wide `withFCanvas({ layers })` provider. See [examples/canvas-layers](https://flow.foblex.com/examples/canvas-layers). |
-| ✅ **Released in v18.5.0** | **Layout Engines + Reference Apps**                  | Added the shared layout integration surface, published Dagre and ELK adapters, introduced explicit render lifecycle outputs, and promoted major demos into standalone apps.                                                           |
-| 🚧 **In Progress**         | **Freeform Connections**                             | Unified `<f-connector>` replacing the input/output split — a single connector that can send, receive, or do both. [Discussion #88](https://github.com/Foblex/f-flow/discussions/88)                                                   |
-| 🧭 **Planned**             | **Path Highlighting**                                | Trace and highlight upstream, downstream, or full connected paths from any node. Class-based — your CSS defines the look.                                                                                                             |
-| 🧭 **Planned**             | **Flow Execution Animation**                         | Animate execution along the graph — from a predefined sequence or driven by real runtime events. Ideal for AI pipelines and live workflows.                                                                                           |
-| 🧭 **Planned**             | **Config-driven Architecture (`provideFoblexFlow`)** | Modern Angular provider API — `provideFoblexFlow(withMinimap(), withMagneticLines(), ...)`. Tree-shakeable, centralized, idiomatic.                                                                                                   |
-| 🧭 **Planned**             | **Grid-Aware Resize Handles**                        | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                                                                                        |
+| Status                     | Item                                  | Notes                                                                                                                                                                                                                              |
+| -------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅ **Released in v19.1.0** | **Managed Flow State**                | `provideFFlow(withFlowState())` adds typed graph records, automatic updates from supported gestures, batched undo/redo, viewport history, and persistable snapshots. See [examples/state](https://flow.foblex.com/examples/state). |
+| ✅ **Released in v19.1.0** | **Large-Flow Runtime Performance**    | Connection redraws are scoped to affected geometry, minimap and connector geometry are cached, registry work is batched, and drag hot paths no longer scan every node.                                                             |
+| ✅ **Released in v19.1.0** | **Angular Elements / Shadow DOM**     | Pointer gestures, connection targeting, and coordinate hit-testing now work when a flow is rendered in an open shadow root through Angular Elements or `ViewEncapsulation.ShadowDom`.                                              |
+| ✅ **Released in v19.0.0** | **Interaction Architecture**          | `provideFFlow(...)` gained control schemes, click-to-connect, and opt-in keyboard accessibility, with runtime controllers and configurable provider features.                                                                      |
+| ✅ **Released in v19.0.0** | **Unified Connectors and AI Tooling** | One `[fConnector]` model replaced the input/output split, while diagnostics, bundled agent guidance, and validated LLM documentation made integration failures easier to diagnose.                                                 |
+| ✅ **Released in v18.6.0** | **Resize Reflow and Layer Ordering**  | `withReflowOnResize` shifts nearby nodes as dimensions change, and `[fLayers]` / `withFCanvas({ layers })` configure the order of groups, connections, and nodes.                                                                  |
+| 🧭 **Planned**             | **Path Highlighting**                 | Trace and highlight upstream, downstream, or full connected paths from any node. Class-based - your CSS defines the look.                                                                                                          |
+| 🧭 **Planned**             | **Flow Execution Animation**          | Animate execution along the graph from a predefined sequence or real runtime events. Ideal for AI pipelines and live workflows.                                                                                                    |
+| 🧭 **Planned**             | **Grid-Aware Resize Handles**         | Resize handles snap to gridlines for more precise editing. [Discussion #130](https://github.com/Foblex/f-flow/discussions/130)                                                                                                     |
 
 ## Release Timeline
 
 ### 2026
+
+- **[v19.1.0](https://github.com/Foblex/f-flow/releases/tag/v19.1.0)** - **2026-07-13**
+  State, scale, and integration release: opt-in managed graph state with typed records and batched undo/redo, targeted connection redraw and geometry caching for large editors, and pointer plus hit-testing support for Angular Elements and open Shadow DOM.
+  Example: [Managed Flow State](https://flow.foblex.com/examples/state)
+
+- **[v19.0.0](https://github.com/Foblex/f-flow/releases/tag/v19.0.0)** - **2026-07-05**
+  Interaction and integration release: provider-driven control schemes, click-to-connect, built-in ARIA semantics with opt-in keyboard editing, the unified `[fConnector]` API, stable diagnostics, and versioned AI-agent documentation.
+  Examples: [Control Schemes](https://flow.foblex.com/examples/control-schemes), [Click to Connect](https://flow.foblex.com/examples/click-to-connect), [Accessibility](https://flow.foblex.com/examples/accessibility)
+
+- **[v18.6.1](https://github.com/Foblex/f-flow/releases/tag/v18.6.1)** - **2026-05-14**
+  Stabilized large diagrams by removing synchronous connection-label measurements from redraw loops and preventing resize reflow from planning against partially applied node state.
 
 - **[v18.6.0](https://github.com/Foblex/f-flow/releases/tag/v18.6.0)** - **2026-04-26**  
   Layout interaction release: the new `withReflowOnResize` plugin auto-shifts neighbouring nodes when a source resizes, with mode / scope / axis / delta source / collision knobs and a runtime `FReflowController`. Layer Ordering exposes the stacking of groups, connections, and nodes through `[fLayers]` and `withFCanvas({ layers })`.  
@@ -73,7 +85,7 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 - **[v17.7.0](https://github.com/Foblex/f-flow/releases/tag/v17.7.0)** - **2025-08-24**  
   Added smarter grouping, `fAutoSizeToFitChildren`, `fAutoExpandOnChildHit`, plus copy/paste and undo/redo reference patterns.  
-  Examples: [Grouping](https://flow.foblex.com/examples/grouping), [Drag to Group](https://flow.foblex.com/examples/drag-to-group), [Copy/Paste](https://flow.foblex.com/examples/copy-paste), [Undo/Redo V2](https://flow.foblex.com/examples/undo-redo-v2)
+  Examples: [Grouping](https://flow.foblex.com/examples/grouping), [Drag to Group](https://flow.foblex.com/examples/drag-to-group), [Copy/Paste](https://flow.foblex.com/examples/copy-paste)
 
 - **[v17.6.0](https://github.com/Foblex/f-flow/releases/tag/v17.6.0)** - **2025-07-23**  
   Reworked connection reassignment, refreshed the minimap, added debounced `fCanvasChange`, and introduced `fDragBlocker`.
@@ -117,10 +129,11 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Capability Map
 
-- **Performance and scale**: `v18.3.0`, `v18.2.0`, `v17.9.5`, `v12.5.0`
-- **Connection authoring and routing**: `v18.3.0`, `v18.0.0`, `17.8.5`, `v17.8.0`, `v16.0.0`, `V12.2.0`
-- **Editor UX and interactions**: `v18.6.0`, `v18.4.0`, `v18.1.0`, `v17.7.0`, `v17.6.0`, `v17.5.0`, `v17.4.0`, `v17.1.1`
-- **Platform and integration**: `v18.5.0`, `v18.4.0`, `v18.3.0`, `v16.0.0`, `v17.5.0`, `v18.1.0`
+- **State and persistence**: `v19.1.0`, `v17.7.0`
+- **Performance and scale**: `v19.1.0`, `v18.6.1`, `v18.3.0`, `v18.2.0`, `v17.9.5`, `v12.5.0`
+- **Connection authoring and routing**: `v19.1.0`, `v19.0.0`, `v18.3.0`, `v18.0.0`, `17.8.5`, `v17.8.0`, `v16.0.0`, `V12.2.0`
+- **Editor UX and interactions**: `v19.1.0`, `v19.0.0`, `v18.6.0`, `v18.4.0`, `v18.1.0`, `v17.7.0`, `v17.6.0`, `v17.5.0`, `v17.4.0`, `v17.1.1`
+- **Platform and integration**: `v19.1.0`, `v19.0.0`, `v18.5.0`, `v18.4.0`, `v18.3.0`, `v16.0.0`, `v17.5.0`, `v18.1.0`
 
 ## Related Links
 
@@ -132,6 +145,6 @@ For migration details and breaking changes, always check the [Changelog](https:/
 
 ## Notes
 
-- This page is release-oriented, not branch-oriented.
+- Published releases appear in the timeline; unreleased work is confined to **Current Status** and labelled explicitly.
 - If you are planning an upgrade, prefer the changelog for migration guidance and this page for historical context.
-- For not-yet-versioned work, use discussions and issues rather than the release timeline.
+- For work not assigned to a version, use discussions and issues rather than the release timeline.

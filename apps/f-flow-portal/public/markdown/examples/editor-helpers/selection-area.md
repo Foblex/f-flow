@@ -35,4 +35,4 @@ It also pairs naturally with grouping, alignment helpers, and undo/redo workflow
 
 - [Selection Area Docs](./docs/f-selection-area-component)
 - [Drag and Drop](./docs/f-draggable-directive)
-- [Undo/Redo Example](./examples/undo-redo)
+- [Managed Flow State](./examples/state)

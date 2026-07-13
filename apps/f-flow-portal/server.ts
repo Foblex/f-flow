@@ -186,6 +186,10 @@ function resolveLegacyRedirect(pathname: string): string | null {
     return '/examples/schema-designer';
   }
 
+  if (normalized === '/examples/undo-redo' || normalized === '/examples/undo-redo-v2') {
+    return '/examples/state';
+  }
+
   // The old consulting page was nested under /docs — a $5K–$50K sales
   // target deserves a first-class top-level route. Preserve external
   // links with a 301.

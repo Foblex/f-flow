@@ -1,0 +1,94 @@
+<f-flow fDraggable (fFullRendered)="rendered()">
+  <f-selection-area />
+  <f-magnetic-lines />
+  <f-canvas fZoom [position]="state.transform().position" [scale]="state.transform().scale">
+    <f-connection-for-create fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+
+    <f-snap-connection [fSnapThreshold]="100" fBehavior="fixed" fType="segment">
+      <f-connection-marker-arrow />
+    </f-snap-connection>
+
+    @for (group of state.groups(); track group.id) {
+    <div
+      fGroup
+      fDragHandle
+      [fGroupId]="group.id"
+      [fGroupPosition]="group.position"
+      [fGroupSize]="group.size"
+      [fGroupParentId]="group.parentId"
+      fAutoExpandOnChildHit
+      fAutoSizeToFitChildren
+    >
+      Group
+    </div>
+    } @for (connection of state.connections(); track connection.id) {
+    <f-connection
+      [fConnectionId]="connection.id"
+      [fSourceId]="connection.sourceId"
+      [fTargetId]="connection.targetId"
+      fBehavior="fixed"
+      fType="segment"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    } @for (node of state.nodes(); track node.id) {
+    <div
+      fNode
+      fDragHandle
+      [fNodeId]="node.id"
+      [fNodePosition]="node.position"
+      [fNodeSize]="node.size"
+      [fNodeParentId]="node.parentId"
+      fAutoExpandOnChildHit
+      fAutoSizeToFitChildren
+    >
+      {{ node.text }}
+      <div
+        fConnector
+        fConnectorSelfConnectable="false"
+        fConnectorId="{{ node.id }}-input-left"
+        fConnectorConnectableSide="left"
+        class="left"
+      ></div>
+      <div
+        fConnector
+        fConnectorSelfConnectable="false"
+        fConnectorId="{{ node.id }}-output-top"
+        fConnectorConnectableSide="top"
+        class="top"
+      ></div>
+      <div
+        fConnector
+        fConnectorSelfConnectable="false"
+        fConnectorId="{{ node.id }}-input-right"
+        fConnectorConnectableSide="right"
+        class="right"
+      ></div>
+      <div
+        fConnector
+        fConnectorSelfConnectable="false"
+        fConnectorId="{{ node.id }}-output-bottom"
+        fConnectorConnectableSide="bottom"
+        class="bottom"
+      ></div>
+    </div>
+    }
+  </f-canvas>
+</f-flow>
+
+<f-external-palette>
+  @for (item of paletteItems; track item.text) {
+  <div fExternalItem [fData]="item">{{ item.text }}</div>
+  }
+</f-external-palette>
+
+<f-toolbar>
+  <button class="f-button primary" (click)="state.undo()" [disabled]="!state.canUndo()">
+    Undo
+  </button>
+  <button class="f-button primary" (click)="state.redo()" [disabled]="!state.canRedo()">
+    Redo
+  </button>
+</f-toolbar>

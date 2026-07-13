@@ -19,6 +19,7 @@ interface INode {
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);
 
+  protected readonly dropToGroup = signal<boolean>(true);
   protected readonly includePaddings = signal<boolean>(true);
   protected readonly autoSizeToFitChildren = signal<boolean>(true);
   protected readonly autoExpandOnChildHit = signal<boolean>(true);
@@ -49,6 +50,10 @@ export class Example {
     this._canvas()?.resetScaleAndCenter(false);
   }
 
+  protected changeDropToGroup(): void {
+    this.dropToGroup.set(!this.dropToGroup());
+  }
+
   protected changePaddings(): void {
     this.includePaddings.set(!this.includePaddings());
   }
@@ -61,7 +66,7 @@ export class Example {
     this.autoExpandOnChildHit.set(!this.autoExpandOnChildHit());
   }
 
-  protected dropToGroup(event: FDropToGroupEvent): void {
+  protected onDropToGroup(event: FDropToGroupEvent): void {
     if (!event.targetGroupId) {
       return;
     }

@@ -26,5 +26,13 @@ export abstract class FFlowBase implements IHasHostElement {
 
   public abstract redraw(): void;
 
+  /**
+   * Re-runs the full-render lifecycle so `fFullRendered` fires again — e.g. to
+   * re-trigger a `resetScaleAndCenter` the app runs from that output.
+   */
+  public abstract reset(): void;
+
   public abstract getState(options?: IFFlowStateOptions): IFFlowState;
+
+  public abstract select(nodes: string[], connections: string[], isSelectedChanged?: boolean): void;
 }

@@ -27,10 +27,26 @@ export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGr
           this._paddings(nodeOrGroup, currentBounding),
         );
 
+        // Capture the node's OWN stored rect before applying the fit. The DOM
+        // measurement (`currentBounding`) lags a frame behind `redraw`, so the
+        // convergence pass (redraw → ResizeObserver → fit again) would still
+        // see the old measurement and re-emit the same size — a duplicate.
+        const previousRect = this._storedRect(nodeOrGroup);
+
         nodeOrGroup.updatePosition(childrenBounding);
         nodeOrGroup.updateSize(childrenBounding);
         nodeOrGroup.redraw();
+
+        // Auto-size is a resize like any other: notify `fNodeSizeChange` /
+        // `fGroupSizeChange`, but only when the fit actually changed the box,
+        // so a settled fit stays silent and can't feed a resize loop.
+        if (!previousRect || !this._isSameRect(previousRect, childrenBounding)) {
+          nodeOrGroup.sizeChange.emit(childrenBounding);
+        }
       }
+      // No children: nothing to fit to. The group keeps whatever size it was
+      // told to have via `fGroupSize` — the binding (e.g. restored by undo)
+      // is the source of truth; the fit must not invent a size here.
     }
 
     const parent = nodeOrGroup.fParentId();
@@ -82,5 +98,25 @@ export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGr
     );
 
     return childrenBounding;
+  }
+
+  private _storedRect(nodeOrGroup: FNodeBase): IRect | null {
+    return nodeOrGroup._size
+      ? RectExtensions.initialize(
+          nodeOrGroup._position.x,
+          nodeOrGroup._position.y,
+          nodeOrGroup._size.width,
+          nodeOrGroup._size.height,
+        )
+      : null;
+  }
+
+  private _isSameRect(a: IRect, b: IRect): boolean {
+    return (
+      Math.round(a.x) === Math.round(b.x) &&
+      Math.round(a.y) === Math.round(b.y) &&
+      Math.round(a.width) === Math.round(b.width) &&
+      Math.round(a.height) === Math.round(b.height)
+    );
   }
 }

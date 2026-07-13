@@ -9,7 +9,7 @@ import {
   GetNormalizedElementRectRequest,
   GetParentNodesRequest,
 } from '../../../domain';
-import { FGroupDirective, FNodeBase } from '../../../f-node';
+import { findNodeOrGroupContaining, FGroupDirective, FNodeBase } from '../../../f-node';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { DragNodeHandler } from '../../drag-node';
@@ -34,7 +34,20 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
       return;
     }
 
-    const dragTargetNode = this._allNodes.find((n) => n.isContains(event.targetElement));
+    // Drop-to-group can be switched off (`fDropToGroup` = false). We still
+    // register the handler — the external-item finalize asks it for a target
+    // container and throws if none exists — but with no candidates it never
+    // activates a target, so nothing is reparented and no highlight appears.
+    if (!this._isDropToGroupEnabled()) {
+      const handler = this._dragInjector.get(DropToGroupHandler);
+      handler.initialize([]);
+
+      this._dragContext.draggableItems.push(handler);
+
+      return;
+    }
+
+    const dragTargetNode = findNodeOrGroupContaining(this._store, event.targetElement);
 
     // If this is not an external drag and we can't resolve a target node — it's an invalid state.
     if (!dragTargetNode && !this._hasExternalDrag()) {
@@ -57,6 +70,10 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     handler.initialize(targets);
 
     this._dragContext.draggableItems.push(handler);
+  }
+
+  private _isDropToGroupEnabled(): boolean {
+    return this._store.fDraggable?.dropToGroup() !== false;
   }
 
   private _canPrepare(): boolean {

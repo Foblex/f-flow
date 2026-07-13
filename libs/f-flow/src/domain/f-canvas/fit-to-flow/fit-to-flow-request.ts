@@ -5,5 +5,6 @@ export class FitToFlowRequest {
   constructor(
     public readonly toCenter: IPoint,
     public readonly animated: boolean,
+    public readonly emitCanvasChange: boolean = true,
   ) {}
 }

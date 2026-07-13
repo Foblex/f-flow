@@ -8,9 +8,9 @@ function getTranslate(transform: string): { x: number; y: number } {
   return { x: Number.parseFloat(match[1]), y: Number.parseFloat(match[2]) };
 }
 
-describe('UndoRedoV2', () => {
+describe('ManagedFlowState', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/examples/undo-redo-v2');
+    cy.visit('/examples/state');
     cy.get('f-flow').scrollIntoView();
   });
 

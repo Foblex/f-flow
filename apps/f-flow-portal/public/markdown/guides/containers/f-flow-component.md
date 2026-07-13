@@ -27,6 +27,8 @@ Use `f-flow` when you need:
 > Foblex Flow is “interaction + rendering infrastructure”.  
 > Your application still owns the **data model** (nodes list, positions, connections, persistence).
 
+This describes the default stateless mode. The optional [Managed Flow State](./examples/state) plugin adds an explicit typed graph store, automatic updates for supported gestures, snapshots and undo/redo without changing the core behavior for applications that do not install it.
+
 ## How it works
 
 `f-flow` registers itself in the internal store, watches data changes, redraws connection layers, and emits render lifecycle events as the flow stabilizes. Public methods like `select`, `clearSelection`, and `getState` call into that same store.

@@ -13,6 +13,7 @@ import {
   CalculateConnectableSideByConnectedPositions,
   CalculateConnectableSideByInternalPosition,
   CalculateConnectorsConnectableSides,
+  ConnectableSidesScheduler,
 } from './calculate-connectors-connectable-sides';
 
 /**
@@ -28,6 +29,8 @@ export const F_NODE_FEATURES = [
   CalculateInputConnections,
 
   CalculateConnectorsConnectableSides,
+
+  ConnectableSidesScheduler,
 
   CalculateNodesBoundingBox,
 

@@ -81,6 +81,11 @@ import { DragMinimapFinalizeRequest, DragMinimapPreparationRequest } from './dra
   selector: 'f-flow[fDraggable]',
   exportAs: 'fDraggable',
   providers: [FDragHandlerResult, DragHandlerInjector],
+  host: {
+    // On by default: marks the flow so the grouping styles (drop-target
+    // highlight) apply. Cleared reactively when `fDropToGroup` is set to false.
+    '[class.f-drop-to-group]': 'dropToGroup()',
+  },
 })
 export class FDraggableDirective
   extends FDraggableBase
@@ -106,6 +111,12 @@ export class FDraggableDirective
 
   @Input({ transform: booleanAttribute, alias: 'fDraggableDisabled' })
   public override disabled: boolean = false;
+
+  /** Turns the drop-to-group gesture on/off. See `FDraggableBase.dropToGroup`. */
+  public override dropToGroup = input(true, {
+    transform: (value: unknown) => booleanAttribute(value),
+    alias: 'fDropToGroup',
+  });
 
   @Input()
   public fMultiSelectTrigger: FEventTrigger = (event: FTriggerEvent) => {
@@ -264,6 +275,72 @@ export class FDraggableDirective
     }
   }
 
+  /**
+   * Gesture claim chain, phase by phase. WITHIN EACH LIST THE ORDER IS THE
+   * PRIORITY CONTRACT: every preparation guards itself with
+   * `FDraggableDataContext.isEmpty()`, so the first entry that claims the
+   * pointer wins and everything after it backs off. The three phases are
+   * intentionally ordered independently — finalization is not a mirror of
+   * preparation (e.g. pinch-to-zoom finalizes last so slower gestures settle
+   * first).
+   */
+  private readonly _pointerDownClaimants: readonly ((event: IPointerEvent) => void)[] = [
+    (event) => this._mediator.execute<void>(new SelectionAreaPreparationRequest(event)),
+    (event) => this._mediator.execute<void>(new DragMinimapPreparationRequest(event)),
+    (event) => this._mediator.execute<void>(new PinchToZoomPreparationRequest(event)),
+    (event) =>
+      this._mediator.execute<void>(new SelectByPointerRequest(event, this.fMultiSelectTrigger)),
+    (event) =>
+      this._mediator.execute<void>(
+        new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
+      ),
+    (event) =>
+      this._mediator.execute<void>(
+        new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
+      ),
+    (event) =>
+      this._mediator.execute<void>(
+        new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
+      ),
+  ];
+
+  private readonly _thresholdClaimants: readonly ((event: IPointerEvent) => void)[] = [
+    (event) =>
+      this._mediator.execute<void>(
+        new ResizeNodePreparationRequest(event, this.fNodeResizeTrigger),
+      ),
+    (event) =>
+      this._mediator.execute<void>(
+        new RotateNodePreparationRequest(event, this.fNodeRotateTrigger),
+      ),
+    (event) =>
+      this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger)),
+    (event) =>
+      this._mediator.execute<void>(
+        new DragExternalItemPreparationRequest(event, this.fExternalItemTrigger),
+      ),
+    (event) => this._mediator.execute<void>(new DropToGroupPreparationRequest(event)),
+    (event) =>
+      this._mediator.execute<void>(
+        new DragCanvasPreparationRequest(event, this.fCanvasMoveTrigger),
+      ),
+  ];
+
+  private readonly _pointerUpFinalizers: readonly ((event: IPointerEvent) => void)[] = [
+    (event) => this._mediator.execute<void>(new DragMinimapFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new SelectionAreaFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new ReassignConnectionFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new ResizeNodeFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new RotateNodeFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new DragNodeFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new DragExternalItemFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new DropToGroupFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new DragCanvasFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event)),
+    (event) => this._mediator.execute<void>(new DragConnectionWaypointFinalizeRequest(event)),
+  ];
+
   public override onPointerDown(event: IPointerEvent): boolean {
     if (isDragBlocker(event.targetElement)) {
       return false;
@@ -274,25 +351,7 @@ export class FDraggableDirective
 
     this._mediator.execute<void>(new InitializeDragSequenceRequest());
 
-    this._mediator.execute<void>(new SelectionAreaPreparationRequest(event));
-
-    this._mediator.execute<void>(new DragMinimapPreparationRequest(event));
-
-    this._mediator.execute<void>(new PinchToZoomPreparationRequest(event));
-
-    this._mediator.execute<void>(new SelectByPointerRequest(event, this.fMultiSelectTrigger));
-
-    this._mediator.execute<void>(
-      new ReassignConnectionPreparationRequest(event, this.fReassignConnectionTrigger),
-    );
-
-    this._mediator.execute<void>(
-      new CreateConnectionPreparationRequest(event, this.fCreateConnectionTrigger),
-    );
-
-    this._mediator.execute<void>(
-      new DragConnectionWaypointPreparationRequest(event, this.fConnectionWaypointsTrigger()),
-    );
+    this._pointerDownClaimants.forEach((claim) => claim(event));
 
     // The left button and touch drive every interaction. The middle button joins only
     // when the active scheme's `canvasMove` gesture claims it (e.g. middle-drag pan in
@@ -308,19 +367,7 @@ export class FDraggableDirective
   }
 
   protected override prepareDragSequence(event: IPointerEvent) {
-    this._mediator.execute<void>(new ResizeNodePreparationRequest(event, this.fNodeResizeTrigger));
-
-    this._mediator.execute<void>(new RotateNodePreparationRequest(event, this.fNodeRotateTrigger));
-
-    this._mediator.execute<void>(new DragNodePreparationRequest(event, this.fNodeMoveTrigger));
-
-    this._mediator.execute<void>(
-      new DragExternalItemPreparationRequest(event, this.fExternalItemTrigger),
-    );
-
-    this._mediator.execute<void>(new DropToGroupPreparationRequest(event));
-
-    this._mediator.execute<void>(new DragCanvasPreparationRequest(event, this.fCanvasMoveTrigger));
+    this._thresholdClaimants.forEach((claim) => claim(event));
 
     this._mediator.execute<void>(new PrepareDragSequenceRequest());
   }
@@ -335,29 +382,7 @@ export class FDraggableDirective
   }
 
   public override onPointerUp(event: IPointerEvent): void {
-    this._mediator.execute<void>(new DragMinimapFinalizeRequest(event));
-
-    this._mediator.execute<void>(new SelectionAreaFinalizeRequest(event));
-
-    this._mediator.execute<void>(new ReassignConnectionFinalizeRequest(event));
-
-    this._mediator.execute<void>(new CreateConnectionFinalizeRequest(event));
-
-    this._mediator.execute<void>(new ResizeNodeFinalizeRequest(event));
-
-    this._mediator.execute<void>(new RotateNodeFinalizeRequest(event));
-
-    this._mediator.execute<void>(new DragNodeFinalizeRequest(event));
-
-    this._mediator.execute<void>(new DragExternalItemFinalizeRequest(event));
-
-    this._mediator.execute<void>(new DropToGroupFinalizeRequest(event));
-
-    this._mediator.execute<void>(new DragCanvasFinalizeRequest(event));
-
-    this._mediator.execute<void>(new PinchToZoomFinalizeRequest(event));
-
-    this._mediator.execute<void>(new DragConnectionWaypointFinalizeRequest(event));
+    this._pointerUpFinalizers.forEach((finalize) => finalize(event));
 
     this._mediator.execute<void>(new EmitEndDragSequenceEventRequest());
   }

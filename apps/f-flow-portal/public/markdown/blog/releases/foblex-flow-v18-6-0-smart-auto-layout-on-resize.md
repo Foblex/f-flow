@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-04-26"
-updatedAt: "2026-04-26"
+updatedAt: "2026-07-13"
 ---
 
 # Foblex Flow v18.6.0: Reflow on Resize and Layer Ordering
@@ -121,6 +121,8 @@ Every knob can be changed at runtime. No re-provisioning the plugin, no rebuildi
 The reflow plugin moves existing nodes. It does not restructure the graph, it does not reroute connections, and it does not decide whether the resize itself is allowed.
 
 Foblex Flow handles the geometric shift, your application owns the data model. The new positions arrive through `(fMoveNodes)` like any other node move, and you decide whether to persist them.
+
+That is still the default stateless behavior. With the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin, supported move events update the explicit plugin store automatically; persistence of its snapshots remains an application decision.
 
 That boundary is intentional. Reflow is interaction infrastructure, not a layout authority.
 

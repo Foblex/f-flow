@@ -31,8 +31,11 @@ export class OnPointerMove implements IExecution<OnPointerMoveRequest, void> {
   }
 
   private _setDifferenceToDraggableItems(difference: IPoint, event: IPointerEvent): void {
+    // One object per event, shared read-only by every handler: spreading a copy
+    // per handler allocated hundreds of points per pointermove on multi-select
+    // drags, and no handler mutates the difference.
     this._dragContext.draggableItems.forEach((item) => {
-      item.onPointerMove({ ...difference }, event);
+      item.onPointerMove(difference, event);
     });
   }
 

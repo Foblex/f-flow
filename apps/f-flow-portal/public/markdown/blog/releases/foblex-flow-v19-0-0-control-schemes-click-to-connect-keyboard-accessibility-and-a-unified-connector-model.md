@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-13"
 ---
 
 # Foblex Flow v19.0.0: Control Schemes, Click-to-Connect, Keyboard Accessibility, and a Unified Connector Model
@@ -72,7 +72,9 @@ providers: [provideFFlow(withA11y())],
 
 With it on: arrows move the selection spatially over nodes _and_ connections, `Shift`+arrow extends, `Ctrl`+arrow walks the topology along connections, `Space` moves the selection (hold-and-release, or tap-to-grab for users who cannot hold two keys at once), `Delete` emits the new `fDeleteSelected` event, and `C` starts a connection from the selected node — arrows pick the target with the usual preview and snapping, `Enter` commits. Every string is localizable, every action key is remappable, and typing inside inputs in your nodes is never hijacked.
 
-The golden rule did not move: the library **never mutates your data**. `Delete` tells you what the user wants removed. You decide what to do.
+The golden rule did not move: in the default stateless mode, the library **never mutates your application-owned data**. `Delete` tells you what the user wants removed. You decide what to do.
+
+Since v19.1, the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin can apply that deletion and other supported gestures to an explicit typed store. Applications that do not install it keep the v19.0 event contract unchanged.
 
 ::: ng-component <accessibility></accessibility> [height]="600"
 :::

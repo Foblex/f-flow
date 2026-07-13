@@ -45,7 +45,7 @@ Keyboard map:
 - `Ctrl`/`Cmd` + `A` — select all; `Escape` — clear the selection (or cancel the active mode).
 - `Space` — move the selection: hold it and use arrows (release to drop), or tap to grab and tap again to drop — the second form is for users who cannot hold two keys at once. `Shift` + arrow moves in coarse steps; `Escape` reverts. The drop emits `fMoveNodes` with every moved node; a pointer drag and a keyboard move produce the same event.
 - `C` — start a connection. Requires exactly one selected node; the proposal defaults to the nearest connector on another node that is not already connected to the source. Arrows move between connectable targets spatially with the usual preview and snapping, `Enter` emits `fCreateConnection`, `Escape` cancels. Connection rules (`fConnectorDisabled`, `fCanBeConnectedTo`, categories, multiplicity) apply exactly as in the drag gesture.
-- `Delete` / `Backspace` — emits `fDeleteSelected: FDeleteSelectedEvent` (`nodeIds`, `groupIds`, `connectionIds`). The library never mutates the graph — remove the items from your data and the flow follows. Requires `fDraggable`.
+- `Delete` / `Backspace` — emits `fDeleteSelected: FDeleteSelectedEvent` (`nodeIds`, `groupIds`, `connectionIds`). In the default stateless mode, remove the items from your data and the flow follows. The optional [Managed Flow State](./examples/state) plugin handles the removal automatically. Requires `fDraggable`.
 - `+` / `-` / `0` — zoom in, out and reset (when `fZoom` is present); the level is announced.
 
 Behavior notes:

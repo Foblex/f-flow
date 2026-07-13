@@ -15,7 +15,9 @@ The keyboard layer is opt-in — add `provideFFlow(withA11y())` and the editor b
 
 ## Example
 
-This example enables the keyboard layer with a custom movement step and wires all three editing events to signals: `(fMoveNodes)` persists positions after a drop, `(fCreateConnection)` adds the wire, `(fDeleteSelected)` removes the selected items — the library never mutates the graph itself.
+This example uses the default stateless mode: it enables the keyboard layer with a custom movement step and wires all three editing events to signals. `(fMoveNodes)` persists positions after a drop, `(fCreateConnection)` adds the wire, and `(fDeleteSelected)` removes the selected items.
+
+The optional [Managed Flow State](./examples/state) plugin can apply all three supported gestures to its typed store automatically. The example keeps the manual handlers to demonstrate the event contract used by applications that own their graph state.
 
 ::: ng-component <accessibility></accessibility> [height]="600"
 [example.html] <<< https://raw.githubusercontent.com/Foblex/f-flow/main/libs/f-examples/extensions/accessibility/example.html

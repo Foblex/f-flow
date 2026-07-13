@@ -7,10 +7,11 @@ import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { CompleteConnectionRedrawRequest } from './pipeline/complete-connection-redraw';
 import { RunConnectionRedrawSliceRequest } from './pipeline/run-connection-redraw-slice';
 import { StartConnectionRedrawRequest } from './pipeline/start-connection-redraw';
-import { IConnectionRedrawSession } from './models';
+import { ConnectionRedrawState, IConnectionRedrawSession } from './models';
 import { ShouldUseConnectionWorkerRequest } from './worker/should-use-connection-worker';
 import { StartConnectionWorkerRedrawRequest } from './worker/start-connection-worker-redraw';
 import { FConnectionBase } from '../../../f-connection-v2';
+import { findSourceConnector, findTargetConnector } from '../../../f-connectors';
 
 /**
  * Execution that redraws connections in the FComponentsStore.
@@ -22,17 +23,20 @@ import { FConnectionBase } from '../../../f-connection-v2';
 export class RedrawConnections implements IExecution<RedrawConnectionsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
+  private readonly _state = inject(ConnectionRedrawState);
 
   public handle(_: RedrawConnectionsRequest): void {
+    const scope = this._resolveScope();
     const session = this._mediator.execute<IConnectionRedrawSession>(
-      new StartConnectionRedrawRequest(),
+      new StartConnectionRedrawRequest(scope === null),
     );
 
     this._createMarkersForCreate();
 
     this._createMarkersForSnap();
 
-    const connections = [...this._store.connections.getAll()];
+    const connections =
+      scope === null ? [...this._store.connections.getAll()] : this._connectionsTouching(scope);
     const connectorRectCache = new Map<string, IRoundedRect>();
 
     if (!connections.length) {
@@ -46,6 +50,83 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     } else {
       this._redrawWithoutWorker(connections, connectorRectCache, session);
     }
+  }
+
+  /**
+   * A pass narrowed to the nodes whose geometry actually changed (single-node
+   * resizes/state changes); `null` = redraw everything. Escalates to a full
+   * pass while a previous pass is still in flight, because starting a new
+   * session aborts the running one mid-slice.
+   */
+  private _resolveScope(): ReadonlySet<string> | null {
+    const scope = this._store.takeConnectionsDirtyScope();
+    if (scope === null || !this._state.isPassCompleted) {
+      return null;
+    }
+
+    return scope;
+  }
+
+  private _connectionsTouching(nodeIds: ReadonlySet<string>): FConnectionBase[] {
+    if (!nodeIds.size) {
+      return [];
+    }
+
+    const hierarchyDirtyCache = new Map<string, boolean>();
+
+    return this._store.connections.getAll().filter((connection) => {
+      const source = findSourceConnector(this._store, connection.sourceId());
+      const target = findTargetConnector(this._store, connection.targetId());
+      // Unresolved endpoints keep full-pass behavior for this connection.
+      if (!source || !target) {
+        return true;
+      }
+
+      return (
+        this._isNodeHierarchyDirty(source.fNodeId, nodeIds, hierarchyDirtyCache) ||
+        this._isNodeHierarchyDirty(target.fNodeId, nodeIds, hierarchyDirtyCache)
+      );
+    });
+  }
+
+  /** A group geometry change also moves every endpoint owned by its descendants. */
+  private _isNodeHierarchyDirty(
+    nodeId: string,
+    dirtyNodeIds: ReadonlySet<string>,
+    cache: Map<string, boolean>,
+  ): boolean {
+    const cached = cache.get(nodeId);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const path: string[] = [];
+    const visited = new Set<string>();
+    let currentId: string | null | undefined = nodeId;
+    let isDirty = false;
+
+    while (currentId && !visited.has(currentId)) {
+      const currentCached = cache.get(currentId);
+      if (currentCached !== undefined) {
+        isDirty = currentCached;
+        break;
+      }
+
+      path.push(currentId);
+      visited.add(currentId);
+      if (dirtyNodeIds.has(currentId)) {
+        isDirty = true;
+        break;
+      }
+
+      currentId = this._store.nodes.get(currentId)?.fParentId();
+    }
+
+    for (const id of path) {
+      cache.set(id, isDirty);
+    }
+
+    return isDirty;
   }
 
   private _createMarkersForCreate(): void {

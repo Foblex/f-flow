@@ -10,7 +10,7 @@ This guide is based on the examples that already follow the newer repository sty
 Treat these examples as the primary reference for new work:
 
 - `libs/f-examples/advanced/copy-paste/example.ts`
-- `libs/f-examples/advanced/undo-redo-v2/example.ts`
+- `libs/f-examples/advanced/flow-state/example.ts`
 - `libs/f-examples/connections/connection-content/example.ts`
 - `libs/f-examples/connectors/connection-rules/example.ts`
 - `libs/f-examples/extensions/auto-pan/example.ts`
@@ -78,7 +78,7 @@ Treat these as additional references for more stateful or event-heavy examples:
 - Prefer `protected readonly` state for values that are read in the template.
 - Prefer `private readonly _...` fields for internal references and helpers.
 - Avoid public mutable template-facing fields in new examples.
-- Use simple local state that explains the feature directly. Do not introduce app-like store layers unless the example is explicitly about state/history patterns, as in `undo-redo-v2`.
+- Use simple local state that explains the feature directly. Do not introduce app-like store layers unless the example is explicitly about state/history patterns, as in `flow-state`.
 
 ## Methods
 

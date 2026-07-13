@@ -235,6 +235,14 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
       }
 
       const soft = this._constraints.soft[i];
+
+      // When the group also auto-sizes to its children, the post-drop fit
+      // emits the settled size — skip this transient expanded rect so the
+      // consumer sees one final `sizeChange` per drag, not expand-then-fit.
+      if (soft.nodeOrGroup.fAutoSizeToFitChildren()) {
+        continue;
+      }
+
       const expandedRect = expandRectByOverflow(soft.boundingRect, r.overflow, r.edges);
 
       soft.nodeOrGroup.sizeChange.emit(expandedRect);

@@ -5,16 +5,13 @@ Use this file as a strict control layer for code generation. Prefer verified pac
 ## What This Library Is
 
 `@foblex/flow` is an Angular-native library for building node-based editors, workflow builders, and interactive graph UIs.
-It provides rendering, connectors, interactions, selection, zoom, and connection drawing. Your app still owns the graph data.
+It provides rendering, connectors, interactions, selection, zoom, and connection drawing. By default your app owns the graph data; the optional `withFlowState()` feature can own the data bookkeeping and undo/redo for an editor.
 
 ## Core Mental Model
 
-- The library does **not** own your graph state.
-- Your app owns nodes, groups, connections, ids, validation, and persistence.
-- Angular templates render the current state.
-- User actions emit events from `fDraggable` or model outputs.
-- Your app updates state.
-- Angular rerenders.
+- **Classic mode (default):** your app owns nodes, groups, connections, validation and persistence. User actions emit events; your handlers update app state; Angular rerenders.
+- **Managed mode (opt-in):** `provideFFlow(withFlowState())` provides `FFlowState`; supported completed gestures update its signals and history automatically. Your app still owns domain fields, validation policy and persistence.
+- Both modes render records through normal Angular templates. `withFlowState()` is optional and does not change classic event behavior when absent.
 
 ## Minimal Working Setup
 
@@ -73,13 +70,13 @@ The default theme is wired by `ng add @foblex/flow` (adds `node_modules/@foblex/
 - `fDraggable` on `<f-flow>`: enables pointer interactions and emits interaction events.
 - `fZoom` on `<f-canvas>`: opt-in wheel / double-click / pinch zoom.
 - `<f-selection-area>`: opt-in rectangle multi-select.
-- `provideFFlow(...)` with features: `withConnectionFlow('click')` (click-to-connect gesture alongside drag; custom gestures implement `IFConnectionFlow` and drive `FCreateConnectionSession`), `withControlScheme(...)` (gesture-to-action mapping, presets `F_DEFAULT_CONTROL_SCHEME`, `F_SCROLL_PAN_CONTROL_SCHEME`, `F_DRAG_SELECT_CONTROL_SCHEME`), `withReflowOnResize(...)` (auto layout on node resize), `withFCanvas(...)` (canvas defaults such as layer order), `withA11y(...)` (enables the keyboard accessibility layer — spatial arrow navigation, grab-move, keyboard connection creation, `Delete` emits `fDeleteSelected`; configurable steps, key bindings `IFA11yKeys`, localizable announcements `IFA11yMessages`; ARIA semantics and the live region are always on even without the feature).
+- `provideFFlow(...)` with features: `withConnectionFlow('click')` (click-to-connect gesture alongside drag; custom gestures implement `IFConnectionFlow` and drive `FCreateConnectionSession`), `withControlScheme(...)` (gesture-to-action mapping, presets `F_DEFAULT_CONTROL_SCHEME`, `F_SCROLL_PAN_CONTROL_SCHEME`, `F_DRAG_SELECT_CONTROL_SCHEME`), `withReflowOnResize(...)` (auto layout on node resize), `withFCanvas(...)` (canvas defaults such as layer order), `withA11y(...)` (keyboard accessibility), and `withFlowState(...)` (managed records plus undo/redo).
 
 ## Hard Rules
 
 - Never invent Inputs, Outputs, methods, directives, or selectors.
 - Do **not** assume React Flow style APIs such as `[nodes]`, `[edges]`, `setNodes()`, `addEdge()`, `useNodesState()`, `<Handle>`, `<Background>`, `<Controls>`, or similar patterns.
-- Do **not** assume a built-in graph store. The app owns state.
+- Do **not** assume managed state unless the component explicitly installs `provideFFlow(withFlowState())`. Without it, the app owns state and handles events.
 - Connections are connector-to-connector, not generic node-to-node edges.
 - Template connections use `fSourceId -> fTargetId` referencing `fConnectorId` values (legacy: `fOutputId -> fInputId` referencing output/input ids).
 - Do **not** interpret `[fNodes]` or `[fConnections]` as graph-state inputs. They are content-projection slot markers used with `ngProjectAs` (see the nested control flow rule below).
@@ -102,11 +99,11 @@ The default theme is wired by `ng add @foblex/flow` (adds `node_modules/@foblex/
 
   Use `"[fNodes]"` for nodes, `"[fGroups]"` for groups, `"[fConnections]"` for connections. A single top-level `@for` / `@if` directly inside `<f-canvas>` needs no wrapper.
 
-- Examples may include app-specific state, layout logic, persistence, undo/redo, toolbars, or validation. Those are example implementations, not built-in package features.
+- Examples may include app-specific layout logic, persistence, toolbars, or validation. Undo/redo is built in only when `withFlowState()` is installed; otherwise it remains application code.
 - Some exports are low-level, compatibility-oriented, or testing-oriented. Do not treat every export from `@foblex/flow` as the recommended app-facing API.
 - If a symbol, selector, event, or behavior is not confirmed in the installed package, say: `not found in @foblex/flow`.
 
-## Correct Usage Pattern
+## Classic State Pattern
 
 - Render nodes and groups from your Angular state using normal Angular templates.
 - Put connectors on the node element itself or on child elements with `fConnector`.
@@ -115,6 +112,35 @@ The default theme is wired by `ng add @foblex/flow` (adds `node_modules/@foblex/
 - Handle events such as `fCreateConnection`, `fReassignConnection`, `fMoveNodes`, `fSelectionChange`, `fCreateNode`, `fDropToGroup`, and `fConnectionWaypointsChanged`.
 - Update your own state in those handlers, then let Angular rerender.
 - Use node/group position bindings and change outputs to keep positions in app state when needed.
+
+## Managed State Pattern
+
+Install the state feature at the same component injector as `provideFFlow`, load plain records, and render its signals:
+
+```typescript
+interface EditorNode extends IFStateNode {
+  text: string;
+}
+
+@Component({
+  providers: [provideFFlow(withFlowState())],
+})
+export class Editor {
+  protected readonly state = injectFlowState<EditorNode>();
+
+  constructor() {
+    this.state.load({ nodes: [], groups: [], connections: [] });
+  }
+}
+```
+
+- Bind `state.nodes()`, `state.groups()` and `state.connections()` with `@for`; bind canvas `[position]` and `[scale]` to `state.transform()` when viewport undo/redo is enabled.
+- Supported v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom.
+- Rotation, connection waypoint editing, and user resize are not captured by managed state in v1.
+- `state.changes()` increments once when a standalone mutation or outer batch settles. A drag can emit selection at start and move/drop at end while remaining one history step and one `changes()` increment.
+- Use `state.snapshot()` for persistence; `load()` replaces data and resets history.
+- For initial or other application-driven viewport positioning, suppress the event at the canvas helper: `canvas.resetScaleAndCenter(false, false)`. The second `false` means `emitCanvasChange = false`, so managed history is untouched.
+- Connection endpoints are connector ids. Automatic cascade from node/group deletion uses the rendered connector registry; before connectors render, remove known attached connection ids explicitly in the same `state.batch(...)`.
 
 ## Common Silent Failures — Check These First
 
@@ -133,6 +159,7 @@ When the flow compiles but looks wrong, verify in this order:
 11. **Node moves but its bindings never fire** (`FF1007`): an `fNode` element is nested inside another node element. One `fNode` per node; hierarchy is id-based (`fNodeParentId`), not DOM-based.
 12. **Group behaviors don't apply** (`FF1008`): `fNodeParentId` / `fGroupParentId` references an id no rendered group has.
 13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
+14. **Initial centering appears in managed undo history**: call `resetScaleAndCenter(false, false)` (or pass `emitCanvasChange: false` to another viewport helper) for an application-driven transform.
 
 To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.
 
@@ -167,6 +194,7 @@ See [STYLING.md](./STYLING.md).
 - Docs index for agents: https://flow.foblex.com/llms.txt
 - Human docs: https://flow.foblex.com/docs/get-started
 - Live examples with source: https://flow.foblex.com/examples/overview
+- Managed state example and contract: https://flow.foblex.com/examples/state
 
 ## Fallback Rule
 

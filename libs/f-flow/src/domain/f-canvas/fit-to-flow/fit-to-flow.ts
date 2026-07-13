@@ -23,7 +23,7 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
 
   private readonly _mediator = inject(FMediator);
 
-  public handle({ toCenter, animated }: FitToFlowRequest): void {
+  public handle({ toCenter, animated, emitCanvasChange }: FitToFlowRequest): void {
     const fNodesRect =
       this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
       RectExtensions.initialize();
@@ -39,7 +39,11 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
     );
 
     this._mediator.execute(
-      new RedrawCanvasWithAnimationRequest(animated, ECanvasRedrawContext.VIEWPORT_ONLY),
+      new RedrawCanvasWithAnimationRequest(
+        animated,
+        ECanvasRedrawContext.VIEWPORT_ONLY,
+        emitCanvasChange,
+      ),
     );
   }
 

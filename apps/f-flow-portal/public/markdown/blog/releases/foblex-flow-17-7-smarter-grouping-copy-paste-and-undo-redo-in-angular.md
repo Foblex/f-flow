@@ -48,17 +48,15 @@ This example shows how easy it is to implement clipboard functionality directly 
 
 ### ⏪ Undo / Redo Example
 
-No editor feels complete without Undo/Redo. With v17.7, you now have a reference implementation:
+No editor feels complete without Undo/Redo. With v17.7, Foblex Flow added a reference implementation:
 
-::: ng-component <undo-redo-v2></undo-redo-v2> [height]="600"
-:::
-
-- New [**Undo-Redo V2 Example**](https://flow.foblex.com/examples/undo-redo-v2).
 - Powered by [**@foblex/mutator**](https://www.npmjs.com/package/@foblex/mutator).
 - Tracks state changes, snapshots, and history.
 - Enables true **time-travel editing** for your diagrams.
 
 Undo/Redo creates a smoother and more interactive editing experience, and is often a must-have for production tools.
+
+The original standalone demo has since been retired. Use the maintained [**Managed Flow State example**](https://flow.foblex.com/examples/state) for built-in history and persistence.
 
 ### 📚 Documentation Updates
 

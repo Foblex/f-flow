@@ -39,6 +39,8 @@ Attach `fResizeHandle` to an element inside a node (or group) and specify the ha
 
 This keeps your data model as the source of truth while interactions stay responsive.
 
+The optional [Managed Flow State](./examples/state) plugin does not capture user resize in v1, so this final-output persistence step still applies when managed state is enabled.
+
 ## API
 
 ### Inputs

@@ -12,13 +12,7 @@ export class FMinimapCanvasDirective {
   public readonly hostElement = this._elementRef.nativeElement;
 
   public redraw(): void {
-    this.clear();
-
-    const fragment = this._elementRef.nativeElement.ownerDocument.createDocumentFragment();
-    this._mediator.execute<SVGRectElement[]>(new MinimapDrawNodesRequest()).forEach((x) => {
-      fragment.appendChild(x);
-    });
-    this.hostElement.appendChild(fragment);
+    this._mediator.execute<void>(new MinimapDrawNodesRequest(this.hostElement));
   }
 
   public clear(): void {

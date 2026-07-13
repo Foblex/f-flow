@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette-2377435effce"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-07-05"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-13"
 ---
 
 # Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette
@@ -572,7 +572,9 @@ At this stage, our visual editor is starting to look much more like a real low-c
 - connect nodes visually using interactive connectors;
 - store and display the list of all connections.
 
-The key idea in this part is the **separation of logic from visual behavior**. The Foblex Flow library doesn’t manage your state directly — it simply tells you what happened: a node was added, a connection started, or a drag event completed. Everything else remains under your control.
+The key idea in this part is the **separation of logic from visual behavior**. This implementation uses Foblex Flow's default stateless mode: the library tells you what happened when a node is added, a connection starts, or a drag completes, and the application updates its own signals.
+
+For editors that do not need a separate application store, the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin can hold typed graph records and apply supported gestures automatically. It does not change the manual event-driven approach shown in this series.
 
 In the next part, we’ll focus on styling and connection behavior. We’ll add curved lines, color schemes, arrows, custom states, and interactions like hover, click, and delete. These enhancements will give your flow editor a polished and professional feel.
 

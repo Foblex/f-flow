@@ -19,6 +19,7 @@ Drag nodes or groups into containers, build nested hierarchies, and manage dynam
 
 ## What this example shows
 
+- Turn the whole gesture on or off with the `[fDropToGroup]` input (on by default) — the "Drop to Group" toggle flips it live.
 - Move nodes or groups into another group and update parent-child relations through drag-and-drop.
 - Nest groups inside groups and nodes inside other containers when the editor needs hierarchy.
 - Create new nodes directly inside a target container via `fExternalItem`.
@@ -28,6 +29,7 @@ Drag nodes or groups into containers, build nested hierarchies, and manage dynam
 ## Practical tips
 
 - Use `fDropToGroup` when your app needs to validate or persist hierarchy changes.
+- With [Managed Flow State](./examples/state), enable `withFlowState({ dropToGroup: true })` to apply the emitted hierarchy change to the plugin store automatically; it remains off by default.
 - Combine external palettes with `fCreateNode` if users should spawn nodes directly inside any container.
 - Enable auto-expand when manual group resizing would slow down editing.
 - Nesting can go deep, but groups inside nodes are still not supported.

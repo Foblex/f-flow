@@ -5,6 +5,7 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { transitionEnd } from '../../transition-end';
 import { FCanvasBase } from '../../../f-canvas';
+import { TransformModelExtensions } from '@foblex/2d';
 
 /**
  * Execution that redraws the canvas with or without animation based on the request.
@@ -13,9 +14,10 @@ import { FCanvasBase } from '../../../f-canvas';
  */
 @Injectable()
 @FExecutionRegister(RedrawCanvasWithAnimationRequest)
-export class RedrawCanvasWithAnimation
-  implements IExecution<RedrawCanvasWithAnimationRequest, void>
-{
+export class RedrawCanvasWithAnimation implements IExecution<
+  RedrawCanvasWithAnimationRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   private get _canvas(): FCanvasBase {
@@ -24,10 +26,19 @@ export class RedrawCanvasWithAnimation
 
   public handle(request: RedrawCanvasWithAnimationRequest): void {
     request.animated ? this._redrawWithAnimation(request.context) : this._redraw(request.context);
-    this._canvas?.emitCanvasChangeEvent();
+    if (request.emitCanvasChange) {
+      this._canvas?.emitCanvasChangeEvent();
+    }
   }
 
   private _redrawWithAnimation(context: ECanvasRedrawContext): void {
+    const targetTransform = TransformModelExtensions.toString(this._canvas.transform);
+    if (this._canvas.hostElement.style.transform === targetTransform) {
+      this._redraw(context);
+
+      return;
+    }
+
     this._store.beginViewportAnimation();
     this._canvas?.redrawWithAnimation();
 

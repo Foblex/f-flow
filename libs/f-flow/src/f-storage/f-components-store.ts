@@ -91,14 +91,59 @@ export class FComponentsStore {
 
   public fDraggable: FDraggableBase | undefined;
 
+  private _isNodesNotifyScheduled = false;
+  private _isConnectionsNotifyScheduled = false;
+
+  /**
+   * Change notifications are coalesced to one per microtask: mounting a node
+   * with K connectors used to fire K+1 synchronous notifications, each running
+   * every listener (semantics rebuild, layout, minimap) — O(N^2) work across
+   * an N-node initial render. Revisions still increment synchronously, so code
+   * comparing revisions never observes stale values.
+   */
   public emitNodeChanges(): void {
     this._nodesRevision++;
-    this.nodesChanges$.notify();
+    if (this._isNodesNotifyScheduled) {
+      return;
+    }
+    this._isNodesNotifyScheduled = true;
+    queueMicrotask(() => {
+      this._isNodesNotifyScheduled = false;
+      this.nodesChanges$.notify();
+    });
   }
 
-  public emitConnectionChanges(): void {
+  /**
+   * Node ids whose connections need a redraw; `null` means "everything".
+   * Only the single-node resize/state path narrows the scope — every other
+   * emitter keeps today's full-redraw semantics.
+   */
+  private _dirtyConnectionNodeIds: Set<string> | null = null;
+
+  public emitConnectionChanges(dirtyNodeId?: string): void {
+    if (dirtyNodeId === undefined) {
+      this._dirtyConnectionNodeIds = null;
+    } else {
+      this._dirtyConnectionNodeIds?.add(dirtyNodeId);
+    }
+
     this._connectionsRevision++;
-    this.connectionsChanges$.notify();
+    if (this._isConnectionsNotifyScheduled) {
+      return;
+    }
+    this._isConnectionsNotifyScheduled = true;
+    queueMicrotask(() => {
+      this._isConnectionsNotifyScheduled = false;
+      this.connectionsChanges$.notify();
+    });
+  }
+
+  /** Returns the accumulated scope and starts collecting a fresh one. */
+  public takeConnectionsDirtyScope(): ReadonlySet<string> | null {
+    const scope = this._dirtyConnectionNodeIds;
+    this._dirtyConnectionNodeIds = new Set();
+
+    return scope;
   }
 
   public completeConnectionsRender(revision: number, nodesRevision: number): void {

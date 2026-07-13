@@ -14,6 +14,15 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
   private readonly _items: TInstance[] = [];
   private readonly _byId = new Map<string, TInstance>();
 
+  /**
+   * Removals are collected here and compacted out of `_items` in one pass on
+   * the next ordered read. A large teardown is O(n) total instead of the
+   * O(n^2) that per-removal indexOf+splice cost; `_byId` reflects removals
+   * immediately, so id lookups never see removed instances.
+   */
+  private readonly _pendingRemovals = new Set<TInstance>();
+  private _isCompactionScheduled = false;
+
   /** Used only for error messages. Example: "node", "connection", "input". */
   protected abstract readonly kind: string;
 
@@ -35,11 +44,13 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
   }
 
   public getAll(): TInstance[] {
+    this._compact();
+
     return this._items;
   }
 
   public size(): number {
-    return this._items.length;
+    return this._byId.size;
   }
 
   /**
@@ -51,6 +62,12 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
 
     if (this._byId.has(id)) {
       throw new Error(`${this.kind} already exists: ${id}`);
+    }
+
+    // Re-adding an instance whose removal is still pending would leave two
+    // copies in the ordered list; settle the pending removal first.
+    if (this._pendingRemovals.has(instance)) {
+      this._compact();
     }
 
     this._items.push(instance);
@@ -78,11 +95,8 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
     // Defensive: if another instance with same id is in registry (shouldn't happen),
     // we remove by id anyway.
     this._byId.delete(id);
-
-    const index = this._items.indexOf(existing);
-    if (index >= 0) {
-      this._items.splice(index, 1);
-    }
+    this._pendingRemovals.add(existing);
+    this._scheduleCompaction();
 
     return true;
   }
@@ -98,11 +112,8 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
     }
 
     this._byId.delete(id);
-
-    const index = this._items.indexOf(existing);
-    if (index >= 0) {
-      this._items.splice(index, 1);
-    }
+    this._pendingRemovals.add(existing);
+    this._scheduleCompaction();
 
     return existing;
   }
@@ -113,5 +124,34 @@ export abstract class FIdRegistryBase<TInstance extends FHasId> {
   public clear(): void {
     this._items.length = 0;
     this._byId.clear();
+    this._pendingRemovals.clear();
+  }
+
+  /** Compacts in place so `getAll()` keeps one array identity across reads. */
+  private _compact(): void {
+    if (!this._pendingRemovals.size) {
+      return;
+    }
+
+    let writeIndex = 0;
+    for (const item of this._items) {
+      if (!this._pendingRemovals.has(item)) {
+        this._items[writeIndex++] = item;
+      }
+    }
+    this._items.length = writeIndex;
+    this._pendingRemovals.clear();
+  }
+
+  /** Settles a removal batch before coalesced registry notifications run. */
+  private _scheduleCompaction(): void {
+    if (this._isCompactionScheduled) {
+      return;
+    }
+    this._isCompactionScheduled = true;
+    queueMicrotask(() => {
+      this._isCompactionScheduled = false;
+      this._compact();
+    });
   }
 }

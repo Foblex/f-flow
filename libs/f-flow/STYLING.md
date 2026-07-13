@@ -14,6 +14,7 @@ Observed host/base classes in source include `.f-flow`, `.f-canvas`, `.f-node`, 
 - Observed in source: `.f-node-output-connected` and `.f-node-input-connected` mark connectors that are currently connected.
 - Observed in source: `.f-node-output-not-connectable` and `.f-node-input-not-connectable` mark connectors that are present but currently not connectable.
 - Observed in source: `.f-grouping-drop-active` and `.f-grouping-over-boundary` are applied during drop-to-group interactions.
+- Observed in source: `.f-drop-to-group` is a host modifier class applied to the flow while the drop-to-group gesture is enabled (the default; toggled by the `fDropToGroup` input). The `.f-grouping-drop-active` / `.f-grouping-over-boundary` highlight is scoped under it.
 - Observed in source: `.f-node-dragging-disabled`, `.f-node-selection-disabled`, `.f-group-dragging-disabled`, `.f-group-selection-disabled`, `.f-connection-reassign-disabled`, and `.f-connection-selection-disabled` are host modifier classes for disabled interaction states.
 - Observed in source: `.f-node-input-disabled`, `.f-node-output-disabled`, and `.f-node-outlet-disabled` are connector/outlet disabled-state classes.
 - Observed in source: `.f-node-input-multiple`, `.f-node-output-multiple`, and `.f-node-output-self-connectable` are connector capability/modifier classes.

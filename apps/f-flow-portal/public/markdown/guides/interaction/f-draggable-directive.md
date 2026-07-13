@@ -26,6 +26,7 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 ### Inputs
 
 - `fDraggableDisabled: boolean;` Default: `false`. Disables all drag interactions.
+- `fDropToGroup: boolean;` Default: `true`. Enables the drop-to-group gesture. While on, the flow carries the `f-drop-to-group` CSS class so the grouping styles apply, dragging a node onto a group reparents it, and a dropped external item nests into the container under the pointer. Set it to `false` and none of that happens — no `fDropToGroup` event is emitted.
 - `fMultiSelectTrigger: FEventTrigger;` Default: `(event) => isMac ? event.metaKey : event.ctrlKey`. Trigger for multi-selection.
 - `fReassignConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `reassignConnection` (`always`). Trigger for reassigning connections.
 - `fCreateConnectionTrigger: FEventTrigger;` Default: the active [control scheme](control-scheme)'s `createConnection` (`always`). Trigger for creating connections.
@@ -51,7 +52,7 @@ The directive attaches to `f-flow`, initializes a drag sequence on pointer down,
 - `fCreateConnection: EventEmitter<FCreateConnectionEvent>;` Emits when a new connection is created.
 - `fConnectionWaypointsChanged: OutputEmitterRef<FConnectionWaypointsChangedEvent>;` Emits when connection waypoints change.
 - `fDropToGroup: EventEmitter<FDropToGroupEvent>;` Emits when items are dropped into a group.
-- `fDeleteSelected: EventEmitter<FDeleteSelectedEvent>;` Emits when the user requests removal of the current selection (keyboard `Delete`/`Backspace`); remove the items from your data — the library never mutates the graph.
+- `fDeleteSelected: EventEmitter<FDeleteSelectedEvent>;` Emits when the user requests removal of the current selection (keyboard `Delete`/`Backspace`). In the default stateless mode, remove the items from your data. The optional [Managed Flow State](./examples/state) plugin handles this supported gesture automatically while the event still fires.
 - `fDragStarted: EventEmitter<FDragStartedEvent>;` Emits when a drag sequence starts.
 - `fDragEnded: EventEmitter<void>;` Emits when a drag sequence ends.
 

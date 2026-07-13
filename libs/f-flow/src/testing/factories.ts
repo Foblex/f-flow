@@ -139,9 +139,23 @@ class NodeFactoryBuilder {
   private _selectionDisabled = false;
   private _hostElement: HTMLElement = document.createElement('div');
   private _overrides: SelectableOverrides = {};
+  private _position: IPoint = PointExtensions.initialize();
+  private _rotate = 0;
 
   public id(value: string): this {
     this._id = value;
+
+    return this;
+  }
+
+  public position(value: IPoint): this {
+    this._position = value;
+
+    return this;
+  }
+
+  public rotate(value: number): this {
+    this._rotate = value;
 
     return this;
   }
@@ -195,8 +209,12 @@ class NodeFactoryBuilder {
       fId: readonlySignal(this._id),
       fParentId: readonlySignal(this._parentId),
       fSelectionDisabled: readonlySignal(this._selectionDisabled),
+      fMinimapClass: readonlySignal<string[] | string>([]),
       hostElement: this._hostElement,
       connectors: [] as FConnectorBase[],
+      _position: this._position,
+      _rotate: this._rotate,
+      _size: undefined,
       markAsSelected: selectable.markAsSelected,
       unmarkAsSelected: selectable.unmarkAsSelected,
       isSelected: selectable.isSelected,

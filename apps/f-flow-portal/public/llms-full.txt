@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v19.0.0 (May 2026)
+- **Current version**: v19.1.0 (July 2026)
 - **Weekly installs**: ~16K
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -33,12 +33,10 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 
 ## 3. Core mental model
 
-- The library does NOT own your graph state.
-- Your app owns nodes, groups, connections, ids, validation, and persistence.
-- Angular templates render the current state.
-- User actions emit events from fDraggable or model outputs.
-- Your app updates state, Angular rerenders.
-- Connections are connector-to-connector (fOutputId → fInputId), not generic node-to-node edges.
+- Classic mode is the default: your app owns graph records, handles interaction events, and Angular rerenders its state.
+- Managed mode is opt-in through `provideFFlow(withFlowState())`: `FFlowState` owns record bookkeeping and undo/redo for supported gestures while your app still owns domain fields, validation and persistence.
+- Both modes render state through normal Angular templates.
+- Connections are connector-to-connector (`fSourceId` → `fTargetId` referencing `fConnectorId`), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
 - Dev-mode diagnostics: the library warns with stable FFxxxx codes (see https://flow.foblex.com/docs/errors) on the most common silent failures — unresolved connection ids (FF1001), zero-height host (FF1002), connector outside a node (FF1003), content not projected into the canvas (FF1004), interaction features without fDraggable (FF1005), CSS-hidden connectors (FF1006), nested fNode elements (FF1007), dangling parent ids (FF1008), viewport helpers called before nodes rendered (FF1009; call from fNodesRendered or fFullRendered).
 - Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
@@ -251,9 +249,9 @@ Selector: `f-canvas`
 | getScale | getScale(): number | Get current zoom scale |
 | setScale | setScale(scale: number, toPosition?: IPoint): void | Set zoom with optional pivot point |
 | resetScale | resetScale(): void | Reset zoom to 1 |
-| resetScaleAndCenter | resetScaleAndCenter(animated?: boolean): void | Reset zoom and center content |
-| fitToScreen | fitToScreen(padding?: IPoint, animated?: boolean): void | Fit all content in viewport |
-| centerGroupOrNode | centerGroupOrNode(id: string, animated?: boolean): void | Center on a specific item |
+| resetScaleAndCenter | resetScaleAndCenter(animated?: boolean, emitCanvasChange?: boolean): void | Reset zoom and center content; optionally suppress `fCanvasChange` |
+| fitToScreen | fitToScreen(padding?: IPoint, animated?: boolean, emitCanvasChange?: boolean): void | Fit all content in viewport; optionally suppress `fCanvasChange` |
+| centerGroupOrNode | centerGroupOrNode(id: string, animated?: boolean, emitCanvasChange?: boolean): void | Center on a specific item; optionally suppress `fCanvasChange` |
 
 #### CSS Classes
 
@@ -594,6 +592,7 @@ Selector: `f-flow[fDraggable]`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fDraggableDisabled | boolean | false | Disable all interactions |
+| fDropToGroup | boolean | true | Enable the drop-to-group gesture. When on, the flow carries the `f-drop-to-group` CSS class (grouping styles apply), dragging a node onto a group reparents it, and a dropped external item nests into the container. Set false and none of that happens (no `fDropToGroup` event). Note: the same public name `fDropToGroup` is also an output event (below) — `[fDropToGroup]` binds this input, `(fDropToGroup)` binds the event. |
 | fMultiSelectTrigger | FEventTrigger | Ctrl/Cmd key | Predicate for multi-select |
 | fReassignConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection reassign |
 | fCreateConnectionTrigger | FEventTrigger | active scheme (always) | Predicate for connection create |
@@ -619,7 +618,7 @@ Selector: `f-flow[fDraggable]`
 | fCreateConnection | EventEmitter\<FCreateConnectionEvent\> | New connection created |
 | fReassignConnection | EventEmitter\<FReassignConnectionEvent\> | Connection endpoint reassigned |
 | fConnectionWaypointsChanged | OutputEmitterRef\<FConnectionWaypointsChangedEvent\> | Waypoints modified |
-| fDropToGroup | EventEmitter\<FDropToGroupEvent\> | Node dropped into group |
+| fDropToGroup | EventEmitter\<FDropToGroupEvent\> | Node dropped into group (shares its public name with the `fDropToGroup` toggle input above) |
 | fDragStarted | EventEmitter\<FDragStartedEvent\> | Any drag interaction started |
 | fDragEnded | EventEmitter\<void\> | Any drag interaction ended |
 | fNodeConnectionsIntersection | OutputEmitterRef\<FNodeConnectionsIntersectionEvent\> | Node-connection intersection detected |
@@ -792,6 +791,90 @@ Provider feature that maps gestures to canvas actions for `fDraggable`, `fZoom`,
 Presets: `F_DEFAULT_CONTROL_SCHEME` (drag pans, wheel zooms, Shift+drag selects), `F_SCROLL_PAN_CONTROL_SCHEME` (Miro-like: scroll pans, drag on empty canvas selects, middle-drag pans), `F_DRAG_SELECT_CONTROL_SCHEME` (draw.io-like: wheel zooms, drag on empty canvas selects, middle-drag pans).
 
 Runtime API: `FControlSchemeController` with `scheme: Signal<IFControlScheme>`, `getScheme()`, and `setScheme(config)` (merges partial gestures; a full preset replaces the scheme). Trigger helpers: `primaryButtonEventTrigger`, `middleButtonEventTrigger`, `isOnFlowBackground`.
+
+---
+
+### Managed Flow State (withFlowState)
+
+Managed state is optional. Install `provideFFlow(withFlowState(config))` to provide an `FFlowState` store that owns record bookkeeping, batches supported gesture events, and supplies undo/redo. Without this feature, the classic event-driven API is unchanged and the application owns all graph state.
+
+```typescript
+interface EditorNode extends IFStateNode {
+  text: string;
+}
+
+@Component({
+  providers: [provideFFlow(withFlowState())],
+})
+export class Editor {
+  readonly state = injectFlowState<EditorNode>();
+
+  constructor() {
+    this.state.load({ nodes: [], groups: [], connections: [] });
+  }
+}
+```
+
+Render `state.nodes()`, `state.groups()` and `state.connections()` with Angular `@for`. Connection `sourceId`/`targetId` values are connector ids and bind directly to `fSourceId`/`fTargetId`. Bind `<f-canvas [position]="state.transform().position" [scale]="state.transform().scale">` when viewport undo/redo should restore the visible view.
+
+#### Record types
+
+```typescript
+interface IFStateNode {
+  id: string;
+  position: IPoint;
+  size?: ISize;
+  rotate?: number;
+  parentId?: string | null;
+}
+
+interface IFStateGroup {
+  id: string;
+  position: IPoint;
+  size?: ISize;
+  rotate?: number;
+  parentId?: string | null;
+}
+
+interface IFStateConnection {
+  id: string;
+  sourceId: string; // connector id
+  targetId: string; // connector id
+}
+```
+
+Extend these interfaces with application fields. The store preserves custom fields without a `data` wrapper.
+
+#### Configuration
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| historyLimit | number | 50 | Maximum undo entries |
+| selectionInHistory | boolean | true | Include selection in history; drag selection batches with movement |
+| canvasTransformInHistory | boolean | true | Include user pan/zoom in history; transform remains tracked when false |
+| canvasTransformDebounce | number | 0 | Debounce viewport history commits in milliseconds |
+| dropToGroup | boolean | false | Reparent dropped records and nest external items into groups |
+| connectionFactory | (event) => IFStateConnection \| null | generated record | Shape or veto a gesture-created connection |
+| nodeFactory | (event) => IFStateNode \| null | payload + externalItemRect | Shape or veto an external-item drop; use normalized `externalItemRect`, not optional raw `dropPosition` |
+| stateClass | Type\<FFlowState\> | FFlowState | Install an application subclass |
+
+#### Store API
+
+Signals: `nodes`, `groups`, `connections`, `selection`, `transform`, `changes`, `canUndo`, `canRedo`.
+
+Data methods: `load`, `snapshot`, `getNode`, `getGroup`, `getConnection`.
+
+Mutation methods: `addNodes`, `updateNode`, `moveNodes`, `removeNodes`, `addGroups`, `updateGroup`, `removeGroups`, `addConnections`, `updateConnection`, `removeConnections`, `removeItems`.
+
+History methods: `undo`, `redo`, `clearHistory`, `batch`. A standalone mutation increments `changes()` when it settles. Mutations inside an outer batch update collection signals immediately but produce one undo entry and one `changes()` increment when the batch closes. The controller keeps one batch open from `fDragStarted` through `fDragEnded`, so selection at drag start plus move/drop at drag end remains one action even across ticks.
+
+Supported automatic v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. Rotation, connection waypoint editing, and user resize are not captured by managed state v1. Library-driven measured-size/group-auto-fit updates may amend current geometry without creating another user history step.
+
+Programmatic viewport helpers emit `fCanvasChange` by default and therefore enter managed history. For initialization or another application-driven adjustment, pass `emitCanvasChange = false`, for example `canvas.resetScaleAndCenter(false, false)`.
+
+Connection deletion cascade depends on the rendered connector registry because state records contain connector ids but not connector-owner node ids. UI deletion against a rendered flow cascades automatically. Before connectors render (including immediate post-`load()` editing or SSR), explicitly remove attached connection ids in the same `state.batch(...)`.
+
+Every store behavior can be overridden by subclassing `FFlowState` and installing the class through `withFlowState({ stateClass: MyState })`.
 
 ---
 

@@ -54,7 +54,11 @@ export abstract class FConnectorBase implements IHasHostElement {
 
   public setConnected(toConnector: FConnectorBase): void {
     this._isConnected = true;
-    this.toConnector.push(toConnector);
+    // Idempotent so scoped connection redraws can re-mark endpoints without
+    // resetting the whole graph's connected state first.
+    if (!this.toConnector.includes(toConnector)) {
+      this.toConnector.push(toConnector);
+    }
   }
 
   public resetConnected(): void {

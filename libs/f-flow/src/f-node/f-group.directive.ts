@@ -19,12 +19,11 @@ import {
   AddNodeToStoreRequest,
   UpdateNodeWhenStateOrSizeChangedRequest,
   RemoveNodeFromStoreRequest,
-  CalculateConnectorsConnectableSidesRequest,
+  ConnectableSidesScheduler,
 } from '../domain';
 import { FMediator } from '@foblex/mediator';
 
 let uniqueId = 0;
-const _DEBOUNCE_TIME = 3;
 
 @Directive({
   standalone: false,
@@ -43,10 +42,9 @@ export class FGroupDirective
   extends FNodeBase
   implements OnInit, AfterViewInit, IHasHostElement, OnDestroy
 {
-  private _debounceTimer: ReturnType<typeof setTimeout> | null = null;
-
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _mediator = inject(FMediator);
+  private readonly _sidesScheduler = inject(ConnectableSidesScheduler);
 
   public override readonly fId = input<string>(`f-group-${uniqueId++}`, { alias: 'fGroupId' });
 
@@ -132,17 +130,7 @@ export class FGroupDirective
       return;
     }
 
-    if (this._debounceTimer) {
-      clearTimeout(this._debounceTimer);
-    }
-    this._debounceTimer = setTimeout(
-      () => this._calculateNodeConnectorsConnectableSides(),
-      _DEBOUNCE_TIME,
-    );
-  }
-
-  private _calculateNodeConnectorsConnectableSides(): void {
-    this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(this));
+    this._sidesScheduler.schedule(this);
   }
 
   public ngAfterViewInit(): void {

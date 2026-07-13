@@ -12,6 +12,7 @@ import { DropToGroupHandler } from '../../drop-to-group';
 import { BrowserService } from '@foblex/platform';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { IDragExternalItemDragResult } from '../i-drag-external-item-drag-result';
+import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-point';
 
 @Injectable()
 @FExecutionRegister(DragExternalItemFinalizeRequest)
@@ -68,11 +69,9 @@ export class DragExternalItemFinalize implements IExecution<DragExternalItemFina
   }
 
   private _getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return this._browser.document
-      .elementsFromPoint(position.x, position.y)
-      .filter(
-        (x) => !x.closest('.f-external-item') && !x.closest('.f-external-item-preview'),
-      ) as HTMLElement[];
+    return getDeepElementsFromPoint(this._browser.document, position.x, position.y).filter(
+      (x) => !x.closest('.f-external-item') && !x.closest('.f-external-item-preview'),
+    ) as HTMLElement[];
   }
 
   private _emitEvent(

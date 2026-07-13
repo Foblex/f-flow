@@ -66,3 +66,4 @@ Controls how close the dragged node must be to the “equal spacing” position 
 
 - Magnetic Rects focus on spacing. If you need classic alignment guides for edges and centers, use Magnetic Lines.
 - The plugin is UX-only and does not own your diagram state - you still control node positions.
+- This remains true when [Managed Flow State](./examples/state) is enabled: Magnetic Rects only assists the gesture, while the separate state plugin records the resulting supported move.

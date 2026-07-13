@@ -52,11 +52,13 @@ describe('FConnectorDirective', () => {
 
   it('defaults to type source-target', () => {
     const element = hostElement.querySelector('[data-f-connector-id="both"]') as HTMLElement;
+    const connector = store.connectors.require('both');
 
     expect(element.getAttribute('data-f-connector-type')).toBe('source-target');
     expect(element.classList).toContain('f-connector');
     expect(element.classList).toContain('f-connector-source-target');
     expect(element.classList).toContain('f-connector-multiple');
+    expect(connector.isSelfConnectable).toBeTrue();
   });
 
   it('applies type-specific and disabled classes', () => {

@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-03-08"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-13"
 ---
 
 # Angular Node-Based UI Library
@@ -28,12 +28,15 @@ Many graph UI tools are React-first, or they bring their own store and conventio
 - your application keeps ownership of data, validation, permissions, and persistence,
 - you can compose the editor with your own services, signals, RxJS streams, or NgRx state.
 
+This stateless model remains the default. Teams that do not need an existing store can opt into [Managed Flow State](./examples/state) for typed graph records, supported gesture writeback, snapshots and undo/redo; business meaning and persistence stay application-owned.
+
 ## Key capabilities
 
 - `f-flow` and `f-canvas` as the editor root and viewport.
 - Nodes, connectors, groups, and persisted connections.
 - Drag-to-connect, drag-to-reassign, box selection, zoom, minimap, snapping, and waypoints.
 - Helper plugins such as Magnetic Lines and Magnetic Rects for cleaner layouts.
+- Optional Managed Flow State for library-managed graph records and interaction history.
 - A UI-agnostic foundation that works with Angular Material or your own design system.
 
 ## Related docs and examples
