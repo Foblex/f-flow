@@ -1,0 +1,62 @@
+@let nodeModel = node();
+
+<call-center-node-header
+  [expanded]="isExpanded()"
+  [type]="nodeModel.type"
+  [description]="nodeModel.description"
+  (expandedChange)="setExpanded($event)"
+  fDragHandle
+/>
+
+@if (isExpanded()) {
+<div class="node-form" fDragBlocker>
+  @switch (nodeModel.type) { @case (nodeType.USER_INPUT) {
+  <call-center-ivr-form [formControl]="form" />
+  } @case (nodeType.PLAY_TEXT) {
+  <call-center-play-text-form [formControl]="form" />
+  } @case (nodeType.CHECK_SCHEDULE) {
+  <call-center-schedule-form [formControl]="form" />
+  } @case (nodeType.QUEUE_CALL) {
+  <call-center-queue-form [formControl]="form" />
+  } @case (nodeType.TO_OPERATOR) {
+  <call-center-operator-form [formControl]="form" />
+  } @case (nodeType.TRANSFER_CALL) {
+  <call-center-transfer-form [formControl]="form" />
+  } @case (nodeType.VOICEMAIL) {
+  <call-center-voicemail-form [formControl]="form" />
+  } }
+</div>
+}
+
+<div class="node-outputs" [class.expanded]="isExpanded()">
+  @for (output of nodeModel.outputs; track output.id) {
+  <div class="output-item">
+    @if (isExpanded()) {
+    <span>{{ output.label }}</span>
+    }
+    <div
+      class="flow-output-connector"
+      fConnector
+      fConnectorType="source"
+      [fConnectorId]="output.id"
+      [fConnectorConnectableSide]="
+          isExpanded() ? connectableSide.RIGHT : connectableSide.BOTTOM
+        "
+      [fConnectorMultiple]="false"
+      [fConnectorSelfConnectable]="false"
+    >
+      @if (connectedOutputIds().has(output.id)) {
+      <button
+        type="button"
+        class="remove-output-connection"
+        fDragBlocker
+        [attr.aria-label]="'Remove ' + (output.label || 'output') + ' connection'"
+        (click)="removeOutputConnection(output.id)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>

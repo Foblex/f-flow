@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow-elk-layout",
-  "version": "19.1.0",
+  "version": "19.1.2",
   "description": "ELK.js layout engine adapter for Foblex Flow.",
   "main": "index.js",
   "types": "index.d.ts",

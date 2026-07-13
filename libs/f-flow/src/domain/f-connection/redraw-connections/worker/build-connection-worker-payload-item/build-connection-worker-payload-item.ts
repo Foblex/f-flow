@@ -6,9 +6,10 @@ import { BuildConnectionWorkerPayloadItemRequest } from './build-connection-work
 
 @Injectable()
 @FExecutionRegister(BuildConnectionWorkerPayloadItemRequest)
-export class BuildConnectionWorkerPayloadItem
-  implements IExecution<BuildConnectionWorkerPayloadItemRequest, IConnectionWorkerPayloadItem>
-{
+export class BuildConnectionWorkerPayloadItem implements IExecution<
+  BuildConnectionWorkerPayloadItemRequest,
+  IConnectionWorkerPayloadItem
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({
@@ -21,8 +22,8 @@ export class BuildConnectionWorkerPayloadItem
     return {
       originalIndex,
       behavior: connection.fBehavior,
-      outputSide: connection.fOutputSide(),
-      inputSide: connection.fInputSide(),
+      outputSide: connection.sourceSide(),
+      inputSide: connection.targetSide(),
       sourceConnectableSide: source.fConnectableSide,
       targetConnectableSide: target.fConnectableSide,
       sourceRotation: this._store.nodes.get(source.fNodeId)?._rotate || 0,

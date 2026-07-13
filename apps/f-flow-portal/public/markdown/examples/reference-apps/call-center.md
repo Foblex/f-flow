@@ -2,7 +2,7 @@
 toc: false
 wideContent: true
 publishedAt: "2026-04-13"
-updatedAt: "2026-04-13"
+updatedAt: "2026-07-13"
 ---
 
 # Call Center Flow
@@ -30,11 +30,25 @@ This example shows how to build a product-style call-routing editor on top of Fo
 - `f-flow` and `f-canvas` as the workflow surface.
 - `fZoom` for viewport scaling and pan.
 - `fExternalItem` and `fCreateNode` for palette-driven node creation.
-- `fNode`, `fNodeInput`, and `fNodeOutput` for call-flow steps and connectors.
+- `fNode` and the unified `fConnector` API for call-flow steps and connectors.
 - `fConnection` with segmented routing and `fConnectionMarkerArrow` for directional links.
 - `fConnectionForCreate` for drag-to-connect interaction.
-- `fMoveNodes`, `fCreateConnection`, `fReassignConnection`, and `fSelectionChange` events for synchronizing editor state.
+- `withFlowState()` for typed records, automatic gesture updates, undo/redo, and local persistence.
+- `withReflowOnResize()` for moving downstream steps when an embedded node form expands or collapses.
+- `withA11y()` and the default control scheme for keyboard and pointer interaction.
 - `fBackground`, `fCirclePattern`, `fLineAlignment`, `fSelectionArea`, and `fMinimap` for canvas usability.
+
+## Application architecture
+
+`CallCenterFlowState` owns editor history and domain commands, `CallCenterFlowStorage` owns local persistence and legacy snapshot normalization, and domain factories construct valid node records and the default call flow. UI components depend on those responsibilities instead of duplicating state, persistence, or record-construction logic.
+
+## Expand, reflow, and undo as one action
+
+An expand/collapse click updates the node record synchronously, while reflow positions arrive later after Angular rendering and `ResizeObserver`. The example opens `FFlowState.beginBatch()` before storing `isExpanded` and closes it after the resize-driven render turn. Reflow's `fMoveNodes` event is therefore committed into the same history item, so one undo restores both the node's content state and every shifted node position.
+
+The toggle also carries `fDragBlocker` because it is rendered inside the node's `fDragHandle`. This keeps the button click from producing a separate selection history item before the expand/reflow transaction.
+
+See the complete [async reflow transaction recipe](./examples/state), including why synchronous `batch()` is insufficient and when two animation frames should be replaced by a real completion signal.
 
 ## Why It Matters
 

@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v19.1.0 (July 2026)
+- **Current version**: v19.1.2 (July 2026)
 - **Weekly installs**: ~16K
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -866,7 +866,26 @@ Data methods: `load`, `snapshot`, `getNode`, `getGroup`, `getConnection`.
 
 Mutation methods: `addNodes`, `updateNode`, `moveNodes`, `removeNodes`, `addGroups`, `updateGroup`, `removeGroups`, `addConnections`, `updateConnection`, `removeConnections`, `removeItems`.
 
-History methods: `undo`, `redo`, `clearHistory`, `batch`. A standalone mutation increments `changes()` when it settles. Mutations inside an outer batch update collection signals immediately but produce one undo entry and one `changes()` increment when the batch closes. The controller keeps one batch open from `fDragStarted` through `fDragEnded`, so selection at drag start plus move/drop at drag end remains one action even across ticks.
+History methods: `undo`, `redo`, `clearHistory`, `batch`, `beginBatch`, `endBatch`. A standalone mutation increments `changes()` when it settles. Mutations inside an outer batch update collection signals immediately but produce one undo entry and one `changes()` increment when the batch closes. The controller keeps one batch open from `fDragStarted` through `fDragEnded`, so selection at drag start plus move/drop at drag end remains one action even across ticks. Use `batch(work)` for synchronous mutations and a matched `beginBatch()` / `endBatch()` pair when one logical action crosses asynchronous boundaries.
+
+#### Expand/collapse plus reflow as one undo item
+
+With `withFlowState()` and `withReflowOnResize()`, expanding a node changes its record immediately, but reflow positions arrive later: Angular must render the new size, then `ResizeObserver` emits an `fMoveNodes` event. A synchronous `batch(() => ...)` closes before that event and can create a second undo item.
+
+```typescript
+state.beginBatch();
+
+try {
+  state.updateNode(nodeId, { isExpanded });
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+} finally {
+  state.endBatch();
+}
+```
+
+The managed state controller applies the later reflow `fMoveNodes` update while the transaction is open. The first mutation retains the shape from before the click, so one `undo()` restores both `isExpanded` and all positions moved by reflow; the outer close also produces one `changes()` increment. Two animation frames are suitable for an immediately rendered content-size change. If size settles after a CSS transition, lazy load, or another asynchronous layout stage, close from that stage's real completion signal. Never leave a batch open, or unrelated later mutations will be merged into the same history entry. Full guide: https://flow.foblex.com/examples/state
 
 Supported automatic v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. Rotation, connection waypoint editing, and user resize are not captured by managed state v1. Library-driven measured-size/group-auto-fit updates may amend current geometry without creating another user history step.
 

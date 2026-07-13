@@ -142,6 +142,27 @@ export class Editor {
 - For initial or other application-driven viewport positioning, suppress the event at the canvas helper: `canvas.resetScaleAndCenter(false, false)`. The second `false` means `emitCanvasChange = false`, so managed history is untouched.
 - Connection endpoints are connector ids. Automatic cascade from node/group deletion uses the rendered connector registry; before connectors render, remove known attached connection ids explicitly in the same `state.batch(...)`.
 
+### Async reflow must stay inside an open transaction
+
+When an application expands/collapses a node, its record changes synchronously but `withReflowOnResize()` emits the resulting `fMoveNodes` positions later, after Angular rendering and `ResizeObserver`. Do not use synchronous `state.batch(() => ...)` if both changes must be one undo item. Open the transaction before changing the record and close it only after reflow settles:
+
+```typescript
+state.beginBatch();
+
+try {
+  state.updateNode(nodeId, { isExpanded });
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+} finally {
+  state.endBatch();
+}
+```
+
+The state controller applies reflow's `fMoveNodes` event inside the open transaction. One `undo()` then restores both the expanded value and every moved position. Two frames fit an immediately rendered size change; for CSS transitions, lazy content, or longer asynchronous layout, close from the real completion signal. Always close in `finally`, because an unclosed batch merges unrelated future mutations into the same history entry.
+
+If the toggle is nested inside `fDragHandle`, add `fDragBlocker` to the toggle. Otherwise its pointer down can select the node first; with `selectionInHistory: true`, that selection is a separate intentional history item even though expand and reflow share one batch.
+
 ## Common Silent Failures — Check These First
 
 When the flow compiles but looks wrong, verify in this order:
@@ -195,6 +216,7 @@ See [STYLING.md](./STYLING.md).
 - Human docs: https://flow.foblex.com/docs/get-started
 - Live examples with source: https://flow.foblex.com/examples/overview
 - Managed state example and contract: https://flow.foblex.com/examples/state
+- Managed state + asynchronous reflow recipe: https://flow.foblex.com/examples/state
 
 ## Fallback Rule
 

@@ -46,7 +46,10 @@ import { FMoveNodesEvent } from './drag-node';
         <div
           fNode
           fDragHandle
+          fConnector
           fNodeId="source-node"
+          fConnectorId="source-node-target"
+          fConnectorType="target"
           [fNodePosition]="{ x: 40, y: 50 }"
         >
           <button
@@ -150,7 +153,62 @@ describe('FDraggable in Shadow DOM', () => {
     expect(fixture.componentInstance.connectionEvents[0].sourceId).toBe('source');
     expect(fixture.componentInstance.connectionEvents[0].targetId).toBe('target');
   }));
+
+  it('drags from a source nested inside a target connector', fakeAsync(() => {
+    const fixture = TestBed.createComponent(ShadowDomFlowHost);
+    fixture.detectChanges();
+    tick(300);
+    fixture.detectChanges();
+
+    const shadowRoot = fixture.nativeElement.shadowRoot as ShadowRoot;
+    const source = shadowRoot.querySelector('[data-f-connector-id="source"]') as HTMLElement;
+    const target = shadowRoot.querySelector('[data-f-connector-id="target"]') as HTMLElement;
+
+    dispatchConnectionDrag(source, target);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.connectionEvents.length).toBe(1);
+    expect(fixture.componentInstance.connectionEvents[0].sourceId).toBe('source');
+    expect(fixture.componentInstance.connectionEvents[0].targetId).toBe('target');
+  }));
 });
+
+function dispatchConnectionDrag(source: HTMLElement, target: HTMLElement): void {
+  const sourceRect = source.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const sourceX = sourceRect.left + sourceRect.width / 2;
+  const sourceY = sourceRect.top + sourceRect.height / 2;
+  const targetX = targetRect.left + targetRect.width / 2;
+  const targetY = targetRect.top + targetRect.height / 2;
+
+  source.dispatchEvent(
+    new MouseEvent('mousedown', {
+      bubbles: true,
+      composed: true,
+      button: 0,
+      buttons: 1,
+      clientX: sourceX,
+      clientY: sourceY,
+    }),
+  );
+  document.dispatchEvent(
+    new MouseEvent('mousemove', {
+      bubbles: true,
+      buttons: 1,
+      clientX: targetX,
+      clientY: targetY,
+    }),
+  );
+  document.dispatchEvent(
+    new PointerEvent('pointerup', {
+      bubbles: true,
+      button: 0,
+      pointerType: 'mouse',
+      clientX: targetX,
+      clientY: targetY,
+    }),
+  );
+}
 
 function dispatchClick(element: HTMLElement): void {
   const rect = element.getBoundingClientRect();

@@ -1,0 +1,52 @@
+<call-center-flow-toolbar
+  (actionTriggered)="executeAction($event)"
+  (resetRequested)="resetFlow()"
+/>
+<call-center-node-palette />
+
+<f-flow fDraggable aria-label="Call center flow editor" (fFullRendered)="editorLoaded()">
+  <f-background>
+    <f-circle-pattern />
+  </f-background>
+  <f-line-alignment [fAlignThreshold]="20" />
+  <f-selection-area />
+  <f-canvas
+    fZoom
+    [scale]="transform().scale"
+    [position]="transform().position"
+    [debounceTime]="200"
+  >
+    @for (connection of connections(); track connection.id) {
+    <f-connection
+      fBehavior="fixed"
+      [fConnectionId]="connection.id"
+      [fOffset]="32"
+      fType="segment"
+      [fSourceId]="connection.sourceId"
+      [fTargetId]="connection.targetId"
+      fTargetSide="calculate"
+    >
+      <f-connection-marker-arrow />
+    </f-connection>
+    }
+
+    <f-connection-for-create fType="segment" [fOffset]="0">
+      <f-connection-marker-arrow />
+    </f-connection-for-create>
+
+    @for (node of nodes(); track node.id) {
+    <call-center-node
+      fNode
+      fConnector
+      fConnectorType="target"
+      [attr.aria-label]="nodeAriaLabel(node)"
+      [fNodeId]="node.id"
+      [fConnectorId]="node.input"
+      [fConnectorDisabled]="!node.input"
+      [fNodePosition]="node.position"
+      [node]="node"
+    />
+    }
+  </f-canvas>
+  <f-minimap [fMinSize]="2000" />
+</f-flow>
