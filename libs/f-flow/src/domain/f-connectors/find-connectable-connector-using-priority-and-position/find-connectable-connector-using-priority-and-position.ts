@@ -11,6 +11,7 @@ import { CalculateClosestConnectorRequest } from '../calculate-closest-connector
 import { FSnapConnectionComponent } from '../../../f-connection';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { calculatePointerInFlow } from '../../../utils';
+import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-point';
 
 /**
  * Execution that finds a connectable connector at a given position with priority.
@@ -123,7 +124,11 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
   }
 
   private _getElementsFromPoint(position: IPoint): HTMLElement[] {
-    return this._browser.document.elementsFromPoint(position.x, position.y) as HTMLElement[];
+    return getDeepElementsFromPoint(
+      this._browser.document,
+      position.x,
+      position.y,
+    ) as HTMLElement[];
   }
 
   private _findConnectableNode(element: HTMLElement): FNodeBase | undefined {

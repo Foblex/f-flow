@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [19.1.0](https://github.com/Foblex/f-flow/compare/v19.0.0...v19.1.0) (Unreleased)
+## [19.1.0](https://github.com/Foblex/f-flow/compare/v19.0.0...v19.1.0) (2026-07-13)
 
 ### Highlights
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+- **shadow-dom:** support flows rendered inside Angular Elements and components using `ViewEncapsulation.ShadowDom`. Normal DOM events keep using `event.target`; document-level gestures fall back to the composed path only after Shadow DOM retargeting, and coordinate hit-testing enters open shadow roots. Closed shadow roots remain unsupported. Addresses [discussion #315](https://github.com/Foblex/f-flow/discussions/315).
 - **flow-state:** supported v1 gestures automatically update managed records for connection create/reassign, node/group movement, deletion, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. One drag remains one history action even when selection and movement arrive in different ticks; `changes()` increments when the outer batch settles.
 - **flow-state:** add `historyLimit`, `selectionInHistory`, `canvasTransformInHistory`, `canvasTransformDebounce`, `dropToGroup`, `connectionFactory`, `nodeFactory`, and custom `stateClass` configuration.
 - **f-canvas:** `resetScaleAndCenter`, `fitToScreen`, and `centerGroupOrNode` now accept an optional `emitCanvasChange` argument. Pass `false` for initialization or another application-driven viewport change that must not enter external or managed history.

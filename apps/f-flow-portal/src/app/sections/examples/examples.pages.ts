@@ -798,6 +798,7 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'State',
     group: 'Editor State',
     date: new Date('2026-07-07 18:30:00'),
+    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Managed Flow State',
       description:

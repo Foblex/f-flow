@@ -1,10 +1,12 @@
+import { getEventTargetElement } from '../../../utils/get-event-target-element';
+
 export abstract class IPointerEvent {
   public get originalEvent(): MouseEvent | TouchEvent {
     return this._event;
   }
 
   public get targetElement(): HTMLElement {
-    return this._target || (this.originalEvent.target as HTMLElement);
+    return this._target;
   }
 
   public get touchEvent(): TouchEvent {
@@ -15,10 +17,16 @@ export abstract class IPointerEvent {
     return this.touchEvent.touches;
   }
 
+  private _target: HTMLElement;
+
   protected constructor(
     private readonly _event: MouseEvent | TouchEvent,
-    private _target?: HTMLElement,
-  ) {}
+    target?: HTMLElement,
+  ) {
+    // Drag preparation may run after dispatch, when composedPath() is already empty.
+    this._target =
+      target ?? (getEventTargetElement(_event, 'f-flow, .f-external-item') as HTMLElement);
+  }
 
   public setTarget(target: HTMLElement): void {
     this._target = target;

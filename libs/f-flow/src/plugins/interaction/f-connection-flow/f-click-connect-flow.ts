@@ -16,6 +16,10 @@ import {
   getAllSourceConnectors,
   isOutletConnector,
 } from '../../../f-connectors';
+import {
+  FEventTargetElement,
+  getEventTargetElement,
+} from '../../../utils/get-event-target-element';
 
 const CLICK_MOVE_TOLERANCE = 3;
 
@@ -83,7 +87,10 @@ export class FClickConnectFlow implements IFConnectionFlow {
       return;
     }
 
-    const target = event.target as HTMLElement;
+    const target = getEventTargetElement(event, 'f-flow');
+    if (!target) {
+      return;
+    }
     if (!this._store.flowHost?.contains(target)) {
       return;
     }
@@ -119,7 +126,7 @@ export class FClickConnectFlow implements IFConnectionFlow {
     );
   };
 
-  private _arm(event: MouseEvent, target: HTMLElement): void {
+  private _arm(event: MouseEvent, target: FEventTargetElement): void {
     const source = this._resolveSource(target);
     if (!source) {
       return;
@@ -146,10 +153,11 @@ export class FClickConnectFlow implements IFConnectionFlow {
     }
 
     // Clicking another source connector re-arms from it; anything else cancels.
-    const nextSource = this._resolveSource(event.target as HTMLElement);
+    const target = getEventTargetElement(event, 'f-flow');
+    const nextSource = target ? this._resolveSource(target) : undefined;
     this._cancel();
-    if (nextSource) {
-      this._arm(event, event.target as HTMLElement);
+    if (nextSource && target) {
+      this._arm(event, target);
     }
   }
 
@@ -169,7 +177,7 @@ export class FClickConnectFlow implements IFConnectionFlow {
    * as the drag path: `target`-type and disabled connectors cannot start, outlets
    * resolve to a connectable source of their node.
    */
-  private _resolveSource(target: HTMLElement): FSourceConnectorBase | undefined {
+  private _resolveSource(target: FEventTargetElement): FSourceConnectorBase | undefined {
     const connector =
       this._findUnifiedConnector(target) ??
       this._store.outlets.getAll().find((x) => x.hostElement.contains(target)) ??
@@ -190,7 +198,7 @@ export class FClickConnectFlow implements IFConnectionFlow {
     return connector.canBeConnected ? (connector as FSourceConnectorBase) : undefined;
   }
 
-  private _findUnifiedConnector(target: HTMLElement): FConnectorDirective | undefined {
+  private _findUnifiedConnector(target: FEventTargetElement): FConnectorDirective | undefined {
     return this._store.connectors
       .getAll()
       .find(

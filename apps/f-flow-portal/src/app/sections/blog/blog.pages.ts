@@ -29,6 +29,24 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
+    text: 'v19.1.0',
+    group: 'Releases',
+    date: new Date('2026-07-13T12:00:00.000Z'),
+    seo: {
+      title: 'Foblex Flow v19.1.0: Managed State, Faster Large Flows, and Shadow DOM Support',
+      description:
+        'Foblex Flow v19.1 adds opt-in typed graph state with batched undo and redo, reduces DOM and redraw work in large editors, and supports interactions inside Angular Elements and open Shadow DOM.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
+      image: './previews/examples/undo-redo-v2.light.png',
+      imageType: 'image/png',
+      imageWidth: 799,
+      imageHeight: 600,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
     text: 'v19.0.0',
     group: 'Releases',
@@ -573,4 +591,5 @@ export const BLOG_COMPONENTS = [
     'undo-redo-v2',
     () => import('@foblex/examples/advanced/undo-redo-v2/example'),
   ),
+  defineLazyComponent('flow-state', () => import('@foblex/examples/advanced/flow-state/example')),
 ];
