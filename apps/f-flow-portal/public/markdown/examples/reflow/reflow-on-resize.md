@@ -2,7 +2,7 @@
 toc: false
 wideContent: true
 publishedAt: "2026-04-25"
-updatedAt: "2026-04-26"
+updatedAt: "2026-07-13"
 ---
 
 # Reflow on Resize
@@ -39,6 +39,29 @@ The simplest case — and the one the plugin was designed for. Three nodes, no r
 :::
 
 The remaining sections wire a resize handle onto the source so you can poke each option deliberately. The plugin reacts the same way regardless of what changes the size.
+
+## Managed state: one undo step for expand and reflow
+
+With `withFlowState()`, a content toggle and the positions emitted by reflow should usually be one undoable action. They do not happen synchronously: the application stores the expanded value first, then Angular renders the new size, and only then does `ResizeObserver` produce the reflow `fMoveNodes` event.
+
+Open a state transaction before changing the value and close it after the resize-driven rendering turn. Do not use `state.batch(() => ...)` for this case because its synchronous callback finishes before reflow runs.
+
+```ts
+state.beginBatch();
+
+try {
+  state.updateNode(nodeId, { isExpanded });
+  await new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+} finally {
+  state.endBatch();
+}
+```
+
+The managed state controller records the later `fMoveNodes` update inside the open transaction, so one `undo()` restores both the content state and all positions moved by reflow. For animated or asynchronously loaded content, close the transaction from the real layout-completion signal instead of assuming two frames are sufficient. See [Managed Flow State](./examples/state) for the complete explanation and failure modes.
+
+When the toggle is inside an `fDragHandle`, mark the toggle with `fDragBlocker`. This prevents the same pointer action from also selecting the node and creating a separate selection history item before the expand/reflow transaction.
 
 ## Mode — who becomes a candidate
 

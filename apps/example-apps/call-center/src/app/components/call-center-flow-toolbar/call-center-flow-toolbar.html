@@ -1,0 +1,117 @@
+<div class="toolbar">
+  <button
+    mat-icon-button
+    (click)="deleteSelection()"
+    [disabled]="!canDeleteSelection()"
+    aria-label="Delete selection"
+    matTooltip="Delete"
+    matTooltipPosition="above"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="state.undo()"
+    [disabled]="!state.canUndo()"
+    aria-label="Undo"
+    matTooltip="Undo"
+    matTooltipPosition="above"
+  >
+    <mat-icon>undo</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="state.redo()"
+    [disabled]="!state.canRedo()"
+    aria-label="Redo"
+    matTooltip="Redo"
+    matTooltipPosition="above"
+  >
+    <mat-icon>redo</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="actionTriggered.emit(action.SELECT_ALL)"
+    aria-label="Select all"
+    matTooltip="Select All"
+    matTooltipPosition="above"
+  >
+    <mat-icon>select_all</mat-icon>
+  </button>
+
+  <div class="divider"></div>
+
+  <button
+    mat-icon-button
+    (click)="actionTriggered.emit(action.ZOOM_IN)"
+    aria-label="Zoom in"
+    matTooltip="Zoom In"
+    matTooltipPosition="above"
+  >
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="actionTriggered.emit(action.ZOOM_OUT)"
+    aria-label="Zoom out"
+    matTooltip="Zoom Out"
+    matTooltipPosition="above"
+  >
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="actionTriggered.emit(action.FIT_TO_SCREEN)"
+    aria-label="Fit to screen"
+    matTooltip="Fit to Screen"
+    matTooltipPosition="above"
+  >
+    <mat-icon>fit_screen</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    (click)="actionTriggered.emit(action.ONE_TO_ONE)"
+    aria-label="Reset zoom"
+    matTooltip="1:1"
+    matTooltipPosition="above"
+  >
+    <mat-icon>crop_free</mat-icon>
+  </button>
+
+  <div class="divider"></div>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="themeMenu"
+    aria-label="Theme"
+    matTooltip="Theme"
+    matTooltipPosition="above"
+  >
+    <mat-icon>{{ currentTheme() === 'dark' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  </button>
+
+  <mat-menu #themeMenu="matMenu">
+    <button mat-menu-item (click)="setTheme('light')" [disabled]="currentTheme() === 'light'">
+      Light
+    </button>
+    <button mat-menu-item (click)="setTheme('dark')" [disabled]="currentTheme() === 'dark'">
+      Dark
+    </button>
+  </mat-menu>
+
+  <button
+    mat-icon-button
+    (click)="requestReset()"
+    aria-label="Reset flow"
+    matTooltip="Reset"
+    matTooltipPosition="above"
+  >
+    <mat-icon>restart_alt</mat-icon>
+  </button>
+</div>

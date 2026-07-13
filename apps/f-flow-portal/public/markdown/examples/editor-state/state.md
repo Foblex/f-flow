@@ -2,7 +2,7 @@
 toc: false
 wideContent: true
 publishedAt: "2026-07-07"
-updatedAt: "2026-07-12"
+updatedAt: "2026-07-13"
 ---
 
 # Managed Flow State
@@ -116,16 +116,17 @@ The store changes its collection signals immediately while a gesture is in progr
 
 ## Core API
 
-| API                                       | Purpose                                                                      |
-| ----------------------------------------- | ---------------------------------------------------------------------------- |
-| `nodes`, `groups`, `connections`          | Readonly collection signals rendered by the template.                        |
-| `selection`, `transform`                  | Current selection and canvas transform signals.                              |
-| `canUndo`, `canRedo`, `changes`           | History availability and settled-change notification signals.                |
-| `load(data)`, `snapshot()`                | Replace/reset the store and export persistable data.                         |
-| `getNode`, `getGroup`, `getConnection`    | Read one record by id.                                                       |
-| `add*`, `update*`, `remove*`, `moveNodes` | Programmatic immutable mutations.                                            |
-| `undo`, `redo`, `clearHistory`            | History operations.                                                          |
-| `batch(work)`                             | Collapse several mutations into one undo step and one `changes()` increment. |
+| API                                       | Purpose                                                                           |
+| ----------------------------------------- | --------------------------------------------------------------------------------- |
+| `nodes`, `groups`, `connections`          | Readonly collection signals rendered by the template.                             |
+| `selection`, `transform`                  | Current selection and canvas transform signals.                                   |
+| `canUndo`, `canRedo`, `changes`           | History availability and settled-change notification signals.                     |
+| `load(data)`, `snapshot()`                | Replace/reset the store and export persistable data.                              |
+| `getNode`, `getGroup`, `getConnection`    | Read one record by id.                                                            |
+| `add*`, `update*`, `remove*`, `moveNodes` | Programmatic immutable mutations.                                                 |
+| `undo`, `redo`, `clearHistory`            | History operations.                                                               |
+| `batch(work)`                             | Collapse synchronous mutations into one undo step and one `changes()` increment.  |
+| `beginBatch()`, `endBatch()`              | Keep one transaction open across asynchronous work such as content-driven reflow. |
 
 ## Selection, and whether it belongs in the history
 
@@ -161,6 +162,42 @@ state.batch(() => {
   state.addConnections(edge); // several mutations, one undo step
 });
 ```
+
+## Keep expand/collapse and async reflow in one undo step
+
+Expanding a node can produce two state changes that belong to one user action:
+
+1. The application stores `isExpanded` immediately.
+2. Angular renders the larger node, `ResizeObserver` runs `withReflowOnResize`, and the plugin emits the resulting node positions through `fMoveNodes` on a later rendering turn.
+
+`batch(() => ...)` only covers synchronous work, so it closes before the reflow positions arrive. Use `beginBatch()` and `endBatch()` to keep the same transaction open across the render boundary. The state controller applies the reflow `fMoveNodes` event automatically while that transaction is still open:
+
+```ts
+function afterResizeObserverTurn(): Promise<void> {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+  });
+}
+
+async function setExpanded(nodeId: string, isExpanded: boolean): Promise<void> {
+  state.beginBatch();
+
+  try {
+    state.updateNode(nodeId, { isExpanded });
+    await afterResizeObserverTurn();
+  } finally {
+    state.endBatch();
+  }
+}
+```
+
+The first mutation records the shape from before the click. Any positions emitted by reflow amend that same history entry, and the outer `endBatch()` produces one `changes()` tick. One `undo()` therefore restores both the collapsed/expanded value and every node moved by reflow.
+
+Two animation frames are appropriate when the size change is rendered immediately: the first lets Angular update and measure the DOM, and the second lets the `ResizeObserver`-driven move settle. If the node size depends on a CSS transition, lazy content, or another asynchronous layout step, close the batch from that operation's real completion signal instead. Always pair `beginBatch()` with `endBatch()` in `finally`; leaving a batch open would merge later, unrelated edits into the same history item.
+
+If the expand/collapse control is nested inside an `fDragHandle`, add `fDragBlocker` to that control. Otherwise the pointer down can select the node before the click handler runs. With `selectionInHistory: true`, that selection is correctly recorded as its own undo item, so the user action appears to require an extra undo even though expand and reflow are already batched together.
+
+The [Call Center Flow](./examples/call-center) uses this pattern when its embedded node forms expand and collapse. The [Reflow on Resize](./examples/reflow-on-resize) guide explains how the layout move itself is calculated.
 
 ### Connection cascade requires rendered connectors
 

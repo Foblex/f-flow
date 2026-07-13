@@ -1,30 +1,29 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { inject, Injectable, signal } from '@angular/core';
+
+export type Theme = 'light' | 'dark';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
+  private readonly _document = inject(DOCUMENT);
   private readonly _storageKey = 'theme';
+  private readonly _current = signal<Theme>('light');
+
+  public readonly current = this._current.asReadonly();
 
   constructor() {
-    const saved = localStorage.getItem(this._storageKey) as 'light' | 'dark' | null;
-    this.setTheme(saved ?? 'light');
+    const saved = this._document.defaultView?.localStorage.getItem(this._storageKey);
+    this.setTheme(saved === 'dark' ? 'dark' : 'light');
   }
 
-  public get current(): 'light' | 'dark' {
-    return (document.documentElement.getAttribute('data-theme') as 'dark' | null)
-      ? 'dark'
-      : 'light';
-  }
-
-  public toggle(theme: 'light' | 'dark'): void {
-    this.setTheme(theme);
-  }
-
-  public setTheme(theme: 'light' | 'dark'): void {
+  public setTheme(theme: Theme): void {
     if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
+      this._document.documentElement.setAttribute('data-theme', 'dark');
     } else {
-      document.documentElement.removeAttribute('data-theme');
+      this._document.documentElement.removeAttribute('data-theme');
     }
-    localStorage.setItem(this._storageKey, theme);
+
+    this._current.set(theme);
+    this._document.defaultView?.localStorage.setItem(this._storageKey, theme);
   }
 }

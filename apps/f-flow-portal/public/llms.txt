@@ -5,7 +5,7 @@
 ## Key facts
 
 - Package: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- Current version: v19.1.0 (see the npm page for the live number)
+- Current version: v19.1.1 (see the npm page for the live number)
 - Weekly installs: ~16K (verify on npm for the latest number)
 - GitHub: https://github.com/Foblex/f-flow
 - License: MIT
@@ -78,7 +78,7 @@
 
 - [Click to Connect](https://flow.foblex.com/examples/click-to-connect): Click source, then target — withConnectionFlow('click')
 - [Accessibility](https://flow.foblex.com/examples/accessibility): Keyboard-operable editor with screen-reader announcements — opt-in via withA11y()
-- [Managed Flow State](https://flow.foblex.com/examples/state): Optional `withFlowState()` store with typed records, automatic gesture updates, batching, undo/redo, and snapshots
+- [Managed Flow State](https://flow.foblex.com/examples/state): Optional `withFlowState()` store with typed records, automatic gesture updates, batching, undo/redo, snapshots, and an async reflow transaction recipe
 
 - [All Examples Overview](https://flow.foblex.com/examples/overview): 50+ interactive examples
 - [AI Low-Code Platform](https://flow.foblex.com/examples/ai-low-code-platform): Reference app

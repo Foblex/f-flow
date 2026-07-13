@@ -39,17 +39,35 @@
   }
 }
 
-.f-node-output {
+.flow-output-connector {
   width: var(--out-size);
   height: var(--out-size);
   background-color: var(--out-bg);
   border-radius: var(--out-radius);
   border: 1.5px solid var(--out-border);
   color: var(--out-text);
-  transition: all var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .remove-output-connection {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .mat-icon {
     font-size: 12px;
@@ -60,7 +78,7 @@
     display: none;
   }
 
-  &.f-node-output-connected {
+  &.f-connector-connected {
     cursor: pointer;
     border-color: var(--out-connected-border);
     background-color: var(--out-connected-bg);

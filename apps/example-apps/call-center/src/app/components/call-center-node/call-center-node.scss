@@ -1,0 +1,44 @@
+// Styles for .node-form, .form-row, .mat-mdc-checkbox are in global _material.scss
+// (needed to penetrate child form components under Angular Emulated encapsulation)
+
+.node-outputs {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding-bottom: 2px;
+
+  .output-item {
+    display: contents;
+  }
+
+  .flow-output-connector {
+    margin-bottom: -12px;
+  }
+
+  &.expanded {
+    display: block;
+    padding-bottom: 0;
+    border-top: 1px solid var(--c-border);
+
+    .output-item {
+      width: calc(100% + 28px);
+      height: 34px;
+      margin-left: -14px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--c-text-subtle);
+      font-size: var(--fs-md);
+
+      & + .output-item {
+        border-top: 1px solid var(--c-border);
+      }
+    }
+
+    .flow-output-connector {
+      margin-bottom: 0;
+    }
+  }
+}

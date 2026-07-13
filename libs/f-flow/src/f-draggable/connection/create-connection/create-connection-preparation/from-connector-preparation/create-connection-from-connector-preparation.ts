@@ -73,11 +73,13 @@ export class CreateConnectionFromConnectorPreparation implements IHandler<
   }
 
   private _findConnector(target: HTMLElement | SVGElement): FConnectorDirective | undefined {
+    const connectorElement = target.closest('[fConnector]');
+
     return this._store.connectors
       .getAll()
       .find(
         (x): x is FConnectorDirective =>
-          x instanceof FConnectorDirective && x.hostElement.contains(target),
+          x instanceof FConnectorDirective && x.hostElement === connectorElement,
       );
   }
 
