@@ -42,7 +42,7 @@ import { CallCenterFlowStorage } from '../../persistence/call-center-flow-storag
   providers: [
     provideFFlow(
       { id: 'main' },
-      withFlowState({ stateClass: CallCenterFlowState, canvasTransformDebounce: 200 }),
+      withFlowState({ stateClass: CallCenterFlowState }),
       withA11y({ moveStep: 20 }),
       withControlScheme(F_DEFAULT_CONTROL_SCHEME),
       withReflowOnResize({

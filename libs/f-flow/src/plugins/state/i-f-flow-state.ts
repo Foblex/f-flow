@@ -30,9 +30,10 @@ export interface IFFlowStateConfig {
   canvasTransformInHistory?: boolean;
 
   /**
-   * Debounce (ms) for recording canvas pan/zoom into history. Default `0`. A
-   * zoom or pan fires a burst of `fCanvasChange` events; a non-zero value
-   * collapses the burst into a single undoable step once it settles. A drag pan
+   * Debounce (ms) for recording canvas pan/zoom into history. Default `350`.
+   * A zoom or pan fires a burst of `fCanvasChange` events; the debounce
+   * collapses the burst into a single undoable step once the live canvas has
+   * settled. Set `0` to record every emitted change immediately. A drag pan
    * still folds into one step regardless (captured at drag end).
    */
   canvasTransformDebounce?: number;
@@ -82,7 +83,7 @@ export function mergeFlowStateConfig(config?: IFFlowStateConfig): IFFlowStateRes
     historyLimit: 50,
     selectionInHistory: true,
     canvasTransformInHistory: true,
-    canvasTransformDebounce: 0,
+    canvasTransformDebounce: 350,
     dropToGroup: false,
     ...config,
   };

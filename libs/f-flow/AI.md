@@ -139,6 +139,7 @@ export class Editor {
 - Rotation, connection waypoint editing, and user resize are not captured by managed state in v1.
 - `state.changes()` increments once when a standalone mutation or outer batch settles. A drag can emit selection at start and move/drop at end while remaining one history step and one `changes()` increment.
 - Use `state.snapshot()` for persistence; `load()` replaces data and resets history.
+- `canvasTransformDebounce` defaults to `350ms`. It waits for wheel/pinch zoom events to settle, then records the current canvas transform as one change and one undo item. Setting it to `0` disables batching: every emitted `fCanvasChange` is applied immediately, increments `state.changes()`, and normally creates a separate undo item. Keep the canvas `[debounceTime]` unset when managed state owns viewport history; do not stack canvas and State debounce layers.
 - For initial or other application-driven viewport positioning, suppress the event at the canvas helper: `canvas.resetScaleAndCenter(false, false)`. The second `false` means `emitCanvasChange = false`, so managed history is untouched.
 - Connection endpoints are connector ids. Automatic cascade from node/group deletion uses the rendered connector registry; before connectors render, remove known attached connection ids explicitly in the same `state.batch(...)`.
 

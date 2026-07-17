@@ -95,7 +95,10 @@ describe('FFlowStateController', () => {
         FFlowStateController,
         FFlowState,
         valueProvider(FComponentsStore, store),
-        valueProvider(F_FLOW_STATE_CONFIG, mergeFlowStateConfig(config)),
+        valueProvider(
+          F_FLOW_STATE_CONFIG,
+          mergeFlowStateConfig({ canvasTransformDebounce: 0, ...config }),
+        ),
       ],
     });
 
@@ -480,6 +483,8 @@ describe('FFlowStateController', () => {
   it('collapses a burst of canvas changes into one step when debounced', async () => {
     setup({ canvasTransformDebounce: 30 });
 
+    canvas.transform.position = { x: 30, y: 0 };
+    canvas.transform.scale = 1.3;
     canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 10, y: 0 }, 1.1));
     canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 20, y: 0 }, 1.2));
     canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 30, y: 0 }, 1.3));
@@ -495,6 +500,28 @@ describe('FFlowStateController', () => {
     state.undo();
     expect(state.canUndo()).toBeFalse();
   });
+
+  it('does not commit a stale debounced transform while the canvas is still moving', fakeAsync(() => {
+    setup({ canvasTransformDebounce: 500 });
+
+    canvas.transform.position = { x: 10, y: 0 };
+    canvas.transform.scale = 1.1;
+    canvas.fCanvasChange.emit(new FCanvasChangeEvent({ x: 10, y: 0 }, 1.1));
+
+    tick(400);
+    canvas.transform.position = { x: 20, y: 0 };
+    canvas.transform.scale = 1.2;
+
+    tick(100);
+
+    expect(state.transform()).toEqual({ position: undefined, scale: 1 });
+    expect(state.canUndo()).toBeFalse();
+
+    tick(500);
+
+    expect(state.transform()).toEqual({ position: { x: 20, y: 0 }, scale: 1.2 });
+    expect(state.canUndo()).toBeTrue();
+  }));
 
   it('leaves the transform unset when a drag does not move the canvas', async () => {
     setup();

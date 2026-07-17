@@ -13,6 +13,10 @@ interface INode extends IFStateNode {
 describe('FFlowState', () => {
   let state: FFlowState<INode>;
 
+  it('uses a 350ms canvas transform debounce by default', () => {
+    expect(mergeFlowStateConfig().canvasTransformDebounce).toBe(350);
+  });
+
   function setup(): void {
     configureDiTest({ providers: [FFlowState] });
     state = injectFromDi(FFlowState) as FFlowState<INode>;

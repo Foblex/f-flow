@@ -2,7 +2,7 @@
 toc: false
 wideContent: true
 publishedAt: "2026-07-07"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-17"
 ---
 
 # Managed Flow State
@@ -67,7 +67,7 @@ The controller forwards the supported finished gestures into the store. All even
 - **Pan / zoom the canvas** — the viewport transform is captured into `state.transform()` and is undoable by default. Bind the canvas `[position]`/`[scale]` to `state.transform()` (as this example does) so `undo`/`redo` move the view back. Set `withFlowState({ canvasTransformInHistory: false })` to keep pan/zoom out of history — it's still tracked and saved in `snapshot()` either way. `position` starts `undefined` (before any transform), which leaves `[position]` free for the initial `resetScaleAndCenter`.
 - **Programmatic view changes** — pass `false` as the `emitCanvasChange` argument to `resetScaleAndCenter`, `fitToScreen` or `centerGroupOrNode` when a library-driven move must stay out of state history. This example initializes the viewport with `resetScaleAndCenter(false, false)`.
 - **Undo back to the start** — when `undo` returns to the beginning of history, the flow's `reset()` re-runs the full-render lifecycle, so the app's `fFullRendered` handler (`resetScaleAndCenter` here) runs again.
-- **Debounce the recording** — a zoom fires a burst of changes; `withFlowState({ canvasTransformDebounce: 200 })` collapses the burst into a single undo step once it settles (a drag pan already folds into one step).
+- **Debounce the recording** — a zoom fires a burst of `fCanvasChange` events. The state plugin waits `350ms` by default, then records the settled live canvas transform as one change and one undo step. Setting `canvasTransformDebounce: 0` disables that batching: every emitted canvas change is applied immediately, increments `state.changes()`, and normally creates its own undo step. This also means a persistence `effect` that depends on `state.changes()` runs for every emitted zoom change. Leave the canvas-level `[debounceTime]` unset when state owns viewport history; stacking both debounce layers delays persistence and can make the State plugin receive stale intermediate transforms. A drag pan still folds into one step at drag end.
 
 ### Scope of v1
 
@@ -108,7 +108,7 @@ The store changes its collection signals immediately while a gesture is in progr
 | `historyLimit`             | `50`                              | Maximum number of undo steps.                                                        |
 | `selectionInHistory`       | `true`                            | Include selection in undo/redo; a drag's leading selection is batched with the move. |
 | `canvasTransformInHistory` | `true`                            | Include user pan/zoom in undo/redo. The transform is still tracked when disabled.    |
-| `canvasTransformDebounce`  | `0`                               | Debounce canvas events before committing a viewport history step.                    |
+| `canvasTransformDebounce`  | `350`                             | Settle and batch viewport events; `0` records every emitted change immediately.      |
 | `dropToGroup`              | `false`                           | Reparent dropped records and nest external items into groups.                        |
 | `connectionFactory`        | generated id/endpoints            | Create or veto a gesture-created connection.                                         |
 | `nodeFactory`              | payload plus normalized drop rect | Create or veto a node dropped from an external palette.                              |

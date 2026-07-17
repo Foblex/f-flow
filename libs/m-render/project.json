@@ -35,10 +35,10 @@
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "libs/m-render/jest.config.ts"
+        "tsConfig": "libs/m-render/tsconfig.spec.json",
+        "polyfills": ["zone.js", "zone.js/testing"]
       }
     },
     "lint": {

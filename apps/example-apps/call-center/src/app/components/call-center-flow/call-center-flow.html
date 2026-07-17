@@ -10,12 +10,7 @@
   </f-background>
   <f-line-alignment [fAlignThreshold]="20" />
   <f-selection-area />
-  <f-canvas
-    fZoom
-    [scale]="transform().scale"
-    [position]="transform().position"
-    [debounceTime]="200"
-  >
+  <f-canvas fZoom [scale]="transform().scale" [position]="transform().position">
     @for (connection of connections(); track connection.id) {
     <f-connection
       fBehavior="fixed"
@@ -30,7 +25,7 @@
     </f-connection>
     }
 
-    <f-connection-for-create fType="segment" [fOffset]="0">
+    <f-connection-for-create fType="segment" [fOffset]="32">
       <f-connection-marker-arrow />
     </f-connection-for-create>
 

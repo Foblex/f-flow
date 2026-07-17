@@ -179,20 +179,45 @@ export class FFlowStateController {
     if (this._transformDebounceTimer !== null) {
       clearTimeout(this._transformDebounceTimer);
     }
+    this._scheduleCanvasChangeFlush(debounce);
+  }
+
+  private _flushCanvasChange(): void {
+    const pending = this._pendingTransform;
+    if (!pending) {
+      return;
+    }
+
+    const current = this._readCanvasTransform();
+    const debounce = this._config?.canvasTransformDebounce ?? 0;
+    if (debounce > 0 && current && !this._isSameCanvasTransform(pending, current)) {
+      this._pendingTransform = current;
+      this._scheduleCanvasChangeFlush(debounce);
+
+      return;
+    }
+
+    this._pendingTransform = null;
+    const settled = debounce > 0 ? (current ?? pending) : pending;
+    this._dispatch(() => (this._state as FFlowState).applyTransform(settled));
+  }
+
+  private _scheduleCanvasChangeFlush(debounce: number): void {
     this._transformDebounceTimer = setTimeout(() => {
       this._transformDebounceTimer = null;
       this._flushCanvasChange();
     }, debounce);
   }
 
-  private _flushCanvasChange(): void {
-    const transform = this._pendingTransform;
-    this._pendingTransform = null;
-    if (!transform) {
-      return;
-    }
-
-    this._dispatch(() => (this._state as FFlowState).applyTransform(transform));
+  private _isSameCanvasTransform(
+    first: { position: IPoint; scale: number },
+    second: { position: IPoint; scale: number },
+  ): boolean {
+    return (
+      first.position.x === second.position.x &&
+      first.position.y === second.position.y &&
+      first.scale === second.scale
+    );
   }
 
   /**
