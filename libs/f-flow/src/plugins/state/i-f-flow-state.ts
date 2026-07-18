@@ -16,7 +16,8 @@ export interface IFFlowStateConfig {
    * `undo`/`redo` also walk selection (Figma/Photoshop style), and a drag's
    * leading selection folds into the same step as the move. Set `false` to
    * keep selection out of the history (like xyflow or tldraw);
-   * `state.selection()` reflects the current selection either way.
+   * `state.selection()` reflects the current selection either way, and the
+   * current value is still saved by `snapshot()` and restored by `load()`.
    */
   selectionInHistory?: boolean;
 

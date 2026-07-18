@@ -98,7 +98,7 @@ The store changes its collection signals immediately while a gesture is in progr
 
 - `load({ nodes, groups, connections })` — plain arrays in. The store only reads the framework keys (`id`, `position`, optional `size`, `rotate`, `parentId`) and carries the rest of your record through untouched — put your fields right on it, no `data` wrapper.
 - Groups are their own collection with the same shape, rendered with `fGroup` — a first-class kind because the library treats them separately (a group id in a selection, its own drop target). Nesting is just `parentId`.
-- `snapshot()` — plain arrays out (`nodes`, `groups`, `connections`) with copied geometry; persist the result as-is.
+- `snapshot()` — plain arrays out (`nodes`, `groups`, `connections`) plus the current `selection` and `transform`; persist the result as-is. `load()` restores all five slices, while older snapshots without `selection` still load with an empty selection.
 - `injectFlowState<MyNode, MyConnection, MyGroup>()` types all three end to end; each argument defaults to the framework shape, so `injectFlowState<MyNode>()` is enough when only nodes carry extra fields.
 
 ## Configuration
@@ -138,6 +138,7 @@ withFlowState({ selectionInHistory: false });
 
 - On by default — every selection change is its own step and `undo`/`redo` restore the previous highlight (Figma, Photoshop); a drag's leading selection folds into the same step as the move.
 - Set `false` to keep selection out of the history, so `undo` walks only graph edits (xyflow, tldraw).
+- This option controls history only. `snapshot()` includes the current selection and `load()` restores it in both modes.
 
 ## Programmatic editing shares the same history
 

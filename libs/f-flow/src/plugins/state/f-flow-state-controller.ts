@@ -73,9 +73,7 @@ export class FFlowStateController {
       }),
     );
 
-    if (this._config.selectionInHistory) {
-      this._wireSelectionRestore();
-    }
+    this._wireSelectionRestore();
   }
 
   public destroy(): void {
@@ -348,9 +346,9 @@ export class FFlowStateController {
   }
 
   /**
-   * When selection is part of the history, `undo`/`redo` land on a shape with
-   * its own selection — push it back into the flow so the highlight follows.
-   * `isSelectedChanged: false` keeps this from re-emitting a selection change.
+   * Pushes state selection into the flow after `load`, `undo` or `redo` so the
+   * rendered highlight follows the persisted state. `isSelectedChanged: false`
+   * keeps this from re-emitting a selection change.
    */
   private _wireSelectionRestore(): void {
     const state = this._state as FFlowState;

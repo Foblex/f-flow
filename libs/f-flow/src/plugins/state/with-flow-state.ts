@@ -23,7 +23,7 @@ import { F_FLOW_STATE_CONFIG, IFFlowStateConfig, mergeFlowStateConfig } from './
  * connection, node moves, drops into groups, external-item drops, delete
  * requests) are applied to the state automatically, each as one undoable
  * step. `undo()`/`redo()` with `canUndo`/`canRedo` signals come built in;
- * `snapshot()` returns the graph as plain arrays for persistence.
+ * `snapshot()` returns the graph, selection and viewport for persistence.
  *
  * Every store behavior is overridable: subclass `FFlowState` (any CRUD
  * method, any `apply*` gesture handler, any protected building block) and

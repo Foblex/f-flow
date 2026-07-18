@@ -80,7 +80,7 @@ describe('FFlowStateController', () => {
     };
   };
 
-  function setup(config?: IFFlowStateConfig): void {
+  function setup(config?: IFFlowStateConfig, initializeController = true): void {
     store = new FComponentsStore();
     draggable = createFakeDraggable();
     store.fDraggable = draggable as unknown as FDraggableBase;
@@ -104,7 +104,9 @@ describe('FFlowStateController', () => {
 
     state = injectFromDi(FFlowState);
     controller = injectFromDi(FFlowStateController);
-    controller.initialize();
+    if (initializeController) {
+      controller.initialize();
+    }
 
     state.load({
       nodes: [
@@ -251,6 +253,29 @@ describe('FFlowStateController', () => {
     state.undo();
     expect(state.selection().nodeIds).toEqual([]);
   });
+
+  for (const selectionInHistory of [true, false]) {
+    it(`applies a preloaded selection to the flow when selectionInHistory is ${selectionInHistory}`, () => {
+      setup({ selectionInHistory }, false);
+      const select = jasmine.createSpy('select');
+      store.fFlow = { select } as unknown as FFlowBase;
+
+      state.load({
+        nodes: [{ id: 'a', position: { x: 0, y: 0 } }],
+        groups: [{ id: 'group-1', position: { x: 100, y: 0 } }],
+        connections: [{ id: 'ab', sourceId: 'a-out', targetId: 'group-1-in' }],
+        selection: {
+          nodeIds: ['a'],
+          groupIds: ['group-1'],
+          connectionIds: ['ab'],
+        },
+      });
+      controller.initialize();
+      TestBed.flushEffects();
+
+      expect(select).toHaveBeenCalledWith(['a', 'group-1'], ['ab'], false);
+    });
+  }
 
   it('applies drops into groups', () => {
     setup({ dropToGroup: true });

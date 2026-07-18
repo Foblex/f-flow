@@ -16,15 +16,11 @@ import {
   IFStateData,
   IFStateGroup,
   IFStateNode,
+  IFStateSelection,
   IFStateTransform,
 } from './i-f-state-models';
 
-/** The selected items, mirrored from the flow. */
-export interface IFStateSelection {
-  nodeIds: string[];
-  groupIds: string[];
-  connectionIds: string[];
-}
+export type { IFStateSelection } from './i-f-state-models';
 
 /** The whole graph at one point in time; records are updated immutably. */
 export interface IFStateShape<
@@ -187,14 +183,15 @@ export class FFlowState<
     this._undoStack.length = 0;
     this._redoStack.length = 0;
     this._batchDirty = false;
+    const selection = _copySelection(data.selection ?? EMPTY_SELECTION);
     const transform = _copyTransform(data.transform ?? DEFAULT_TRANSFORM);
-    this._liveSelection.set(EMPTY_SELECTION);
+    this._liveSelection.set(selection);
     this._liveTransform.set(transform);
     this._shape.set({
       nodes: _byId(data.nodes ?? []),
       groups: _byId(data.groups ?? []),
       connections: _byId(data.connections ?? []),
-      selection: EMPTY_SELECTION,
+      selection,
       transform,
     });
     this._syncHistorySignals();
@@ -212,6 +209,7 @@ export class FFlowState<
       nodes: Object.values(nodes).map(_copyBox),
       groups: Object.values(groups).map(_copyBox),
       connections: Object.values(connections).map((connection) => ({ ...connection })),
+      selection: _copySelection(this.selection()),
       transform: _copyTransform(this.transform()),
     };
   }
@@ -796,6 +794,14 @@ function _copyBox<T extends { position: IPoint; size?: { width: number; height: 
     ...box,
     position: { ...box.position },
     size: box.size ? { ...box.size } : undefined,
+  };
+}
+
+function _copySelection(selection: IFStateSelection): IFStateSelection {
+  return {
+    nodeIds: [...selection.nodeIds],
+    groupIds: [...selection.groupIds],
+    connectionIds: [...selection.connectionIds],
   };
 }
 

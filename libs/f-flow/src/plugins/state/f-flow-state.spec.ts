@@ -347,6 +347,60 @@ describe('FFlowState', () => {
     return injectFromDi(FFlowState) as FFlowState<INode>;
   }
 
+  for (const selectionInHistory of [true, false]) {
+    it(`round-trips selection through snapshot() and load() when selectionInHistory is ${selectionInHistory}`, () => {
+      const s = setupWithConfig({ selectionInHistory });
+      s.load({
+        nodes: [{ id: 'a', position: { x: 0, y: 0 } }],
+        groups: [{ id: 'group-1', position: { x: 100, y: 0 } }],
+        connections: [{ id: 'ab', sourceId: 'a-out', targetId: 'group-1-in' }],
+      });
+      s.applySelectionChange(new FSelectionChangeEvent(['a'], ['group-1'], ['ab']));
+
+      const snapshot = s.snapshot();
+      expect(snapshot.selection).toEqual({
+        nodeIds: ['a'],
+        groupIds: ['group-1'],
+        connectionIds: ['ab'],
+      });
+
+      s.load({ nodes: [], connections: [] });
+      expect(s.selection()).toEqual({ nodeIds: [], groupIds: [], connectionIds: [] });
+
+      s.load(snapshot);
+      expect(s.selection()).toEqual({
+        nodeIds: ['a'],
+        groupIds: ['group-1'],
+        connectionIds: ['ab'],
+      });
+      expect(s.canUndo()).toBeFalse();
+    });
+  }
+
+  it('batches a selection and its programmatic viewport change into one history item', () => {
+    const s = setupWithConfig({ selectionInHistory: true, canvasTransformInHistory: true });
+    s.load({
+      nodes: [{ id: 'a', position: { x: 0, y: 0 } }],
+      connections: [],
+      transform: { position: { x: 0, y: 0 }, scale: 1 },
+    });
+    const changesBefore = s.changes();
+
+    s.beginBatch();
+    s.applySelectionChange(new FSelectionChangeEvent(['a'], [], []));
+    s.applyTransform({ position: { x: 120, y: 80 }, scale: 1 });
+    s.endBatch();
+
+    expect(s.selection().nodeIds).toEqual(['a']);
+    expect(s.transform()).toEqual({ position: { x: 120, y: 80 }, scale: 1 });
+    expect(s.changes()).toBe(changesBefore + 1);
+
+    s.undo();
+    expect(s.selection().nodeIds).toEqual([]);
+    expect(s.transform()).toEqual({ position: { x: 0, y: 0 }, scale: 1 });
+    expect(s.canUndo()).toBeFalse();
+  });
+
   it('round-trips the canvas transform through snapshot() and load()', () => {
     loadSample();
 

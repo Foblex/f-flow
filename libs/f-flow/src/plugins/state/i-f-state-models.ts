@@ -53,6 +53,13 @@ export interface IFStateTransform {
   scale: number;
 }
 
+/** The selected graph items, as persisted by `snapshot()` and restored by `load()`. */
+export interface IFStateSelection {
+  nodeIds: string[];
+  groupIds: string[];
+  connectionIds: string[];
+}
+
 /** The whole graph, as it goes in (`load`) and comes out (`snapshot`). */
 export interface IFStateData<
   TNode extends IFStateNode = IFStateNode,
@@ -62,6 +69,11 @@ export interface IFStateData<
   nodes: TNode[];
   connections: TConnection[];
   groups: TGroup[];
+  /**
+   * The current selection. Restored on `load` and present in every `snapshot`.
+   * Omitted on load clears the selection for backward compatibility.
+   */
+  selection?: IFStateSelection;
   /**
    * The canvas pan/zoom. Restored on `load` and present in every `snapshot`.
    * Omitted on load resets it to the identity transform.
