@@ -206,11 +206,22 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
     emitCanvasChange: boolean = true,
   ): void {
     this._warnWhenCalledBeforeNodesRender('centerGroupOrNode()');
-    this._afterRedraw(() => {
-      this._mediator.execute(
-        new CenterGroupOrNodeRequest(groupOrNodeId, animated, emitCanvasChange),
-      );
-    });
+    this._centerGroupOrNode(groupOrNodeId, animated, emitCanvasChange, false);
+  }
+
+  /**
+   * Resets the canvas scale to `1` and centers the specified group or node.
+   * @param groupOrNodeId - The ID of the group or node to center.
+   * @param animated - If true, the centering will be animated; otherwise, it will be instantaneous.
+   * @param emitCanvasChange - If false, does not emit `fCanvasChange` for this programmatic move.
+   */
+  public resetScaleAndCenterGroupOrNode(
+    groupOrNodeId: string,
+    animated: boolean = true,
+    emitCanvasChange: boolean = true,
+  ): void {
+    this._warnWhenCalledBeforeNodesRender('resetScaleAndCenterGroupOrNode()');
+    this._centerGroupOrNode(groupOrNodeId, animated, emitCanvasChange, true);
   }
 
   /**
@@ -284,5 +295,18 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
         this.destroyRef,
       ),
     );
+  }
+
+  private _centerGroupOrNode(
+    groupOrNodeId: string,
+    animated: boolean,
+    emitCanvasChange: boolean,
+    resetScale: boolean,
+  ): void {
+    this._afterRedraw(() => {
+      this._mediator.execute(
+        new CenterGroupOrNodeRequest(groupOrNodeId, animated, emitCanvasChange, resetScale),
+      );
+    });
   }
 }

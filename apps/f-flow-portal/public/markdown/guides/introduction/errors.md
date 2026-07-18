@@ -109,7 +109,7 @@ Fix: reference an existing group id, and keep ids stable across re-renders.
 
 **Warning: viewport helper called before nodes were rendered.**
 
-`fitToScreen()`, `resetScaleAndCenter()`, or `centerGroupOrNode()` was called before the nodes were rendered (e.g. from `ngOnInit` / `ngAfterViewInit`), so it computes against an incomplete node set and produces a wrong initial viewport.
+`fitToScreen()`, `resetScaleAndCenter()`, `centerGroupOrNode()`, or `resetScaleAndCenterGroupOrNode()` was called before the nodes were rendered (e.g. from `ngOnInit` / `ngAfterViewInit`), so it computes against an incomplete node set and produces a wrong initial viewport.
 
 These helpers compute from the nodes bounding box, so `(fNodesRendered)` is the earliest safe moment — connections do not affect the result. `(fFullRendered)` also works:
 

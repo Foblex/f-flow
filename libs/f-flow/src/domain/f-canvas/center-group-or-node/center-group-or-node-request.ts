@@ -4,5 +4,6 @@ export class CenterGroupOrNodeRequest {
     public id: string,
     public animated: boolean,
     public emitCanvasChange: boolean = true,
+    public resetScale: boolean = false,
   ) {}
 }

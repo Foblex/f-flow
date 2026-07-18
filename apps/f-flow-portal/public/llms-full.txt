@@ -250,8 +250,9 @@ Selector: `f-canvas`
 | setScale | setScale(scale: number, toPosition?: IPoint): void | Set zoom with optional pivot point |
 | resetScale | resetScale(): void | Reset zoom to 1 |
 | resetScaleAndCenter | resetScaleAndCenter(animated?: boolean, emitCanvasChange?: boolean): void | Reset zoom and center content; optionally suppress `fCanvasChange` |
+| resetScaleAndCenterGroupOrNode | resetScaleAndCenterGroupOrNode(id: string, animated?: boolean, emitCanvasChange?: boolean): void | Reset zoom to 1 and center on a specific item; optionally suppress `fCanvasChange` |
 | fitToScreen | fitToScreen(padding?: IPoint, animated?: boolean, emitCanvasChange?: boolean): void | Fit all content in viewport; optionally suppress `fCanvasChange` |
-| centerGroupOrNode | centerGroupOrNode(id: string, animated?: boolean, emitCanvasChange?: boolean): void | Center on a specific item; optionally suppress `fCanvasChange` |
+| centerGroupOrNode | centerGroupOrNode(id: string, animated?: boolean, emitCanvasChange?: boolean): void | Center on a specific item while preserving zoom; optionally suppress `fCanvasChange` |
 
 #### CSS Classes
 

@@ -57,6 +57,7 @@ const REQUIRED_SYMBOLS = [
   'withFlowState',
   'FFlowState',
   'injectFlowState',
+  'resetScaleAndCenterGroupOrNode',
 ];
 
 const llms = readFileSync(LLMS_PATH, 'utf8');
