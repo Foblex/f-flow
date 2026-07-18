@@ -55,7 +55,7 @@
  * next to it. Pages that don't open with an h1 silently skip.
  */
 .doc-content > h1:first-child::before {
-  content: 'v19.1.1 · Angular 17.3+ · MIT';
+  content: 'v19.1.4 · Angular 17.3+ · MIT';
   display: block;
   width: fit-content;
   margin-bottom: 14px;

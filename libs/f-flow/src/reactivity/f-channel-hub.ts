@@ -19,7 +19,14 @@ export class FChannelHub {
   }
 
   public listen(destroyRef: DestroyRef, callback: FChannelListener): void {
-    let current = callback;
+    let tornDown = false;
+    let current = () => {
+      if (tornDown || destroyRef.destroyed) {
+        return;
+      }
+
+      callback();
+    };
 
     const cleanups: (() => void)[] = [];
     const onSubscribes: ((finalCb: FChannelListener) => void)[] = [];
@@ -34,10 +41,8 @@ export class FChannelHub {
       if (res.setTeardown) teardownSetters.push(res.setTeardown);
     }
 
-    const unsubs = this._channels.map((ch) => ch.listen(() => current()));
-
+    const unsubs: (() => void)[] = [];
     let unregisterOnDestroy: (() => void) | null = null;
-    let tornDown = false;
     const teardown = () => {
       if (tornDown) return;
       tornDown = true;
@@ -53,11 +58,40 @@ export class FChannelHub {
       .slice()
       .reverse()
       .forEach((set) => set(teardown));
+
+    if (destroyRef.destroyed) {
+      teardown();
+
+      return;
+    }
+
+    this._channels.forEach((channel) => {
+      unsubs.push(
+        channel.listen(() => {
+          if (tornDown || destroyRef.destroyed) {
+            return;
+          }
+
+          current();
+        }),
+      );
+    });
+
+    if (destroyRef.destroyed) {
+      teardown();
+
+      return;
+    }
+
+    unregisterOnDestroy = destroyRef.onDestroy(teardown);
+
     onSubscribes
       .slice()
       .reverse()
-      .forEach((fn) => fn(current));
-
-    unregisterOnDestroy = destroyRef.onDestroy(teardown);
+      .forEach((fn) => {
+        if (!tornDown && !destroyRef.destroyed) {
+          fn(current);
+        }
+      });
   }
 }
