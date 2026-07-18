@@ -1,0 +1,85 @@
+@if (targetConnectorId(); as connectorId) {
+<span
+  class="slot-target"
+  fConnector
+  fConnectorType="target"
+  [fConnectorId]="connectorId"
+  [fConnectorConnectableSide]="targetSide()"
+  [fConnectorDisabled]="true"
+></span>
+}
+
+<button
+  #origin="cdkOverlayOrigin"
+  class="add-trigger"
+  type="button"
+  cdkOverlayOrigin
+  fDragBlocker
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-expanded]="isOpen()"
+  matTooltip="Add campaign step"
+  (click)="toggle($event)"
+>
+  <mat-icon>add</mat-icon>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayPush]="true"
+  [cdkConnectedOverlayViewportMargin]="12"
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  (backdropClick)="close()"
+  (detach)="close()"
+>
+  <section class="step-picker" aria-label="Choose a campaign step">
+    <header class="picker-header">
+      <div>
+        <strong>Add a step</strong>
+        <span>Build the next part of this journey</span>
+      </div>
+      <button type="button" class="close-picker" aria-label="Close step picker" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
+
+    <label class="search-field">
+      <mat-icon>search</mat-icon>
+      <input
+        type="search"
+        placeholder="Search steps"
+        autocomplete="off"
+        [value]="query()"
+        (input)="updateQuery($event)"
+      />
+    </label>
+
+    <div class="step-groups">
+      @for (group of groups(); track group.name) {
+      <section class="step-group">
+        <h3>{{ group.name }}</h3>
+        @for (type of group.types; track type) {
+        <button type="button" class="step-option" (click)="select(type)">
+          <span class="step-icon" [attr.data-type]="type">
+            <mat-icon>{{ metadata[type].icon }}</mat-icon>
+          </span>
+          <span class="step-copy">
+            <strong>{{ metadata[type].name }}</strong>
+            <small>{{ metadata[type].defaultDescription }}</small>
+          </span>
+          <mat-icon class="option-arrow">chevron_right</mat-icon>
+        </button>
+        }
+      </section>
+      } @empty {
+      <div class="empty-search">
+        <mat-icon>search_off</mat-icon>
+        <span>No matching steps</span>
+      </div>
+      }
+    </div>
+  </section>
+</ng-template>

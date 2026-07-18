@@ -1,0 +1,43 @@
+@if (!isTrigger()) {
+<span
+  class="node-connector target-connector"
+  fConnector
+  fConnectorType="target"
+  [fConnectorId]="node().id + ':input'"
+  [fConnectorConnectableSide]="targetSide()"
+  [fConnectorDisabled]="true"
+></span>
+}
+
+<div class="node-heading">
+  <span class="node-icon">
+    <mat-icon>{{ metadata().icon }}</mat-icon>
+  </span>
+  <div class="node-title">
+    <span>{{ metadata().name }}</span>
+    <strong>{{ node().title }}</strong>
+  </div>
+  <span class="node-status" [class.inactive]="!node().isActive">
+    {{ node().isActive ? 'Active' : 'Paused' }}
+  </span>
+</div>
+
+<p>{{ node().description }}</p>
+
+<div class="node-detail">
+  <mat-icon>tune</mat-icon>
+  <span>{{ node().detail }}</span>
+</div>
+
+@for (output of node().outputs; track output.id) {
+<span
+  class="node-connector source-connector"
+  [class.branch-yes]="output.key === 'yes'"
+  [class.branch-no]="output.key === 'no'"
+  fConnector
+  fConnectorType="source"
+  [fConnectorId]="output.id"
+  [fConnectorConnectableSide]="sourceSide()"
+  [fConnectorDisabled]="true"
+></span>
+}

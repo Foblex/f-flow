@@ -1,0 +1,107 @@
+<nav class="toolbar" aria-label="Campaign controls">
+  <div class="tool-group">
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Undo"
+      matTooltip="Undo"
+      [disabled]="!controller.state.canUndo() || controller.isBusy()"
+      (click)="undo()"
+    >
+      <mat-icon>undo</mat-icon>
+    </button>
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Redo"
+      matTooltip="Redo"
+      [disabled]="!controller.state.canRedo() || controller.isBusy()"
+      (click)="redo()"
+    >
+      <mat-icon>redo</mat-icon>
+    </button>
+  </div>
+
+  <span class="toolbar-divider" aria-hidden="true"></span>
+
+  <div class="tool-group viewport-tools">
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Zoom out"
+      matTooltip="Zoom out"
+      (click)="viewportActionRequested.emit(viewportAction.ZOOM_OUT)"
+    >
+      <mat-icon>zoom_out</mat-icon>
+    </button>
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Zoom in"
+      matTooltip="Zoom in"
+      (click)="viewportActionRequested.emit(viewportAction.ZOOM_IN)"
+    >
+      <mat-icon>zoom_in</mat-icon>
+    </button>
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Fit campaign to screen"
+      matTooltip="Fit to screen"
+      (click)="viewportActionRequested.emit(viewportAction.FIT)"
+    >
+      <mat-icon>fit_screen</mat-icon>
+    </button>
+  </div>
+
+  <span class="toolbar-divider" aria-hidden="true"></span>
+
+  <div class="tool-group" role="group" aria-label="Layout direction">
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Top to bottom layout"
+      matTooltip="Top to bottom"
+      [class.active]="controller.direction() === direction.TOP_BOTTOM"
+      [disabled]="controller.isBusy()"
+      (click)="directionRequested.emit(direction.TOP_BOTTOM)"
+    >
+      <mat-icon>vertical_align_center</mat-icon>
+    </button>
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Left to right layout"
+      matTooltip="Left to right"
+      [class.active]="controller.direction() === direction.LEFT_RIGHT"
+      [disabled]="controller.isBusy()"
+      (click)="directionRequested.emit(direction.LEFT_RIGHT)"
+    >
+      <mat-icon>align_horizontal_center</mat-icon>
+    </button>
+  </div>
+
+  <span class="toolbar-divider" aria-hidden="true"></span>
+
+  <div class="tool-group">
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Toggle color theme"
+      matTooltip="Theme"
+      (click)="theme.toggle()"
+    >
+      <mat-icon>{{ theme.current() === 'dark' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+    <button
+      class="toolbar-button"
+      type="button"
+      aria-label="Reset campaign"
+      matTooltip="Reset campaign"
+      [disabled]="controller.isBusy()"
+      (click)="resetRequested.emit()"
+    >
+      <mat-icon>restart_alt</mat-icon>
+    </button>
+  </div>
+</nav>

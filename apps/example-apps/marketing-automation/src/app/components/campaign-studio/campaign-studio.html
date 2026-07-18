@@ -1,0 +1,115 @@
+<campaign-toolbar
+  (viewportActionRequested)="executeViewportAction($event)"
+  (directionRequested)="changeDirection($event)"
+  (resetRequested)="resetCampaign()"
+/>
+
+<main
+  class="studio-workspace"
+  [attr.data-layout-direction]="isHorizontal() ? 'horizontal' : 'vertical'"
+>
+  @if (controller.isReady()) {
+  <f-flow
+    fDraggable
+    aria-label="Marketing campaign automation editor"
+    (fFullRendered)="flowRendered()"
+    (fSelectionChange)="selectionChanged($event)"
+    (keydown.enter)="openSelectedAddStepPicker($event)"
+  >
+    <f-background>
+      <f-circle-pattern />
+    </f-background>
+
+    <f-canvas
+      fZoom
+      [fZoomMinimum]="0.25"
+      [fZoomMaximum]="1.8"
+      [scale]="controller.transform().scale"
+      [position]="controller.transform().position"
+    >
+      @for (connection of controller.connections(); track connection.id) {
+      <f-connection
+        fBehavior="fixed"
+        fType="segment"
+        [fConnectionId]="connection.id"
+        [fSourceId]="connection.sourceId"
+        [fTargetId]="connection.targetId"
+        [fOffset]="28"
+        [fReassignDisabled]="true"
+        [fSelectionDisabled]="true"
+      >
+        <f-connection-marker-arrow />
+
+        @if (connection.label) {
+        <span
+          class="branch-label"
+          fConnectionContent
+          [position]="0.22"
+          [attr.data-branch]="connection.label.toLowerCase()"
+        >
+          {{ connection.label }}
+        </span>
+        }
+
+        <campaign-add-button
+          fConnectionContent
+          [position]="0.5"
+          [context]="connectionAddContext(connection)"
+          (stepSelected)="addStep(connectionAddContext(connection), $event)"
+        />
+      </f-connection>
+      } @for (slot of controller.addSlots(); track slot.id) {
+      <f-connection
+        class="slot-connection"
+        fBehavior="fixed"
+        fType="segment"
+        [fConnectionId]="'slot-connection:' + slot.id"
+        [fSourceId]="slot.context.sourceConnectorId"
+        [fTargetId]="slot.targetConnectorId"
+        [fReassignDisabled]="true"
+        [fSelectionDisabled]="true"
+      />
+      } @for (node of controller.nodes(); track node.id) {
+      <campaign-node
+        fNode
+        [attr.aria-label]="nodeAriaLabel(node)"
+        [attr.data-node-type]="node.type"
+        [fNodeId]="node.id"
+        [fNodePosition]="node.position"
+        [fNodeDraggingDisabled]="true"
+        [fConnectOnNode]="false"
+        [node]="node"
+        [direction]="controller.direction()"
+      />
+      } @for (slot of controller.addSlots(); track slot.id) {
+      <campaign-add-button
+        fNode
+        class="add-slot-node"
+        [fNodeId]="slot.id"
+        [fNodePosition]="slot.position"
+        [fNodeSize]="addSlotSize"
+        [fNodeDraggingDisabled]="true"
+        [fConnectOnNode]="false"
+        [nodeId]="slot.id"
+        [context]="slot.context"
+        [targetConnectorId]="slot.targetConnectorId"
+        [targetSide]="targetSide()"
+        (stepSelected)="addStep(slot.context, $event)"
+      />
+      }
+    </f-canvas>
+
+    <f-minimap [fMinSize]="1800" />
+  </f-flow>
+  } @else {
+  <div class="loading-state" role="status">
+    <span class="loading-mark"><span></span></span>
+    <strong>Preparing campaign</strong>
+  </div>
+  } @if (controller.selectedNode()) {
+  <campaign-inspector
+    (closeRequested)="closeInspector()"
+    (deleteRequested)="deleteSelectedStep()"
+  />
+  }
+</main>

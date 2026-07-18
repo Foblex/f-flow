@@ -1,0 +1,62 @@
+@if (controller.selectedNode(); as node) {
+<header class="inspector-header">
+  <div class="inspector-title">
+    <span class="type-icon" [attr.data-type]="node.type">
+      <mat-icon>{{ metadata[node.type].icon }}</mat-icon>
+    </span>
+    <div>
+      <span>{{ metadata[node.type].name }}</span>
+      <strong>Step settings</strong>
+    </div>
+  </div>
+  <button
+    mat-icon-button
+    type="button"
+    aria-label="Close step settings"
+    matTooltip="Close"
+    (click)="closeRequested.emit()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<div class="inspector-content">
+  <label class="field">
+    <span>Name</span>
+    <input type="text" [value]="node.title" (change)="updateText('title', $event)" />
+  </label>
+
+  <label class="field">
+    <span>Description</span>
+    <textarea
+      rows="4"
+      [value]="node.description"
+      (change)="updateText('description', $event)"
+    ></textarea>
+  </label>
+
+  <label class="field">
+    <span>Configuration summary</span>
+    <input type="text" [value]="node.detail" (change)="updateText('detail', $event)" />
+  </label>
+</div>
+
+<footer class="inspector-footer">
+  <span
+    class="delete-button-tooltip"
+    matTooltip="Branching and trigger steps cannot be removed"
+    [matTooltipDisabled]="controller.canDeleteSelected()"
+  >
+    <button
+      mat-button
+      type="button"
+      class="delete-button"
+      [disabled]="!controller.canDeleteSelected() || controller.isBusy()"
+      (click)="deleteRequested.emit()"
+    >
+      <mat-icon>delete</mat-icon>
+      Delete step
+    </button>
+  </span>
+</footer>
+}

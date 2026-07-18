@@ -1,0 +1,211 @@
+@use '@foblex/flow/styles' as flow-theme;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0');
+
+@include flow-theme.theme-tokens();
+
+f-flow {
+  @include flow-theme.connection($scoped: false);
+  @include flow-theme.connection-markers($scoped: false);
+}
+
+:root {
+  color-scheme: light;
+  --campaign-accent: #2563eb;
+  --campaign-accent-soft: #e8f0ff;
+  --campaign-canvas: #f4f6f8;
+  --campaign-surface: #ffffff;
+  --campaign-surface-raised: #f7f8fa;
+  --campaign-border: #dce1e8;
+  --campaign-border-strong: #bdc6d2;
+  --campaign-text: #172033;
+  --campaign-text-muted: #667085;
+  --campaign-text-subtle: #98a2b3;
+  --campaign-text-faint: #b1b8c4;
+  --campaign-success: #16865c;
+  --campaign-warning: #d97706;
+  --campaign-danger: #d14343;
+  --campaign-tooltip-background: #172033;
+  --campaign-tooltip-text: #ffffff;
+  --campaign-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.08);
+  --campaign-shadow-md: 0 8px 24px rgba(16, 24, 40, 0.1);
+  --campaign-shadow-lg: 0 20px 50px rgba(16, 24, 40, 0.16);
+  --campaign-node-color: #64748b;
+}
+
+:root[data-campaign-theme-dark] {
+  color-scheme: dark;
+  --campaign-accent: #6ea2ff;
+  --campaign-accent-soft: #172b50;
+  --campaign-canvas: #161a20;
+  --campaign-surface: #22272f;
+  --campaign-surface-raised: #292f38;
+  --campaign-border: #363e49;
+  --campaign-border-strong: #4c5765;
+  --campaign-text: #f2f4f7;
+  --campaign-text-muted: #aeb7c4;
+  --campaign-text-subtle: #7f8a99;
+  --campaign-text-faint: #697586;
+  --campaign-success: #55c993;
+  --campaign-warning: #fbbf24;
+  --campaign-danger: #ff7d7d;
+  --campaign-tooltip-background: #f2f4f7;
+  --campaign-tooltip-text: #161a20;
+  --campaign-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.32);
+  --campaign-shadow-md: 0 10px 28px rgba(0, 0, 0, 0.34);
+  --campaign-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.48);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  color: var(--campaign-text);
+  background: var(--campaign-canvas);
+  font-family: 'Inter', Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.mat-icon {
+  font-family: 'Material Symbols Rounded';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.f-flow {
+  --ff-connection-color: var(--campaign-border-strong);
+  --ff-connection-hit-width: 14px;
+  --ff-connection-width: 1.6px;
+  --ff-marker-color: var(--campaign-border-strong);
+  background: var(--campaign-canvas);
+}
+
+.f-background circle {
+  fill: color-mix(in srgb, var(--campaign-text-subtle) 42%, transparent);
+}
+
+.slot-connection .f-connection-path {
+  stroke: color-mix(in srgb, var(--campaign-border-strong) 72%, transparent);
+  stroke-dasharray: 5 6;
+}
+
+.f-node.f-selected:not(.add-slot-node) {
+  outline: 2px solid var(--campaign-accent);
+  outline-offset: 3px;
+}
+
+.f-minimap {
+  right: 16px;
+  bottom: 16px;
+  width: 156px;
+  height: 108px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--campaign-surface) 94%, transparent);
+  border: 1px solid var(--campaign-border);
+  border-radius: 7px;
+  box-shadow: var(--campaign-shadow-sm);
+}
+
+.f-minimap .f-minimap-node {
+  fill: var(--campaign-border-strong);
+}
+
+.f-minimap .f-minimap-view {
+  fill: color-mix(in srgb, var(--campaign-accent) 10%, transparent);
+  stroke: var(--campaign-accent);
+  stroke-width: 1;
+}
+
+[data-type='trigger'],
+[data-node-type='trigger'] {
+  --campaign-node-color: #7c3aed;
+}
+
+[data-type='audience'],
+[data-node-type='audience'] {
+  --campaign-node-color: #0f8a8a;
+}
+
+[data-type='email'],
+[data-node-type='email'] {
+  --campaign-node-color: #2563eb;
+}
+
+[data-type='sms'],
+[data-node-type='sms'] {
+  --campaign-node-color: #16865c;
+}
+
+[data-type='wait'],
+[data-node-type='wait'] {
+  --campaign-node-color: #d97706;
+}
+
+[data-type='condition'],
+[data-node-type='condition'] {
+  --campaign-node-color: #c2416c;
+}
+
+[data-type='webhook'],
+[data-node-type='webhook'] {
+  --campaign-node-color: #475569;
+}
+
+[data-type='goal'],
+[data-node-type='goal'] {
+  --campaign-node-color: #ca8a04;
+}
+
+[data-type='exit'],
+[data-node-type='exit'] {
+  --campaign-node-color: #64748b;
+}
+
+.cdk-overlay-container {
+  z-index: 1000;
+}
+
+.mat-mdc-tooltip .mat-mdc-tooltip-surface {
+  min-width: 0;
+  min-height: 0;
+  max-width: 280px;
+  padding: 6px 8px;
+  color: var(--campaign-tooltip-text);
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0;
+  background: var(--campaign-tooltip-background);
+  border: 1px solid color-mix(in srgb, var(--campaign-tooltip-text) 12%, transparent);
+  border-radius: 5px;
+  box-shadow: var(--campaign-shadow-md);
+}
+
+@media (max-width: 760px) {
+  .f-minimap {
+    display: none;
+  }
+}
