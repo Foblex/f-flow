@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Features
+
+- **marketing-automation:** add a standalone campaign-journey reference app. Steps are inserted from add controls on connections and open branches, Dagre keeps the graph arranged top-to-bottom or left-to-right, and the editor combines managed state, persistence, undo/redo, the scroll-pan control scheme, keyboard accessibility, theming, and a responsive inspector. Selecting a step and its animated viewport centering are batched into one history item; a keyboard-selected add node opens the same picker with `Enter` as a pointer click.
+- **flow-state:** persist the current node, group, and connection selection in every `snapshot()` and restore it from `load()`, independently of `selectionInHistory`. Older snapshots remain compatible and load with an empty selection.
+- **f-canvas:** add `resetScaleAndCenterGroupOrNode(id, animated?, emitCanvasChange?)`, which centers one item while resetting zoom to `1`. Existing `centerGroupOrNode()` continues to preserve the current zoom.
+
+### Fixes
+
+- **a11y:** start arrow-key spatial navigation from the current single selection when selection came from a pointer, application state, or a restored snapshot. This prevents the first arrow press from falling back to the first registered node when `aria-activedescendant` is absent or stale.
+
+### Documentation
+
+- Document selection persistence, the new item-centering API, and the Marketing Automation architecture in the portal, bundled AI guide, and generated LLM/search artifacts.
+
+## [19.1.4] - 2026-07-18
+
+### Fixes
+
+- **reactivity:** stop `FChannelHub` callbacks as soon as Angular view destruction begins, skip listener registration for an already destroyed view, and discard delayed notifications while destroy callbacks are pending. This prevents intermittent `NG0911` failures and blank embedded examples during navigation.
+
+## [19.1.3] - 2026-07-17
+
+### Fixes
+
+- **flow-state:** make viewport history wait until the live canvas transform has settled before committing a debounced change. Continued wheel or pinch input now reschedules the pending write instead of restoring an older transform and making zoom jump backwards.
+- **m-render:** ignore lazy component resolutions after their view is destroyed or a newer render generation starts, preventing late `createComponent()` calls against disposed portal views. Dynamic input assignment and JSON dataset parsing were also made type-safe.
+
+### Configuration
+
+- **flow-state:** change the default `canvasTransformDebounce` from `0` to `350ms`. Set it to `0` explicitly when every emitted `fCanvasChange` must be recorded immediately as its own state change.
+
+## [19.1.2] - 2026-07-13
+
+### Fixes
+
+- **connectors:** resolve a unified connector from the nearest `[fConnector]` host for both drag-to-connect and click-to-connect. Nested connector content no longer makes connection creation select the wrong registered connector or fail to start.
+- **connections:** build worker redraw payloads from the connection's resolved source and target sides, so explicit connection-side settings keep priority over connector connectable-side defaults.
+
+### Examples
+
+- **call-center:** rebuild the reference app around managed Flow State, persistence, undo/redo, keyboard accessibility, the scroll-pan control scheme, unified connectors, and resize reflow. The resize and reflow sequence stays inside one open State transaction so expanding or collapsing a node creates one history item.
+
+## [19.1.1] - 2026-07-13
+
+### Maintenance
+
+- Republish the `19.1.0` package contents under the corrected patch version. There are no runtime API or behavior changes in this release.
+
 ## [19.1.0](https://github.com/Foblex/f-flow/compare/v19.0.0...v19.1.0) (2026-07-13)
 
 ### Highlights

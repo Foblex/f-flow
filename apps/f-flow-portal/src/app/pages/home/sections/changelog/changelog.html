@@ -5,7 +5,7 @@
 
 <div class="grid">
   @for (item of items; track item.version) {
-  <a class="card" [routerLink]="item.routerLink">
+  <a class="card" [href]="item.href">
     <div class="head">
       <span class="ver">{{ item.version }}</span>
       <span class="date">{{ item.date }}</span>

@@ -138,9 +138,10 @@ export class Editor {
 - Supported v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom.
 - Rotation, connection waypoint editing, and user resize are not captured by managed state in v1.
 - `state.changes()` increments once when a standalone mutation or outer batch settles. A drag can emit selection at start and move/drop at end while remaining one history step and one `changes()` increment.
-- Use `state.snapshot()` for persistence; `load()` replaces data and resets history.
+- Use `state.snapshot()` for persistence; it includes graph records, selection, and viewport transform. `load()` restores them and resets history. Snapshots created before selection persistence remain valid and load with an empty selection.
 - `canvasTransformDebounce` defaults to `350ms`. It waits for wheel/pinch zoom events to settle, then records the current canvas transform as one change and one undo item. Setting it to `0` disables batching: every emitted `fCanvasChange` is applied immediately, increments `state.changes()`, and normally creates a separate undo item. Keep the canvas `[debounceTime]` unset when managed state owns viewport history; do not stack canvas and State debounce layers.
 - For initial or other application-driven viewport positioning, suppress the event at the canvas helper: `canvas.resetScaleAndCenter(false, false)`. The second `false` means `emitCanvasChange = false`, so managed history is untouched.
+- `canvas.centerGroupOrNode(id)` preserves the current zoom. Use `canvas.resetScaleAndCenterGroupOrNode(id)` when focusing the item must also reset zoom to `1`; both methods emit `fCanvasChange` by default.
 - Connection endpoints are connector ids. Automatic cascade from node/group deletion uses the rendered connector registry; before connectors render, remove known attached connection ids explicitly in the same `state.batch(...)`.
 
 ### Async reflow must stay inside an open transaction
@@ -180,7 +181,7 @@ When the flow compiles but looks wrong, verify in this order:
 10. **Connections attach to the wrong place** (`FF1006`): a connector is hidden with CSS (`display: none`) — its geometry is a 0×0 point. Conditionally render instead of hiding.
 11. **Node moves but its bindings never fire** (`FF1007`): an `fNode` element is nested inside another node element. One `fNode` per node; hierarchy is id-based (`fNodeParentId`), not DOM-based.
 12. **Group behaviors don't apply** (`FF1008`): `fNodeParentId` / `fGroupParentId` references an id no rendered group has.
-13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
+13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` / `resetScaleAndCenterGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
 14. **Initial centering appears in managed undo history**: call `resetScaleAndCenter(false, false)` (or pass `emitCanvasChange: false` to another viewport helper) for an application-driven transform.
 
 To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.

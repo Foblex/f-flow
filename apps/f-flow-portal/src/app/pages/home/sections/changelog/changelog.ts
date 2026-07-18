@@ -6,37 +6,35 @@ interface IChangelogItem {
   version: string;
   date: string;
   description: string;
-  routerLink: string;
+  href: string;
 }
 
 /**
- * Latest three release blog posts, mirrored from the "Releases" group
- * in blog-config.ts so each card links to the real write-up. Keep in
- * sync when a new release post lands — this is the shortest "is the
- * project alive?" signal on the home page.
+ * Latest three published releases, mirrored from the root changelog. Keep this
+ * list in sync when a release lands — it is the shortest "is the project alive?"
+ * signal on the home page.
  */
 const CHANGELOG: IChangelogItem[] = [
   {
-    version: 'v19.1.0',
-    date: 'July 2026',
+    version: 'v19.1.4',
+    date: 'July 18, 2026',
     description:
-      'Managed Flow State with batched undo and redo, faster rendering for large flows, and interaction support inside Angular Elements and open Shadow DOM.',
-    routerLink: '/blog/foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
+      'Safer reactive teardown prevents delayed Flow callbacks from reaching destroyed Angular views and intermittently breaking embedded examples.',
+    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1914---2026-07-18',
   },
   {
-    version: 'v19.0.0',
-    date: 'July 2026',
+    version: 'v19.1.3',
+    date: 'July 17, 2026',
     description:
-      'Control schemes, click-to-connect, keyboard accessibility, a unified connector model, and an AI-ready integration toolchain.',
-    routerLink:
-      '/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
+      'Stable managed viewport history, a practical 350ms transform debounce, and cancellation of stale dynamic component renders.',
+    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1913---2026-07-17',
   },
   {
-    version: 'v18.6.0',
-    date: 'April 2026',
+    version: 'v19.1.2',
+    date: 'July 13, 2026',
     description:
-      'Smart Auto-Layout on Resize: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, and collision rules.',
-    routerLink: '/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
+      'Reliable unified-connector creation and side resolution, plus a complete State-powered refresh of the Call Center reference app.',
+    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1912---2026-07-13',
   },
 ];
 
