@@ -945,6 +945,22 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'marketing-automation',
+    text: 'Marketing Automation',
+    group: 'Reference Apps',
+    date: new Date('2026-07-17 12:00:00'),
+    seo: {
+      title: 'Angular Marketing Automation Builder Example with Foblex Flow',
+      description:
+        'Build campaign journeys by inserting typed steps into connections or open branches, with automatic Dagre layout, state history, persistence, accessibility, and responsive editing tools.',
+      image: './previews/examples/marketing-automation.light.png',
+      imageDark: './previews/examples/marketing-automation.dark.png',
+      imageWidth: 1440,
+      imageHeight: 900,
+      imageType: 'image/png',
+    },
+  },
+  {
     slug: 'uml-diagram-example',
     text: 'UML Diagram',
     group: 'Reference Apps',
@@ -1174,6 +1190,10 @@ export const EXAMPLES_COMPONENTS = [
   defineLazyComponent(
     'call-center',
     () => import('../../features/reference-app-previews/call-center-preview'),
+  ),
+  defineLazyComponent(
+    'marketing-automation',
+    () => import('../../features/reference-app-previews/marketing-automation-preview'),
   ),
   defineLazyComponent(
     'uml-diagram-example',

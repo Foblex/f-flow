@@ -10,6 +10,7 @@ const EMBEDDED_REFERENCE_APPS = {
   'db-management-flow': '../../apps/example-apps/schema-designer/browser',
   'schema-designer': '../../apps/example-apps/schema-designer/browser',
   'call-center': '../../apps/example-apps/call-center/browser',
+  'marketing-automation': '../../apps/example-apps/marketing-automation/browser',
   'uml-diagram-example': '../../apps/example-apps/uml-diagram/browser',
   'tournament-bracket': '../../apps/example-apps/tournament-bracket/browser',
 } as const;

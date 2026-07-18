@@ -14,6 +14,7 @@ const PORTAL_BROWSER = join(ROOT, 'dist', 'f-flow-portal', 'browser');
 const EMBEDDED_REFERENCE_APPS = [
   'schema-designer',
   'call-center',
+  'marketing-automation',
   'tournament-bracket',
   'uml-diagram-example',
 ];
@@ -23,8 +24,14 @@ let baseUrl;
 
 describe('Portal prerendered pages', () => {
   before(async () => {
-    assert.ok(existsSync(PORTAL_SERVER), 'Portal server build is missing. Run the portal build first.');
-    assert.ok(existsSync(PORTAL_BROWSER), 'Portal browser build is missing. Run the portal build first.');
+    assert.ok(
+      existsSync(PORTAL_SERVER),
+      'Portal server build is missing. Run the portal build first.',
+    );
+    assert.ok(
+      existsSync(PORTAL_BROWSER),
+      'Portal browser build is missing. Run the portal build first.',
+    );
 
     for (const appName of EMBEDDED_REFERENCE_APPS) {
       const appDistPath = getEmbeddedAppDistPath(appName);
@@ -109,7 +116,8 @@ describe('Portal prerendered pages', () => {
         assert.match(response.contentType, /text\/html/u);
         assert.match(response.body, /<title>.+<\/title>/u);
 
-        const canonical = item.route === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${item.route}`;
+        const canonical =
+          item.route === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${item.route}`;
 
         assert.match(
           response.body,
@@ -287,8 +295,26 @@ function getEmbeddedAppDistPath(appName) {
       return join(ROOT, 'dist', 'apps', 'example-apps', 'schema-designer', 'browser', 'index.html');
     case 'call-center':
       return join(ROOT, 'dist', 'apps', 'example-apps', 'call-center', 'browser', 'index.html');
+    case 'marketing-automation':
+      return join(
+        ROOT,
+        'dist',
+        'apps',
+        'example-apps',
+        'marketing-automation',
+        'browser',
+        'index.html',
+      );
     case 'tournament-bracket':
-      return join(ROOT, 'dist', 'apps', 'example-apps', 'tournament-bracket', 'browser', 'index.html');
+      return join(
+        ROOT,
+        'dist',
+        'apps',
+        'example-apps',
+        'tournament-bracket',
+        'browser',
+        'index.html',
+      );
     case 'uml-diagram-example':
       return join(ROOT, 'dist', 'apps', 'example-apps', 'uml-diagram', 'browser', 'index.html');
     default:
