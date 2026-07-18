@@ -155,6 +155,18 @@ describe('FA11yController keyboard layer', () => {
     expect(selection.fNodeIds).toEqual(['b']);
   });
 
+  it('should continue spatial navigation from the current single selection', () => {
+    setup();
+    const nodeC = createNodeStub({ id: 'c', x: 600, y: 0 });
+    nodes.push(nodeC);
+    host.appendChild(nodeC.hostElement);
+    selection = { fNodeIds: ['b'], fGroupIds: [], fConnectionIds: [] };
+
+    keydown('ArrowRight');
+
+    expect(selection.fNodeIds).toEqual(['c']);
+  });
+
   it('should never handle keys typed inside interactive content', () => {
     setup();
     const input = document.createElement('input');

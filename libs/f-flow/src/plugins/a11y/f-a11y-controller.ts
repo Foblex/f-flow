@@ -363,6 +363,7 @@ export class FA11yController {
     const direction = ARROW_DIRECTIONS[event.key];
     if (direction) {
       event.preventDefault();
+      this._syncActiveItemFromSelection();
       event.ctrlKey || event.metaKey
         ? this._walkConnections(direction, event.shiftKey)
         : this._navigate(direction, event.shiftKey);
@@ -453,6 +454,55 @@ export class FA11yController {
   }
 
   // ------------------------------------------------------------------ navigation
+
+  /**
+   * Selection can be restored from state or replaced by a pointer-driven render before
+   * this layer receives a stable DOM target. In that case there is no active descendant,
+   * so use the single selected item as the spatial-navigation anchor.
+   */
+  private _syncActiveItemFromSelection(): void {
+    const selection = this._selection();
+    const selectedNodeIds = [...selection.fNodeIds, ...selection.fGroupIds];
+    if (selectedNodeIds.length + selection.fConnectionIds.length !== 1) {
+      return;
+    }
+
+    const selectedNodeId = selectedNodeIds[0];
+    if (selectedNodeId) {
+      if (this._activeNodeId === selectedNodeId && this._activeNode()) {
+        return;
+      }
+      const node = this._store.nodes.getAll().find((x) => x.fId() === selectedNodeId);
+      if (!node) {
+        return;
+      }
+
+      this._activeNodeId = selectedNodeId;
+      this._activeConnectionId = undefined;
+      this._walkTargetNodeId = undefined;
+      this._lastMove = undefined;
+      this._setActiveDescendant(node.hostElement);
+
+      return;
+    }
+
+    const selectedConnectionId = selection.fConnectionIds[0];
+    if (this._activeConnectionId === selectedConnectionId && this._activeConnection()) {
+      return;
+    }
+    const connection = this._store.connections
+      .getAll()
+      .find((x) => x.fId() === selectedConnectionId);
+    if (!connection) {
+      return;
+    }
+
+    this._activeConnectionId = selectedConnectionId;
+    this._activeNodeId = undefined;
+    this._walkTargetNodeId = undefined;
+    this._lastMove = undefined;
+    this._setActiveDescendant(connection.hostElement as HTMLElement);
+  }
 
   /**
    * Plain arrows travel over nodes AND connections as equal stops — a connection is
