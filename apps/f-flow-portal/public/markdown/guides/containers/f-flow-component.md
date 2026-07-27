@@ -39,6 +39,8 @@ This describes the default stateless mode. The optional [Managed Flow State](./e
 
 - `fFlowId: InputSignal<string>;` The unique identifier for the flow instance. Default: `f-flow-${uniqueId++}`
 
+- `fCache: InputSignal<boolean>;` Enables the optional geometry cache for large scenes. Default: `false`. Start without it and compare the same workload before enabling it; see [Large-Flow Performance](large-flow-performance).
+
 ### Outputs
 
 - `fNodesRendered: OutputEmitterRef<string>;` Emits once when the current render cycle has finished rendering nodes and groups. Payload is the current flow id.
@@ -51,7 +53,7 @@ This describes the default stateless mode. The optional [Managed Flow State](./e
 
 ### Methods
 
-- `redraw(): void;` Forces a redraw of nodes and connections.
+- `redraw(): void;` Requests a connection redraw.
 
 - `reset(): void;` Resets internal loaded state. Next render will emit `fNodesRendered` and `fFullRendered` again.
 
@@ -61,7 +63,7 @@ This describes the default stateless mode. The optional [Managed Flow State](./e
 
 - `getPositionInFlow(position: IPoint): IRect;` Converts a point from the viewport into flow coordinates (relative to the flow).
 
-- `getState(): IFFlowState;` Exports the full flow state: nodes, groups and connections (including their current transforms/positions).
+- `getState(options?: IFFlowStateOptions): IFFlowState;` Exports the full flow state: nodes, groups and connections. Pass `{ measuredSize: true }` to include each node's measured size.
 
 - `selectAll(): void;` Selects all selectable items.
 
@@ -96,10 +98,16 @@ interface IRect {
 #### IFFlowState
 
 ```typescript
+interface IFFlowStateOptions {
+  measuredSize?: boolean;
+}
+
 interface IFFlowState {
-  nodes: IFNodeState[];
-  groups: IFGroupState[];
-  connections: IFConnectionState[];
+  position: IPoint;
+  scale: number;
+  nodes: IFFlowStateNode[];
+  groups: IFFlowStateNode[];
+  connections: IFFlowStateConnection[];
 }
 ```
 
@@ -107,8 +115,9 @@ interface IFFlowState {
 
 ```typescript
 interface ICurrentSelection {
-  nodes: string[];
-  connections: string[];
+  fNodeIds: string[];
+  fGroupIds: string[];
+  fConnectionIds: string[];
 }
 ```
 

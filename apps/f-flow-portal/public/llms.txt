@@ -1,16 +1,17 @@
 # Foblex Flow
 
-> Angular-native library for building node-based UIs, workflow builders, AI pipeline tools, and interactive diagram editors. MIT licensed. Built by a small team in Warsaw, Poland since 2022.
+> Angular-native library for building node-based UIs, workflow builders, AI pipeline tools, and interactive diagram editors. MIT licensed.
 
 ## Key facts
 
 - Package: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
 - Current version: v19.1.4 (see the npm page for the live number)
-- Weekly installs: ~16K (verify on npm for the latest number)
+- Usage metrics: see the npm page for current download data
 - GitHub: https://github.com/Foblex/f-flow
 - License: MIT
 - Supports: Angular 17.3+ (older 12–17.2 lines pinned separately)
 - Built for: Angular teams. Not a React wrapper. Not framework-agnostic.
+- State integration: classic app-owned records by default, or opt-in `withFlowState()` managed records; domain validation and persistence remain application-owned
 
 ## Documentation
 
@@ -21,6 +22,10 @@
 - [Roadmap](https://flow.foblex.com/docs/roadmap): Planned features and release timeline
 - [Errors and Warnings](https://flow.foblex.com/docs/errors): FFxxxx diagnostic codes with causes and fixes
 - [AI Agents](https://flow.foblex.com/docs/ai): Setting up LLMs and coding agents (AGENTS.md, bundled AI.md, llms.txt, Context7)
+- [Managed Flow State](https://flow.foblex.com/docs/managed-flow-state): Choosing classic app-owned records or opt-in typed state, snapshots, batching, and undo/redo
+- [Large Flow Performance](https://flow.foblex.com/docs/large-flow-performance): Cache, virtualization, workers, minimap limits, and measurement guidance
+- [Shadow DOM and Angular Elements](https://flow.foblex.com/docs/shadow-dom-and-angular-elements): Embedding flows in open shadow roots and custom elements
+- [Migrating to Unified Connectors](https://flow.foblex.com/docs/migrating-to-unified-connectors): Replace deprecated input/output connector aliases with fConnector and source/target endpoint ids
 
 ## API Reference
 

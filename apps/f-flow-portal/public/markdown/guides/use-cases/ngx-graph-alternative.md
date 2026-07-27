@@ -21,7 +21,7 @@ The models are close enough that migration is mechanical for most apps:
 - In the default stateless mode, ngx-graph `nodes` / `links` arrays stay your source of truth — Foblex Flow never owns your data. Render them with `@for` instead of passing them to a component input.
 - A `node` template (`ng-template #nodeTemplate`) becomes a plain element with `fNode` and `[fNodePosition]` — with your full Angular component inside, not an SVG fragment. HTML instead of SVG is the biggest quality-of-life change: real inputs, buttons, pipes and directives inside nodes.
 - A `link` becomes `<f-connection fSourceId fTargetId>` with built-in path types (straight, segment, bezier), markers and labels.
-- Automatic layout (`dagre` in ngx-graph) maps to `@foblex/f-dagre-layout` or `@foblex/f-elkjs-layout` — run it on init or on demand, then keep user-made positions.
+- Automatic layout (`dagre` in ngx-graph) maps to `@foblex/flow-dagre-layout` or `@foblex/flow-elk-layout` — run it on init or on demand, then keep user-made positions.
 - `(select)`-style events map to `fSelectionChange`; panning/zooming to `f-canvas` + `fZoom`.
 
 What has no ngx-graph equivalent — and therefore needs no migration — is everything editors need: connection creation by drag/click/keyboard, groups, resize handles, alignment guides, virtualization for large scenes, and an accessibility layer.

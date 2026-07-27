@@ -3,14 +3,27 @@ import { basename, join, relative, sep } from 'node:path';
 
 const ROOT = process.cwd();
 const MARKDOWN_ROOT = join(ROOT, 'apps', 'f-flow-portal', 'public', 'markdown');
+const ROUTES_PATH = join(ROOT, 'tmp', 'portal-routes.txt');
 const SITEMAP_PATH = join(ROOT, 'tmp', 'sitemap.xml');
 const CANONICAL_ORIGIN = 'https://flow.foblex.com';
+const STATIC_INTERNAL_PATHS = new Set([
+  '/llms.txt',
+  '/llms-full.txt',
+  '/robots.txt',
+  '/sitemap.xml',
+]);
 
 const markdownFiles = walkMarkdownFiles(MARKDOWN_ROOT);
+const generatedRoutes = readFileSync(ROUTES_PATH, 'utf8')
+  .split(/\r?\n/u)
+  .map((route) => route.trim())
+  .filter(Boolean);
 const sitemap = readFileSync(SITEMAP_PATH, 'utf8');
 const issues = [];
 const noindexRoutes = [];
 const expectedRoutes = new Set(['/']);
+const knownRoutes = new Set(generatedRoutes);
+let checkedInternalLinks = 0;
 
 for (const filePath of markdownFiles) {
   const content = readFileSync(filePath, 'utf8');
@@ -24,6 +37,12 @@ for (const filePath of markdownFiles) {
     if (route) {
       noindexRoutes.push(route);
     }
+  }
+
+  // Orphan markdown can be an intentional redirect stub rather than a rendered
+  // portal page. Validate links only for routes the portal actually registers.
+  if (route && knownRoutes.has(route)) {
+    validateInternalLinks(filePath, route, content, knownRoutes, issues);
   }
 }
 
@@ -49,7 +68,9 @@ if (issues.length) {
   process.exit(1);
 }
 
-console.log(`SEO content validation passed for ${markdownFiles.length} markdown files.`);
+console.log(
+  `SEO content validation passed for ${markdownFiles.length} markdown files and ${checkedInternalLinks} internal links.`,
+);
 
 function walkMarkdownFiles(directory) {
   const entries = readdirSync(directory, { withFileTypes: true });
@@ -93,4 +114,95 @@ function toRoutePath(filePath) {
     default:
       return null;
   }
+}
+
+function validateInternalLinks(filePath, sourceRoute, content, routes, collectedIssues) {
+  const contentWithoutCode = content
+    .replace(/^```[\s\S]*?^```\s*$/gmu, preserveLineBreaks)
+    .replace(/`[^`\r\n]*`/gu, preserveLineBreaks);
+  const markdownLinkPattern = /(?<!!)\[[^\]\r\n]*\]\(([^)\s]+)(?:\s+["'][^)]*)?\)/gu;
+
+  for (const match of contentWithoutCode.matchAll(markdownLinkPattern)) {
+    const href = match[1];
+
+    if (href.startsWith('#') || /^(?:mailto|tel):/iu.test(href)) {
+      continue;
+    }
+
+    let targetUrl;
+
+    try {
+      targetUrl = resolveMarkdownLink(href, sourceRoute);
+    } catch {
+      collectedIssues.push(
+        `${relative(ROOT, filePath)}:${getLineNumber(contentWithoutCode, match.index)}: invalid link ${href}`,
+      );
+      continue;
+    }
+
+    if (targetUrl.origin !== CANONICAL_ORIGIN) {
+      continue;
+    }
+
+    checkedInternalLinks += 1;
+
+    const targetRoute = normalizeRoute(targetUrl.pathname);
+
+    if (isStaticInternalPath(targetRoute) || routes.has(targetRoute)) {
+      continue;
+    }
+
+    collectedIssues.push(
+      `${relative(ROOT, filePath)}:${getLineNumber(contentWithoutCode, match.index)}: ` +
+        `internal link ${href} resolves to missing route ${targetRoute}`,
+    );
+  }
+}
+
+function preserveLineBreaks(value) {
+  return value.replace(/[^\r\n]/gu, ' ');
+}
+
+/**
+ * Mirrors MarkdownService._normalizeLinks().
+ *
+ * Bare slugs stay inside the current documentation section. Links prefixed
+ * with "./" are intentionally left untouched by m-render and therefore
+ * resolve from the portal's <base href="/">. Do not replace this with the
+ * browser's default URL(relative, currentRoute) behavior: that is not the
+ * repository's markdown-link contract.
+ */
+function resolveMarkdownLink(href, sourceRoute) {
+  if (href.startsWith('http') || href.startsWith('www')) {
+    return new URL(href.startsWith('www') ? `https://${href}` : href);
+  }
+
+  if (href.startsWith('./')) {
+    return new URL(href.slice(2), `${CANONICAL_ORIGIN}/`);
+  }
+
+  const prefix = sourceRoute.substring(0, sourceRoute.lastIndexOf('/'));
+  const normalizedHref = href.startsWith('/') ? `${prefix}${href}` : `${prefix}/${href}`;
+
+  return new URL(normalizedHref, CANONICAL_ORIGIN);
+}
+
+function normalizeRoute(route) {
+  if (!route || route === '/') {
+    return '/';
+  }
+
+  return route.replace(/\/+$/u, '');
+}
+
+function isStaticInternalPath(route) {
+  return (
+    STATIC_INTERNAL_PATHS.has(route) ||
+    route.startsWith('/embedded/') ||
+    /\.[A-Za-z0-9]{1,8}$/u.test(route)
+  );
+}
+
+function getLineNumber(content, index) {
+  return content.slice(0, index).split(/\r?\n/u).length;
 }

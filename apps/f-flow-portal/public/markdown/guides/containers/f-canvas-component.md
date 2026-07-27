@@ -38,6 +38,8 @@ A typical diagram structure is always:
 
 - `debounceTime: InputSignal<number>;` Debounce time (ms) for `fCanvasChange`. Values below `0` are normalized to `0`.
 
+- `fLayers: InputSignal<EFCanvasLayer[] | undefined>;` Sets the built-in layer order from bottom to top. A non-empty direct input overrides `withFCanvas({ layers })`; an empty or unset input falls back to the provider value. Omitted layers are appended afterward in their default relative order. Default order: groups, connections, nodes.
+
 ### Outputs
 
 - `fCanvasChange: OutputEmitterRef<FCanvasChangeEvent>;` Emits when the canvas transform changes (position/scale). Useful for syncing external UI (toolbar, status).
@@ -47,8 +49,6 @@ A typical diagram structure is always:
 - `redraw(): void;` Triggers an immediate redraw.
 
 - `getPosition(): IPoint;` Returns current canvas position.
-
-- `setPosition(position: IPoint): void;` Sets canvas position.
 
 - `getScale(): number;` Returns current scale.
 
@@ -79,20 +79,22 @@ interface IPoint {
 
 ```typescript
 class FCanvasChangeEvent {
-  transform: ITransformModel;
-  position: IPoint;
-  scale: number;
+  readonly position: IPoint;
+  readonly scale: number;
 }
 ```
 
-#### ITransformModel
+#### EFCanvasLayer
 
 ```typescript
-interface ITransformModel {
-  position: IPoint;
-  scale: number;
+enum EFCanvasLayer {
+  GROUPS = 'groups',
+  CONNECTIONS = 'connections',
+  NODES = 'nodes',
 }
 ```
+
+Provide a shared default with `provideFFlow(withFCanvas({ layers }))`, or bind `[fLayers]` on one canvas when that instance needs a different stacking order.
 
 ## Styling
 

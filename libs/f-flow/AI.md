@@ -5,12 +5,13 @@ Use this file as a strict control layer for code generation. Prefer verified pac
 ## What This Library Is
 
 `@foblex/flow` is an Angular-native library for building node-based editors, workflow builders, and interactive graph UIs.
-It provides rendering, connectors, interactions, selection, zoom, and connection drawing. By default your app owns the graph data; the optional `withFlowState()` feature can own the data bookkeeping and undo/redo for an editor.
+It provides rendering, connectors, interactions, selection, zoom, and connection drawing. By default your app owns graph records; the optional `withFlowState()` feature maintains typed records and undo/redo that your app explicitly loads and renders.
 
 ## Core Mental Model
 
-- **Classic mode (default):** your app owns nodes, groups, connections, validation and persistence. User actions emit events; your handlers update app state; Angular rerenders.
-- **Managed mode (opt-in):** `provideFFlow(withFlowState())` provides `FFlowState`; supported completed gestures update its signals and history automatically. Your app still owns domain fields, validation policy and persistence.
+- **Classic mode (default):** your app owns nodes, groups, and connections. User actions emit events; your handlers validate them, update app state, and Angular rerenders.
+- **Managed mode (opt-in):** `provideFFlow(withFlowState())` provides `FFlowState`; supported completed gestures update its typed records and history automatically.
+- **Application responsibility in both modes:** your app defines domain fields and owns validation policy, permissions, persistence, backend integration, and business meaning.
 - Both modes render records through normal Angular templates. `withFlowState()` is optional and does not change classic event behavior when absent.
 
 ## Minimal Working Setup
@@ -136,7 +137,7 @@ export class Editor {
 
 - Bind `state.nodes()`, `state.groups()` and `state.connections()` with `@for`; bind canvas `[position]` and `[scale]` to `state.transform()` when viewport undo/redo is enabled.
 - Supported v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom.
-- Rotation, connection waypoint editing, and user resize are not captured by managed state in v1.
+- Node and group geometry emitted through `fNodeSizeChange` / `fGroupSizeChange`, including user resize and auto-expand or auto-fit updates, changes the managed records without creating a separate history step. Arbitrary content measurement that emits neither output is not written to the store. Rotation and connection waypoint editing are not captured by managed state in v1.
 - `state.changes()` increments once when a standalone mutation or outer batch settles. A drag can emit selection at start and move/drop at end while remaining one history step and one `changes()` increment.
 - Use `state.snapshot()` for persistence; it includes graph records, selection, and viewport transform. `load()` restores them and resets history. Snapshots created before selection persistence remain valid and load with an empty selection.
 - `canvasTransformDebounce` defaults to `350ms`. It waits for wheel/pinch zoom events to settle, then records the current canvas transform as one change and one undo item. Setting it to `0` disables batching: every emitted `fCanvasChange` is applied immediately, increments `state.changes()`, and normally creates a separate undo item. Keep the canvas `[debounceTime]` unset when managed state owns viewport history; do not stack canvas and State debounce layers.
@@ -193,9 +194,9 @@ To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call
 - Style flow internals (connection paths, minimap, markers) in global styles or via `::ng-deep` — component-scoped CSS never reaches them. Wire the default theme via `ng add`.
 - Do not combine `fAutoSizeToFitChildren` with restoring a persisted group size in the same render: pass `false` while restoring, enable it afterwards.
 - With several `<f-flow>` instances on one page, keep `fDraggable` enabled only on the active flow.
-- Connections define `SELECTED_START` / `SELECTED_END` marker variants in addition to `START` / `END`, or markers disappear when the connection is selected.
+- For custom markers, either provide `SELECTED_START` / `SELECTED_END` alongside `START` / `END`, or use `START_ALL_STATES` / `END_ALL_STATES`; the all-states variants create both normal and selected markers.
 - An empty `fCanBeConnectedTo` allow-list means "no restriction", not "allow nothing"; category strings must match exactly.
-- Above ~500 nodes enable `[fCache]` on `<f-flow>` and render nodes with `*fVirtualFor` inside `<ng-container ngProjectAs="[fNodes]">`.
+- Start with regular `@for` rendering and measure a production build. Enable `[fCache]` when geometry reads are a demonstrated cost; use `*fVirtualFor` inside `<ng-container ngProjectAs="[fNodes]">` when progressive creation materially improves startup. `fVirtualFor` is not viewport culling.
 
 ## Naming Distinction
 
@@ -218,7 +219,11 @@ See [STYLING.md](./STYLING.md).
 - Human docs: https://flow.foblex.com/docs/get-started
 - Live examples with source: https://flow.foblex.com/examples/overview
 - Managed state example and contract: https://flow.foblex.com/examples/state
+- Managed state guide: https://flow.foblex.com/docs/managed-flow-state
 - Managed state + asynchronous reflow recipe: https://flow.foblex.com/examples/state
+- Large-flow performance guide: https://flow.foblex.com/docs/large-flow-performance
+- Shadow DOM and Angular Elements: https://flow.foblex.com/docs/shadow-dom-and-angular-elements
+- Unified connector migration: https://flow.foblex.com/docs/migrating-to-unified-connectors
 
 ## Fallback Rule
 

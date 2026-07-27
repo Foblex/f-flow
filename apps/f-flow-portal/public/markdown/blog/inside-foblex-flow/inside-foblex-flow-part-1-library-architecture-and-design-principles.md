@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/inside-foblex-flow-part-1-library-architecture-and-design-principles-3c0a6ed81087"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-08-19"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-27"
 ---
 
 # Inside Foblex Flow — Part 1: Library Architecture and Design Principles
@@ -57,19 +57,20 @@ Most node-based libraries give you everything “out of the box”: a data store
 
 > 📌 In short: the library handles the **UI layer**, while your application owns the business logic.
 
-That remains the default stateless architecture. Since v19.1, applications can explicitly install the optional [Managed Flow State](https://flow.foblex.com/examples/state) plugin when they want typed graph records, automatic updates for supported gestures, snapshots and undo/redo. The plugin can own generic graph bookkeeping; business meaning and persistence remain application concerns.
+That remains the default stateless architecture. Since v19.1, applications can explicitly install the optional [Managed Flow State](https://flow.foblex.com/docs/managed-flow-state) plugin when they want typed graph records, automatic updates for supported gestures, snapshots and undo/redo. The plugin can own generic graph bookkeeping; business meaning and persistence remain application concerns.
 
 ### ⚡ Event-Driven Model
 
 The golden rule of the stateless [Foblex Flow](https://flow.foblex.com/) core: the library **never mutates your application-owned data silently**.
 
-Every user action is emitted as an Angular event:
+Completed interactions are emitted through the public Angular events:
 
-- fNodeMoved — a node was dragged.
-- fNodeSelected — a node was selected.
-- fConnectionCreated — a new connection was made.
-- fConnectionRemoved — a connection was deleted.
-- fCanvasChanged— the canvas was changed.
+- `fMoveNodes` — nodes or groups finished moving.
+- `fSelectionChange` — the current node, group, and connection selection changed.
+- `fCreateConnection` — a new connection was requested.
+- `fReassignConnection` — an existing endpoint was moved to another connector.
+- `fDeleteSelected` — deletion of the current selection was requested.
+- `fCanvasChange` — the canvas position or scale changed.
 
 This means every action is a **signal to your application**:
 
@@ -85,8 +86,7 @@ We can break down [Foblex Flow](https://flow.foblex.com/) into four layers:
 FFlowComponent
  └── FCanvas
       ├── FNodeDirective
-      │     ├── FNodeOutputDirective
-      │     └── FNodeInputDirective
+      │     └── FConnectorDirective
       │
       └── FConnectionComponent
 ```
@@ -103,36 +103,46 @@ The workspace: holds all nodes and connections. Manages zoom, pan, and selection
 
 Nodes are not predefined components, but **directives** you can attach to any Angular element.
 
-- fNode — turns an element into a node.
-- fNodeOutput — defines an output connector.
-- fNodeInput — defines an input connector.
+- `fNode` — turns an element into a node.
+- `fConnector` — defines a source, target, bidirectional, or outlet connector.
 
 #### Connections
 
-An SVG path connecting an output to an input. Supports Bezier curves, straight lines, and arrows.
+An SVG path connecting a source connector to a target connector. Supports Bezier, straight, segmented, and adaptive paths plus custom markers and content.
 
 ### 🔧 Minimal Example
 
 ```html
-<f-flow>
+<f-flow fDraggable>
   <f-canvas>
+    <f-connection fSourceId="out1" fTargetId="in1"></f-connection>
+
     <!-- Node 1 -->
-    <div fNode fNodeId="node1" [position]="{x: 100, y: 150}">
-      <div fNodeOutput fOutputId="out1"></div>
+    <div fNode fNodeId="node1" [fNodePosition]="{ x: 100, y: 150 }">
+      Source
+      <span
+        fConnector
+        fConnectorId="out1"
+        fConnectorType="source"
+        fConnectorConnectableSide="right"
+      ></span>
     </div>
 
     <!-- Node 2 -->
-    <div fNode fNodeId="node2" [position]="{x: 400, y: 150}">
-      <div fNodeInput fInputId="in1"></div>
+    <div fNode fNodeId="node2" [fNodePosition]="{ x: 400, y: 150 }">
+      Target
+      <span
+        fConnector
+        fConnectorId="in1"
+        fConnectorType="target"
+        fConnectorConnectableSide="left"
+      ></span>
     </div>
-
-    <!-- Connection -->
-    <f-connection fOutputId="out1" fInputId="in1"></f-connection>
   </f-canvas>
 </f-flow>
 ```
 
-Positions (x, y) are mandatory — without them a node won’t render.
+Explicit positions keep the initial layout predictable. If `fNodePosition` is omitted, the node uses the default origin instead of disappearing.
 
 But where and how you store them (Signals, NgRx, Firestore, a plain service) is entirely up to you.
 
@@ -144,14 +154,12 @@ Instead of hiding complexity behind black boxes, the API is transparent: directi
 
 #### 2. SSR and Zoneless Angular
 
-[Foblex Flow](https://flow.foblex.com/) works outside the browser.
-
-All window, document, and localStorage references go through DI and can be mocked for SSR.
+[Foblex Flow](https://flow.foblex.com/) supports Angular SSR. Browser-only paths are guarded so they do not execute during server rendering.
 
 #### 3. Performance
 
 - No “global JSON graph” that’s recalculated on each change.
-- Renders only changed elements.
+- Scopes many registry updates and connection redraws to affected geometry, while explicit full-redraw APIs remain available.
 - Drag-and-drop is optimized for large graphs (hundreds of nodes).
 
 #### 4. Flexibility

@@ -24,6 +24,7 @@ const SECTIONS_ROOT = path.join(REPO_ROOT, 'apps/f-flow-portal/src/app/sections'
 const OUT_PATH = path.join(REPO_ROOT, 'apps/f-flow-portal/public/search-index.json');
 const TMP_ROOT = path.join(REPO_ROOT, 'tmp');
 const STUB_PATH = path.join(TMP_ROOT, 'm-render-stub.cjs');
+const MODULE_PATH = fileURLToPath(import.meta.url);
 
 const SECTION_REGISTRY = [
   { id: 'docs', routePath: '/docs', markdownDir: 'guides' },
@@ -42,12 +43,17 @@ const MODEL_ID = 'Xenova/all-MiniLM-L6-v2';
 const CHUNK_TARGET_CHARS = 600;
 const CHUNK_MAX_CHARS = 1200;
 
-await main();
+if (process.argv[1] && path.resolve(process.argv[1]) === MODULE_PATH) {
+  await main();
+}
 
 async function main() {
   const jiti = await createJitiLoader();
   const helpers = jiti(
-    path.join(REPO_ROOT, 'libs/m-render/src/lib/documentation-page/page-config/derive-markdown-path.ts'),
+    path.join(
+      REPO_ROOT,
+      'libs/m-render/src/lib/documentation-page/page-config/derive-markdown-path.ts',
+    ),
   );
   const derivePageMarkdownPath = helpers.derivePageMarkdownPath;
 
@@ -82,9 +88,7 @@ async function main() {
     dtype: 'q8',
   });
   console.log(`  ready in ${formatDuration(Date.now() - modelStart)}`);
-  console.log(
-    `Embedding ${chunks.length} chunks across ${documents.length} pages...`,
-  );
+  console.log(`Embedding ${chunks.length} chunks across ${documents.length} pages...`);
 
   const indexed = [];
   const embedStart = Date.now();
@@ -121,7 +125,9 @@ async function main() {
   );
 
   const sizeKb = Math.round((await readFile(OUT_PATH)).length / 1024);
-  console.log(`\nWrote ${indexed.length} documents to ${path.relative(REPO_ROOT, OUT_PATH)} (${sizeKb} KB)`);
+  console.log(
+    `\nWrote ${indexed.length} documents to ${path.relative(REPO_ROOT, OUT_PATH)} (${sizeKb} KB)`,
+  );
 }
 
 async function createJitiLoader() {
@@ -134,7 +140,7 @@ async function createJitiLoader() {
 `,
   );
 
-  const here = fileURLToPath(import.meta.url);
+  const here = MODULE_PATH;
   const require = createRequire(here);
   const { createJiti } = require('jiti');
 
@@ -198,8 +204,11 @@ async function preparePageDocument(section, page, derivePageMarkdownPath) {
  * Returns at least one chunk per page even when the body is shorter
  * than the target size.
  */
-function chunkPage(doc) {
-  const sections = splitIntoSections(doc.rawBody);
+export function chunkPage(doc) {
+  // Remove complete fences before heading/paragraph splitting. Otherwise a
+  // long block can be split into fragments without a closing fence, allowing
+  // raw source code to leak into excerpts and embeddings.
+  const sections = splitIntoSections(removeFencedCodeBlocks(doc.rawBody));
   const sized = [];
   for (const section of sections) {
     if (section.length <= CHUNK_MAX_CHARS) {
@@ -324,19 +333,22 @@ function stripFrontmatter(md) {
 }
 
 function stripMarkdown(md) {
-  return md
-    // Drop fenced code blocks — large noisy dumps that drown the prose signal.
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/~~~[\s\S]*?~~~/g, ' ')
-    // Keep inline code CONTENT (just remove the backticks). API identifiers
-    // like `getState`, `f-flow`, `IFFlowState` are the strongest signal on
-    // reference pages and must reach the embedding model.
-    .replace(/`([^`]*)`/g, '$1')
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/^#{1,6}\s+/gm, '')
-    .replace(/[*_>~|]/g, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return (
+    removeFencedCodeBlocks(md)
+      // Keep inline code CONTENT (just remove the backticks). API identifiers
+      // like `getState`, `f-flow`, `IFFlowState` are the strongest signal on
+      // reference pages and must reach the embedding model.
+      .replace(/`([^`]*)`/g, '$1')
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+      .replace(/^#{1,6}\s+/gm, '')
+      .replace(/[*_>~|]/g, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  );
+}
+
+function removeFencedCodeBlocks(markdown) {
+  return markdown.replace(/```[\s\S]*?```/gu, ' ').replace(/~~~[\s\S]*?~~~/gu, ' ');
 }

@@ -2,7 +2,7 @@
 toc: false
 wideContent: true
 publishedAt: "2026-07-07"
-updatedAt: "2026-07-17"
+updatedAt: "2026-07-27"
 ---
 
 # Managed Flow State
@@ -71,7 +71,7 @@ The controller forwards the supported finished gestures into the store. All even
 
 ### Scope of v1
 
-Managed state v1 does not capture rotation, connection waypoint editing, or user resize. Those interactions continue to update the rendered directives and emit their normal public outputs; applications that enable them must update their own records. Library-driven size measurement and group auto-fit may amend the current stored geometry, but they do not create a separate user history step.
+Managed state v1 does not capture rotation or connection waypoint editing. Those interactions continue to update the rendered directives and emit their normal public outputs; applications that enable them must update their own records. Node and group geometry emitted through `fNodeSizeChange` / `fGroupSizeChange`, including user resize and auto-expand or auto-fit updates, amends the current stored geometry without creating a separate user history step. Arbitrary content measurement that emits neither output is not written to the store.
 
 ## Undo/Redo built in
 

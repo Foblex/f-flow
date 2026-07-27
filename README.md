@@ -30,7 +30,7 @@
 
 Foblex Flow gives Angular teams a simple way to start building graph-based products without adopting a React-first mental model. Begin with `f-flow`, `f-canvas`, nodes, and connections, then add richer editor features only when your product needs them.
 
-Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces while keeping your own state, validation, persistence, and domain logic.
+Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces. Start with app-owned graph records, or opt into managed records and undo/redo with `withFlowState()`; validation, persistence, permissions, and domain logic remain application concerns in both modes.
 
 <p align="center">
   <a href="https://flow.foblex.com/examples/overview">
@@ -47,7 +47,8 @@ Current `19.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 - Built for real editor interactions: drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment helpers, and waypoints.
 - Advanced modules are optional: caching and virtualization are scaling tools, not day-one requirements.
 - Custom nodes, connectors, and connections for domain-specific graph UIs.
-- Your app stays in control of graph state, validation rules, permissions, and persistence.
+- Choose the state boundary that fits your editor: app-owned records by default, or optional typed `FFlowState` records with snapshots and undo/redo.
+- Your app stays in control of validation rules, permissions, persistence, and business meaning in either state mode.
 - Suitable for both lightweight diagrams and full workflow-builder products.
 
 ## Feature Overview
@@ -61,10 +62,18 @@ Current `19.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 | Layout        | Dagre and ELK auto-layout packages, reflow-on-resize, layer ordering                                                                                                      |
 | Scale         | Node virtualization, render caching, background workers — optional, for large scenes                                                                                      |
 | Customization | Fully templated nodes/connections/connectors, themable via CSS tokens/SCSS mixins, custom markers, connection gradients and labels                                        |
-| Integration   | Event-driven API (`fCreateConnection`, `fMoveNodes`, `fDeleteSelected`, …) — the library never mutates your data; SSR-safe, zoneless-ready                                |
+| Integration   | Classic event-driven API with app-owned records, or optional `withFlowState()` managed records, snapshots, and undo/redo; SSR-safe, zoneless-ready                        |
 | AI tooling    | `llms.txt`, bundled `AI.md`, `ng add` writes agent rules, dev diagnostics with stable `FFxxxx` error codes                                                                |
 
 Coming from React Flow? Read the honest comparison: [React Flow vs Foblex Flow for Angular teams](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams).
+
+## Choose Your State Integration
+
+The default **classic mode** renders arrays or signals owned by your application. Foblex Flow emits final interaction events such as `fCreateConnection` and `fMoveNodes`; your handlers validate them and update application state.
+
+The optional **managed mode** installs `provideFFlow(withFlowState())`. Its typed `FFlowState` records apply supported gestures automatically and provide batching, snapshots, undo, and redo. Your application still defines domain fields and decides how records are validated and persisted.
+
+[Managed Flow State guide](https://flow.foblex.com/docs/managed-flow-state) · [Live state example](https://flow.foblex.com/examples/state)
 
 ## What You Can Build
 
@@ -156,7 +165,7 @@ Full guide: [Default Theme and Styling](https://flow.foblex.com/docs/default-the
 </f-flow>
 ```
 
-That is the whole mental model: `f-flow` hosts the editor, `f-canvas` pans and zooms, any element becomes a node with `fNode`, connectors attach edges. Everything below is opt-in.
+That is the rendering mental model: `f-flow` hosts the editor, `f-canvas` pans and zooms, any element becomes a node with `fNode`, and `fConnector` endpoints attach connections. State management and every advanced feature remain explicit choices.
 
 ## Quick FAQ
 
@@ -168,6 +177,10 @@ That is the whole mental model: `f-flow` hosts the editor, `f-canvas` pans and z
 
 - [Get Started](https://flow.foblex.com/docs/get-started)
 - [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility)
+- [Managed Flow State](https://flow.foblex.com/docs/managed-flow-state)
+- [Large Flow Performance](https://flow.foblex.com/docs/large-flow-performance)
+- [Shadow DOM and Angular Elements](https://flow.foblex.com/docs/shadow-dom-and-angular-elements)
+- [Migrating to Unified Connectors](https://flow.foblex.com/docs/migrating-to-unified-connectors)
 - [Documentation](https://flow.foblex.com/docs/intro)
 - [Examples](https://flow.foblex.com/examples/overview)
 - [Articles](https://flow.foblex.com/blog/overview)

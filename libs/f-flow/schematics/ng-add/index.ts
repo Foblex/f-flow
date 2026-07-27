@@ -23,8 +23,10 @@ const AGENT_RULES_BLOCK = `${AGENT_RULES_BEGIN}
 
 Before writing any code that uses \`@foblex/flow\`, read the AI guide bundled with the
 package: \`node_modules/@foblex/flow/AI.md\`. It contains the verified API surface, hard
-rules (no React Flow patterns, the app owns graph state), a minimal working setup, and a
-checklist of common silent failures.
+rules (no React Flow patterns), a current \`fConnector\` setup, the choice between classic
+app-owned records and opt-in \`withFlowState()\` managed records, and a checklist of common
+silent failures. Domain validation, permissions, and persistence remain application
+concerns in both state modes.
 
 Additional references:
 

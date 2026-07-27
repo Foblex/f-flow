@@ -39,7 +39,7 @@ Attach `fResizeHandle` to an element inside a node (or group) and specify the ha
 
 This keeps your data model as the source of truth while interactions stay responsive.
 
-The optional [Managed Flow State](./examples/state) plugin does not capture user resize in v1, so this final-output persistence step still applies when managed state is enabled.
+The optional [Managed Flow State](./examples/state) plugin synchronizes the final `fNodeSizeChange` or `fGroupSizeChange` into its records, including user resize. That geometry amendment does not create a standalone undo step; keep this final-output persistence step only when your application owns the records itself or needs additional domain-side handling.
 
 ## API
 

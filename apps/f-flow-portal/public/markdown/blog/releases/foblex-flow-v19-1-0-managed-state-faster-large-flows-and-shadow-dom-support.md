@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-13"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-27"
 ---
 
 # Foblex Flow v19.1.0: Managed State, Faster Large Flows, and Shadow DOM Support
@@ -115,7 +115,7 @@ Undoing back to the initial loaded state also reruns the full-render lifecycle, 
 
 ## Explicit v1 Boundaries
 
-Managed state v1 does not automatically capture rotation, connection waypoint editing, or user resize. Their existing public outputs still fire, so applications can update the managed records themselves when those interactions are enabled.
+Managed state v1 does not automatically capture rotation or connection waypoint editing. Their existing public outputs still fire, so applications can update the managed records themselves when those interactions are enabled. Node and group geometry emitted through `fNodeSizeChange` / `fGroupSizeChange`, including user resize and auto-expand or auto-fit updates, amends current records without creating a separate history step. Arbitrary content measurement that emits neither output is not written to the store.
 
 Connection cascade during programmatic removal uses the rendered connector registry to resolve ownership. If an application removes a node before its connectors render, such as immediately after `load()` or during SSR, it should remove the known connection ids in the same `state.batch(...)` call.
 
@@ -182,7 +182,7 @@ The result is that undo restores the graph as one coherent visual state: group, 
 
 The release also adds a maintained zoneless Angular starter under `starters/minimal-flow` for StackBlitz, expands the v19 README and package metadata, and adds comparison and use-case pages for teams evaluating Angular diagram libraries.
 
-The dedicated [Managed Flow State guide](https://flow.foblex.com/examples/state) contains the complete API, configuration table, v1 limitations, and a working example. Applications that prefer to own the entire history layer can continue using the existing event-driven APIs.
+The dedicated [Managed Flow State guide](https://flow.foblex.com/docs/managed-flow-state) contains the state-model choice, configuration, v1 limitations, and a working template. Applications that prefer to own the entire history layer can continue using the existing event-driven APIs.
 
 ## Upgrade Notes
 

@@ -20,10 +20,12 @@
   ],
   "rules": [
     "Use standalone components with FFlowModule import",
-    "The library does NOT own graph state — your app owns nodes, groups, connections, ids, validation, and persistence",
-    "Connections are connector-to-connector (fOutputId → fInputId), not generic node-to-node edges",
+    "Classic mode is the default: your app owns graph records and updates them from Foblex interaction events",
+    "Managed mode is opt-in: provideFFlow(withFlowState()) provides typed FFlowState records, supported gesture writeback, snapshots, and undo/redo",
+    "In both state modes your app owns domain fields, validation policy, permissions, persistence, and business meaning",
+    "Connections are connector-to-connector: fSourceId and fTargetId reference fConnectorId values; use fConnector for new code",
     "Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge()",
-    "Handle events from fDraggable (fCreateConnection, fReassignConnection, fMoveNodes, etc.) to update your own state",
+    "In classic mode handle events from fDraggable (fCreateConnection, fReassignConnection, fMoveNodes, etc.) to update app state",
     "Prefer non-deprecated event property names: sourceId/targetId over fOutputId/fInputId in FCreateConnectionEvent",
     "Import from @foblex/flow, not internal paths"
   ]

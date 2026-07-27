@@ -150,6 +150,27 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Learn how click selection, box selection, multi-select, and programmatic selection work together.',
     },
   },
+  {
+    slug: 'managed-flow-state',
+    text: 'Managed Flow State',
+    group: 'Concepts',
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Managed Flow State - Typed Graph Records, Snapshots and Undo/Redo',
+      description:
+        'Choose between classic event-driven state and opt-in Managed Flow State, then load, render, mutate, snapshot, persist, undo, and redo typed graph records.',
+    },
+  },
+  {
+    slug: 'large-flow-performance',
+    text: 'Large-Flow Performance',
+    group: 'Concepts',
+    seo: {
+      title: 'Large-Flow Performance - Cache, Virtualization and Connection Workers',
+      description:
+        'Scale Angular node editors deliberately with stable rendering, fCache, progressive fVirtualFor, automatic connection workers, and measurable performance tests.',
+    },
+  },
 
   // -------- Containers --------
   {
@@ -280,6 +301,16 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Define target restrictions using allowed input IDs/categories and expose valid targets during drag-to-connect.',
     },
   },
+  {
+    slug: 'migrating-to-unified-connectors',
+    text: 'Migrate to Unified Connectors',
+    group: 'Connectors',
+    seo: {
+      title: 'Migrate to Unified Foblex Flow Connectors - v19 Connector Guide',
+      description:
+        'Migrate fNodeOutput, fNodeInput, fOutputId and fInputId to the v19 fConnector, fSourceId and fTargetId API without rewriting the whole editor at once.',
+    },
+  },
 
   // -------- Connections --------
   {
@@ -402,6 +433,19 @@ export const DOCS_PAGES: IPageDefinition[] = [
       title: 'Accessibility - Keyboard Operation and Screen Reader Support',
       description:
         'Built-in ARIA semantics and an opt-in keyboard layer: spatial navigation, grab-and-move, keyboard connection creation, localizable announcements, and remappable keys via withA11y.',
+    },
+  },
+
+  // -------- Integration --------
+  {
+    slug: 'shadow-dom-and-angular-elements',
+    text: 'Shadow DOM and Angular Elements',
+    group: 'Integration',
+    badge: { text: 'New', type: 'success' },
+    seo: {
+      title: 'Foblex Flow in Shadow DOM and Angular Elements',
+      description:
+        'Run Foblex Flow inside Angular Elements and ViewEncapsulation.ShadowDom with pointer gestures, connection targeting, deep hit-testing, and correctly scoped styles.',
     },
   },
 

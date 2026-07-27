@@ -18,7 +18,7 @@ This guide is the shortest path from installation to a working flow. You will:
 
 ## Install
 
-This guide assumes the current `18.x` line. If your application is on Angular 12-17.2, start with [Angular Version Compatibility](angular-version-compatibility) and pin the matching Foblex Flow line before you run `ng add` or `npm install`.
+This guide assumes the current `19.x` line. If your application is on Angular 12-17.2, start with [Angular Version Compatibility](angular-version-compatibility) and pin the matching Foblex Flow line before you run `ng add` or `npm install`.
 
 ::: code-group
 
@@ -62,39 +62,45 @@ A minimal interactive flow consists of:
 2. **`fDraggable`** — enables interaction (drag, pointer handling, editor UX pipeline).
 3. **`f-canvas`** — the layer where nodes and connections are rendered.
 4. **Nodes** with `fNode` and explicit positions via `fNodePosition`.
-5. **Connectors** (`fNodeOutput` / `fNodeInput`) + **`f-connection`** that joins matching `fOutputId` and `fInputId`.
+5. **Unified connectors** (`fConnector`) + **`f-connection`** whose `fSourceId` and `fTargetId` reference matching `fConnectorId` values.
 
 ```html
 <f-flow fDraggable>
   <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <f-connection fSourceId="source-1" fTargetId="target-1"></f-connection>
 
     <div
       fNode
       fDragHandle
-      fNodeOutput
       [fNodePosition]="{ x: 32, y: 32 }"
-      fOutputId="output1"
-      fOutputConnectableSide="right"
     >
       Node 1
+      <div
+        fConnector
+        fConnectorId="source-1"
+        fConnectorType="source"
+        fConnectorConnectableSide="right"
+      ></div>
     </div>
 
     <div
       fNode
       fDragHandle
-      fNodeInput
       [fNodePosition]="{ x: 240, y: 32 }"
-      fInputId="input1"
-      fInputConnectableSide="left"
     >
       Node 2
+      <div
+        fConnector
+        fConnectorId="target-1"
+        fConnectorType="target"
+        fConnectorConnectableSide="left"
+      ></div>
     </div>
   </f-canvas>
 </f-flow>
 ```
 
-The component that hosts this template must import `FFlowModule` — `f-flow`, `f-canvas`, `fNode`, the connectors, and `f-connection` are only reachable through the module:
+Import `FFlowModule` for the complete template above. `f-flow` and `f-canvas` are standalone components, but the sample also uses non-standalone directives and components that the module registers:
 
 ```typescript
 import { Component } from '@angular/core';
@@ -109,6 +115,15 @@ import { FFlowModule } from '@foblex/flow';
 })
 export class Flow {}
 ```
+
+## Choose a state mode
+
+The template above works with either state integration:
+
+- **Classic mode (default):** your component owns node, group, and connection records. Handle final interaction events such as `fCreateConnection` and `fMoveNodes`, validate them, and update your Angular state.
+- **Managed mode (opt-in):** install `provideFFlow(withFlowState())`, load typed records into `FFlowState`, and render its signals. Supported gestures update those records and history automatically, with snapshots and undo/redo included.
+
+In both modes your application defines domain fields, validation rules, permissions, and persistence. See the [Managed Flow State guide](managed-flow-state) when you want the opt-in store.
 
 ## Default theme
 
@@ -206,8 +221,8 @@ Use this as a practical baseline, then adapt it to your app styles.
 - [`f-flow`](f-flow-component) — root container that provides flow context.
 - [`f-canvas`](f-canvas-component) — viewport/rendering layer for nodes and connections.
 - [`fNode`](f-node-directive) — directive that turns an element into a node.
-- [`fNodeOutput`](f-node-output-directive) / [`fNodeInput`](f-node-input-directive) — connectors that represent connection endpoints.
-- [`f-connection`](f-connection-component) — renders a connection between matching `fOutputId` and `fInputId`.
+- [`fConnector`](f-connector-directive) — unified source, target, source-target, or outlet endpoint. Use it for new code.
+- [`f-connection`](f-connection-component) — renders a connection whose `fSourceId` and `fTargetId` match rendered `fConnectorId` values.
 
 ## Try it yourself
 
@@ -215,7 +230,7 @@ After you get the minimal template working, try:
 
 - moving nodes by changing `[fNodePosition]`,
 - adding more nodes and connections,
-- experimenting with connector sides (`fOutputConnectableSide`, `fInputConnectableSide`),
+- experimenting with connector sides (`fConnectorConnectableSide`),
 - changing the connection look/behavior via `fType` and `fBehavior`,
 - enabling additional UX helpers (selection area, minimap, alignment and spacing).
 
@@ -225,9 +240,10 @@ Only add scaling features such as cache or virtualization once you actually need
 
 - Nodes and connections must be inside `f-canvas`. Elements outside it will not participate in transform and interaction.
 - Nested control flow (`@for` inside `@if`, `@for` inside `@for`) is not projected into the canvas — content renders detached and invisible without errors. Wrap the block with `<ng-container ngProjectAs="[fNodes]">` (groups: `"[fGroups]"`, connections: `"[fConnections]"`). See [Errors and Warnings](errors) (FF1004).
-- `fOutputId` and `fInputId` must match connector ids exactly — otherwise the connection will not render.
+- `fSourceId` and `fTargetId` must match rendered `fConnectorId` values exactly — otherwise the connection will not render.
 - Always define initial node positions for predictable layout.
 - Keep ids stable across re-renders if your app persists or recalculates the graph.
+- Older `fNodeOutput` / `fNodeInput` and `fOutputId` / `fInputId` APIs remain as deprecated compatibility aliases. Do not use them in new code; follow [Migrating to Unified Connectors](migrating-to-unified-connectors) when updating an existing editor.
 
 For custom connection types, see the Examples section: `/examples/custom-connection-type`.
 
@@ -238,9 +254,9 @@ Continue with the API references:
 - [`f-flow`](f-flow-component)
 - [`f-canvas`](f-canvas-component)
 - [`fNode`](f-node-directive)
-- [`fNodeOutput`](f-node-output-directive)
-- [`fNodeInput`](f-node-input-directive)
+- [`fConnector`](f-connector-directive)
 - [`f-connection`](f-connection-component)
+- [Managed Flow State](managed-flow-state)
 
 ## Example
 

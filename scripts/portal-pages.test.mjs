@@ -1,5 +1,6 @@
 import { after, before, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
+import { request } from 'node:http';
 import { createServer } from 'node:net';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { basename, join, relative, sep } from 'node:path';
@@ -8,6 +9,7 @@ import { spawn } from 'node:child_process';
 const ROOT = process.cwd();
 const MARKDOWN_ROOT = join(ROOT, 'apps', 'f-flow-portal', 'public', 'markdown');
 const CANONICAL_ORIGIN = 'https://flow.foblex.com';
+const LEGACY_PORTAL_HOST = 'foblex-flow-5378d59922a2.herokuapp.com';
 const PORTAL_SERVER = join(ROOT, 'dist', 'f-flow-portal', 'server', 'server.mjs');
 const PORTAL_BROWSER = join(ROOT, 'dist', 'f-flow-portal', 'browser');
 
@@ -71,6 +73,35 @@ describe('Portal prerendered pages', () => {
     await assertRedirect('/examples', '/examples/overview');
     await assertRedirect('/showcase', '/showcase/overview');
     await assertRedirect('/blog', '/blog/overview');
+    await assertRedirect('/docs/consulting', '/services');
+  });
+
+  test('legacy Heroku host permanently redirects to the canonical origin', async () => {
+    const response = await requestWithHeaders(`${baseUrl}/docs/get-started?source=legacy`, {
+      Host: LEGACY_PORTAL_HOST,
+    });
+
+    assert.equal(response.status, 308);
+    assert.equal(response.location, `${CANONICAL_ORIGIN}/docs/get-started?source=legacy`);
+  });
+
+  test('canonical host permanently redirects proxy-forwarded HTTP to HTTPS', async () => {
+    const response = await requestWithHeaders(`${baseUrl}/docs/get-started?source=http`, {
+      Host: 'flow.foblex.com',
+      'X-Forwarded-Proto': 'http',
+    });
+
+    assert.equal(response.status, 308);
+    assert.equal(response.location, `${CANONICAL_ORIGIN}/docs/get-started?source=http`);
+  });
+
+  test('canonical proxy-forwarded HTTPS does not enter a redirect loop', async () => {
+    const response = await requestWithHeaders(`${baseUrl}/docs/get-started`, {
+      Host: 'flow.foblex.com',
+      'X-Forwarded-Proto': 'https',
+    });
+
+    assert.equal(response.status, 200);
   });
 
   test('retired undo/redo examples redirect to managed state', async () => {
@@ -117,7 +148,7 @@ describe('Portal prerendered pages', () => {
         assert.match(response.body, /<title>.+<\/title>/u);
 
         const canonical =
-          item.route === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${item.route}`;
+          item.route === '/' ? `${CANONICAL_ORIGIN}/` : `${CANONICAL_ORIGIN}${item.route}`;
 
         assert.match(
           response.body,
@@ -185,6 +216,31 @@ function collectMarkdownExpectations() {
   }
 
   return expectations.sort((left, right) => left.route.localeCompare(right.route));
+}
+
+function requestWithHeaders(url, headers) {
+  const target = new URL(url);
+
+  return new Promise((resolve, reject) => {
+    const req = request(
+      {
+        hostname: target.hostname,
+        port: target.port,
+        path: `${target.pathname}${target.search}`,
+        headers,
+      },
+      (response) => {
+        response.resume();
+        resolve({
+          status: response.statusCode,
+          location: response.headers.location,
+        });
+      },
+    );
+
+    req.on('error', reject);
+    req.end();
+  });
 }
 
 function walkMarkdownFiles(directoryPath) {

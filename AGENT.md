@@ -8,7 +8,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ## Core principles
 
-- Keep the library boundary intact: `@foblex/flow` owns interaction, rendering, and internal runtime UI state; application code owns graph data, validation, persistence, and business meaning.
+- Keep the library boundary intact: `@foblex/flow` owns interaction, rendering, and internal runtime UI state. In the default classic integration the application owns graph records; the optional `withFlowState()` plugin can maintain typed records and history. In both modes the application defines domain fields, validation, permissions, persistence, and business meaning.
 - Never invent selectors, inputs, outputs, methods, or React Flow style APIs such as `[nodes]`, `[edges]`, `setNodes()`, or `addEdge()`.
 - Preserve established public `f*` API names and aliases. When an event exposes both current and deprecated names, prefer the current non-deprecated fields in new consumer code.
 - Extend existing feature slices before introducing new cross-cutting abstractions.
@@ -24,7 +24,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - `plugins/layout/` contains layout-changing features such as `f-layout` and `f-reflow-on-resize`.
 - `plugins/snapping/` contains positioning-assistance features such as `f-line-alignment`, `f-magnetic-lines`, and `f-magnetic-rects`.
 - `domain/` contains internal mediator-driven operations and feature execution classes.
-- `f-storage/`, `f-cache/`, and `reactivity/` are internal runtime support layers, not app-facing graph state layers.
+- `f-storage/`, `f-cache/`, and `reactivity/` are internal runtime support layers, not app-facing graph state layers. `plugins/state/` is the explicit opt-in managed-record layer exposed through `withFlowState()`.
 - `libs/f-examples` and `libs/f-pro-examples` are consumer-style examples of the library.
 - `apps/f-flow-portal/src/app` and `apps/f-flow-portal/public/markdown` power the documentation portal and are the source of truth for docs/example registration.
 - Tests are colocated with source as `*.spec.ts`. Test-only helpers live under `libs/f-flow/src/testing`.
@@ -168,7 +168,8 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 - Small feature-local execution classes registered with `@FExecutionRegister(...)`.
 - Base-class layering for Angular host primitives such as flow, canvas, node, connector, connection, and drag infrastructure.
 - Composition through registries, plugin instances, handlers, and feature provider arrays.
-- Event-driven integration where the app handles final events and updates its own state.
+- Classic event-driven integration where the app handles final events and updates its own state.
+- Opt-in managed integration through `provideFFlow(withFlowState())`, where `FFlowState` applies supported completed gestures to typed records and history.
 - Internal reactivity built on Angular signals plus `FChannel` / `FChannelHub` in library code.
 
 ### Preferred patterns
@@ -183,7 +184,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ### Discouraged patterns
 
-- Do not introduce an application-owned graph store into `libs/f-flow/src`.
+- Do not introduce another app-facing graph store outside `plugins/state/`, make managed state mandatory, or move domain validation and persistence into the library.
 - Do not add React Flow style data APIs or node/edge store helpers to the library.
 - Do not introduce Angular CDK drag-drop into the core interaction pipeline.
 - Do not introduce RxJS-based internal state flow into library features that currently use signals and `libs/f-flow/src/reactivity`.
@@ -227,7 +228,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 ### Services
 
 - Keep services small and feature-specific.
-- Use `@Injectable()` services for runtime registries, helpers, or support objects, not as a replacement for the app-owned domain model.
+- Use `@Injectable()` services for runtime registries, helpers, or support objects, not as a replacement for the application's domain model. `FFlowState` is the deliberate opt-in exception for graph-record bookkeeping, not for domain policy or persistence.
 - Prefer existing stores/registries/channels before inventing a new singleton service.
 
 ### Inputs / Outputs / Signals
@@ -375,7 +376,7 @@ The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-po
 
 - `llms.txt` is the short index following the [llms.txt spec](https://llmstxt.org): H1 title, blockquote, H2 sections with `- [Link](url): description` entries. Keep it as a link directory — no inline API content.
 - `llms-full.txt` is the full inline reference with all inputs, outputs, methods, types, and code examples. Keep the existing numbered section structure and table format.
-- `scripts/validate-llms-content.mjs` (part of `npm run seo:check`, runs on prebuild) enforces freshness: the stated version must match `libs/f-flow/package.json`, every docs page from `docs.pages.ts` must be linked in `llms.txt`, and every symbol in its `REQUIRED_SYMBOLS` list must appear in `llms-full.txt`. When shipping a new headline public API, add its key symbol to `REQUIRED_SYMBOLS`.
+- `scripts/validate-llms-content.mjs` (part of `npm run seo:check`, runs on prebuild) enforces freshness: the stated version and every phrase that calls a major line "current" must match `libs/f-flow/package.json`; every docs page from `docs.pages.ts` must be linked in `llms.txt`; every symbol in its `REQUIRED_SYMBOLS` list must appear in `llms-full.txt`; and canonical quickstarts must use `fConnector` / `fConnectorId` with `fSourceId` / `fTargetId`, not deprecated connector aliases. When shipping a new headline public API, add its key symbol to `REQUIRED_SYMBOLS`.
 - The consumer-facing `libs/f-flow/AI.md` ships inside the npm package (`ng-package.json` assets) — update it alongside the llms files for the same triggers; it is what agents read from `node_modules/@foblex/flow/AI.md`.
 - Update the version number when bumping the package version.
 - Add new components/directives in the API Reference section following the existing table format.

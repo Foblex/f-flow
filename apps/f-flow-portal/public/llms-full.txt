@@ -1,6 +1,6 @@
 # Foblex Flow — Full LLM-readable reference
 
-> Angular-native library for building node-based UIs, workflow builders, AI pipeline tools, and interactive diagram editors. MIT licensed. Built by a small team in Warsaw, Poland since 2022.
+> Angular-native library for building node-based UIs, workflow builders, AI pipeline tools, and interactive diagram editors. MIT licensed.
 
 This file concatenates the canonical content LLMs need to answer substantive questions about Foblex Flow without fetching individual URLs.
 
@@ -10,7 +10,7 @@ This file concatenates the canonical content LLMs need to answer substantive que
 
 Foblex Flow is an Angular library (not a framework, not a platform) that provides primitives for building node-based user interfaces — workflow builders, AI pipeline tools, visual editors, and interactive diagrams.
 
-It is distributed as the npm package `@foblex/flow` under the MIT license. Compatible with Angular 17.3 and later (older 12–17.2 lines pinned separately). Not a React wrapper and not framework-agnostic — built from the ground up on Angular primitives: standalone components, signals, change detection, and SSR.
+It is distributed as the npm package `@foblex/flow` under the MIT license. The current 19.x line has Angular `>=17.3.0` peer dependencies (older Angular applications must pin an earlier Foblex Flow line). It is not a React wrapper and not framework-agnostic — it is built from the ground up on Angular primitives: standalone components, signals, change detection, and SSR.
 
 **In plain terms**: if you need your users to drag nodes around a canvas, draw connections between them, edit the graph, and ship it inside an Angular app, Foblex Flow is the rendering and interaction layer you embed. Your domain rules, persistence, and backend integration stay under your control.
 
@@ -25,16 +25,16 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. Compa
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
 - **Current version**: v19.1.4 (July 2026)
-- **Weekly installs**: ~16K
+- **Current download data**: https://www.npmjs.com/package/@foblex/flow
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
 - **Supports**: Angular 17.3+
-- **Team**: Siarhei, Mark, and Siarhei — Warsaw, Poland, building Foblex libraries full-time since 2022
 
 ## 3. Core mental model
 
-- Classic mode is the default: your app owns graph records, handles interaction events, and Angular rerenders its state.
-- Managed mode is opt-in through `provideFFlow(withFlowState())`: `FFlowState` owns record bookkeeping and undo/redo for supported gestures while your app still owns domain fields, validation and persistence.
+- Classic mode is the default: your app owns graph records, validates and handles interaction events, and Angular rerenders its state.
+- Managed mode is opt-in through `provideFFlow(withFlowState())`: `FFlowState` maintains typed records and undo/redo for supported gestures.
+- In both modes your app defines domain fields and owns validation policy, permissions, persistence, backend integration, and business meaning.
 - Both modes render state through normal Angular templates.
 - Connections are connector-to-connector (`fSourceId` → `fTargetId` referencing `fConnectorId`), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
@@ -106,28 +106,42 @@ import { FFlowModule } from '@foblex/flow';
 
 ### Angular Version Compatibility
 
-| @foblex/flow | Angular    |
-|-------------|------------|
-| 18.x        | 17.3 – 21  |
-| 17.x        | 17.3 – 19  |
-| 16.x        | 16.x       |
-| 12.x        | 12.x – 15  |
+| @foblex/flow | Published Angular peer range |
+|---------------|------------------------------|
+| 19.x          | >=17.3.0                     |
+| 18.5–18.6     | >=17.3.0                     |
+| 18.0–18.4     | >=15.0.0                     |
+| 17.9.5        | >=15.0.0                     |
+| 16.0.0        | >=12.0.0                     |
+| 12.6.3        | >=12.0.0                     |
+
+The current repository uses Angular 20.3. A peer range is not evidence that every future Angular major has already been tested; check current CI and release notes when upgrading.
 
 ## 5. Minimal working example
 
 ```html
 <f-flow fDraggable>
   <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <f-connection fSourceId="source-1" fTargetId="target-1"></f-connection>
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }"
-         fNodeOutput fOutputId="output1" fOutputConnectableSide="right">
+    <div fNode fDragHandle [fNodePosition]="{ x: 24, y: 24 }">
       Source Node
+      <div
+        fConnector
+        fConnectorId="source-1"
+        fConnectorType="source"
+        fConnectorConnectableSide="right">
+      </div>
     </div>
 
-    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }"
-         fNodeInput fInputId="input1" fInputConnectableSide="left">
+    <div fNode fDragHandle [fNodePosition]="{ x: 244, y: 24 }">
       Target Node
+      <div
+        fConnector
+        fConnectorId="target-1"
+        fConnectorType="target"
+        fConnectorConnectableSide="left">
+      </div>
     </div>
   </f-canvas>
 </f-flow>
@@ -163,7 +177,7 @@ If you're in an Angular codebase and evaluating both:
 | | Foblex Flow | React Flow + angular-react wrapper |
 |---|---|---|
 | Framework primitives | Angular standalone components, signals, DI | React components + glue layer |
-| State model | Your own Angular services | React hooks bridged into Angular |
+| State model | Classic app-owned records or optional typed FFlowState | React hooks bridged into Angular |
 | SSR | Angular Universal supported | Requires extra bridging |
 | Bundle size impact | Angular-only, no React runtime | Adds React + React-DOM + wrapper |
 | Community size | Smaller, focused on Angular | Larger, React-first |
@@ -172,7 +186,7 @@ If you're in an Angular codebase and evaluating both:
 
 **When to pick React Flow instead**: you're in a React codebase; you need the larger React-ecosystem community; you want a turnkey paid commercial tier (React Flow Pro).
 
-**When to pick Foblex Flow**: you're shipping an Angular app and don't want to drag React into it; you want SSR without bridging; you want a state model that lives in Angular services, not React hooks.
+**When to pick Foblex Flow**: you're shipping an Angular app and don't want to drag React into it; you want SSR without bridging; you want either an event-driven app-owned model or an opt-in typed Angular state layer.
 
 ---
 
@@ -189,6 +203,7 @@ Selector: `f-flow`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fFlowId | InputSignal\<string\> | f-flow-{id} | Unique flow identifier |
+| fCache | InputSignal\<boolean\> | false | Enable the optional geometry cache; measure before enabling |
 
 #### Outputs
 
@@ -202,12 +217,12 @@ Selector: `f-flow`
 
 | Method | Signature | Description |
 |--------|-----------|-------------|
-| redraw | redraw(): void | Force redraw of nodes and connections |
+| redraw | redraw(): void | Request a connection redraw |
 | reset | reset(): void | Resets internal state; re-emits on next render |
 | getNodesBoundingBox | getNodesBoundingBox(): IRect \| null | Returns bounding box of all nodes/groups |
 | getSelection | getSelection(): ICurrentSelection | Returns selected node/group/connection ids |
 | getPositionInFlow | getPositionInFlow(position: IPoint): IRect | Converts viewport point to flow coordinates |
-| getState | getState(): IFFlowState | Exports full flow state |
+| getState | getState(options?: IFFlowStateOptions): IFFlowState | Exports full flow state; `{ measuredSize: true }` includes measured node sizes |
 | selectAll | selectAll(): void | Selects all items |
 | select | select(nodesAndGroups: string[], connections: string[], isSelectedChanged?: boolean): void | Selects specific items |
 | clearSelection | clearSelection(): void | Clears all selection |
@@ -245,7 +260,6 @@ Selector: `f-canvas`
 |--------|-----------|-------------|
 | redraw | redraw(): void | Force immediate redraw |
 | getPosition | getPosition(): IPoint | Get current pan position |
-| setPosition | setPosition(position: IPoint): void | Set pan position |
 | getScale | getScale(): number | Get current zoom scale |
 | setScale | setScale(scale: number, toPosition?: IPoint): void | Set zoom with optional pivot point |
 | resetScale | resetScale(): void | Reset zoom to 1 |
@@ -276,7 +290,7 @@ Selector: `[fNode]`
 | fNodeSize | InputSignal\<ISize \| undefined\> | undefined | Optional fixed size override |
 | fNodeRotate | ModelSignal\<number\> | 0 | Rotation angle in degrees |
 | fConnectOnNode | InputSignal\<boolean\> | true | Allow connection drop on node body |
-| fMinimapClass | InputSignal\<string \| string[]\> | '' | Extra CSS classes for minimap representation |
+| fMinimapClass | InputSignal\<string \| string[]\> | [] | Extra CSS classes for minimap representation |
 | fNodeDraggingDisabled | InputSignal\<boolean\> | false | Disable node dragging |
 | fNodeSelectionDisabled | InputSignal\<boolean\> | false | Disable node selection |
 | fIncludePadding | InputSignal\<boolean\> | true | Include CSS padding in bounds calculation |
@@ -316,10 +330,10 @@ Selector: `[fGroup]`
 | fGroupId | string | f-group-{id} | Unique group identifier |
 | fGroupParentId | string \| null | null | Parent group/node id |
 | fGroupPosition | IPoint | { x: 0, y: 0 } | Group position (model binding) |
-| fGroupSize | ISize | undefined | Container size |
+| fGroupSize | ISize \| undefined | undefined | Container size |
 | fGroupRotate | number | 0 | Rotation degrees (model binding) |
 | fConnectOnNode | boolean | true | Allow connection drop on group |
-| fMinimapClass | string \| string[] | '' | CSS classes for minimap |
+| fMinimapClass | string \| string[] | [] | CSS classes for minimap |
 | fGroupDraggingDisabled | boolean | false | Disable group dragging |
 | fGroupSelectionDisabled | boolean | false | Disable group selection |
 | fIncludePadding | boolean | true | Include padding in bounds |
@@ -464,7 +478,7 @@ Selector: `[fNodeOutlet]`
 
 ### f-connection (FConnectionComponent)
 
-Renders an SVG connection edge between a source output and a target input.
+Renders an SVG connection edge between source and target connectors.
 
 Selector: `f-connection`
 
@@ -473,8 +487,8 @@ Selector: `f-connection`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fConnectionId | InputSignal\<string\> | f-connection-{id} | Unique connection id |
-| fSourceId | InputSignal\<string\> | required | Source connector id |
-| fTargetId | InputSignal\<string\> | required | Target connector id |
+| fSourceId | InputSignal\<string\> | '' | Source connector id; must resolve for the connection to render |
+| fTargetId | InputSignal\<string\> | '' | Target connector id; must resolve for the connection to render |
 | fSourceSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override source dock side |
 | fTargetSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Override target dock side |
 | fOutputId | InputSignal\<string\> | '' | Deprecated: use fSourceId |
@@ -483,11 +497,11 @@ Selector: `f-connection`
 | fInputSide | InputSignal\<EFConnectionConnectableSide\> | DEFAULT | Deprecated: use fTargetSide |
 | fReassignDisabled | InputSignal\<boolean\> | false | Disable drag-to-reassign |
 | fSelectionDisabled | InputSignal\<boolean\> | false | Disable selection |
-| fBehavior | InputSignal\<EFConnectionBehavior\> | FIXED | Connection behavior (FIXED or FLOATING) |
-| fType | InputSignal\<EFConnectionType \| string\> | STRAIGHT | Visual type (STRAIGHT, BEZIER, SEGMENT) |
+| fBehavior | InputSignal\<EFConnectionBehavior\> | FIXED | Connection behavior (FIXED, FIXED_CENTER, or FLOATING) |
+| fType | InputSignal\<EFConnectionType \| string\> | STRAIGHT | Visual type (STRAIGHT, BEZIER, SEGMENT, ADAPTIVE_CURVE, or custom) |
 | fOffset | InputSignal\<number\> | 12 | Min straight length before curve |
 | fRadius | InputSignal\<number\> | 8 | Radius for rounded corners |
-| fReassignableStart | InputSignal\<boolean\> | false | Enable start-end reassignment |
+| fReassignableStart | InputSignal\<boolean\> | false | Enable source/start endpoint reassignment |
 
 #### Content Projection
 
@@ -620,6 +634,7 @@ Selector: `f-flow[fDraggable]`
 | fReassignConnection | EventEmitter\<FReassignConnectionEvent\> | Connection endpoint reassigned |
 | fConnectionWaypointsChanged | OutputEmitterRef\<FConnectionWaypointsChangedEvent\> | Waypoints modified |
 | fDropToGroup | EventEmitter\<FDropToGroupEvent\> | Node dropped into group (shares its public name with the `fDropToGroup` toggle input above) |
+| fDeleteSelected | EventEmitter\<FDeleteSelectedEvent\> | User requested deletion of the current selection |
 | fDragStarted | EventEmitter\<FDragStartedEvent\> | Any drag interaction started |
 | fDragEnded | EventEmitter\<void\> | Any drag interaction ended |
 | fNodeConnectionsIntersection | OutputEmitterRef\<FNodeConnectionsIntersectionEvent\> | Node-connection intersection detected |
@@ -714,6 +729,7 @@ Selector: `f-minimap`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | fMinSize | number | 1000 | Minimum size of minimap coordinate system |
+| fNodeRenderLimit | number | 10000 | Stop drawing minimap node rects above this node count; values <= 0 disable the limit |
 
 #### CSS Classes
 
@@ -742,8 +758,8 @@ Selector: `f-background`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | id | string | f-pattern-{id} | Pattern id |
-| vColor | string | transparent | Vertical line color |
-| hColor | string | transparent | Horizontal line color |
+| vColor | string | rgba(0,0,0,0.1) | Vertical line color |
+| hColor | string | rgba(0,0,0,0.1) | Horizontal line color |
 | vSize | number | 20 | Vertical spacing |
 | hSize | number | 20 | Horizontal spacing |
 
@@ -773,7 +789,7 @@ CSS Class: `.f-selection-area`
 
 Every flow ships an accessibility layer; no setup needed. Semantics always run: nodes/groups/connections receive `role`, `aria-roledescription`, accessible names (a connection gets "Connection from X to Y"; set `aria-label` yourself to override — the library only fills missing attributes), standing keyboard instructions via `aria-describedby`, and a live region announces selection, movement, connection and deletion (WCAG 4.1.3); the minimap and connection previews are `aria-hidden`.
 
-The keyboard layer is OPT-IN — installing `provideFFlow(withA11y())` enables it (existing apps with their own key handling stay untouched): the `f-flow` host becomes the single tab stop (`role="application"` so screen readers hand arrow keys to the canvas); arrows move the SELECTION to the nearest node spatially — DOM focus stays on the host, the active item is exposed via `aria-activedescendant` (`Shift`+arrow extends the selection, `Home`/`End` first/last); `Ctrl`+arrow walks the topology — the connection is focused and selected first, then the node on its other end; `Ctrl`+`A` selects all, `Escape` clears; `Space` moves the selection — hold it and arrow (release drops) or tap to grab / tap to drop (`Shift` = coarse step, `Escape` reverts, the drop emits `fMoveNodes`); `C` starts a connection from the selected node (exactly one node must be selected) driving the shared `FCreateConnectionSession` — arrows move between connectable targets spatially with preview and snap, `Enter` emits `fCreateConnection`, `Escape` cancels; `Delete`/`Backspace` emits `fDeleteSelected: FDeleteSelectedEvent` (the library never mutates your data); `+`/`-`/`0` zoom. Native controls inside nodes (inputs, buttons, links) are never hijacked.
+The keyboard layer is OPT-IN — installing `provideFFlow(withA11y())` enables it (existing apps with their own key handling stay untouched): the `f-flow` host becomes the single tab stop (`role="application"` so screen readers hand arrow keys to the canvas); arrows move the SELECTION to the nearest node spatially — DOM focus stays on the host, the active item is exposed via `aria-activedescendant` (`Shift`+arrow extends the selection, `Home`/`End` first/last); `Ctrl`+arrow walks the topology — the connection is focused and selected first, then the node on its other end; `Ctrl`+`A` selects all, `Escape` clears; `Space` moves the selection — hold it and arrow (release drops) or tap to grab / tap to drop (`Shift` = coarse step, `Escape` reverts, the drop emits `fMoveNodes`); `C` starts a connection from the selected node (exactly one node must be selected) driving the shared `FCreateConnectionSession` — arrows move between connectable targets spatially with preview and snap, `Enter` emits `fCreateConnection`, `Escape` cancels; `Delete`/`Backspace` emits `fDeleteSelected: FDeleteSelectedEvent` (classic mode leaves the data update to your handler; managed mode can apply it to `FFlowState`); `+`/`-`/`0` zoom. Native controls inside nodes (inputs, buttons, links) are never hijacked.
 
 `withA11y(config)` also tunes the layer: `keyboard: false` keeps keys off while customizing the rest, `moveStep`/`coarseMoveStep` set movement steps, `messages: Partial<IFA11yMessages>` localizes every announcement and attached string, `keys: IFA11yKeys` rebinds actions (`grab`/`connect`/`deleteSelected`/`selectAll`/`zoomIn`/`zoomOut`/`zoomReset`; empty array disables one; arrows/Enter/Escape are fixed). Focus styling: nodes/groups get a `:focus-visible` outline (`--ff-focus-ring-color`), focused connections use the selected stroke.
 
@@ -797,7 +813,7 @@ Runtime API: `FControlSchemeController` with `scheme: Signal<IFControlScheme>`, 
 
 ### Managed Flow State (withFlowState)
 
-Managed state is optional. Install `provideFFlow(withFlowState(config))` to provide an `FFlowState` store that owns record bookkeeping, batches supported gesture events, and supplies undo/redo. Without this feature, the classic event-driven API is unchanged and the application owns all graph state.
+Managed state is optional. Install `provideFFlow(withFlowState(config))` to provide an `FFlowState` store that maintains typed records, batches supported gesture events, and supplies undo/redo. Without this feature, the classic event-driven API is unchanged and the application owns all graph records. With it, the application still defines domain fields and owns validation policy, permissions, persistence, and business meaning.
 
 ```typescript
 interface EditorNode extends IFStateNode {
@@ -888,7 +904,7 @@ try {
 
 The managed state controller applies the later reflow `fMoveNodes` update while the transaction is open. The first mutation retains the shape from before the click, so one `undo()` restores both `isExpanded` and all positions moved by reflow; the outer close also produces one `changes()` increment. Two animation frames are suitable for an immediately rendered content-size change. If size settles after a CSS transition, lazy load, or another asynchronous layout stage, close from that stage's real completion signal. Never leave a batch open, or unrelated later mutations will be merged into the same history entry. Full guide: https://flow.foblex.com/examples/state
 
-Supported automatic v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. Rotation, connection waypoint editing, and user resize are not captured by managed state v1. Library-driven measured-size/group-auto-fit updates may amend current geometry without creating another user history step.
+Supported automatic v1 gestures: create/reassign connection, move nodes/groups, delete selection, external-item creation, optional drop-to-group, selection, and canvas pan/zoom. Node and group geometry emitted through `fNodeSizeChange` / `fGroupSizeChange`, including user resize and auto-expand or auto-fit updates, amends current records without creating a separate history step; arbitrary content measurement that emits neither output is not written to the store. Rotation and connection waypoint editing are not captured by managed state v1.
 
 Programmatic viewport helpers emit `fCanvasChange` by default and therefore enter managed history. For initialization or another application-driven adjustment, pass `emitCanvasChange = false`, for example `canvas.resetScaleAndCenter(false, false)`.
 
@@ -923,7 +939,7 @@ Drop events emit via `fCreateNode` on `fDraggable`.
 
 ---
 
-### f-auto-pan (FAutoPanComponent)
+### f-auto-pan (FAutoPan)
 
 Edge-based viewport scrolling during drag operations.
 
@@ -965,11 +981,18 @@ Snap-to-grid rectangle guides during node drag.
 
 Selector: `f-magnetic-rects`
 
+#### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| alignThreshold | number | 100 | Maximum alignment delta in pixels |
+| spacingThreshold | number | 100 | Maximum equal-spacing delta in pixels |
+
 ---
 
 ### f-line-alignment (FLineAlignmentComponent)
 
-**Deprecated.** Use `f-magnetic-lines` instead. Will be removed in v19.0.0.
+**Deprecated.** Use `f-magnetic-lines` instead.
 
 Selector: `f-line-alignment`
 
@@ -1005,6 +1028,7 @@ Foblex Flow uses a final-result event model — events emit when an action compl
 | fConnectionWaypointsChanged | fDraggable | OutputEmitterRef\<FConnectionWaypointsChangedEvent\> | Waypoints modified |
 | fCreateNode | fDraggable | EventEmitter\<FCreateNodeEvent\> | External item dropped |
 | fDropToGroup | fDraggable | EventEmitter\<FDropToGroupEvent\> | Node dropped into group |
+| fDeleteSelected | fDraggable | EventEmitter\<FDeleteSelectedEvent\> | User requested deletion of selected nodes, groups, or connections |
 | fDragStarted | fDraggable | EventEmitter\<FDragStartedEvent\> | Drag started |
 | fDragEnded | fDraggable | EventEmitter\<void\> | Drag ended |
 
@@ -1030,18 +1054,26 @@ Control when behaviors activate with `FEventTrigger = (event: MouseEvent | Touch
 
 ## 10. Connection Rules
 
-Restrict which inputs can accept connections from specific outputs.
+Restrict which target connectors can accept connections from specific source connectors.
 
-Use `fCanBeConnectedInputs` on output/outlet directives to whitelist valid targets by input id or category.
+Use `fCanBeConnectedTo` on a source or outlet `fConnector` to allow targets by connector id or category.
 
 ```html
-<!-- Only connects to inputs with id "db-input" or category "database" -->
-<div fNodeOutput fOutputId="query-output"
-     [fCanBeConnectedInputs]="['db-input', 'database']">
+<!-- Only connects to a target with id "db-input" or category "database" -->
+<div
+  fConnector
+  fConnectorId="query-output"
+  fConnectorType="source"
+  [fCanBeConnectedTo]="['db-input', 'database']">
 </div>
 
-<!-- Categorized input -->
-<div fNodeInput fInputId="my-db-input" fInputCategory="database"></div>
+<!-- Categorized target -->
+<div
+  fConnector
+  fConnectorId="my-db-input"
+  fConnectorType="target"
+  fConnectorCategory="database">
+</div>
 ```
 
 During drag-to-connect, valid targets get `.f-connector-connectable` and invalid ones are blocked. Always validate again at persistence time.
@@ -1073,21 +1105,56 @@ interface ITransformModel {
   scale: number;
 }
 
+interface IFFlowStateOptions {
+  measuredSize?: boolean;
+}
+
+interface IFFlowStateConnector {
+  id: string;
+  fConnectableSide: EFConnectableSide;
+}
+
+interface IFFlowStateNode {
+  id: string;
+  parentId?: string;
+  position: IPoint;
+  size?: ISize;
+  measuredSize?: ISize;
+  rotate: number;
+  fInputs: IFFlowStateConnector[];
+  fOutputs: IFFlowStateConnector[];
+  isSelected: boolean;
+}
+
+interface IFFlowStateConnection {
+  id: string;
+  fOutputId: string;
+  fInputId: string;
+  fType: EFConnectionType | string;
+  fBehavior: EFConnectionBehavior;
+  isSelected: boolean;
+  waypoints: IPoint[];
+  fInputSide: EFConnectionConnectableSide;
+  fOutputSide: EFConnectionConnectableSide;
+}
+
 interface IFFlowState {
-  nodes: IFNodeState[];
-  groups: IFGroupState[];
-  connections: IFConnectionState[];
+  position: IPoint;
+  scale: number;
+  nodes: IFFlowStateNode[];
+  groups: IFFlowStateNode[];
+  connections: IFFlowStateConnection[];
 }
 
 interface ICurrentSelection {
-  nodes: string[];
-  connections: string[];
+  fNodeIds: string[];
+  fGroupIds: string[];
+  fConnectionIds: string[];
 }
 
-interface FCanvasChangeEvent {
-  transform: ITransformModel;
-  position: IPoint;
-  scale: number;
+class FCanvasChangeEvent {
+  readonly position: IPoint;
+  readonly scale: number;
 }
 
 interface FSelectionChangeEvent {
@@ -1109,6 +1176,7 @@ type FEventTrigger = (event: MouseEvent | TouchEvent | WheelEvent) => boolean;
 ```typescript
 enum EFConnectionBehavior {
   FIXED = 'fixed',
+  FIXED_CENTER = 'fixed_center',
   FLOATING = 'floating'
 }
 
@@ -1124,30 +1192,44 @@ enum EFConnectableSide {
   TOP = 'top',
   RIGHT = 'right',
   BOTTOM = 'bottom',
-  LEFT = 'left'
+  LEFT = 'left',
+  CALCULATE = 'calculate',
+  CALCULATE_HORIZONTAL = 'calculate_horizontal',
+  CALCULATE_VERTICAL = 'calculate_vertical'
+}
+
+enum EFConnectionConnectableSide {
+  DEFAULT = 'default',
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left',
+  CALCULATE = 'calculate',
+  CALCULATE_HORIZONTAL = 'calculate_horizontal',
+  CALCULATE_VERTICAL = 'calculate_vertical'
 }
 
 enum EFResizeHandleType {
-  LEFT,
-  LEFT_TOP,
-  TOP,
-  RIGHT_TOP,
-  RIGHT,
-  RIGHT_BOTTOM,
-  BOTTOM,
-  LEFT_BOTTOM
+  LEFT = 'left',
+  LEFT_TOP = 'left-top',
+  TOP = 'top',
+  RIGHT_TOP = 'right-top',
+  RIGHT = 'right',
+  RIGHT_BOTTOM = 'right-bottom',
+  BOTTOM = 'bottom',
+  LEFT_BOTTOM = 'left-bottom'
 }
 
 enum EFZoomDirection {
-  ZOOM_IN = 0,
-  ZOOM_OUT = 1
+  ZOOM_IN = 1,
+  ZOOM_OUT = -1
 }
 
 enum EFMarkerType {
   START = 'f-connection-marker-start',
   END = 'f-connection-marker-end',
-  SELECTED_START = 'f-connection-marker-selected-start',
-  SELECTED_END = 'f-connection-marker-selected-end',
+  SELECTED_START = 'f-connection-selected-marker-start',
+  SELECTED_END = 'f-connection-selected-marker-end',
   START_ALL_STATES = 'f-connection-marker-start-all-states',
   END_ALL_STATES = 'f-connection-marker-end-all-states'
 }
@@ -1243,9 +1325,14 @@ Progressive rendering for large diagrams. Renders nodes in chunks using a frame-
 ```html
 <f-flow fDraggable>
   <f-canvas>
-    <div *fVirtualFor="let node of nodes" fNode [fNodePosition]="node.position">
-      {{ node.label }}
-    </div>
+    <ng-container ngProjectAs="[fNodes]" *fVirtualFor="let node of nodes">
+      <div
+        fNode
+        [fNodeId]="node.id"
+        [fNodePosition]="node.position">
+        {{ node.label }}
+      </div>
+    </ng-container>
   </f-canvas>
 </f-flow>
 ```
@@ -1261,6 +1348,12 @@ Performance optimization that caches node and connector geometry to avoid redund
   </f-canvas>
 </f-flow>
 ```
+
+### Shadow DOM and Angular Elements
+
+Foblex Flow v19.1 supports editors rendered inside open shadow roots. Use an Angular component with `encapsulation: ViewEncapsulation.ShadowDom`; that component can also be exported through Angular Elements. Angular Elements alone does not create a shadow root. Pointer target resolution, deep `elementsFromPoint()` hit-testing, connection gestures, background detection, and external palette drops follow the composed event path through nested open roots.
+
+Closed shadow roots are unsupported because their internal tree is unavailable for deep hit-testing. Document-level CSS also does not cross the boundary, so load the required Foblex theme layers or equivalent styles inside the shadow component. Full guide: https://flow.foblex.com/docs/shadow-dom-and-angular-elements
 
 ### Reflow on Resize (withReflowOnResize)
 
@@ -1293,21 +1386,22 @@ import { provideFFlow, withFCanvas, EFCanvasLayer } from '@foblex/flow';
 providers: [provideFFlow(withFCanvas({ layers: [EFCanvasLayer.GROUPS, EFCanvasLayer.NODES, EFCanvasLayer.CONNECTIONS] }))];
 ```
 
-Order is read bottom to top; the `[fLayers]` input wins over the provider value; missing layers append in their default position. Default: `[GROUPS, CONNECTIONS, NODES]`. Docs: https://flow.foblex.com/examples/canvas-layers
+Order is read bottom to top; a non-empty `[fLayers]` input wins over the provider value, while an empty or unset input falls back to `withFCanvas({ layers })`; missing layers append afterward in their default relative order. Default: `[GROUPS, CONNECTIONS, NODES]`. Docs: https://flow.foblex.com/examples/canvas-layers
 
 ### Layout Engine Integration
 
 Abstract layout engine with Dagre and ELK adapters for automatic node positioning.
 
 ```typescript
+import { Component, inject } from '@angular/core';
 import { provideFLayout } from '@foblex/flow';
-import { FDagreLayoutEngine } from '@foblex/layout-dagre';
+import { DagreLayoutEngine } from '@foblex/flow-dagre-layout';
 
 @Component({
-  providers: [provideFLayout(FDagreLayoutEngine)],
+  providers: [provideFLayout(DagreLayoutEngine)],
 })
 export class MyFlowComponent {
-  private layout = inject(F_LAYOUT);
+  private readonly layout = inject(DagreLayoutEngine);
 
   async autoLayout() {
     await this.layout.relayout();
@@ -1315,7 +1409,7 @@ export class MyFlowComponent {
 }
 ```
 
-Optional packages: `@foblex/layout-dagre`, `@foblex/layout-elk`
+Optional packages: `@foblex/flow-dagre-layout`, `@foblex/flow-elk-layout`
 
 ### Layout Engine API
 
@@ -1354,16 +1448,16 @@ interface IConnection {
     <f-flow fDraggable
             (fCreateConnection)="onCreateConnection($event)"
             (fSelectionChange)="onSelectionChange($event)">
-      <f-canvas [fZoom]="true">
-        <f-background>
-          <f-circle-pattern></f-circle-pattern>
-        </f-background>
+      <f-background>
+        <f-circle-pattern></f-circle-pattern>
+      </f-background>
 
+      <f-canvas [fZoom]="true">
         @for (connection of connections(); track connection.id) {
           <f-connection
             [fConnectionId]="connection.id"
-            [fOutputId]="connection.sourceId"
-            [fInputId]="connection.targetId"
+            [fSourceId]="connection.sourceId"
+            [fTargetId]="connection.targetId"
             fType="segment">
           </f-connection>
         }
@@ -1375,23 +1469,26 @@ interface IConnection {
                [fNodeId]="node.id"
                [fNodePosition]="node.position"
                (fNodePositionChange)="onNodePositionChange(node.id, $event)">
-            <div fNodeOutput
-                 [fOutputId]="node.id + '-output'"
-                 fOutputConnectableSide="right"
+            <div fConnector
+                 [fConnectorId]="node.id + '-output'"
+                 fConnectorType="source"
+                 fConnectorConnectableSide="right"
                  class="connector right">
             </div>
-            <div fNodeInput
-                 [fInputId]="node.id + '-input'"
-                 fInputConnectableSide="left"
+            <div fConnector
+                 [fConnectorId]="node.id + '-input'"
+                 fConnectorType="target"
+                 fConnectorConnectableSide="left"
                  class="connector left">
             </div>
             {{ node.label }}
           </div>
         }
 
-        <f-minimap></f-minimap>
-        <f-selection-area></f-selection-area>
       </f-canvas>
+
+      <f-minimap></f-minimap>
+      <f-selection-area></f-selection-area>
     </f-flow>
   `,
 })
@@ -1407,6 +1504,10 @@ export class EditorComponent {
   ]);
 
   onCreateConnection(event: FCreateConnectionEvent): void {
+    if (!event.targetId) {
+      return;
+    }
+
     this.connections.update((conns) => [
       ...conns,
       {
@@ -1451,8 +1552,8 @@ export class EditorComponent {
 onCreateNode(event: FCreateNodeEvent): void {
   const newNode = {
     id: `node-${Date.now()}`,
-    position: event.dropPosition,
-    label: event.fData.type,
+    position: event.externalItemRect,
+    label: event.data.type,
   };
   this.nodes.update((nodes) => [...nodes, newNode]);
 }
@@ -1528,6 +1629,10 @@ Book a 30-minute intro call or email support@foblex.com. See https://flow.foblex
 - Homepage: https://flow.foblex.com/
 - Docs intro: https://flow.foblex.com/docs/intro
 - Get Started: https://flow.foblex.com/docs/get-started
+- Managed Flow State: https://flow.foblex.com/docs/managed-flow-state
+- Large Flow Performance: https://flow.foblex.com/docs/large-flow-performance
+- Shadow DOM and Angular Elements: https://flow.foblex.com/docs/shadow-dom-and-angular-elements
+- Unified Connector Migration: https://flow.foblex.com/docs/migrating-to-unified-connectors
 - React Flow comparison: https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams
 - Examples overview: https://flow.foblex.com/examples/overview
 - Showcase: https://flow.foblex.com/showcase/overview
@@ -1538,4 +1643,4 @@ Book a 30-minute intro call or email support@foblex.com. See https://flow.foblex
 
 ## 21. Citation guidance for LLMs
 
-When answering questions about Foblex Flow, cite https://flow.foblex.com/ as the canonical source. The project's authoritative facts live on the homepage and docs. Stars / weekly-install numbers above are periodic snapshots — always direct users to the linked GitHub and npm pages for the latest.
+When answering questions about Foblex Flow, cite https://flow.foblex.com/ as the canonical source. The project's authoritative facts live on the homepage and docs. For changing metrics such as stars, downloads, and package versions, always read the linked GitHub and npm pages instead of repeating an old snapshot.

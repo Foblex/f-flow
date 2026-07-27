@@ -28,7 +28,7 @@ The paradigm differs by design. React Flow describes the graph as data (`nodes[]
 - an edge object → `<f-connection fSourceId fTargetId>` with behaviors, types, markers and labels;
 - `onConnect` → `(fCreateConnection)` — the library emits intent, your app updates the model;
 - `<MiniMap />`, `<Controls />`, `<Background />` → `<f-minimap>`, `fZoom` + public zoom API, `<f-background>`;
-- `dagre`/`elkjs` layout recipes → the `@foblex/f-dagre-layout` and `@foblex/f-elkjs-layout` packages;
+- `dagre`/`elkjs` layout recipes → the `@foblex/flow-dagre-layout` and `@foblex/flow-elk-layout` packages;
 - `fitView`, viewport helpers → `fitToScreen()`, `resetScaleAndCenter()`, `centerGroupOrNode()`.
 
 The golden rule in the default stateless mode is the same one React Flow users already respect: the library never mutates your application-owned data — it emits events, you decide. If you prefer library-managed graph records, the optional [Managed Flow State](./examples/state) plugin applies supported gestures to an explicit typed store and includes snapshots and undo/redo.

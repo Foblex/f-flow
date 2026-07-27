@@ -41,13 +41,13 @@ You can also browse the source code for all demos in `libs/f-examples/**`.
 
 You compose a flow from primitives: one `f-flow` root, one `f-canvas`, nodes with connectors, and connection components.
 
-Foblex Flow focuses on **rendering and interaction**. Your application owns the graph model (nodes, connections, metadata) and decides how to update it. The library emits interaction events (drag, selection changes, connection create/reassign) so you can:
+In the default classic mode, Foblex Flow focuses on **rendering and interaction** while your application owns the graph model (nodes, connections, metadata) and decides how to update it. The library emits interaction events (drag, selection changes, connection create/reassign) so you can:
 
 - keep business state in your own store (signals, RxJS, NgRx, plain services),
 - persist changes to your backend in a predictable way,
 - apply domain rules (validation, limits, permissions) where they belong.
 
-That is the default stateless integration. If you want the library to keep typed graph records and apply supported gestures automatically, install the optional [Managed Flow State](./examples/state) plugin with `provideFFlow(withFlowState())`. The core remains stateless, the plugin is opt-in, and the same public events remain available.
+That is the default classic integration. If you want the library to keep typed graph records and apply supported gestures automatically, install the optional [Managed Flow State](managed-flow-state) plugin with `provideFFlow(withFlowState())`. It adds snapshots and undo/redo while the same public events remain available. In both modes your application defines domain fields and owns validation policy, permissions, persistence, and business meaning.
 
 ## Quick FAQ
 
@@ -62,12 +62,14 @@ This page is an overview. Use these guides for exact contracts:
 - [Flow](f-flow-component)
 - [Canvas](f-canvas-component)
 - [Node](f-node-directive)
+- [Unified Connector](f-connector-directive)
 - [Connection](f-connection-component)
 - [Drag and Drop](f-draggable-directive)
+- [Managed Flow State](managed-flow-state)
 
 ## Notes / Pitfalls
 
-- Use **stable ids** for nodes and connectors to keep connections predictable (`fNodeId`, `fInputId`, `fOutputId`).
+- Use **stable ids** for nodes and connectors to keep connections predictable (`fNodeId`, `fConnectorId`, `fSourceId`, `fTargetId`).
 - Style primitives explicitly for production UI - defaults are intentionally minimal.
 - Add advanced helpers (selection area, minimap, alignment/spacing) after base rendering is stable.
 

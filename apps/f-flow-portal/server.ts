@@ -6,6 +6,10 @@ import { dirname, join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
 import bootstrap from './src/server/main.server';
 
+const CANONICAL_ORIGIN = 'https://flow.foblex.com';
+const CANONICAL_HOST = 'flow.foblex.com';
+const LEGACY_PORTAL_HOSTS = new Set(['foblex-flow-5378d59922a2.herokuapp.com']);
+
 const EMBEDDED_REFERENCE_APPS = {
   'db-management-flow': '../../apps/example-apps/schema-designer/browser',
   'schema-designer': '../../apps/example-apps/schema-designer/browser',
@@ -25,6 +29,21 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+
+  server.use((req, res, next) => {
+    const hostname = req.hostname.toLowerCase();
+
+    if (LEGACY_PORTAL_HOSTS.has(hostname)) {
+      return res.redirect(308, `${CANONICAL_ORIGIN}${req.originalUrl}`);
+    }
+
+    const forwardedProtocol = req.get('x-forwarded-proto')?.split(',')[0]?.trim().toLowerCase();
+    if (hostname === CANONICAL_HOST && forwardedProtocol === 'http') {
+      return res.redirect(308, `${CANONICAL_ORIGIN}${req.originalUrl}`);
+    }
+
+    next();
+  });
 
   const renderNotFound = (
     req: express.Request,
