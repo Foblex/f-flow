@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [Unreleased]
 
+## [19.1.6] - 2026-07-27
+
+### Fixes
+
+- **layout packages:** require the matching `@foblex/flow` 19.x peer range. Versions `19.0.0` through `19.1.5` incorrectly retained `^18.4.0`, which excludes Flow 19.x and can make npm reject an otherwise valid installation with `ERESOLVE`.
+
+### Maintenance
+
+- Republish the synchronized core, Dagre, and ELK package train so `@foblex/flow`, `@foblex/flow-dagre-layout`, and `@foblex/flow-elk-layout` all resolve cleanly at `19.1.6`.
+
+## [19.1.5] - 2026-07-27
+
 ### Features
 
 - **marketing-automation:** add a standalone campaign-journey reference app. Steps are inserted from add controls on connections and open branches, Dagre keeps the graph arranged top-to-bottom or left-to-right, and the editor combines managed state, persistence, undo/redo, the scroll-pan control scheme, keyboard accessibility, theming, and a responsive inspector. Selecting a step and its animated viewport centering are batched into one history item; a keyboard-selected add node opens the same picker with `Enter` as a pointer click.
