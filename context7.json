@@ -4,7 +4,7 @@
   "public_key": "pk_AXePqX7dQePCWoCr7W56G",
   "projectTitle": "Foblex Flow",
   "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces",
-  "folders": ["apps/f-flow-portal/public/markdown", "libs/f-flow/src", "libs/f-layout"],
+  "folders": ["libs/f-flow", "libs/f-layout"],
   "excludeFolders": [
     "node_modules",
     "dist",
@@ -22,6 +22,8 @@
   ],
   "rules": [
     "Use standalone components with FFlowModule import",
+    "Use <div fNode> and <div fConnector>; fNode and fConnector are attribute directives, never <f-node> or <f-connector> custom elements",
+    "Treat libs/f-flow/AI.md as the canonical generation guide; never invent selectors or bindings from prose titles",
     "Classic mode is the default: your app owns graph records and updates them from Foblex interaction events",
     "Managed mode is opt-in: provideFFlow(withFlowState()) provides typed FFlowState records, supported gesture writeback, snapshots, and undo/redo",
     "In both state modes your app owns domain fields, validation policy, permissions, persistence, and business meaning",
