@@ -3,7 +3,7 @@
   "url": "https://context7.com/foblex/f-flow",
   "public_key": "pk_AXePqX7dQePCWoCr7W56G",
   "projectTitle": "Foblex Flow",
-  "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces",
+  "description": "Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors",
   "folders": ["libs/f-flow", "libs/f-layout"],
   "excludeFolders": [
     "node_modules",

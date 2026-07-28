@@ -1,3 +1,7 @@
+---
+allowDeprecatedApiExamples: true
+---
+
 # Outlet
 
 **Selector:** `[fNodeOutlet]`  

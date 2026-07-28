@@ -1,18 +1,20 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-28"
 ---
 
 # ngx-graph Alternative
 
-ngx-graph served Angular teams well as a graph **visualization** library, but its last release was years ago and the repository is effectively unmaintained, while tens of thousands of projects still install it weekly. If you are choosing today — or maintaining an app stuck on it — Foblex Flow is the actively maintained Angular-native option, and it covers a wider job: not just rendering a graph, but letting users edit it.
+Verified on: **2026-07-28**.
+
+[Swimlane ngx-graph](https://github.com/swimlane/ngx-graph) is an Angular graph **visualization** library. Its repository is active and has a `21.0.0-alpha.1` tag, so this page does not present Foblex Flow as a replacement for an abandoned project. It is a migration guide for a different requirement: moving from visualization-first graphs to a user-editable node editor.
 
 ## The honest difference in scope
 
-- ngx-graph renders a graph from data with automatic layouts. Interaction is mostly viewing: pan, zoom, click.
-- Foblex Flow is an editor toolkit: dragging nodes, creating and reassigning connections, selection, resize/rotate, minimap, snapping, undo-friendly events — plus optional auto-layout via the Dagre and ELK packages when you want ngx-graph-style automatic arrangement.
+- ngx-graph renders `nodes` and `links` with automatic layouts. Its primary model is visualization: arrange graph data and expose view interactions.
+- Foblex Flow is an editor library: users drag nodes, create and reassign connections, select, resize, rotate, group, and edit routes. Optional Dagre and ELK packages add automatic arrangement when the editor needs it.
 
-If all you need is a static, auto-laid-out visualization and you never touch it again, a dead-but-working dependency may hold for a while. The moment users need to _change_ the graph — or you need Angular 17+ support, signals, SSR, or bug fixes — you need a maintained editor library.
+If all you need is an automatically laid-out visualization, ngx-graph may remain the more direct fit. Consider migration when users must _change_ the graph or when HTML-based Angular node content and editor interactions become core product requirements.
 
 ## Migrating from ngx-graph
 
@@ -28,7 +30,6 @@ What has no ngx-graph equivalent — and therefore needs no migration — is eve
 
 ## Why teams pick Foblex Flow after ngx-graph
 
-- Actively maintained: frequent releases, issues answered, Angular 17.3+ targeted, strict SemVer.
 - HTML nodes with real Angular content instead of SVG templates.
 - Interaction out of the box instead of view-only rendering.
 - Scaling tools (virtualization, caching, background workers) when graphs grow.
@@ -42,3 +43,5 @@ ng add @foblex/flow
 ```
 
 Start with [Get Started](./docs/get-started), see automatic arrangement in the [Dagre layout example](./examples/dagre-layout), and browse the [examples gallery](./examples/overview) for the interactions ngx-graph never had.
+
+Primary source checked: [swimlane/ngx-graph on GitHub](https://github.com/swimlane/ngx-graph).

@@ -25,7 +25,7 @@
 <h1 align="center">Foblex Flow</h1>
 
 <p align="center">
-  <strong>Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.</strong>
+  <strong>Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.</strong>
 </p>
 
 Foblex Flow gives Angular teams a simple way to start building graph-based products without adopting a React-first mental model. Begin with `f-flow`, `f-canvas`, nodes, and connections, then add richer editor features only when your product needs them.

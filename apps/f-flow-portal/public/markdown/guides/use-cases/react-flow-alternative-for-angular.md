@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-28"
 ---
 
 # React Flow Alternative for Angular
@@ -33,12 +33,20 @@ The paradigm differs by design. React Flow describes the graph as data (`nodes[]
 
 The golden rule in the default stateless mode is the same one React Flow users already respect: the library never mutates your application-owned data — it emits events, you decide. If you prefer library-managed graph records, the optional [Managed Flow State](./examples/state) plugin applies supported gestures to an explicit typed store and includes snapshots and undo/redo.
 
-## What you get that React Flow doesn't ship
+## Where Foblex Flow differs
 
-- Keyboard-driven connection creation and a full accessibility layer (opt-in `withA11y()`): spatial arrow navigation, selection, movement, deletion and connecting without a mouse, with screen-reader announcements.
-- Configurable control schemes with Miro-like and draw.io-like presets, switchable at runtime.
-- Click-to-connect alongside drag, on a gesture-independent connection engine you can extend with custom gestures.
-- An Angular-grade integration story: signals-friendly, SSR-safe, zoneless-ready, `ng add` setup.
+This is not a list of features React Flow lacks. React Flow currently supports server-side rendering, controlled and uncontrolled state, keyboard operation, screen-reader semantics, connection reassignment, and third-party layout integrations.
+
+Foblex Flow differs at the framework and interaction-model boundaries:
+
+- Nodes are Angular templates and components, so Angular DI, forms, signals, pipes, and your design system remain inside one runtime.
+- The default mode renders application-owned records; optional Managed Flow State can instead own typed editor records, snapshots, and undo/redo.
+- A unified `fConnector` can behave as a source, target, source-target, or outlet while connections refer to canonical source and target IDs.
+- Control schemes define canvas gestures as one policy, with Miro-like and draw.io-like presets that can be changed at runtime.
+- The opt-in `withA11y()` keyboard layer uses spatial navigation across nodes and connections and supports keyboard connection creation.
+- Dagre and ELK are packaged as Angular-facing layout integrations instead of only being external recipes.
+
+Both libraries can build production node editors. The deciding question is usually which rendering model and framework boundary your team wants to own.
 
 ## What React Flow has that we don't pretend to match
 
@@ -46,7 +54,7 @@ The golden rule in the default stateless mode is the same one React Flow users a
 - A React-shaped API that LLMs know from training data.
 - A commercial Pro example library.
 
-If those outweigh framework fit for your team, React Flow with a wrapper is a legitimate choice. For a deeper side-by-side — bundle size, SSR, migration notes — read [React Flow vs Foblex Flow for Angular teams](./docs/react-flow-vs-foblex-flow-for-angular-teams).
+If those outweigh framework fit for your team, React Flow with a wrapper is a legitimate choice. For a source-linked evaluation matrix covering rendering, state, SSR, accessibility, layout, and migration, read [React Flow vs Foblex Flow for Angular teams](./docs/react-flow-vs-foblex-flow-for-angular-teams).
 
 ## Start in five minutes
 
@@ -71,3 +79,12 @@ ng add @foblex/flow
 ```
 
 Continue with [Get Started](./docs/get-started), browse the [examples](./examples/overview), or open the flagship [AI Low-Code Platform demo](./examples/ai-low-code-platform) to see how far the same primitives scale.
+
+## React Flow sources checked
+
+Claims about React Flow on this page were verified on 2026-07-28 against its official documentation:
+
+- [Server-side rendering](https://reactflow.dev/learn/advanced-use/ssr-ssg-configuration)
+- [Accessibility](https://reactflow.dev/learn/advanced-use/accessibility)
+- [Controlled and uncontrolled flows](https://reactflow.dev/learn/advanced-use/uncontrolled-flow)
+- [Layout integrations](https://reactflow.dev/learn/layouting/layouting)

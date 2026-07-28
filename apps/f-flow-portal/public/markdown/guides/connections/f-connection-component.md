@@ -1,3 +1,7 @@
+---
+allowDeprecatedApiExamples: true
+---
+
 # Connection
 
 **Selector:** `f-connection`  
@@ -97,6 +101,7 @@ Creation/reassign events are emitted from `f-flow[fDraggable]` (see [Event Syste
 ```typescript
 enum EFConnectionBehavior {
   FIXED = 'fixed',
+  FIXED_CENTER = 'fixed_center',
   FLOATING = 'floating',
 }
 ```

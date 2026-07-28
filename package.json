@@ -1,6 +1,6 @@
 {
   "version": "19.1.6",
-  "description": "Angular-native node-based UI library for building node editors, workflow builders, and interactive graph interfaces.",
+  "description": "Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.",
   "author": "Siarhei Huzarevich",
   "homepage": "https://flow.foblex.com",
   "docs": "https://flow.foblex.com",

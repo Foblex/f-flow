@@ -4,7 +4,7 @@ Use this file as a strict control layer for code generation. Prefer verified pac
 
 ## What This Library Is
 
-`@foblex/flow` is an Angular-native library for building node-based editors, workflow builders, and interactive graph UIs.
+`@foblex/flow` is an Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.
 It provides rendering, connectors, interactions, selection, zoom, and connection drawing. By default your app owns graph records; the optional `withFlowState()` feature maintains typed records and undo/redo that your app explicitly loads and renders.
 
 ## Core Mental Model

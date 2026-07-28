@@ -1,11 +1,13 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-28"
 ---
 
 # Angular AI Agent Builder
 
 Visual AI builders — agent pipelines, RAG flows, prompt chains, low-code LLM tools — are node editors underneath: steps with configuration, wires with meaning, validation on what may connect to what. Foblex Flow gives Angular teams that editor layer, while your application keeps the semantics: which node is a model call, what flows through an edge, and what happens on run.
+
+Foblex Flow does **not** execute agents, prompts, tools, or workflows. It supplies the visual editor surface; your application owns the AI runtime, credentials, permissions, persistence, evaluation, and orchestration.
 
 ## What an AI builder needs from the canvas
 

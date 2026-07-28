@@ -51,7 +51,7 @@ export class Services implements OnInit, AfterViewInit {
   protected readonly title = PORTAL_SHELL.appName;
 
   protected readonly tagline =
-    'Angular-native node-based UI library for workflow builders, AI pipelines, and visual editors.';
+    'Angular-native node editor library for workflow builders, AI pipelines, and interactive diagram editors.';
 
   protected readonly footerColumns: IFooterColumn[] = [
     {

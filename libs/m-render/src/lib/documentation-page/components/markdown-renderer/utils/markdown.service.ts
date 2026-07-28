@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements -- keep the compact legacy parser style until it is migrated as a whole */
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +14,8 @@ import {
   ParseAlerts,
   ParseAngularExampleWithCodeLinks,
   ParseGroupedCodeItems,
-  ParsePreviewGroup, ParseShowcase,
+  ParsePreviewGroup,
+  ParseShowcase,
   ParseSingleCodeItem,
 } from './index';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -29,13 +31,14 @@ interface IMarkdownOriginDraft {
 
 @Injectable()
 export class MarkdownService {
-
   private readonly _markdown = new MarkdownIt({ html: true, linkify: true });
   private readonly _httpClient = inject(HttpClient);
   private readonly _domSanitizer = inject(DomSanitizer);
   private readonly _router = inject(Router);
   private readonly _provider = inject(F_PREVIEW_NAVIGATION_PROVIDER, { optional: true });
-  private readonly _pageLayout = signal<IMarkdownPageLayoutOptions>({ ...DEFAULT_MARKDOWN_PAGE_LAYOUT_OPTIONS });
+  private readonly _pageLayout = signal<IMarkdownPageLayoutOptions>({
+    ...DEFAULT_MARKDOWN_PAGE_LAYOUT_OPTIONS,
+  });
   private readonly _pageSeo = signal<ISeoOverrides | null>(null);
   private readonly _pageOrigin = signal<IMarkdownOriginData | null>(null);
 
@@ -60,14 +63,20 @@ export class MarkdownService {
   public parseUrl(src: string): Observable<SafeHtml> {
     this._resetPageContext();
 
-    return this._httpClient.get(src, { responseType: 'text' }).pipe(take(1), catchError(() => of(''))).pipe(
-      switchMap((text) => of(this._renderMarkdownWithPageContext(text))),
-      switchMap((x) => of(this._cleanupEmptyParagraphs(x))),
-      switchMap((x) => of(this._cleanupWasteParagraphFromExampleView(x))),
-      switchMap((x) => of(this._cleanupWasteParagraphFromPreviewGroup(x))),
-      switchMap((x) => of(this._normalizeLinks(x))),
-      switchMap((x) => of(this._domSanitizer.bypassSecurityTrustHtml(x))),
-    );
+    return this._httpClient
+      .get(src, { responseType: 'text' })
+      .pipe(
+        take(1),
+        catchError(() => of('')),
+      )
+      .pipe(
+        switchMap((text) => of(this._renderMarkdownWithPageContext(text))),
+        switchMap((x) => of(this._cleanupEmptyParagraphs(x))),
+        switchMap((x) => of(this._cleanupWasteParagraphFromExampleView(x))),
+        switchMap((x) => of(this._cleanupWasteParagraphFromPreviewGroup(x))),
+        switchMap((x) => of(this._normalizeLinks(x))),
+        switchMap((x) => of(this._domSanitizer.bypassSecurityTrustHtml(x))),
+      );
   }
 
   public parseText(value: string): Observable<SafeHtml> {
@@ -108,7 +117,7 @@ export class MarkdownService {
   }
 
   private _appendLinkClasses(tag: string): string {
-    const classes = [ 'f-text-link', 'f-text-link-primary' ];
+    const classes = ['f-text-link', 'f-text-link-primary'];
     const classMatch = tag.match(/\bclass=(["'])([^"']*)\1/);
 
     if (!classMatch) {
@@ -121,7 +130,10 @@ export class MarkdownService {
       ...classes.filter((className) => !existingClasses.includes(className)),
     ];
 
-    return tag.replace(classMatch[0], `class=${classMatch[1]}${mergedClasses.join(' ')}${classMatch[1]}`);
+    return tag.replace(
+      classMatch[0],
+      `class=${classMatch[1]}${mergedClasses.join(' ')}${classMatch[1]}`,
+    );
   }
 
   private _isExternalLink(href: string): boolean {
@@ -133,7 +145,10 @@ export class MarkdownService {
   }
 
   private _cleanupWasteParagraphFromExampleView(html: string): string {
-    return html.replace(/<div class="f-code-group-body">\s*<p>[^<]*<\/p>/g, '<div class="f-code-group-body">');
+    return html.replace(
+      /<div class="f-code-group-body">\s*<p>[^<]*<\/p>/g,
+      '<div class="f-code-group-body">',
+    );
   }
 
   private _cleanupWasteParagraphFromPreviewGroup(html: string): string {
@@ -214,7 +229,10 @@ export class MarkdownService {
 
   private _normalizeFrontMatterValue(value: string): string {
     const trimmed = value.trim();
-    if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith('\'') && trimmed.endsWith('\''))) {
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
       return trimmed.slice(1, -1).trim();
     }
     return trimmed;
@@ -222,18 +240,22 @@ export class MarkdownService {
 
   private _parseBoolean(value: string): boolean | null {
     const normalized = value.toLowerCase();
-    if ([ 'true', '1', 'yes', 'on' ].includes(normalized)) {
+    if (['true', '1', 'yes', 'on'].includes(normalized)) {
       return true;
     }
 
-    if ([ 'false', '0', 'no', 'off' ].includes(normalized)) {
+    if (['false', '0', 'no', 'off'].includes(normalized)) {
       return false;
     }
 
     return null;
   }
 
-  private _applyLayoutKey(key: string, boolValue: boolean | null, layout: IMarkdownPageLayoutOptions): void {
+  private _applyLayoutKey(
+    key: string,
+    boolValue: boolean | null,
+    layout: IMarkdownPageLayoutOptions,
+  ): void {
     if (boolValue === null) {
       return;
     }
@@ -259,7 +281,12 @@ export class MarkdownService {
     }
   }
 
-  private _applySeoKey(key: string, value: string, boolValue: boolean | null, seo: ISeoOverrides): void {
+  private _applySeoKey(
+    key: string,
+    value: string,
+    boolValue: boolean | null,
+    seo: ISeoOverrides,
+  ): void {
     switch (key) {
       case 'title':
       case 'seotitle':
@@ -339,6 +366,14 @@ export class MarkdownService {
           seo.nofollow = boolValue;
         }
         return;
+      case 'publishedat':
+      case 'published_at':
+        seo.date_published = value;
+        return;
+      case 'updatedat':
+      case 'updated_at':
+        seo.date_modified = value;
+        return;
     }
   }
 
@@ -376,11 +411,11 @@ export class MarkdownService {
       return null;
     }
 
-    const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${ trimmed }`;
+    const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 
     try {
       const url = new URL(candidate);
-      if (![ 'http:', 'https:' ].includes(url.protocol)) {
+      if (!['http:', 'https:'].includes(url.protocol)) {
         return null;
       }
       return url.toString();
@@ -407,7 +442,7 @@ export class MarkdownService {
         return 'Originally published on Medium';
       }
 
-      return `Originally published on ${ hostname }`;
+      return `Originally published on ${hostname}`;
     } catch {
       return 'Originally published externally';
     }

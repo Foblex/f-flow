@@ -1,11 +1,14 @@
 ---
+allowDeprecatedApiExamples: true
 origin: "https://medium.com/@shuzarevich/foblex-flow-v18-waypoints-pinch-to-zoom-and-better-control-flow-support-8d290f946916"
 originLabel: "Originally published on Medium"
 publishedAt: "2026-01-26"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-28"
 ---
 
 # Foblex Flow v18: Waypoints, Pinch-to-Zoom, and Better Control Flow Support
+
+> **Historical API note:** This release article intentionally preserves v18 code. New code should use [`fConnector`, `fSourceId`, and `fTargetId`](./docs/migrating-to-unified-connectors).
 
 Foblex Flow v18 improves route editing and viewport control for Angular node editors with connection waypoints and first-class pinch-to-zoom support.
 

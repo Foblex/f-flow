@@ -32,3 +32,6 @@ jobs:
 
       - name: Build portal
         run: npm run build
+
+      - name: Verify prerendered pages and redirects
+        run: node --test scripts/github-pages-redirects.test.mjs scripts/portal-pages.test.mjs

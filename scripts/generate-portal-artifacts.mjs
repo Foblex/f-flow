@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { mkdir, readFile, stat, writeFile, readdir } from 'node:fs/promises';
+import { mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,7 +13,7 @@ const STUB_PATH = path.join(TMP_ROOT, 'm-render-stub.cjs');
 const CANONICAL_ORIGIN = 'https://flow.foblex.com';
 const ISO_DATE_PATTERN = /^(\d{4}-\d{2}-\d{2})/u;
 
-// section id -> { routePath, markdownDir, changefreq, priority }
+// section id -> { routePath, markdownDir }
 //
 // `routePath` and `markdownDir` mirror what each ISectionConfig declares.
 // They are duplicated here intentionally: the script runs at build time
@@ -21,26 +21,26 @@ const ISO_DATE_PATTERN = /^(\d{4}-\d{2}-\d{2})/u;
 // cheaper than wiring an additional Angular dep. Keep in sync if a new
 // section is added under apps/f-flow-portal/src/app/sections/.
 const SECTION_REGISTRY = [
-  { id: 'docs', routePath: '/docs', markdownDir: 'guides', changefreq: 'weekly', priority: '0.9' },
-  { id: 'examples', routePath: '/examples', markdownDir: 'examples', changefreq: 'weekly', priority: '0.8' },
-  { id: 'showcase', routePath: '/showcase', markdownDir: 'showcase', changefreq: 'monthly', priority: '0.7' },
-  { id: 'blog', routePath: '/blog', markdownDir: 'blog', changefreq: 'monthly', priority: '0.7' },
+  { id: 'docs', routePath: '/docs', markdownDir: 'guides' },
+  { id: 'examples', routePath: '/examples', markdownDir: 'examples' },
+  { id: 'showcase', routePath: '/showcase', markdownDir: 'showcase' },
+  { id: 'blog', routePath: '/blog', markdownDir: 'blog' },
 ];
 
 // Portal-owned pages with no PageDefinition (rendered by their own
 // Angular components in apps/f-flow-portal/src/app/pages/). Keep in sync
 // with app.routes.ts.
-const PORTAL_PAGES = [
-  { route: '/', changefreq: 'weekly', priority: '1.0' },
-  { route: '/services', changefreq: 'monthly', priority: '0.9' },
-];
+const PORTAL_PAGES = [{ route: '/' }, { route: '/services' }];
 
 await main();
 
 async function main() {
   const jiti = await createJitiLoader();
   const helpers = jiti(
-    path.join(REPO_ROOT, 'libs/m-render/src/lib/documentation-page/page-config/derive-markdown-path.ts'),
+    path.join(
+      REPO_ROOT,
+      'libs/m-render/src/lib/documentation-page/page-config/derive-markdown-path.ts',
+    ),
   );
   const derivePageMarkdownPath = helpers.derivePageMarkdownPath;
 
@@ -128,9 +128,7 @@ async function collectSectionEntries(section, pages, derivePageMarkdownPath) {
       route: `${section.routePath}/${page.slug}`,
       markdownPath,
       noindex: metadata.noindex,
-      lastmod: metadata.updatedAt ?? metadata.publishedAt ?? metadata.fileMtime,
-      changefreq: section.changefreq,
-      priority: section.priority,
+      lastmod: metadata.updatedAt ?? metadata.publishedAt,
     });
   }
 
@@ -148,12 +146,10 @@ async function readMarkdownMetadata(filePath) {
     throw error;
   }
 
-  const fileStat = await stat(filePath);
   return {
     noindex: /^noindex:\s*true\s*$/mu.test(content),
     publishedAt: extractDateField(content, 'publishedAt'),
     updatedAt: extractDateField(content, 'updatedAt'),
-    fileMtime: toIsoDate(fileStat.mtime),
   };
 }
 
@@ -207,23 +203,14 @@ function buildRoutes(entries) {
 
 function buildSitemap(entries) {
   const visibleEntries = entries.filter((entry) => !entry.noindex);
-  const latestLastmod = visibleEntries.reduce(
-    (latest, entry) => (entry.lastmod > latest ? entry.lastmod : latest),
-    '1970-01-01',
-  );
 
   const sitemapEntries = [
     ...PORTAL_PAGES.map((page) => ({
       loc: page.route === '/' ? CANONICAL_ORIGIN : `${CANONICAL_ORIGIN}${page.route}`,
-      lastmod: latestLastmod,
-      changefreq: page.changefreq,
-      priority: page.priority,
     })),
     ...visibleEntries.map((entry) => ({
       loc: `${CANONICAL_ORIGIN}${entry.route}`,
       lastmod: entry.lastmod,
-      changefreq: entry.changefreq,
-      priority: entry.priority,
     })),
   ];
 
@@ -235,9 +222,9 @@ function buildSitemap(entries) {
   sitemapEntries.forEach((entry) => {
     lines.push('  <url>');
     lines.push(`    <loc>${escapeXml(entry.loc)}</loc>`);
-    lines.push(`    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`);
-    lines.push(`    <changefreq>${escapeXml(entry.changefreq)}</changefreq>`);
-    lines.push(`    <priority>${escapeXml(entry.priority)}</priority>`);
+    if (entry.lastmod) {
+      lines.push(`    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`);
+    }
     lines.push('  </url>');
   });
 
@@ -270,10 +257,6 @@ function getRouteWeight(route) {
   if (route.startsWith('/showcase/')) return 3;
   if (route.startsWith('/blog/')) return 4;
   return 5;
-}
-
-function toIsoDate(value) {
-  return value.toISOString().slice(0, 10);
 }
 
 function escapeXml(value) {

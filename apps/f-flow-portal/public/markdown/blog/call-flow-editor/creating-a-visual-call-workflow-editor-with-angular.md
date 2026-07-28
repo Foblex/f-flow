@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/creating-a-visual-call-workflow-editor-with-angular-eb89d08815ff"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2024-03-28"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-28"
 ---
 
 # Creating a Visual Call Workflow Editor with Angular
@@ -136,29 +136,33 @@ Render connections and nodes inside `f-flow` / `f-canvas`:
     <f-canvas fZoom>
       @for (connection of flow.connections; track connection.key) {
         <f-connection
+          [fConnectionId]="connection.key"
           [fBehavior]="cBehavior"
           [fType]="cType"
-          [fOutputId]="connection.from"
-          [fInputId]="connection.to"
+          [fSourceId]="connection.from"
+          [fTargetId]="connection.to"
         ></f-connection>
       }
 
       @for (node of flow.nodes; track node.key) {
-        <div
-          fNode
-          fNodeInput
-          [fInputId]="node.input"
-          [fInputDisabled]="!node.input"
-          [fInputConnectableSide]="eConnectableSide.TOP"
-          [fNodePosition]="node.position"
-        >
+        <div fNode [fNodePosition]="node.position">
+          @if (node.input; as input) {
+            <div
+              fConnector
+              fConnectorType="target"
+              [fConnectorId]="input"
+              [fConnectorConnectableSide]="eConnectableSide.TOP"
+            ></div>
+          }
+
           <div>{{ node.name }}</div>
 
           @for (output of node.outputs; track output) {
             <div
-              fNodeOutput
-              [fOutputId]="output"
-              [fOutputConnectableSide]="eConnectableSide.BOTTOM"
+              fConnector
+              fConnectorType="source"
+              [fConnectorId]="output"
+              [fConnectorConnectableSide]="eConnectableSide.BOTTOM"
             ></div>
           }
         </div>
@@ -186,7 +190,7 @@ public onCreateNode(event: FCreateNodeEvent): void {
     key: this.generateId(),
     name: NODE_MAP[event.data].name,
     outputs,
-    position: event.rect,
+    position: event.dropPosition ?? event.externalItemRect,
     type: event.data,
   });
 }
@@ -195,6 +199,8 @@ private generateId(): string {
   return `${Math.random().toString(36).substr(2, 9)}`;
 }
 ```
+
+`dropPosition` is optional. When it is unavailable, `externalItemRect` provides the dragged item’s flow-space coordinates.
 
 ```html
 @for (item of possibleNodes; track item) {
@@ -228,9 +234,14 @@ Enable connection creation/reassignment and process events:
 
 ```ts
 public onCreateConnection(event: FCreateConnectionEvent): void {
-  const connection: IConnectionViewModel = {
-    from: event.fOutputId,
-    to: event.fInputId,
+  if (!event.targetId) {
+    return;
+  }
+
+  const connection: IConnectionModel = {
+    key: this.generateId(),
+    from: event.sourceId,
+    to: event.targetId,
   };
 
   this.flow.connections.push(connection);
@@ -238,13 +249,26 @@ public onCreateConnection(event: FCreateConnectionEvent): void {
 
 public onReassignConnection(event: FReassignConnectionEvent): void {
   const connection = this.flow.connections.find(
-    (c) => c.from === event.fOutputId && c.to === event.oldFInputId,
+    (item) => item.key === event.connectionId,
   );
 
-  if (connection) {
-    connection.to = event.newFInputId;
+  if (!connection) {
+    return;
+  }
+
+  if (event.endpoint === 'source') {
+    if (event.nextSourceId) {
+      connection.from = event.nextSourceId;
+    }
+    return;
+  }
+
+  if (event.nextTargetId) {
+    connection.to = event.nextTargetId;
   }
 }
 ```
+
+`previousSourceId` and `previousTargetId` contain the endpoints before reassignment. The corresponding `nextSourceId` or `nextTargetId` can be `undefined` when the endpoint is dropped on the canvas; `dropPosition` contains that canvas position. For connection creation, the same case is represented by an undefined `targetId` together with `dropPosition`.
 
 This gives users a flexible way to build and modify call routing logic visually.

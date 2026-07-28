@@ -16,25 +16,25 @@ interface IChangelogItem {
  */
 const CHANGELOG: IChangelogItem[] = [
   {
-    version: 'v19.1.6',
-    date: 'July 27, 2026',
+    version: 'v19.1.0',
+    date: 'July 2026',
     description:
-      'Correct layout-package peer metadata for clean installation with the current Foblex Flow 19.x line.',
-    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1916---2026-07-27',
+      'Managed Flow State with batched undo and redo, faster rendering for large flows, and interaction support inside Angular Elements and open Shadow DOM.',
+    href: 'https://flow.foblex.com/blog/foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
   },
   {
-    version: 'v19.1.5',
-    date: 'July 27, 2026',
+    version: 'v19.0.0',
+    date: 'July 2026',
     description:
-      'Selection-aware managed snapshots, precise item centering, better keyboard navigation, and a complete Marketing Automation reference app.',
-    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1915---2026-07-27',
+      'Control schemes, click-to-connect, keyboard accessibility, a unified connector model, and an AI-ready integration toolchain.',
+    href: 'https://flow.foblex.com/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
   },
   {
-    version: 'v19.1.4',
-    date: 'July 18, 2026',
+    version: 'v18.6.0',
+    date: 'April 2026',
     description:
-      'Safer reactive teardown prevents delayed Flow callbacks from reaching destroyed Angular views and intermittently breaking embedded examples.',
-    href: 'https://github.com/Foblex/f-flow/blob/main/CHANGELOG.md#1914---2026-07-18',
+      'Smart Auto-Layout on Resize: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, and collision rules.',
+    href: 'https://flow.foblex.com/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
   },
 ];
 

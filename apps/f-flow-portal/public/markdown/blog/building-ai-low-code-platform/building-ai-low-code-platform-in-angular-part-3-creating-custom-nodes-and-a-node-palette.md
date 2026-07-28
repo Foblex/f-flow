@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-3-creating-custom-nodes-and-a-node-palette-2377435effce"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-07-05"
-updatedAt: "2026-07-13"
+updatedAt: "2026-07-28"
 ---
 
 # Building AI Low-Code Platform in Angular — Part 3: Creating Custom Nodes and a Node Palette
@@ -21,6 +21,8 @@ It’s not a full low-code platform just yet, but it establishes the custom-node
 - 🔌 **Logic to create nodes and connections** using Foblex Flow events
 
 > 🔧 [View the source code on GitHub](https://github.com/Foblex/Building-AI-Low-Code-Platform3)
+
+> **Version note:** The linked repository preserves the original v18 implementation. The examples below use the unified connector and event APIs introduced in v19.
 
 ### Component Architecture
 
@@ -249,13 +251,23 @@ export class Node {
 
 ```html
 <div class="connectors inputs">
-  @for (connector of data().inputs; track $index) {
-    <connector fNodeInput [fInputId]="connector + ' ' + data().id" fInputConnectableSide="left" />
+  @for (connector of data().inputs; track connector) {
+    <connector
+      fConnector
+      [fConnectorId]="connector + ' ' + data().id"
+      fConnectorType="target"
+      fConnectorConnectableSide="left"
+    />
   }
 </div>
 <div class="connectors outputs">
-  @for (connector of data().outputs; track $index) {
-    <connector fNodeOutput [fOutputId]="connector + ' ' + data().id" fOutputConnectableSide="right" />
+  @for (connector of data().outputs; track connector) {
+    <connector
+      fConnector
+      [fConnectorId]="connector + ' ' + data().id"
+      fConnectorType="source"
+      fConnectorConnectableSide="right"
+    />
   }
 </div>
 
@@ -343,7 +355,7 @@ export class Node {
 }
 ```
 
-Each node has **inputs** ([fNodeInput](https://flow.foblex.com/docs/f-node-input-directive)) and **outputs** ([fNodeOutput](https://flow.foblex.com/docs/f-node-output-directive)) — these are small circular components with hover animation and styles for the connected state.
+Each node has **target** and **source** ports built with the unified [`fConnector`](https://flow.foblex.com/docs/f-connector-directive) directive. `fConnectorType` defines each port’s role, while `fConnectorId` gives the connection model a stable endpoint.
 
 ### 🔘 Connector Component
 
@@ -380,7 +392,7 @@ export class Connector {}
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
 
-  &.connected {
+  &.f-connector-connected {
     background-color: #4b91f1;
     box-shadow: 0 0 0 2px rgba(75, 145, 241, 0.2);
   }
@@ -422,8 +434,12 @@ protected createNode(event: FCreateNodeEvent<IStorageNode>): void {
     const newNode: INode = {
       ...event.data,
       id: generateGuid(),
-      position: event.rect || { x: 0, y: 0 }
+      position: {
+        x: event.externalItemRect.x,
+        y: event.externalItemRect.y,
+      },
     };
+
     return [...nodes, newNode];
   });
 }
@@ -431,9 +447,11 @@ protected createNode(event: FCreateNodeEvent<IStorageNode>): void {
 
 Here’s what’s happening:
 
-- We extract the node’s metadata from event.data.
-- We generate a unique id using generateGuid().
-- We use the position passed from the event — this is usually the cursor position on drop.
+- We extract the node’s metadata from `event.data`.
+- We generate a unique ID using `generateGuid()`.
+- We use `event.externalItemRect` for the dropped item’s position in flow coordinates.
+- `event.targetContainerId` identifies the node or group under the drop, when present.
+- `event.dropPosition` provides the exact pointer position when custom placement logic needs it.
 - We return a new list of nodes with the new one added.
 
 #### 3. Updating the template
@@ -507,8 +525,8 @@ Let’s update our Flow component template to handle the connection event and al
     <!-- Render all established connections -->
     @for (connection of connections(); track connection.id) {
       <f-connection [fConnectionId]="connection.id"
-                    [fOutputId]="connection.from"
-                    [fInputId]="connection.to" />
+                    [fSourceId]="connection.from"
+                    [fTargetId]="connection.to" />
     }
 
     <!-- Render all nodes -->
@@ -535,24 +553,28 @@ Here’s the method that handles fCreateConnection and stores the connection in 
 protected connections = signal<IConnection[]>([]);
 
 protected createConnection(event: FCreateConnectionEvent): void {
-  if (!event.fInputId) return;
+  const targetId = event.targetId;
+
+  if (!targetId) {
+    return;
+  }
 
   this.connections.update((connections) => [
     ...connections,
     {
       id: generateGuid(),
-      from: event.fOutputId,
-      to: event.fInputId
-    }
+      from: event.sourceId,
+      to: targetId,
+    },
   ]);
 }
 ```
 
 Here’s what’s happening:
 
-- event.fOutputId is the ID of the output connector the user dragged from.
-- event.fInputId is the ID of the input the user dropped onto.
-- If fInputId is missing (the user released the mouse in empty space), we ignore the event.
+- `event.sourceId` is the ID of the source connector the user dragged from.
+- `event.targetId` is the target connector ID, or `undefined` when the pointer is released in empty space.
+- `event.dropPosition` is the pointer position in flow coordinates and can be used to open a node picker or apply custom drop behavior.
 
 ### 🖇 Putting It All Together
 

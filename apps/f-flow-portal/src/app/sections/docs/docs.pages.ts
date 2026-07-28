@@ -8,8 +8,8 @@ import { defineLazyComponent, IPageDefinition } from '@foblex/m-render';
  *
  * The section uses `appendAppNameToTitle: true`, so each `seo.title` is treated
  * as the long descriptive form and the meta service appends " | Foblex Flow".
- * Pages whose final title must be SHORT (e.g. SEO landing pages) override this
- * with `seo.titleIsFinal: true`.
+ * A page uses `seo.titleIsFinal: true` only when its title already contains the
+ * Foblex Flow brand and appending it would duplicate the name.
  */
 export const DOCS_PAGES: IPageDefinition[] = [
   // -------- Introduction --------
@@ -38,8 +38,6 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular Compatibility',
     group: 'Introduction',
     seo: {
-      // Frontmatter override → final title without " | Foblex Flow"
-      titleIsFinal: true,
       title: 'Angular Version Compatibility',
       description:
         'Which Foblex Flow version to use with Angular 12 through Angular 20+, including legacy, transition, and current signal-based lines.',
@@ -501,16 +499,15 @@ export const DOCS_PAGES: IPageDefinition[] = [
     },
   },
 
-  // -------- Use Cases (SEO landing pages — short final titles, no app-name suffix) --------
+  // -------- Use Cases --------
   {
     slug: 'angular-node-based-ui-library',
     text: 'Angular Node-Based UI Library',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'Angular Node-Based UI Library',
+      title: 'Angular Node-Based UI Architecture',
       description:
-        'Foblex Flow is an Angular-native node-based UI library for teams that want to start simple in Angular and grow into richer graph interfaces later.',
+        'Learn how an Angular node-based UI separates editor interactions from domain rules, persistence, permissions, and workflow execution.',
     },
   },
   {
@@ -518,7 +515,6 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular Node Editor Library',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
       title: 'Angular Node Editor Library',
       description:
         'Build Angular node editors with Foblex Flow using a small starting path, then add richer interaction patterns only when you need them.',
@@ -529,8 +525,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular Workflow Builder',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'Angular Workflow Builder',
+      title: 'Angular Workflow Builder UI',
       description:
         'Build an Angular workflow builder with Foblex Flow using a simple core flow surface first, then add validation, minimaps, and richer editor features later.',
     },
@@ -540,8 +535,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular Diagram Library',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'Angular Diagram Library',
+      title: 'Angular Diagram Editor Library',
       description:
         'Use Foblex Flow as an Angular diagram library when you need interactive diagrams with a simple starting path and room for richer graph behavior.',
     },
@@ -551,8 +545,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular AI Agent Builder',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'Angular AI Agent Builder',
+      title: 'Angular AI Workflow Builder UI',
       description:
         'Build visual AI agent pipelines, RAG flows and low-code LLM tools in Angular with Foblex Flow: typed connections, form-rich nodes, keyboard accessibility, and an open-source reference IDE demo.',
     },
@@ -562,10 +555,9 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'Angular Flowchart Library',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'Angular Flowchart Library',
+      title: 'Angular Flowchart Editor Library',
       description:
-        'Foblex Flow is an Angular-native flowchart library for editable flowcharts: draggable steps, wired connections, validation rules, auto-layout, and accessibility — MIT licensed and actively maintained.',
+        'Foblex Flow is an MIT-licensed Angular flowchart library for editable flowcharts with draggable steps, wired connections, validation rules, auto-layout, and accessibility.',
     },
   },
   {
@@ -573,10 +565,9 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'React Flow Alternative',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
       title: 'React Flow Alternative for Angular',
       description:
-        'Angular-native alternative to React Flow: how the nodes/edges mental model maps to Foblex Flow templates, what wrapping React costs, and what Foblex Flow ships that React Flow does not.',
+        'Angular-native alternative to React Flow: map nodes, edges, handles, and events to Foblex Flow templates, then compare the framework and interaction models.',
     },
   },
   {
@@ -584,10 +575,9 @@ export const DOCS_PAGES: IPageDefinition[] = [
     text: 'ngx-graph Alternative',
     group: 'Use Cases',
     seo: {
-      titleIsFinal: true,
-      title: 'ngx-graph Alternative — Maintained Angular Graph Editor',
+      title: 'ngx-graph Alternative — Angular Graph Editor Migration',
       description:
-        'ngx-graph is unmaintained; Foblex Flow is the actively maintained Angular-native alternative with editing, auto-layout via Dagre/ELK, and a mechanical migration path from ngx-graph nodes and links.',
+        'Migration guide from visualization-first ngx-graph to an editable Angular node editor, including node/link mapping and Dagre or ELK layout options.',
     },
   },
   {
@@ -598,7 +588,7 @@ export const DOCS_PAGES: IPageDefinition[] = [
       titleIsFinal: true,
       title: 'React Flow vs Foblex Flow — Honest Comparison for Angular Teams',
       description:
-        'Side-by-side comparison of React Flow (with Angular wrapper) and Foblex Flow. Framework fit, bundle size, SSR, migration notes, and when each is the right choice.',
+        'Source-linked comparison of React Flow and Foblex Flow for Angular teams: rendering, state, SSR, accessibility, layout, migration, and when each fits.',
     },
   },
 ];

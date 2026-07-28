@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/design-node-based-interfaces-in-angular-a-beginners-guide-with-foblex-flow-b3160ac3edbb"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-06-23"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-28"
 ---
 
 # Building AI Low-Code Platform in Angular — Part 2: Creating Your First Flow
@@ -12,6 +12,8 @@ Learn how to render a flow, create basic draggable nodes, and connect them. This
 In this article, we’ll build a minimal interactive flow with draggable nodes and dynamic connections using Foblex Flow.
 
 [View the source code on GitHub](https://github.com/Foblex/Building-AI-Low-Code-Platform2)
+
+> **Version note:** The linked repository preserves the original v18 implementation. The examples below use the unified connector API introduced in v19.
 
 ## 🚀 Installation
 
@@ -40,28 +42,34 @@ Let’s create the smallest useful example: two nodes and one connection.
 ```html
 <f-flow fDraggable>
   <f-canvas>
-    <f-connection fOutputId="output1" fInputId="input1"></f-connection>
+    <f-connection fSourceId="source1" fTargetId="target1"></f-connection>
 
     <div
       fNode
       fDragHandle
-      fNodeOutput
       [fNodePosition]="{ x: 32, y: 32 }"
-      fOutputId="output1"
-      fOutputConnectableSide="right"
     >
       Node 1
+      <div
+        fConnector
+        fConnectorId="source1"
+        fConnectorType="source"
+        fConnectorConnectableSide="right"
+      ></div>
     </div>
 
     <div
       fNode
       fDragHandle
-      fNodeInput
       [fNodePosition]="{ x: 240, y: 32 }"
-      fInputId="input1"
-      fInputConnectableSide="left"
     >
       Node 2
+      <div
+        fConnector
+        fConnectorId="target1"
+        fConnectorType="target"
+        fConnectorConnectableSide="left"
+      ></div>
     </div>
   </f-canvas>
 </f-flow>
@@ -69,7 +77,7 @@ Let’s create the smallest useful example: two nodes and one connection.
 
 ## 🎨 Styling
 
-Foblex Flow does not ship default styles, so you fully control the look.
+`ng add @foblex/flow` connects the shipped default theme automatically. You can keep it, override it with application styles like these, or configure the theme manually when installing the package without the schematic.
 
 ```scss
 .f-flow {
@@ -119,19 +127,19 @@ Foblex Flow does not ship default styles, so you fully control the look.
 
 ## 🔍 Explanation
 
-- `<f-flow>`: root component that manages flow state.
+- `<f-flow>`: root component that hosts editor interaction and runtime UI state.
 - `<f-canvas>`: workspace where nodes and connections are rendered.
 - `fNode`: directive that turns an element into a node.
-- `fNodeOutput` / `fNodeInput`: source and target connectors.
-- `<f-connection>`: renders a connection by `fOutputId` and `fInputId`.
+- `fConnector`: unified connector directive; `fConnectorType` selects the `source` or `target` role.
+- `<f-connection>`: renders a connection whose `fSourceId` and `fTargetId` match connector IDs.
 
-Note: `fOutputId` and `fInputId` belong to different collections, so they may match technically, but it is better to keep them distinct.
+Unified `fConnectorId` values share one registry, so each connector needs a unique ID.
 
 ## 🧪 Try This
 
 - Change `[fNodePosition]` coordinates.
 - Add extra `fNode` and `f-connection` elements.
-- Experiment with connector sides: `fOutputConnectableSide`, `fInputConnectableSide`.
+- Experiment with connector sides using `fConnectorConnectableSide`.
 - Tune connection visuals with `fType` and behavior with `fBehavior`.
 
 `fType` values: `straight`, `bezier`, `segment` (or custom string).  
@@ -145,14 +153,14 @@ Note: `fOutputId` and `fInputId` belong to different collections, so they may ma
 
 ## 🐞 Common Mistakes
 
-- Missing `[fNodePosition]`: node is not rendered.
-- Wrong `fOutputId` / `fInputId`: connection is not rendered.
+- Missing `[fNodePosition]`: nodes start at the default origin and can overlap.
+- A mismatched `fSourceId` / `fTargetId` and `fConnectorId`: connection is not rendered.
 - Components outside `<f-canvas>`: `fNode` and `fConnection` won’t work.
 
 ## 🔍 Under the Hood
 
 1. All `fNode` elements are registered with positions.
-2. `fConnection` resolves related connectors by IDs.
+2. `fConnection` resolves source and target connectors by their unified IDs.
 3. Connection points are calculated and an SVG path is drawn.
 4. On node movement, paths are recalculated automatically.
 

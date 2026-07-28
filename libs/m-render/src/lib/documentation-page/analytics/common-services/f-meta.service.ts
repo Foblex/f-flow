@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, Observable, startWith } from 'rxjs';
 import { IMetaData } from './i-meta-data';
@@ -11,6 +12,7 @@ import { ISeoOverrides } from './i-seo-overrides';
 
 @Injectable()
 export class FMetaService {
+  private readonly _document = inject(DOCUMENT);
   private readonly _location = inject(LOCATION);
   private readonly _router = inject(Router);
   private readonly _headTag = inject(FHeadTagService);
@@ -41,6 +43,7 @@ export class FMetaService {
   public dispose(): void {
     this._seoOverrides = null;
     this._lastPath = '';
+    this._removeStructuredData();
 
     if (!this._configuration.meta) {
       return;
@@ -82,6 +85,12 @@ export class FMetaService {
     }
 
     this._updateMetaTags(data);
+
+    if (item) {
+      this._updateStructuredData(currentUrl, item, data);
+    } else {
+      this._removeStructuredData();
+    }
   }
 
   private _findDocGroupByUrl(url: string): INavigationGroup | undefined {
@@ -169,6 +178,133 @@ export class FMetaService {
     this._headTag.updateNameTag({ name: 'twitter:title', content: twitterTitle });
     this._headTag.updateNameTag({ name: 'twitter:description', content: twitterDescription });
     this._headTag.updateNameTag({ name: 'twitter:image', content: twitterImage });
+  }
+
+  private _updateStructuredData(currentUrl: string, item: INavigationItem, meta: IMetaData): void {
+    const seo = this._seoOverrides;
+    const canonical = this._toAbsoluteUrl(seo?.canonical || meta.canonical || meta.url);
+    const title = seo?.title || meta.title;
+    const description = seo?.description || meta.description;
+    const image = this._toAbsoluteUrl(seo?.og_image || seo?.image || meta.image);
+    const type = seo?.og_type || seo?.type || meta.type;
+    const siteOrigin = this._toAbsoluteUrl('/');
+    const websiteId = `${siteOrigin}#website`;
+    const organizationId = `${siteOrigin}#organization`;
+    const pageId = `${canonical}#webpage`;
+    const articleId = `${canonical}#article`;
+    const breadcrumbId = `${canonical}#breadcrumb`;
+    const sectionUrl = this._toAbsoluteUrl(
+      this._configuration.meta?.canonical || this._configuration.meta?.url || currentUrl,
+    );
+    const breadcrumbItems: Record<string, unknown>[] = [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: meta.app_name,
+        item: siteOrigin,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: this._sectionName(currentUrl),
+        item: sectionUrl,
+      },
+    ];
+
+    if (canonical !== sectionUrl) {
+      breadcrumbItems.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: item.text,
+        item: canonical,
+      });
+    }
+
+    const breadcrumb = {
+      '@type': 'BreadcrumbList',
+      '@id': breadcrumbId,
+      itemListElement: breadcrumbItems,
+    };
+    const commonPageData = {
+      '@id': pageId,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { '@id': websiteId },
+      breadcrumb: { '@id': breadcrumbId },
+      ...(image ? { image } : {}),
+    };
+    const page = {
+      '@type': 'WebPage',
+      ...commonPageData,
+      ...(type === 'article' ? { mainEntity: { '@id': articleId } } : {}),
+    };
+    const graphNodes: Record<string, unknown>[] = [breadcrumb, page];
+
+    if (type === 'article') {
+      const datePublished = this._dateValue(seo?.date_published, item.date);
+      const dateModified = this._dateValue(seo?.date_modified, item.date);
+
+      graphNodes.push({
+        '@type': 'TechArticle',
+        '@id': articleId,
+        url: canonical,
+        name: title,
+        headline: title,
+        description,
+        isPartOf: { '@id': websiteId },
+        mainEntityOfPage: { '@id': pageId },
+        publisher: {
+          '@type': 'Organization',
+          '@id': organizationId,
+          name: 'Foblex',
+          url: siteOrigin,
+        },
+        ...(image ? { image } : {}),
+        ...(datePublished ? { datePublished } : {}),
+        ...(dateModified ? { dateModified } : {}),
+      });
+    }
+
+    const graph = {
+      '@context': 'https://schema.org',
+      '@graph': graphNodes,
+    };
+    const pageScripts = this._document.head.querySelectorAll(
+      'script[type="application/ld+json"][data-ld-page="true"]',
+    );
+
+    pageScripts.forEach((node) => node.remove());
+
+    const script = this._document.createElement('script');
+    script.setAttribute('type', 'application/ld+json');
+    script.setAttribute('data-ld-id', 'm-render-page');
+    script.setAttribute('data-ld-page', 'true');
+    script.textContent = JSON.stringify(graph).replaceAll('<', '\\u003c');
+    this._document.head.appendChild(script);
+  }
+
+  private _removeStructuredData(): void {
+    this._document.head
+      .querySelector('script[type="application/ld+json"][data-ld-id="m-render-page"]')
+      ?.remove();
+  }
+
+  private _sectionName(currentUrl: string): string {
+    const section = currentUrl.split('/').filter(Boolean)[0] || 'docs';
+
+    if (section === 'blog') {
+      return 'Articles';
+    }
+
+    return section.charAt(0).toUpperCase() + section.slice(1);
+  }
+
+  private _dateValue(value: string | undefined, fallback: Date | undefined): string | null {
+    const candidate = value || fallback?.toISOString();
+    const match = candidate?.match(/^(\d{4}-\d{2}-\d{2})/u);
+
+    return match?.[1] || null;
   }
 
   private _resolveRobots(defaultRobots: string | undefined, seo: ISeoOverrides | null): string {

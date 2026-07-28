@@ -1,3 +1,7 @@
+---
+allowDeprecatedApiExamples: true
+---
+
 # Input
 
 **Selector:** `[fNodeInput]`  

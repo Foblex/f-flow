@@ -17,6 +17,16 @@ export class StructuredData {
   private readonly _document = inject(DOCUMENT);
 
   public set(id: string, graph: JsonLdGraph): void {
+    const pageScripts = this._document.head.querySelectorAll(
+      'script[type="application/ld+json"][data-ld-page="true"]',
+    );
+
+    pageScripts.forEach((node) => {
+      if (node.getAttribute('data-ld-id') !== id) {
+        node.remove();
+      }
+    });
+
     const attr = `data-ld-id="${id}"`;
     const existing = this._document.head.querySelector(
       `script[type="application/ld+json"][${attr}]`,
@@ -26,6 +36,7 @@ export class StructuredData {
     if (!existing) {
       script.setAttribute('type', 'application/ld+json');
       script.setAttribute('data-ld-id', id);
+      script.setAttribute('data-ld-page', 'true');
       this._document.head.appendChild(script);
     }
     script.textContent = JSON.stringify(graph);

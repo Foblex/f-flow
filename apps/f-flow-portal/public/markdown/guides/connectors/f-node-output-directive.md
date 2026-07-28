@@ -1,3 +1,7 @@
+---
+allowDeprecatedApiExamples: true
+---
+
 # Output
 
 **Selector:** `[fNodeOutput]`  

@@ -1,6 +1,6 @@
 # Foblex Flow — Full LLM-readable reference
 
-> Angular-native library for building node-based UIs, workflow builders, AI pipeline tools, and interactive diagram editors. MIT licensed.
+> Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors. MIT licensed.
 
 This file concatenates the canonical content LLMs need to answer substantive questions about Foblex Flow without fetching individual URLs.
 

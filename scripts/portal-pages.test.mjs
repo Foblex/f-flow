@@ -70,14 +70,47 @@ describe('Portal prerendered pages', () => {
 
   test('section root redirects are correct', async () => {
     await assertRedirect('/docs', '/docs/intro');
+    await assertRedirect('/docs/?utm_source=legacy', '/docs/intro?utm_source=legacy');
     await assertRedirect('/examples', '/examples/overview');
     await assertRedirect('/showcase', '/showcase/overview');
     await assertRedirect('/blog', '/blog/overview');
     await assertRedirect('/docs/consulting', '/services');
   });
 
+  test('legacy docs URLs redirect once to canonical pages', async (t) => {
+    const cases = [
+      ['/docs/en', '/docs/intro'],
+      ['/docs/en/', '/docs/intro'],
+      ['/docs/en/get-started', '/docs/get-started'],
+      ['/docs/en/get-started/', '/docs/get-started'],
+      ['/docs/en/f-draggable-directive/', '/docs/f-draggable-directive'],
+      [
+        '/docs/en/angular-workflow-builder?return=/docs/en/get-started?source=legacy',
+        '/docs/angular-workflow-builder?return=/docs/en/get-started?source=legacy',
+      ],
+    ];
+
+    for (const [legacyRoute, canonicalRoute] of cases) {
+      await t.test(legacyRoute, async () => {
+        await assertRedirect(legacyRoute, canonicalRoute);
+
+        const canonicalPath = canonicalRoute.split('?')[0];
+        const response = await fetchText(`${baseUrl}${canonicalPath}`);
+
+        assert.equal(response.status, 200);
+        assert.match(
+          response.body,
+          new RegExp(
+            `<link rel="canonical" href="${escapeRegExp(`${CANONICAL_ORIGIN}${canonicalPath}`)}"`,
+            'u',
+          ),
+        );
+      });
+    }
+  });
+
   test('legacy Heroku host permanently redirects to the canonical origin', async () => {
-    const response = await requestWithHeaders(`${baseUrl}/docs/get-started?source=legacy`, {
+    const response = await requestWithHeaders(`${baseUrl}/docs/en/get-started/?source=legacy`, {
       Host: LEGACY_PORTAL_HOST,
     });
 
@@ -134,6 +167,36 @@ describe('Portal prerendered pages', () => {
         new RegExp(`<loc>${escapeRegExp(`${CANONICAL_ORIGIN}${item.route}`)}</loc>`, 'u'),
       );
     }
+  });
+
+  test('documentation and articles publish route-specific structured data', async () => {
+    const docs = await fetchText(`${baseUrl}/docs/get-started`);
+
+    assert.equal(docs.status, 200);
+    assert.match(docs.body, /data-ld-id="m-render-page"/u);
+    assert.match(docs.body, /"@type":"BreadcrumbList"/u);
+    assert.match(docs.body, /"@type":"WebPage"/u);
+    assert.match(docs.body, /"@id":"https:\/\/flow\.foblex\.com\/#website"/u);
+
+    const article = await fetchText(
+      `${baseUrl}/blog/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data`,
+    );
+
+    assert.equal(article.status, 200);
+    assert.match(article.body, /"@type":"TechArticle"/u);
+    assert.match(
+      article.body,
+      /"@id":"https:\/\/flow\.foblex\.com\/blog\/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data#article"/u,
+    );
+    assert.match(
+      article.body,
+      /"mainEntityOfPage":\{"@id":"https:\/\/flow\.foblex\.com\/blog\/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data#webpage"\}/u,
+    );
+    assert.match(article.body, /"datePublished":"2026-04-24"/u);
+    assert.match(article.body, /"dateModified":"2026-07-28"/u);
+    assert.match(article.body, /"@type":"Organization"/u);
+    assert.match(article.body, /"name":"Foblex"/u);
+    assert.doesNotMatch(article.body, /"@type":"Person"/u);
   });
 
   test('all markdown routes are present and render expected content', async (t) => {
@@ -195,7 +258,7 @@ function collectMarkdownExpectations() {
   const expectations = [
     {
       route: '/',
-      h1: 'Foblex Flow',
+      h1: 'Build production node editors in Angular.',
       noindex: false,
     },
   ];

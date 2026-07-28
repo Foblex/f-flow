@@ -12,6 +12,25 @@ const STATIC_INTERNAL_PATHS = new Set([
   '/robots.txt',
   '/sitemap.xml',
 ]);
+const DEPRECATED_API_CODE_PATTERNS = [
+  {
+    label: 'legacy connector id (fOutputId/fInputId)',
+    pattern: /\bf(?:Output|Input)Id\b/gu,
+  },
+  {
+    label: 'legacy connector directive (fNodeOutput/fNodeInput/fNodeOutlet)',
+    pattern: /\bfNode(?:Output|Input|Outlet)\b/gu,
+  },
+  {
+    label: 'deprecated create-node field (event.rect)',
+    pattern: /\bevent\.rect\b/gu,
+  },
+  {
+    label: 'deprecated reassignment event field',
+    pattern: /\b(?:old|new)(?:F)?(?:Input|Output|Source|Target)Id\b/gu,
+  },
+];
+const HARDCODED_CURRENT_MAJOR_PATTERN = /\bcurrent\s+`?v?\d+\.x`?(?:\s+line)?\b/giu;
 
 const markdownFiles = walkMarkdownFiles(MARKDOWN_ROOT);
 const generatedRoutes = readFileSync(ROUTES_PATH, 'utf8')
@@ -28,12 +47,13 @@ let checkedInternalLinks = 0;
 for (const filePath of markdownFiles) {
   const content = readFileSync(filePath, 'utf8');
   const route = toRoutePath(filePath);
+  const noindex = /^noindex:\s*true\s*$/m.test(content);
 
-  if (route && !/^noindex:\s*true\s*$/m.test(content)) {
+  if (route && !noindex) {
     expectedRoutes.add(route);
   }
 
-  if (/^noindex:\s*true\s*$/m.test(content)) {
+  if (noindex) {
     if (route) {
       noindexRoutes.push(route);
     }
@@ -43,6 +63,11 @@ for (const filePath of markdownFiles) {
   // portal page. Validate links only for routes the portal actually registers.
   if (route && knownRoutes.has(route)) {
     validateInternalLinks(filePath, route, content, knownRoutes, issues);
+
+    if (!noindex) {
+      validateDeprecatedApiExamples(filePath, content, issues);
+      validateCurrentMajorClaims(filePath, content, issues);
+    }
   }
 }
 
@@ -60,12 +85,59 @@ for (const route of expectedRoutes) {
   }
 }
 
+if (/<(?:changefreq|priority)>/u.test(sitemap)) {
+  issues.push(
+    'tmp/sitemap.xml: changefreq and priority should stay omitted because search engines ignore them',
+  );
+}
+
 if (issues.length) {
   console.error('SEO content validation failed:\n');
   for (const issue of issues) {
     console.error(`- ${issue}`);
   }
   process.exit(1);
+}
+
+function validateDeprecatedApiExamples(filePath, content, collectedIssues) {
+  if (/^allowDeprecatedApiExamples:\s*true\s*$/mu.test(content)) {
+    return;
+  }
+
+  const fencedCodePattern = /^```[^\r\n]*\r?\n([\s\S]*?)^```\s*$/gmu;
+
+  for (const blockMatch of content.matchAll(fencedCodePattern)) {
+    const code = blockMatch[1];
+
+    for (const { label, pattern } of DEPRECATED_API_CODE_PATTERNS) {
+      pattern.lastIndex = 0;
+      const match = pattern.exec(code);
+
+      if (!match) {
+        continue;
+      }
+
+      const codeOffset = blockMatch[0].indexOf(code);
+      const absoluteIndex = blockMatch.index + codeOffset + match.index;
+
+      collectedIssues.push(
+        `${relative(ROOT, filePath)}:${getLineNumber(content, absoluteIndex)}: ${label} in an ` +
+          'indexable code example; migrate it or add allowDeprecatedApiExamples: true only for ' +
+          'an intentional legacy/migration page',
+      );
+    }
+  }
+}
+
+function validateCurrentMajorClaims(filePath, content, collectedIssues) {
+  HARDCODED_CURRENT_MAJOR_PATTERN.lastIndex = 0;
+
+  for (const match of content.matchAll(HARDCODED_CURRENT_MAJOR_PATTERN)) {
+    collectedIssues.push(
+      `${relative(ROOT, filePath)}:${getLineNumber(content, match.index)}: avoid hardcoding ` +
+        `"${match[0]}"; describe the API generation or inject the package version`,
+    );
+  }
 }
 
 console.log(

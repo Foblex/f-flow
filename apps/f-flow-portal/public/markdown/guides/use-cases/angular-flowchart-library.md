@@ -1,6 +1,6 @@
 ---
 publishedAt: "2026-07-05"
-updatedAt: "2026-07-05"
+updatedAt: "2026-07-28"
 ---
 
 # Angular Flowchart Library
@@ -27,7 +27,7 @@ Foblex Flow is an Angular-native flowchart library for **editable** flowcharts: 
 
 ## Compared to the usual suspects
 
-- Abandoned Angular flowchart packages (ng-flowchart, ngx-flowchart) stopped receiving updates years ago; Foblex Flow ships frequent releases and targets current Angular.
+- Lightweight packages such as `@modoro/ng-flowchart` and `ngx-flowchart` target narrower feature sets; verify their latest release and Angular compatibility before choosing one for a new project.
 - Chart libraries (ngx-charts and friends) draw data, not editors — no dragging, no wiring, no editing events.
 - Big commercial diagram suites bring their own data model and licensing; here the chart stays your data, the library only emits events, and everything is MIT.
 
@@ -43,8 +43,8 @@ ng add @foblex/flow
     @for (step of steps(); track step.id) {
       <div fNode fDragHandle [fNodeId]="step.id" [fNodePosition]="step.position">
         {{ step.title }}
-        <div fConnector fConnectorId="step.id + '-in'" fConnectorType="target"></div>
-        <div fConnector fConnectorId="step.id + '-out'" fConnectorType="source"></div>
+        <div fConnector [fConnectorId]="step.id + '-in'" fConnectorType="target"></div>
+        <div fConnector [fConnectorId]="step.id + '-out'" fConnectorType="source"></div>
       </div>
     }
     @for (arrow of arrows(); track arrow.id) {

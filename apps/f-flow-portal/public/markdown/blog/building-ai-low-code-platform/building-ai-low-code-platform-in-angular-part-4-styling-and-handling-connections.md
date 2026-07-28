@@ -2,7 +2,7 @@
 origin: "https://javascript.plainenglish.io/building-ai-low-code-platform-in-angular-part-4-styling-and-handling-connections-79e1ef769a5d"
 originLabel: "Originally published on JavaScript in Plain English"
 publishedAt: "2025-08-06"
-updatedAt: "2026-03-08"
+updatedAt: "2026-07-28"
 ---
 
 # Building AI Low-Code Platform in Angular — Part 4: Styling and Handling Connections
@@ -28,7 +28,7 @@ Connections in Foblex Flow aren’t just static wires — they’re fully in
 ::: ng-component <drag-to-reassign></drag-to-reassign> [height]="600"
 :::
 
-By default, only the **target end** ([input](https://flow.foblex.com/docs/f-node-input-directive)) is draggable. But you can also make the **source end** ([output](https://flow.foblex.com/docs/f-node-output-directive)) reassignable by setting the fReassignableStart=”true” input. This gives you precise control over which ends can be modified — on a **per-connection** basis.
+By default, only the **target end** is draggable. But you can also make the **source end** reassignable by setting the `[fReassignableStart]="true"` input. Both ends use the unified [connector directive](https://flow.foblex.com/docs/f-connector-directive). This gives you precise control over which ends can be modified — on a **per-connection** basis.
 
 ::: ng-component <drag-to-reassign></drag-to-reassign> [height]="600"
 :::
@@ -36,10 +36,12 @@ By default, only the **target end** ([input](https://flow.foblex.com/docs/f-node
 Want to rewire a connection? Just drag one of its ends and drop it onto another connector. [Foblex Flow](https://flow.foblex.com/) takes care of the rest — when the drag operation finishes, it emits the fReassignConnection event from the \<f-flow> component itself (not from the connection element):
 
 ```html
-<f-flow fDraggable
-        (fCreateNode)="createNode($event)"
-        (fCreateConnection)="createConnection($event)"
-        (fReassignConnection)="reassignConnection($event)"> // This event is emitted from fDraggable, not from f-connection itself
+<f-flow
+  fDraggable
+  (fCreateNode)="createNode($event)"
+  (fCreateConnection)="createConnection($event)"
+  (fReassignConnection)="reassignConnection($event)"
+>
 </f-flow>
 ```
 
@@ -48,19 +50,18 @@ This event contains everything you need to handle the reattachment:
 ```ts
 class FReassignConnectionEvent {
   connectionId: string;
-  isSourceReassign: boolean;
-  isTargetReassign: boolean;
-  oldSourceId: string;
-  newSourceId: string | undefined;
-  oldTargetId: string;
-  newTargetId: string | undefined;
-  dropPoint: IPoint;
+  endpoint: 'source' | 'target';
+  previousSourceId: string;
+  nextSourceId: string | undefined;
+  previousTargetId: string;
+  nextTargetId: string | undefined;
+  dropPosition: IPoint;
 }
 ```
 
 🧠 **Tip:**
 
-The event will still be triggered even if the user doesn’t drop the connection onto another connector. In that case, newTargetId (or newSourceId) will be undefined, but you’ll still receive the exact dropPoint — the canvas coordinates where the user released the connection.
+The event will still be triggered even if the user doesn’t drop the connection onto another connector. In that case, `nextTargetId` (or `nextSourceId`) will be `undefined`, but you’ll still receive the exact `dropPosition` — the canvas coordinates where the user released the connection. The `previousSourceId` and `previousTargetId` fields preserve the original endpoints.
 
 This is extremely useful if you want to open a context menu or create a new node on the fly at that position.
 
@@ -68,17 +69,24 @@ Here’s how to update your connection list when the target changes:
 
 ```ts
 protected reassignConnection(event: FReassignConnectionEvent): void {
-  if (!event.newTargetId) {
+  const nextConnectorId =
+    event.endpoint === 'source' ? event.nextSourceId : event.nextTargetId;
+
+  if (!nextConnectorId) {
     return;
   }
-  this.connections.update((connections) => {
-    const connection = connections.find(c => c.id === event.connectionId);
-    if(!connection) {
-      throw new Error(`Connection ${event.connectionId} not found`);
-    }
-    connection.to = event.newTargetId;
-    return [...connections];
-  });
+
+  this.connections.update((connections) =>
+    connections.map((connection) => {
+      if (connection.id !== event.connectionId) {
+        return connection;
+      }
+
+      return event.endpoint === 'source'
+        ? { ...connection, from: nextConnectorId }
+        : { ...connection, to: nextConnectorId };
+    }),
+  );
 }
 ```
 
@@ -103,7 +111,7 @@ Let’s start with the **three connection types**, each offering a different vis
 
 Next, you can define how the connection _behaves_ when linking nodes:
 
-- fixed — connects from a specific side (left, right, top, bottom) defined via fConnectableSide
+- fixed — connects from a specific side (left, right, top, bottom) defined via `fConnectorConnectableSide`
 - fixed_center — connects from the exact center of each node
 - floating — auto-calculates the intersection between the node’s shape and the imaginary line between node centers (great for circular or irregular shapes)
 
@@ -126,8 +134,8 @@ In our low-code platform, we’ll use a **Bézier curve** with a **fixed side be
 <f-connection [fConnectionId]="connection.id"
               fBehavior="fixed"
               fType="bezier"
-              [fOutputId]="connection.from"
-              [fInputId]="connection.to" />
+              [fSourceId]="connection.from"
+              [fTargetId]="connection.to" />
 ```
 
 You’re now in control — not just of where your connections go, but _how they feel_ when they get there.
@@ -146,7 +154,7 @@ With [Foblex Flow](https://flow.foblex.com/), you can attach **custom SVG marker
 Here’s a minimal example that adds a simple circle to the **start** of a connection:
 
 ```html
-<f-connection [fOutputId]="id1" [fInputId]="id2">
+<f-connection [fSourceId]="id1" [fTargetId]="id2">
   <svg fMarker type="f-connection-marker-start"
        [height]="10" [width]="10" [refX]="5" [refY]="5">
     <circle cx="5" cy="5" r="2" fill="var(--connection-color)" />
@@ -183,8 +191,8 @@ protected readonly eMarkerType = EFMarkerType;
 <f-connection [fConnectionId]="connection.id"
               fBehavior="fixed"
               fType="bezier"
-              [fOutputId]="connection.from"
-              [fInputId]="connection.to">
+              [fSourceId]="connection.from"
+              [fTargetId]="connection.to">
   <svg viewBox="0 0 10 10" fMarker [type]="eMarkerType.START" [height]="10" [width]="10" [refX]="5" [refY]="5">
     <circle cx="5" cy="5" r="2" fill="var(--connection-color)" />
   </svg>

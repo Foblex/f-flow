@@ -52,7 +52,7 @@ export class Home implements OnInit {
   protected readonly title = PORTAL_SHELL.appName;
 
   protected readonly tagline =
-    'Angular-native node-based UI library for workflow builders, AI pipelines, and visual editors.';
+    'Angular-native node editor library for workflow builders, AI pipelines, and interactive diagram editors.';
 
   protected readonly footerColumns: IFooterColumn[] = [
     {
@@ -88,9 +88,9 @@ export class Home implements OnInit {
 
   public ngOnInit(): void {
     this._seo.apply({
-      title: 'Foblex Flow — Angular Node-Based UI Library for Workflow Builders',
+      title: 'Foblex Flow — Angular Node Editor & Workflow Builder Library',
       description:
-        'Angular-native library for building node editors, workflow builders, and diagram UIs. Signals, standalone components, SSR-aware. MIT licensed.',
+        'Build production Angular node editors, workflow builder UIs, AI pipelines, and interactive diagrams with app-owned or optional managed editor state.',
       canonicalUrl: 'https://flow.foblex.com/',
     });
 
@@ -131,7 +131,7 @@ export class Home implements OnInit {
           runtimePlatform: 'Angular 17.3+',
           author: { '@id': 'https://flow.foblex.com/#organization' },
           description:
-            'Angular-native library for node-based UIs, workflow builders, and interactive diagram editors.',
+            'Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.',
           downloadUrl: 'https://www.npmjs.com/package/@foblex/flow',
           codeRepository: 'https://github.com/Foblex/f-flow',
           url: 'https://flow.foblex.com/',

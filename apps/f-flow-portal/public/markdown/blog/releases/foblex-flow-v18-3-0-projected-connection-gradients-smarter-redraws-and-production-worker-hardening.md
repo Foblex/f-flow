@@ -1,9 +1,12 @@
 ---
+allowDeprecatedApiExamples: true
 publishedAt: "2026-03-17"
-updatedAt: "2026-03-17"
+updatedAt: "2026-07-28"
 ---
 
 # Foblex Flow v18.3.0: Projected Connection Gradients, Smarter Redraws, and Production Worker Hardening
+
+> **Historical API note:** This release article intentionally preserves v18 code. New code should use [`fConnector`, `fSourceId`, and `fTargetId`](./docs/migrating-to-unified-connectors).
 
 Foblex Flow v18.3.0 finishes the connection-model work that started around projected rendering and large-scene performance.
 

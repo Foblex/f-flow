@@ -1,6 +1,7 @@
 ---
+allowDeprecatedApiExamples: true
 publishedAt: "2026-07-27"
-updatedAt: "2026-07-27"
+updatedAt: "2026-07-28"
 ---
 
 # Migrating to Unified Connectors

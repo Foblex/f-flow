@@ -34,12 +34,12 @@ export function app(): express.Express {
     const hostname = req.hostname.toLowerCase();
 
     if (LEGACY_PORTAL_HOSTS.has(hostname)) {
-      return res.redirect(308, `${CANONICAL_ORIGIN}${req.originalUrl}`);
+      return res.redirect(308, `${CANONICAL_ORIGIN}${normalizeRedirectUrl(req.originalUrl)}`);
     }
 
     const forwardedProtocol = req.get('x-forwarded-proto')?.split(',')[0]?.trim().toLowerCase();
     if (hostname === CANONICAL_HOST && forwardedProtocol === 'http') {
-      return res.redirect(308, `${CANONICAL_ORIGIN}${req.originalUrl}`);
+      return res.redirect(308, `${CANONICAL_ORIGIN}${normalizeRedirectUrl(req.originalUrl)}`);
     }
 
     next();
@@ -64,26 +64,10 @@ export function app(): express.Express {
       .catch((err) => next(err));
   };
 
-  server.get(['/docs', '/docs/'], (_req, res) => {
-    res.redirect(301, '/docs/intro');
-  });
-
-  server.get(['/examples', '/examples/'], (_req, res) => {
-    res.redirect(301, '/examples/overview');
-  });
-
-  server.get(['/showcase', '/showcase/'], (_req, res) => {
-    res.redirect(301, '/showcase/overview');
-  });
-
-  server.get(['/blog', '/blog/'], (_req, res) => {
-    res.redirect(301, '/blog/overview');
-  });
-
   registerEmbeddedReferenceApps(server, serverDistFolder);
 
   server.use((req, res, next) => {
-    const [pathOnly, query = ''] = req.url.split('?', 2);
+    const { path: pathOnly, search } = splitUrl(req.url);
 
     // Raw markdown sources stay served — the m-render runtime fetches them
     // to render docs/examples — but must not be indexed. Tagging the
@@ -94,17 +78,10 @@ export function app(): express.Express {
       res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
     }
 
-    const legacyRedirect = resolveLegacyRedirect(pathOnly);
+    const redirectPath = resolveRedirectPath(pathOnly);
 
-    if (legacyRedirect) {
-      return res.redirect(301, legacyRedirect + (query ? '?' + query : ''));
-    }
-
-    // Keep canonical URLs without trailing slash across docs/examples/showcase/blog.
-    if (pathOnly.length > 1 && !isAssetPath(pathOnly) && pathOnly.endsWith('/')) {
-      const normalizedPath = pathOnly.replace(/\/+$/, '');
-
-      return res.redirect(301, normalizedPath + (query ? '?' + query : ''));
+    if (redirectPath) {
+      return res.redirect(301, redirectPath + search);
     }
     next();
   });
@@ -187,6 +164,53 @@ function isAssetPath(pathname: string): boolean {
 
 function isRawMarkdownPath(pathname: string): boolean {
   return pathname.startsWith('/markdown/') && pathname.endsWith('.md');
+}
+
+function splitUrl(url: string): { path: string; search: string } {
+  const queryIndex = url.indexOf('?');
+
+  if (queryIndex === -1) {
+    return { path: url, search: '' };
+  }
+
+  return {
+    path: url.slice(0, queryIndex),
+    search: url.slice(queryIndex),
+  };
+}
+
+function normalizeRedirectUrl(url: string): string {
+  const { path, search } = splitUrl(url);
+
+  return (resolveRedirectPath(path) ?? path) + search;
+}
+
+function resolveRedirectPath(pathname: string): string | null {
+  const legacyRedirect = resolveLegacyRedirect(pathname);
+
+  if (legacyRedirect) {
+    return legacyRedirect;
+  }
+
+  const normalized = normalizeRoutePath(pathname);
+  const sectionRootRedirects: Record<string, string> = {
+    '/docs': '/docs/intro',
+    '/examples': '/examples/overview',
+    '/showcase': '/showcase/overview',
+    '/blog': '/blog/overview',
+  };
+  const sectionRootRedirect = sectionRootRedirects[normalized];
+
+  if (sectionRootRedirect) {
+    return sectionRootRedirect;
+  }
+
+  // Keep canonical URLs without trailing slash across docs/examples/showcase/blog.
+  if (pathname.length > 1 && !isAssetPath(pathname) && pathname.endsWith('/')) {
+    return normalized;
+  }
+
+  return null;
 }
 
 function resolveLegacyRedirect(pathname: string): string | null {

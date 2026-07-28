@@ -1,13 +1,13 @@
 ---
 publishedAt: "2026-04-06"
-updatedAt: "2026-07-27"
+updatedAt: "2026-07-28"
 ---
 
 # Angular Version Compatibility
 
 Use this page to answer one practical question: **which `@foblex/flow` version should I install for my Angular version, and which companion packages belong with it?**
 
-If you use the current `19.x` line, `ng add @foblex/flow` installs companion packages automatically.
+With the `19.x` line, `ng add @foblex/flow` installs companion packages automatically.
 If you need to pin an older line, use the manual install commands below.
 
 ## Quick matrix
@@ -64,7 +64,7 @@ npm install @foblex/flow@12.6.3 @foblex/core@1.2.6 @foblex/platform@1.0.3
 
 ## Short notes
 
-- Angular `17.3+`: use the current `19.x` line for new applications.
+- Angular `17.3+`: use the `19.x` line for new applications.
 - Angular control flow with projected nodes or connections: prefer `18.0.0+`.
 - For older pinned lines, manual installation is clearer than relying on `ng add`.
 - Angular already brings its own compatible `@angular/core`, `@angular/common`, and RxJS versions. The commands above focus on the extra Foblex companion packages you need to match manually.

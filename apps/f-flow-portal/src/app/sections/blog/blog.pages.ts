@@ -247,7 +247,7 @@ export const BLOG_PAGES: IPageDefinition[] = [
     seo: {
       title: 'Angular Diagram and Flow Libraries Compared (2026)',
       description:
-        "A maintainer's honest map of Angular diagramming in 2026: Foblex Flow, ngx-vflow, ng-diagram, ngx-graph, React Flow via wrapper, GoJS, JointJS+ and Syncfusion — who wins which trade-off, including where Foblex Flow loses.",
+        "A maintainer's honest map of Angular diagramming in 2026: Foblex Flow, ngx-vflow, ngDiagram, ngx-graph, React Flow via wrapper, GoJS, JointJS+ and Syncfusion — who wins which trade-off, including where Foblex Flow loses.",
       canonical: 'https://flow.foblex.com/blog/angular-diagram-and-flow-libraries-compared-2026',
       image: './site-preview.png',
       imageType: 'image/png',
@@ -322,7 +322,7 @@ export const BLOG_PAGES: IPageDefinition[] = [
     seo: {
       title: 'Inside Foblex Flow — Part 1: Library Architecture and Design Principles',
       description:
-        'Inside Foblex Flow Part 1 explains the architecture and design principles behind an Angular-native node-based UI library.',
+        'Inside Foblex Flow Part 1 explains the architecture and design principles behind an Angular-native node editor library.',
       canonical:
         'https://flow.foblex.com/blog/inside-foblex-flow-part-1-library-architecture-and-design-principles',
       image: 'https://cdn-images-1.medium.com/max/1024/1*C5fuysW8hY46nNZDRiJgIA.png',
@@ -348,13 +348,13 @@ export const BLOG_PAGES: IPageDefinition[] = [
   },
   {
     slug: 'designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data',
-    text: 'Part 3: Designing a Stateless Library',
+    text: 'Part 3: Stateless Core and Managed State',
     group: 'Inside Foblex Flow',
     date: new Date('2026-04-24T12:00:00.000Z'),
     seo: {
-      title: 'Designing a Stateless Library — How Foblex Flow Avoids Owning Your Data',
+      title: 'Stateless Core, Optional Managed State — Choosing the State Boundary',
       description:
-        'Why Foblex Flow keeps a stateless core, how applications own graph meaning, and when to opt into Managed Flow State for records and undo/redo.',
+        'How Foblex Flow separates app-owned domain state from its stateless core and optional Managed Flow State records, snapshots, and undo/redo.',
       canonical:
         'https://flow.foblex.com/blog/designing-a-stateless-library-how-foblex-flow-avoids-owning-your-data',
       image: 'https://flow.foblex.com/site-preview.png',
