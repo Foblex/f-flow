@@ -258,7 +258,7 @@ function collectMarkdownExpectations() {
   const expectations = [
     {
       route: '/',
-      h1: 'Build production node editors in Angular.',
+      h1: 'The most adopted node editor for Angular.',
       noindex: false,
     },
   ];
