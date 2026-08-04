@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [Unreleased]
 
+### Features
+
+- **ng-add:** write a canonical Foblex Flow instruction block to `AGENTS.md` and ensure Claude Code loads it through an idempotent `@AGENTS.md` import in `CLAUDE.md`, while preserving existing project instructions.
+
 ## [19.1.6] - 2026-07-27
 
 ### Fixes

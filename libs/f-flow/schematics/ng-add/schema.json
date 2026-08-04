@@ -7,7 +7,7 @@
     "skipAgentRules": {
       "type": "boolean",
       "default": false,
-      "description": "Skip writing the Foblex Flow section into the workspace AGENTS.md (AI agent rules)."
+      "description": "Skip writing the Foblex Flow section into AGENTS.md and its Claude Code import into CLAUDE.md."
     }
   }
 }
