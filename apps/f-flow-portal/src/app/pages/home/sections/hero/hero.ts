@@ -3,12 +3,37 @@ import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IS_BROWSER_PLATFORM } from '@foblex/m-render';
 import { formatCount, formatVersion, Stats } from '../../../../core/stats';
+import { SHOWCASE } from '../../../../../../public/showcase/showcase';
 import { HeroFlowAnchor } from '../hero-flow-anchor';
 
 interface IStat {
   value: string;
   label?: string;
 }
+
+interface IProductionProduct {
+  name: string;
+  url: string;
+}
+
+/**
+ * Commercial products for the hero proof strip, derived from the showcase:
+ * an entry qualifies when it links to an external product website. A short
+ * brand in trailing parentheses wins over the long showcase name, so
+ * "Agents Platform (XpertAI)" renders as "XpertAI". Adding a product to
+ * SHOWCASE updates this strip automatically — no per-item assets here.
+ */
+const PRODUCTION_PRODUCTS: IProductionProduct[] = SHOWCASE.flatMap((item) => {
+  const website = item.links?.find((link) => link.text === 'Website');
+
+  if (!website) {
+    return [];
+  }
+
+  const shortName = item.name.match(/\(([^)]+)\)\s*$/u)?.[1] ?? item.name;
+
+  return [{ name: shortName, url: website.url }];
+});
 
 @Component({
   selector: 'home-hero',
@@ -36,6 +61,8 @@ export class Hero {
   });
 
   protected readonly installCommand = 'ng add @foblex/flow';
+
+  protected readonly productionProducts = PRODUCTION_PRODUCTS;
 
   protected copyInstall(): void {
     if (!this._isBrowser) {

@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 - **ng-add:** write a canonical Foblex Flow instruction block to `AGENTS.md` and ensure Claude Code loads it through an idempotent `@AGENTS.md` import in `CLAUDE.md`, while preserving existing project instructions.
 
+### Documentation
+
+- Surface the version-matched AI coding guide, LLM-readable documentation, diagnostics, and verification workflow in the README and on the portal home page.
+- Lead with verified adoption positioning (npm download data) across the portal home page, READMEs, package descriptions, and llms facts; surface named production products near the hero.
+- Add an honest source-linked ngx-vflow vs Foblex Flow comparison guide and cross-link it from the React Flow comparison and the 2026 libraries roundup.
+
 ## [19.1.6] - 2026-07-27
 
 ### Fixes

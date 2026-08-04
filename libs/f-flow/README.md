@@ -25,10 +25,10 @@
 <h1 align="center">Foblex Flow</h1>
 
 <p align="center">
-  <strong>Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.</strong>
+  <strong>The most adopted node editor library for Angular — for production workflow builders, AI pipelines, and interactive diagram editors.</strong>
 </p>
 
-Foblex Flow gives Angular teams a simple way to start building graph-based products without adopting a React-first mental model. Begin with `f-flow`, `f-canvas`, nodes, and connections, then add richer editor features only when your product needs them.
+Foblex Flow ships the hard parts of a production node editor — drag logic, hit-testing, SVG connection paths, reassign, selection, zoom, and undo/redo — as Angular-native building blocks. Begin with `f-flow`, `f-canvas`, nodes, and connections, then add richer editor features only when your product needs them. It powers production products such as [Luware Nimbus](https://luware.com/products/nimbus), [ProcessMIX](https://processmix.com/), [XpertAI](https://xpertai.cn/en/), and [EpicStaff](https://www.epicstaff.ai/).
 
 Use it to create workflow builders, AI low-code tools, call-flow editors, UML diagrams, internal back-office tools, and other node-based interfaces. Start with app-owned graph records, or opt into managed records and undo/redo with `withFlowState()`; validation, persistence, permissions, and domain logic remain application concerns in both modes.
 
@@ -40,8 +40,17 @@ Use it to create workflow builders, AI low-code tools, call-flow editors, UML di
 
 Current `19.x` releases target Angular `17.3+`. If your app is on Angular 12-17.2, check the [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility) guide first and pin the matching Foblex Flow line before installing.
 
+## Built for AI Coding Agents
+
+Foblex Flow treats AI coding agents as first-class users: the package ships a version-matched guide at `node_modules/@foblex/flow/AI.md`, `ng add` writes workspace agent rules, and stable `FFxxxx` diagnostics give agents a concrete pass/fail signal. Before generating code, verify Foblex-specific selectors and APIs against that guide or the linked official reference; do not infer APIs from other node editor libraries.
+
+Choose the integration deliberately: classic mode keeps graph records in the application, while optional `provideFFlow(withFlowState())` provides typed managed records and undo/redo for supported operations. Verify generated flows using the APIs and `FFxxxx` diagnostics described in the shipped guide.
+
+[AI setup guide](https://flow.foblex.com/docs/ai) · [Full curated LLM-readable reference](https://flow.foblex.com/llms-full.txt)
+
 ## Why Foblex Flow
 
+- The most adopted node editor library built for Angular, by npm weekly downloads — maintained full-time since 2022 and used in production commercial products.
 - Easy starting path: most editors begin with `f-flow`, `f-canvas`, nodes, connectors, and connections.
 - Angular-first API that fits Angular apps instead of wrapping a React-style state model.
 - Built for real editor interactions: drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment helpers, and waypoints.
@@ -65,7 +74,7 @@ Current `19.x` releases target Angular `17.3+`. If your app is on Angular 12-17.
 | Integration   | Classic event-driven API with app-owned records, or optional `withFlowState()` managed records, snapshots, and undo/redo; SSR-safe, zoneless-ready                        |
 | AI tooling    | `llms.txt`, bundled `AI.md`, `ng add` writes agent rules, dev diagnostics with stable `FFxxxx` error codes                                                                |
 
-Coming from React Flow? Read the honest comparison: [React Flow vs Foblex Flow for Angular teams](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams).
+Comparing options? Read the honest comparisons: [React Flow vs Foblex Flow for Angular teams](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams) and [ngx-vflow vs Foblex Flow](https://flow.foblex.com/docs/ngx-vflow-vs-foblex-flow).
 
 ## Choose Your State Integration
 
@@ -191,7 +200,7 @@ That is the rendering mental model: `f-flow` hosts the editor, `f-canvas` pans a
 
 ### For AI Agents and LLMs
 
-- [llms.txt](https://flow.foblex.com/llms.txt) — docs index for agents; [llms-full.txt](https://flow.foblex.com/llms-full.txt) — complete LLM-readable API reference
+- [llms.txt](https://flow.foblex.com/llms.txt) — docs index for agents; [llms-full.txt](https://flow.foblex.com/llms-full.txt) — full curated LLM-readable reference
 - [AI usage guide](https://github.com/Foblex/f-flow/blob/main/libs/f-flow/AI.md) — strict code-generation rules, also shipped inside this package at `node_modules/@foblex/flow/AI.md`
 
 ## Community and Support

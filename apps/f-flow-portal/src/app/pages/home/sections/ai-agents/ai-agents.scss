@@ -1,0 +1,78 @@
+@use '../../../../shared/styles/section' as s;
+
+:host {
+  @include s.section-frame;
+}
+
+.proofs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: 760px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.proof {
+  @include s.card-base;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding: 20px;
+
+  h3 {
+    margin: 1px 0 7px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--secondary-text);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--f-link-primary-color);
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--f-link-primary-hover-color);
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--f-link-primary-color);
+      outline-offset: 2px;
+    }
+  }
+
+  code {
+    font-family: var(--font-family-mono);
+    font-size: 0.92em;
+    overflow-wrap: anywhere;
+  }
+}
+
+.proof-marker {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--divider-color);
+  border-radius: 9px;
+  background: var(--alpha-06);
+  color: var(--secondary-text);
+  font-family: var(--font-family-mono);
+  font-size: 10px;
+  font-weight: 600;
+}

@@ -1,0 +1,58 @@
+<section-head
+  kicker="AI-assisted development"
+  title="Your coding agent already knows Foblex Flow."
+  description="Foblex Flow treats coding agents as first-class users: the package ships a version-matched guide, ng add wires workspace rules, and stable FFxxxx diagnostics give agents a concrete pass/fail signal for every generated flow."
+  linkText="Set up your coding agent"
+  linkRouterLink="/docs/ai"
+/>
+
+<ul class="proofs" aria-label="Foblex Flow support for AI coding agents">
+  <li class="proof">
+    <span class="proof-marker" aria-hidden="true">01</span>
+    <div>
+      <h3>Version-matched package guide</h3>
+      <p>
+        The installed package includes <code>node_modules/@foblex/flow/AI.md</code> with verified
+        APIs, patterns, and common failure checks for that version.
+      </p>
+    </div>
+  </li>
+
+  <li class="proof">
+    <span class="proof-marker" aria-hidden="true">02</span>
+    <div>
+      <h3>Workspace rules from <code>ng add</code></h3>
+      <p>
+        <code>ng add @foblex/flow</code> writes a managed Foblex Flow section into
+        <code>AGENTS.md</code> and wires the Claude Code import in <code>CLAUDE.md</code> — every
+        agent reads the same canonical rules.
+      </p>
+    </div>
+  </li>
+
+  <li class="proof">
+    <span class="proof-marker" aria-hidden="true">03</span>
+    <div>
+      <h3>LLM-readable documentation</h3>
+      <p>
+        Hosted <a href="/llms.txt">llms.txt</a> and
+        <a href="/llms-full.txt">llms-full.txt</a> expose the docs for retrieval, with
+        <a href="https://context7.com/foblex/f-flow" target="_blank" rel="noopener noreferrer"
+          >Foblex Flow on Context7</a
+        >.
+      </p>
+    </div>
+  </li>
+
+  <li class="proof">
+    <span class="proof-marker" aria-hidden="true">04</span>
+    <div>
+      <h3>Concrete runtime verification</h3>
+      <p>
+        Stable <a routerLink="/docs/errors"><code>FFxxxx</code> diagnostics</a> identify setup
+        errors. After <code>fFullRendered</code>, compare <code>getState()</code> with the expected
+        graph and fail on diagnostics such as unresolved endpoint <code>FF1001</code>.
+      </p>
+    </div>
+  </li>
+</ul>

@@ -1,6 +1,6 @@
 # Foblex Flow
 
-> Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors. MIT licensed.
+> The most adopted node editor library for Angular (by npm weekly downloads) — Angular-native, for production workflow builders, AI pipelines, and interactive diagram editors. MIT licensed.
 
 ## Key facts
 
@@ -11,6 +11,7 @@
 - License: MIT
 - Supports: Angular 17.3+ (older 12–17.2 lines pinned separately)
 - Built for: Angular teams. Not a React wrapper. Not framework-agnostic.
+- Adoption: the most widely used node editor library built for Angular, by npm weekly downloads; in production at Luware Nimbus, ProcessMIX, XpertAI, and EpicStaff
 - State integration: classic app-owned records by default, or opt-in `withFlowState()` managed records; domain validation and persistence remain application-owned
 
 ## Documentation
@@ -19,6 +20,7 @@
 - [Get Started](https://flow.foblex.com/docs/get-started): Install and render your first flow in 5 minutes
 - [Angular Version Compatibility](https://flow.foblex.com/docs/angular-version-compatibility)
 - [React Flow vs Foblex Flow](https://flow.foblex.com/docs/react-flow-vs-foblex-flow-for-angular-teams): Honest comparison for Angular teams
+- [ngx-vflow vs Foblex Flow](https://flow.foblex.com/docs/ngx-vflow-vs-foblex-flow): Honest comparison of the two Angular-native node editor libraries
 - [Roadmap](https://flow.foblex.com/docs/roadmap): Planned features and release timeline
 - [Errors and Warnings](https://flow.foblex.com/docs/errors): FFxxxx diagnostic codes with causes and fixes
 - [AI Agents](https://flow.foblex.com/docs/ai): Setting up LLMs and coding agents (AGENTS.md, bundled AI.md, llms.txt, Context7)
@@ -93,7 +95,7 @@
 
 ## Full reference
 
-- [llms-full.txt](https://flow.foblex.com/llms-full.txt): Complete inline API reference with all inputs, outputs, methods, types, code examples, and styling documentation
+- [llms-full.txt](https://flow.foblex.com/llms-full.txt): Full curated reference covering core app-facing inputs, outputs, methods, types, code examples, and styling guidance
 
 ## Services
 

@@ -361,7 +361,7 @@ Treat examples, docs, and the portal app as confirmation of public usage pattern
 
 ## AI documentation maintenance (llms.txt)
 
-The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-portal/public/llms-full.txt` (full inline reference) are the AI-consumable documentation served at `https://flow.foblex.com/llms.txt` and `https://flow.foblex.com/llms-full.txt`. Context7 and other AI tools index these files. The file `context7.json` at the repository root configures how Context7 crawls this repository.
+The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-portal/public/llms-full.txt` (full curated app-facing reference) are the AI-consumable documentation served at `https://flow.foblex.com/llms.txt` and `https://flow.foblex.com/llms-full.txt`. Context7 and other AI tools index these files. The file `context7.json` at the repository root configures how Context7 crawls this repository.
 
 ### When to update llms.txt and llms-full.txt
 
@@ -375,7 +375,7 @@ The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-po
 ### How to update
 
 - `llms.txt` is the short index following the [llms.txt spec](https://llmstxt.org): H1 title, blockquote, H2 sections with `- [Link](url): description` entries. Keep it as a link directory — no inline API content.
-- `llms-full.txt` is the full inline reference with all inputs, outputs, methods, types, and code examples. Keep the existing numbered section structure and table format.
+- `llms-full.txt` is the full curated reference for core app-facing inputs, outputs, methods, types, and code examples. It is not an exhaustive inventory of low-level, compatibility, or testing exports. Keep the existing numbered section structure and table format.
 - `scripts/validate-llms-content.mjs` (part of `npm run seo:check`, runs on prebuild) enforces freshness: the stated version and every phrase that calls a major line "current" must match `libs/f-flow/package.json`; every docs page from `docs.pages.ts` must be linked in `llms.txt`; every symbol in its `REQUIRED_SYMBOLS` list must appear in `llms-full.txt`; and canonical quickstarts must use `fConnector` / `fConnectorId` with `fSourceId` / `fTargetId`, not deprecated connector aliases. When shipping a new headline public API, add its key symbol to `REQUIRED_SYMBOLS`.
 - The consumer-facing `libs/f-flow/AI.md` ships inside the npm package (`ng-package.json` assets) — update it alongside the llms files for the same triggers; it is what agents read from `node_modules/@foblex/flow/AI.md`.
 - Update the version number when bumping the package version.
@@ -383,7 +383,7 @@ The files `apps/f-flow-portal/public/llms.txt` (short index) and `apps/f-flow-po
 - Update the Angular Version Compatibility table when compatibility changes.
 - Keep code examples accurate and using current API names (prefer non-deprecated property names).
 - Do not remove documentation for features that still exist.
-- Do not add internal/private APIs. Only document what is exported through `public-api.ts`.
+- Do not add internal/private APIs or low-level exports that are not intended for application code. Every documented symbol must be exported through `public-api.ts`.
 
 ### When to update context7.json
 

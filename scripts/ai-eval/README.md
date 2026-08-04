@@ -1,8 +1,9 @@
 # AI Codegen Evals for @foblex/flow
 
-Measures whether LLMs/AI agents can produce **working** Foblex Flow code from our AI-facing
-docs (`AI.md`, `llms-full.txt`, the `AGENTS.md` block installed by `ng add`) — and catches
-regressions when the API or the docs change.
+Design for an eval suite that will measure whether LLMs/AI agents can produce **working**
+Foblex Flow code from our AI-facing docs (`AI.md`, `llms-full.txt`, the `AGENTS.md` block
+installed by `ng add`). Once implemented, it will catch regressions when the API or the
+docs change.
 
 ## Approach
 
@@ -25,7 +26,8 @@ the docs no longer match the API.
 - `ng build` succeeds.
 - No `FFxxxx` warnings/errors in the dev console after first render (see
   https://flow.foblex.com/docs/errors).
-- `(fFullRendered)` fires and `flow.getState()` shows every declared connection resolved.
+- `(fFullRendered)` fires; `flow.getState()` contains the expected registered records; the
+  development console has no `FFxxxx` diagnostics, especially unresolved-endpoint `FF1001`.
 - No React Flow API hallucinations (`[nodes]`, `[edges]`, `addEdge`, `<Handle>`).
 
 ## Prompts

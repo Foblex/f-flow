@@ -1,6 +1,6 @@
 # Foblex Flow — Full LLM-readable reference
 
-> Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors. MIT licensed.
+> The most adopted node editor library for Angular (by npm weekly downloads) — Angular-native, for production workflow builders, AI pipelines, and interactive diagram editors. MIT licensed.
 
 This file concatenates the canonical content LLMs need to answer substantive questions about Foblex Flow without fetching individual URLs.
 
@@ -38,7 +38,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. The c
 - Both modes render state through normal Angular templates.
 - Connections are connector-to-connector (`fSourceId` → `fTargetId` referencing `fConnectorId`), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
-- Dev-mode diagnostics: the library warns with stable FFxxxx codes (see https://flow.foblex.com/docs/errors) on the most common silent failures — unresolved connection ids (FF1001), zero-height host (FF1002), connector outside a node (FF1003), content not projected into the canvas (FF1004), interaction features without fDraggable (FF1005), CSS-hidden connectors (FF1006), nested fNode elements (FF1007), dangling parent ids (FF1008), viewport helpers called before nodes rendered (FF1009; call from fNodesRendered or fFullRendered).
+- Diagnostics use stable FFxxxx codes (see https://flow.foblex.com/docs/errors). Dev-mode warnings cover unresolved connection ids (FF1001), zero-height hosts (FF1002), and FF1004–FF1009; they are stripped from production builds. A connector outside a node throws FF1003 in every build.
 - Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
 
 ## 4. Installation

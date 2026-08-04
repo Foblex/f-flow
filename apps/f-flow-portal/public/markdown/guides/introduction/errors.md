@@ -121,8 +121,10 @@ These helpers compute from the nodes bounding box, so `(fNodesRendered)` is the 
 
 ## Verifying a flow programmatically
 
-To assert a flow is fully wired (useful in tests and for AI agents):
+To verify a flow programmatically (useful in tests and for AI agents):
 
-1. Listen to `(fFullRendered)` on `<f-flow>`.
-2. Call `flow.getState()` and check every declared connection resolved to existing connectors.
-3. In dev mode, an empty console (no `FFxxxx` warnings) after the first render means ids, hierarchy, and sizing are consistent.
+1. Wait until `(fFullRendered)` fires on `<f-flow>` so the full render cycle has settled.
+2. Compare the node, group, and connection ids from `flow.getState()` with the expected graph.
+3. Fail on any `FFxxxx` console diagnostic; `FF1001` identifies an unresolved connection endpoint.
+
+`getState()` exports registered graph records; it does not by itself prove that connection endpoints resolved.

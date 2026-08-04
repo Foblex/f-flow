@@ -6,6 +6,7 @@ import { Stats } from '../../core/stats';
 import { StructuredData } from '../../core/structured-data';
 import { PortalFooter, PortalHeader, IFooterColumn } from '../../shared';
 import {
+  AiAgents,
   Changelog,
   Features,
   FinalCta,
@@ -30,6 +31,7 @@ import {
     HeroFlow,
     Hero,
     Why,
+    AiAgents,
     Features,
     Showcase,
     RefApps,
@@ -52,7 +54,7 @@ export class Home implements OnInit {
   protected readonly title = PORTAL_SHELL.appName;
 
   protected readonly tagline =
-    'Angular-native node editor library for workflow builders, AI pipelines, and interactive diagram editors.';
+    'The most adopted node editor library for Angular — for workflow builders, AI pipelines, and interactive diagram editors.';
 
   protected readonly footerColumns: IFooterColumn[] = [
     {
@@ -90,7 +92,7 @@ export class Home implements OnInit {
     this._seo.apply({
       title: 'Foblex Flow — Angular Node Editor & Workflow Builder Library',
       description:
-        'Build production Angular node editors, workflow builder UIs, AI pipelines, and interactive diagrams with app-owned or optional managed editor state.',
+        'The most adopted node editor library for Angular. Build production workflow builders, AI pipelines, and interactive diagrams — drag, connect, undo/redo already built.',
       canonicalUrl: 'https://flow.foblex.com/',
     });
 
@@ -131,7 +133,7 @@ export class Home implements OnInit {
           runtimePlatform: 'Angular 17.3+',
           author: { '@id': 'https://flow.foblex.com/#organization' },
           description:
-            'Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.',
+            'The most adopted node editor library for Angular. Angular-native, for production workflow builders, AI pipelines, and interactive diagram editors.',
           downloadUrl: 'https://www.npmjs.com/package/@foblex/flow',
           codeRepository: 'https://github.com/Foblex/f-flow',
           url: 'https://flow.foblex.com/',

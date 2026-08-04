@@ -16,19 +16,19 @@ interface IWhyCard {
 export class Why {
   protected readonly cards: IWhyCard[] = [
     {
+      title: 'The hard parts are already built',
+      description:
+        'Drag logic, hit-testing, SVG connection paths, reassign, selection, zoom, snapping, undo/redo — the editor plumbing you would otherwise write and maintain yourself.',
+    },
+    {
       title: 'Angular-native, not a wrapper',
       description:
-        'Templates, forms, validators, and services stay in Angular. No React runtime, no framework bridge.',
+        'Templates, forms, validators, and services stay in Angular. No React runtime, no framework bridge, no second mental model.',
     },
     {
-      title: 'Start simple, scale when you need to',
+      title: 'Accessibility as a feature, not a checkbox',
       description:
-        'Most editors only need f-flow, f-canvas, nodes, and connections. Caching, virtualization, and workers are optional.',
-    },
-    {
-      title: 'Built for real editors',
-      description:
-        'Drag to connect, drag to reassign, selection, zoom, minimap, snapping, alignment, waypoints. Not a static diagram renderer.',
+        'ARIA semantics are always on; withA11y() adds keyboard navigation, node movement, and connection creation without a mouse — for products that must pass WCAG and EAA audits.',
     },
   ];
 }

@@ -125,7 +125,7 @@ The most common migration mistake is trying to invent React-style inputs on Fobl
 
 Do not decide from a feature checklist alone. Build one representative node containing your real form controls, connect and reassign it, save the graph, run SSR/hydration, test keyboard access, and measure the largest expected flow. The integration cost becomes visible quickly.
 
-For a shorter mental-model mapping, read [React Flow Alternative for Angular](react-flow-alternative-for-angular). Then run the [AI Low-Code Platform](./examples/ai-low-code-platform), [Connection Rules](./examples/connection-rules), and [Accessibility](./examples/accessibility) examples.
+For a shorter mental-model mapping, read [React Flow Alternative for Angular](react-flow-alternative-for-angular). Comparing Angular-native options instead? See [ngx-vflow vs Foblex Flow](ngx-vflow-vs-foblex-flow). Then run the [AI Low-Code Platform](./examples/ai-low-code-platform), [Connection Rules](./examples/connection-rules), and [Accessibility](./examples/accessibility) examples.
 
 ## Primary sources
 

@@ -96,9 +96,9 @@ One id per connector; `fConnectorType` decides the behavior (`source`, `target`,
 
 ## The Editor Now Explains Itself — to Humans and to Agents
 
-A silent failure is the worst kind of bug report, and node editors are full of them: a connection whose endpoint id matches nothing, a node inside a nested `@if` that registers but renders detached, a zero-height host. v19 ships dev-mode diagnostics with stable codes — **FF1001–FF1009** — each linking to a documented cause and fix at https://flow.foblex.com/docs/errors. They are stripped from production builds.
+A silent failure is the worst kind of bug report, and node editors are full of them: a connection whose endpoint id matches nothing, a node inside a nested `@if` that registers but renders detached, a zero-height host. v19 ships stable **FF1001–FF1009** diagnostics, each linking to a documented cause and fix at https://flow.foblex.com/docs/errors. FF1001, FF1002, and FF1004–FF1009 are dev-mode warnings stripped from production builds; FF1003 remains an actionable error in every build.
 
-The same release makes the library legible to AI agents, because that is where the errors actually come from now. `ng add @foblex/flow` writes a managed section into your `AGENTS.md` pointing coding agents at the version-matched guide bundled **inside the npm package**, and the hosted `llms.txt`/`llms-full.txt` are validated in CI so they cannot drift from the API again. Details: https://flow.foblex.com/docs/ai
+The same release makes the library legible to AI agents, because that is where the errors actually come from now. `ng add @foblex/flow` writes a managed section into your `AGENTS.md` pointing coding agents at the version-matched guide bundled **inside the npm package**. The hosted `llms.txt`/`llms-full.txt` are checked in CI for release-version freshness, coverage of critical app-facing symbols, and current quickstart syntax. Details: https://flow.foblex.com/docs/ai
 
 ## Small Fixes That Matter
 

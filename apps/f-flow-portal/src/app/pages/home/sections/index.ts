@@ -1,3 +1,4 @@
+export * from './ai-agents';
 export * from './changelog';
 export * from './features';
 export * from './final-cta';

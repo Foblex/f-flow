@@ -4,7 +4,7 @@ Use this file as a strict control layer for code generation. Prefer verified pac
 
 ## What This Library Is
 
-`@foblex/flow` is an Angular-native node editor library for production workflow builders, AI pipelines, and interactive diagram editors.
+`@foblex/flow` is the most widely adopted node editor library for Angular (by npm weekly downloads) — Angular-native, for production workflow builders, AI pipelines, and interactive diagram editors.
 It provides rendering, connectors, interactions, selection, zoom, and connection drawing. By default your app owns graph records; the optional `withFlowState()` feature maintains typed records and undo/redo that your app explicitly loads and renders.
 
 ## Core Mental Model
@@ -170,7 +170,7 @@ If the toggle is nested inside `fDragHandle`, add `fDragBlocker` to the toggle. 
 
 When the flow compiles but looks wrong, verify in this order:
 
-1. **Connection not visible**: `fSourceId` / `fTargetId` does not match any rendered `fConnectorId` exactly (string comparison; `1` vs `'1'` from different sources is a classic mismatch). The connection silently does not render.
+1. **Connection not visible**: `fSourceId` / `fTargetId` does not match any rendered `fConnectorId` exactly. `out-1` vs `out_1` is a mismatch; numeric `1` and string `'1'` normalize to the same id. The connection does not render, and dev mode reports `FF1001` after endpoint resolution settles.
 2. **Blank canvas**: `f-flow` has zero height, or the theme SCSS is not wired in `angular.json`.
 3. **`'f-flow' is not a known element`** or connectors not working: `FFlowModule` missing from the component `imports`.
 4. **Nothing is draggable / no events fire**: `fDraggable` missing on `<f-flow>`.
@@ -185,7 +185,7 @@ When the flow compiles but looks wrong, verify in this order:
 13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` / `resetScaleAndCenterGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
 14. **Initial centering appears in managed undo history**: call `resetScaleAndCenter(false, false)` (or pass `emitCanvasChange: false` to another viewport helper) for an application-driven transform.
 
-To verify programmatically: listen to `(fFullRendered)` on `<f-flow>`, then call `flow.getState()` and assert every declared connection resolved to existing connectors.
+To verify programmatically: wait for `(fFullRendered)`, compare the node, group, and connection ids exported by `flow.getState()` with the expected graph, and fail the test on any `FFxxxx` console diagnostic. `getState()` exports registered graph records; it does not by itself prove that connection endpoints resolved. Dev-mode `FF1001` reports an unresolved endpoint.
 
 ## Additional Rules
 

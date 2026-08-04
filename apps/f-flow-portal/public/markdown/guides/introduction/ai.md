@@ -4,23 +4,25 @@ Foblex Flow ships several channels that teach LLMs and AI coding agents the curr
 
 ## In your project (recommended)
 
-`ng add @foblex/flow` writes a marker-delimited **Foblex Flow section into your workspace `AGENTS.md`** — the cross-tool rules file read by Cursor, GitHub Copilot, Claude Code, Codex, and others. The section points agents at the guide bundled inside the package:
+`ng add @foblex/flow` writes a marker-delimited **Foblex Flow section into your workspace `AGENTS.md`**. This is the canonical shared instruction block for tools that support `AGENTS.md`, and it points agents at the guide bundled inside the package:
 
 - `node_modules/@foblex/flow/AI.md` — verified API surface, hard rules, a minimal working setup, and a checklist of common silent failures.
 - `node_modules/@foblex/flow/STYLING.md` — runtime CSS classes and safe selector strategy.
 
-Because the guide ships inside the npm package, it always matches the installed version — agents do not need to guess or search. Re-running `ng add` refreshes only the managed block; pass `--skip-agent-rules` to opt out.
+Because Claude Code loads project instructions from `CLAUDE.md`, the schematic also ensures that the root `CLAUDE.md` contains an `@AGENTS.md` import. Existing `CLAUDE.md` content is preserved, and re-running `ng add` does not duplicate the import.
 
-Already installed? Add the section without re-running the full schematic by copying it from [AGENTS.md on GitHub](https://github.com/Foblex/f-flow/blob/main/libs/f-flow/AI.md) or re-run `ng add @foblex/flow` — the dependency steps are idempotent.
+The bundled guide matches the installed package version, so agents can verify the API locally instead of relying on outdated examples. Re-running `ng add` refreshes only the managed `AGENTS.md` block and keeps both instruction files idempotent. Pass `--skip-agent-rules` to skip changes to both `AGENTS.md` and `CLAUDE.md`.
+
+Already installed? Re-run `ng add @foblex/flow`; its dependency, theme, and agent-instruction updates are idempotent.
 
 ## Hosted LLM docs
 
 - [llms.txt](https://flow.foblex.com/llms.txt) — docs index in the [llms.txt](https://llmstxt.org) format.
-- [llms-full.txt](https://flow.foblex.com/llms-full.txt) — the complete LLM-readable reference: API tables, events, types, styling, and full code examples. Point a custom agent, GPT, or RAG pipeline here.
+- [llms-full.txt](https://flow.foblex.com/llms-full.txt) — a full curated LLM-readable reference covering core app-facing API tables, events, types, styling, and code examples. Point a custom agent, GPT, or RAG pipeline here.
 
 ## MCP / Context7
 
-The repository ships a `context7.json`, so [Context7](https://context7.com) indexes the documentation — agents with the Context7 MCP server installed can resolve `@foblex/flow` docs on demand.
+The repository ships a `context7.json`, so [Foblex Flow is indexed on Context7](https://context7.com/foblex/f-flow) — agents with the Context7 MCP server installed can resolve `@foblex/flow` docs on demand.
 
 ## Diagnostics agents can act on
 
@@ -28,10 +30,10 @@ In dev mode the library reports misconfigurations with stable `FFxxxx` codes —
 
 ## Verifying generated code
 
-A flow is fully wired when:
+Use three separate checks for generated flows:
 
-1. `(fFullRendered)` has fired on `<f-flow>`.
-2. `flow.getState()` shows every declared connection resolved.
-3. The console contains no `FFxxxx` warnings.
+1. Wait until `(fFullRendered)` fires on `<f-flow>` so the full render cycle has settled.
+2. Compare the node, group, and connection ids from `flow.getState()` with the expected graph.
+3. Fail on any `FFxxxx` console diagnostic; `FF1001` identifies an unresolved connection endpoint.
 
-This three-step check is cheap enough to run in e2e tests and agent verification loops alike.
+`getState()` exports registered graph records; it does not by itself prove that connection endpoints resolved. These checks are cheap enough to run in e2e tests and agent verification loops alike.

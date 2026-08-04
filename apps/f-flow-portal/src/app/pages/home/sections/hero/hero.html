@@ -1,10 +1,16 @@
 <div class="hero">
   <div class="copy">
-    <h1>Build production node editors in Angular.</h1>
+    <a class="ai-pill" routerLink="/docs/ai">
+      <span class="ai-pill-dot" aria-hidden="true"></span>
+      Built for AI coding agents
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <h1>The most adopted node editor for Angular.</h1>
     <p class="sub">
-      Foblex Flow is the Angular-native node editor library for workflow builder UIs, AI pipelines,
-      and interactive diagram editors. Add layout, accessibility, history, and large-flow tooling
-      only when needed.
+      Stop hand-rolling drag logic, hit-testing, and SVG connection paths. Foblex Flow ships
+      production editor interactions — connect, select, zoom, keyboard editing, undo/redo — as
+      Angular-native building blocks.
     </p>
 
     <div class="stats" aria-label="Project stats">
@@ -43,6 +49,17 @@
       <a class="f-button primary" routerLink="/docs/get-started">Get Started</a>
       <a class="f-button" routerLink="/examples/overview">See live examples</a>
     </div>
+
+    @if (productionProducts.length) {
+    <div class="production" aria-label="Commercial products built with Foblex Flow">
+      <span class="production-label">In production at</span>
+      @for (product of productionProducts; track product.name) {
+      <a class="production-link" [href]="product.url" target="_blank" rel="noopener noreferrer">
+        {{ product.name }}
+      </a>
+      }
+    </div>
+    }
   </div>
 
   <hero-flow-anchor class="image" />

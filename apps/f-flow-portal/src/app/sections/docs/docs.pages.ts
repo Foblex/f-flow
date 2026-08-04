@@ -591,6 +591,17 @@ export const DOCS_PAGES: IPageDefinition[] = [
         'Source-linked comparison of React Flow and Foblex Flow for Angular teams: rendering, state, SSR, accessibility, layout, migration, and when each fits.',
     },
   },
+  {
+    slug: 'ngx-vflow-vs-foblex-flow',
+    text: 'ngx-vflow vs Foblex Flow',
+    group: 'Use Cases',
+    seo: {
+      titleIsFinal: true,
+      title: 'ngx-vflow vs Foblex Flow — Honest Comparison of Angular Node Editors',
+      description:
+        'Source-linked comparison of the two Angular-native node editor libraries: data model, editor toolkit, accessibility, layout, large-flow tooling, and when each fits.',
+    },
+  },
 ];
 
 /**

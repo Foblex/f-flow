@@ -2,7 +2,7 @@
 
 ## Description
 
-Foblex Flow is an **Angular-native** library for building interactive **node-based editors** and diagram UIs - custom nodes, smooth connections, and production-grade interaction helpers.
+Foblex Flow is the most widely adopted **node editor library for Angular** — **Angular-native**, for building interactive node-based editors and diagram UIs with custom nodes, smooth connections, and production-grade interaction helpers.
 
 It’s designed for real products where users edit graphs manually: dragging nodes, connecting ports, selecting multiple items, aligning layouts, and navigating large canvases.
 
