@@ -78,4 +78,16 @@ export const SHOWCASE: IShowcaseItem[] = [
     imageUrl: './showcase/images/luware-nimbus.light.png',
     links: [{ text: 'Website', url: 'https://luware.com/products/nimbus' }],
   },
+  {
+    name: 'skill-map',
+    tags: ['AI', 'Dev Tools'],
+    description:
+      'Maps the AI-agent context inside a repo (skills, commands, agents, MCP servers) and every reference between them, as a live graph you run locally. Built with Angular + Foblex Flow.',
+    imageUrl: './showcase/images/skill-map.dark.jpg',
+    links: [
+      { text: 'Website', url: 'https://skill-map.ai' },
+      { text: 'Demo', url: 'https://skill-map.ai/demo/' },
+      { text: 'Sources', url: 'https://github.com/crystian/skill-map' },
+    ],
+  },
 ];
