@@ -163,4 +163,50 @@ describe('CalculateAdaptiveCurveData', () => {
       ),
     ).toBe(true);
   });
+
+  it('passes through a waypoint without a tangent kink (issue #324)', () => {
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(110, 60),
+      target: pure.point(268, 250),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.TOP,
+      radius: 0,
+      offset: 12,
+      waypoints: [pure.point(330, 30)],
+    };
+
+    const result = builder.handle(request);
+    const segments = parseAdaptiveCubicSegments(result.path);
+
+    expect(segments.length).toBe(2);
+
+    const join = segments[0].p3;
+    const incoming = Math.atan2(join.y - segments[0].c2.y, join.x - segments[0].c2.x);
+    const outgoing = Math.atan2(segments[1].c1.y - join.y, segments[1].c1.x - join.x);
+
+    expect(Math.abs(incoming - outgoing)).toBeLessThan(1e-9);
+  });
 });
+
+interface IParsedAdaptiveSegment {
+  p0: IPoint;
+  c1: IPoint;
+  c2: IPoint;
+  p3: IPoint;
+}
+
+function parseAdaptiveCubicSegments(path: string): IParsedAdaptiveSegment[] {
+  const start = /M ([-\d.]+) ([-\d.]+)/u.exec(path);
+  const segments: IParsedAdaptiveSegment[] = [];
+  let current = { x: Number(start?.[1]), y: Number(start?.[2]) };
+
+  const cubicPattern = /C ([-\d.]+) ([-\d.]+), ([-\d.]+) ([-\d.]+), ([-\d.]+) ([-\d.]+)/gu;
+  let match: RegExpExecArray | null;
+  while ((match = cubicPattern.exec(path)) !== null) {
+    const [c1x, c1y, c2x, c2y, x, y] = match.slice(1).map(Number);
+    segments.push({ p0: current, c1: { x: c1x, y: c1y }, c2: { x: c2x, y: c2y }, p3: { x, y } });
+    current = { x, y };
+  }
+
+  return segments;
+}

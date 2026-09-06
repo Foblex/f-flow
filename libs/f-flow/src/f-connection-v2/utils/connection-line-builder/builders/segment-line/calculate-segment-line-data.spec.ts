@@ -142,4 +142,106 @@ describe('CalculateSegmentLineData', () => {
     expect(response.points[response.points.length - 1]).toEqual(request.target);
     expect(response.candidates?.length ?? 0).toBeGreaterThan(0);
   });
+
+  function isOnPolyline(points: { x: number; y: number }[], p: { x: number; y: number }): boolean {
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = points[i];
+      const b = points[i + 1];
+      const withinX = p.x >= Math.min(a.x, b.x) && p.x <= Math.max(a.x, b.x);
+      const withinY = p.y >= Math.min(a.y, b.y) && p.y <= Math.max(a.y, b.y);
+      const cross = (b.x - a.x) * (p.y - a.y) - (b.y - a.y) * (p.x - a.x);
+      if (withinX && withinY && Math.abs(cross) < 1e-6) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  it('routes through a waypoint without connector stubs around it (issue #324)', () => {
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(110, 60),
+      target: pure.point(268, 250),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.TOP,
+      radius: 0,
+      offset: 12,
+      waypoints: [pure.point(330, 30)],
+    };
+
+    const response = builder.handle(request);
+
+    expect(response.points).toEqual([
+      pure.point(110, 60),
+      pure.point(122, 60),
+      pure.point(122, 30),
+      pure.point(330, 30),
+      pure.point(330, 238),
+      pure.point(268, 238),
+      pure.point(268, 250),
+    ]);
+  });
+
+  it('keeps every waypoint on the polyline, including detour waypoints', () => {
+    const waypoints = [pure.point(-60, 90), pure.point(150, -40)];
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(0, 0),
+      target: pure.point(300, 0),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.RIGHT,
+      radius: 0,
+      offset: 12,
+      waypoints,
+    };
+
+    const response = builder.handle(request);
+
+    for (const waypoint of waypoints) {
+      expect(isOnPolyline(response.points, waypoint))
+        .withContext(`waypoint (${waypoint.x},${waypoint.y})`)
+        .toBe(true);
+    }
+  });
+
+  it('maps a rounded-corner waypoint handle to the bend apex on the path', () => {
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(110, 60),
+      target: pure.point(268, 250),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.TOP,
+      radius: 8,
+      offset: 12,
+      waypoints: [pure.point(200, 30), pure.point(330, 30)],
+    };
+
+    const response = builder.handle(request);
+
+    // The mid-segment waypoint is already on the line; the corner waypoint
+    // maps to the apex of its rounded bend: b + 0.25 * radius * (dout - din).
+    expect(response.waypointHandles).toEqual([pure.point(200, 30), pure.point(328, 32)]);
+
+    const sharp = builder.handle({ ...request, radius: 0 });
+    expect(sharp.waypointHandles).toEqual([pure.point(200, 30), pure.point(330, 30)]);
+  });
+
+  it('places waypoint-creation candidates on straight segments of the polyline', () => {
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(0, 0),
+      target: pure.point(300, 300),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.TOP,
+      radius: 10,
+      offset: 12,
+      waypoints: [pure.point(150, -40), pure.point(350, 150)],
+    };
+
+    const response = builder.handle(request);
+
+    expect(response.candidates?.length).toBe(3);
+    for (const candidate of response.candidates ?? []) {
+      expect(isOnPolyline(response.points, candidate))
+        .withContext(`candidate (${candidate.x},${candidate.y})`)
+        .toBe(true);
+    }
+  });
 });

@@ -10,5 +10,12 @@ export function findExistingWaypoint(
   const component = connection.fWaypoints();
   const radius = component?.radius() || 8;
 
-  return component?.waypoints().find((x) => isPointerInsidePoint(position, x, radius));
+  // Handles can be drawn slightly off the raw waypoint (on the bend apex of a
+  // rounded corner), so hit-test where they are rendered but hand back the
+  // real waypoint — dragging always operates on the model value.
+  const index = (component?.displayedWaypoints() ?? []).findIndex((x) =>
+    isPointerInsidePoint(position, x, radius),
+  );
+
+  return index >= 0 ? component?.waypoints()[index] : undefined;
 }

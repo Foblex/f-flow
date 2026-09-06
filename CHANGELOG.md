@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [Unreleased]
+## [19.1.7] - 2026-09-06
+
+### Fixes
+
+- **connections:** route segment connections through waypoints as pass-through anchors ([#324](https://github.com/Foblex/f-flow/issues/324)): no connector-like stubs or extra bends around waypoints, no paths that miss a dragged waypoint, routes prefer going around the endpoint nodes instead of through them, and waypoint-creation candidates always sit on straight runs of the line.
+- **connections:** bezier and adaptive curves pass through waypoints smoothly: connector sides shape only the endpoint tangents, and both segments meeting at a waypoint share one Catmull-Rom style tangent instead of kinking toward the connector directions.
+- **connections:** waypoint handles on rounded segment corners are drawn and hit-tested on the bend apex of the rendered path instead of the sharp corner point, so the handle always sits on the visible line; dragging still updates the real waypoint.
 
 ### Features
 
