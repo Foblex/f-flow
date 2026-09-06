@@ -203,6 +203,27 @@ describe('CalculateSegmentLineData', () => {
     }
   });
 
+  it('maps a rounded-corner waypoint handle to the bend apex on the path', () => {
+    const request: IFConnectionBuilderRequest = {
+      source: pure.point(110, 60),
+      target: pure.point(268, 250),
+      sourceSide: EFConnectableSide.RIGHT,
+      targetSide: EFConnectableSide.TOP,
+      radius: 8,
+      offset: 12,
+      waypoints: [pure.point(200, 30), pure.point(330, 30)],
+    };
+
+    const response = builder.handle(request);
+
+    // The mid-segment waypoint is already on the line; the corner waypoint
+    // maps to the apex of its rounded bend: b + 0.25 * radius * (dout - din).
+    expect(response.waypointHandles).toEqual([pure.point(200, 30), pure.point(328, 32)]);
+
+    const sharp = builder.handle({ ...request, radius: 0 });
+    expect(sharp.waypointHandles).toEqual([pure.point(200, 30), pure.point(330, 30)]);
+  });
+
   it('places waypoint-creation candidates on straight segments of the polyline', () => {
     const request: IFConnectionBuilderRequest = {
       source: pure.point(0, 0),

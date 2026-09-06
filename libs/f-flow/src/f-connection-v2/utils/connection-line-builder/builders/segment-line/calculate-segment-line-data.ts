@@ -5,7 +5,7 @@ import {
   mergePointChains,
   normalizePolyline,
 } from '../utils';
-import { createSegmentLinePath } from './create-segment-line-path';
+import { calculateCornerApex, createSegmentLinePath } from './create-segment-line-path';
 import {
   IFConnectionBuilder,
   IFConnectionBuilderRequest,
@@ -79,7 +79,29 @@ export class CalculateSegmentLineData implements IFConnectionBuilder {
       secondPoint,
       points: polyline,
       candidates,
+      waypointHandles: this._calculateWaypointHandles(waypoints ?? [], polyline, radius ?? 0),
     };
+  }
+
+  /**
+   * Display positions for the waypoint handles. A waypoint that is a rounded
+   * corner of the polyline maps to the apex of its bend, so the handle sits on
+   * the rendered path; a waypoint lying mid-segment is already on the line.
+   */
+  private _calculateWaypointHandles(
+    waypoints: IPoint[],
+    polyline: IPoint[],
+    radius: number,
+  ): IPoint[] {
+    return waypoints.map((waypoint) => {
+      const index = polyline.findIndex((point) => point.x === waypoint.x && point.y === waypoint.y);
+
+      if (index <= 0 || index >= polyline.length - 1) {
+        return { x: waypoint.x, y: waypoint.y };
+      }
+
+      return calculateCornerApex(polyline[index - 1], waypoint, polyline[index + 1], radius);
+    });
   }
 
   /**

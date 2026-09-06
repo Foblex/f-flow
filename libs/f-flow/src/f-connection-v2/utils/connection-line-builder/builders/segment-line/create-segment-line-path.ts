@@ -19,6 +19,45 @@ export function createSegmentLinePath(points: IPoint[], borderRadius: number): s
   return parts.join(' ');
 }
 
+/**
+ * The point of the rendered path closest to corner `b` — the apex of the
+ * rounded bend `getBend` produces for it, or `b` itself when the corner is
+ * rendered sharp. Uses the same bend-size clamping as `getBend`, so the
+ * result always lies on the path.
+ */
+export function calculateCornerApex(a: IPoint, b: IPoint, c: IPoint, size: number): IPoint {
+  if (size <= 0) {
+    return { x: b.x, y: b.y };
+  }
+
+  const collinearX = Math.abs(a.x - b.x) <= EPS && Math.abs(b.x - c.x) <= EPS;
+  const collinearY = Math.abs(a.y - b.y) <= EPS && Math.abs(b.y - c.y) <= EPS;
+  if (collinearX || collinearY) {
+    return { x: b.x, y: b.y };
+  }
+
+  const ab = Math.hypot(b.x - a.x, b.y - a.y);
+  const bc = Math.hypot(c.x - b.x, c.y - b.y);
+
+  const bendSize = Math.min(ab * 0.5, bc * 0.5, size);
+
+  if (bendSize < MIN_VISIBLE || ab === 0 || bc === 0) {
+    return { x: b.x, y: b.y };
+  }
+
+  // The bend is a quadratic from (b - bendSize*din) to (b + bendSize*dout)
+  // with control b; its apex at t = 0.5 is b + 0.25 * bendSize * (dout - din).
+  const dinX = (b.x - a.x) / ab;
+  const dinY = (b.y - a.y) / ab;
+  const doutX = (c.x - b.x) / bc;
+  const doutY = (c.y - b.y) / bc;
+
+  return {
+    x: b.x + 0.25 * bendSize * (doutX - dinX),
+    y: b.y + 0.25 * bendSize * (doutY - dinY),
+  };
+}
+
 function getBend(a: IPoint, b: IPoint, c: IPoint, size: number): string {
   const x = b.x;
   const y = b.y;

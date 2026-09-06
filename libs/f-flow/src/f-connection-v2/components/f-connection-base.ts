@@ -171,15 +171,14 @@ export abstract class FConnectionBase
   public setLine({ point1, point2 }: ILine): void {
     this.line = LineExtensions.initialize(point1, point2);
 
-    const { path, points, penultimatePoint, secondPoint, candidates } = this._getPathResult(
-      point1,
-      point2,
-    );
+    const { path, points, penultimatePoint, secondPoint, candidates, waypointHandles } =
+      this._getPathResult(point1, point2);
 
     this.path = path;
     this._penultimatePoint = penultimatePoint || point1;
     this._secondPoint = secondPoint || point2;
     this.fWaypoints()?.candidates.set(candidates || []);
+    this.fWaypoints()?.handles.set(waypointHandles || []);
 
     this._contentLayoutEngine.layout(points || [], this._contents());
   }
