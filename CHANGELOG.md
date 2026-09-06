@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [Unreleased]
 
+### Fixes
+
+- **connections:** route segment connections through waypoints as pass-through anchors ([#324](https://github.com/Foblex/f-flow/issues/324)): no connector-like stubs or extra bends around waypoints, no paths that miss a dragged waypoint, routes prefer going around the endpoint nodes instead of through them, and waypoint-creation candidates always sit on straight runs of the line.
+- **connections:** bezier and adaptive curves pass through waypoints smoothly: connector sides shape only the endpoint tangents, and both segments meeting at a waypoint share one Catmull-Rom style tangent instead of kinking toward the connector directions.
+
 ### Features
 
 - **ng-add:** write a canonical Foblex Flow instruction block to `AGENTS.md` and ensure Claude Code loads it through an idempotent `@AGENTS.md` import in `CLAUDE.md`, while preserving existing project instructions.

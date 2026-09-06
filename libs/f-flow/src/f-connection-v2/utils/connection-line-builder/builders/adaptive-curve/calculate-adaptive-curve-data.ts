@@ -2,6 +2,7 @@ import { IPoint } from '@foblex/2d';
 import {
   buildConnectionAnchors,
   calculateCurveCandidates,
+  calculateSmoothControlPoint,
   createMultiCubicPath,
   ICubicSegment,
   sampleMultiCubicUniform,
@@ -100,15 +101,33 @@ export class CalculateAdaptiveCurveData implements IFConnectionBuilder {
 
     const segments: ICubicSegment[] = [];
 
+    // Connector sides shape only the first and the last tangent; at
+    // intermediate waypoints both adjacent segments share one Catmull-Rom
+    // style tangent, so the curve passes through waypoints without kinks.
     for (let i = 0; i < anchors.length - 1; i++) {
       const a = anchors[i];
       const b = anchors[i + 1];
+      const handle = Math.hypot(b.x - a.x, b.y - a.y) / 3;
 
-      const h0 = CalculateAdaptiveCurveData._handleLength(a, b, sourceSide, clampedOffset);
-      const h3 = CalculateAdaptiveCurveData._handleLength(b, a, targetSide, clampedOffset);
+      const c1 =
+        i === 0
+          ? CalculateAdaptiveCurveData._softControl(
+              sourceSide,
+              a,
+              b,
+              CalculateAdaptiveCurveData._handleLength(a, b, sourceSide, clampedOffset),
+            )
+          : calculateSmoothControlPoint(a, anchors[i - 1], b, handle);
 
-      const c1 = CalculateAdaptiveCurveData._softControl(sourceSide, a, b, h0);
-      const c2 = CalculateAdaptiveCurveData._softControl(targetSide, b, a, h3);
+      const c2 =
+        i === anchors.length - 2
+          ? CalculateAdaptiveCurveData._softControl(
+              targetSide,
+              b,
+              a,
+              CalculateAdaptiveCurveData._handleLength(b, a, targetSide, clampedOffset),
+            )
+          : calculateSmoothControlPoint(b, a, anchors[i + 2], -handle);
 
       segments.push({ p0: a, c1, c2, p3: b, chainIndex: i });
     }

@@ -1,6 +1,13 @@
-<f-flow fDraggable (fLoaded)="loaded()" (fConnectionWaypointsChanged)="changed($event)">
+<f-flow fDraggable (fFullRendered)="loaded()" (fConnectionWaypointsChanged)="changed($event)">
   <f-canvas>
-    <f-connection [fReassignDisabled]="true" fType="straight" fOutputId="1" fInputId="2">
+    <f-connection
+      [fReassignDisabled]="true"
+      fType="straight"
+      fSourceId="1"
+      fTargetId="2"
+      fSourceSide="calculate"
+      fTargetSide="calculate"
+    >
       @if (waypointsOn()) {
       <f-connection-waypoints
         [(waypoints)]="waypointsStraight"
@@ -9,28 +16,19 @@
       />
       }
     </f-connection>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: -150, y: 0 }"
-      fNodeOutput
-      fOutputId="1"
-      fOutputConnectableSide="right"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: -150, y: 0 }" fConnector fConnectorId="1">
       Node
     </div>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 200, y: 0 }"
-      fNodeInput
-      fInputId="2"
-      fInputConnectableSide="left"
-    >
-      Node
-    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 0 }" fConnector fConnectorId="2">Node</div>
 
-    <f-connection [fReassignDisabled]="true" fType="segment" fOutputId="3" fInputId="4">
+    <f-connection
+      [fReassignDisabled]="true"
+      fType="segment"
+      fSourceId="3"
+      fTargetId="4"
+      fSourceSide="calculate"
+      fTargetSide="calculate"
+    >
       @if (waypointsOn()) {
       <f-connection-waypoints
         [(waypoints)]="waypointsSegment"
@@ -39,28 +37,21 @@
       />
       }
     </f-connection>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: -150, y: 150 }"
-      fNodeOutput
-      fOutputId="3"
-      fOutputConnectableSide="right"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: -150, y: 150 }" fConnector fConnectorId="3">
       Node
     </div>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 250, y: 200 }"
-      fNodeInput
-      fInputId="4"
-      fInputConnectableSide="left"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: 250, y: 200 }" fConnector fConnectorId="4">
       Node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fType="bezier" fOutputId="5" fInputId="6">
+    <f-connection
+      [fReassignDisabled]="true"
+      fType="bezier"
+      fSourceId="5"
+      fTargetId="6"
+      fSourceSide="calculate"
+      fTargetSide="calculate"
+    >
       @if (waypointsOn()) {
       <f-connection-waypoints
         [(waypoints)]="waypointsBezier"
@@ -69,28 +60,21 @@
       />
       }
     </f-connection>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: -150, y: 300 }"
-      fNodeOutput
-      fOutputId="5"
-      fOutputConnectableSide="right"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: -150, y: 300 }" fConnector fConnectorId="5">
       Node
     </div>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 200, y: 350 }"
-      fNodeInput
-      fInputId="6"
-      fInputConnectableSide="left"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: 200, y: 350 }" fConnector fConnectorId="6">
       Node
     </div>
 
-    <f-connection [fReassignDisabled]="true" fType="adaptive-curve" fOutputId="7" fInputId="8">
+    <f-connection
+      [fReassignDisabled]="true"
+      fType="adaptive-curve"
+      fSourceId="7"
+      fTargetId="8"
+      fSourceSide="calculate"
+      fTargetSide="calculate"
+    >
       @if (waypointsOn()) {
       <f-connection-waypoints
         [(waypoints)]="waypointsAdaptiveCurve"
@@ -98,24 +82,10 @@
       />
       }
     </f-connection>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: -150, y: 450 }"
-      fNodeOutput
-      fOutputId="7"
-      fOutputConnectableSide="right"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: -150, y: 450 }" fConnector fConnectorId="7">
       Node
     </div>
-    <div
-      fNode
-      fDragHandle
-      [fNodePosition]="{ x: 250, y: 500 }"
-      fNodeInput
-      fInputId="8"
-      fInputConnectableSide="left"
-    >
+    <div fNode fDragHandle [fNodePosition]="{ x: 250, y: 500 }" fConnector fConnectorId="8">
       Node
     </div>
   </f-canvas>

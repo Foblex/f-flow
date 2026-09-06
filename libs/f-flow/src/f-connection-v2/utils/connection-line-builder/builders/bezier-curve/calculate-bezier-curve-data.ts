@@ -2,6 +2,7 @@ import { IPoint } from '@foblex/2d';
 import {
   buildConnectionAnchors,
   calculateCurveCandidates,
+  calculateSmoothControlPoint,
   createMultiCubicPath,
   ICubicSegment,
   sampleMultiCubicUniform,
@@ -26,12 +27,23 @@ export class CalculateBezierCurveData implements IFConnectionBuilder {
 
     const segments: ICubicSegment[] = [];
 
+    // Connector sides shape only the first and the last tangent; at
+    // intermediate waypoints both adjacent segments share one Catmull-Rom
+    // style tangent, so the curve passes through waypoints without kinks.
     for (let i = 0; i < anchors.length - 1; i++) {
       const a = anchors[i];
       const b = anchors[i + 1];
+      const handle = Math.hypot(b.x - a.x, b.y - a.y) / 3;
 
-      const c1 = getAnglePoint(sourceSide, a, b, offset ?? 0);
-      const c2 = getAnglePoint(targetSide, b, a, offset ?? 0);
+      const c1 =
+        i === 0
+          ? getAnglePoint(sourceSide, a, b, offset ?? 0)
+          : calculateSmoothControlPoint(a, anchors[i - 1], b, handle);
+
+      const c2 =
+        i === anchors.length - 2
+          ? getAnglePoint(targetSide, b, a, offset ?? 0)
+          : calculateSmoothControlPoint(b, a, anchors[i + 2], -handle);
 
       segments.push({ p0: a, c1, c2, p3: b, chainIndex: i });
     }
