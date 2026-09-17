@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Fixes
+
+- **connections:** dropping a connection on a node (`fConnectOnNode`) now attaches to the connector closest to the drop point instead of the first registered one ([#326](https://github.com/Foblex/f-flow/issues/326)); zero-size connectors resolve to the aimed-at connector as well.
+
 ## [19.1.7] - 2026-09-06
 
 ### Fixes

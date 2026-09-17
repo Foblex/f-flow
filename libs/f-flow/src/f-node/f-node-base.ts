@@ -57,7 +57,7 @@ export abstract class FNodeBase extends MIXIN_BASE implements ISelectable, IHasH
 
   public _size: ISize | undefined;
 
-  /** When `true` (`fConnectOnNode` input), dropping a connection anywhere on the node connects to its first connectable input. */
+  /** When `true` (`fConnectOnNode` input), dropping a connection anywhere on the node connects to its connectable connector closest to the drop point. */
   public abstract fConnectOnNode: Signal<boolean>;
 
   /** Extra CSS class(es) applied to this node's representation in the minimap (`fMinimapClass` input). */

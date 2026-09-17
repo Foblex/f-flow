@@ -60,7 +60,7 @@ With the optional [Managed Flow State](./examples/state) plugin, completed move 
 
 - `fNodeRotate: ModelSignal<number>;` Default: `0`. Rotation (degrees). Affects node geometry and connector placement.
 
-- `fConnectOnNode: InputSignal<boolean>;` Default: `true`. Allows dropping a connection onto the node body (not directly on an input). The library will choose the first available connectable input.
+- `fConnectOnNode: InputSignal<boolean>;` Default: `true`. Allows dropping a connection onto the node body (not directly on an input). The library will choose the connectable connector closest to the drop point.
 
 - `fMinimapClass: InputSignal<string | string[]>;` Extra CSS class(es) applied in the minimap only.
 

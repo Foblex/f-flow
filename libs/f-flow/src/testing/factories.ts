@@ -137,6 +137,7 @@ class NodeFactoryBuilder {
   private _parentId: string | null | undefined = null;
   private _selected = false;
   private _selectionDisabled = false;
+  private _connectOnNode = true;
   private _hostElement: HTMLElement = document.createElement('div');
   private _overrides: SelectableOverrides = {};
   private _position: IPoint = PointExtensions.initialize();
@@ -184,6 +185,12 @@ class NodeFactoryBuilder {
     return this;
   }
 
+  public connectOnNode(value: boolean): this {
+    this._connectOnNode = value;
+
+    return this;
+  }
+
   public onMarkAsSelected(handler: () => void): this {
     this._overrides.markAsSelected = handler;
 
@@ -204,13 +211,15 @@ class NodeFactoryBuilder {
 
   public build(): FNodeBase {
     const selectable = createSelectableBehavior(this._hostElement, this._selected, this._overrides);
+    const hostElement = this._hostElement;
 
     const node = {
       fId: readonlySignal(this._id),
       fParentId: readonlySignal(this._parentId),
       fSelectionDisabled: readonlySignal(this._selectionDisabled),
+      fConnectOnNode: readonlySignal(this._connectOnNode),
       fMinimapClass: readonlySignal<string[] | string>([]),
-      hostElement: this._hostElement,
+      hostElement,
       connectors: [] as FConnectorBase[],
       _position: this._position,
       _rotate: this._rotate,
@@ -218,6 +227,9 @@ class NodeFactoryBuilder {
       markAsSelected: selectable.markAsSelected,
       unmarkAsSelected: selectable.unmarkAsSelected,
       isSelected: selectable.isSelected,
+      isContains(element: HTMLElement | SVGElement): boolean {
+        return hostElement.contains(element);
+      },
       refresh(): void {
         // No-op for tests.
       },
