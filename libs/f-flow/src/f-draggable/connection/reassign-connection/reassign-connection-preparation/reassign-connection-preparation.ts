@@ -60,8 +60,17 @@ export class ReassignConnectionPreparation implements IExecution<
     queueMicrotask(() => this._bringToFront(connection));
   }
 
+  /**
+   * Connections attached to the same connector have coinciding drag handles, so
+   * a selected connection wins over registration order — grabbing the handle of
+   * the connection the user just selected is what they aimed at (discussion #328).
+   */
   private _findConnectionAt(pointerInFlow: IPoint): FConnectionBase | undefined {
-    return this._connections.find((c) => isPointerInsideStartOrEndDragHandles(c, pointerInFlow));
+    const matches = this._connections.filter((c) =>
+      isPointerInsideStartOrEndDragHandles(c, pointerInFlow),
+    );
+
+    return matches.find((c) => c.isSelected()) ?? matches[0];
   }
 
   private _capturePointerDown(request: ReassignConnectionPreparationRequest): void {
