@@ -5,6 +5,9 @@ import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { fWarnOnce, isFDevMode } from '../../f-diagnostics';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
+import { F_FLOW_CONFIG } from '../../../provide-f-flow';
+
+const DEFAULT_MIN_CONNECTOR_SIZE = 1;
 
 /**
  * Dev-mode misconfiguration checks (`FFxxxx` codes), run after each settled nodes
@@ -15,6 +18,7 @@ import { FConnectorBase } from '../../../f-connectors';
 @FExecutionRegister(RunDevDiagnosticsRequest)
 export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, void> {
   private readonly _store = inject(FComponentsStore);
+  private readonly _config = inject(F_FLOW_CONFIG, { optional: true });
 
   public handle(_: RunDevDiagnosticsRequest): void {
     if (!isFDevMode()) {
@@ -24,6 +28,7 @@ export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, v
     this._checkDetachedItems();
     this._checkInteractionsWithoutDraggable();
     this._checkHiddenConnectors();
+    this._checkZeroSizeConnectors();
     this._checkNestedNodes();
     this._checkDanglingParentIds();
   }
@@ -106,14 +111,7 @@ export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, v
    * geometry is a 0×0 point: connections attach to the wrong place or nowhere.
    */
   private _checkHiddenConnectors(): void {
-    const connectors: FConnectorBase[] = [
-      ...this._store.connectors.getAll(),
-      ...this._store.outputs.getAll(),
-      ...this._store.inputs.getAll(),
-      ...this._store.outlets.getAll(),
-    ];
-
-    for (const connector of connectors) {
+    for (const connector of this._allConnectors()) {
       const host = connector.hostElement;
       if (host.isConnected && host.getClientRects().length === 0) {
         fWarnOnce(
@@ -123,6 +121,45 @@ export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, v
         );
       }
     }
+  }
+
+  /**
+   * FF1010 — a rendered connector whose own box is zero/near-zero sized. The visual
+   * dot is often drawn with `::before`/`::after`, but hit-testing and connection
+   * geometry use the element's box, so drops land past the connector and fall back
+   * to node-level connect (see issue #326). Threshold comes from
+   * `provideFFlow({ diagnostics: { minConnectorSize } })`; `0` disables the check.
+   */
+  private _checkZeroSizeConnectors(): void {
+    const threshold = this._config?.diagnostics?.minConnectorSize ?? DEFAULT_MIN_CONNECTOR_SIZE;
+    if (threshold <= 0) {
+      return;
+    }
+
+    for (const connector of this._allConnectors()) {
+      const host = connector.hostElement;
+      if (!host.isConnected || host.getClientRects().length === 0) {
+        continue;
+      }
+
+      const { width, height } = host.getBoundingClientRect();
+      if (width < threshold || height < threshold) {
+        fWarnOnce(
+          'FF1010',
+          connector.fId(),
+          `Connector "${connector.fId()}" is ${Math.round(width)}×${Math.round(height)}px. Hit-testing and connection geometry use the element's own box, so a dot drawn with ::before/::after is not enough — give the connector element itself a size (width/height).`,
+        );
+      }
+    }
+  }
+
+  private _allConnectors(): FConnectorBase[] {
+    return [
+      ...this._store.connectors.getAll(),
+      ...this._store.outputs.getAll(),
+      ...this._store.inputs.getAll(),
+      ...this._store.outlets.getAll(),
+    ];
   }
 
   /**

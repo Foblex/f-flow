@@ -119,6 +119,24 @@ These helpers compute from the nodes bounding box, so `(fNodesRendered)` is the 
 </f-flow>
 ```
 
+## FF1010
+
+**Warning: connector element has no size.**
+
+A rendered connector's own box is zero or near-zero sized — usually the visible dot is drawn with `::before` / `::after` while the connector element itself has no `width`/`height`. Hit-testing and connection geometry use the element's box, so drops land past the connector and fall back to node-level connect (`fConnectOnNode`), attaching to a connector you did not aim at.
+
+Fix: size the connector element itself:
+
+```css
+.port {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+```
+
+The threshold is configurable via `provideFFlow({ diagnostics: { minConnectorSize: 4 } })`; set `0` to switch the check off. Default: `1`.
+
 ## Verifying a flow programmatically
 
 To verify a flow programmatically (useful in tests and for AI agents):
