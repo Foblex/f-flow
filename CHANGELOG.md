@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 - **canvas:** `fitToScreen` accepts an optional `maxScale` cap, so fitting a small graph no longer magnifies it to fill the viewport ([#147](https://github.com/Foblex/f-flow/issues/147)).
+- **connections:** `<f-snap-connection>` emits `fSnapTargetChange` when the snapped target is acquired, switched, or released during connection creation, so both endpoints can be styled while the snap preview is shown ([#180](https://github.com/Foblex/f-flow/issues/180)).
 - **diagnostics:** new dev-mode warning `FF1010` for rendered connectors whose own box has no size (dot drawn via `::before`/`::after`); threshold configurable through `provideFFlow({ diagnostics: { minConnectorSize } })`, `0` disables the check.
 
 ## [19.1.7] - 2026-09-06

@@ -9,7 +9,11 @@ import {
   IConnectionEndpointRotationContext,
 } from '../../../../f-connection-v2';
 import { FComponentsStore } from '../../../../f-storage';
-import { FConnectionForCreateComponent, FSnapConnectionComponent } from '../../../../f-connection';
+import {
+  FConnectionForCreateComponent,
+  FSnapConnectionComponent,
+  FSnapTargetChangeEvent,
+} from '../../../../f-connection';
 import {
   CalculateClosestConnectorRequest,
   CalculateTargetConnectorsToConnectRequest,
@@ -42,6 +46,7 @@ export class FCreateConnectionSession {
 
   private _targets: IConnectorRectRef[] = [];
   private _sourceRef: IConnectorRectRef<FSourceConnectorBase> | undefined;
+  private _snapTargetId: string | undefined;
 
   private get _connection(): FConnectionForCreateComponent | undefined {
     return this._store.connections.getForCreate() as FConnectionForCreateComponent | undefined;
@@ -112,7 +117,29 @@ export class FCreateConnectionSession {
     }
 
     const snapTarget = closest && closest.distance < snap.fSnapThreshold ? closest : undefined;
+    this._emitSnapTargetChange(sourceRef, snapTarget?.connector);
     this._drawSnapConnection(sourceRef, snapTarget);
+  }
+
+  /** One event per acquired/switched/released snap target, not one per pointer move. */
+  private _emitSnapTargetChange(
+    sourceRef: IConnectorRectRef<FSourceConnectorBase>,
+    target: FConnectorBase | undefined,
+  ): void {
+    const snap = this._snapConnection;
+    if (!snap) {
+      return;
+    }
+
+    const targetId = target?.fId();
+    if (targetId === this._snapTargetId) {
+      return;
+    }
+
+    this._snapTargetId = targetId;
+    snap.fSnapTargetChange.emit(
+      new FSnapTargetChangeEvent(this._resolveEventSource(sourceRef.connector).fId(), targetId),
+    );
   }
 
   /**
@@ -259,6 +286,12 @@ export class FCreateConnectionSession {
   }
 
   private _end(): void {
+    const sourceRef = this._sourceRef;
+    if (sourceRef && this._snapTargetId !== undefined) {
+      this._emitSnapTargetChange(sourceRef, undefined);
+    }
+    this._snapTargetId = undefined;
+
     const connection = this._connection;
     if (connection) {
       connection.redraw();

@@ -9,8 +9,10 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  output,
   signal,
 } from '@angular/core';
+import { FSnapTargetChangeEvent } from './f-snap-target-change-event';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
 import { FMediator } from '@foblex/mediator';
@@ -48,6 +50,13 @@ export class FSnapConnectionComponent
 
   @Input({ transform: numberAttribute })
   public fSnapThreshold: number = 20;
+
+  /**
+   * Fires when the snapped target changes during a connection-creation gesture:
+   * with the connector id while one is within `fSnapThreshold`, and with an
+   * `undefined` target when the snap is released or the gesture ends.
+   */
+  public readonly fSnapTargetChange = output<FSnapTargetChangeEvent>();
 
   public override fOutputId = signal('');
 

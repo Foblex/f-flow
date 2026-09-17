@@ -550,6 +550,12 @@ Selector: `f-snap-connection`
 | fBehavior | EFConnectionBehavior | FIXED | Connection behavior |
 | fType | EFConnectionType | STRAIGHT | Visual type |
 
+#### Outputs
+
+| Output | Type | Description |
+|--------|------|-------------|
+| fSnapTargetChange | OutputEmitterRef\<FSnapTargetChangeEvent\> | Fires once per snap-target change during connection creation: `{ sourceId, targetId }` when a connector enters the threshold, `targetId: undefined` when the snap is released or the gesture ends |
+
 ---
 
 ### f-connection-waypoints (FConnectionWaypoints)
