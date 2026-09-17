@@ -60,7 +60,7 @@ A typical diagram structure is always:
 
 - `resetScaleAndCenterGroupOrNode(groupOrNodeId: string, animated: boolean = true, emitCanvasChange: boolean = true): void;` Resets scale to `1` and centers a specific group or node. Use it when focusing an item must also normalize zoom.
 
-- `fitToScreen(padding: IPoint = { x: 0, y: 0 }, animated: boolean = true, emitCanvasChange: boolean = true): void;` Fits all nodes/groups into the viewport. Padding adds extra space around content; the third argument controls `fCanvasChange` emission.
+- `fitToScreen(padding: IPoint = { x: 0, y: 0 }, animated: boolean = true, emitCanvasChange: boolean = true, maxScale?: number): void;` Fits all nodes/groups into the viewport. Padding adds extra space around content; the third argument controls `fCanvasChange` emission; `maxScale` caps the resulting zoom so a small graph is not magnified to fill the screen.
 
 - `centerGroupOrNode(groupOrNodeId: string, animated: boolean = true, emitCanvasChange: boolean = true): void;` Centers the viewport on a group or node by id while preserving the current scale. The third argument controls `fCanvasChange` emission.
 

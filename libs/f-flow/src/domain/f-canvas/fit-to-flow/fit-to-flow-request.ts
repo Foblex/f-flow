@@ -6,5 +6,6 @@ export class FitToFlowRequest {
     public readonly toCenter: IPoint,
     public readonly animated: boolean,
     public readonly emitCanvasChange: boolean = true,
+    public readonly maxScale?: number,
   ) {}
 }

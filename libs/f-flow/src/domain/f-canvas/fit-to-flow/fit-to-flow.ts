@@ -23,7 +23,7 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
 
   private readonly _mediator = inject(FMediator);
 
-  public handle({ toCenter, animated, emitCanvasChange }: FitToFlowRequest): void {
+  public handle({ toCenter, animated, emitCanvasChange, maxScale }: FitToFlowRequest): void {
     const fNodesRect =
       this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
       RectExtensions.initialize();
@@ -36,6 +36,7 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
       RectExtensions.fromElement(this._store.flowHost),
       this._store.nodes.getAll().map((x) => x._position),
       toCenter,
+      maxScale,
     );
 
     this._mediator.execute(
@@ -47,7 +48,13 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
     );
   }
 
-  public fitToParent(rect: IRect, parentRect: IRect, points: IPoint[], toCenter: IPoint): void {
+  public fitToParent(
+    rect: IRect,
+    parentRect: IRect,
+    points: IPoint[],
+    toCenter: IPoint,
+    maxScale?: number,
+  ): void {
     this._transform.scaledPosition = PointExtensions.initialize();
     this._transform.position = this._getZeroPositionWithoutScale(points);
     const itemsContainerWidth = rect.width / this._transform.scale + toCenter.x;
@@ -61,6 +68,12 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
         parentRect.width / itemsContainerWidth,
         parentRect.height / itemsContainerHeight,
       );
+    }
+
+    // A small bounding box (a couple of nodes) would otherwise be magnified to
+    // fill the viewport; the optional cap keeps the content readable (issue #147).
+    if (maxScale != null && this._transform.scale > maxScale) {
+      this._transform.scale = maxScale;
     }
 
     const newX =
