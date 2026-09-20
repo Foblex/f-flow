@@ -12,6 +12,15 @@ export interface IFFlowDiagnosticsConfig {
    * Set `0` to switch the check off. Default: `1`.
    */
   minConnectorSize?: number;
+
+  /**
+   * FF1011 threshold: warns when a node's rendered box sits more than this many
+   * on-screen pixels away from its `fNodePosition` — usually app CSS on the node
+   * host (margin, left/top, an extra transform) moved the visuals while the model
+   * stayed put, so model-driven features (minimap, fitToScreen, auto-layout)
+   * disagree with what the user sees. Set `0` to switch the check off. Default: `2`.
+   */
+  maxNodePositionDrift?: number;
 }
 
 /**

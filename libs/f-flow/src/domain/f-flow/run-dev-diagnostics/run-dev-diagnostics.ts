@@ -6,8 +6,10 @@ import { fWarnOnce, isFDevMode } from '../../f-diagnostics';
 import { FNodeBase } from '../../../f-node';
 import { FConnectorBase } from '../../../f-connectors';
 import { F_FLOW_CONFIG } from '../../../provide-f-flow';
+import { calculatePointerInFlow } from '../../../utils';
 
 const DEFAULT_MIN_CONNECTOR_SIZE = 1;
+const DEFAULT_MAX_NODE_POSITION_DRIFT = 2;
 
 /**
  * Dev-mode misconfiguration checks (`FFxxxx` codes), run after each settled nodes
@@ -29,6 +31,7 @@ export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, v
     this._checkInteractionsWithoutDraggable();
     this._checkHiddenConnectors();
     this._checkZeroSizeConnectors();
+    this._checkNodePositionDrift();
     this._checkNestedNodes();
     this._checkDanglingParentIds();
   }
@@ -148,6 +151,62 @@ export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, v
           'FF1010',
           connector.fId(),
           `Connector "${connector.fId()}" is ${Math.round(width)}×${Math.round(height)}px. Hit-testing and connection geometry use the element's own box, so a dot drawn with ::before/::after is not enough — give the connector element itself a size (width/height).`,
+        );
+      }
+    }
+  }
+
+  /**
+   * FF1011 — a node whose rendered box diverges from its model position. The canvas
+   * places the host at `fNodePosition`, so a drift means app CSS on the node host
+   * (margin, left/top, an extra transform) or out-of-band positioning moved the
+   * visuals; model-driven features (minimap, fitToScreen, auto-layout) keep using
+   * the model position and disagree with what the user sees (see issue #331).
+   * Threshold comes from `provideFFlow({ diagnostics: { maxNodePositionDrift } })`;
+   * `0` disables the check.
+   */
+  private _checkNodePositionDrift(): void {
+    const threshold =
+      this._config?.diagnostics?.maxNodePositionDrift ?? DEFAULT_MAX_NODE_POSITION_DRIFT;
+    if (threshold <= 0) {
+      return;
+    }
+
+    const flowHost = this._store.flowHost;
+    const transform = this._store.transform;
+    if (!flowHost || !transform) {
+      return;
+    }
+
+    const scale = transform.scale || 1;
+    for (const node of this._store.nodes.getAll()) {
+      const host = node.hostElement as HTMLElement;
+      if (!host.isConnected || host.getClientRects().length === 0) {
+        continue;
+      }
+
+      const rect = host.getBoundingClientRect();
+      const renderedCenter = calculatePointerInFlow(
+        { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 },
+        flowHost,
+        transform,
+      );
+      // Centers survive rotation (the host spins around its own center), so compare
+      // them instead of AABB origins; sizes come from unscaled layout geometry.
+      const width = typeof host.offsetWidth === 'number' ? host.offsetWidth : rect.width / scale;
+      const height =
+        typeof host.offsetHeight === 'number' ? host.offsetHeight : rect.height / scale;
+      const driftX = renderedCenter.x - (node._position.x + width / 2);
+      const driftY = renderedCenter.y - (node._position.y + height / 2);
+      // Compared in on-screen pixels: at deep zoom-out a sub-pixel gBCR reading
+      // divided by the scale would otherwise cross the threshold on its own.
+      const drift = Math.max(Math.abs(driftX), Math.abs(driftY)) * scale;
+
+      if (drift > threshold) {
+        fWarnOnce(
+          'FF1011',
+          node.fId(),
+          `${this._describe(node)} "${node.fId()}" is rendered ~${Math.round(drift)}px away from its fNodePosition (model x: ${Math.round(node._position.x)}, y: ${Math.round(node._position.y)}; rendered x: ${Math.round(renderedCenter.x - width / 2)}, y: ${Math.round(renderedCenter.y - height / 2)}). The minimap, fitToScreen and auto-layout read the model, so they place this node where fNodePosition says — not where CSS moved it. Fold the offset (margin/left/top/extra transform on the node host) into fNodePosition instead.`,
         );
       }
     }

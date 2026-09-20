@@ -129,13 +129,22 @@ Fix: size the connector element itself:
 
 ```css
 .port {
-  position: absolute;
   width: 10px;
   height: 10px;
 }
 ```
 
 The threshold is configurable via `provideFFlow({ diagnostics: { minConnectorSize: 4 } })`; set `0` to switch the check off. Default: `1`.
+
+## FF1011
+
+**Warning: node is rendered away from its model position.**
+
+A node's rendered box diverges from its `fNodePosition` by more than the threshold — usually app CSS on the node host (`margin`, `left`/`top`, an extra `transform`) or positioning done outside the model. The canvas shows the CSS result, but every feature that reads the model — the minimap, `fitToScreen()`, auto-layout — places the node where `fNodePosition` says, so they disagree with what the user sees.
+
+Fix: fold the offset into `fNodePosition` itself and remove the extra CSS positioning from the node host.
+
+The threshold (in on-screen pixels) is configurable via `provideFFlow({ diagnostics: { maxNodePositionDrift: 5 } })`; set `0` to switch the check off. Default: `2`.
 
 ## Verifying a flow programmatically
 
