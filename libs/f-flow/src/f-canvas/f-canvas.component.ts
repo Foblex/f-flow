@@ -229,15 +229,18 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
    * @param padding - paddings from the bounds of the canvas
    * @param animated - If true, the fit will be animated; otherwise, it will be instantaneous.
    * @param emitCanvasChange - If false, does not emit `fCanvasChange` for this programmatic move.
+   * @param maxScale - Upper bound for the resulting scale, so a small graph is not
+   * magnified to fill the viewport. Unlimited when omitted.
    */
   public fitToScreen(
     padding: IPoint = PointExtensions.initialize(),
     animated: boolean = true,
     emitCanvasChange: boolean = true,
+    maxScale?: number,
   ): void {
     this._warnWhenCalledBeforeNodesRender('fitToScreen()');
     this._afterRedraw(() => {
-      this._mediator.execute(new FitToFlowRequest(padding, animated, emitCanvasChange));
+      this._mediator.execute(new FitToFlowRequest(padding, animated, emitCanvasChange, maxScale));
     });
   }
 

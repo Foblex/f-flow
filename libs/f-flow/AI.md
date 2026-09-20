@@ -183,7 +183,9 @@ When the flow compiles but looks wrong, verify in this order:
 11. **Node moves but its bindings never fire** (`FF1007`): an `fNode` element is nested inside another node element. One `fNode` per node; hierarchy is id-based (`fNodeParentId`), not DOM-based.
 12. **Group behaviors don't apply** (`FF1008`): `fNodeParentId` / `fGroupParentId` references an id no rendered group has.
 13. **Wrong initial viewport** (`FF1009`): `fitToScreen()` / `resetScaleAndCenter()` / `centerGroupOrNode()` / `resetScaleAndCenterGroupOrNode()` called before nodes were rendered — call them from `(fNodesRendered)` (earliest safe) or `(fFullRendered)`.
-14. **Initial centering appears in managed undo history**: call `resetScaleAndCenter(false, false)` (or pass `emitCanvasChange: false` to another viewport helper) for an application-driven transform.
+14. **Drop connects to a connector you did not aim at** (`FF1010`): the connector element itself has no size — the visible dot is drawn with `::before`/`::after`. Give the connector element its own `width`/`height`; node-level drops (`fConnectOnNode`) attach to the connector closest to the drop point.
+15. **Minimap/fitToScreen/auto-layout place a node elsewhere than the canvas shows** (`FF1011`): app CSS on the node host (margin, left/top, an extra transform) moved the visuals while `fNodePosition` stayed put. Model-driven features read the model; fold the offset into `fNodePosition`.
+16. **Initial centering appears in managed undo history**: call `resetScaleAndCenter(false, false)` (or pass `emitCanvasChange: false` to another viewport helper) for an application-driven transform.
 
 To verify programmatically: wait for `(fFullRendered)`, compare the node, group, and connection ids exported by `flow.getState()` with the expected graph, and fail the test on any `FFxxxx` console diagnostic. `getState()` exports registered graph records; it does not by itself prove that connection endpoints resolved. Dev-mode `FF1001` reports an unresolved endpoint.
 

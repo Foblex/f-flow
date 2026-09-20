@@ -119,6 +119,33 @@ These helpers compute from the nodes bounding box, so `(fNodesRendered)` is the 
 </f-flow>
 ```
 
+## FF1010
+
+**Warning: connector element has no size.**
+
+A rendered connector's own box is zero or near-zero sized — usually the visible dot is drawn with `::before` / `::after` while the connector element itself has no `width`/`height`. Hit-testing and connection geometry use the element's box, so drops land past the connector and fall back to node-level connect (`fConnectOnNode`), attaching to a connector you did not aim at.
+
+Fix: size the connector element itself:
+
+```css
+.port {
+  width: 10px;
+  height: 10px;
+}
+```
+
+The threshold is configurable via `provideFFlow({ diagnostics: { minConnectorSize: 4 } })`; set `0` to switch the check off. Default: `1`.
+
+## FF1011
+
+**Warning: node is rendered away from its model position.**
+
+A node's rendered box diverges from its `fNodePosition` by more than the threshold — usually app CSS on the node host (`margin`, `left`/`top`, an extra `transform`) or positioning done outside the model. The canvas shows the CSS result, but every feature that reads the model — the minimap, `fitToScreen()`, auto-layout — places the node where `fNodePosition` says, so they disagree with what the user sees.
+
+Fix: fold the offset into `fNodePosition` itself and remove the extra CSS positioning from the node host.
+
+The threshold (in on-screen pixels) is configurable via `provideFFlow({ diagnostics: { maxNodePositionDrift: 5 } })`; set `0` to switch the check off. Default: `2`.
+
 ## Verifying a flow programmatically
 
 To verify a flow programmatically (useful in tests and for AI agents):

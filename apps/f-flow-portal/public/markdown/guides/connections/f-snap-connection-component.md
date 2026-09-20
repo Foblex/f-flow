@@ -35,7 +35,7 @@ During drag/create/reassign interactions, the helper tracks candidate targets an
 
 ### Outputs
 
-- No direct outputs.
+- `fSnapTargetChange: OutputEmitterRef<FSnapTargetChangeEvent>;` Fires when the snapped target changes during a connection-creation gesture: `{ sourceId, targetId }` while a connector is within `fSnapThreshold`, and with `targetId: undefined` when the snap is released or the gesture ends. One event per change, not per pointer move — useful for styling both endpoints while the snap preview is visible.
 
 ### Methods
 

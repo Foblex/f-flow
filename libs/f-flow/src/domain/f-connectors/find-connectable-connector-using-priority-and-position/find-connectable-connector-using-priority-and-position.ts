@@ -16,7 +16,7 @@ import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-
 /**
  * Execution that finds a connectable connector at a given position with priority.
  * It checks for connectors at the position, the closest connector if snap connection is enabled,
- * and the first connectable connector of the node at that position.
+ * and the closest connectable connector of the node at that position.
  */
 @Injectable()
 @FExecutionRegister(FindConnectableConnectorUsingPriorityAndPositionRequest)
@@ -60,13 +60,13 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
     result.push(...this._filterConnectorsThatLocatedAtPosition(request));
 
     // Closest connector is only added if snap connection is enabled and there is a closest connector found
-    // Closest connector has more priority than the first connectable input of the node at position
+    // Closest connector has more priority than the node-level connector of the node at position
     const closestConnector = this._isSnapConnectionEnabledAndHasClosestConnector(request);
     if (closestConnector) {
       result.unshift(closestConnector.connector);
     }
 
-    const fInput = this._getFirstConnectableConnectorOfNodeAtPosition(request);
+    const fInput = this._getClosestConnectableConnectorOfNodeAtPosition(request);
     if (fInput) {
       result.push(fInput);
     }
@@ -112,14 +112,22 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
     return !!closestConnector && closestConnector.distance < this._snapConnection!.fSnapThreshold;
   }
 
-  //if node placed in position and fConnectOnNode is true, return the first connectable connector of the node
-  private _getFirstConnectableConnectorOfNodeAtPosition(
+  //if node placed in position and fConnectOnNode is true, return the closest connectable connector of the node
+  private _getClosestConnectableConnectorOfNodeAtPosition(
     request: FindConnectableConnectorUsingPriorityAndPositionRequest,
   ): FConnectorBase | undefined {
+    const pointerInFlow = this._calculatePointerInFlow(request.pointerPosition);
+
     return this._getElementsFromPoint(request.pointerPosition)
       .map((x) => this._findConnectableNode(x))
       .filter((x) => !!x)
-      .map((x) => this._findFirstConnectableConnectorOfNode(request.connectableConnectors, x))
+      .map((x) =>
+        this._findClosestConnectableConnectorOfNode(
+          request.connectableConnectors,
+          x,
+          pointerInFlow,
+        ),
+      )
       .find((x) => !!x);
   }
 
@@ -135,10 +143,20 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
     return this._fNodes.find((x) => x.isContains(element) && x.fConnectOnNode());
   }
 
-  private _findFirstConnectableConnectorOfNode(
-    connectableInputs: IConnectorRectRef[],
+  /**
+   * A node can expose several connectable connectors; picking the one nearest
+   * to the drop point matches what the user aimed at, while registration order
+   * would pick an arbitrary one (see issue #326).
+   */
+  private _findClosestConnectableConnectorOfNode(
+    connectableConnectors: IConnectorRectRef[],
     fNode: FNodeBase,
+    pointerInFlow: IPoint,
   ): FConnectorBase | undefined {
-    return connectableInputs.find((x) => x.connector.fNodeId === fNode.fId())?.connector;
+    const nodeConnectors = connectableConnectors.filter((x) => x.connector.fNodeId === fNode.fId());
+
+    return this._mediator.execute<IClosestConnectorRef | undefined>(
+      new CalculateClosestConnectorRequest(pointerInFlow, nodeConnectors),
+    )?.connector;
   }
 }

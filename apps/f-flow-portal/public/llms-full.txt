@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. The c
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v19.1.7 (September 2026)
+- **Current version**: v19.2.0 (September 2026)
 - **Current download data**: https://www.npmjs.com/package/@foblex/flow
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -38,7 +38,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. The c
 - Both modes render state through normal Angular templates.
 - Connections are connector-to-connector (`fSourceId` → `fTargetId` referencing `fConnectorId`), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
-- Diagnostics use stable FFxxxx codes (see https://flow.foblex.com/docs/errors). Dev-mode warnings cover unresolved connection ids (FF1001), zero-height hosts (FF1002), and FF1004–FF1009; they are stripped from production builds. A connector outside a node throws FF1003 in every build.
+- Diagnostics use stable FFxxxx codes (see https://flow.foblex.com/docs/errors). Dev-mode warnings cover unresolved connection ids (FF1001), zero-height hosts (FF1002), and FF1004–FF1011; they are stripped from production builds. A connector outside a node throws FF1003 in every build.
 - Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
 
 ## 4. Installation
@@ -549,6 +549,12 @@ Selector: `f-snap-connection`
 | fOffset | number | 12 | Distance from connector |
 | fBehavior | EFConnectionBehavior | FIXED | Connection behavior |
 | fType | EFConnectionType | STRAIGHT | Visual type |
+
+#### Outputs
+
+| Output | Type | Description |
+|--------|------|-------------|
+| fSnapTargetChange | OutputEmitterRef\<FSnapTargetChangeEvent\> | Fires once per snap-target change during connection creation: `{ sourceId, targetId }` when a connector enters the threshold, `targetId: undefined` when the snap is released or the gesture ends |
 
 ---
 

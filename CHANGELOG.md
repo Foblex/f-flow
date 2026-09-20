@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [19.2.0] - 2026-09-20
+
+### Fixes
+
+- **connections:** dropping a connection on a node (`fConnectOnNode`) now attaches to the connector closest to the drop point instead of the first registered one ([#326](https://github.com/Foblex/f-flow/issues/326)); zero-size connectors resolve to the aimed-at connector as well.
+- **connections:** grabbing a reassign handle shared by several connections on the same connector now prefers the selected connection over registration order ([#328](https://github.com/Foblex/f-flow/discussions/328)).
+
+### Features
+
+- **canvas:** `fitToScreen` accepts an optional `maxScale` cap, so fitting a small graph no longer magnifies it to fill the viewport ([#147](https://github.com/Foblex/f-flow/issues/147)).
+- **connections:** `<f-snap-connection>` emits `fSnapTargetChange` when the snapped target is acquired, switched, or released during connection creation, so both endpoints can be styled while the snap preview is shown ([#180](https://github.com/Foblex/f-flow/issues/180)).
+- **diagnostics:** new dev-mode warning `FF1010` for rendered connectors whose own box has no size (dot drawn via `::before`/`::after`); threshold configurable through `provideFFlow({ diagnostics: { minConnectorSize } })`, `0` disables the check.
+- **diagnostics:** new dev-mode warning `FF1011` for nodes rendered away from their `fNodePosition` (app CSS moved the visuals while the model stayed put), so model-driven features — minimap, `fitToScreen`, auto-layout — stop disagreeing silently with the canvas ([#331](https://github.com/Foblex/f-flow/issues/331)); threshold configurable through `provideFFlow({ diagnostics: { maxNodePositionDrift } })`, `0` disables the check.
+
 ## [19.1.7] - 2026-09-06
 
 ### Fixes
