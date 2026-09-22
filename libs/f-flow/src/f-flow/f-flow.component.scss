@@ -1,4 +1,4 @@
-:host {
+f-flow {
   display: block;
   position: relative;
   width: 100%;
@@ -23,52 +23,55 @@
 // hit-testing flips between the path and the background every frame — flickering
 // :hover styles and the cursor. Connections take no part in drop targeting (drops
 // resolve against connectors), so they give up pointer events for the drag's duration.
-:host(.f-dragging),
-:host(.f-connections-dragging) {
+f-flow.f-dragging,
+f-flow.f-connections-dragging {
   // The connection host is already inert; the hit targets are its children
   // (.f-connection-group with pointer-events: all, the stroke paths, waypoint
   // handles), so the drag-time opt-out must reach them.
-  ::ng-deep .f-connection .f-connection-group,
-  ::ng-deep .f-connection .f-connection-content,
-  ::ng-deep .f-connection svg * {
+  .f-connection .f-connection-group,
+  .f-connection .f-connection-content,
+  .f-connection svg * {
     pointer-events: none !important;
   }
 }
 
-::ng-deep {
-  .f-connection-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    inline-size: max-content;
-    pointer-events: all;
-    transform-origin: 50% 50%;
-  }
-
-  .f-node,
-  .f-group {
-    position: absolute !important;
-    transform-origin: center;
-    user-select: none;
-    pointer-events: all;
-    left: 0 !important;
-    top: 0 !important;
-    box-sizing: border-box;
-  }
-
-  .f-group {
-    z-index: 1;
-  }
-
-  .f-connection-content {
-    z-index: 3;
-  }
-
-  .f-node {
-    z-index: 4;
-  }
+// The rules below were written under `::ng-deep`. Under emulated encapsulation the
+// compiler stripped that token and emitted them unscoped, so they have always been
+// global. With `ViewEncapsulation.None` nothing shims the styles, and a surviving
+// `::ng-deep` would be an unknown pseudo-element that invalidates the whole rule —
+// so the token is dropped here. The emitted selectors are unchanged.
+.f-connection-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  inline-size: max-content;
+  pointer-events: all;
+  transform-origin: 50% 50%;
 }
 
-.hidden {
+.f-node,
+.f-group {
+  position: absolute !important;
+  transform-origin: center;
+  user-select: none;
+  pointer-events: all;
+  left: 0 !important;
+  top: 0 !important;
+  box-sizing: border-box;
+}
+
+.f-group {
+  z-index: 1;
+}
+
+.f-connection-content {
+  z-index: 3;
+}
+
+.f-node {
+  z-index: 4;
+}
+
+f-flow .hidden {
   opacity: 0;
 }

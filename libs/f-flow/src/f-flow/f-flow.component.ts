@@ -12,6 +12,7 @@ import {
   OnDestroy,
   OnInit,
   output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_FLOW, FFlowBase } from './f-flow-base';
 import {
@@ -85,6 +86,7 @@ const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
     { provide: F_FLOW, useExisting: FFlowComponent },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FFlowComponent extends FFlowBase implements OnInit, AfterContentInit, OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);
