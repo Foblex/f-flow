@@ -11,6 +11,7 @@ import {
   OnDestroy,
   OnInit,
   untracked,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_CONNECTION_WAYPOINTS, FConnectionWaypointsBase } from './models';
 import { IPoint } from '@foblex/2d';
@@ -29,6 +30,7 @@ import { RemoveConnectionWaypointRequest } from '../../../domain';
     class: 'f-component f-connection-waypoints',
   },
   providers: [{ provide: F_CONNECTION_WAYPOINTS, useExisting: FConnectionWaypoints }],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FConnectionWaypoints extends FConnectionWaypointsBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);
