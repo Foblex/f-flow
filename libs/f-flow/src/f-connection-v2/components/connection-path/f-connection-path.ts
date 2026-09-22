@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  ViewEncapsulation,
+} from '@angular/core';
 import { normalizeDomElementId } from '@foblex/utils';
 import { F_CONNECTION_PATH, FConnectionPathBase } from './models';
 import { createConnectionDomIdentifier, createGradientDomUrl } from '../../utils';
@@ -22,6 +29,7 @@ import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
       useExisting: FConnectionPath,
     },
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FConnectionPath extends FConnectionPathBase {
   private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);
