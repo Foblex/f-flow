@@ -10,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  ViewEncapsulation,
 } from '@angular/core';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
@@ -41,6 +42,7 @@ let uniqueId = 0;
   providers: [
     { provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FConnectionForCreateComponent },
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FConnectionForCreateComponent
   extends FConnectionBase
