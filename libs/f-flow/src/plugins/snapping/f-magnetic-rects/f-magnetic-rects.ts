@@ -6,6 +6,7 @@ import {
   numberAttribute,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_MAGNETIC_RECTS, FMagneticRectsBase } from './f-magnetic-rects-base';
 import { FMediator } from '@foblex/mediator';
@@ -25,6 +26,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [{ provide: F_MAGNETIC_RECTS, useExisting: FMagneticRects }],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FMagneticRects extends FMagneticRectsBase implements OnInit, OnDestroy {
   public override readonly alignThreshold = input(100, {
