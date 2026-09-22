@@ -6,6 +6,7 @@ import {
   numberAttribute,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_MAGNETIC_LINES, FMagneticLinesBase } from './f-magnetic-lines-base';
 import { FMediator } from '@foblex/mediator';
@@ -25,6 +26,7 @@ import {
   standalone: true,
   providers: [{ provide: F_MAGNETIC_LINES, useExisting: FMagneticLines }],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FMagneticLines extends FMagneticLinesBase implements OnInit, OnDestroy {
   public override readonly threshold = input(10, { transform: numberAttribute });
