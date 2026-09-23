@@ -14,6 +14,7 @@ import {
   output,
   untracked,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_CANVAS, FCanvasBase } from './models';
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
@@ -63,6 +64,7 @@ import { F_DEFAULT_LAYER_ORDER } from './constants';
   },
   providers: [{ provide: F_CANVAS, useExisting: FCanvasComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);

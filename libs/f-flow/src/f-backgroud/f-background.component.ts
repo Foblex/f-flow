@@ -6,6 +6,7 @@ import {
   inject,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
@@ -28,6 +29,7 @@ import {
   },
   providers: [{ provide: F_BACKGROUND, useExisting: FBackgroundComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FBackgroundComponent
   extends FBackgroundBase
