@@ -2,7 +2,7 @@ f-connection-for-create {
   pointer-events: none;
   position: absolute;
 
-  svg {
+  > svg {
     overflow: visible;
 
     .f-connection-group {

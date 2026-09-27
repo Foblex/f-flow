@@ -1,7 +1,7 @@
 f-connection {
   pointer-events: none;
 
-  svg {
+  > svg {
     display: block;
     vertical-align: middle;
     overflow: visible !important;

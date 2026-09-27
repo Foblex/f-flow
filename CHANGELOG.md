@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Fixes
+
+- **connections:** the connection worker is terminated when its flow is destroyed, so recreated flows no longer leak worker threads and blob URLs ([#330](https://github.com/Foblex/f-flow/issues/330)). Thanks @chris-perry.
+- **styles:** component styles ship unencapsulated (`ViewEncapsulation.None`) and element-prefixed, so a strict CSP `style-src` can hash them ([#329](https://github.com/Foblex/f-flow/issues/329)). Thanks @chris-perry.
+- **styles:** connection svg rules scope to the component's own root svg (`> svg`), so projected content — custom `svg[fMarker]` markers and svg icons inside `[fConnectionContent]` — keeps its own layout.
+
 ## [19.2.0] - 2026-09-20
 
 ### Fixes
