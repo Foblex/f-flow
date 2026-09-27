@@ -30,7 +30,7 @@ export const STATS_FALLBACK: StatsSnapshot = {
   stars: 496,
   weeklyInstalls: 14_000,
   yearlyInstalls: 366_000,
-  version: 'v19.2.0',
+  version: 'v19.3.0',
   license: 'MIT',
 };
 
