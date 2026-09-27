@@ -20,6 +20,7 @@ import {
   CalculateNodesBoundingBoxNormalizedPositionRequest,
   ClearSelectionRequest,
   COMMON_PROVIDERS,
+  DisposeConnectionWorkerRequest,
   GetCurrentSelectionRequest,
   GetNormalizedPointRequest,
   fWarnOnce,
@@ -270,6 +271,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   public ngOnDestroy(): void {
     this._a11y.destroy();
     this._flowState.destroy();
+    this._mediator.execute(new DisposeConnectionWorkerRequest());
     this._mediator.execute(new RemoveFlowFromStoreRequest(this));
   }
 }

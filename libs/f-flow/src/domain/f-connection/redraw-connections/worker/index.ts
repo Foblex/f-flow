@@ -2,6 +2,7 @@ export * from './apply-connection-worker-result';
 export * from './build-connection-worker-batch';
 export * from './build-connection-worker-payload-item';
 export * from './disable-connection-worker';
+export * from './dispose-connection-worker';
 export * from './ensure-connection-worker';
 export * from './handle-connection-worker-message';
 export * from './is-connection-worker-enabled';
