@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
 import { F_CONNECTION_SELECTION, FConnectionSelectionBase } from './models';
 import { createConnectionSelectionDomIdentifier } from '../../utils';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
@@ -19,6 +19,7 @@ import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';
       useExisting: FConnectionSelection,
     },
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FConnectionSelection extends FConnectionSelectionBase {
   private readonly _connection = inject(F_CONNECTION_COMPONENTS_PARENT);

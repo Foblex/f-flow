@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FSelectionAreaBase } from './f-selection-area-base';
 import { FMediator } from '@foblex/mediator';
 import { FEventTrigger } from '../domain';
@@ -20,6 +20,7 @@ import {
   host: {
     'class': 'f-selection-area f-component',
   },
+  encapsulation: ViewEncapsulation.None,
 })
 export class FSelectionArea extends FSelectionAreaBase implements OnInit, OnDestroy {
   private readonly _mediator = inject(FMediator);

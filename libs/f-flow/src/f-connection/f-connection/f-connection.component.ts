@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
@@ -40,6 +41,7 @@ let uniqueId = 0;
     '[class.f-connection-reassign-disabled]': 'fDraggingDisabled()',
   },
   providers: [{ provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FConnectionComponent }],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FConnectionComponent extends FConnectionBase implements OnInit, OnChanges, OnDestroy {
   public override fId = input<string>(`f-connection-${uniqueId++}`, { alias: 'fConnectionId' });

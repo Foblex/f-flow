@@ -9,6 +9,7 @@ import {
   OnDestroy,
   OnInit,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
@@ -38,6 +39,7 @@ import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
   standalone: true,
   providers: [{ provide: F_MINIMAP_BASE, useExisting: FMinimapComponent }],
   imports: [FMinimapFlowDirective, FMinimapCanvasDirective, FMinimapViewDirective],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FMinimapComponent extends FMinimapBase implements AfterViewInit, OnInit, OnDestroy {
   private readonly _destroyRef = inject(DestroyRef);

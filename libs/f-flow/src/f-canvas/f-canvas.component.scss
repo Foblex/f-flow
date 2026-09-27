@@ -1,4 +1,4 @@
-:host {
+f-canvas {
   position: absolute;
   overflow: visible;
   width: 100%;
@@ -20,15 +20,15 @@
 // instead of competing across layers. The actual stacking order between
 // the three layers is controlled by their DOM order in the template
 // (driven by `[fLayers]` / `withFCanvas({ layers })`), not by z-index.
-.f-groups-container,
-.f-connections-container,
-.f-nodes-container {
+f-canvas .f-groups-container,
+f-canvas .f-connections-container,
+f-canvas .f-nodes-container {
   isolation: isolate;
 }
 
 // Connections-container stays absolutely positioned to preserve the
 // containing block its descendant SVGs rely on (matches every release
 // before v18.6).
-.f-connections-container {
+f-canvas .f-connections-container {
   position: absolute;
 }

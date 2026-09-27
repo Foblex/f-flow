@@ -11,6 +11,7 @@ import {
   OnInit,
   output,
   signal,
+  ViewEncapsulation,
 } from '@angular/core';
 import { FSnapTargetChangeEvent } from './f-snap-target-change-event';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
@@ -41,6 +42,7 @@ let uniqueId = 0;
     'aria-hidden': 'true',
   },
   providers: [{ provide: F_CONNECTION_COMPONENTS_PARENT, useExisting: FSnapConnectionComponent }],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FSnapConnectionComponent
   extends FConnectionBase

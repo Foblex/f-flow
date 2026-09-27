@@ -1,15 +1,15 @@
-:host {
+f-connection-waypoints {
   pointer-events: none;
   position: absolute;
-}
 
-svg {
-  display: block;
-  vertical-align: middle;
-  position: absolute;
-  overflow: visible;
-}
+  svg {
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    overflow: visible;
+  }
 
-circle {
-  pointer-events: visible;
+  circle {
+    pointer-events: visible;
+  }
 }

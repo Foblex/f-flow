@@ -1,4 +1,12 @@
-import { Component, inject, input, numberAttribute, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  numberAttribute,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FMediator } from '@foblex/mediator';
 import {
   INSTANCES,
@@ -21,6 +29,7 @@ import { F_MAGNETIC_LINES, FMagneticLinesBase } from '../f-magnetic-lines';
     'class': 'f-line-alignment f-component',
   },
   providers: [{ provide: F_MAGNETIC_LINES, useExisting: FLineAlignmentComponent }],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FLineAlignmentComponent extends FMagneticLinesBase implements OnInit, OnDestroy {
   public override readonly threshold = input(10, {
