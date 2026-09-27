@@ -29,6 +29,25 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v19-3-0-strict-csp-support-waypoint-routing-and-new-diagnostics',
+    text: 'v19.3.0',
+    group: 'Releases',
+    date: new Date('2026-09-28T12:00:00.000Z'),
+    seo: {
+      title:
+        'Foblex Flow v19.3.0: Strict CSP Support, Smarter Waypoint Routing, and New Diagnostics',
+      description:
+        'Foblex Flow v19.3 works under a strict Content-Security-Policy: hashable component styles with no unsafe-inline, even on static hosting. The release also smooths connection routing through waypoints, makes drops and reassigns hit the intended connector, and adds new dev diagnostics.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v19-3-0-strict-csp-support-waypoint-routing-and-new-diagnostics',
+      image: './previews/blog/foblex-flow-v19-3-0.png',
+      imageType: 'image/png',
+      imageWidth: 2000,
+      imageHeight: 1052,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
     text: 'v19.1.0',
     group: 'Releases',

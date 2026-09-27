@@ -16,6 +16,13 @@ interface IChangelogItem {
  */
 const CHANGELOG: IChangelogItem[] = [
   {
+    version: 'v19.3.0',
+    date: 'September 2026',
+    description:
+      'Strict CSP support without unsafe-inline, smoother connection routing through waypoints, drops that attach to the intended connector, snap target events, and new dev diagnostics.',
+    href: 'https://flow.foblex.com/blog/foblex-flow-v19-3-0-strict-csp-support-waypoint-routing-and-new-diagnostics',
+  },
+  {
     version: 'v19.1.0',
     date: 'July 2026',
     description:
@@ -28,13 +35,6 @@ const CHANGELOG: IChangelogItem[] = [
     description:
       'Control schemes, click-to-connect, keyboard accessibility, a unified connector model, and an AI-ready integration toolchain.',
     href: 'https://flow.foblex.com/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
-  },
-  {
-    version: 'v18.6.0',
-    date: 'April 2026',
-    description:
-      'Smart Auto-Layout on Resize: when a node grows or shrinks, the surrounding nodes shift automatically along configurable mode, scope, axis, and collision rules.',
-    href: 'https://flow.foblex.com/blog/foblex-flow-v18-6-0-smart-auto-layout-on-resize',
   },
 ];
 
