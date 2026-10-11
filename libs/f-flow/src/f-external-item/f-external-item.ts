@@ -71,6 +71,6 @@ export class FExternalItem<TData> extends FExternalItemBase<TData> implements On
   }
 
   public ngOnDestroy(): void {
-    this._apiService.register(this);
+    this._apiService.remove(this);
   }
 }

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Fixes
+
+- **external items:** destroyed `[fExternalItem]` directives are removed from `FExternalItemService` instead of being re-registered, so routed pages with palettes no longer leak their views and DOM through the root-provided service ([#335](https://github.com/Foblex/f-flow/issues/335)). Thanks @arunraja92.
+
 ## [19.3.0] - 2026-09-28
 
 ### Fixes
