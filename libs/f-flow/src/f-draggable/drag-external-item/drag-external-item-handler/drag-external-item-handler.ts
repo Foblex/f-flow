@@ -134,7 +134,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
       this._matchSize(el as HTMLElement, this._pointerDownRect);
     }
 
-    el.style.transform = _translate(this._pointerDownRect);
+    el.style.transform = _translate(this._absoluteToClient(this._pointerDownRect));
 
     return el;
   }
@@ -171,7 +171,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
     const constrained = this._applyConstraints(desiredDelta);
     const pointInFlow = Point.fromPoint(this._startRect).add(constrained);
     const next = this._toAbsolutePoint(pointInFlow).add(this._absoluteOffsetFromFlow);
-    this._previewEl.style.transform = _translate(next);
+    this._previewEl.style.transform = _translate(this._absoluteToClient(next));
   }
 
   public override onPointerUp(): void {
@@ -283,6 +283,19 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
       this._browser.window.pageXOffset || this._browser.document.documentElement.scrollLeft;
 
     return Point.fromPoint(clientPoint).add(PointExtensions.initialize(scrollLeft, scrollTop));
+  }
+
+  /**
+   * The preview is `position: fixed`, so its transform is in viewport (client) coordinates,
+   * while the drag math above works in page (absolute) coordinates.
+   */
+  private _absoluteToClient(absolutePoint: IPoint): Point {
+    const scrollTop =
+      this._browser.window.pageYOffset || this._browser.document.documentElement.scrollTop;
+    const scrollLeft =
+      this._browser.window.pageXOffset || this._browser.document.documentElement.scrollLeft;
+
+    return Point.fromPoint(absolutePoint).sub(PointExtensions.initialize(scrollLeft, scrollTop));
   }
 }
 
