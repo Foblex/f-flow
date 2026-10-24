@@ -30,10 +30,18 @@ export class VectorExtensions {
     return VectorExtensions.initialize(v1.x - v2.x, v1.y - v2.y);
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static add(v1: IVector, v2: IVector): IVector {
     return VectorExtensions.initialize(v1.x + v2.x, v1.y + v2.y);
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static scale(v: IVector, value: number): IVector {
     return VectorExtensions.initialize(v.x * value, v.y * value);
   }

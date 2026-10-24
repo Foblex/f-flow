@@ -27,6 +27,10 @@ export class Point implements IPoint {
     return Point.fromPoint(result);
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public subNumber(value: number): Point {
     const result = PointExtensions.sub(this, new Point(value, value));
 

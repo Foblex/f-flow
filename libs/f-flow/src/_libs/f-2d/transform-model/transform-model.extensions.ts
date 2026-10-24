@@ -10,6 +10,10 @@ export class TransformModelExtensions {
     return `matrix(${transform.scale}, 0, 0, ${transform.scale}, ${position.x}, ${position.y})`;
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static fromString(value: string | null): ITransformModel | undefined {
     return parseTransformModel(value);
   }

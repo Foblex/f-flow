@@ -1,8 +1,16 @@
 import { IPoint } from './i-point';
 
+/**
+ * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+ * `@foblex/2d` directly if you still need it.
+ */
 export type PointInput = IPoint | null | undefined;
 
 export class PointExtensions {
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static castToPoint(value: PointInput): IPoint {
     return value || PointExtensions.initialize();
   }
@@ -11,6 +19,10 @@ export class PointExtensions {
     return { x, y };
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static copy(point: IPoint): IPoint {
     return PointExtensions.initialize(point.x, point.y);
   }
@@ -44,6 +56,10 @@ export class PointExtensions {
     );
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static roundTo(point: IPoint, size: number): IPoint {
     const xCount = Math.trunc(point.x / size);
     const yCount = Math.trunc(point.y / size);
@@ -51,6 +67,10 @@ export class PointExtensions {
     return { x: xCount * size, y: yCount * size };
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static hypotenuse(point1: IPoint, point2: IPoint): number {
     const a = point2.x - point1.x;
     const b = point2.y - point1.y;
@@ -58,6 +78,10 @@ export class PointExtensions {
     return Math.abs(Math.sqrt(a * a + b * b));
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static distance(point1: IPoint, point2: IPoint): number {
     const dx = point1.x - point2.x;
     const dy = point1.y - point2.y;
@@ -65,10 +89,18 @@ export class PointExtensions {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static getMinimum(point1: IPoint, point2: IPoint): IPoint {
     return PointExtensions.initialize(Math.min(point1.x, point2.x), Math.min(point1.y, point2.y));
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static getMaximum(point1: IPoint, point2: IPoint): IPoint {
     return PointExtensions.initialize(Math.max(point1.x, point2.x), Math.max(point1.y, point2.y));
   }

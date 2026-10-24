@@ -1,5 +1,9 @@
 import { IRect } from './i-rect';
 
+/**
+ * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+ * `@foblex/2d` directly if you still need it.
+ */
 export function findClosestAlignment(
   elements: IRect[],
   target: IRect,

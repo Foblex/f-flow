@@ -93,6 +93,10 @@ export class RectExtensions {
     return this.initialize(rectCopy.x, rectCopy.y, rectCopy.width, rectCopy.height);
   }
 
+  /**
+   * @deprecated Not used by `@foblex/flow`; removed from the public API in v20. Depend on
+   * `@foblex/2d` directly if you still need it.
+   */
   public static addPointToSize(rect: IRect, point: IPoint): IRect {
     const rectCopy = RectExtensions.copy(rect);
     rectCopy.width += point.x;
