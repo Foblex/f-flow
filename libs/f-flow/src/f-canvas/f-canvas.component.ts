@@ -17,7 +17,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { F_CANVAS, FCanvasBase } from './models';
-import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions, TransformModelExtensions } from '../_libs/f-2d';
 import { FCanvasChangeEvent } from './models';
 import { FMediator } from '../_libs/f-mediator';
 import { EFCanvasLayer } from './enums';

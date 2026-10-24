@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ScrollCanvasRequest } from './scroll-canvas-request';
 import { IExecution } from '../../../_libs/f-mediator';
-import { PointExtensions } from '@foblex/2d';
+import { PointExtensions } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 
 /**

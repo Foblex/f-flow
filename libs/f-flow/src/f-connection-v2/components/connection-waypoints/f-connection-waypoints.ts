@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { F_CONNECTION_WAYPOINTS, FConnectionWaypointsBase } from './models';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FMediator } from '../../../_libs/f-mediator';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';

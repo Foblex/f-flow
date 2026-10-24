@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FMediator } from '../../../../_libs/f-mediator';
-import { IPoint, IRoundedRect, RectExtensions, RoundedRect } from '@foblex/2d';
+import { IPoint, IRoundedRect, RectExtensions, RoundedRect } from '../../../../_libs/f-2d';
 import { FConnectorBase, FSourceConnectorBase, isOutletConnector } from '../../../../f-connectors';
 import {
   ConnectionBehaviourBuilder,

@@ -3,7 +3,7 @@ import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FitToChildNodesAndGroupsRequest } from './fit-to-child-nodes-and-groups-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
-import { IRect, RectExtensions } from '@foblex/2d';
+import { IRect, RectExtensions } from '../../../_libs/f-2d';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 import { GetNodePaddingRequest } from '../get-node-padding';
 

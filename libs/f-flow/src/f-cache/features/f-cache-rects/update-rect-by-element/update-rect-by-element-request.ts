@@ -1,4 +1,4 @@
-import { IRect, IRoundedRect } from '@foblex/2d';
+import { IRect, IRoundedRect } from '../../../../_libs/f-2d';
 
 export class UpdateFCacheRectByElementRequest {
   /** Erased marker: the execution's return type, inferred by FMediator.execute. */

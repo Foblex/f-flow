@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { InputCanvasPositionRequest } from './input-canvas-position-request';
 import { IExecution } from '../../../_libs/f-mediator';
-import { IPoint, ITransformModel, PointExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 
 /**

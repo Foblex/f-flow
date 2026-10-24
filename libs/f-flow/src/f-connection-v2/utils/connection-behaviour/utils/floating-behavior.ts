@@ -1,4 +1,4 @@
-import { ILine, IPoint, IRoundedRect } from '@foblex/2d';
+import { ILine, IPoint, IRoundedRect } from '../../../../_libs/f-2d';
 import { ICalculateBehaviorRequest } from '../models';
 import { getRotatedRoundedRectIntersection } from './get-rotated-rounded-rect-intersection';
 

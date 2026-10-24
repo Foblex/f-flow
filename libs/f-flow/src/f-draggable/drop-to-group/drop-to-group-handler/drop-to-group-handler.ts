@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IPoint, ITransformModel, Point, RectExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, Point, RectExtensions } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';

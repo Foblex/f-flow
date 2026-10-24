@@ -1,4 +1,4 @@
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, Point, PointExtensions } from '../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';

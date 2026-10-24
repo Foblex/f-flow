@@ -3,7 +3,7 @@ import { PinchToZoomPreparationRequest } from './pinch-to-zoom-preparation-reque
 import { IExecution } from '../../../_libs/f-mediator';
 import { IPointerEvent } from '../../infrastructure';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
-import { Point } from '@foblex/2d';
+import { Point } from '../../../_libs/f-2d';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { PinchToZoomHandler } from '../handler';
 import { DragHandlerInjector } from '../../infrastructure';

@@ -1,4 +1,4 @@
-import { IPoint, IRect, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, RectExtensions } from '../../../_libs/f-2d';
 import { DragNodeItemHandler } from './drag-node-item-handler';
 import { Injectable } from '@angular/core';
 import { DragHandlerBase } from '../../infrastructure';

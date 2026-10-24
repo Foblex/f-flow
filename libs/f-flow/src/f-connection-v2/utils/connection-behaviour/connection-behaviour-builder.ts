@@ -1,5 +1,5 @@
 import { ConnectionBehaviourBuilderRequest } from './connection-behaviour-builder-request';
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../_libs/f-2d';
 import { fixedCenterBehavior, fixedOutboundBehavior, floatingBehavior } from './utils';
 import { EFConnectionBehavior, EFConnectionConnectableSide } from './enums';
 import { EFConnectableSide } from '../../enums';

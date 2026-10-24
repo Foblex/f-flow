@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 export function normalizePolyline(points: IPoint[], eps = 1e-6): IPoint[] {
   const n = points.length;

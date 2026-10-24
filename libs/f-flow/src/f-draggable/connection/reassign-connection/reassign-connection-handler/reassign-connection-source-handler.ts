@@ -14,7 +14,7 @@ import {
   FNodeOutputDirective,
 } from '../../../../f-connectors';
 import { FSnapConnectionComponent } from '../../../../f-connection';
-import { ILine, IPoint, RoundedRect } from '@foblex/2d';
+import { ILine, IPoint, RoundedRect } from '../../../../_libs/f-2d';
 import { IReassignHandler, rectFromPoint, withinSnapThreshold } from './i-reassign-handler';
 import {
   ConnectionBehaviourBuilder,

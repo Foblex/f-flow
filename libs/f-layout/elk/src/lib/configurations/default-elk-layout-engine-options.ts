@@ -1,4 +1,4 @@
-import { SizeExtensions } from '@foblex/2d';
+import { SizeExtensions } from '@foblex/flow';
 import { EFLayoutDirection } from '@foblex/flow';
 import { EElkLayoutAlgorithm } from '../enums';
 import { IElkLayoutEngineOptions } from '../models';

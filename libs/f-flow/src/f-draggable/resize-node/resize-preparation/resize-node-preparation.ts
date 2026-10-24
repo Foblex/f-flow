@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ResizeNodePreparationRequest } from './resize-node-preparation-request';
-import { ITransformModel, Point } from '@foblex/2d';
+import { ITransformModel, Point } from '../../../_libs/f-2d';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';

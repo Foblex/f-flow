@@ -1,4 +1,4 @@
-import { IPoint, RectExtensions, RoundedRect } from '@foblex/2d';
+import { IPoint, RectExtensions, RoundedRect } from '../../../../_libs/f-2d';
 import { FSnapConnectionComponent } from '../../../../f-connection';
 import { IClosestConnectorRef, IConnectorRectRef } from '../../../../domain';
 

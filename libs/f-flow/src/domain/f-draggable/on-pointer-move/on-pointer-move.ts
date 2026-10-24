@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { IExecution } from '../../../_libs/f-mediator';
 import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
-import { IPoint, Point } from '@foblex/2d';
+import { IPoint, Point } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 import { IPointerEvent } from '../../../f-draggable/infrastructure';
 

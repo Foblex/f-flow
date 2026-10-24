@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../../../_libs/f-2d';
 import { EFConnectableSide } from '../../../../../f-connection-v2';
 import { RenderConnectionFromGeometryRequest } from '../../main-thread/render-connection-from-geometry';
 import { RenderConnectionWithLineRequest } from '../../main-thread/render-connection-with-line';

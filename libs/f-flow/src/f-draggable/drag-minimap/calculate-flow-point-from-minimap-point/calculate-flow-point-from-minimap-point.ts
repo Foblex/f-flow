@@ -1,4 +1,4 @@
-import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '../../../_libs/f-2d';
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';

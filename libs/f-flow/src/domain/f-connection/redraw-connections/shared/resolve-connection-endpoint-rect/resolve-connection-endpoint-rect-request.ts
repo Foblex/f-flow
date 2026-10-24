@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../../_libs/f-2d';
 import { FConnectorBase } from '../../../../../f-connectors';
 
 export class ResolveConnectionEndpointRectRequest {

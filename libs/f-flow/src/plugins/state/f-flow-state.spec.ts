@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '../../_libs/f-2d';
 import { configureDiTest, injectFromDi, valueProvider } from '@foblex/flow';
 import { FSelectionChangeEvent } from '../../f-draggable';
 import { FFlowState } from './f-flow-state';

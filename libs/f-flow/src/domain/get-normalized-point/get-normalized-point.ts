@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedPointRequest } from './get-normalized-point-request';
 import { FComponentsStore } from '../../f-storage';

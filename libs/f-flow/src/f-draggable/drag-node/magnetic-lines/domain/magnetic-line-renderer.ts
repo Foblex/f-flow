@@ -1,4 +1,4 @@
-import { ISize, ITransformModel } from '@foblex/2d';
+import { ISize, ITransformModel } from '../../../../_libs/f-2d';
 import { MagneticLineElement } from './magnetic-line-element';
 import { BrowserService } from '../../../../_libs/f-platform';
 

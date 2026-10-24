@@ -1,6 +1,6 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { MagneticLinesPreparationRequest } from './magnetic-lines-preparation-request';
-import { IRect, ISize } from '@foblex/2d';
+import { IRect, ISize } from '../../../../_libs/f-2d';
 import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   DragNodeHandler,

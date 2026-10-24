@@ -10,7 +10,7 @@ import {
   RectExtensions,
   RoundedRect,
   SizeExtensions,
-} from '@foblex/2d';
+} from '../../_libs/f-2d';
 import { GetCachedFCacheRectRequest, UpdateFCacheRectByElementRequest } from '../../f-cache';
 import { calculatePointerInFlow } from '../../utils';
 

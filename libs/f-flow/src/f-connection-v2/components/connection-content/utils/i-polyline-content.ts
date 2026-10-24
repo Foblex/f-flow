@@ -1,5 +1,5 @@
 import { Signal } from '@angular/core';
-import { ISize } from '@foblex/2d';
+import { ISize } from '../../../../_libs/f-2d';
 import { PolylineContentAlign } from './polyline-content-align';
 
 /** Domain contract for content item to be placed along the path. */

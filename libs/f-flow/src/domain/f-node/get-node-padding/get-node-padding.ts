@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GetNodePaddingRequest } from './get-node-padding-request';
 import { IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../_libs/f-2d';
 import { BrowserService } from '../../../_libs/f-platform';
 
 /**

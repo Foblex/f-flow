@@ -5,7 +5,7 @@ import { FBackgroundBase } from '../f-backgroud';
 import { FConnectorBase, FNodeInputBase, FNodeOutletBase, FNodeOutputBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
-import { ITransformModel } from '@foblex/2d';
+import { ITransformModel } from '../_libs/f-2d';
 import { FConnectorRegistry } from './f-connector-registry';
 import { FNodeRegistry } from './f-node-registry';
 import { FConnectionRegistry } from './f-connection-registry';

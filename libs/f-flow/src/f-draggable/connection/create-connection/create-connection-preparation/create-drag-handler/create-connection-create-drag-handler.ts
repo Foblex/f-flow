@@ -1,4 +1,4 @@
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '../../../../../_libs/f-2d';
 import { IHandler } from '../../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionCreateDragHandlerRequest } from './create-connection-create-drag-handler-request';

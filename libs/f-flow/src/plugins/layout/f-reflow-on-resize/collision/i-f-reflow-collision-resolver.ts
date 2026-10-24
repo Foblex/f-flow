@@ -1,4 +1,4 @@
-import { IPoint, IRect } from '@foblex/2d';
+import { IPoint, IRect } from '../../../../_libs/f-2d';
 import { IReflowCandidate } from '../selection';
 
 export interface IReflowRawShift {

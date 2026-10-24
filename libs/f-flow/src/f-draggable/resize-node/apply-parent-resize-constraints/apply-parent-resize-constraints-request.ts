@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../_libs/f-2d';
 import { IResizeLimits } from '../constraint';
 
 export class ApplyParentResizeConstraintsRequest {

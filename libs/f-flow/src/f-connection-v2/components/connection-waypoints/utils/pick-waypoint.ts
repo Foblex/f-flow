@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../_libs/f-2d';
 import { Signal } from '@angular/core';
 
 import { FConnectionWaypointsBase } from '../models';

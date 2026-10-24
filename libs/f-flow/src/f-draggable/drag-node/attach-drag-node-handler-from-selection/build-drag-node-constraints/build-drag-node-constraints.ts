@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../../_libs/f-mediator';
-import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '@foblex/2d';
+import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '../../../../_libs/f-2d';
 import { BuildDragNodeConstraintsRequest } from './build-drag-node-constraints-request';
 import { infinityMinMax } from '../../../../utils';
 import { FNodeBase } from '../../../../f-node';

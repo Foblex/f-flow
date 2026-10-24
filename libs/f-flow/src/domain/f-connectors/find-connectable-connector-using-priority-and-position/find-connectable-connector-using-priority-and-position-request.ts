@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import type { FConnectorBase } from '../../../f-connectors';
 

@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../../_libs/f-2d';
 import { IMagneticGapRect } from './i-magnetic-gap-rect';
 import { IMagneticRectsResult, MagneticRectsAlignMode } from './i-magnetic-rects-result';
 

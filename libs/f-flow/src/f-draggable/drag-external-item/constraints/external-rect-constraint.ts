@@ -1,4 +1,4 @@
-import { IMinMaxPoint, IPoint } from '@foblex/2d';
+import { IMinMaxPoint, IPoint } from '../../../_libs/f-2d';
 import { Injector } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
 

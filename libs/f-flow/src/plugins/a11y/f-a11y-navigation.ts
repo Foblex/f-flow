@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../_libs/f-2d';
 
 export type FA11yDirection = 'up' | 'down' | 'left' | 'right';
 

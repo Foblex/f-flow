@@ -1,4 +1,4 @@
-import { RectExtensions, RoundedRect } from '@foblex/2d';
+import { RectExtensions, RoundedRect } from '../../../_libs/f-2d';
 import {
   CalculateClosestConnector,
   CalculateClosestConnectorRequest,

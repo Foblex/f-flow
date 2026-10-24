@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { ResetScaleAndCenterRequest } from './reset-scale-and-center-request';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
+import {
+  IPoint,
+  IRect,
+  ITransformModel,
+  PointExtensions,
+  RectExtensions,
+} from '../../../_libs/f-2d';
 import {
   CalculateNodesBoundingBoxRequest,
   ECanvasRedrawContext,

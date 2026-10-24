@@ -1,4 +1,4 @@
-import { PointExtensions } from '@foblex/2d';
+import { PointExtensions } from '../../../../../_libs/f-2d';
 import { calculateCenterBetweenPoints, createPureHarness } from '@foblex/flow';
 
 describe('calculateCenterBetweenPoints', () => {

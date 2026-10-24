@@ -1,5 +1,5 @@
 import { FMediator } from '../../../_libs/f-mediator';
-import { PointExtensions, RectExtensions } from '@foblex/2d';
+import { PointExtensions, RectExtensions } from '../../../_libs/f-2d';
 import {
   canvasFactory,
   configureDiTest,

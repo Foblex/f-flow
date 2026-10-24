@@ -18,7 +18,7 @@ import {
   requireSourceConnector,
   requireTargetConnector,
 } from '../../../../f-connectors';
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../_libs/f-2d';
 import { GetConnectorRectReferenceRequest } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
 

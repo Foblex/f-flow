@@ -1,4 +1,4 @@
-import { IPoint, ITransformModel, RectExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, RectExtensions } from '../../../_libs/f-2d';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from './find-connectable-connector-using-priority-and-position-request';
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '../../../_libs/f-platform';

@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../_libs/f-2d';
 import { EFConnectableSide } from '../../enums';
 import { FConnectionComponentsParent } from '../../models';
 import { IConnectionEndpointRotationContext } from './models';

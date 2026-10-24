@@ -15,6 +15,11 @@
       "description": "Rewrites @foblex/utils imports to @foblex/flow and removes the obsolete dependency - the helpers are bundled with the library now",
       "version": "19.4.0",
       "factory": "./ng-update/vendored-utils#migrateVendoredUtils"
+    },
+    "migration-vendored-2d": {
+      "description": "Rewrites @foblex/2d imports to @foblex/flow and removes the obsolete dependency - the geometry primitives are bundled with the library now",
+      "version": "19.4.0",
+      "factory": "./ng-update/vendored-2d#migrateVendored2d"
     }
   }
 }

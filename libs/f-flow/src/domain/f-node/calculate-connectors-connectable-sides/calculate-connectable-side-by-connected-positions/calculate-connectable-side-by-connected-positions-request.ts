@@ -1,5 +1,5 @@
 import { FConnectorBase } from '../../../../f-connectors';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../_libs/f-2d';
 import type { EFConnectableSide } from '../../../../f-connection-v2';
 
 export class CalculateConnectableSideByConnectedPositionsRequest {

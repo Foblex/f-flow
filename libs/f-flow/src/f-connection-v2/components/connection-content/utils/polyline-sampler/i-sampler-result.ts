@@ -1,5 +1,5 @@
 import { ITangent } from './i-tangent';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 /** Result of sampling the path. */
 export interface ISamplerResult {

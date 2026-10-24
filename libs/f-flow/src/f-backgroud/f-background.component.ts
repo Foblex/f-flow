@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
-import { ITransformModel } from '@foblex/2d';
+import { ITransformModel } from '../_libs/f-2d';
 import { F_BACKGROUND_PATTERN } from './domain';
 import { FMediator } from '../_libs/f-mediator';
 import { AddPatternToBackgroundRequest } from '../domain';

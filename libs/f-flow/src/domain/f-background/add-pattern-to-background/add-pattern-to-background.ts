@@ -1,4 +1,4 @@
-import { TransformModelExtensions } from '@foblex/2d';
+import { TransformModelExtensions } from '../../../_libs/f-2d';
 import { AddPatternToBackgroundRequest } from './add-pattern-to-background-request';
 import { inject, Injectable } from '@angular/core';
 import { IExecution } from '../../../_libs/f-mediator';

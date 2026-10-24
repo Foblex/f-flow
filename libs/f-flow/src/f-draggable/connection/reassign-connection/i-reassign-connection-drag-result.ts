@@ -1,4 +1,4 @@
-import { RoundedRect } from '@foblex/2d';
+import { RoundedRect } from '../../../_libs/f-2d';
 import { IConnectorRectRef } from '../../../domain';
 import { FConnectionBase } from '../../../f-connection-v2';
 

@@ -3,7 +3,7 @@ import { MinimapDrawNodesRequest } from './minimap-draw-nodes-request';
 import { IExecution } from '../../../_libs/f-mediator';
 import { createSVGElement } from '../../../domain';
 import { FNodeBase, FNodeDirective } from '../../../f-node';
-import { IRect, RectExtensions, setRectToElement } from '@foblex/2d';
+import { IRect, RectExtensions, setRectToElement } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 import { BrowserService } from '../../../_libs/f-platform';
 import { MinimapNodeRects } from '../minimap-node-rects';

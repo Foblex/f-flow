@@ -11,7 +11,7 @@ import {
   RectExtensions,
   RoundedRect,
   SizeExtensions,
-} from '@foblex/2d';
+} from '../../_libs/f-2d';
 import { GetCachedFCacheRectRequest, UpdateFCacheRectByElementRequest } from '../../f-cache';
 import { BrowserService } from '../../_libs/f-platform';
 import { calculatePointerInFlow } from '../../utils';

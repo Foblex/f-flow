@@ -1,5 +1,5 @@
 import { FMediator, IHandler } from '../../../../../_libs/f-mediator';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromConnectorPreparationRequest } from './create-connection-from-connector-preparation-request';
 import { FComponentsStore } from '../../../../../f-storage';

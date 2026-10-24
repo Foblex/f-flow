@@ -1,4 +1,4 @@
-import { IRect, ISize, ITransformModel } from '@foblex/2d';
+import { IRect, ISize, ITransformModel } from '../../../../_libs/f-2d';
 import { Injector } from '@angular/core';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { calculateMagneticGuides, IMagneticGuidesResult, MagneticLineRenderer } from '../domain';

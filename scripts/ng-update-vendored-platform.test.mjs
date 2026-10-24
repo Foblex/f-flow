@@ -171,3 +171,45 @@ describe('@foblex/flow ng-update vendored-utils migration', () => {
     assert.equal(packageJson.dependencies['@foblex/utils'], undefined);
   });
 });
+
+describe('@foblex/flow ng-update vendored-2d migration', () => {
+  async function run2dMigration(tree) {
+    const runner = new SchematicTestRunner('migrations', MIGRATIONS_PATH);
+
+    return runner.runSchematic('migration-vendored-2d', {}, tree);
+  }
+
+  const F2D_PACKAGE_JSON = JSON.stringify(
+    { dependencies: { '@foblex/flow': '^19.3.0', '@foblex/2d': '^1.2.2' } },
+    null,
+    2,
+  );
+
+  test('removes the dependency when the application does not import it', async () => {
+    const tree = createTree({
+      '/package.json': F2D_PACKAGE_JSON,
+      '/src/main.ts': "import { FFlowModule } from '@foblex/flow';\n",
+    });
+
+    const result = await run2dMigration(tree);
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.equal(packageJson.dependencies['@foblex/2d'], undefined);
+    assert.equal(packageJson.dependencies['@foblex/flow'], '^19.3.0');
+  });
+
+  test('rewrites 2d imports to @foblex/flow and removes the dependency', async () => {
+    const tree = createTree({
+      '/package.json': F2D_PACKAGE_JSON,
+      '/src/custom.ts': "import { IPoint, PointExtensions } from '@foblex/2d';\n",
+    });
+
+    const result = await run2dMigration(tree);
+    const custom = result.readContent('/src/custom.ts');
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.match(custom, /from '@foblex\/flow';/u);
+    assert.doesNotMatch(custom, /@foblex\/2d/u);
+    assert.equal(packageJson.dependencies['@foblex/2d'], undefined);
+  });
+});

@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../_libs/f-2d';
 import { IFCacheNodeRef } from './i-f-cache-node-ref';
 
 export class FCacheNode {

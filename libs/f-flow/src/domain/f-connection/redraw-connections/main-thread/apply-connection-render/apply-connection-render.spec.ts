@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../../../_libs/f-2d';
 import { FMediator } from '../../../../../_libs/f-mediator';
 import {
   configureDiTest,

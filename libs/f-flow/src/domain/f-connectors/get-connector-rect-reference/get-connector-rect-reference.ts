@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { GetConnectorRectReferenceRequest } from './get-connector-rect-reference-request';
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../_libs/f-2d';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { FConnectorBase } from '../../../f-connectors';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';

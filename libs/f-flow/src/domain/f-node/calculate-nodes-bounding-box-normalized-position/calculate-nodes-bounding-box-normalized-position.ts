@@ -1,4 +1,4 @@
-import { IRect, RectExtensions } from '@foblex/2d';
+import { IRect, RectExtensions } from '../../../_libs/f-2d';
 import { CalculateNodesBoundingBoxNormalizedPositionRequest } from './calculate-nodes-bounding-box-normalized-position-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';

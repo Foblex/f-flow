@@ -1,4 +1,4 @@
-import { TransformModelExtensions } from '@foblex/2d';
+import { TransformModelExtensions } from '../../../_libs/f-2d';
 import { canvasFactory, configureDiTest, FComponentsStore, injectFromDi } from '@foblex/flow';
 import { ECanvasRedrawContext } from './e-canvas-redraw-context';
 import { RedrawCanvasWithAnimation } from './redraw-canvas-with-animation';

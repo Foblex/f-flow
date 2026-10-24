@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SelectionAreaPreparationRequest } from './selection-area-preparation-request';
-import { Point } from '@foblex/2d';
+import { Point } from '../../../_libs/f-2d';
 import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import {

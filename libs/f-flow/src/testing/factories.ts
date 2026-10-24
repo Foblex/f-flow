@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-classes-per-file
-import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions, TransformModelExtensions } from '../_libs/f-2d';
 import { EFConnectableSide, FConnectionBase } from '../f-connection-v2';
 import { FConnectorBase, FConnectorKind, FConnectorType } from '../f-connectors';
 import { FCanvasBase } from '../f-canvas';

@@ -1,8 +1,6 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
-export function calculatePolylineCandidates(
-  polyline: IPoint[],
-): IPoint[] {
+export function calculatePolylineCandidates(polyline: IPoint[]): IPoint[] {
   if (polyline.length < 2) {
     throw new Error('Polylines must be at least two points');
   }

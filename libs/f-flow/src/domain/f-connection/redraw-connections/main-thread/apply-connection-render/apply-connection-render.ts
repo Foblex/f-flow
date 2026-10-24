@@ -1,4 +1,4 @@
-import { ILine, IPoint } from '@foblex/2d';
+import { ILine, IPoint } from '../../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { CreateConnectionMarkersRequest } from '../../../create-connection-markers';

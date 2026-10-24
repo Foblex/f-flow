@@ -1,4 +1,4 @@
-import { ILine, IPoint, PointExtensions, RoundedRect } from '@foblex/2d';
+import { ILine, IPoint, PointExtensions, RoundedRect } from '../../../_libs/f-2d';
 import { FMediator } from '../../../_libs/f-mediator';
 import {
   GetConnectorRectReferenceRequest,

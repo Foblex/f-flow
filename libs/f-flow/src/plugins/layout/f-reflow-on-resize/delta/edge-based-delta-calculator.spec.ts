@@ -1,4 +1,4 @@
-import { RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '../../../../_libs/f-2d';
 import { EFReflowAxis } from '../enums';
 import { EdgeBasedDeltaCalculator } from './edge-based-delta-calculator';
 

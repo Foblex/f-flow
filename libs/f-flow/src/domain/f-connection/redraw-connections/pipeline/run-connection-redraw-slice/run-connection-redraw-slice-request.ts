@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../../_libs/f-2d';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 import {
   IConnectionRedrawSession,

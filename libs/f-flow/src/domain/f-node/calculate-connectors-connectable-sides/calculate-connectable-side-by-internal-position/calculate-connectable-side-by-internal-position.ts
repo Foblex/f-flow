@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
 import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position-request';
-import { RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '../../../../_libs/f-2d';
 import { IsDragStartedRequest } from '../../../f-draggable';
 import { EFConnectableSide } from '../../../../f-connection-v2';
 

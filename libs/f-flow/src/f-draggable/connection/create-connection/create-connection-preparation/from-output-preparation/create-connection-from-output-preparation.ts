@@ -5,7 +5,7 @@ import { FNodeOutputBase, isNodeOutput, isOutletConnector } from '../../../../..
 import { CreateConnectionCreateDragHandlerRequest } from '../create-drag-handler';
 import { FComponentsStore } from '../../../../../f-storage';
 import { FNodeBase } from '../../../../../f-node';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 @Injectable()
 export class CreateConnectionFromOutputPreparation implements IHandler<

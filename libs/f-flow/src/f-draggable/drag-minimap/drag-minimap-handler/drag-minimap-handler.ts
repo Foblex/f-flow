@@ -1,4 +1,4 @@
-import { IPoint, IRect, Point } from '@foblex/2d';
+import { IPoint, IRect, Point } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
 import { FMediator } from '../../../_libs/f-mediator';

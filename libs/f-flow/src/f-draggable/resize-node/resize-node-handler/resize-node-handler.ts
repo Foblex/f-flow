@@ -1,4 +1,4 @@
-import { IPoint, IRect, IRoundedRect, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, IRoundedRect, RectExtensions } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
 import { FMediator } from '../../../_libs/f-mediator';

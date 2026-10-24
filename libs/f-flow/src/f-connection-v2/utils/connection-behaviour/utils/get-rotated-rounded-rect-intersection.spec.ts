@@ -1,4 +1,4 @@
-import { RoundedRect } from '@foblex/2d';
+import { RoundedRect } from '../../../../_libs/f-2d';
 import { getRotatedRoundedRectIntersection } from './get-rotated-rounded-rect-intersection';
 
 describe('getRotatedRoundedRectIntersection', () => {

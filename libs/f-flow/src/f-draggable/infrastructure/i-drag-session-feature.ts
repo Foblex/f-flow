@@ -1,4 +1,4 @@
-import { IPoint, IRect, ITransformModel } from '@foblex/2d';
+import { IPoint, IRect, ITransformModel } from '../../_libs/f-2d';
 
 export interface IDragSessionFeature {
   onPrepare?(ctx: IDragSessionContext): void;

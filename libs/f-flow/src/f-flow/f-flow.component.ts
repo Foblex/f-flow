@@ -42,7 +42,7 @@ import {
   SortItemLayersRequest,
   WaitForConnectionsRenderedRequest,
 } from '../domain';
-import { IPoint, IRect } from '@foblex/2d';
+import { IPoint, IRect } from '../_libs/f-2d';
 import { FMediator } from '../_libs/f-mediator';
 import { F_DRAGGABLE_PROVIDERS, FDraggableDataContext } from '../f-draggable';
 import {

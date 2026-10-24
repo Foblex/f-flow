@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-constraints-request';
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../_libs/f-2d';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IResizeLimit, IResizeLimits, IResizeOverflow } from '../constraint';
 import { SetFCacheNodeRectRequest } from '../../../f-cache';

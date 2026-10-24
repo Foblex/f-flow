@@ -1,4 +1,4 @@
-import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FRotateNodeStartEventData } from '../f-rotate-node-start-event-data';
 import { FComponentsStore } from '../../../f-storage';

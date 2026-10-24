@@ -10,7 +10,7 @@ import { FComponentsStore } from '../../../f-storage';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 import { filterConnectableTargets } from './filter-connectable-targets';
 import { EFConnectableSide } from '../../../f-connection-v2';
 

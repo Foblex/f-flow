@@ -11,7 +11,7 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IRect, ISize, PointExtensions } from '../_libs/f-2d';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { IHasHostElement } from '../i-has-host-element';

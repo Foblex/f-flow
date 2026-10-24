@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../_libs/f-2d';
 import { IExecution } from '../../../../_libs/f-mediator';
 import { UpdateFCacheRectByElementRequest } from './update-rect-by-element-request';
 import { FCache } from '../../../model';

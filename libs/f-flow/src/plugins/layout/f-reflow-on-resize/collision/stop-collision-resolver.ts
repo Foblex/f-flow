@@ -1,4 +1,4 @@
-import { IRect, RectExtensions } from '@foblex/2d';
+import { IRect, RectExtensions } from '../../../../_libs/f-2d';
 import { IReflowCandidate } from '../selection';
 import {
   IFReflowCollisionResolver,

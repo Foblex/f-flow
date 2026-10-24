@@ -1,4 +1,4 @@
-import { IMinMaxPoint } from '@foblex/2d';
+import { IMinMaxPoint } from '../_libs/f-2d';
 
 export function infinityMinMax(): IMinMaxPoint {
   return {

@@ -1,5 +1,5 @@
 import { Signal } from '@angular/core';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 
 export class GridSnapper {
   private readonly _vCellSize: number;

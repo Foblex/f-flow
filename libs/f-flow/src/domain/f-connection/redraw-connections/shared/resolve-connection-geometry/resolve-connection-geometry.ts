@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ResolveConnectionEndpointRectRequest } from '../resolve-connection-endpoint-rect';

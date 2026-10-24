@@ -1,5 +1,5 @@
 import { Polyline } from './polyline';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 import { ISamplerResult } from './i-sampler-result';
 
 /**

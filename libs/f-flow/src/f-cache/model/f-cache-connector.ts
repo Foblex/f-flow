@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../_libs/f-2d';
 import { FCacheConnectorKey } from './f-cache-connector-key';
 
 export class FCacheConnector {

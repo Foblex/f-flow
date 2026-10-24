@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ResetScaleRequest } from './reset-scale-request';
 import { IExecution } from '../../../_libs/f-mediator';
-import { ITransformModel, PointExtensions } from '@foblex/2d';
+import { ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 
 /**

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IRect, RectExtensions, RoundedRect } from '@foblex/2d';
+import { IRect, RectExtensions, RoundedRect } from '../../../../_libs/f-2d';
 import { IExecution } from '../../../../_libs/f-mediator';
 import { SetFCacheNodeRectRequest } from './set-node-rect-request';
 import { FCache } from '../../../model';

@@ -1,4 +1,4 @@
-import { Point } from '@foblex/2d';
+import { Point } from '../../../_libs/f-2d';
 import { FMediator } from '../../../_libs/f-mediator';
 import { IMouseEvent } from '../../infrastructure';
 import { FDraggableBase } from '../../f-draggable-base';

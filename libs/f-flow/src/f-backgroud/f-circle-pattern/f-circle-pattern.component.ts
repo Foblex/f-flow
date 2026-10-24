@@ -10,7 +10,12 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { IPoint, ITransformModel, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import {
+  IPoint,
+  ITransformModel,
+  PointExtensions,
+  TransformModelExtensions,
+} from '../../_libs/f-2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { BrowserService } from '../../_libs/f-platform';
 import { createSVGElement } from '../../domain';

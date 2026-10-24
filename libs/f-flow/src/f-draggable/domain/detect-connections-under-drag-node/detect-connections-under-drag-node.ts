@@ -1,4 +1,4 @@
-import { GetIntersections, IRoundedRect } from '@foblex/2d';
+import { GetIntersections, IRoundedRect } from '../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { DetectConnectionsUnderDragNodeRequest } from './detect-connections-under-drag-node-request';

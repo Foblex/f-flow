@@ -1,4 +1,4 @@
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../../../_libs/f-2d';
 import { FConnectorBase } from '../../../../../f-connectors';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 

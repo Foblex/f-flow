@@ -4,7 +4,7 @@ import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IFFlowState } from './i-f-flow-state';
 import { FComponentsStore } from '../../../f-storage';
 import { FGroupDirective, FNodeDirective } from '../../../f-node';
-import { IPoint, ITransformModel, PointExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { CalculateNodesStateRequest } from './calculate-nodes-state';
 import { CalculateConnectionsStateRequest } from './calculate-connections-state';
 import { FCanvasBase } from '../../../f-canvas';

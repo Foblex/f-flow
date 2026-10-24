@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { PointExtensions } from '@foblex/2d';
+import { PointExtensions } from '../../../../_libs/f-2d';
 import { EFLayoutMode } from '../enums';
 import { FLayoutEngine } from '../f-layout-engine';
 import { IFLayoutNodePosition } from '../models';

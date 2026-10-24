@@ -3,7 +3,7 @@ import {
   EFConnectionConnectableSide,
   EFConnectionType,
 } from '../../../f-connection-v2';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 
 export interface IFFlowStateConnection {
   id: string;

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ReassignConnectionPreparationRequest } from './reassign-connection-preparation-request';
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '../../../../_libs/f-2d';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, Point, PointExtensions } from '../../../_libs/f-2d';
 import { RunAutoPanFrameRequest } from './run-auto-pan-frame-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';

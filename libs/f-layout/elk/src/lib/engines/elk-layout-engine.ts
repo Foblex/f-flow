@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPoint, PointExtensions, SizeExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions, SizeExtensions } from '@foblex/flow';
 import {
   EFLayoutDirection,
   FLayoutEngine,

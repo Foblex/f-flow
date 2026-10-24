@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions-request';
 import { FConnectorBase } from '../../../../f-connectors';
-import { IPoint, IRect } from '@foblex/2d';
+import { IPoint, IRect } from '../../../../_libs/f-2d';
 import { determineSide } from '../utils';
 import { CALCULATABLE_SIDES } from '../constants';
 import { TCalculateMode } from '../models';

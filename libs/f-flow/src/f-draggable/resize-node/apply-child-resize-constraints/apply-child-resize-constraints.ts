@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApplyChildResizeConstraintsRequest } from './apply-child-resize-constraints-request';
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../_libs/f-2d';
 import { IExecution } from '../../../_libs/f-mediator';
 
 @Injectable()

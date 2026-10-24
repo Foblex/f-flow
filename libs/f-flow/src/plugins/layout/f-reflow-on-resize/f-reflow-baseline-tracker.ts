@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../_libs/f-2d';
 
 /**
  * Per-node "last known rect" used to derive the baseline for the next resize.

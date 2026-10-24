@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { SetZoomRequest } from './set-zoom-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
-import { IPoint, Point } from '@foblex/2d';
+import { IPoint, Point } from '../../../_libs/f-2d';
 import { FCanvasBase } from '../../../f-canvas';
 import { FZoomBase } from '../../../f-zoom';
 import { IsDragStartedRequest } from '../../f-draggable';

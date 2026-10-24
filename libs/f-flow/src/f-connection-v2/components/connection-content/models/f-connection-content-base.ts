@@ -1,5 +1,5 @@
 import { DestroyRef, ElementRef, inject, InjectionToken, Signal } from '@angular/core';
-import { ISize } from '@foblex/2d';
+import { ISize } from '../../../../_libs/f-2d';
 import { IPolylineContent, PolylineContentAlign } from '../utils';
 
 export const F_CONNECTION_CONTENT = new InjectionToken<FConnectionContentBase>(

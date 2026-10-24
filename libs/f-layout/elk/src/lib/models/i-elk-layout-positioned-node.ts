@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '@foblex/flow';
 
 export interface IElkLayoutPositionedNode extends IPoint {
   id: string;

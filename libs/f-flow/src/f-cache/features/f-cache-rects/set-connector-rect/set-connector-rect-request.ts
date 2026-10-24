@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../_libs/f-2d';
 
 export class SetFCacheConnectorRectRequest {
   /** Erased marker: the execution's return type, inferred by FMediator.execute. */
