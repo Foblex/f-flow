@@ -18,6 +18,13 @@ export class EmitEndDragSequenceEvent implements IExecution<EmitEndDragSequenceE
 
     this._dragSession.reset();
     this._emitEvent();
+
+    // a nodes render pass that fired mid-drag was skipped by the IsDragStarted
+    // guard; rerun it now that the drag is over
+    if (this._store.hasPendingNodesPassAfterDrag) {
+      this._store.hasPendingNodesPassAfterDrag = false;
+      this._store.emitNodeChanges();
+    }
   }
 
   private _emitEvent(): void {

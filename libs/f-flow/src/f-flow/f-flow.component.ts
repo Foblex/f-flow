@@ -52,7 +52,7 @@ import {
   ListenConnectionsChangesRequest,
 } from '../f-storage';
 import { BrowserService } from '../_libs/f-platform';
-import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
+import { afterNextPaint, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 import { F_CACHE_OPTIONS } from '../f-cache';
 import { F_FLOW_CONFIG } from '../provide-f-flow';
@@ -61,7 +61,16 @@ import { FA11yAnnouncer, FA11yController } from '../plugins/a11y';
 import { FFlowStateController } from '../plugins/state';
 
 let uniqueId = 0;
-const SORT_ITEM_LAYERS_DEBOUNCE_MS = 120;
+
+// grace for flows whose data arrives asynchronously shortly after init: while the store
+// is empty and this window is open, the pass defers instead of latching the one-shot
+// lifecycle events (fNodesRendered/fFullRendered/fLoaded) on an empty canvas; a
+// legitimately empty flow completes its lifecycle once the window closes
+const EMPTY_FLOW_LIFECYCLE_GRACE_MS = 120;
+
+// dev diagnostics inspect the settled state, not the intermediate ones a burst of
+// passes walks through — they run behind their own settle window
+const DEV_DIAGNOSTICS_SETTLE_MS = 120;
 
 @Component({
   selector: 'f-flow',
@@ -161,34 +170,82 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     );
   }
 
+  private _emptyBootstrapGraceTimer: ReturnType<typeof setTimeout> | null = null;
+  private _isEmptyBootstrapGraceElapsed = false;
+  private _devDiagnosticsTimer: ReturnType<typeof setTimeout> | null = null;
+
   private _listenNodesChanges(): void {
+    this._destroyRef.onDestroy(() => {
+      if (this._emptyBootstrapGraceTimer !== null) clearTimeout(this._emptyBootstrapGraceTimer);
+      if (this._devDiagnosticsTimer !== null) clearTimeout(this._devDiagnosticsTimer);
+    });
+
+    // no wall-clock debounce here: the store coalesces a burst of node registrations into
+    // one notification per microtask, and afterNextPaint restarts its double-rAF on every
+    // notification, so same-frame batches merge into one pass; correctness is held by the
+    // guards below and the connection revisions
     new FChannelHub(
       this._componentsStore.nodesChanges$,
       this._componentsStore.progressiveRenderChanges$,
     )
-      .pipe(notifyOnStart(), debounceTime(SORT_ITEM_LAYERS_DEBOUNCE_MS), afterNextPaint())
-      .listen(this._destroyRef, () => {
-        if (this._mediator.execute(new IsDragStartedRequest())) {
-          return;
-        }
+      .pipe(notifyOnStart(), afterNextPaint())
+      .listen(this._destroyRef, () => this._runNodesPass());
+  }
 
-        if (this._componentsStore.hasPendingProgressiveRender) {
-          return;
-        }
+  private _runNodesPass(): void {
+    if (this._mediator.execute(new IsDragStartedRequest())) {
+      // EmitEndDragSequenceEvent re-emits node changes for this flag, so the
+      // skipped pass runs right after pointer-up instead of being lost
+      this._componentsStore.hasPendingNodesPassAfterDrag = true;
 
-        this._mediator.execute(new SortItemLayersRequest());
-        this._mediator.execute(new NotifyNodesRenderedRequest());
-        this._mediator.execute(
-          new WaitForConnectionsRenderedRequest(
-            this._componentsStore.connectionsRevision + 1,
-            this._componentsStore.nodesRevision,
-            () => this._mediator.execute(new NotifyFullRenderedRequest()),
-            this._destroyRef,
-          ),
-        );
-        this._mediator.execute(new EmitConnectionsChangesRequest());
-        this._mediator.execute(new RunDevDiagnosticsRequest());
-      });
+      return;
+    }
+
+    if (this._componentsStore.hasPendingProgressiveRender) {
+      return;
+    }
+
+    if (!this._componentsStore.nodes.getAll().length && !this._isEmptyBootstrapGraceElapsed) {
+      this._emptyBootstrapGraceTimer ??= setTimeout(() => {
+        this._isEmptyBootstrapGraceElapsed = true;
+        this._emptyBootstrapGraceTimer = null;
+        this._componentsStore.emitNodeChanges();
+      }, EMPTY_FLOW_LIFECYCLE_GRACE_MS);
+
+      return;
+    }
+
+    if (this._emptyBootstrapGraceTimer !== null) {
+      clearTimeout(this._emptyBootstrapGraceTimer);
+      this._emptyBootstrapGraceTimer = null;
+    }
+    this._isEmptyBootstrapGraceElapsed = true;
+
+    this._mediator.execute(new SortItemLayersRequest());
+    this._mediator.execute(new NotifyNodesRenderedRequest());
+    this._mediator.execute(
+      new WaitForConnectionsRenderedRequest(
+        this._componentsStore.connectionsRevision + 1,
+        this._componentsStore.nodesRevision,
+        () => this._mediator.execute(new NotifyFullRenderedRequest()),
+        this._destroyRef,
+      ),
+    );
+    this._mediator.execute(new EmitConnectionsChangesRequest());
+    this._scheduleDevDiagnostics();
+  }
+
+  private _scheduleDevDiagnostics(): void {
+    if (!isFDevMode()) {
+      return;
+    }
+    if (this._devDiagnosticsTimer !== null) {
+      clearTimeout(this._devDiagnosticsTimer);
+    }
+    this._devDiagnosticsTimer = setTimeout(() => {
+      this._devDiagnosticsTimer = null;
+      this._mediator.execute(new RunDevDiagnosticsRequest());
+    }, DEV_DIAGNOSTICS_SETTLE_MS);
   }
 
   private _listenConnectionsChanges(): void {

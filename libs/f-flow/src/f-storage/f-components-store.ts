@@ -31,6 +31,13 @@ export class FComponentsStore {
   private _viewportAnimationCount = 0;
 
   public readonly nodesChanges$ = new FChannel();
+
+  /**
+   * Set when the nodes render pass was skipped because a drag was active;
+   * `EmitEndDragSequenceEvent` re-emits node changes for it, so the skipped
+   * pass runs right after pointer-up instead of being lost.
+   */
+  public hasPendingNodesPassAfterDrag = false;
   private _nodesRevision = 0;
 
   public readonly progressiveRenderChanges$ = new FChannel();

@@ -40,6 +40,23 @@ export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
     });
   }
 
+  // each move appends the group's children to the container tail; when they already sit
+  // there in that exact order the append is a pure no-op that still resets CSS
+  // transitions and forces layout, so the steady state (every pass after the first one)
+  // must skip the DOM entirely
+  private _isAlreadyContainerTail(elements: HTMLElement[]): boolean {
+    let cursor: Element | null = this._nodesContainer.lastElementChild;
+
+    for (let i = elements.length - 1; i >= 0; i--) {
+      if (cursor !== elements[i]) {
+        return false;
+      }
+      cursor = cursor.previousElementSibling;
+    }
+
+    return true;
+  }
+
   private _getGroups(): FNodeBase[] {
     return this._store.nodes.getAll().filter((x) => this._groupsContainer.contains(x.hostElement));
   }
@@ -60,6 +77,10 @@ export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
   }
 
   private _moveChildrenNodes(sortedChildrenGroups: HTMLElement[]): void {
+    if (!sortedChildrenGroups.length || this._isAlreadyContainerTail(sortedChildrenGroups)) {
+      return;
+    }
+
     const fragment = this._browser.document.createDocumentFragment();
     sortedChildrenGroups.forEach((childGroup: HTMLElement) => {
       fragment.appendChild(childGroup);
