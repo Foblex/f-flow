@@ -1,12 +1,11 @@
 import { ILine, IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { CreateConnectionMarkersRequest } from '../../../create-connection-markers';
 import { FConnectionBase, FConnectionContentBase } from '../../../../../f-connection-v2';
 import { ApplyConnectionRenderRequest } from './apply-connection-render-request';
 
 @Injectable()
-@FExecutionRegister(ApplyConnectionRenderRequest)
 export class ApplyConnectionRender implements IExecution<ApplyConnectionRenderRequest, void> {
   private readonly _mediator = inject(FMediator);
 

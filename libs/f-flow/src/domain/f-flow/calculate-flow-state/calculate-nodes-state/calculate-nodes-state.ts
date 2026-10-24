@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CalculateNodesStateRequest } from './calculate-nodes-state-request';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnector } from '../i-f-flow-state-connector';
@@ -10,7 +10,6 @@ import { GetNormalizedElementRectRequest } from '../../../get-normalized-element
  * Execution that retrieves the state of Flow nodes, including their position, size, inputs, outputs, and selection status.
  */
 @Injectable()
-@FExecutionRegister(CalculateNodesStateRequest)
 export class CalculateNodesState implements IExecution<
   CalculateNodesStateRequest,
   IFFlowStateNode[]

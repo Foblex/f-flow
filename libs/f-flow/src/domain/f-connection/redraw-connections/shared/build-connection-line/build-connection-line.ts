@@ -1,6 +1,6 @@
 import { ILine } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import {
   ConnectionBehaviourBuilder,
   ConnectionBehaviourBuilderRequest,
@@ -13,7 +13,6 @@ import { BuildConnectionLineRequest } from './build-connection-line-request';
 import { FConnectorBase } from '../../../../../f-connectors';
 
 @Injectable()
-@FExecutionRegister(BuildConnectionLineRequest)
 export class BuildConnectionLine implements IExecution<BuildConnectionLineRequest, ILine> {
   private readonly _mediator = inject(FMediator);
   private readonly _connectionBehaviour = inject(ConnectionBehaviourBuilder);

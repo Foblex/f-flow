@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedConnectorRectRequest } from './get-normalized-connector-rect-request';
-import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
 import {
   IPoint,
@@ -22,7 +22,6 @@ import { calculatePointerInFlow } from '../../utils';
  * adjusting for the canvas transformation and element offsets.
  */
 @Injectable()
-@FExecutionRegister(GetNormalizedConnectorRectRequest)
 export class GetNormalizedConnectorRect implements IExecution<
   GetNormalizedConnectorRectRequest,
   IRoundedRect

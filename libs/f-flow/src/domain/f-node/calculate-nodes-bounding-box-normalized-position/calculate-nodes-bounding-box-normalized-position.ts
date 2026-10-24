@@ -2,7 +2,7 @@ import { IRect, RectExtensions } from '@foblex/2d';
 import { CalculateNodesBoundingBoxNormalizedPositionRequest } from './calculate-nodes-bounding-box-normalized-position-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 import { GetCachedFCacheRectRequest } from '../../../f-cache';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
@@ -13,7 +13,6 @@ import { GetNormalizedElementRectRequest } from '../../get-normalized-element-re
  * It retrieves the rectangles of each node's host element and computes their union.
  */
 @Injectable()
-@FExecutionRegister(CalculateNodesBoundingBoxNormalizedPositionRequest)
 export class CalculateNodesBoundingBoxNormalizedPosition implements IExecution<
   CalculateNodesBoundingBoxNormalizedPositionRequest,
   IRect | null

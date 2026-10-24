@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RunDevDiagnosticsRequest } from './run-dev-diagnostics-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { fWarnOnce, isFDevMode } from '../../f-diagnostics';
@@ -17,7 +17,6 @@ const DEFAULT_MAX_NODE_POSITION_DRIFT = 2;
  * all warnings are one-shot per cause and stripped from production builds.
  */
 @Injectable()
-@FExecutionRegister(RunDevDiagnosticsRequest)
 export class RunDevDiagnostics implements IExecution<RunDevDiagnosticsRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _config = inject(F_FLOW_CONFIG, { optional: true });

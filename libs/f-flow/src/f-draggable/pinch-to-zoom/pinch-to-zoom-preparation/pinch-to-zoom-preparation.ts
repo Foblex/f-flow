@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PinchToZoomPreparationRequest } from './pinch-to-zoom-preparation-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { IPointerEvent } from '../../infrastructure';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { Point } from '@foblex/2d';
@@ -9,7 +9,6 @@ import { PinchToZoomHandler } from '../handler';
 import { DragHandlerInjector } from '../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(PinchToZoomPreparationRequest)
 export class PinchToZoomPreparation implements IExecution<PinchToZoomPreparationRequest, void> {
   private readonly _dragInjector = inject(DragHandlerInjector);
   private readonly _store = inject(FComponentsStore);

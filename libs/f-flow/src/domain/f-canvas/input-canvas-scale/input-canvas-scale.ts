@@ -1,13 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { InputCanvasScaleRequest } from './input-canvas-scale-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 /**
  * Execution that handles the scaling of the input canvas.
  * It updates the scale of the canvas transform and redraws the canvas when the user sets a new scale using the input.
  */
 @Injectable()
-@FExecutionRegister(InputCanvasScaleRequest)
 export class InputCanvasScale implements IExecution<InputCanvasScaleRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

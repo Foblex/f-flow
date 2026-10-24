@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions-request';
 import { FConnectorBase } from '../../../../f-connectors';
 import { IPoint, IRect } from '@foblex/2d';
@@ -14,7 +14,6 @@ import { EFConnectableSide } from '../../../../f-connection-v2';
  * based on positions of connected connectors and allowed sides.
  */
 @Injectable()
-@FExecutionRegister(CalculateConnectableSideByConnectedPositionsRequest)
 export class CalculateConnectableSideByConnectedPositions implements IExecution<
   CalculateConnectableSideByConnectedPositionsRequest,
   EFConnectableSide

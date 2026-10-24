@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '../../../../../_libs/f-platform';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState, IConnectionWorkerResponse } from '../../models';
 import { DisableConnectionWorkerRequest } from '../disable-connection-worker';
 import { HandleConnectionWorkerMessageRequest } from '../handle-connection-worker-message';
@@ -14,7 +14,6 @@ import {
 } from '../runtime/connection-worker-runtime';
 
 @Injectable()
-@FExecutionRegister(EnsureConnectionWorkerRequest)
 export class EnsureConnectionWorker implements IExecution<
   EnsureConnectionWorkerRequest,
   Worker | null

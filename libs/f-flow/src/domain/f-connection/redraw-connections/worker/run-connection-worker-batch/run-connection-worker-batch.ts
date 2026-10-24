@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { IConnectionWorkerResultItem } from '../../models';
 import { RunConnectionWorkerRequest } from '../run-connection-worker';
 import { RunConnectionWorkerBatchRequest } from './run-connection-worker-batch-request';
 
 @Injectable()
-@FExecutionRegister(RunConnectionWorkerBatchRequest)
 export class RunConnectionWorkerBatch implements IExecution<
   RunConnectionWorkerBatchRequest,
   Promise<IConnectionWorkerResultItem[]>

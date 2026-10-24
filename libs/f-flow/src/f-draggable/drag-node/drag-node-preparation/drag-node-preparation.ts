@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragNodePreparationRequest } from './drag-node-preparation-request';
 import { Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { findNodeOrGroupContaining, FNodeBase } from '../../../f-node';
@@ -18,7 +18,6 @@ import { MagneticLinesPreparationRequest } from '../magnetic-lines';
 import { MagneticRectsPreparationRequest } from '../magnetic-rects';
 
 @Injectable()
-@FExecutionRegister(DragNodePreparationRequest)
 export class DragNodePreparation implements IExecution<DragNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

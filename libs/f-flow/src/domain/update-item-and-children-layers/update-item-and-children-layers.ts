@@ -1,6 +1,6 @@
 import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes-and-groups';
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
@@ -12,7 +12,6 @@ import { fWarnOnce } from '../f-diagnostics';
  * It handles different item containers (groups, nodes, connections) and updates their layers accordingly.
  */
 @Injectable()
-@FExecutionRegister(UpdateItemAndChildrenLayersRequest)
 export class UpdateItemAndChildrenLayers implements IExecution<
   UpdateItemAndChildrenLayersRequest,
   void

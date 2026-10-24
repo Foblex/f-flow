@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { SetZoomRequest } from './set-zoom-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { IPoint, Point } from '@foblex/2d';
@@ -25,7 +25,6 @@ const DRAG_KINDS_WITHOUT_REBASE = new Set(['drag-canvas', 'selection-area']);
  * It adjusts the zoom level by a specified step and direction, ensuring it stays within defined limits.
  */
 @Injectable()
-@FExecutionRegister(SetZoomRequest)
 export class SetZoom implements IExecution<SetZoomRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

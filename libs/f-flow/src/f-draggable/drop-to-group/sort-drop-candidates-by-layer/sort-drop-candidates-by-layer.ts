@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { SortDropCandidatesByLayerRequest } from './sort-drop-candidates-by-layer-request';
 import { INodeWithRect } from '../../domain';
 
 @Injectable()
-@FExecutionRegister(SortDropCandidatesByLayerRequest)
 export class SortDropCandidatesByLayer implements IExecution<
   SortDropCandidatesByLayerRequest,
   INodeWithRect[]

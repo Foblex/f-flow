@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';
@@ -12,7 +12,6 @@ import { IPointerEvent } from '../../../f-draggable/infrastructure';
  * when the drag started, and updates the draggable items accordingly.
  */
 @Injectable()
-@FExecutionRegister(OnPointerMoveRequest)
 export class OnPointerMove implements IExecution<OnPointerMoveRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);

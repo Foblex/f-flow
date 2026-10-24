@@ -18,6 +18,16 @@ import { F_ZOOM_FEATURES } from './f-zoom';
 import { GetNormalizedConnectorRect } from './get-normalized-connector-rect';
 import { F_MINIMAP_FEATURES } from './minimap';
 import { F_CACHE_FEATURES } from '../f-cache';
+import { fExecution } from '../_libs/f-mediator';
+import { GetDeepChildrenNodesAndGroupsRequest } from './get-deep-children-nodes-and-groups/get-deep-children-nodes-and-groups-request';
+import { GetNormalizedConnectorRectRequest } from './get-normalized-connector-rect/get-normalized-connector-rect-request';
+import { GetNormalizedElementRectRequest } from './get-normalized-element-rect/get-normalized-element-rect-request';
+import { GetNormalizedPointRequest } from './get-normalized-point/get-normalized-point-request';
+import { MoveFrontElementsBeforeTargetElementRequest } from './update-item-and-children-layers/move-front-elements-before-target-element/move-front-elements-before-target-element-request';
+import { SortItemLayersRequest } from './sort-item-layers/sort-item-layers-request';
+import { SortItemsByParentRequest } from './sort-item-layers/sort-items-by-parent/sort-items-by-parent-request';
+import { SortNodeLayersRequest } from './sort-item-layers/sort-node-layers-by-groups/sort-node-layers-request';
+import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers/update-item-and-children-layers-request';
 
 /**
  * This module provides a collection of common providers for the FFlow domain.
@@ -48,21 +58,21 @@ export const COMMON_PROVIDERS = [
 
   ...F_CACHE_FEATURES,
 
-  GetDeepChildrenNodesAndGroups,
+  fExecution(GetDeepChildrenNodesAndGroupsRequest, GetDeepChildrenNodesAndGroups),
 
-  GetNormalizedConnectorRect,
+  fExecution(GetNormalizedConnectorRectRequest, GetNormalizedConnectorRect),
 
-  GetNormalizedElementRect,
+  fExecution(GetNormalizedElementRectRequest, GetNormalizedElementRect),
 
-  GetNormalizedPoint,
+  fExecution(GetNormalizedPointRequest, GetNormalizedPoint),
 
-  SortItemLayers,
+  fExecution(SortItemLayersRequest, SortItemLayers),
 
-  SortItemsByParent,
+  fExecution(SortItemsByParentRequest, SortItemsByParent),
 
-  SortNodeLayers,
+  fExecution(SortNodeLayersRequest, SortNodeLayers),
 
-  UpdateItemAndChildrenLayers,
+  fExecution(UpdateItemAndChildrenLayersRequest, UpdateItemAndChildrenLayers),
 
-  MoveFrontElementsBeforeTargetElement,
+  fExecution(MoveFrontElementsBeforeTargetElementRequest, MoveFrontElementsBeforeTargetElement),
 ];

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ReassignConnectionFinalizeRequest } from './reassign-connection-finalize-request';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FDraggableBase } from '../../../f-draggable-base';
 import { FReassignConnectionEvent } from '../f-reassign-connection-event';
 import { FConnectorBase } from '../../../../f-connectors';
@@ -16,7 +16,6 @@ import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-res
 import { ReassignConnectionHandler } from '../reassign-connection-handler';
 
 @Injectable()
-@FExecutionRegister(ReassignConnectionFinalizeRequest)
 export class ReassignConnectionFinalize implements IExecution<
   ReassignConnectionFinalizeRequest,
   void

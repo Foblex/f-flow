@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
-import { CalculateSelectableItemsRequest } from './calculate-selectable-items-request';
 import { FNodeBase } from '../../../f-node';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
@@ -13,7 +12,6 @@ import { FConnectionBase } from '../../../f-connection-v2';
  * It filters out elements that are already selected in the FDraggableDataContext.
  */
 @Injectable()
-@FExecutionRegister(CalculateSelectableItemsRequest)
 export class CalculateSelectableItems implements IExecution<void, ICanBeSelectedElementAndRect[]> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

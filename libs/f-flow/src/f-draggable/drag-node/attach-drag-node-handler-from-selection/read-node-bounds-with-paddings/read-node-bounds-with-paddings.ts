@@ -1,13 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { ReadNodeBoundsWithPaddingsRequest } from './read-node-bounds-with-paddings-request';
 import { IRect, RectExtensions } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FNodeBase } from '../../../../f-node';
 import { GetNodePaddingRequest, GetNormalizedElementRectRequest } from '../../../../domain';
 import { ReadNodeBoundsWithPaddingsResponse } from './read-node-bounds-with-paddings-response';
 
 @Injectable()
-@FExecutionRegister(ReadNodeBoundsWithPaddingsRequest)
 export class ReadNodeBoundsWithPaddings implements IExecution<
   ReadNodeBoundsWithPaddingsRequest,
   ReadNodeBoundsWithPaddingsResponse

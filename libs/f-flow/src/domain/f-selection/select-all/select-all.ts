@@ -1,6 +1,6 @@
 import { SelectAllRequest } from './select-all-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 
@@ -9,7 +9,6 @@ import { FDraggableDataContext } from '../../../f-draggable';
  * It marks all nodes and connections as selected and updates the selected items in the FDraggableDataContext.
  */
 @Injectable()
-@FExecutionRegister(SelectAllRequest)
 export class SelectAll implements IExecution<SelectAllRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);

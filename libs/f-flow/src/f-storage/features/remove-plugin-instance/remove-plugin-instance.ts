@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RemovePluginInstanceRequest } from './remove-plugin-instance-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that removes a line alignment from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(RemovePluginInstanceRequest)
 export class RemovePluginInstance implements IExecution<RemovePluginInstanceRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

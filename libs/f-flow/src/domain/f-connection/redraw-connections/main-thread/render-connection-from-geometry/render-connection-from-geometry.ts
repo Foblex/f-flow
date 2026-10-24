@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { BuildConnectionLineRequest } from '../../shared/build-connection-line';
 import { RenderConnectionWithLineRequest } from '../render-connection-with-line';
 import { RenderConnectionFromGeometryRequest } from './render-connection-from-geometry-request';
 
 @Injectable()
-@FExecutionRegister(RenderConnectionFromGeometryRequest)
 export class RenderConnectionFromGeometry implements IExecution<
   RenderConnectionFromGeometryRequest,
   void

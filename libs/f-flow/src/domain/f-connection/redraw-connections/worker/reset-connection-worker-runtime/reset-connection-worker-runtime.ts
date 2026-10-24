@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../../../_libs/f-mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState } from '../../models';
 import { ResetConnectionWorkerRuntimeRequest } from './reset-connection-worker-runtime-request';
 
 @Injectable()
-@FExecutionRegister(ResetConnectionWorkerRuntimeRequest)
 export class ResetConnectionWorkerRuntime implements IExecution<
   ResetConnectionWorkerRuntimeRequest,
   void

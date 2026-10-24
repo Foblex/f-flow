@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RemoveConnectionMarkerFromStoreRequest } from './remove-connection-marker-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that removes a connection marker from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(RemoveConnectionMarkerFromStoreRequest)
 export class RemoveConnectionMarkerFromStore implements IExecution<
   RemoveConnectionMarkerFromStoreRequest,
   void

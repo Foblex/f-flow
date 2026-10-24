@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { RoundedRect } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '../../../../_libs/f-mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { SetFCacheConnectorRectRequest } from './set-connector-rect-request';
 import { FCache, FCacheConnectorKeyFactory } from '../../../model';
 import { F_CACHE_OPTIONS } from '../../../config';
 
 @Injectable()
-@FExecutionRegister(SetFCacheConnectorRectRequest)
 export class SetFCacheConnectorRect implements IExecution<SetFCacheConnectorRectRequest, void> {
   private readonly _store = inject(FCache);
   private readonly _options = inject(F_CACHE_OPTIONS);

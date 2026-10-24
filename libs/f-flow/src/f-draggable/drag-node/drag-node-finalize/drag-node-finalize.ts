@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragNodeFinalizeRequest } from './drag-node-finalize-request';
 import { IPoint, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DetectConnectionsUnderDragNodeRequest } from '../../domain';
@@ -13,7 +13,6 @@ import { IMagneticRectsResult } from '../magnetic-rects';
 import { isDragNodeHandler } from '../is-drag-node-handler';
 
 @Injectable()
-@FExecutionRegister(DragNodeFinalizeRequest)
 export class DragNodeFinalize implements IExecution<DragNodeFinalizeRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

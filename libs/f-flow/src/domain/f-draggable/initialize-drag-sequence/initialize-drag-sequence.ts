@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { InitializeDragSequenceRequest } from './initialize-drag-sequence-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 
@@ -7,7 +7,6 @@ import { FDraggableDataContext } from '../../../f-draggable';
  * Execution that initializes the drag sequence by resetting the FDraggableDataContext.
  */
 @Injectable()
-@FExecutionRegister(InitializeDragSequenceRequest)
 export class InitializeDragSequence implements IExecution<InitializeDragSequenceRequest, void> {
   private readonly _dragContext = inject(FDraggableDataContext);
 

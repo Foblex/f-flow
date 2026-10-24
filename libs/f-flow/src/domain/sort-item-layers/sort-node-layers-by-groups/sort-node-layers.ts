@@ -1,6 +1,6 @@
 import { SortNodeLayersRequest } from './sort-node-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
@@ -13,7 +13,6 @@ import { FCanvasBase } from '../../../f-canvas';
  * and moves them to maintain the correct hierarchy.
  */
 @Injectable()
-@FExecutionRegister(SortNodeLayersRequest)
 export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 import {
@@ -8,7 +8,6 @@ import {
 } from './resolve-connection-endpoint-rotation-context-request';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectionEndpointRotationContextRequest)
 export class ResolveConnectionEndpointRotationContext implements IExecution<
   ResolveConnectionEndpointRotationContextRequest,
   TResolveConnectionEndpointRotationContextResponse

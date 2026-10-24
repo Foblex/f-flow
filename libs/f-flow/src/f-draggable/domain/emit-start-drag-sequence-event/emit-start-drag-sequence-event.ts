@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { EmitStartDragSequenceEventRequest } from './emit-start-drag-sequence-event-request';
 import { FComponentsStore } from '../../../f-storage';
 import {
@@ -13,7 +13,6 @@ import { F_CSS_CLASS } from '../../../domain';
  * Execution that starts the drag sequence by adding a dragging class to the host element
  */
 @Injectable()
-@FExecutionRegister(EmitStartDragSequenceEventRequest)
 export class EmitStartDragSequenceEvent implements IExecution<
   EmitStartDragSequenceEventRequest,
   void

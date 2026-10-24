@@ -12,3 +12,4 @@ export * from './i-validator';
 
 export * from './pipeline';
 export * from './f-response-of';
+export * from './f-execution';

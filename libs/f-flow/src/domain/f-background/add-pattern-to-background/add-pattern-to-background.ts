@@ -1,7 +1,7 @@
 import { TransformModelExtensions } from '@foblex/2d';
 import { AddPatternToBackgroundRequest } from './add-pattern-to-background-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { createSVGElement } from '../../../domain';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { BrowserService } from '../../../_libs/f-platform';
@@ -12,7 +12,6 @@ let uniqueId = 0;
  * Execution that adds a pattern to the background in the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(AddPatternToBackgroundRequest)
 export class AddPatternToBackground implements IExecution<AddPatternToBackgroundRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);

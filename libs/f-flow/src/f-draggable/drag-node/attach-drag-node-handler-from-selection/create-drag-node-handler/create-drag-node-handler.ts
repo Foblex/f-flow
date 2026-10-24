@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CreateDragNodeHandlerRequest } from './create-drag-node-handler-request';
 import { DragNodeHandler, DragNodeItemHandler } from '../../drag-node-handler';
 import { FNodeBase } from '../../../../f-node';
@@ -10,7 +10,6 @@ import { DragNodeConnectionHandlerBase } from '../../drag-node-dependent-connect
 import { AttachSoftParentConnectionDragHandlersToNodeRequest } from '../attach-soft-parent-connection-drag-handlers-to-node';
 
 @Injectable()
-@FExecutionRegister(CreateDragNodeHandlerRequest)
 export class CreateDragNodeHandler implements IExecution<
   CreateDragNodeHandlerRequest,
   DragNodeHandler

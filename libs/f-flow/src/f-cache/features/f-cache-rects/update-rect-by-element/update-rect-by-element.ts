@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { IRoundedRect } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '../../../../_libs/f-mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { UpdateFCacheRectByElementRequest } from './update-rect-by-element-request';
 import { FCache } from '../../../model';
 import { F_CACHE_OPTIONS } from '../../../config';
 
 @Injectable()
-@FExecutionRegister(UpdateFCacheRectByElementRequest)
 export class UpdateFCacheRectByElement implements IExecution<
   UpdateFCacheRectByElementRequest,
   void

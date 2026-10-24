@@ -1,7 +1,6 @@
 import { IHandler } from '../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFinalizeRequest } from './create-connection-finalize-request';
-import { FExecutionRegister } from '../../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { CreateConnectionHandler } from '../create-connection-handler';
 import { FCreateConnectionSession } from '../f-create-connection-session';
@@ -13,7 +12,6 @@ import { FCreateConnectionSession } from '../f-create-connection-session';
  * by an unrelated drag's pointer up.
  */
 @Injectable()
-@FExecutionRegister(CreateConnectionFinalizeRequest)
 export class CreateConnectionFinalize implements IHandler<CreateConnectionFinalizeRequest, void> {
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _session = inject(FCreateConnectionSession);

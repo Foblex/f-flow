@@ -1,10 +1,9 @@
 import { PreventDefaultIsExternalItemRequest } from './prevent-default-is-external-item-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { Injectable } from '@angular/core';
 import { isExternalItem } from '../../../f-external-item';
 
 @Injectable()
-@FExecutionRegister(PreventDefaultIsExternalItemRequest)
 export class PreventDefaultIsExternalItem implements IExecution<
   PreventDefaultIsExternalItemRequest,
   void

@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { SelectionAreaFinalizeRequest } from './selection-area-finalize-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 
 @Injectable()
-@FExecutionRegister(SelectionAreaFinalizeRequest)
 export class SelectionAreaFinalize implements IExecution<SelectionAreaFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
 

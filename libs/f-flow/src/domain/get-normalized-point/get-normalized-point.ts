@@ -2,7 +2,7 @@ import { IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedPointRequest } from './get-normalized-point-request';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '../../_libs/f-mediator';
+import { IExecution } from '../../_libs/f-mediator';
 import { calculatePointerInFlow } from '../../utils';
 
 /**
@@ -11,7 +11,6 @@ import { calculatePointerInFlow } from '../../utils';
  * and the canvas transformation.
  */
 @Injectable()
-@FExecutionRegister(GetNormalizedPointRequest)
 export class GetNormalizedPoint implements IExecution<GetNormalizedPointRequest, IPoint> {
   private readonly _store = inject(FComponentsStore);
 

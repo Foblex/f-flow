@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RemoveSnapConnectionFromStoreRequest } from './remove-snap-connection-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that removes the snap connection from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(RemoveSnapConnectionFromStoreRequest)
 export class RemoveSnapConnectionFromStore implements IExecution<
   RemoveSnapConnectionFromStoreRequest,
   void

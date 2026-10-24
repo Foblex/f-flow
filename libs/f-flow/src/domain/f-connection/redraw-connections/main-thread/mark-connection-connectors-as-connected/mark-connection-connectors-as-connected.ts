@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../../../_libs/f-mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { MarkConnectionConnectorsAsConnectedRequest } from './mark-connection-connectors-as-connected-request';
 import { ConnectionRedrawState } from '../../models';
 
 @Injectable()
-@FExecutionRegister(MarkConnectionConnectorsAsConnectedRequest)
 export class MarkConnectionConnectorsAsConnected implements IExecution<
   MarkConnectionConnectorsAsConnectedRequest,
   void

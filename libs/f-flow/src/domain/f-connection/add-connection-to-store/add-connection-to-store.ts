@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { AddConnectionToStoreRequest } from './add-connection-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that adds a connection to the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(AddConnectionToStoreRequest)
 export class AddConnectionToStore implements IExecution<AddConnectionToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

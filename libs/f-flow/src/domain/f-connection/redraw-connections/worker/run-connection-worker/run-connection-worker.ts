@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState, IConnectionWorkerResultItem } from '../../models';
 import { EnsureConnectionWorkerRequest } from '../ensure-connection-worker';
 import { IsConnectionWorkerEnabledRequest } from '../is-connection-worker-enabled';
 import { RunConnectionWorkerRequest } from './run-connection-worker-request';
 
 @Injectable()
-@FExecutionRegister(RunConnectionWorkerRequest)
 export class RunConnectionWorker implements IExecution<
   RunConnectionWorkerRequest,
   Promise<IConnectionWorkerResultItem[]>

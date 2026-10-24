@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '../../../../_libs/f-mediator';
+import { FMediator, IHandler } from '../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { isConnector, isNodeOutlet, isNodeOutput } from '../../../../f-connectors';
@@ -13,7 +13,6 @@ import { FEventTrigger, isValidEventTrigger } from '../../../../domain';
 import { IPointerEvent } from '../../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(CreateConnectionPreparationRequest)
 export class CreateConnectionPreparation implements IHandler<
   CreateConnectionPreparationRequest,
   void

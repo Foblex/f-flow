@@ -1,10 +1,9 @@
 import { NotifyTransformChangedRequest } from './notify-transform-changed-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-components-store';
 
 @Injectable()
-@FExecutionRegister(NotifyTransformChangedRequest)
 export class NotifyTransformChanged implements IExecution<NotifyTransformChangedRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

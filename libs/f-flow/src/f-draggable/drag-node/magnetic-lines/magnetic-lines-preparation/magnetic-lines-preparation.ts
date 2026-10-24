@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { MagneticLinesPreparationRequest } from './magnetic-lines-preparation-request';
 import { IRect, ISize } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   DragNodeHandler,
   DragNodeItemHandler,
@@ -16,7 +16,6 @@ import { GetNormalizedElementRectRequest } from '../../../../domain';
 import { FMagneticLinesBase } from '../../../../plugins/snapping/f-magnetic-lines';
 
 @Injectable()
-@FExecutionRegister(MagneticLinesPreparationRequest)
 export class MagneticLinesPreparation implements IExecution<MagneticLinesPreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RotateNodePreparationRequest } from './rotate-node-preparation-request';
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
@@ -27,7 +27,6 @@ type TRotateConnectionHandler = {
 };
 
 @Injectable()
-@FExecutionRegister(RotateNodePreparationRequest)
 export class RotateNodePreparation implements IExecution<RotateNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { DragCanvasFinalizeRequest } from './drag-canvas-finalize-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DragCanvasHandler } from '../drag-canvas-handler';
 
 @Injectable()
-@FExecutionRegister(DragCanvasFinalizeRequest)
 export class DragCanvasFinalize implements IExecution<DragCanvasFinalizeRequest, void> {
   private readonly _dragContext = inject(FDraggableDataContext);
 

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ECanvasRedrawContext } from './e-canvas-redraw-context';
 import { RedrawCanvasWithAnimationRequest } from './redraw-canvas-with-animation-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { transitionEnd } from '../../transition-end';
 import { FCanvasBase } from '../../../f-canvas';
@@ -13,7 +13,6 @@ import { TransformModelExtensions } from '@foblex/2d';
  * If not animated, it will redraw immediately and notify data change.
  */
 @Injectable()
-@FExecutionRegister(RedrawCanvasWithAnimationRequest)
 export class RedrawCanvasWithAnimation implements IExecution<
   RedrawCanvasWithAnimationRequest,
   void

@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { ListenNodesChangesRequest } from './listen-nodes-changes-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FChannelHub } from '../../../reactivity';
 
 @Injectable()
-@FExecutionRegister(ListenNodesChangesRequest)
 export class ListenNodesChanges implements IExecution<ListenNodesChangesRequest, FChannelHub> {
   private readonly _store = inject(FComponentsStore);
 

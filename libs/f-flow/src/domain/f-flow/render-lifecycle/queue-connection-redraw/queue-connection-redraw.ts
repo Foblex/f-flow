@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { QueueConnectionRedrawRequest } from './queue-connection-redraw-request';
 import { QueueConnectionRedrawState } from './queue-connection-redraw-state';
 import { FComponentsStore } from '../../../../f-storage';
 import { RedrawConnectionsRequest } from '../../../f-connection';
 
 @Injectable()
-@FExecutionRegister(QueueConnectionRedrawRequest)
 export class QueueConnectionRedraw implements IExecution<QueueConnectionRedrawRequest, void> {
   private readonly _state = inject(QueueConnectionRedrawState);
   private readonly _store = inject(FComponentsStore);

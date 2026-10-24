@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ResizeNodePreparationRequest } from './resize-node-preparation-request';
 import { ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
@@ -15,7 +15,6 @@ import { DragHandlerInjector } from '../../infrastructure';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node';
 
 @Injectable()
-@FExecutionRegister(ResizeNodePreparationRequest)
 export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

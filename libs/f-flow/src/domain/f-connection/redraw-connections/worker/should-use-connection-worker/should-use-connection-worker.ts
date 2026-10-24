@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ShouldUseConnectionWorkerRequest } from './should-use-connection-worker-request';
 import { IsConnectionWorkerEnabledRequest } from '../is-connection-worker-enabled';
 
 @Injectable()
-@FExecutionRegister(ShouldUseConnectionWorkerRequest)
 export class ShouldUseConnectionWorker implements IExecution<
   ShouldUseConnectionWorkerRequest,
   boolean

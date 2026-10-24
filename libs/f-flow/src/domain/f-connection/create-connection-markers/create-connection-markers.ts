@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { BrowserService } from '../../../_libs/f-platform';
 import { normalizeDomElementId } from '@foblex/utils';
 import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2';
@@ -10,7 +10,6 @@ import { EFMarkerType } from '../../../f-connection-v2';
  * Execution that creates connection markers for a given connection.
  */
 @Injectable()
-@FExecutionRegister(CreateConnectionMarkersRequest)
 export class CreateConnectionMarkers implements IExecution<
   CreateConnectionMarkersRequest,
   boolean

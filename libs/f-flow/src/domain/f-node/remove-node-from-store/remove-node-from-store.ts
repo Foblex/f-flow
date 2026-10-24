@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { RemoveNodeFromStoreRequest } from './remove-node-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 import { UnregisterFCacheNodeRequest } from '../../../f-cache';
@@ -8,7 +8,6 @@ import { UnregisterFCacheNodeRequest } from '../../../f-cache';
  * Execution that removes a node from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(RemoveNodeFromStoreRequest)
 export class RemoveNodeFromStore implements IExecution<RemoveNodeFromStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);

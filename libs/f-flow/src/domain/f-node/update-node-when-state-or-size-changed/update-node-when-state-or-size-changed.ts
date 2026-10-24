@@ -1,5 +1,5 @@
 import { afterNextRender, inject, Injectable, Injector } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FChannelHub, FResizeChannel } from '../../../reactivity';
@@ -19,7 +19,6 @@ import { FReflowOrchestrator } from '../../../plugins/layout/f-reflow-on-resize'
  * feature is not active.
  */
 @Injectable()
-@FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
 export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
   UpdateNodeWhenStateOrSizeChangedRequest,
   void

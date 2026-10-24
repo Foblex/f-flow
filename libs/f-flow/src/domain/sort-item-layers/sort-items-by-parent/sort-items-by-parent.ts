@@ -1,6 +1,6 @@
 import { SortItemsByParentRequest } from './sort-items-by-parent-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { BrowserService } from '../../../_libs/f-platform';
@@ -11,7 +11,6 @@ import { BrowserService } from '../../../_libs/f-platform';
  * and moves them to maintain the correct hierarchy.
  */
 @Injectable()
-@FExecutionRegister(SortItemsByParentRequest)
 export class SortItemsByParent implements IExecution<SortItemsByParentRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _browser = inject(BrowserService);

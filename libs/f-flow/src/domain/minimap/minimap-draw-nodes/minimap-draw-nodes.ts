@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapDrawNodesRequest } from './minimap-draw-nodes-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { createSVGElement } from '../../../domain';
 import { FNodeBase, FNodeDirective } from '../../../f-node';
 import { IRect, RectExtensions, setRectToElement } from '@foblex/2d';
@@ -22,7 +22,6 @@ interface IMinimapNodeEntry {
  * node rect on every animation frame.
  */
 @Injectable()
-@FExecutionRegister(MinimapDrawNodesRequest)
 export class MinimapDrawNodes implements IExecution<MinimapDrawNodesRequest, void> {
   private readonly _browser = inject(BrowserService);
   private readonly _store = inject(FComponentsStore);

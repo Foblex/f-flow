@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { DropToGroupPreparationRequest } from './drop-to-group-preparation-request';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
 import {
@@ -17,7 +17,6 @@ import { DragHandlerInjector } from '../../infrastructure';
 import { DragExternalItemHandler } from '../../drag-external-item';
 
 @Injectable()
-@FExecutionRegister(DropToGroupPreparationRequest)
 export class DropToGroupPreparation implements IExecution<DropToGroupPreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _dragContext = inject(FDraggableDataContext);

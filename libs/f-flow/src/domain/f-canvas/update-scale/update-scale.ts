@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { UpdateScaleRequest } from './update-scale-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { ITransformModel, PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -9,7 +9,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Occurs when the fZoom directive or User call the setScale method.
  */
 @Injectable()
-@FExecutionRegister(UpdateScaleRequest)
 export class UpdateScale implements IExecution<UpdateScaleRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

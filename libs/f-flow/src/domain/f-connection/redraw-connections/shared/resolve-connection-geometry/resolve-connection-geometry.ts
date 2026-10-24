@@ -1,6 +1,6 @@
 import { IRoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ResolveConnectionEndpointRectRequest } from '../resolve-connection-endpoint-rect';
 import { ResolveConnectionEndpointsRequest } from '../resolve-connection-endpoints';
 import { ResolveConnectionGeometryRequest } from './resolve-connection-geometry-request';
@@ -9,7 +9,6 @@ import { FConnectionBase } from '../../../../../f-connection-v2';
 import { FConnectorBase } from '../../../../../f-connectors';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectionGeometryRequest)
 export class ResolveConnectionGeometry implements IExecution<
   ResolveConnectionGeometryRequest,
   IConnectionGeometry | null

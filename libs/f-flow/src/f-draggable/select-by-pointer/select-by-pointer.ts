@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { SelectByPointerRequest } from './select-by-pointer-request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { FComponentsStore } from '../../f-storage';
@@ -49,7 +49,6 @@ import { SelectionAreaHandler } from '../selection-area';
  */
 
 @Injectable()
-@FExecutionRegister(SelectByPointerRequest)
 export class SelectByPointer implements IExecution<SelectByPointerRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

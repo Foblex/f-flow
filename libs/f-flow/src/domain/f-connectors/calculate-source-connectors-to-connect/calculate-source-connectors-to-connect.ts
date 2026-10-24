@@ -1,6 +1,6 @@
 import { CalculateSourceConnectorsToConnectRequest } from './calculate-source-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import {
   FConnectorBase,
   FSourceConnectorBase,
@@ -18,7 +18,6 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  * along with their rect references.
  */
 @Injectable()
-@FExecutionRegister(CalculateSourceConnectorsToConnectRequest)
 export class CalculateSourceConnectorsToConnect implements IExecution<
   CalculateSourceConnectorsToConnectRequest,
   IConnectorRectRef[]

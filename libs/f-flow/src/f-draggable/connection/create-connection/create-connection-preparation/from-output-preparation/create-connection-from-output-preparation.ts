@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '../../../../../_libs/f-mediator';
+import { FMediator, IHandler } from '../../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromOutputPreparationRequest } from './create-connection-from-output-preparation-request';
 import { FNodeOutputBase, isNodeOutput, isOutletConnector } from '../../../../../f-connectors';
@@ -8,7 +8,6 @@ import { FNodeBase } from '../../../../../f-node';
 import { IPoint } from '@foblex/2d';
 
 @Injectable()
-@FExecutionRegister(CreateConnectionFromOutputPreparationRequest)
 export class CreateConnectionFromOutputPreparation implements IHandler<
   CreateConnectionFromOutputPreparationRequest,
   void

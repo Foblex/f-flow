@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { AddCanvasToStoreRequest } from './add-canvas-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that adds a canvas to the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(AddCanvasToStoreRequest)
 export class AddCanvasToStore implements IExecution<AddCanvasToStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

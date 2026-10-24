@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ScrollCanvasRequest } from './scroll-canvas-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -10,7 +10,6 @@ import { FComponentsStore } from '../../../f-storage';
  * transform position.
  */
 @Injectable()
-@FExecutionRegister(ScrollCanvasRequest)
 export class ScrollCanvas implements IExecution<ScrollCanvasRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

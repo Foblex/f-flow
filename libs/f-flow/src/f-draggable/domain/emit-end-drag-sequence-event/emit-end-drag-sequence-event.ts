@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { EmitEndDragSequenceEventRequest } from './emit-end-drag-sequence-event-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -9,7 +9,6 @@ import { F_CSS_CLASS } from '../../../domain';
  * Execution that handles the end of a drag sequence.
  */
 @Injectable()
-@FExecutionRegister(EmitEndDragSequenceEventRequest)
 export class EmitEndDragSequenceEvent implements IExecution<EmitEndDragSequenceEventRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragSession = inject(FDraggableDataContext);

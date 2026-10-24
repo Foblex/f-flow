@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FitToChildNodesAndGroupsRequest } from './fit-to-child-nodes-and-groups-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
@@ -8,7 +8,6 @@ import { GetNormalizedElementRectRequest } from '../../get-normalized-element-re
 import { GetNodePaddingRequest } from '../get-node-padding';
 
 @Injectable()
-@FExecutionRegister(FitToChildNodesAndGroupsRequest)
 export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGroupsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

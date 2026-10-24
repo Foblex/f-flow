@@ -1,12 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { UnregisterFCacheNodeRequest } from './unregister-node-request';
 import { FCache } from '../../../model';
 import { UnregisterFCacheConnectorRequest } from '../../f-cache-connectors';
 import { F_CACHE_OPTIONS } from '../../../config';
 
 @Injectable()
-@FExecutionRegister(UnregisterFCacheNodeRequest)
 export class UnregisterFCacheNode implements IExecution<UnregisterFCacheNodeRequest, void> {
   private readonly _store = inject(FCache);
   private readonly _mediator = inject(FMediator);

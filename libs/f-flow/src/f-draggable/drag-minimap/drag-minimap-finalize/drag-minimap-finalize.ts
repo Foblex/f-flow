@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { DragMinimapFinalizeRequest } from './drag-minimap-finalize-request';
-import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext, isDragMinimapHandler } from '../../../f-draggable';
 
 @Injectable()
-@FExecutionRegister(DragMinimapFinalizeRequest)
 export class DragMinimapFinalize implements IExecution<DragMinimapFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
 

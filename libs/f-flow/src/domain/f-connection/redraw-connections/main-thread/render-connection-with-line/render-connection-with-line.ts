@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ApplyConnectionRenderRequest } from '../apply-connection-render';
 import { MarkConnectionConnectorsAsConnectedRequest } from '../mark-connection-connectors-as-connected';
 import { RenderConnectionWithLineRequest } from './render-connection-with-line-request';
 
 @Injectable()
-@FExecutionRegister(RenderConnectionWithLineRequest)
 export class RenderConnectionWithLine implements IExecution<RenderConnectionWithLineRequest, void> {
   private readonly _mediator = inject(FMediator);
 

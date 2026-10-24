@@ -4,10 +4,8 @@ import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, getAllSourceConnectors } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { ResolveConnectableOutputForOutletRequest } from './resolve-connectable-output-for-outlet-request';
-import { FExecutionRegister } from '../../../../_libs/f-mediator';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectableOutputForOutletRequest)
 export class ResolveConnectableOutputForOutlet implements IHandler<
   ResolveConnectableOutputForOutletRequest,
   FConnectorBase | undefined

@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '../../../_libs/f-mediator';
+import { FMediator, IHandler } from '../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer-request';
 import { FDraggableDataContext } from '../../../f-draggable';
@@ -11,7 +11,6 @@ import { FNodeBase } from '../../../f-node';
  * and updates the layers of the node and its children.
  */
 @Injectable()
-@FExecutionRegister(SelectAndUpdateNodeLayerRequest)
 export class SelectAndUpdateNodeLayer implements IHandler<SelectAndUpdateNodeLayerRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
   private readonly _mediator = inject(FMediator);

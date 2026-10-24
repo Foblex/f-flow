@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../../../_libs/f-mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../../f-storage';
 import { findSourceConnector, findTargetConnector } from '../../../../../f-connectors';
 import { ResolveConnectionEndpointsRequest } from './resolve-connection-endpoints-request';
@@ -7,7 +7,6 @@ import { IConnectionEndpoints } from '../../models';
 import { fWarnOnce } from '../../../../f-diagnostics';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectionEndpointsRequest)
 export class ResolveConnectionEndpoints implements IExecution<
   ResolveConnectionEndpointsRequest,
   IConnectionEndpoints | null

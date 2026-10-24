@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { BrowserService } from '../../../../../_libs/f-platform';
 import { CompleteConnectionRedrawRequest } from '../complete-connection-redraw';
 import { IsConnectionRedrawCurrentRequest } from '../is-connection-redraw-current';
@@ -12,7 +12,6 @@ const CONNECTIONS_PER_SLICE_LIMIT = 500;
 const SLICE_BUDGET_MS = 6;
 
 @Injectable()
-@FExecutionRegister(RunConnectionRedrawSliceRequest)
 export class RunConnectionRedrawSlice implements IExecution<RunConnectionRedrawSliceRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);

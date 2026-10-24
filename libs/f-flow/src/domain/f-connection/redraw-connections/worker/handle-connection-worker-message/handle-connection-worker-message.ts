@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '../../../../../_libs/f-mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState } from '../../models';
 import { HandleConnectionWorkerMessageRequest } from './handle-connection-worker-message-request';
 
 @Injectable()
-@FExecutionRegister(HandleConnectionWorkerMessageRequest)
 export class HandleConnectionWorkerMessage implements IExecution<
   HandleConnectionWorkerMessageRequest,
   void

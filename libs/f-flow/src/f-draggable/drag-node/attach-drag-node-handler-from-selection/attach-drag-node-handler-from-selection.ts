@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachDragNodeHandlerFromSelectionRequest } from './attach-drag-node-handler-from-selection-request';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeBase } from '../../../f-node';
@@ -15,7 +15,6 @@ import { CreateDragNodeHandlerRequest } from './create-drag-node-handler';
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
 @Injectable()
-@FExecutionRegister(AttachDragNodeHandlerFromSelectionRequest)
 export class AttachDragNodeHandlerFromSelection implements IExecution<
   AttachDragNodeHandlerFromSelectionRequest,
   DragNodeHandler

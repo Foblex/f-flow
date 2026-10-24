@@ -2,7 +2,7 @@ import { IPoint, ITransformModel, RectExtensions } from '@foblex/2d';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from './find-connectable-connector-using-priority-and-position-request';
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '../../../_libs/f-platform';
-import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FConnectorBase } from '../../../f-connectors';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
@@ -19,7 +19,6 @@ import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-
  * and the closest connectable connector of the node at that position.
  */
 @Injectable()
-@FExecutionRegister(FindConnectableConnectorUsingPriorityAndPositionRequest)
 export class FindConnectableConnectorUsingPriorityAndPosition implements IExecution<
   FindConnectableConnectorUsingPriorityAndPositionRequest,
   FConnectorBase | undefined
