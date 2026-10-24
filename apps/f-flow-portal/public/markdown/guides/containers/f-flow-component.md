@@ -61,7 +61,7 @@ This describes the default stateless mode. The optional [Managed Flow State](./e
 
 - `getSelection(): ICurrentSelection;` Returns selected node/group/connection ids.
 
-- `getPositionInFlow(position: IPoint): IRect;` Converts a point from the viewport into flow coordinates (relative to the flow).
+- `getPositionInFlow(position: IPoint): IPoint;` Converts a point from the viewport into flow coordinates (relative to the flow).
 
 - `getState(options?: IFFlowStateOptions): IFFlowState;` Exports the full flow state: nodes, groups and connections. Pass `{ measuredSize: true }` to include each node's measured size.
 

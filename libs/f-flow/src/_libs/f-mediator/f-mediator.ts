@@ -2,6 +2,7 @@ import { inject, Injectable, Injector, Type } from '@angular/core';
 import { IExecution } from './i-execution';
 import { IValidator } from './i-validator';
 import { Pipeline } from './pipeline';
+import { IRequestWithResponse } from './f-response-of';
 
 declare const ngDevMode: boolean | undefined;
 
@@ -49,6 +50,8 @@ export class FMediator {
   // dev-only so the production hot path stays branch-free (an unregistered request is
   // a development-time mistake: registrations are static decorators loaded with the
   // library, so the case cannot appear in a working build)
+  public execute<R extends IRequestWithResponse>(request: R): R['__response'];
+  public execute<TResponse>(request: object): TResponse;
   public execute<TResponse>(request: object): TResponse {
     const pipeline = FMediator.pipelines.get(_fTokenOf(request));
 

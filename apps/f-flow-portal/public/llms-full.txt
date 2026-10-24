@@ -221,7 +221,7 @@ Selector: `f-flow`
 | reset | reset(): void | Resets internal state; re-emits on next render |
 | getNodesBoundingBox | getNodesBoundingBox(): IRect \| null | Returns bounding box of all nodes/groups |
 | getSelection | getSelection(): ICurrentSelection | Returns selected node/group/connection ids |
-| getPositionInFlow | getPositionInFlow(position: IPoint): IRect | Converts viewport point to flow coordinates |
+| getPositionInFlow | getPositionInFlow(position: IPoint): IPoint | Converts viewport point to flow coordinates |
 | getState | getState(options?: IFFlowStateOptions): IFFlowState | Exports full flow state; `{ measuredSize: true }` includes measured node sizes |
 | selectAll | selectAll(): void | Selects all items |
 | select | select(nodesAndGroups: string[], connections: string[], isSelectedChanged?: boolean): void | Selects specific items |

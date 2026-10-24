@@ -2,6 +2,9 @@ import { DragNodeConnectionHandlerBase } from '../../drag-node-dependent-connect
 import { DragNodeItemHandler } from '../../drag-node-handler';
 
 export class AttachTargetConnectionDragHandlersToNodeRequest {
+  /** Erased marker: the execution's return type, inferred by FMediator.execute. */
+  declare readonly __response: void;
+
   static readonly fToken = Symbol('AttachTargetConnectionDragHandlersToNodeRequest');
 
   constructor(

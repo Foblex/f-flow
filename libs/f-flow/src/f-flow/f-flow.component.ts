@@ -228,7 +228,11 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
   }
 
-  public getPositionInFlow(position: IPoint): IRect {
+  /**
+   * Converts a client-space point into flow coordinates. Earlier versions declared
+   * `IRect` here by mistake - the returned value never had width or height.
+   */
+  public getPositionInFlow(position: IPoint): IPoint {
     return this._mediator.execute(new GetNormalizedPointRequest(position));
   }
 
