@@ -1,7 +1,7 @@
 import { IPoint, IRect, IRoundedRect, RectExtensions } from '@foblex/2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { CalculateResizeLimitsRequest } from '../calculate-resize-limits';
 import { ApplyChildResizeConstraintsRequest } from '../apply-child-resize-constraints';
 import { CalculateChangedRectFromDifferenceRequest } from '../calculate-changed-rect-from-difference';

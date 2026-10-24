@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { RunDevDiagnosticsRequest } from './run-dev-diagnostics-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { fWarnOnce, isFDevMode } from '../../f-diagnostics';

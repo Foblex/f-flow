@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CalculateResizeLimitsRequest } from './calculate-resize-limits-request';
 import { IRect, SizeExtensions } from '@foblex/2d';
 import { IResizeConstraint, IResizeLimit, IResizeLimits } from '../constraint';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { CalculateDirectChildrenUnionRectRequest } from '../calculate-direct-children-union-rect';
 import { FNodeBase } from '../../../f-node';
 import { GetNodePaddingRequest, GetParentNodesRequest } from '../../../domain';

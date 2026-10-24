@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IHandler } from '../../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromOutputPreparationRequest } from './create-connection-from-output-preparation-request';
 import { FNodeOutputBase, isNodeOutput, isOutletConnector } from '../../../../../f-connectors';

@@ -1,5 +1,5 @@
 import { DragExternalItemCreatePlaceholderRequest } from './drag-external-item-create-placeholder-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { EmbeddedViewRef, inject, Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
 import { deepCloneNode, getOrCreateRootNodeForViewRef } from '@foblex/utils';
 import { BrowserService } from '../../../_libs/f-platform';

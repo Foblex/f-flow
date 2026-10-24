@@ -1,7 +1,7 @@
-import { IHandler } from '@foblex/mediator';
+import { IHandler } from '../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFinalizeRequest } from './create-connection-finalize-request';
-import { FExecutionRegister } from '@foblex/mediator';
+import { FExecutionRegister } from '../../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { CreateConnectionHandler } from '../create-connection-handler';
 import { FCreateConnectionSession } from '../f-create-connection-session';

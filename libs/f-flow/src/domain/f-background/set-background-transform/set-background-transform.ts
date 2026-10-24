@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { SetBackgroundTransformRequest } from './set-background-transform-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 
@@ -9,7 +9,6 @@ import { FComponentsStore, INSTANCES } from '../../../f-storage';
 @Injectable()
 @FExecutionRegister(SetBackgroundTransformRequest)
 export class SetBackgroundTransform implements IExecution<SetBackgroundTransformRequest, void> {
-
   private readonly _store = inject(FComponentsStore);
 
   public handle(request: SetBackgroundTransformRequest): void {

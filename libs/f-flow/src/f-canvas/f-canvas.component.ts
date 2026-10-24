@@ -19,7 +19,7 @@ import {
 import { F_CANVAS, FCanvasBase } from './models';
 import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import { FCanvasChangeEvent } from './models';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { EFCanvasLayer } from './enums';
 import { resolveLayerOrder } from './layers';
 import { F_CANVAS_CONFIG } from './utils';

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { EmitStartDragSequenceEventRequest } from './emit-start-drag-sequence-event-request';
 import { FComponentsStore } from '../../../f-storage';
 import {
@@ -14,9 +14,10 @@ import { F_CSS_CLASS } from '../../../domain';
  */
 @Injectable()
 @FExecutionRegister(EmitStartDragSequenceEventRequest)
-export class EmitStartDragSequenceEvent
-  implements IExecution<EmitStartDragSequenceEventRequest, void>
-{
+export class EmitStartDragSequenceEvent implements IExecution<
+  EmitStartDragSequenceEventRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);

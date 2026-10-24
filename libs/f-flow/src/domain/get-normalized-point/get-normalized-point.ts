@@ -2,7 +2,7 @@ import { IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedPointRequest } from './get-normalized-point-request';
 import { FComponentsStore } from '../../f-storage';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../_libs/f-mediator';
 import { calculatePointerInFlow } from '../../utils';
 
 /**

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { DragMinimapFinalizeRequest } from './drag-minimap-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext, isDragMinimapHandler } from '../../../f-draggable';
 
 @Injectable()

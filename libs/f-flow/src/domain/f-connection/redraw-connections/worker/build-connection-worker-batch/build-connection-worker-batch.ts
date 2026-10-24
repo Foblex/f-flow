@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { IRoundedRect } from '@foblex/2d';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 import {
@@ -14,9 +14,10 @@ import { BuildConnectionWorkerBatchRequest } from './build-connection-worker-bat
 
 @Injectable()
 @FExecutionRegister(BuildConnectionWorkerBatchRequest)
-export class BuildConnectionWorkerBatch
-  implements IExecution<BuildConnectionWorkerBatchRequest, IConnectionWorkerBatch>
-{
+export class BuildConnectionWorkerBatch implements IExecution<
+  BuildConnectionWorkerBatchRequest,
+  IConnectionWorkerBatch
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connections, cache }: BuildConnectionWorkerBatchRequest): IConnectionWorkerBatch {

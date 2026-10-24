@@ -1,6 +1,6 @@
 import { CalculateClosestConnectorRequest } from './calculate-closest-connector-request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { IPoint, IRect } from '@foblex/2d';
 import { IClosestConnectorRef } from '../i-closest-connector-ref';
 import { IConnectorRectRef } from '../index';
@@ -10,9 +10,10 @@ import { IConnectorRectRef } from '../index';
  */
 @Injectable()
 @FExecutionRegister(CalculateClosestConnectorRequest)
-export class CalculateClosestConnector
-  implements IExecution<CalculateClosestConnectorRequest, IClosestConnectorRef | undefined>
-{
+export class CalculateClosestConnector implements IExecution<
+  CalculateClosestConnectorRequest,
+  IClosestConnectorRef | undefined
+> {
   public handle({
     position,
     connectorRefs,

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachDragNodeHandlerFromSelectionRequest } from './attach-drag-node-handler-from-selection-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { FNodeBase } from '../../../f-node';

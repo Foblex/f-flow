@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
 import { FChannel } from '../../reactivity';
 import {

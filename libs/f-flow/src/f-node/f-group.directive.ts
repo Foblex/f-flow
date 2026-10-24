@@ -21,7 +21,7 @@ import {
   RemoveNodeFromStoreRequest,
   ConnectableSidesScheduler,
 } from '../domain';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 
 let uniqueId = 0;
 

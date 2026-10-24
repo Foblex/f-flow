@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IHandler } from '../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { SelectAndUpdateNodeLayerRequest } from './select-and-update-node-layer-request';
 import { FDraggableDataContext } from '../../../f-draggable';

@@ -16,7 +16,7 @@ import {
 import { FSnapTargetChangeEvent } from './f-snap-target-change-event';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
 import { castToEnum } from '@foblex/utils';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../_libs/f-mediator';
 import {
   AddSnapConnectionToStoreRequest,
   RemoveSnapConnectionFromStoreRequest,

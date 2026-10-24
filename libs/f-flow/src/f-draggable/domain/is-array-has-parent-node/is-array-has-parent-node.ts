@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IsArrayHasParentNodeRequest } from './is-array-has-parent-node-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachSoftParentConnectionDragHandlersToNodeRequest } from './attach-soft-parent-connection-drag-handlers-to-node-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import { FNodeBase } from '../../../../f-node';
 import { FConnectionBase } from '../../../../f-connection-v2';

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragConnectionWaypointPreparationRequest } from './drag-connection-waypoint-preparation-request';
 import { IPoint, ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { DragConnectionWaypointHandler } from '../drag-connection-waypoint-handler';
 import { FComponentsStore } from '../../../../f-storage';
 import { DragHandlerInjector, FDraggableDataContext } from '../../../../f-draggable';

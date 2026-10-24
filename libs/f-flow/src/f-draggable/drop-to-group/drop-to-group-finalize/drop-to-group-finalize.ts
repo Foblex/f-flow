@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { DropToGroupFinalizeRequest } from './drop-to-group-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { FComponentsStore } from '../../../f-storage';

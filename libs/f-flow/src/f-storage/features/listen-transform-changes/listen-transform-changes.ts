@@ -1,7 +1,7 @@
 import { ListenTransformChangesRequest } from './listen-transform-changes-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../index';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FChannelHub } from '../../../reactivity';
 
 @Injectable()

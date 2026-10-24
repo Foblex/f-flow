@@ -1,6 +1,6 @@
 import { Directive, ElementRef, inject } from '@angular/core';
 import { IRect, setRectToElement } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { MinimapCalculateViewRectRequest } from '../domain';
 
 @Directive({

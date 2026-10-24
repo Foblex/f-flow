@@ -1,5 +1,5 @@
 import { PreventDefaultIsExternalItemRequest } from './prevent-default-is-external-item-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { Injectable } from '@angular/core';
 import { isExternalItem } from '../../../f-external-item';
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { SetZoomRequest } from './set-zoom-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { IPoint, Point } from '@foblex/2d';

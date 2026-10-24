@@ -2,7 +2,7 @@ import { IRoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { CompleteConnectionRedrawRequest } from './pipeline/complete-connection-redraw';
 import { RunConnectionRedrawSliceRequest } from './pipeline/run-connection-redraw-slice';

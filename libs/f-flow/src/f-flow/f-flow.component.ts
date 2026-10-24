@@ -43,7 +43,7 @@ import {
   WaitForConnectionsRenderedRequest,
 } from '../domain';
 import { IPoint, IRect } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { F_DRAGGABLE_PROVIDERS, FDraggableDataContext } from '../f-draggable';
 import {
   EmitConnectionsChangesRequest,

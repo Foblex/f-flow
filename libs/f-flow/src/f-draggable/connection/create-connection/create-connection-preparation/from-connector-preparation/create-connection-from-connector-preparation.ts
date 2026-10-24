@@ -1,4 +1,4 @@
-import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IHandler } from '../../../../../_libs/f-mediator';
 import { IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromConnectorPreparationRequest } from './create-connection-from-connector-preparation-request';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapCalculateViewportRequest } from './minimap-calculate-viewport-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { adjustRectToMinSize, IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import { FFlowBase } from '../../../f-flow';

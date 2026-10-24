@@ -13,7 +13,7 @@ import {
   untracked,
 } from '@angular/core';
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import {
   defaultEventTrigger,
   FEventTrigger,

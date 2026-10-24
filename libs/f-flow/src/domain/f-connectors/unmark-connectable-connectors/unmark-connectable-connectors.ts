@@ -1,6 +1,6 @@
 import { UnmarkConnectableConnectorsRequest } from './unmark-connectable-connectors-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FConnectorBase } from '../../../f-connectors';
 import { F_CSS_CLASS } from '../../css-cls';
 import { FComponentsStore } from '../../../f-storage';
@@ -10,9 +10,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(UnmarkConnectableConnectorsRequest)
-export class UnmarkConnectableConnectors
-  implements IExecution<UnmarkConnectableConnectorsRequest, void>
-{
+export class UnmarkConnectableConnectors implements IExecution<
+  UnmarkConnectableConnectorsRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connectors }: UnmarkConnectableConnectorsRequest): void {

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { BrowserService } from '../../../_libs/f-platform';
 import { normalizeDomElementId } from '@foblex/utils';
 import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2';

@@ -1,6 +1,6 @@
 import { Directive, effect, inject, Injector, input, OnInit, untracked } from '@angular/core';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { castToEnum } from '@foblex/utils';
 import { F_CONNECTION_CONTENT, FConnectionContentBase } from './models';
 import { PolylineContentAlign } from './utils';

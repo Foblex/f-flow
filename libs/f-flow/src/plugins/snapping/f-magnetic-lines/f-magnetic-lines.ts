@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { F_MAGNETIC_LINES, FMagneticLinesBase } from './f-magnetic-lines-base';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import {
   INSTANCES,
   RegisterPluginInstanceRequest,

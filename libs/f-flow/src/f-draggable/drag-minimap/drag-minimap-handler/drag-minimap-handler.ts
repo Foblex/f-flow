@@ -1,7 +1,7 @@
 import { IPoint, IRect, Point } from '@foblex/2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { DRAG_MINIMAP_HANDLER_KIND, DRAG_MINIMAP_HANDLER_TYPE } from '../is-drag-minimap-handler';
 import { inject, Injectable } from '@angular/core';
 import { CalculateFlowPointFromMinimapPointRequest } from '../calculate-flow-point-from-minimap-point';

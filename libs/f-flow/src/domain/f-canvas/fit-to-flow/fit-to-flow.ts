@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FitToFlowRequest } from './fit-to-flow-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 import {

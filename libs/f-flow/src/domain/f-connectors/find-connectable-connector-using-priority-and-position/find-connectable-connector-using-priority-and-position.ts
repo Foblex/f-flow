@@ -2,7 +2,7 @@ import { IPoint, ITransformModel, RectExtensions } from '@foblex/2d';
 import { FindConnectableConnectorUsingPriorityAndPositionRequest } from './find-connectable-connector-using-priority-and-position-request';
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '../../../_libs/f-platform';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FConnectorBase } from '../../../f-connectors';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
 import { SelectByPointerRequest } from './select-by-pointer-request';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../domain';
 import { FComponentsStore } from '../../f-storage';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { IRect } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import { FNodeBase } from '../../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../../domain/get-normalized-element-rect';

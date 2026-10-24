@@ -1,6 +1,6 @@
 import { CalculateFlowStateRequest } from './calculate-flow-state-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IFFlowState } from './i-f-flow-state';
 import { FComponentsStore } from '../../../f-storage';
 import { FGroupDirective, FNodeDirective } from '../../../f-node';

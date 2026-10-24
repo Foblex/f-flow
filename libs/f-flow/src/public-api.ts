@@ -47,4 +47,6 @@ export * from './f-flow.module';
 
 export * from './i-has-host-element';
 
+export * from './_libs/f-mediator/deprecated-public-api';
+
 export * from './_libs/f-platform';

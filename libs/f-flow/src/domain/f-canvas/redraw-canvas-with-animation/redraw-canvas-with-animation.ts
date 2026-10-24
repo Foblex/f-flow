@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ECanvasRedrawContext } from './e-canvas-redraw-context';
 import { RedrawCanvasWithAnimationRequest } from './redraw-canvas-with-animation-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { transitionEnd } from '../../transition-end';
 import { FCanvasBase } from '../../../f-canvas';

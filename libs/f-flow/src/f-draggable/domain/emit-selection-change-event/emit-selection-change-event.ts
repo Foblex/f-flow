@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-request';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';

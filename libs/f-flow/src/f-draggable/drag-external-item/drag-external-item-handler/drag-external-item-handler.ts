@@ -1,6 +1,6 @@
 import { IPoint, IRect, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
 import { BrowserService } from '../../../_libs/f-platform';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { Injector } from '@angular/core';
 import { DragHandlerBase, FDragHandlerResult } from '../../infrastructure';
 import { FDragExternalItemStartEventData } from '../f-drag-external-item-start-event-data';

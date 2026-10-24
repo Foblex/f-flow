@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FSelectionAreaBase } from './f-selection-area-base';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FEventTrigger } from '../domain';
 import {
   INSTANCES,

@@ -131,7 +131,6 @@
     "@angular/ssr": "20.3.9",
     "@cypress/angular": "^2.1.0",
     "@foblex/2d": "^1.2.1",
-    "@foblex/mediator": "1.1.3",
     "@foblex/mutator": "^1.0.7",
     "@foblex/utils": "1.1.1",
     "@huggingface/transformers": "^4.2.0",

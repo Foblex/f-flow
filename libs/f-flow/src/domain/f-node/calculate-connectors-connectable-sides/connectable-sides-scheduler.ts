@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import type { FNodeBase } from '../../../f-node/f-node-base';
 import { FComponentsStore } from '../../../f-storage/f-components-store';
 import { CalculateConnectorsConnectableSidesRequest } from './calculate-connectors-connectable-sides-request';

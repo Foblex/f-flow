@@ -1,15 +1,16 @@
 import { ILine } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { BuildConnectionLineRequest } from '../../shared/build-connection-line';
 import { RenderConnectionWithLineRequest } from '../render-connection-with-line';
 import { RenderConnectionFromGeometryRequest } from './render-connection-from-geometry-request';
 
 @Injectable()
 @FExecutionRegister(RenderConnectionFromGeometryRequest)
-export class RenderConnectionFromGeometry
-  implements IExecution<RenderConnectionFromGeometryRequest, void>
-{
+export class RenderConnectionFromGeometry implements IExecution<
+  RenderConnectionFromGeometryRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connection, geometry }: RenderConnectionFromGeometryRequest): void {

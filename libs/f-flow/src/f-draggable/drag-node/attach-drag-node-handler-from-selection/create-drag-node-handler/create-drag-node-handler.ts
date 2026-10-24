@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CreateDragNodeHandlerRequest } from './create-drag-node-handler-request';
 import { DragNodeHandler, DragNodeItemHandler } from '../../drag-node-handler';
 import { FNodeBase } from '../../../../f-node';

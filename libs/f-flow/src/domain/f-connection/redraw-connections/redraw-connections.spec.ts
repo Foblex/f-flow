@@ -1,4 +1,4 @@
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import {
   configureDiTest,
   connectorFactory,

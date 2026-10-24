@@ -1,6 +1,6 @@
 import { SortItemLayersRequest } from './sort-item-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
 import { SortNodeLayersRequest } from './sort-node-layers-by-groups';
 import { SortItemsByParentRequest } from './sort-items-by-parent';
 import { FComponentsStore } from '../../f-storage';

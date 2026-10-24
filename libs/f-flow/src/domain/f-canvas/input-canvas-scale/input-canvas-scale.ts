@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { InputCanvasScaleRequest } from './input-canvas-scale-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 /**
  * Execution that handles the scaling of the input canvas.

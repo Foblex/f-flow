@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { DropToGroupPreparationRequest } from './drop-to-group-preparation-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
 import { IRect } from '@foblex/2d';

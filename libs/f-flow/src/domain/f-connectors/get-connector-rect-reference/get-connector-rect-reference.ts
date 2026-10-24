@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { GetConnectorRectReferenceRequest } from './get-connector-rect-reference-request';
 import { IRoundedRect } from '@foblex/2d';
 import { IConnectorRectRef } from '../i-connector-rect-ref';

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { OnPointerMoveRequest } from './on-pointer-move-request';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { IPoint, Point } from '@foblex/2d';

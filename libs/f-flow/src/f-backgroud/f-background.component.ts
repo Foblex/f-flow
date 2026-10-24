@@ -11,7 +11,7 @@ import {
 import { F_BACKGROUND, FBackgroundBase } from './f-background-base';
 import { ITransformModel } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN } from './domain';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { AddPatternToBackgroundRequest } from '../domain';
 import {
   INSTANCES,

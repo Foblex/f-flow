@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference-request';
 import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { RESIZE_DIRECTIONS } from '../constraint';
 
 @Injectable()

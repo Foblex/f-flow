@@ -87,3 +87,45 @@ describe('@foblex/flow ng-update vendored-platform migration', () => {
     assert.equal(result.readContent('/dist/app/main.ts'), vendored);
   });
 });
+
+describe('@foblex/flow ng-update vendored-mediator migration', () => {
+  async function runMediatorMigration(tree) {
+    const runner = new SchematicTestRunner('migrations', MIGRATIONS_PATH);
+
+    return runner.runSchematic('migration-vendored-mediator', {}, tree);
+  }
+
+  const MEDIATOR_PACKAGE_JSON = JSON.stringify(
+    { dependencies: { '@foblex/flow': '^19.3.0', '@foblex/mediator': '^1.1.3' } },
+    null,
+    2,
+  );
+
+  test('removes the dependency when the application does not import it', async () => {
+    const tree = createTree({
+      '/package.json': MEDIATOR_PACKAGE_JSON,
+      '/src/main.ts': "import { FFlowModule } from '@foblex/flow';\n",
+    });
+
+    const result = await runMediatorMigration(tree);
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.equal(packageJson.dependencies['@foblex/mediator'], undefined);
+    assert.equal(packageJson.dependencies['@foblex/flow'], '^19.3.0');
+  });
+
+  test('rewrites mediator imports to @foblex/flow and removes the dependency', async () => {
+    const tree = createTree({
+      '/package.json': MEDIATOR_PACKAGE_JSON,
+      '/src/custom.ts': "import { FMediator, IExecution } from '@foblex/mediator';\n",
+    });
+
+    const result = await runMediatorMigration(tree);
+    const custom = result.readContent('/src/custom.ts');
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.match(custom, /from '@foblex\/flow';/u);
+    assert.doesNotMatch(custom, /@foblex\/mediator/u);
+    assert.equal(packageJson.dependencies['@foblex/mediator'], undefined);
+  });
+});

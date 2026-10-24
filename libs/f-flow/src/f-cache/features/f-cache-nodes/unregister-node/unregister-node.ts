@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { UnregisterFCacheNodeRequest } from './unregister-node-request';
 import { FCache } from '../../../model';
 import { UnregisterFCacheConnectorRequest } from '../../f-cache-connectors';

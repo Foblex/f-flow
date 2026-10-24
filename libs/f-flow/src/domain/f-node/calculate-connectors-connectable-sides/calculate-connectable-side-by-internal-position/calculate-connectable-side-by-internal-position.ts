@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { CalculateConnectableSideByInternalPositionRequest } from './calculate-connectable-side-by-internal-position-request';
 import { RectExtensions } from '@foblex/2d';
 import { IsDragStartedRequest } from '../../../f-draggable';
@@ -22,9 +22,10 @@ export const CONNECTABLE_SIDE_EPSILON = new InjectionToken<number>('CONNECTABLE_
  */
 @Injectable()
 @FExecutionRegister(CalculateConnectableSideByInternalPositionRequest)
-export class CalculateConnectableSideByInternalPosition
-  implements IExecution<CalculateConnectableSideByInternalPositionRequest, EFConnectableSide>
-{
+export class CalculateConnectableSideByInternalPosition implements IExecution<
+  CalculateConnectableSideByInternalPositionRequest,
+  EFConnectableSide
+> {
   private readonly _mediator = inject(FMediator);
 
   /**

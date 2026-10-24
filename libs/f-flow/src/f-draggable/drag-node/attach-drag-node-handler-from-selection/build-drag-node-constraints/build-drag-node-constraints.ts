@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '@foblex/2d';
 import { BuildDragNodeConstraintsRequest } from './build-drag-node-constraints-request';
 import { infinityMinMax } from '../../../../utils';
@@ -13,9 +13,10 @@ import { IDragNodeDeltaConstraints, IDragNodeSoftConstraint } from '../../drag-n
 
 @Injectable()
 @FExecutionRegister(BuildDragNodeConstraintsRequest)
-export class BuildDragNodeConstraints
-  implements IExecution<BuildDragNodeConstraintsRequest, IDragNodeDeltaConstraints>
-{
+export class BuildDragNodeConstraints implements IExecution<
+  BuildDragNodeConstraintsRequest,
+  IDragNodeDeltaConstraints
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ nodeOrGroup }: BuildDragNodeConstraintsRequest): IDragNodeDeltaConstraints {

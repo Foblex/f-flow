@@ -1,6 +1,6 @@
 import { ElementRef, ModuleWithProviders, Provider, ProviderToken, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FComponentsStore } from '../f-storage';
 import { FDraggableDataContext } from '../f-draggable';
 

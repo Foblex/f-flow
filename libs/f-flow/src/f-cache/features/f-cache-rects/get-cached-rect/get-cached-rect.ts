@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { IRect } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../../_libs/f-mediator';
 import { GetCachedFCacheRectRequest } from './get-cached-rect-request';
 import { FCache } from '../../../model';
 import { F_CACHE_OPTIONS } from '../../../config';

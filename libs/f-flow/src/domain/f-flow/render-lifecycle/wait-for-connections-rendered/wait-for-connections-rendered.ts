@@ -1,13 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../../_libs/f-mediator';
 import { WaitForConnectionsRenderedRequest } from './wait-for-connections-rendered-request';
 import { FComponentsStore } from '../../../../f-storage';
 
 @Injectable()
 @FExecutionRegister(WaitForConnectionsRenderedRequest)
-export class WaitForConnectionsRendered
-  implements IExecution<WaitForConnectionsRenderedRequest, void>
-{
+export class WaitForConnectionsRendered implements IExecution<
+  WaitForConnectionsRenderedRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({

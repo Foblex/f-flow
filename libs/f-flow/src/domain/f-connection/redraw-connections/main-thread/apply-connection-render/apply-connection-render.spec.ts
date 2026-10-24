@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { ILine } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../../../_libs/f-mediator';
 import {
   configureDiTest,
   createSpy,

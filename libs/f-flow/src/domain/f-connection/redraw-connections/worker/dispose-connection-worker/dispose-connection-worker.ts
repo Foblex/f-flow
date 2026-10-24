@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState } from '../../models';
 import { DisposeConnectionWorkerRequest } from './dispose-connection-worker-request';
 

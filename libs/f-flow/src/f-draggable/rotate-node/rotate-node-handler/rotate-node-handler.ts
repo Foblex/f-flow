@@ -2,7 +2,7 @@ import { IPoint, IRect, ITransformModel, PointExtensions } from '@foblex/2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FRotateNodeStartEventData } from '../f-rotate-node-start-event-data';
 import { FComponentsStore } from '../../../f-storage';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { inject, Injectable } from '@angular/core';
 import { FNodeBase } from '../../../f-node';

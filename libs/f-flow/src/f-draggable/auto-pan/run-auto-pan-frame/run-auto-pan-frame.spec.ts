@@ -1,5 +1,5 @@
 import { Point } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { IMouseEvent } from '../../infrastructure';
 import { FDraggableBase } from '../../f-draggable-base';
 import { FDraggableDataContext } from '../../f-draggable-data-context';

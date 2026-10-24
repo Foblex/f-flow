@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BrowserService } from '../../../../../_libs/f-platform';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState, IConnectionWorkerResponse } from '../../models';
 import { DisableConnectionWorkerRequest } from '../disable-connection-worker';
 import { HandleConnectionWorkerMessageRequest } from '../handle-connection-worker-message';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import {
   getAllSourceConnectors,

@@ -2,7 +2,7 @@ import { IPoint, IRect, Point, PointExtensions, RectExtensions } from '@foblex/2
 import { CalculateFlowPointFromMinimapPointRequest } from './calculate-flow-point-from-minimap-point-request';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../f-storage';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FMinimapState } from '../../../domain';
 
 @Injectable()

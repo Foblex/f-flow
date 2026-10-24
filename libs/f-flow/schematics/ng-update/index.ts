@@ -6,9 +6,10 @@ import {
 } from '@schematics/angular/utility/dependencies';
 import { FoblexDependencies } from '../shared/foblex-dependencies';
 import { migrateVendoredPlatform } from './vendored-platform';
+import { migrateVendoredMediator } from './vendored-mediator';
 
 export function ngUpdate(): Rule {
-  return chain([updateDependencies(), migrateVendoredPlatform()]);
+  return chain([updateDependencies(), migrateVendoredPlatform(), migrateVendoredMediator()]);
 }
 
 function updateDependencies(): Rule {

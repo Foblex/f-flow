@@ -1,6 +1,6 @@
 import { Directive, ElementRef, inject, input } from '@angular/core';
 import { setRectToViewBox } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FMinimapState, IMinimapViewport, MinimapCalculateViewportRequest } from '../domain';
 
 @Directive({

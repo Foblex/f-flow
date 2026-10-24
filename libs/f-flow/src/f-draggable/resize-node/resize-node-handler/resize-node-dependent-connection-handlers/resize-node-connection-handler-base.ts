@@ -1,5 +1,5 @@
 import { ILine, IRoundedRect, RoundedRect } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../../_libs/f-mediator';
 import {
   GetNormalizedConnectorRectRequest,
   IConnectorRectRef,

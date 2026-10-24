@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { GetFlowRequest } from './get-flow-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FFlowBase } from '../../../f-flow';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapDrawNodesRequest } from './minimap-draw-nodes-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { createSVGElement } from '../../../domain';
 import { FNodeBase, FNodeDirective } from '../../../f-node';
 import { IRect, RectExtensions, setRectToElement } from '@foblex/2d';

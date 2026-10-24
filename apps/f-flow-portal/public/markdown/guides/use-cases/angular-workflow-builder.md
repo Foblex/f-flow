@@ -57,7 +57,7 @@ nx g @foblex/flow:add
 Or install it manually with the required companion packages:
 
 ```bash
-npm install @foblex/flow @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
 ```
 
 If you are evaluating architecture first, start with [Introducing Foblex Flow](intro) and then inspect the workflow-oriented examples.

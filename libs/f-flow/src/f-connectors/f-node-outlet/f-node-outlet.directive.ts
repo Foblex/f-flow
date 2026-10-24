@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { F_NODE_OUTLET, FNodeOutletBase } from './f-node-outlet-base';
 import { injectConnectorNode } from '../inject-connector-node';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../_libs/f-mediator';
 import { AddConnectorToStoreRequest, RemoveConnectorFromStoreRequest } from '../../domain';
 import { stringAttribute } from '../../utils';
 import { EFConnectableSide } from '../../f-connection-v2';

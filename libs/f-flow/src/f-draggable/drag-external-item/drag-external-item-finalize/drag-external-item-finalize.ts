@@ -1,7 +1,7 @@
 import { EventEmitter, inject, Injectable } from '@angular/core';
 import { DragExternalItemFinalizeRequest } from './drag-external-item-finalize-request';
 import { IPoint, IRect } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FCreateNodeEvent } from '../f-create-node-event';
 import { FDragHandlerResult } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';

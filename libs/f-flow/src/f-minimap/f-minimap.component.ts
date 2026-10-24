@@ -11,7 +11,7 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';

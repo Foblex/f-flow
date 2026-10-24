@@ -4,7 +4,7 @@ import { IPoint, ITransformModel, Point } from '@foblex/2d';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   isDragHandleEnd,
   isPointerInsideStartOrEndDragHandles,

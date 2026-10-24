@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IPoint, Point, PointExtensions } from '@foblex/2d';
 import { RunAutoPanFrameRequest } from './run-auto-pan-frame-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';

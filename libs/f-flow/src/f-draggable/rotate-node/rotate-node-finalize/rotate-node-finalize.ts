@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { RotateNodeFinalizeRequest } from './rotate-node-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isRotateNodeHandler } from '../is-rotate-node-handler';
 

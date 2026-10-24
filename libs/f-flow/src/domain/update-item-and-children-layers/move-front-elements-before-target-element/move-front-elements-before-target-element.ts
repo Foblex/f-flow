@@ -1,6 +1,6 @@
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element-request';
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 
 /**
  * Execution that moves elements in the FItemsContainer before a target element.
@@ -8,9 +8,10 @@ import { FExecutionRegister, IExecution } from '@foblex/mediator';
  */
 @Injectable()
 @FExecutionRegister(MoveFrontElementsBeforeTargetElementRequest)
-export class MoveFrontElementsBeforeTargetElement
-  implements IExecution<MoveFrontElementsBeforeTargetElementRequest, void>
-{
+export class MoveFrontElementsBeforeTargetElement implements IExecution<
+  MoveFrontElementsBeforeTargetElementRequest,
+  void
+> {
   public handle(request: MoveFrontElementsBeforeTargetElementRequest): void {
     const elementsToMove: Element[] = [];
     for (let i = request.targetIndex + 1; i < request.allElements.length; i++) {

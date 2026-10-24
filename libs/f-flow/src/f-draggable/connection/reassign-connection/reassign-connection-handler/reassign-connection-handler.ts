@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';
 import { IReassignConnectionEventData } from '../i-reassign-connection-event-data';
 import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-result';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../../_libs/f-mediator';
 import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../../f-connection-v2';
 import { FComponentsStore } from '../../../../f-storage';
 import { requireSourceConnector, requireTargetConnector } from '../../../../f-connectors';

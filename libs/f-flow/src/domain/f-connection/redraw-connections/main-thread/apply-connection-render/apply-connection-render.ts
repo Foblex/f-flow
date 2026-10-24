@@ -1,6 +1,6 @@
 import { ILine, IPoint } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { CreateConnectionMarkersRequest } from '../../../create-connection-markers';
 import { FConnectionBase, FConnectionContentBase } from '../../../../../f-connection-v2';
 import { ApplyConnectionRenderRequest } from './apply-connection-render-request';

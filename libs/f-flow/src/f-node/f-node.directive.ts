@@ -22,7 +22,7 @@ import {
   ConnectableSidesScheduler,
 } from '../domain';
 import { stringAttribute } from '../utils';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 
 let uniqueId = 0;
 

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { SortDropCandidatesByLayerRequest } from './sort-drop-candidates-by-layer-request';
 import { INodeWithRect } from '../../domain';
 
 @Injectable()
 @FExecutionRegister(SortDropCandidatesByLayerRequest)
-export class SortDropCandidatesByLayer
-  implements IExecution<SortDropCandidatesByLayerRequest, INodeWithRect[]>
-{
+export class SortDropCandidatesByLayer implements IExecution<
+  SortDropCandidatesByLayerRequest,
+  INodeWithRect[]
+> {
   public handle({ candidates }: SortDropCandidatesByLayerRequest): INodeWithRect[] {
     // Stable sort even if runtime sort stability changes: remember original index.
     const indexed = candidates.map((candidate, index) => ({ candidate, index }));

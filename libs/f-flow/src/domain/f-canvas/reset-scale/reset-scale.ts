@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ResetScaleRequest } from './reset-scale-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { ITransformModel, PointExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 

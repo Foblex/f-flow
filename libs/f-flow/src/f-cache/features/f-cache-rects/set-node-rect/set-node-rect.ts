@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { IRect, RectExtensions, RoundedRect } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../../_libs/f-mediator';
 import { SetFCacheNodeRectRequest } from './set-node-rect-request';
 import { FCache } from '../../../model';
 import { F_CACHE_OPTIONS } from '../../../config';

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { IConnectionWorkerBatch, IConnectionWorkerResultItem } from '../../models';
 import { IsConnectionRedrawCurrentRequest, RunConnectionRedrawSliceRequest } from '../../pipeline';
 import { BuildConnectionWorkerBatchRequest } from '../build-connection-worker-batch';
@@ -8,9 +8,10 @@ import { StartConnectionWorkerRedrawRequest } from './start-connection-worker-re
 
 @Injectable()
 @FExecutionRegister(StartConnectionWorkerRedrawRequest)
-export class StartConnectionWorkerRedraw
-  implements IExecution<StartConnectionWorkerRedrawRequest, void>
-{
+export class StartConnectionWorkerRedraw implements IExecution<
+  StartConnectionWorkerRedrawRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connections, cache, session }: StartConnectionWorkerRedrawRequest): void {

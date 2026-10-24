@@ -24,7 +24,7 @@ If you need to pin an older line, use the manual install commands below.
 ### Angular 17.3+
 
 ```bash
-npm install @foblex/flow@19 @foblex/mediator@1.1.3 @foblex/2d@1.2.2 @foblex/utils@1.1.1
+npm install @foblex/flow@19 @foblex/2d@1.2.2 @foblex/utils@1.1.1
 ```
 
 If you want to stay on the last `17.x` release line:

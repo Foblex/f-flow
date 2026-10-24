@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { AddConnectionForCreateToStoreRequest } from './add-connection-for-create-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -8,9 +8,10 @@ import { FComponentsStore } from '../../../f-storage';
  */
 @Injectable()
 @FExecutionRegister(AddConnectionForCreateToStoreRequest)
-export class AddConnectionForCreateToStore
-  implements IExecution<AddConnectionForCreateToStoreRequest, void>
-{
+export class AddConnectionForCreateToStore implements IExecution<
+  AddConnectionForCreateToStoreRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
 
   public handle({ connection }: AddConnectionForCreateToStoreRequest): void {

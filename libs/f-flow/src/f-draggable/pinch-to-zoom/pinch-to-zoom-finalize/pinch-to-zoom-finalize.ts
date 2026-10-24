@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PinchToZoomFinalizeRequest } from './pinch-to-zoom-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { PinchToZoomHandler } from '../handler';
 

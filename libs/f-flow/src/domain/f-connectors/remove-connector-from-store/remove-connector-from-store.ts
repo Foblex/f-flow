@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { RemoveConnectorFromStoreRequest } from './remove-connector-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FConnectorBase } from '../../../f-connectors';

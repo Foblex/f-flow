@@ -1,15 +1,16 @@
 import { IRoundedRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { GetNormalizedConnectorRectRequest } from '../../../../get-normalized-connector-rect';
 import { FConnectorBase } from '../../../../../f-connectors';
 import { ResolveConnectionEndpointRectRequest } from './resolve-connection-endpoint-rect-request';
 
 @Injectable()
 @FExecutionRegister(ResolveConnectionEndpointRectRequest)
-export class ResolveConnectionEndpointRect
-  implements IExecution<ResolveConnectionEndpointRectRequest, IRoundedRect>
-{
+export class ResolveConnectionEndpointRect implements IExecution<
+  ResolveConnectionEndpointRectRequest,
+  IRoundedRect
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connector, cache }: ResolveConnectionEndpointRectRequest): IRoundedRect {

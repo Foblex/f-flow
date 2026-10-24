@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapCalculateViewRectRequest } from './minimap-calculate-view-rect-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { IRect, RectExtensions } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
 

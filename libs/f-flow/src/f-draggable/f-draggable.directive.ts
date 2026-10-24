@@ -28,7 +28,7 @@ import {
   ReassignConnectionPreparationRequest,
 } from './connection';
 import { FSelectionChangeEvent } from './f-selection-change-event';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import {
   AddDndToStoreRequest,
   defaultEventTrigger,

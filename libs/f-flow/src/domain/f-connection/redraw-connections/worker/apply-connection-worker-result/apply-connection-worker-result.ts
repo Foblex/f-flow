@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ILine } from '@foblex/2d';
 import { EFConnectableSide } from '../../../../../f-connection-v2';
 import { RenderConnectionFromGeometryRequest } from '../../main-thread/render-connection-from-geometry';
@@ -9,9 +9,10 @@ import { ApplyConnectionWorkerResultRequest } from './apply-connection-worker-re
 
 @Injectable()
 @FExecutionRegister(ApplyConnectionWorkerResultRequest)
-export class ApplyConnectionWorkerResult
-  implements IExecution<ApplyConnectionWorkerResultRequest, void>
-{
+export class ApplyConnectionWorkerResult implements IExecution<
+  ApplyConnectionWorkerResultRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ batchItem, result }: ApplyConnectionWorkerResultRequest): void {

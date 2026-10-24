@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CalculateNodesStateRequest } from './calculate-nodes-state-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnector } from '../i-f-flow-state-connector';
@@ -12,9 +12,10 @@ import { IRect } from '@foblex/2d';
  */
 @Injectable()
 @FExecutionRegister(CalculateNodesStateRequest)
-export class CalculateNodesState
-  implements IExecution<CalculateNodesStateRequest, IFFlowStateNode[]>
-{
+export class CalculateNodesState implements IExecution<
+  CalculateNodesStateRequest,
+  IFFlowStateNode[]
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 

@@ -1,5 +1,5 @@
 import { IPoint, IRect, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { DragHandlerBase } from '../../infrastructure';
 import { ISelectable } from '../../../mixins';
 import { FComponentsStore, INSTANCES, NotifyTransformChangedRequest } from '../../../f-storage';

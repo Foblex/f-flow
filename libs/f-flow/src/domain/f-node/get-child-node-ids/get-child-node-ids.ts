@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GetChildNodeIdsRequest } from './get-child-node-ids-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { FExecutionRegister, IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
 

@@ -1,5 +1,5 @@
 import { Directive, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { F_CONNECTION_MARKER, FConnectionMarkerBase } from './models';
 import { EFMarkerType } from './enums';
 import { coerceMarkerType } from './utils';
