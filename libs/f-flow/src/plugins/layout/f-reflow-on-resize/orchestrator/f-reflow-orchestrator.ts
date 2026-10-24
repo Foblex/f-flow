@@ -11,6 +11,8 @@ import { FReflowIgnoreRegistry } from '../directives/f-reflow-ignore-registry';
 import { IReflowCandidate, IReflowConnection } from '../selection';
 import { FReflowBaselineTracker } from '../f-reflow-baseline-tracker';
 
+const POSITION_COHERENCE_EPSILON = 0.5;
+
 /**
  * Drives the resize → plan → apply pipeline.
  *
@@ -187,13 +189,19 @@ export class FReflowOrchestrator {
   // `_position` ahead of the model. Planning against a half-applied
   // state poisons every candidate read from DOM and propagates one
   // measured rect onto many siblings (issue #305). Skipping the rect
-  // makes the orchestrator wait until the next coherent tick.
+  // makes the orchestrator wait until the next coherent tick. The
+  // comparison tolerates sub-pixel drift: internal writes round-trip
+  // through DOM measurements, and a resize on a zoomed canvas produces
+  // fractional coordinates the model never sees exactly.
   private _safeGetRect(node: FNodeBase): IRect | null {
     if (!node.hostElement) {
       return null;
     }
     const modelPos = node.position();
-    if (modelPos.x !== node._position.x || modelPos.y !== node._position.y) {
+    if (
+      Math.abs(modelPos.x - node._position.x) > POSITION_COHERENCE_EPSILON ||
+      Math.abs(modelPos.y - node._position.y) > POSITION_COHERENCE_EPSILON
+    ) {
       return null;
     }
     try {

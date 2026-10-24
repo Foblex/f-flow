@@ -76,6 +76,12 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
     const rect = this._lastRect ?? this._fallbackRectFromModel();
     this._nodeOrGroup.sizeChange.emit(rect);
 
+    // same contract as the drag handler: pointermove wrote `_position` directly for
+    // speed, so the model has to catch up here — a top/left-handle resize shifts the
+    // position, and a permanent model/_position mismatch makes the reflow orchestrator
+    // treat the node as mid-flight and silently skip it forever
+    this._nodeOrGroup.position.set(this._nodeOrGroup._position);
+
     this._reflowOrchestrator.handleResize(this._nodeOrGroup, this._baselineRect);
 
     requestAnimationFrame(() => this._nodeOrGroup.refresh());

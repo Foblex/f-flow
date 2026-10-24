@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. See [standa
 - **external items:** the drag preview stays under the pointer on a scrolled page — its transform is written in viewport coordinates now that the preview is `position: fixed`, so the scroll offset is no longer applied twice, and the dropped node (`FCreateNodeEvent.externalItemRect`) lands where the preview was released ([#339](https://github.com/Foblex/f-flow/pull/339)). Thanks @itaishopen-unyx.
 
 - **flow:** `getPositionInFlow()` is now typed truthfully as returning `IPoint` - it never returned a rect, so code reading `width`/`height` from the old `IRect` type was getting `undefined` at runtime.
+- **reflow:** a top/left-handle resize no longer silently kills reflow-on-resize for the node. The resize handler never mirrored the final position back into the `fNodePosition` model (the drag handler always did), so after any position-changing resize the orchestrator's mid-flight guard saw a permanent model/`_position` mismatch and skipped the node in every later plan — the axis/delta-source/runtime-config switches looked broken while the whole feature was dead for that node. The model now syncs on pointer-up (which also makes `fNodePositionChange` emit for position-changing resizes), and the guard tolerates sub-pixel drift from resizes on a zoomed canvas.
 
 ### Dependencies
 
