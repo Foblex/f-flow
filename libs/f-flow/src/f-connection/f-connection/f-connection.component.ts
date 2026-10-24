@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
-import { castToEnum } from '@foblex/utils';
+import { castToEnum } from '../../_libs/f-utils';
 import { FMediator } from '../../_libs/f-mediator';
 import { AddConnectionToStoreRequest, RemoveConnectionFromStoreRequest } from '../../domain';
 import { stringAttribute } from '../../utils';

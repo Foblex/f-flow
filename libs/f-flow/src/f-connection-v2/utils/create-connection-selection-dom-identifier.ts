@@ -1,4 +1,4 @@
-import { normalizeDomElementId } from '@foblex/utils';
+import { normalizeDomElementId } from '../../_libs/f-utils';
 
 export function createConnectionSelectionDomIdentifier(
   componentId: string,

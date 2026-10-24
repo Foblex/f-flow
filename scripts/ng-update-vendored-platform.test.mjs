@@ -129,3 +129,45 @@ describe('@foblex/flow ng-update vendored-mediator migration', () => {
     assert.equal(packageJson.dependencies['@foblex/mediator'], undefined);
   });
 });
+
+describe('@foblex/flow ng-update vendored-utils migration', () => {
+  async function runUtilsMigration(tree) {
+    const runner = new SchematicTestRunner('migrations', MIGRATIONS_PATH);
+
+    return runner.runSchematic('migration-vendored-utils', {}, tree);
+  }
+
+  const UTILS_PACKAGE_JSON = JSON.stringify(
+    { dependencies: { '@foblex/flow': '^19.3.0', '@foblex/utils': '^1.1.1' } },
+    null,
+    2,
+  );
+
+  test('removes the dependency when the application does not import it', async () => {
+    const tree = createTree({
+      '/package.json': UTILS_PACKAGE_JSON,
+      '/src/main.ts': "import { FFlowModule } from '@foblex/flow';\n",
+    });
+
+    const result = await runUtilsMigration(tree);
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.equal(packageJson.dependencies['@foblex/utils'], undefined);
+    assert.equal(packageJson.dependencies['@foblex/flow'], '^19.3.0');
+  });
+
+  test('rewrites utils imports to @foblex/flow and removes the dependency', async () => {
+    const tree = createTree({
+      '/package.json': UTILS_PACKAGE_JSON,
+      '/src/custom.ts': "import { generateGuid, castToEnum } from '@foblex/utils';\n",
+    });
+
+    const result = await runUtilsMigration(tree);
+    const custom = result.readContent('/src/custom.ts');
+    const packageJson = JSON.parse(result.readContent('/package.json'));
+
+    assert.match(custom, /from '@foblex\/flow';/u);
+    assert.doesNotMatch(custom, /@foblex\/utils/u);
+    assert.equal(packageJson.dependencies['@foblex/utils'], undefined);
+  });
+});

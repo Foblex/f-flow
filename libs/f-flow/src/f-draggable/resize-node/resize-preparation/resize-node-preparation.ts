@@ -10,7 +10,7 @@ import { ResizeNodeHandler } from '../resize-node-handler';
 import {
   getDataAttrValueFromClosestElementWithClass,
   isClosestElementHasClass,
-} from '@foblex/utils';
+} from '../../../_libs/f-utils';
 import { DragHandlerInjector } from '../../infrastructure';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node';
 

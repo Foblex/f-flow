@@ -1,6 +1,6 @@
 import { computed, Directive, input } from '@angular/core';
 import { EFResizeHandleType } from './e-f-resize-handle-type';
-import { castToEnum } from '@foblex/utils';
+import { castToEnum } from '../../_libs/f-utils';
 
 @Directive({
   standalone: false,

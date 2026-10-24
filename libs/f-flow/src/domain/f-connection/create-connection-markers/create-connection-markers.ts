@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
 import { IExecution } from '../../../_libs/f-mediator';
 import { BrowserService } from '../../../_libs/f-platform';
-import { normalizeDomElementId } from '@foblex/utils';
+import { normalizeDomElementId } from '../../../_libs/f-utils';
 import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2';
 import { EFMarkerType } from '../../../f-connection-v2';
 

@@ -6,7 +6,7 @@ import {
   disableDragInteractions,
   extendStyles,
   getOrCreateRootNodeForViewRef,
-} from '@foblex/utils';
+} from '../../../_libs/f-utils';
 import { BrowserService } from '../../../_libs/f-platform';
 
 @Injectable()

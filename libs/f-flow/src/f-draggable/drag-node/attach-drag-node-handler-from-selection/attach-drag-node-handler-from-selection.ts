@@ -7,7 +7,7 @@ import { FNodeBase } from '../../../f-node';
 import { AttachSourceConnectionDragHandlersToNodeRequest } from './attach-source-connection-drag-handlers-to-node';
 import { AttachTargetConnectionDragHandlersToNodeRequest } from './attach-target-connection-drag-handlers-to-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
-import { flatMap } from '@foblex/utils';
+import { flatMap } from '../../../_libs/f-utils';
 import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection-handlers';
 import { DragNodeHandler, DragNodeItemHandler } from '../drag-node-handler';
 import { CreateDragNodeHierarchyRequest } from './create-drag-node-hierarchy';

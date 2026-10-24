@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { F_NODE_OUTPUT, FNodeOutputBase } from './f-node-output-base';
 import { injectConnectorNode } from '../inject-connector-node';
-import { castToEnum } from '@foblex/utils';
+import { castToEnum } from '../../_libs/f-utils';
 import { FMediator } from '../../_libs/f-mediator';
 import {
   AddConnectorToStoreRequest,

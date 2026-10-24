@@ -55,8 +55,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.3.0",
     "@angular/core": ">=17.3.0",
-    "@foblex/2d": "^1.2.2",
-    "@foblex/utils": "^1.1.1"
+    "@foblex/2d": "^1.2.2"
   },
   "dependencies": {
     "tslib": "^2.3.0"

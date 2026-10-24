@@ -11,7 +11,7 @@ import {
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
-import { isClosestElementHasClass } from '@foblex/utils';
+import { isClosestElementHasClass } from '../../../_libs/f-utils';
 import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../infrastructure';
 import { MagneticLinesPreparationRequest } from '../magnetic-lines';

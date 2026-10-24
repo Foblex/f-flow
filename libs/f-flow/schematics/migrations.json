@@ -10,6 +10,11 @@
       "description": "Rewrites @foblex/mediator imports to @foblex/flow and removes the obsolete dependency - the mediator is bundled with the library now",
       "version": "19.4.0",
       "factory": "./ng-update/vendored-mediator#migrateVendoredMediator"
+    },
+    "migration-vendored-utils": {
+      "description": "Rewrites @foblex/utils imports to @foblex/flow and removes the obsolete dependency - the helpers are bundled with the library now",
+      "version": "19.4.0",
+      "factory": "./ng-update/vendored-utils#migrateVendoredUtils"
     }
   }
 }
