@@ -5,6 +5,7 @@ import {
   FFlowModule,
   provideFFlow,
   withConnectionFlow,
+  withInitialView,
 } from '@foblex/flow';
 import { generateGuid } from '@foblex/utils';
 
@@ -21,7 +22,7 @@ interface IConnection {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule],
-  providers: [provideFFlow(withConnectionFlow('click'))],
+  providers: [provideFFlow(withInitialView(), withConnectionFlow('click'))],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

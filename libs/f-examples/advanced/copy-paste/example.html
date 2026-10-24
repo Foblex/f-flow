@@ -1,4 +1,4 @@
-<f-flow fDraggable (fLoaded)="loaded()" (fSelectionChange)="selectionChanged($event)">
+<f-flow fInitialView fDraggable (fLoaded)="loaded()" (fSelectionChange)="selectionChanged($event)">
   <f-canvas fZoom>
     @for (connection of model().connections; track connection.id) {
     <f-connection

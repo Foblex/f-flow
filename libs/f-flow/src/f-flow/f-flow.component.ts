@@ -1,5 +1,6 @@
 import {
   AfterContentInit,
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -56,6 +57,7 @@ import { afterNextPaint, FChannelHub, notifyOnStart, takeOne } from '../reactivi
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 import { F_CACHE_OPTIONS } from '../f-cache';
 import { F_FLOW_CONFIG } from '../provide-f-flow';
+import { F_INITIAL_VIEW } from '../plugins/initial-view';
 import { F_REFLOW_PROVIDERS } from '../plugins/layout/f-reflow-on-resize';
 import { FA11yAnnouncer, FA11yController } from '../plugins/a11y';
 import { FFlowStateController } from '../plugins/state';
@@ -114,6 +116,17 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   });
   public override fCache = input(false, { transform: booleanAttribute });
 
+  /**
+   * Enables the initial-view behavior without `provideFFlow(withInitialView())`: the flow
+   * renders invisibly and is revealed after the first full render and the viewport work
+   * queued by the `(fFullRendered)` handler — the first visible frame already carries the
+   * fitted/centered viewport. When bound, the input takes priority over the provider
+   * feature in both directions; left unbound, the provider decides.
+   */
+  public fInitialView = input<boolean | undefined, unknown>(undefined, {
+    transform: booleanAttribute,
+  });
+
   public override readonly hostElement = inject(ElementRef).nativeElement;
 
   public override fNodesRendered = output<string>();
@@ -134,6 +147,7 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
     if (!this._browser.isBrowser()) {
       return;
     }
+    this._hideUntilInitialView();
     this._listenNodesChanges();
     this._listenConnectionsChanges();
     this._a11y.initialize();
@@ -173,6 +187,40 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   private _emptyBootstrapGraceTimer: ReturnType<typeof setTimeout> | null = null;
   private _isEmptyBootstrapGraceElapsed = false;
   private _devDiagnosticsTimer: ReturnType<typeof setTimeout> | null = null;
+
+  private readonly _isInitialViewEnabled = inject(F_INITIAL_VIEW, { optional: true }) ?? false;
+  private _isInitialViewRevealPending = false;
+
+  // withInitialView(): render invisibly (visibility keeps layout, so all measurements
+  // work) until the first full render and the viewport work queued by the
+  // (fFullRendered) handler have landed — the first visible frame already carries
+  // the fitted/centered viewport
+  private _hideUntilInitialView(): void {
+    // the input, when bound, overrides the provider feature; unbound, the provider decides
+    const isActive = this.fInitialView() ?? this._isInitialViewEnabled;
+    if (!isActive) {
+      return;
+    }
+    this._isInitialViewRevealPending = true;
+    this.hostElement.style.visibility = 'hidden';
+  }
+
+  private _revealInitialViewOnce(): void {
+    if (!this._isInitialViewRevealPending) {
+      return;
+    }
+    this._isInitialViewRevealPending = false;
+
+    // registered AFTER the handler's own deferred viewport work (fitToScreen & co.
+    // apply inside their own afterNextRender), so the reveal runs once the
+    // transform is already in place
+    afterNextRender(
+      () => {
+        this.hostElement.style.visibility = '';
+      },
+      { injector: this._injector },
+    );
+  }
 
   private _listenNodesChanges(): void {
     this._destroyRef.onDestroy(() => {
@@ -227,7 +275,10 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
       new WaitForConnectionsRenderedRequest(
         this._componentsStore.connectionsRevision + 1,
         this._componentsStore.nodesRevision,
-        () => this._mediator.execute(new NotifyFullRenderedRequest()),
+        () => {
+          this._mediator.execute(new NotifyFullRenderedRequest());
+          this._revealInitialViewOnce();
+        },
         this._destroyRef,
       ),
     );

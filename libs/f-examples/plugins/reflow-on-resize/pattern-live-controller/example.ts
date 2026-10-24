@@ -5,6 +5,7 @@ import {
   FReflowController,
   provideFFlow,
   withReflowOnResize,
+  withInitialView,
 } from '@foblex/flow';
 import { FToolbarComponent } from '@foblex/m-render';
 
@@ -15,7 +16,7 @@ import { FToolbarComponent } from '@foblex/m-render';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule, FToolbarComponent],
-  providers: [provideFFlow(withReflowOnResize())],
+  providers: [provideFFlow(withInitialView(), withReflowOnResize())],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -24,7 +25,7 @@ export class Example {
   protected readonly enabled = signal(true);
 
   protected loaded(): void {
-    this._canvas()?.fitToScreen({ x: 100, y: 100 }, true);
+    this._canvas()?.fitToScreen({ x: 100, y: 100 }, false);
   }
 
   protected toggleEnabled(): void {

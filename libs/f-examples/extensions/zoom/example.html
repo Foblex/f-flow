@@ -1,4 +1,4 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fInitialView fDraggable (fLoaded)="onLoaded()">
   <f-canvas [fZoom]="isZoomEnabled">
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
     <div fNode [fNodePosition]="{ x: 0, y: 0 }" fDragHandle>

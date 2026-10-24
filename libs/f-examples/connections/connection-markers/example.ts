@@ -17,6 +17,6 @@ export class Example {
   // Wait for the full render so the animated viewport reset runs
   // after both nodes and connection paths are ready.
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(true);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 }

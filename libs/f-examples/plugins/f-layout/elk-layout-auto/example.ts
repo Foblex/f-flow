@@ -182,6 +182,6 @@ export class Example implements OnInit {
 
   private _fitToScreen(): void {
     // Fit the viewport after each full render/re-layout cycle.
-    this._canvas()?.fitToScreen(PointExtensions.initialize(150, 150), true);
+    this._canvas()?.fitToScreen(PointExtensions.initialize(150, 150), false);
   }
 }

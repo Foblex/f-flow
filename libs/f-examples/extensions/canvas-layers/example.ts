@@ -20,7 +20,7 @@ export class Example {
   protected readonly layers = signal<EFCanvasLayer[]>([...F_DEFAULT_LAYER_ORDER]);
 
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(true);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   protected bringNodesToTop(): void {

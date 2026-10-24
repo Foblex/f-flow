@@ -1,4 +1,9 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="onConnectionDropped($event)">
+<f-flow
+  fInitialView
+  fDraggable
+  (fLoaded)="onLoaded()"
+  (fCreateConnection)="onConnectionDropped($event)"
+>
   <f-canvas>
     <f-connection-for-create></f-connection-for-create>
 
