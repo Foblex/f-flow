@@ -86,7 +86,7 @@ export class DetectConnectionsUnderDragNode implements IExecution<
   }
 
   private _collectConnectionsUnderNode(node: FNodeBase): FConnectionBase[] {
-    const nodeRect = this._mediator.execute<IRoundedRect>(
+    const nodeRect = this._mediator.execute(
       new GetNormalizedConnectorRectRequest(node.hostElement, false),
     );
 

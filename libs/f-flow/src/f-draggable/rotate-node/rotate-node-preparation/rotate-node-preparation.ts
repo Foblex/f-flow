@@ -8,7 +8,6 @@ import {
   CalculateInputConnectionsRequest,
   CalculateOutputConnectionsRequest,
   GetConnectorRectReferenceRequest,
-  IConnectorRectRef,
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
@@ -21,7 +20,6 @@ import {
   DragNodeConnectionSourceHandler,
   DragNodeConnectionTargetHandler,
 } from '../../drag-node';
-import { FConnectionBase } from '../../../f-connection-v2';
 
 type TRotateConnectionHandler = {
   connection: DragNodeConnectionHandlerBase;
@@ -89,38 +87,30 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
   }
 
   private _buildInputConnectionHandlers(nodeOrGroup: FNodeBase): TRotateConnectionHandler[] {
-    return this._mediator
-      .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(nodeOrGroup))
-      .map((x) => {
-        const connector = requireTargetConnector(this._store, x.targetId());
-        const connectorRef = this._mediator.execute<IConnectorRectRef>(
-          new GetConnectorRectReferenceRequest(connector),
-        );
-        const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
-        handler.initialize(x);
+    return this._mediator.execute(new CalculateInputConnectionsRequest(nodeOrGroup)).map((x) => {
+      const connector = requireTargetConnector(this._store, x.targetId());
+      const connectorRef = this._mediator.execute(new GetConnectorRectReferenceRequest(connector));
+      const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
+      handler.initialize(x);
 
-        return {
-          connection: handler,
-          connector: connectorRef.rect.gravityCenter,
-        };
-      });
+      return {
+        connection: handler,
+        connector: connectorRef.rect.gravityCenter,
+      };
+    });
   }
 
   private _buildOutputConnectionHandlers(nodeOrGroup: FNodeBase): TRotateConnectionHandler[] {
-    return this._mediator
-      .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(nodeOrGroup))
-      .map((x) => {
-        const connector = requireSourceConnector(this._store, x.sourceId());
-        const connectorRef = this._mediator.execute<IConnectorRectRef>(
-          new GetConnectorRectReferenceRequest(connector),
-        );
-        const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
-        handler.initialize(x);
+    return this._mediator.execute(new CalculateOutputConnectionsRequest(nodeOrGroup)).map((x) => {
+      const connector = requireSourceConnector(this._store, x.sourceId());
+      const connectorRef = this._mediator.execute(new GetConnectorRectReferenceRequest(connector));
+      const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
+      handler.initialize(x);
 
-        return {
-          connection: handler,
-          connector: connectorRef.rect.gravityCenter,
-        };
-      });
+      return {
+        connection: handler,
+        connector: connectorRef.rect.gravityCenter,
+      };
+    });
   }
 }

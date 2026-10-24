@@ -96,7 +96,7 @@ export class DragExternalItemFinalize implements IExecution<DragExternalItemFina
   }
 
   private _getPreviewRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._result.getData().preview),
     );
   }

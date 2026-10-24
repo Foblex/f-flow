@@ -42,12 +42,12 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
     this._connection = connection;
     this._draggedEnd = isTargetDragHandle ? 'target' : 'source';
 
-    this._sourceRef = this._mediator.execute<IConnectorRectRef>(
+    this._sourceRef = this._mediator.execute(
       new GetConnectorRectReferenceRequest(
         requireSourceConnector(this._store, this._connection.sourceId()),
       ),
     );
-    this._targetRef = this._mediator.execute<IConnectorRectRef>(
+    this._targetRef = this._mediator.execute(
       new GetConnectorRectReferenceRequest(
         requireTargetConnector(this._store, this._connection.targetId()),
       ),

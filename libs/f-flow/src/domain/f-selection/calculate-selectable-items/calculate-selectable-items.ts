@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { IRect } from '@foblex/2d';
 import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
 import { CalculateSelectableItemsRequest } from './calculate-selectable-items-request';
 import { FNodeBase } from '../../../f-node';
@@ -44,7 +43,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+          fRect: this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement)),
         };
       });
   }
@@ -59,9 +58,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: this._mediator.execute<IRect>(
-            new GetNormalizedElementRectRequest(x.boundingElement),
-          ),
+          fRect: this._mediator.execute(new GetNormalizedElementRectRequest(x.boundingElement)),
         };
       });
   }

@@ -5,7 +5,6 @@ import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnector } from '../i-f-flow-state-connector';
 import { GetNormalizedElementRectRequest } from '../../../get-normalized-element-rect';
-import { IRect } from '@foblex/2d';
 
 /**
  * Execution that retrieves the state of Flow nodes, including their position, size, inputs, outputs, and selection status.
@@ -25,7 +24,7 @@ export class CalculateNodesState implements IExecution<
       .filter((x) => x instanceof component)
       .map((x) => {
         const measuredRect = measuredSize
-          ? this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement))
+          ? this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement))
           : null;
 
         return {

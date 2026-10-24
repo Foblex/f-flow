@@ -64,7 +64,7 @@ export class ReassignConnectionFinalize implements IExecution<
     event: IPointerEvent,
     connectable: IConnectorRectRef[],
   ): FConnectorBase | undefined {
-    return this._mediator.execute<FConnectorBase | undefined>(
+    return this._mediator.execute(
       new FindConnectableConnectorUsingPriorityAndPositionRequest(event.getPosition(), connectable),
     );
   }

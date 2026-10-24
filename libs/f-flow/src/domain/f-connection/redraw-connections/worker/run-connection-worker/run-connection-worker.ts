@@ -19,13 +19,13 @@ export class RunConnectionWorker implements IExecution<
       return Promise.resolve([]);
     }
 
-    if (!this._mediator.execute<boolean>(new IsConnectionWorkerEnabledRequest())) {
+    if (!this._mediator.execute(new IsConnectionWorkerEnabledRequest())) {
       return Promise.reject(new Error('Connection worker is disabled.'));
     }
 
     this._interruptPendingRequests();
 
-    const worker = this._mediator.execute<Worker | null>(new EnsureConnectionWorkerRequest());
+    const worker = this._mediator.execute(new EnsureConnectionWorkerRequest());
     if (!worker) {
       return Promise.reject(new Error('Unable to initialize connection worker.'));
     }

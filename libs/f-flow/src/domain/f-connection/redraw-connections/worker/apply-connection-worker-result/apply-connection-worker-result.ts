@@ -31,7 +31,7 @@ export class ApplyConnectionWorkerResult implements IExecution<
         result.sourceSide as EFConnectableSide,
         result.targetSide as EFConnectableSide,
       );
-      this._mediator.execute<void>(
+      this._mediator.execute(
         new RenderConnectionWithLineRequest(
           batchItem.connection,
           batchItem.geometry.source,
@@ -45,7 +45,7 @@ export class ApplyConnectionWorkerResult implements IExecution<
   }
 
   private _fallbackToMainThread(batchItem: IConnectionWorkerBatchItem): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new RenderConnectionFromGeometryRequest(batchItem.connection, batchItem.geometry),
     );
   }

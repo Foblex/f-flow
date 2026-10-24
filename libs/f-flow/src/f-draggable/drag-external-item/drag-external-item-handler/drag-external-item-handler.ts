@@ -79,7 +79,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _getStartRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._externalItem.hostElement),
     );
   }
@@ -126,9 +126,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _createPreview(): HTMLElement | SVGElement {
-    const el = this._mediator.execute<HTMLElement>(
-      new DragExternalItemCreatePreviewRequest(this._externalItem),
-    );
+    const el = this._mediator.execute(new DragExternalItemCreatePreviewRequest(this._externalItem));
 
     if (this._externalItem.previewMatchSize()) {
       this._matchSize(el as HTMLElement, this._pointerDownRect);
@@ -140,9 +138,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _createPlaceholder(): HTMLElement | SVGElement {
-    return this._mediator.execute<HTMLElement>(
-      new DragExternalItemCreatePlaceholderRequest(this._externalItem),
-    );
+    return this._mediator.execute(new DragExternalItemCreatePlaceholderRequest(this._externalItem));
   }
 
   private _placePreviewIntoOverlay(): void {

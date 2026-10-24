@@ -92,7 +92,7 @@ export class ReassignConnectionPreparation implements IExecution<
   }
 
   private _bringToFront(connection: FConnectionBase): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new UpdateItemAndChildrenLayersRequest(
         connection,
         this._canvas.fConnectionsContainer().nativeElement,

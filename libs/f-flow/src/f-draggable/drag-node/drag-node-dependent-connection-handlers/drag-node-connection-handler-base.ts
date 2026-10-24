@@ -96,9 +96,7 @@ export class DragNodeConnectionHandlerBase {
   }
 
   private _readRectRef(connector: FConnectorBase): IConnectorRectRef {
-    return this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    );
+    return this._mediator.execute(new GetConnectorRectReferenceRequest(connector));
   }
 
   private _withDelta(rect: IConnectorRectRef['rect'], delta: IPoint): IConnectorRectRef['rect'] {
@@ -108,8 +106,6 @@ export class DragNodeConnectionHandlerBase {
   private _resolveRotationContext(
     connector?: FConnectorBase,
   ): IConnectionEndpointRotationContext | undefined {
-    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
-      new ResolveConnectionEndpointRotationContextRequest(connector),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRotationContextRequest(connector));
   }
 }

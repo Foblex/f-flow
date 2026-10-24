@@ -64,14 +64,10 @@ export class GetNormalizedParentNodeRect implements IExecution<
   }
 
   private _getNodeRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _getNodePadding(nodeOrGroup: FNodeBase, rect: IRect): [number, number, number, number] {
-    return this._mediator.execute<[number, number, number, number]>(
-      new GetNodePaddingRequest(nodeOrGroup, rect),
-    );
+    return this._mediator.execute(new GetNodePaddingRequest(nodeOrGroup, rect));
   }
 }

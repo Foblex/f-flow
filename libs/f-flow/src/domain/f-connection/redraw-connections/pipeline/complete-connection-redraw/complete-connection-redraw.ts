@@ -13,7 +13,7 @@ export class CompleteConnectionRedraw implements IExecution<CompleteConnectionRe
   private readonly _state = inject(ConnectionRedrawState);
 
   public handle({ session }: CompleteConnectionRedrawRequest): void {
-    if (!this._mediator.execute<boolean>(new IsConnectionRedrawCurrentRequest(session))) {
+    if (!this._mediator.execute(new IsConnectionRedrawCurrentRequest(session))) {
       return;
     }
 

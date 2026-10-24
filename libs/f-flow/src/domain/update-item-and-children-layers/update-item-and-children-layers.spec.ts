@@ -70,8 +70,8 @@ describe('UpdateItemAndChildrenLayers', () => {
 
     registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
 
-    mediator.execute<void>(new SortItemLayersRequest());
-    mediator.execute<void>(
+    mediator.execute(new SortItemLayersRequest());
+    mediator.execute(
       new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
     );
 
@@ -108,7 +108,7 @@ describe('UpdateItemAndChildrenLayers', () => {
 
     registryAddMany(componentsStore.nodes, [group1, group2, node1, node2, node3, node4]);
 
-    mediator.execute<void>(
+    mediator.execute(
       new UpdateItemAndChildrenLayersRequest(group1, canvas.fGroupsContainer().nativeElement),
     );
 

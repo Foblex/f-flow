@@ -54,7 +54,7 @@ export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRe
 
     const handler = this._dragInjector.createInstance(ResizeNodeHandler);
     handler.initialize(nodeOrGroup, this._readResizeHandleType(event.targetElement));
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new AttachResizeConnectionDragHandlersToNodeRequest(handler, nodeOrGroup),
     );
 

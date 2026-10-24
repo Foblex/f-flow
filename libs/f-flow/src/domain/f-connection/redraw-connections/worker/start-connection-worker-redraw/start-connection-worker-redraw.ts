@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/f-mediator';
-import { IConnectionWorkerBatch, IConnectionWorkerResultItem } from '../../models';
+import { IConnectionWorkerResultItem } from '../../models';
 import { IsConnectionRedrawCurrentRequest, RunConnectionRedrawSliceRequest } from '../../pipeline';
 import { BuildConnectionWorkerBatchRequest } from '../build-connection-worker-batch';
 import { RunConnectionWorkerBatchRequest } from '../run-connection-worker-batch';
@@ -15,11 +15,9 @@ export class StartConnectionWorkerRedraw implements IExecution<
   private readonly _mediator = inject(FMediator);
 
   public handle({ connections, cache, session }: StartConnectionWorkerRedrawRequest): void {
-    const batch = this._mediator.execute<IConnectionWorkerBatch>(
-      new BuildConnectionWorkerBatchRequest(connections, cache),
-    );
+    const batch = this._mediator.execute(new BuildConnectionWorkerBatchRequest(connections, cache));
     if (!batch.payload.length) {
-      this._mediator.execute<void>(
+      this._mediator.execute(
         new RunConnectionRedrawSliceRequest(connections, cache, 0, session, batch.items),
       );
 
@@ -27,13 +25,13 @@ export class StartConnectionWorkerRedraw implements IExecution<
     }
 
     this._mediator
-      .execute<Promise<IConnectionWorkerResultItem[]>>(new RunConnectionWorkerBatchRequest(batch))
+      .execute(new RunConnectionWorkerBatchRequest(batch))
       .then((results) => {
-        if (!this._mediator.execute<boolean>(new IsConnectionRedrawCurrentRequest(session))) {
+        if (!this._mediator.execute(new IsConnectionRedrawCurrentRequest(session))) {
           return;
         }
 
-        this._mediator.execute<void>(
+        this._mediator.execute(
           new RunConnectionRedrawSliceRequest(
             connections,
             cache,
@@ -45,11 +43,11 @@ export class StartConnectionWorkerRedraw implements IExecution<
         );
       })
       .catch(() => {
-        if (!this._mediator.execute<boolean>(new IsConnectionRedrawCurrentRequest(session))) {
+        if (!this._mediator.execute(new IsConnectionRedrawCurrentRequest(session))) {
           return;
         }
 
-        this._mediator.execute<void>(
+        this._mediator.execute(
           new RunConnectionRedrawSliceRequest(connections, cache, 0, session, batch.items),
         );
       });

@@ -24,11 +24,11 @@ export class EmitSelectionChangeEvent implements IExecution<EmitSelectionChangeE
 
     this._emitSelectionChange(this._getSelection());
     this._dragSession.isSelectedChanged = false;
-    this._mediator.execute<void>(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   private _getSelection(): ICurrentSelection {
-    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute(new GetCurrentSelectionRequest());
   }
 
   private _emitSelectionChange(selection: ICurrentSelection): void {

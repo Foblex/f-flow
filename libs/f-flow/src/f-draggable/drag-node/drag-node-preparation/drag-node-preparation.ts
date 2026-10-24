@@ -39,8 +39,8 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
     // Store pointer-down context for other handlers
     this._dragSession.draggableItems = [this._buildDragNodeHandler(node)];
 
-    this._mediator.execute<void>(new MagneticLinesPreparationRequest());
-    this._mediator.execute<void>(new MagneticRectsPreparationRequest());
+    this._mediator.execute(new MagneticLinesPreparationRequest());
+    this._mediator.execute(new MagneticRectsPreparationRequest());
   }
 
   private _canStartDrag(event: IPointerEvent, trigger: FEventTrigger): boolean {

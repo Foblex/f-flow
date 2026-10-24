@@ -24,8 +24,7 @@ export class ResetScaleAndCenter implements IExecution<ResetScaleAndCenterReques
 
   public handle({ animated, emitCanvasChange }: ResetScaleAndCenterRequest): void {
     const nodesRect =
-      this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
-      RectExtensions.initialize();
+      this._mediator.execute(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (nodesRect.width === 0 || nodesRect.height === 0) {
       return;
     }

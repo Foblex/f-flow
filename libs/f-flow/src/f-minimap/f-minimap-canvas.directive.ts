@@ -12,7 +12,7 @@ export class FMinimapCanvasDirective {
   public readonly hostElement = this._elementRef.nativeElement;
 
   public redraw(): void {
-    this._mediator.execute<void>(new MinimapDrawNodesRequest(this.hostElement));
+    this._mediator.execute(new MinimapDrawNodesRequest(this.hostElement));
   }
 
   public clear(): void {

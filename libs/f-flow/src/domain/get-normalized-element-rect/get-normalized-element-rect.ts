@@ -33,9 +33,7 @@ export class GetNormalizedElementRect implements IExecution<
   }
 
   public handle({ element }: GetNormalizedElementRectRequest): IRect {
-    const cachedRect = this._mediator.execute<IRect | undefined>(
-      new GetCachedFCacheRectRequest(element),
-    );
+    const cachedRect = this._mediator.execute(new GetCachedFCacheRectRequest(element));
     if (cachedRect) {
       return cachedRect;
     }

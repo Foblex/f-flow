@@ -741,14 +741,14 @@ export class FA11yController {
   // ------------------------------------------------------------------ selection
 
   private _applySelection(nodeAndGroupIds: string[], connectionIds: string[]): void {
-    this._mediator.execute<void>(new SelectRequest(nodeAndGroupIds, connectionIds, true));
-    this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
+    this._mediator.execute(new SelectRequest(nodeAndGroupIds, connectionIds, true));
+    this._mediator.execute(new EmitSelectionChangeEventRequest());
   }
 
   private _selectAll(): void {
-    this._mediator.execute<void>(new SelectAllRequest());
+    this._mediator.execute(new SelectAllRequest());
     this._dragContext.markSelectionAsChanged();
-    this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
+    this._mediator.execute(new EmitSelectionChangeEventRequest());
     const selection = this._selection();
     this._announce(
       this._messages.allSelected(
@@ -764,9 +764,9 @@ export class FA11yController {
     if (isEmpty) {
       return;
     }
-    this._mediator.execute<void>(new ClearSelectionRequest());
+    this._mediator.execute(new ClearSelectionRequest());
     this._dragContext.markSelectionAsChanged();
-    this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
+    this._mediator.execute(new EmitSelectionChangeEventRequest());
     this._announce(this._messages.selectionCleared);
   }
 
@@ -1091,7 +1091,7 @@ export class FA11yController {
   }
 
   private _selection(): ICurrentSelection {
-    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute(new GetCurrentSelectionRequest());
   }
 
   /**

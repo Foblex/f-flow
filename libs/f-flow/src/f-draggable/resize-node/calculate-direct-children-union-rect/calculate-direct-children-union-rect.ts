@@ -32,9 +32,7 @@ export class CalculateDirectChildrenUnionRect implements IExecution<
   }
 
   private _normalizeRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _concatRectWithParentPadding(

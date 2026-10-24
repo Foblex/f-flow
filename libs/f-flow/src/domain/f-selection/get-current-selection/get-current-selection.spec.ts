@@ -2,7 +2,6 @@ import {
   configureDiTest,
   createMediatorHarness,
   FDraggableDataContext,
-  FSelectionChangeEvent,
   GetCurrentSelection,
   GetCurrentSelectionRequest,
   injectFromDi,
@@ -39,7 +38,7 @@ describe('GetSelectionExecution', () => {
 
     draggableDataContext.selectedItems = selectedItems;
 
-    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    const result = mediator.execute(new GetCurrentSelectionRequest());
 
     expect(result.fNodeIds).toEqual(['node1']);
     expect(result.fGroupIds).toEqual(['group1']);
@@ -49,7 +48,7 @@ describe('GetSelectionExecution', () => {
   it('should return empty FSelectionChangeEvent when no items are selected', () => {
     draggableDataContext.selectedItems = [];
 
-    const result = mediator.execute<FSelectionChangeEvent>(new GetCurrentSelectionRequest());
+    const result = mediator.execute(new GetCurrentSelectionRequest());
 
     expect(result.fNodeIds).toEqual([]);
     expect(result.fConnectionIds).toEqual([]);

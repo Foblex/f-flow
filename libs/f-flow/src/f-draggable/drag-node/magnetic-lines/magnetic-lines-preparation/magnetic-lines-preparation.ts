@@ -66,7 +66,7 @@ export class MagneticLinesPreparation implements IExecution<MagneticLinesPrepara
     const notDragged = this._store.nodes.getAll().filter((x) => !dragged.has(x));
 
     return notDragged.map((x) =>
-      this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+      this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement)),
     );
   }
 }

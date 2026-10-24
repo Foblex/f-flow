@@ -26,8 +26,6 @@ export class ResolveConnectionEndpointRect implements IExecution<
   }
 
   private _calculateRect(connector: FConnectorBase): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(
-      new GetNormalizedConnectorRectRequest(connector.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedConnectorRectRequest(connector.hostElement));
   }
 }

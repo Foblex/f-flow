@@ -55,7 +55,7 @@ export class DragMinimapHandler extends DragHandlerBase<unknown> {
   }
 
   private _getNewPosition(eventPoint: IPoint): IPoint {
-    return this._mediator.execute<IPoint>(
+    return this._mediator.execute(
       new CalculateFlowPointFromMinimapPointRequest(
         this._flowRect,
         this._startCanvasPosition,

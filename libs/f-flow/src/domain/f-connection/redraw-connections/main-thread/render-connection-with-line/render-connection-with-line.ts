@@ -10,7 +10,7 @@ export class RenderConnectionWithLine implements IExecution<RenderConnectionWith
   private readonly _mediator = inject(FMediator);
 
   public handle({ connection, source, target, line }: RenderConnectionWithLineRequest): void {
-    this._mediator.execute<void>(new MarkConnectionConnectorsAsConnectedRequest(source, target));
-    this._mediator.execute<void>(new ApplyConnectionRenderRequest(connection, line));
+    this._mediator.execute(new MarkConnectionConnectorsAsConnectedRequest(source, target));
+    this._mediator.execute(new ApplyConnectionRenderRequest(connection, line));
   }
 }

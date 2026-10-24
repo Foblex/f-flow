@@ -70,6 +70,6 @@ export class CalculateConnectableSideByConnectedPositions implements IExecution<
   }
 
   private _getConnectorRect(element: HTMLElement | SVGElement): IRect {
-    return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(element));
+    return this._mediator.execute(new GetNormalizedElementRectRequest(element));
   }
 }

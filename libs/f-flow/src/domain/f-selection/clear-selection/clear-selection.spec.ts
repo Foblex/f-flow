@@ -33,7 +33,7 @@ describe('ClearSelection', () => {
     expect(draggableDataContext.selectedItems.length).toBe(2);
     expect(draggableDataContext.isSelectedChanged).toBe(false);
 
-    mediator.execute<void>(new ClearSelectionRequest());
+    mediator.execute(new ClearSelectionRequest());
 
     expect(firstUnmark).toHaveBeenCalledTimes(1);
     expect(secondUnmark).toHaveBeenCalledTimes(1);

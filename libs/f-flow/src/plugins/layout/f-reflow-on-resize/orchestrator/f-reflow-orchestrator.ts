@@ -197,7 +197,7 @@ export class FReflowOrchestrator {
       return null;
     }
     try {
-      return this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(node.hostElement));
+      return this._mediator.execute(new GetNormalizedElementRectRequest(node.hostElement));
     } catch {
       return null;
     }

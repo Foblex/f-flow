@@ -98,7 +98,7 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
       return undefined;
     }
 
-    const closestConnector = this._mediator.execute<IClosestConnectorRef | undefined>(
+    const closestConnector = this._mediator.execute(
       new CalculateClosestConnectorRequest(
         this._calculatePointerInFlow(request.pointerPosition),
         request.connectableConnectors,
@@ -155,7 +155,7 @@ export class FindConnectableConnectorUsingPriorityAndPosition implements IExecut
   ): FConnectorBase | undefined {
     const nodeConnectors = connectableConnectors.filter((x) => x.connector.fNodeId === fNode.fId());
 
-    return this._mediator.execute<IClosestConnectorRef | undefined>(
+    return this._mediator.execute(
       new CalculateClosestConnectorRequest(pointerInFlow, nodeConnectors),
     )?.connector;
   }

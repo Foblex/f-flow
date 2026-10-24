@@ -42,7 +42,6 @@ import {
   WaitForConnectionsRenderedRequest,
 } from '../domain';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../f-storage';
-import { FFlowBase } from '../f-flow';
 import { F_DEFAULT_LAYER_ORDER } from './constants';
 
 /**
@@ -127,7 +126,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._flowId = this._mediator.execute<FFlowBase>(new GetFlowRequest()).fId();
+    this._flowId = this._mediator.execute(new GetFlowRequest()).fId();
     this._mediator.execute(new AddCanvasToStoreRequest(this));
     this._positionChange();
     this._scaleChange();

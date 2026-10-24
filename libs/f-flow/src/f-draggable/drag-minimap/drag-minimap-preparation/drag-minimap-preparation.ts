@@ -78,7 +78,7 @@ export class DragMinimapPreparation implements IExecution<DragMinimapPreparation
     eventPoint: IPoint,
     minimap: FMinimapState,
   ): IPoint {
-    return this._mediator.execute<IPoint>(
+    return this._mediator.execute(
       new CalculateFlowPointFromMinimapPointRequest(
         flowRect,
         Point.fromPoint(this._canvas.transform.position),

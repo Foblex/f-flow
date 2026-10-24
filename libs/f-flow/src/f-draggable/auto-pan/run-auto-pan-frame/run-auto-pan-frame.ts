@@ -23,21 +23,21 @@ export class RunAutoPanFrame implements IExecution<RunAutoPanFrameRequest, void>
   public handle(_request: RunAutoPanFrameRequest): void {
     const mode = this._getAutoPanMode();
     if (!this._canAutoPan(mode)) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
 
     const delta = this._getAutoPanDelta();
     if (!delta.x && !delta.y) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
 
     this._applyCanvasDelta(delta, mode);
     this._replayLastPointerMove();
-    this._mediator.execute<void>(new ScheduleAutoPanFrameRequest());
+    this._mediator.execute(new ScheduleAutoPanFrameRequest());
   }
 
   private _applyCanvasDelta(delta: IPoint, mode: TAutoPanMode): void {

@@ -35,8 +35,6 @@ export class BuildConnectionLine implements IExecution<BuildConnectionLineReques
   private _resolveRotationContext(
     connector: FConnectorBase,
   ): TResolveConnectionEndpointRotationContextResponse {
-    return this._mediator.execute<TResolveConnectionEndpointRotationContextResponse>(
-      new ResolveConnectionEndpointRotationContextRequest(connector),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRotationContextRequest(connector));
   }
 }

@@ -19,8 +19,6 @@ export class RunConnectionWorkerBatch implements IExecution<
       return Promise.resolve([]);
     }
 
-    return this._mediator.execute<Promise<IConnectionWorkerResultItem[]>>(
-      new RunConnectionWorkerRequest(batch.payload),
-    );
+    return this._mediator.execute(new RunConnectionWorkerRequest(batch.payload));
   }
 }

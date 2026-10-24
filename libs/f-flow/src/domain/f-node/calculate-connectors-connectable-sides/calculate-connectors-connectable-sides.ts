@@ -61,7 +61,7 @@ export class CalculateConnectorsConnectableSides implements IExecution<
     const mode = connector.userFConnectableSide;
 
     if (mode === EFConnectableSide.AUTO) {
-      return this._mediator.execute<EFConnectableSide>(
+      return this._mediator.execute(
         new CalculateConnectableSideByInternalPositionRequest(connector),
       );
     }

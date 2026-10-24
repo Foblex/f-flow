@@ -27,13 +27,11 @@ export class BuildDragNodeConstraints implements IExecution<
   }
 
   private _readCurrentRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _readParentsChain(nodeOrGroup: FNodeBase): FNodeBase[] {
-    return this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(nodeOrGroup)) ?? [];
+    return this._mediator.execute(new GetParentNodesRequest(nodeOrGroup)) ?? [];
   }
 
   private _buildConstraints(parents: FNodeBase[], childRect: IRect): IDragNodeDeltaConstraints {
@@ -62,9 +60,7 @@ export class BuildDragNodeConstraints implements IExecution<
     parent: FNodeBase,
     childrenPaddings: [number, number, number, number],
   ): ReadNodeBoundsWithPaddingsResponse {
-    return this._mediator.execute<ReadNodeBoundsWithPaddingsResponse>(
-      new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings),
-    );
+    return this._mediator.execute(new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings));
   }
 
   private _calculateDifference(parentRect: IRect, currentRect: IRect): IMinMaxPoint {

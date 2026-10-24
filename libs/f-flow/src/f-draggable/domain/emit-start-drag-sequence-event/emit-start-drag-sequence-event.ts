@@ -25,7 +25,7 @@ export class EmitStartDragSequenceEvent implements IExecution<
   public handle(_request: EmitStartDragSequenceEventRequest): void {
     if (this._dragContext.draggableItems.length > 0) {
       this._store.flowHost.classList.add(F_CSS_CLASS.DRAG_AND_DROP.DRAGGING);
-      this._mediator.execute<void>(new EmitSelectionChangeEventRequest());
+      this._mediator.execute(new EmitSelectionChangeEventRequest());
       this._emitDragStarted();
     }
   }

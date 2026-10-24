@@ -74,7 +74,7 @@ export class DragConnectionWaypointPreparation implements IExecution<
   }
 
   private _updateConnectionLayer(connection: FConnectionBase): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new UpdateItemAndChildrenLayersRequest(
         connection,
         this._canvas.fConnectionsContainer().nativeElement,

@@ -16,7 +16,7 @@ export class PrepareDragSequence implements IExecution<PrepareDragSequenceReques
   public handle(_: PrepareDragSequenceRequest): void {
     this._callPrepareDragSequence();
 
-    this._mediator.execute<void>(new EmitStartDragSequenceEventRequest());
+    this._mediator.execute(new EmitStartDragSequenceEventRequest());
   }
 
   private _callPrepareDragSequence(): void {

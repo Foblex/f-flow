@@ -108,7 +108,7 @@ export class FGroupDirective
   public ngOnInit(): void {
     super.redraw();
 
-    this._mediator.execute<void>(new AddNodeToStoreRequest(this));
+    this._mediator.execute(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -141,9 +141,7 @@ export class FGroupDirective
   }
 
   private _listenStateSizeChanges(): void {
-    this._mediator.execute<void>(
-      new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef),
-    );
+    this._mediator.execute(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public override refresh(): void {
@@ -151,6 +149,6 @@ export class FGroupDirective
   }
 
   public ngOnDestroy(): void {
-    this._mediator.execute<void>(new RemoveNodeFromStoreRequest(this));
+    this._mediator.execute(new RemoveNodeFromStoreRequest(this));
   }
 }

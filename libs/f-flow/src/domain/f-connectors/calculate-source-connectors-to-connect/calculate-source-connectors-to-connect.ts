@@ -38,9 +38,7 @@ export class CalculateSourceConnectorsToConnect implements IExecution<
 
     const refs: IConnectorRectRef[] = [];
     for (const connector of sources) {
-      refs.push(
-        this._mediator.execute<IConnectorRectRef>(new GetConnectorRectReferenceRequest(connector)),
-      );
+      refs.push(this._mediator.execute(new GetConnectorRectReferenceRequest(connector)));
     }
 
     this._scheduleApplyCalculatedSides(refs, pointer);

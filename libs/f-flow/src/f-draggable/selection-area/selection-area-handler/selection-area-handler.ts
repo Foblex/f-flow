@@ -70,7 +70,7 @@ export class SelectionAreaHandler extends DragHandlerBase<unknown> {
         this._selectedByMove.push(item.element);
       }
     });
-    this._mediator.execute<void>(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   private _getMinimumPoint(point1: IPoint, point2: IPoint): IPoint {

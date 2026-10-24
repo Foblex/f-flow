@@ -33,17 +33,13 @@ export class ResolveConnectionGeometry implements IExecution<
   }
 
   private _resolveConnectionEndpoints(connection: FConnectionBase): IConnectionEndpoints | null {
-    return this._mediator.execute<IConnectionEndpoints | null>(
-      new ResolveConnectionEndpointsRequest(connection),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointsRequest(connection));
   }
 
   private _resolveEndpointRect(
     connector: FConnectorBase,
     cache: Map<string, IRoundedRect>,
   ): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(
-      new ResolveConnectionEndpointRectRequest(connector, cache),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRectRequest(connector, cache));
   }
 }

@@ -25,8 +25,7 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
 
   public handle({ toCenter, animated, emitCanvasChange, maxScale }: FitToFlowRequest): void {
     const fNodesRect =
-      this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
-      RectExtensions.initialize();
+      this._mediator.execute(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }

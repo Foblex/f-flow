@@ -109,7 +109,7 @@ export class SelectByPointer implements IExecution<SelectByPointerRequest, void>
     }
 
     queueMicrotask(() => {
-      this._mediator.execute<void>(
+      this._mediator.execute(
         new UpdateItemAndChildrenLayersRequest(item, item.hostElement.parentElement as HTMLElement),
       );
     });

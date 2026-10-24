@@ -16,9 +16,7 @@ export class ApplyConnectionRender implements IExecution<ApplyConnectionRenderRe
   >();
 
   public handle({ connection, line }: ApplyConnectionRenderRequest): void {
-    const markersChanged = this._mediator.execute<boolean>(
-      new CreateConnectionMarkersRequest(connection),
-    );
+    const markersChanged = this._mediator.execute(new CreateConnectionMarkersRequest(connection));
     if (!markersChanged && !this._shouldRender(connection, line)) {
       return;
     }

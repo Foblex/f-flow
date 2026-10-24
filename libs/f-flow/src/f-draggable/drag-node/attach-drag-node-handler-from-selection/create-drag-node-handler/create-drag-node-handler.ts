@@ -61,7 +61,7 @@ export class CreateDragNodeHandler implements IExecution<
     constraints: IDragNodeDeltaConstraints,
     handlerPool: DragNodeConnectionHandlerBase[],
   ): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new AttachSoftParentConnectionDragHandlersToNodeRequest(
         dragHandler,
         constraints,
@@ -71,8 +71,6 @@ export class CreateDragNodeHandler implements IExecution<
   }
 
   private _calculateConstraints(nodeOrGroup: FNodeBase): IDragNodeDeltaConstraints {
-    return this._mediator.execute<IDragNodeDeltaConstraints>(
-      new BuildDragNodeConstraintsRequest(nodeOrGroup),
-    );
+    return this._mediator.execute(new BuildDragNodeConstraintsRequest(nodeOrGroup));
   }
 }

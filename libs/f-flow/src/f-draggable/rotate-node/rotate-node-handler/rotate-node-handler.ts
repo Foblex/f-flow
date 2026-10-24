@@ -97,7 +97,7 @@ export class RotateNodeHandler extends DragHandlerBase<FRotateNodeStartEventData
   }
 
   private _readNodeRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._nodeOrGroup.hostElement),
     );
   }

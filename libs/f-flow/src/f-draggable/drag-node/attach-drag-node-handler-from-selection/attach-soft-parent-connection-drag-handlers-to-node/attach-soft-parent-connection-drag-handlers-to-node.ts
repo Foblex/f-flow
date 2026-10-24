@@ -19,7 +19,7 @@ import {
   requireTargetConnector,
 } from '../../../../f-connectors';
 import { IRoundedRect } from '@foblex/2d';
-import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../../domain';
+import { GetConnectorRectReferenceRequest } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
 
 @Injectable()
@@ -134,9 +134,7 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
       return cached;
     }
 
-    const rect = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    ).rect;
+    const rect = this._mediator.execute(new GetConnectorRectReferenceRequest(connector)).rect;
     cache.set(cacheKey, rect);
 
     return rect;

@@ -36,6 +36,7 @@ export class GetNormalizedConnectorRect implements IExecution<
   }
 
   public handle({ element, cache }: GetNormalizedConnectorRectRequest): IRoundedRect {
+    // deliberate narrowing: connector entries in the cache hold rounded rects
     const cachedRect = this._mediator.execute<IRoundedRect | undefined>(
       new GetCachedFCacheRectRequest(element),
     );

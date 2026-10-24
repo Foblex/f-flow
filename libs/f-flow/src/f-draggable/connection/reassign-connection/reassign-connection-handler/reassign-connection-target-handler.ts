@@ -53,7 +53,7 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
   }
 
   public collectAndMarkCandidates(): void {
-    this._candidates = this._mediator.execute<IConnectorRectRef[]>(
+    this._candidates = this._mediator.execute(
       new CalculateTargetConnectorsToConnectRequest(
         this._source,
         this._sourceRef.rect.gravityCenter,
@@ -108,9 +108,7 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
   }
 
   private _findClosest(point: IPoint): IClosestConnectorRef | undefined {
-    return this._mediator.execute<IClosestConnectorRef | undefined>(
-      new CalculateClosestConnectorRequest(point, this._candidates),
-    );
+    return this._mediator.execute(new CalculateClosestConnectorRequest(point, this._candidates));
   }
 
   private _draw(targetRect: RoundedRect, targetSide: EFConnectableSide): void {
@@ -162,8 +160,6 @@ export class ReassignConnectionTargetHandler implements IReassignHandler {
   private _resolveRotationContext(
     connector?: FConnectorBase,
   ): IConnectionEndpointRotationContext | undefined {
-    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
-      new ResolveConnectionEndpointRotationContextRequest(connector),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRotationContextRequest(connector));
   }
 }

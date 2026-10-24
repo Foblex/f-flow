@@ -10,7 +10,7 @@ import { GetDeepChildrenNodesAndGroupsRequest } from '../../../domain';
 import { flatMap } from '@foblex/utils';
 import { DragNodeConnectionHandlerBase } from '../drag-node-dependent-connection-handlers';
 import { DragNodeHandler, DragNodeItemHandler } from '../drag-node-handler';
-import { CreateDragNodeHierarchyRequest, DragNodeHierarchy } from './create-drag-node-hierarchy';
+import { CreateDragNodeHierarchyRequest } from './create-drag-node-hierarchy';
 import { CreateDragNodeHandlerRequest } from './create-drag-node-handler';
 
 // This execution is responsible for creating a drag model for moving nodes based on the current selection.
@@ -28,7 +28,7 @@ export class AttachDragNodeHandlerFromSelection implements IExecution<
     const selected = this._collectSelected(nodeOrGroup);
     const selectedWithChildren = this._withDeepChildren(selected);
 
-    const hierarchy = this._mediator.execute<DragNodeHierarchy>(
+    const hierarchy = this._mediator.execute(
       new CreateDragNodeHierarchyRequest(selectedWithChildren),
     );
 
@@ -73,9 +73,7 @@ export class AttachDragNodeHandlerFromSelection implements IExecution<
     for (const node of nodes) {
       result.push(node);
 
-      const children = this._mediator.execute<FNodeBase[]>(
-        new GetDeepChildrenNodesAndGroupsRequest(node.fId()),
-      );
+      const children = this._mediator.execute(new GetDeepChildrenNodesAndGroupsRequest(node.fId()));
 
       result.push(...children);
     }

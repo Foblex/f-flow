@@ -36,7 +36,7 @@ export class ConnectableSidesScheduler {
     for (const node of this._pending) {
       // A node destroyed while queued must not be recalculated.
       if (this._store.nodes.get(node.fId()) === node) {
-        this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(node));
+        this._mediator.execute(new CalculateConnectorsConnectableSidesRequest(node));
       }
     }
     this._pending.clear();

@@ -22,7 +22,7 @@ import {
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
 } from '../f-storage';
-import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../reactivity';
+import { debounceAnimationFrame, notifyOnStart } from '../reactivity';
 import { BrowserService } from '../_libs/f-platform';
 import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
 
@@ -76,7 +76,7 @@ export class FMinimapComponent extends FMinimapBase implements AfterViewInit, On
 
   private _listenTransformChanges(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenTransformChangesRequest())
+      .execute(new ListenTransformChangesRequest())
       .pipe(notifyOnStart(), debounceAnimationFrame())
       .listen(this._destroyRef, () => {
         this._redraw();

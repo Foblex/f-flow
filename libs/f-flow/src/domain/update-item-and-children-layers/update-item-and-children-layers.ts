@@ -2,7 +2,6 @@ import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-l
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
-import { FNodeBase } from '../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes-and-groups';
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
 import { FCanvasBase } from '../../f-canvas';
@@ -140,7 +139,7 @@ export class UpdateItemAndChildrenLayers implements IExecution<
 
   private _getChildrenNodesAndGroups(fId: string): HTMLElement[] {
     return this._mediator
-      .execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .execute(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .map((x) => x.hostElement);
   }
 }

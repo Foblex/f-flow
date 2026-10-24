@@ -39,9 +39,7 @@ export class CalculateTargetConnectorsToConnect implements IExecution<
 
     const refs: IConnectorRectRef[] = [];
     for (const input of targets) {
-      refs.push(
-        this._mediator.execute<IConnectorRectRef>(new GetConnectorRectReferenceRequest(input)),
-      );
+      refs.push(this._mediator.execute(new GetConnectorRectReferenceRequest(input)));
     }
 
     this._scheduleApplyCalculatedSides(refs, pointer);

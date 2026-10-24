@@ -17,7 +17,7 @@ export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequ
 
   public handle(_request: ScheduleAutoPanFrameRequest): void {
     if (!this._canAutoPan() || !this._hasAutoPanDelta()) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
@@ -28,7 +28,7 @@ export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequ
 
     this._dragContext.autoPanFrameId = requestAnimationFrame(() => {
       this._dragContext.autoPanFrameId = null;
-      this._mediator.execute<void>(new RunAutoPanFrameRequest());
+      this._mediator.execute(new RunAutoPanFrameRequest());
     });
   }
 

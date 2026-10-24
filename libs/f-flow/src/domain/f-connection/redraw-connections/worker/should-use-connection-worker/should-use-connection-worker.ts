@@ -12,8 +12,6 @@ export class ShouldUseConnectionWorker implements IExecution<
   private readonly _mediator = inject(FMediator);
 
   public handle({ connectionCount }: ShouldUseConnectionWorkerRequest): boolean {
-    return (
-      connectionCount > 0 && this._mediator.execute<boolean>(new IsConnectionWorkerEnabledRequest())
-    );
+    return connectionCount > 0 && this._mediator.execute(new IsConnectionWorkerEnabledRequest());
   }
 }

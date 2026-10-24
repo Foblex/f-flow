@@ -86,13 +86,13 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   // --------------------------
 
   private _readBaselineRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._nodeOrGroup.hostElement),
     );
   }
 
   private _buildConstraints(baselineRect: IRect): IResizeConstraint {
-    return this._mediator.execute<IResizeConstraint>(
+    return this._mediator.execute(
       new CalculateResizeLimitsRequest(this._nodeOrGroup, baselineRect),
     );
   }
@@ -102,7 +102,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   // --------------------------
 
   private _calcNextRect(delta: IPoint): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new CalculateChangedRectFromDifferenceRequest(
         this._baselineRect,
         delta,
@@ -164,7 +164,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
       return cached;
     }
 
-    const rect = this._mediator.execute<IRoundedRect>(
+    const rect = this._mediator.execute(
       new GetNormalizedConnectorRectRequest(connector.hostElement, false),
     );
     cache.set(cacheKey, rect);

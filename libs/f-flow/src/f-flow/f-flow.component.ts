@@ -186,14 +186,14 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
             this._destroyRef,
           ),
         );
-        this._mediator.execute<void>(new EmitConnectionsChangesRequest());
+        this._mediator.execute(new EmitConnectionsChangesRequest());
         this._mediator.execute(new RunDevDiagnosticsRequest());
       });
   }
 
   private _listenConnectionsChanges(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
+      .execute(new ListenConnectionsChangesRequest())
       // .pipe(afterNextPaint()) // Removed: caused ~32ms lag on connection redraw. 1ms debounce from ListenConnectionsChanges is sufficient.
       .listen(this._destroyRef, () => {
         if (this._mediator.execute(new IsDragStartedRequest())) {
@@ -219,13 +219,11 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
   }
 
   public getNodesBoundingBox(): IRect | null {
-    return this._mediator.execute<IRect | null>(
-      new CalculateNodesBoundingBoxNormalizedPositionRequest(),
-    );
+    return this._mediator.execute(new CalculateNodesBoundingBoxNormalizedPositionRequest());
   }
 
   public getSelection(): ICurrentSelection {
-    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute(new GetCurrentSelectionRequest());
   }
 
   /**
@@ -242,10 +240,10 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
 
   public selectAll(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
+      .execute(new ListenConnectionsChangesRequest())
       .pipe(takeOne())
       .listen(this._destroyRef, () => {
-        this._mediator.execute<void>(new SelectAllRequest());
+        this._mediator.execute(new SelectAllRequest());
       });
   }
 
@@ -263,15 +261,15 @@ export class FFlowComponent extends FFlowBase implements OnInit, AfterContentIni
    */
   public select(nodes: string[], connections: string[], isSelectedChanged: boolean = true): void {
     this._mediator
-      .execute<FChannelHub>(new ListenConnectionsChangesRequest())
+      .execute(new ListenConnectionsChangesRequest())
       .pipe(takeOne())
       .listen(this._destroyRef, () => {
-        this._mediator.execute<void>(new SelectRequest(nodes, connections, isSelectedChanged));
+        this._mediator.execute(new SelectRequest(nodes, connections, isSelectedChanged));
       });
   }
 
   public clearSelection(): void {
-    this._mediator.execute<void>(new ClearSelectionRequest());
+    this._mediator.execute(new ClearSelectionRequest());
   }
 
   public ngOnDestroy(): void {

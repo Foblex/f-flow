@@ -19,7 +19,7 @@ export class SelectAndUpdateNodeLayer implements IHandler<SelectAndUpdateNodeLay
   public handle({ nodeOrGroup }: SelectAndUpdateNodeLayerRequest): void {
     this._selectNodeIfNotSelected(nodeOrGroup);
 
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new UpdateItemAndChildrenLayersRequest(
         nodeOrGroup,
         nodeOrGroup.hostElement.parentElement as HTMLElement,

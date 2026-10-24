@@ -44,7 +44,7 @@ export class SetZoom implements IExecution<SetZoomRequest, void> {
   }
 
   private get _isDragStarted(): boolean {
-    return this._mediator.execute<boolean>(new IsDragStartedRequest());
+    return this._mediator.execute(new IsDragStartedRequest());
   }
 
   public handle(request: SetZoomRequest): void {

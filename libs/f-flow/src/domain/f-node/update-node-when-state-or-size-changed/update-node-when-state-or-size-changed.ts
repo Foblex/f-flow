@@ -41,13 +41,13 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
       .listen(destroyRef, () => {
         // Scoped: a single node's resize/state change only needs its own
         // connections redrawn, not a whole-graph pass.
-        this._mediator.execute<void>(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
+        this._mediator.execute(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
         if (!this._isDragging()) {
           this._mediator.execute(
             new InvalidateFCacheNodeRequest(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged'),
           );
 
-          this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
+          this._mediator.execute(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
 
           // Auto-fit must read FRESH child parentage. On a state-driven change
           // (e.g. undo re-parenting a child out), the fit would otherwise run
@@ -58,11 +58,11 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
           // the settled parentage. Content/plain resizes keep today's sync path.
           if (nodeOrGroup.fAutoSizeToFitChildren()) {
             afterNextRender(
-              () => this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup)),
+              () => this._mediator.execute(new FitToChildNodesAndGroupsRequest(nodeOrGroup)),
               { injector: this._injector },
             );
           } else {
-            this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
+            this._mediator.execute(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
           }
 
           this._reflowOrchestrator.handleResize(nodeOrGroup);

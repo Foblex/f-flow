@@ -3,7 +3,6 @@ import { DropToGroupPreparationRequest } from './drop-to-group-preparation-reque
 import { FExecutionRegister, FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { INodeWithRect } from '../../domain';
-import { IRect } from '@foblex/2d';
 import {
   GetChildNodeIdsRequest,
   GetNormalizedElementRectRequest,
@@ -59,7 +58,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     // We can drop items only to children of direct parent (if target is inside some parent).
     if (dragTargetNode) {
       const parentId = dragTargetNode.fParentId();
-      const allowedIds = this._mediator.execute<string[]>(new GetChildNodeIdsRequest(parentId));
+      const allowedIds = this._mediator.execute(new GetChildNodeIdsRequest(parentId));
 
       if (allowedIds.length) {
         targets = targets.filter((t) => allowedIds.includes(t.node.fId()));
@@ -96,14 +95,12 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     const eligible = this._eligibleTargets(draggedWithParents, draggingGroup);
 
     const targets = eligible.map((node) => {
-      const rect = this._mediator.execute<IRect>(
-        new GetNormalizedElementRectRequest(node.hostElement),
-      );
+      const rect = this._mediator.execute(new GetNormalizedElementRectRequest(node.hostElement));
 
       return { node, rect };
     });
 
-    return this._mediator.execute<INodeWithRect[]>(new SortDropCandidatesByLayerRequest(targets));
+    return this._mediator.execute(new SortDropCandidatesByLayerRequest(targets));
   }
 
   private _getDraggedNodes(): FNodeBase[] {
@@ -116,7 +113,7 @@ export class DropToGroupPreparation implements IExecution<DropToGroupPreparation
     return nodes.reduce((result: FNodeBase[], node: FNodeBase) => {
       result.push(node);
 
-      const parents = this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(node));
+      const parents = this._mediator.execute(new GetParentNodesRequest(node));
       result.push(...parents);
 
       return result;

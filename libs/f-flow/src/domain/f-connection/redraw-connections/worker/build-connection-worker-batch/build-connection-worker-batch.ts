@@ -3,7 +3,6 @@ import { FExecutionRegister, FMediator, IExecution } from '../../../../../_libs/
 import { IRoundedRect } from '@foblex/2d';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 import {
-  IConnectionGeometry,
   IConnectionWorkerBatch,
   IConnectionWorkerBatchItem,
   IConnectionWorkerPayloadItem,
@@ -43,7 +42,7 @@ export class BuildConnectionWorkerBatch implements IExecution<
     cache: Map<string, IRoundedRect>,
     originalIndex: number,
   ): IConnectionWorkerBatchItem | null {
-    const geometry = this._mediator.execute<IConnectionGeometry | null>(
+    const geometry = this._mediator.execute(
       new ResolveConnectionGeometryRequest(connection, cache),
     );
     if (!geometry) {
@@ -53,7 +52,7 @@ export class BuildConnectionWorkerBatch implements IExecution<
     return {
       connection,
       geometry,
-      payload: this._mediator.execute<IConnectionWorkerPayloadItem>(
+      payload: this._mediator.execute(
         new BuildConnectionWorkerPayloadItemRequest(connection, geometry, originalIndex),
       ),
     };

@@ -30,14 +30,12 @@ export class CalculateNodesBoundingBoxNormalizedPosition implements IExecution<
   }
 
   private _getNodeRect(node: FNodeBase): IRect {
-    const cached = this._mediator.execute<IRect | undefined>(
-      new GetCachedFCacheRectRequest(node.hostElement),
-    );
+    const cached = this._mediator.execute(new GetCachedFCacheRectRequest(node.hostElement));
     if (cached) {
       return this._getElementRect(node, cached);
     }
 
-    const normalizedRect = this._mediator.execute<IRect>(
+    const normalizedRect = this._mediator.execute(
       new GetNormalizedElementRectRequest(node.hostElement),
     );
 
