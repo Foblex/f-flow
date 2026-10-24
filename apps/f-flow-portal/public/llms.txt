@@ -85,6 +85,7 @@
 
 - [Click to Connect](https://flow.foblex.com/examples/click-to-connect): Click source, then target — withConnectionFlow('click')
 - [Accessibility](https://flow.foblex.com/examples/accessibility): Keyboard-operable editor with screen-reader announcements — opt-in via withA11y()
+- [Initial View](https://flow.foblex.com/examples/initial-view): Reveal the flow already fitted/centered on first paint — fInitialView input or withInitialView()
 - [Managed Flow State](https://flow.foblex.com/examples/state): Optional `withFlowState()` store with typed records, automatic gesture updates, batching, undo/redo, snapshots, and an async reflow transaction recipe
 
 - [All Examples Overview](https://flow.foblex.com/examples/overview): 50+ interactive examples

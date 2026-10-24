@@ -59,10 +59,10 @@ For Nx workspaces:
 nx g @foblex/flow:add
 ```
 
-Or install it manually with the required companion packages:
+Or install it manually:
 
 ```bash
-npm install @foblex/flow @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow
 ```
 
 Use the [examples overview](./examples/overview) to compare patterns and start from the closest editor use case.

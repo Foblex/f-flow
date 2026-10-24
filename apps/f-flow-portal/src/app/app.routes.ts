@@ -46,6 +46,11 @@ export const routes: Routes = [
     redirectTo: 'examples/overview',
   },
   {
+    path: 'examples/help-in-positioning',
+    pathMatch: 'full',
+    redirectTo: 'examples/magnetic-lines',
+  },
+  {
     path: 'examples/undo-redo',
     pathMatch: 'full',
     redirectTo: 'examples/state',

@@ -29,10 +29,10 @@ For Nx workspaces:
 nx g @foblex/flow:add
 ```
 
-If you prefer manual installation, install the required companion packages explicitly:
+If you prefer manual installation:
 
 ```bash
-npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow
 ```
 
 ## 🔧 Creating a Basic Flow

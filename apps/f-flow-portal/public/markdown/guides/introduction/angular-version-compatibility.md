@@ -7,7 +7,7 @@ updatedAt: "2026-07-28"
 
 Use this page to answer one practical question: **which `@foblex/flow` version should I install for my Angular version, and which companion packages belong with it?**
 
-With the `19.x` line, `ng add @foblex/flow` installs companion packages automatically.
+Since `19.4.0` there are no companion packages — the former `@foblex/*` dependencies are bundled, and `ng add @foblex/flow` is all you need. For older lines `ng add` installs the companion packages automatically.
 If you need to pin an older line, use the manual install commands below.
 
 ## Quick matrix
@@ -23,8 +23,16 @@ If you need to pin an older line, use the manual install commands below.
 
 ### Angular 17.3+
 
+Since `19.4.0` the library has no runtime dependencies besides Angular — the former `@foblex/*` packages are bundled:
+
 ```bash
-npm install @foblex/flow@19 @foblex/2d@1.2.2 @foblex/utils@1.1.1
+npm install @foblex/flow@19
+```
+
+For `19.0.0` - `19.3.x`:
+
+```bash
+npm install @foblex/flow@19.3.0 @foblex/2d@1.2.2 @foblex/utils@1.1.1
 ```
 
 If you want to stay on the last `17.x` release line:
@@ -55,7 +63,8 @@ npm install @foblex/flow@12.6.3 @foblex/core@1.2.6 @foblex/platform@1.0.3
 
 | Foblex Flow line | Companion packages you should install manually                                                                              |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `19.x`           | `@foblex/platform@1.0.4`, `@foblex/mediator@1.1.3`, `@foblex/2d@1.2.2`, `@foblex/utils@1.1.1`                               |
+| `19.4.0+`        | none — everything is bundled with `@foblex/flow`                                                                            |
+| `19.0` - `19.3`  | `@foblex/2d@1.2.2`, `@foblex/utils@1.1.1`                                                                                   |
 | `18.x`           | `@foblex/platform@1.0.4`, `@foblex/mediator@1.1.3`, `@foblex/2d@1.2.2`, `@foblex/utils@1.1.1`                               |
 | `17.9.5`         | `@foblex/platform@1.0.4`, `@foblex/mediator@1.1.3`, `@foblex/2d@1.2.1`, `@foblex/utils@1.1.1`                               |
 | `17.4.0`         | `@foblex/platform@1.0.4`, `@foblex/mediator@1.1.2`, `@foblex/2d@1.1.9`, `@foblex/utils@1.1.1`, `@foblex/drag-toolkit@1.1.0` |

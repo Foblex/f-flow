@@ -1,0 +1,32 @@
+@if (visible()) {
+<f-flow fInitialView fDraggable (fFullRendered)="loaded()">
+  <f-canvas fZoom>
+    <f-connection fOutputId="o1" fInputId="i1" fBehavior="floating"></f-connection>
+    <f-connection fOutputId="o2" fInputId="i2" fBehavior="floating"></f-connection>
+    <f-connection fOutputId="o3" fInputId="i3" fBehavior="floating"></f-connection>
+
+    <div fNode fDragHandle [fNodePosition]="{ x: 0, y: 0 }">
+      <div fNodeOutput fOutputId="o1" class="right"></div>
+      Collect
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 420, y: 230 }">
+      <div fNodeInput fInputId="i1" class="left"></div>
+      <div fNodeOutput fOutputId="o2" class="right"></div>
+      Process
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 840, y: 40 }">
+      <div fNodeInput fInputId="i2" class="left"></div>
+      <div fNodeOutput fOutputId="o3" class="right"></div>
+      Review
+    </div>
+    <div fNode fDragHandle [fNodePosition]="{ x: 1260, y: 320 }">
+      <div fNodeInput fInputId="i3" class="left"></div>
+      Publish
+    </div>
+  </f-canvas>
+</f-flow>
+}
+
+<f-toolbar>
+  <button class="f-button primary" (click)="replay()">Replay</button>
+</f-toolbar>
