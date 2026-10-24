@@ -1,36 +1,34 @@
 import {
   ChangeDetectionStrategy,
-  Component, DestroyRef,
-  ElementRef, inject, input, numberAttribute, OnChanges,
-  OnInit, SimpleChanges,
-} from "@angular/core";
-import {
-  IPoint,
-  ITransformModel,
-  PointExtensions,
-  TransformModelExtensions,
-} from '@foblex/2d';
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  input,
+  numberAttribute,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { IPoint, ITransformModel, PointExtensions, TransformModelExtensions } from '@foblex/2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../_libs/f-platform';
 import { createSVGElement } from '../../domain';
 import { FChannel, FChannelHub, notifyOnStart } from '../../reactivity';
 
 let uniqueId = 0;
 
 @Component({
-  selector: "f-circle-pattern",
+  selector: 'f-circle-pattern',
   template: ``,
   standalone: true,
   host: {
     '[attr.id]': 'id',
   },
-  providers: [
-    { provide: F_BACKGROUND_PATTERN, useExisting: FCirclePatternComponent },
-  ],
+  providers: [{ provide: F_BACKGROUND_PATTERN, useExisting: FCirclePatternComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundPattern {
-
   private readonly _destroyRef = inject(DestroyRef);
   private readonly _elementReference = inject(ElementRef);
   private readonly _fBrowser = inject(BrowserService);
@@ -41,7 +39,7 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
     return this._elementReference.nativeElement;
   }
 
-  public id = input<string>(`f-pattern-${ uniqueId++ }`);
+  public id = input<string>(`f-pattern-${uniqueId++}`);
   public color = input<string>('rgba(0,0,0,0.1)');
   public radius = input<number, unknown>(20, { transform: numberAttribute });
 
@@ -54,8 +52,7 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   private _pattern!: SVGPatternElement;
   private _circle!: SVGCircleElement;
 
-  constructor(
-  ) {
+  constructor() {
     this._createPattern();
   }
 
@@ -73,7 +70,9 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   }
 
   private _listenStateChanges(): void {
-    new FChannelHub(this._stateChanges).pipe(notifyOnStart()).listen(this._destroyRef, () => this._redraw());
+    new FChannelHub(this._stateChanges)
+      .pipe(notifyOnStart())
+      .listen(this._destroyRef, () => this._redraw());
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -95,17 +94,17 @@ export class FCirclePatternComponent implements OnInit, OnChanges, IFBackgroundP
   }
 
   private _redrawPattern(): void {
-    this._pattern.setAttribute('x', `${ this._position.x }`);
-    this._pattern.setAttribute('y', `${ this._position.y }`);
-    this._pattern.setAttribute('width', `${ this._scaledRadius }`);
-    this._pattern.setAttribute('height', `${ this._scaledRadius }`);
+    this._pattern.setAttribute('x', `${this._position.x}`);
+    this._pattern.setAttribute('y', `${this._position.y}`);
+    this._pattern.setAttribute('width', `${this._scaledRadius}`);
+    this._pattern.setAttribute('height', `${this._scaledRadius}`);
   }
 
   private _redrawElement(): void {
     this._circle.setAttribute('fill', this.color());
-    this._circle.setAttribute('cx', `${ this._scaledRadius / 2 }`);
-    this._circle.setAttribute('cy', `${ this._scaledRadius / 2 }`);
-    this._circle.setAttribute('r', `${ this._scaledRadius / this.radius() }`);
+    this._circle.setAttribute('cx', `${this._scaledRadius / 2}`);
+    this._circle.setAttribute('cy', `${this._scaledRadius / 2}`);
+    this._circle.setAttribute('r', `${this._scaledRadius / this.radius()}`);
   }
 
   public setTransform(transform: ITransformModel): void {

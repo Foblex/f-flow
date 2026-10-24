@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 
 /**
  * Execution that sorts items by their parent nodes in the FItemsContainer.

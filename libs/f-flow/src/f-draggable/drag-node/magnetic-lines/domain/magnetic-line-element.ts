@@ -1,4 +1,4 @@
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 
 type MagneticLineRect = {
   left: number;

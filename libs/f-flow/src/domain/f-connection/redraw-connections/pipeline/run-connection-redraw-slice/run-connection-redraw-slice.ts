@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../../_libs/f-platform';
 import { CompleteConnectionRedrawRequest } from '../complete-connection-redraw';
 import { IsConnectionRedrawCurrentRequest } from '../is-connection-redraw-current';
 import { RenderConnectionRequest } from '../../main-thread/render-connection';

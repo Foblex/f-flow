@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "migration-vendored-platform": {
+      "description": "Rewrites @foblex/platform imports to @foblex/flow and removes the obsolete dependency - the platform services are bundled with the library now",
+      "version": "19.4.0",
+      "factory": "./ng-update/vendored-platform#migrateVendoredPlatform"
+    }
+  }
+}

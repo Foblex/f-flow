@@ -3,7 +3,7 @@ import { GetNodePaddingRequest } from './get-node-padding-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { FNodeBase } from '../../../f-node';
 import { IRect } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 
 /**
  * Execution that retrieves the padding data of a Node.

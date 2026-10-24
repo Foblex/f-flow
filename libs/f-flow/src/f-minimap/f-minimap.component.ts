@@ -23,7 +23,7 @@ import {
   RemovePluginInstanceRequest,
 } from '../f-storage';
 import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../reactivity';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../_libs/f-platform';
 import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
 
 @Component({

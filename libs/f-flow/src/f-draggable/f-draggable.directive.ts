@@ -49,7 +49,7 @@ import { F_CONNECTION_FLOW, IFConnectionFlow } from '../plugins/interaction/f-co
 import { ScheduleAutoPanFrameRequest, StopAutoPanRequest } from './auto-pan';
 import { SelectByPointerRequest } from './select-by-pointer';
 import { ResizeNodeFinalizeRequest, ResizeNodePreparationRequest } from './resize-node';
-import { EOperationSystem, PlatformService } from '@foblex/platform';
+import { EOperationSystem, PlatformService } from '../_libs/f-platform';
 import {
   EmitEndDragSequenceEventRequest,
   EmitSelectionChangeEventRequest,

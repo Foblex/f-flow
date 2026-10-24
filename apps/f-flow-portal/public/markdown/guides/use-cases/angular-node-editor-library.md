@@ -62,7 +62,7 @@ nx g @foblex/flow:add
 Or install it manually with the required companion packages:
 
 ```bash
-npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
 ```
 
 Use the [examples overview](./examples/overview) to compare patterns and start from the closest editor use case.

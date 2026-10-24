@@ -1,5 +1,5 @@
 import { ITransformModel } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 import { IMagneticGapRect } from './i-magnetic-gap-rect';
 import { MagneticRectElement } from './magnetic-rect-element';
 

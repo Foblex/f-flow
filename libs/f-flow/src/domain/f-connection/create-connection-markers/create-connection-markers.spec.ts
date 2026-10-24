@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { EFMarkerType } from '../../../f-connection-v2/components/connection-marker/enums';
 import {
   configureDiTest,

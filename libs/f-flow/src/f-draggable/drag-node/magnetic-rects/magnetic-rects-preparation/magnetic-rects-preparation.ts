@@ -8,7 +8,7 @@ import {
   MagneticRectsHandler,
   MagneticRectsRenderer,
 } from '../../index';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FNodeBase } from '../../../../f-node';

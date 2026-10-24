@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../../_libs/f-platform';
 import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
 import { ConnectionWorkerState, IConnectionWorkerResponse } from '../../models';
 import { DisableConnectionWorkerRequest } from '../disable-connection-worker';
@@ -15,9 +15,10 @@ import {
 
 @Injectable()
 @FExecutionRegister(EnsureConnectionWorkerRequest)
-export class EnsureConnectionWorker
-  implements IExecution<EnsureConnectionWorkerRequest, Worker | null>
-{
+export class EnsureConnectionWorker implements IExecution<
+  EnsureConnectionWorkerRequest,
+  Worker | null
+> {
   private readonly _browser = inject(BrowserService);
   private readonly _state = inject(ConnectionWorkerState);
   private readonly _mediator = inject(FMediator);

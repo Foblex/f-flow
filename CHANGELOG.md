@@ -10,6 +10,11 @@ All notable changes to this project will be documented in this file. See [standa
 - **diagnostics:** a node wrapped by its component's host element no longer breaks the drag gesture with an `Unknown container` throw — layer raising is skipped with a one-shot dev-mode warning `FF1012` that explains the supported pattern ([#337](https://github.com/Foblex/f-flow/issues/337)). Thanks @i3ene.
 - **external items:** the drag preview stays under the pointer on a scrolled page — its transform is written in viewport coordinates now that the preview is `position: fixed`, so the scroll offset is no longer applied twice, and the dropped node (`FCreateNodeEvent.externalItemRect`) lands where the preview was released ([#339](https://github.com/Foblex/f-flow/pull/339)). Thanks @itaishopen-unyx.
 
+### Dependencies
+
+- **platform:** `@foblex/platform` is vendored into the library (`src/_libs/f-platform`) and removed from the peer dependencies — one package less to install, and its exports (`BrowserService`, `PlatformService`, …) are now available from `@foblex/flow` directly. The standalone npm package keeps working for code that imports it, but the library no longer requires it. The parts of the vendored API the library does not use — the local-storage services, the `PlatformService` browser flags, and `IWindowService.open`/`location`/`isMediaQuery` — are marked `@deprecated` and scheduled for removal in v20.
+- **schematics:** `ng update @foblex/flow` now runs migrations (the `ng-update.migrations` entry was missing, so the update schematic never ran automatically); the first migration rewrites application imports of `@foblex/platform` to `@foblex/flow` and removes the obsolete dependency from package.json.
+
 ## [19.3.0] - 2026-09-28
 
 ### Fixes

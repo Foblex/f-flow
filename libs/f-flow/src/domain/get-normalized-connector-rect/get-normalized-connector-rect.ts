@@ -13,7 +13,7 @@ import {
   SizeExtensions,
 } from '@foblex/2d';
 import { GetCachedFCacheRectRequest, UpdateFCacheRectByElementRequest } from '../../f-cache';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../_libs/f-platform';
 import { calculatePointerInFlow } from '../../utils';
 
 /**

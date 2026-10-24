@@ -2,7 +2,7 @@ import { DragExternalItemCreatePlaceholderRequest } from './drag-external-item-c
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
 import { EmbeddedViewRef, inject, Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
 import { deepCloneNode, getOrCreateRootNodeForViewRef } from '@foblex/utils';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 
 @Injectable()
 @FExecutionRegister(DragExternalItemCreatePlaceholderRequest)

@@ -1,5 +1,5 @@
 import { RectExtensions, RoundedRect } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import {
   CalculateClosestConnector,
   canvasFactory,

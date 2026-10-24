@@ -9,7 +9,7 @@ import { DragExternalItemHandler } from '../drag-external-item-handler';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isDragExternalItemHandler } from '../is-drag-external-item-handler';
 import { DropToGroupHandler } from '../../drop-to-group';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { IDragExternalItemDragResult } from '../i-drag-external-item-drag-result';
 import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-point';

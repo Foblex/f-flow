@@ -5,7 +5,7 @@ import { createSVGElement } from '../../../domain';
 import { FNodeBase, FNodeDirective } from '../../../f-node';
 import { IRect, RectExtensions, setRectToElement } from '@foblex/2d';
 import { FComponentsStore } from '../../../f-storage';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { MinimapNodeRects } from '../minimap-node-rects';
 
 interface IMinimapNodeEntry {

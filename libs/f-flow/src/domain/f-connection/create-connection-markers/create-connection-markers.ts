@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionMarkersRequest } from './create-connection-markers-request';
 import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { normalizeDomElementId } from '@foblex/utils';
 import { FConnectionBase, FConnectionMarkerBase } from '../../../f-connection-v2';
 import { EFMarkerType } from '../../../f-connection-v2';
@@ -11,9 +11,10 @@ import { EFMarkerType } from '../../../f-connection-v2';
  */
 @Injectable()
 @FExecutionRegister(CreateConnectionMarkersRequest)
-export class CreateConnectionMarkers
-  implements IExecution<CreateConnectionMarkersRequest, boolean>
-{
+export class CreateConnectionMarkers implements IExecution<
+  CreateConnectionMarkersRequest,
+  boolean
+> {
   private readonly _browser = inject(BrowserService);
   private readonly _markerCache = new WeakMap<
     FConnectionBase,

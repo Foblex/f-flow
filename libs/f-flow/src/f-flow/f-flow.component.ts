@@ -51,7 +51,7 @@ import {
   F_STORAGE_PROVIDERS,
   ListenConnectionsChangesRequest,
 } from '../f-storage';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../_libs/f-platform';
 import { afterNextPaint, debounceTime, FChannelHub, notifyOnStart, takeOne } from '../reactivity';
 import { ConnectionBehaviourBuilder, ConnectionLineBuilder } from '../f-connection-v2';
 import { F_CACHE_OPTIONS } from '../f-cache';

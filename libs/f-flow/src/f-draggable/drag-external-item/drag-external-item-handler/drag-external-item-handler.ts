@@ -1,5 +1,5 @@
 import { IPoint, IRect, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { FMediator } from '@foblex/mediator';
 import { Injector } from '@angular/core';
 import { DragHandlerBase, FDragHandlerResult } from '../../infrastructure';

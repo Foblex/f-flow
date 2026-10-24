@@ -7,7 +7,7 @@ import {
   extendStyles,
   getOrCreateRootNodeForViewRef,
 } from '@foblex/utils';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 
 @Injectable()
 @FExecutionRegister(DragExternalItemCreatePreviewRequest)

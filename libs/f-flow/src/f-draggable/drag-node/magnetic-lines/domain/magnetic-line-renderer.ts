@@ -1,6 +1,6 @@
 import { ISize, ITransformModel } from '@foblex/2d';
 import { MagneticLineElement } from './magnetic-line-element';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 
 export class MagneticLineRenderer {
   private readonly _horizontal: MagneticLineElement;

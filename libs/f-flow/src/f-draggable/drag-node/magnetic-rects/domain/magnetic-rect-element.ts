@@ -1,4 +1,4 @@
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 
 export class MagneticRectElement {
   private readonly _element: HTMLElement;
