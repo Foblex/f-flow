@@ -42,12 +42,14 @@ export class BrowserService {
       const percentage = parseFloat(value) / 100;
 
       return Math.max(clientWidth, clientHeight) * percentage;
+    } else if (value.endsWith('rem')) {
+      // must be checked before 'em': every 'rem' value ends with 'em' as well
+      return (
+        parseFloat(value) *
+        parseFloat(this.window.getComputedStyle(this.document.documentElement).fontSize)
+      );
     } else if (value.endsWith('em')) {
       return parseFloat(value) * parseFloat(fontSize);
-    } else if (value.endsWith('rem')) {
-      return (
-        parseFloat(value) * parseFloat(getComputedStyle(this.document.documentElement).fontSize)
-      );
     } else if (value.endsWith('vh')) {
       const vh = this.window.innerHeight / 100;
 

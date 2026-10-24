@@ -77,6 +77,10 @@ export class PlatformService {
   public SAFARI: boolean = this.isBrowser && /safari/i.test(navigator.userAgent) && this.WEBKIT;
 
   public getOS(): EOperationSystem | undefined {
+    if (!this.isBrowser) {
+      return undefined;
+    }
+
     const userAgent = navigator.userAgent.toLowerCase(),
       macosPlatforms = /(macintosh|macintel|macppc|mac68k|macos)/i,
       windowsPlatforms = /(win32|win64|windows|wince)/i;

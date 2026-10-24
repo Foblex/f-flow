@@ -3,16 +3,18 @@ import { IExecution } from './i-execution';
 import { IValidator } from './i-validator';
 import { Pipeline } from './pipeline';
 
+declare const ngDevMode: boolean | undefined;
+
 /** A request class carries its pipeline key as a static `fToken`. */
 interface IRequestType {
-  fToken?: string;
+  fToken?: string | symbol;
 }
 
 @Injectable()
 export class FMediator {
   private readonly _injector = inject(Injector);
 
-  public static pipelines = new Map<string, Pipeline<unknown, unknown>>();
+  public static pipelines = new Map<string | symbol, Pipeline<unknown, unknown>>();
 
   public static registerPipeline<TRequest, TResponse>(
     type: Type<TRequest>,
@@ -43,14 +45,25 @@ export class FMediator {
     throw new Error('Handler not registered for request type.');
   }
 
-  // run pipeline without validation and error handling
+  // run pipeline without validation and error handling; the missing-pipeline check is
+  // dev-only so the production hot path stays branch-free (an unregistered request is
+  // a development-time mistake: registrations are static decorators loaded with the
+  // library, so the case cannot appear in a working build)
   public execute<TResponse>(request: object): TResponse {
-    return FMediator.pipelines
-      .get(_fTokenOf(request))!
-      .execute(request, this._injector) as TResponse;
+    const pipeline = FMediator.pipelines.get(_fTokenOf(request));
+
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      if (!pipeline) {
+        throw new Error(
+          `No execution is registered for "${request.constructor.name}". Provide the execution class (it registers itself through @FExecutionRegister) in the active injector.`,
+        );
+      }
+    }
+
+    return pipeline!.execute(request, this._injector) as TResponse;
   }
 }
 
-function _fTokenOf(request: object): string {
-  return (request.constructor as IRequestType).fToken as string;
+function _fTokenOf(request: object): string | symbol {
+  return (request.constructor as IRequestType).fToken as string | symbol;
 }
