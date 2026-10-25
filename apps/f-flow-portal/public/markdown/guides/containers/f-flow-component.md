@@ -41,7 +41,7 @@ This describes the default stateless mode. The optional [Managed Flow State](./e
 
 - `fCache: InputSignal<boolean>;` Enables the optional geometry cache for large scenes. Default: `false`. Start without it and compare the same workload before enabling it; see [Large-Flow Performance](large-flow-performance).
 
-- `fInitialView: InputSignal<boolean | undefined>;` Renders the flow invisibly and reveals it only after the first full render and the viewport work queued by the `(fFullRendered)` handler — the first visible frame already carries the fitted/centered viewport. When bound, it overrides the `withInitialView()` provider feature in both directions. See the [Initial View example](../examples/initial-view).
+- `fInitialView: InputSignal<boolean | undefined>;` Renders the flow invisibly and reveals it only after the first full render and the viewport work queued by the `(fFullRendered)` handler — the first visible frame already carries the fitted/centered viewport. When bound, it overrides the `withInitialView()` provider feature in both directions. See the [Initial View example](./examples/initial-view).
 
 ### Outputs
 

@@ -29,7 +29,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.3.0",
     "@angular/core": ">=17.3.0",
-    "@foblex/flow": "^19.0.0"
+    "@foblex/flow": "^19.4.0"
   },
   "dependencies": {
     "dagre": "^0.8.5",

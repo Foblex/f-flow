@@ -75,9 +75,9 @@ Include the default theme in angular.json:
   "@angular/common": ">=17.3.0",
   "@angular/core": ">=17.3.0"
 }
+```
 
 The former runtime dependencies (`@foblex/2d`, `@foblex/utils`, `@foblex/platform`, `@foblex/mediator`) are bundled with the library since `19.4.0`; the geometry types (`IPoint`, `IRect`, `ISize`, ...) are imported from `@foblex/flow` directly. `ng update @foblex/flow` rewrites application imports of those packages and removes the obsolete dependencies.
-```
 
 ### Module Import
 

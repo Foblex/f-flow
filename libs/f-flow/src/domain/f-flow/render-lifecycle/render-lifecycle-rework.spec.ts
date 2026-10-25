@@ -100,9 +100,10 @@ describe('render lifecycle without the wall-clock debounce', () => {
     const fixture = TestBed.createComponent(AsyncDataHostComponent);
     fixture.detectChanges();
 
-    // data arrives inside the old 120ms window — and inside the grace
-    await wait(60);
-    expect(fixture.componentInstance.fullRenderedCount).toBe(0);
+    // data arrives inside the grace window; no intermediate zero-count assert here —
+    // under CPU load the 120ms grace can expire while this test merely waits, and the
+    // final once-with-content asserts below already fail if the empty latch fired
+    await wait(30);
 
     fixture.componentInstance.nodes.set([
       { id: 'a', parentId: null, position: { x: 0, y: 0 } },

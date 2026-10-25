@@ -80,6 +80,10 @@ describe('AddNodeFromPalette', () => {
     cy.get('body', { timeout: 10000 }).should(($body: JQuery<HTMLElement>) => {
       expect($body.find('.f-loading-dot').length).to.equal(0);
     });
+    // the example opts into fInitialView: the flow stays visibility:hidden until the
+    // first full render, and hidden elements are invisible to elementsFromPoint —
+    // wait for the reveal before computing drop points
+    cy.get('f-flow', { timeout: 10000 }).should('be.visible');
   });
 
   it('should create node when external item is dropped into canvas', () => {
