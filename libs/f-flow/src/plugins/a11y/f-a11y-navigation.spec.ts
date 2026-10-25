@@ -1,4 +1,4 @@
-import { RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '../../_libs/f-2d';
 import { findSpatialNeighbor, IFA11yNavigable } from './f-a11y-navigation';
 
 describe('a11y spatial navigation', () => {

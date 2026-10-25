@@ -6,6 +6,7 @@ import {
   injectFlowState,
   provideFFlow,
   withFlowState,
+  withInitialView,
 } from '@foblex/flow';
 import { FExternalPaletteComponent, FToolbarComponent } from '@foblex/m-render';
 
@@ -21,7 +22,12 @@ interface INode extends IFStateNode {
   templateUrl: './example.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  providers: [provideFFlow(withFlowState({ dropToGroup: true, canvasTransformDebounce: 350 }))],
+  providers: [
+    provideFFlow(
+      withInitialView(),
+      withFlowState({ dropToGroup: true, canvasTransformDebounce: 350 }),
+    ),
+  ],
   imports: [FFlowModule, FToolbarComponent, FExternalPaletteComponent],
 })
 export class Example {

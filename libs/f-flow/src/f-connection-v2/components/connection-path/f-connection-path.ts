@@ -6,7 +6,7 @@ import {
   input,
   ViewEncapsulation,
 } from '@angular/core';
-import { normalizeDomElementId } from '@foblex/utils';
+import { normalizeDomElementId } from '../../../_libs/f-utils';
 import { F_CONNECTION_PATH, FConnectionPathBase } from './models';
 import { createConnectionDomIdentifier, createGradientDomUrl } from '../../utils';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../models';

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, Point, PointExtensions } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';

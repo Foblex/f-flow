@@ -1,8 +1,11 @@
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../../../_libs/f-2d';
 import { FConnectorBase } from '../../../../../f-connectors';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 
 export class RenderConnectionWithLineRequest {
+  /** Erased marker: the execution's return type, inferred by FMediator.execute. */
+  declare readonly __response: void;
+
   static readonly fToken = Symbol('RenderConnectionWithLineRequest');
 
   constructor(

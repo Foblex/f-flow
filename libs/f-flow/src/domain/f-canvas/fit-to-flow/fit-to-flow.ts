@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { FitToFlowRequest } from './fit-to-flow-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
+import {
+  IPoint,
+  IRect,
+  ITransformModel,
+  PointExtensions,
+  RectExtensions,
+} from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 import {
   CalculateNodesBoundingBoxRequest,
@@ -13,7 +19,6 @@ import {
  * Fits all nodes and groups to the flow by scaling and positioning them
  */
 @Injectable()
-@FExecutionRegister(FitToFlowRequest)
 export class FitToFlow implements IExecution<FitToFlowRequest, void> {
   private readonly _store = inject(FComponentsStore);
 
@@ -25,8 +30,7 @@ export class FitToFlow implements IExecution<FitToFlowRequest, void> {
 
   public handle({ toCenter, animated, emitCanvasChange, maxScale }: FitToFlowRequest): void {
     const fNodesRect =
-      this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
-      RectExtensions.initialize();
+      this._mediator.execute(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (fNodesRect.width === 0 || fNodesRect.height === 0) {
       return;
     }

@@ -1,4 +1,4 @@
-import { IPoint, PointExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions } from '../../../../../_libs/f-2d';
 import {
   buildConnectionAnchors,
   calculateCenterBetweenPoints,

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
-import { IPoint, IRoundedRect, RectExtensions, RoundedRect } from '@foblex/2d';
+import { FMediator } from '../../../../_libs/f-mediator';
+import { IPoint, IRoundedRect, RectExtensions, RoundedRect } from '../../../../_libs/f-2d';
 import { FConnectorBase, FSourceConnectorBase, isOutletConnector } from '../../../../f-connectors';
 import {
   ConnectionBehaviourBuilder,
@@ -83,6 +83,7 @@ export class FCreateConnectionSession {
       this.cancel();
     }
 
+    // deliberate narrowing: the session always starts from a source connector
     this._sourceRef = this._mediator.execute<IConnectorRectRef<FSourceConnectorBase>>(
       new GetConnectorRectReferenceRequest(source),
     );
@@ -147,7 +148,7 @@ export class FCreateConnectionSession {
    * the drag drop: rect hit, then snap-threshold closest, then `fConnectOnNode` node.
    */
   public resolveTarget(clientPoint: IPoint): FConnectorBase | undefined {
-    return this._mediator.execute<FConnectorBase | undefined>(
+    return this._mediator.execute(
       new FindConnectableConnectorUsingPriorityAndPositionRequest(clientPoint, this._targets),
     );
   }
@@ -192,7 +193,7 @@ export class FCreateConnectionSession {
   private _collectAndMarkTargets(): void {
     const sourceRef = this._sourceRef as IConnectorRectRef<FSourceConnectorBase>;
 
-    this._targets = this._mediator.execute<IConnectorRectRef[]>(
+    this._targets = this._mediator.execute(
       new CalculateTargetConnectorsToConnectRequest(
         sourceRef.connector,
         sourceRef.rect.gravityCenter,
@@ -224,9 +225,7 @@ export class FCreateConnectionSession {
   }
 
   private _findClosestTarget(pointer: IPoint): IClosestConnectorRef | undefined {
-    return this._mediator.execute<IClosestConnectorRef | undefined>(
-      new CalculateClosestConnectorRequest(pointer, this._targets),
-    );
+    return this._mediator.execute(new CalculateClosestConnectorRequest(pointer, this._targets));
   }
 
   private _drawCreateConnection(
@@ -340,9 +339,7 @@ export class FCreateConnectionSession {
   private _resolveRotationContext(
     connector?: FConnectorBase,
   ): IConnectionEndpointRotationContext | undefined {
-    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
-      new ResolveConnectionEndpointRotationContextRequest(connector),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRotationContextRequest(connector));
   }
 }
 

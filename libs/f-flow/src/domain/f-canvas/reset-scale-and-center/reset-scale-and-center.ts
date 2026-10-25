@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { ResetScaleAndCenterRequest } from './reset-scale-and-center-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IPoint, IRect, ITransformModel, PointExtensions, RectExtensions } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
+import {
+  IPoint,
+  IRect,
+  ITransformModel,
+  PointExtensions,
+  RectExtensions,
+} from '../../../_libs/f-2d';
 import {
   CalculateNodesBoundingBoxRequest,
   ECanvasRedrawContext,
@@ -13,7 +19,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that resets the scale of the canvas and centers the nodes and groups inside the flow.
  */
 @Injectable()
-@FExecutionRegister(ResetScaleAndCenterRequest)
 export class ResetScaleAndCenter implements IExecution<ResetScaleAndCenterRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -24,8 +29,7 @@ export class ResetScaleAndCenter implements IExecution<ResetScaleAndCenterReques
 
   public handle({ animated, emitCanvasChange }: ResetScaleAndCenterRequest): void {
     const nodesRect =
-      this._mediator.execute<IRect | null>(new CalculateNodesBoundingBoxRequest()) ||
-      RectExtensions.initialize();
+      this._mediator.execute(new CalculateNodesBoundingBoxRequest()) || RectExtensions.initialize();
     if (nodesRect.width === 0 || nodesRect.height === 0) {
       return;
     }

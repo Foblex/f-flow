@@ -1,6 +1,6 @@
 import { ICubicSegment } from './multi-cubic';
 import { cubicBezierAtT } from './sample-cubic-bezier-uniform';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 export function calculateCurveCandidates(segments: ICubicSegment[]): IPoint[] {
   return segments.map((s) => {

@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../../f-storage';
 import { IConnectionWorkerPayloadItem } from '../../models';
 import { BuildConnectionWorkerPayloadItemRequest } from './build-connection-worker-payload-item-request';
 
 @Injectable()
-@FExecutionRegister(BuildConnectionWorkerPayloadItemRequest)
 export class BuildConnectionWorkerPayloadItem implements IExecution<
   BuildConnectionWorkerPayloadItemRequest,
   IConnectionWorkerPayloadItem

@@ -6,21 +6,33 @@ import { ApplyParentResizeConstraints } from './apply-parent-resize-constraints'
 import { CalculateChangedRectFromDifference } from './calculate-changed-rect-from-difference';
 import { CalculateDirectChildrenUnionRect } from './calculate-direct-children-union-rect';
 import { AttachResizeConnectionDragHandlersToNode } from './resize-preparation';
+import { fExecution } from '../../_libs/f-mediator';
+import { ApplyChildResizeConstraintsRequest } from './apply-child-resize-constraints/apply-child-resize-constraints-request';
+import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-constraints/apply-parent-resize-constraints-request';
+import { AttachResizeConnectionDragHandlersToNodeRequest } from './resize-preparation/attach-resize-connection-drag-handlers-to-node/attach-resize-connection-drag-handlers-to-node-request';
+import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference/calculate-changed-rect-from-difference-request';
+import { CalculateDirectChildrenUnionRectRequest } from './calculate-direct-children-union-rect/calculate-direct-children-union-rect-request';
+import { CalculateResizeLimitsRequest } from './calculate-resize-limits/calculate-resize-limits-request';
+import { ResizeNodeFinalizeRequest } from './resize-node-finalize/resize-node-finalize-request';
+import { ResizeNodePreparationRequest } from './resize-preparation/resize-node-preparation-request';
 
 export const NODE_RESIZE_PROVIDERS = [
-  ApplyChildResizeConstraints,
+  fExecution(ApplyChildResizeConstraintsRequest, ApplyChildResizeConstraints),
 
-  ApplyParentResizeConstraints,
+  fExecution(ApplyParentResizeConstraintsRequest, ApplyParentResizeConstraints),
 
-  CalculateChangedRectFromDifference,
+  fExecution(CalculateChangedRectFromDifferenceRequest, CalculateChangedRectFromDifference),
 
-  CalculateDirectChildrenUnionRect,
+  fExecution(CalculateDirectChildrenUnionRectRequest, CalculateDirectChildrenUnionRect),
 
-  CalculateResizeLimits,
+  fExecution(CalculateResizeLimitsRequest, CalculateResizeLimits),
 
-  AttachResizeConnectionDragHandlersToNode,
+  fExecution(
+    AttachResizeConnectionDragHandlersToNodeRequest,
+    AttachResizeConnectionDragHandlersToNode,
+  ),
 
-  ResizeNodeFinalize,
+  fExecution(ResizeNodeFinalizeRequest, ResizeNodeFinalize),
 
-  ResizeNodePreparation,
+  fExecution(ResizeNodePreparationRequest, ResizeNodePreparation),
 ];

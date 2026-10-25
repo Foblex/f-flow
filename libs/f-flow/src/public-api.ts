@@ -14,6 +14,7 @@ export * from './f-draggable';
 export * from './f-external-item';
 
 export * from './plugins/a11y';
+export * from './plugins/initial-view';
 export * from './plugins/interaction';
 export * from './plugins/layout';
 export * from './plugins/snapping';
@@ -46,3 +47,11 @@ export * from './utils';
 export * from './f-flow.module';
 
 export * from './i-has-host-element';
+
+export * from './_libs/f-2d';
+
+export * from './_libs/f-mediator/deprecated-public-api';
+
+export * from './_libs/f-platform';
+
+export * from './_libs/f-utils/deprecated-public-api';

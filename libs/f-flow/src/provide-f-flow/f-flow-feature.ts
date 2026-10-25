@@ -4,6 +4,7 @@ import { Provider } from '@angular/core';
  * Discriminator for `with*()` features composed by `provideFFlow`.
  */
 export enum EFFlowFeatureKind {
+  INITIAL_VIEW = 'initial-view',
   REFLOW_ON_RESIZE = 'reflow-on-resize',
   CANVAS = 'canvas',
   CONTROL_SCHEME = 'control-scheme',

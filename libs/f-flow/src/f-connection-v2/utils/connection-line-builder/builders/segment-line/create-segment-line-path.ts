@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 const EPS = 1e-6;
 const END_EPS = 0.0002;

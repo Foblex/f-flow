@@ -1,16 +1,15 @@
 import { DragExternalItemCreatePreviewRequest } from './drag-external-item-create-preview-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { EmbeddedViewRef, inject, Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
 import {
   deepCloneNode,
   disableDragInteractions,
   extendStyles,
   getOrCreateRootNodeForViewRef,
-} from '@foblex/utils';
-import { BrowserService } from '@foblex/platform';
+} from '../../../_libs/f-utils';
+import { BrowserService } from '../../../_libs/f-platform';
 
 @Injectable()
-@FExecutionRegister(DragExternalItemCreatePreviewRequest)
 export class DragExternalItemCreatePreview implements IExecution<
   DragExternalItemCreatePreviewRequest,
   HTMLElement | SVGElement

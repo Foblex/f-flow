@@ -1,15 +1,15 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { CreateDragNodeHierarchyRequest } from './create-drag-node-hierarchy-request';
 import { DragNodeHierarchy } from './drag-node-hierarchy';
 import { FNodeBase } from '../../../../f-node';
 import { DragNodeItemHandler } from '../../drag-node-handler';
 
 @Injectable()
-@FExecutionRegister(CreateDragNodeHierarchyRequest)
-export class CreateDragNodeHierarchy
-  implements IExecution<CreateDragNodeHierarchyRequest, DragNodeHierarchy>
-{
+export class CreateDragNodeHierarchy implements IExecution<
+  CreateDragNodeHierarchyRequest,
+  DragNodeHierarchy
+> {
   private readonly _injector = inject(Injector);
 
   public handle({ nodesAndGroups }: CreateDragNodeHierarchyRequest): DragNodeHierarchy {

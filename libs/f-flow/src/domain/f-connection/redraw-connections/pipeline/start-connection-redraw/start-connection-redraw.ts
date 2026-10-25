@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../../f-storage';
 import { ConnectionRedrawState, IConnectionRedrawSession } from '../../models';
 import { StartConnectionRedrawRequest } from './start-connection-redraw-request';
 
 @Injectable()
-@FExecutionRegister(StartConnectionRedrawRequest)
 export class StartConnectionRedraw implements IExecution<
   StartConnectionRedrawRequest,
   IConnectionRedrawSession

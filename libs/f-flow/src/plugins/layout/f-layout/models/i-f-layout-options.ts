@@ -1,4 +1,4 @@
-import { ISize } from '@foblex/2d';
+import { ISize } from '../../../../_libs/f-2d';
 import { EFLayoutDirection } from '../enums';
 
 export interface IFLayoutOptions<TAlgorithm extends string = string> {

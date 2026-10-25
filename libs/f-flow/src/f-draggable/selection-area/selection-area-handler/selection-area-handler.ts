@@ -1,5 +1,12 @@
-import { IPoint, IRect, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import {
+  IPoint,
+  IRect,
+  ITransformModel,
+  Point,
+  PointExtensions,
+  RectExtensions,
+} from '../../../_libs/f-2d';
+import { FMediator } from '../../../_libs/f-mediator';
 import { DragHandlerBase } from '../../infrastructure';
 import { ISelectable } from '../../../mixins';
 import { FComponentsStore, INSTANCES, NotifyTransformChangedRequest } from '../../../f-storage';
@@ -70,7 +77,7 @@ export class SelectionAreaHandler extends DragHandlerBase<unknown> {
         this._selectedByMove.push(item.element);
       }
     });
-    this._mediator.execute<void>(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   private _getMinimumPoint(point1: IPoint, point2: IPoint): IPoint {

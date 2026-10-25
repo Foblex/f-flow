@@ -29,6 +29,24 @@ export const BLOG_PAGES: IPageDefinition[] = [
 
   // -------- Releases --------
   {
+    slug: 'foblex-flow-v19-4-0-zero-dependencies-initial-view-and-faster-load-events',
+    text: 'v19.4.0',
+    group: 'Releases',
+    date: new Date('2026-10-25T12:00:00.000Z'),
+    seo: {
+      title: 'Foblex Flow v19.4.0: Zero Dependencies, Initial View, and Faster Load Events',
+      description:
+        'Foblex Flow v19.4 depends on nothing but Angular: the @foblex runtime packages are bundled and ng update rewrites your imports. The release also adds the Initial View feature - the flow appears already fitted on its first visible frame - fires load events ~120ms earlier, fixes reflow-on-resize, and hardens SSR.',
+      canonical:
+        'https://flow.foblex.com/blog/foblex-flow-v19-4-0-zero-dependencies-initial-view-and-faster-load-events',
+      image: './previews/blog/foblex-flow-v19-4-0.png',
+      imageType: 'image/png',
+      imageWidth: 2000,
+      imageHeight: 1052,
+      ogType: 'article',
+    },
+  },
+  {
     slug: 'foblex-flow-v19-3-0-strict-csp-support-waypoint-routing-and-new-diagnostics',
     text: 'v19.3.0',
     group: 'Releases',

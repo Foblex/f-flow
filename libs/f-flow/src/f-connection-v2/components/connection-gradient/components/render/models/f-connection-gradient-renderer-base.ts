@@ -9,7 +9,7 @@ import {
   OnInit,
   untracked,
 } from '@angular/core';
-import { ILine, Point } from '@foblex/2d';
+import { ILine, Point } from '../../../../../../_libs/f-2d';
 import { F_CONNECTION_COMPONENTS_PARENT } from '../../../../../models';
 import { createGradientDomIdentifier } from '../../../../../utils';
 import { FConnectionGradientBase } from '../../../models';

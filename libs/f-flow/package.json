@@ -1,6 +1,6 @@
 {
   "name": "@foblex/flow",
-  "version": "19.3.0",
+  "version": "19.4.0",
   "description": "The most adopted node editor library for Angular. Angular-native, for production workflow builders, AI pipelines, and interactive diagram editors.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -46,16 +46,15 @@
     "postbuild": "copyfiles schematics/*/schema.json schematics/*/files/** schematics/collection.json ../../dist/f-flow/"
   },
   "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "migrations": "./schematics/migrations.json"
+  },
   "ng-add": {
     "save": "dependencies"
   },
   "peerDependencies": {
     "@angular/common": ">=17.3.0",
-    "@angular/core": ">=17.3.0",
-    "@foblex/platform": "^1.0.4",
-    "@foblex/mediator": "^1.1.3",
-    "@foblex/2d": "^1.2.2",
-    "@foblex/utils": "^1.1.1"
+    "@angular/core": ">=17.3.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

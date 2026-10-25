@@ -1,4 +1,4 @@
-import { IPoint, ISize } from '@foblex/2d';
+import { IPoint, ISize } from '../../_libs/f-2d';
 
 /**
  * The framework fields the state plugin needs on a node — they map 1:1 onto

@@ -15,10 +15,10 @@ import {
   PointExtensions,
   SizeExtensions,
   TransformModelExtensions,
-} from '@foblex/2d';
+} from '../../_libs/f-2d';
 import { F_BACKGROUND_PATTERN, IFBackgroundPattern } from '../domain';
 import { createSVGElement } from '../../domain';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../_libs/f-platform';
 import { FChannel, FChannelHub, notifyOnStart } from '../../reactivity';
 
 let uniqueId = 0;

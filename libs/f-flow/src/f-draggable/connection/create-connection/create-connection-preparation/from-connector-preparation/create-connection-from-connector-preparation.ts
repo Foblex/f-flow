@@ -1,5 +1,5 @@
-import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
-import { IPoint } from '@foblex/2d';
+import { FMediator, IHandler } from '../../../../../_libs/f-mediator';
+import { IPoint } from '../../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromConnectorPreparationRequest } from './create-connection-from-connector-preparation-request';
 import { FComponentsStore } from '../../../../../f-storage';
@@ -21,7 +21,6 @@ import { IPointerEvent } from '../../../../infrastructure';
  * `target` connectors cannot start a connection.
  */
 @Injectable()
-@FExecutionRegister(CreateConnectionFromConnectorPreparationRequest)
 export class CreateConnectionFromConnectorPreparation implements IHandler<
   CreateConnectionFromConnectorPreparationRequest,
   void

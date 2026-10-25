@@ -1,5 +1,5 @@
-import { ILine, IRoundedRect, RoundedRect } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { ILine, IRoundedRect, RoundedRect } from '../../../../_libs/f-2d';
+import { FMediator } from '../../../../_libs/f-mediator';
 import {
   GetNormalizedConnectorRectRequest,
   IConnectorRectRef,
@@ -89,7 +89,7 @@ export class ResizeNodeConnectionHandlerBase {
   private _readRectRef(connector: FConnectorBase): IConnectorRectRef {
     return {
       connector,
-      rect: this._mediator.execute<IRoundedRect>(
+      rect: this._mediator.execute(
         new GetNormalizedConnectorRectRequest(connector.hostElement, false),
       ),
     };
@@ -98,8 +98,6 @@ export class ResizeNodeConnectionHandlerBase {
   private _resolveRotationContext(
     connector?: FConnectorBase,
   ): IConnectionEndpointRotationContext | undefined {
-    return this._mediator.execute<IConnectionEndpointRotationContext | undefined>(
-      new ResolveConnectionEndpointRotationContextRequest(connector),
-    );
+    return this._mediator.execute(new ResolveConnectionEndpointRotationContextRequest(connector));
   }
 }

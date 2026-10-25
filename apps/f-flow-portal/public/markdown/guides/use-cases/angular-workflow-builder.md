@@ -54,10 +54,10 @@ For Nx workspaces:
 nx g @foblex/flow:add
 ```
 
-Or install it manually with the required companion packages:
+Or install it manually:
 
 ```bash
-npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow
 ```
 
 If you are evaluating architecture first, start with [Introducing Foblex Flow](intro) and then inspect the workflow-oriented examples.

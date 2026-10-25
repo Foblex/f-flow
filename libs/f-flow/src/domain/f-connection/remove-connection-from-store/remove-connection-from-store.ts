@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RemoveConnectionFromStoreRequest } from './remove-connection-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
-@FExecutionRegister(RemoveConnectionFromStoreRequest)
 export class RemoveConnectionFromStore implements IExecution<
   RemoveConnectionFromStoreRequest,
   void

@@ -5,7 +5,7 @@ import { FBackgroundBase } from '../f-backgroud';
 import { FConnectorBase, FNodeInputBase, FNodeOutletBase, FNodeOutputBase } from '../f-connectors';
 import { FDraggableBase } from '../f-draggable';
 import { FChannel } from '../reactivity';
-import { ITransformModel } from '@foblex/2d';
+import { ITransformModel } from '../_libs/f-2d';
 import { FConnectorRegistry } from './f-connector-registry';
 import { FNodeRegistry } from './f-node-registry';
 import { FConnectionRegistry } from './f-connection-registry';
@@ -31,6 +31,13 @@ export class FComponentsStore {
   private _viewportAnimationCount = 0;
 
   public readonly nodesChanges$ = new FChannel();
+
+  /**
+   * Set when the nodes render pass was skipped because a drag was active;
+   * `EmitEndDragSequenceEvent` re-emits node changes for it, so the skipped
+   * pass runs right after pointer-up instead of being lost.
+   */
+  public hasPendingNodesPassAfterDrag = false;
   private _nodesRevision = 0;
 
   public readonly progressiveRenderChanges$ = new FChannel();

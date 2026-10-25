@@ -1,4 +1,4 @@
-import { ILine } from '@foblex/2d';
+import { ILine } from '../../../../_libs/f-2d';
 
 export interface IConnectionWorkerResultItem {
   originalIndex: number;

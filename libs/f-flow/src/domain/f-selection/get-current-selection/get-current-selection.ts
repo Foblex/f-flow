@@ -1,6 +1,6 @@
 import { GetCurrentSelectionRequest } from './get-current-selection-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { ICurrentSelection } from './i-current-selection';
 
@@ -8,7 +8,6 @@ import { ICurrentSelection } from './i-current-selection';
  * Execution that retrieves the current selection of items in the FDraggableDataContext.
  */
 @Injectable()
-@FExecutionRegister(GetCurrentSelectionRequest)
 export class GetCurrentSelection implements IExecution<
   GetCurrentSelectionRequest,
   ICurrentSelection

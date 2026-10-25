@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';
 import { IReassignConnectionEventData } from '../i-reassign-connection-event-data';
 import { IReassignConnectionDragResult } from '../i-reassign-connection-drag-result';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../../_libs/f-mediator';
 import { ConnectionBehaviourBuilder, FConnectionBase } from '../../../../f-connection-v2';
 import { FComponentsStore } from '../../../../f-storage';
 import { requireSourceConnector, requireTargetConnector } from '../../../../f-connectors';
@@ -11,7 +11,7 @@ import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../..
 import { IReassignHandler, rectFromPoint } from './i-reassign-handler';
 import { ReassignConnectionSourceHandler } from './reassign-connection-source-handler';
 import { ReassignConnectionTargetHandler } from './reassign-connection-target-handler';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../_libs/f-2d';
 
 @Injectable()
 export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnectionEventData> {
@@ -42,12 +42,12 @@ export class ReassignConnectionHandler extends DragHandlerBase<IReassignConnecti
     this._connection = connection;
     this._draggedEnd = isTargetDragHandle ? 'target' : 'source';
 
-    this._sourceRef = this._mediator.execute<IConnectorRectRef>(
+    this._sourceRef = this._mediator.execute(
       new GetConnectorRectReferenceRequest(
         requireSourceConnector(this._store, this._connection.sourceId()),
       ),
     );
-    this._targetRef = this._mediator.execute<IConnectorRectRef>(
+    this._targetRef = this._mediator.execute(
       new GetConnectorRectReferenceRequest(
         requireTargetConnector(this._store, this._connection.targetId()),
       ),

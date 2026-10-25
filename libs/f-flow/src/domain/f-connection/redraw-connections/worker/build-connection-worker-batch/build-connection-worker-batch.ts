@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IRoundedRect } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { IRoundedRect } from '../../../../../_libs/f-2d';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 import {
-  IConnectionGeometry,
   IConnectionWorkerBatch,
   IConnectionWorkerBatchItem,
   IConnectionWorkerPayloadItem,
@@ -13,10 +12,10 @@ import { BuildConnectionWorkerPayloadItemRequest } from '../build-connection-wor
 import { BuildConnectionWorkerBatchRequest } from './build-connection-worker-batch-request';
 
 @Injectable()
-@FExecutionRegister(BuildConnectionWorkerBatchRequest)
-export class BuildConnectionWorkerBatch
-  implements IExecution<BuildConnectionWorkerBatchRequest, IConnectionWorkerBatch>
-{
+export class BuildConnectionWorkerBatch implements IExecution<
+  BuildConnectionWorkerBatchRequest,
+  IConnectionWorkerBatch
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ connections, cache }: BuildConnectionWorkerBatchRequest): IConnectionWorkerBatch {
@@ -42,7 +41,7 @@ export class BuildConnectionWorkerBatch
     cache: Map<string, IRoundedRect>,
     originalIndex: number,
   ): IConnectionWorkerBatchItem | null {
-    const geometry = this._mediator.execute<IConnectionGeometry | null>(
+    const geometry = this._mediator.execute(
       new ResolveConnectionGeometryRequest(connection, cache),
     );
     if (!geometry) {
@@ -52,7 +51,7 @@ export class BuildConnectionWorkerBatch
     return {
       connection,
       geometry,
-      payload: this._mediator.execute<IConnectionWorkerPayloadItem>(
+      payload: this._mediator.execute(
         new BuildConnectionWorkerPayloadItemRequest(connection, geometry, originalIndex),
       ),
     };

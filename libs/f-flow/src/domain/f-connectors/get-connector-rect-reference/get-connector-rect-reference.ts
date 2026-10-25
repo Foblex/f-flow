@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { GetConnectorRectReferenceRequest } from './get-connector-rect-reference-request';
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../_libs/f-2d';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { FConnectorBase } from '../../../f-connectors';
 import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connector-rect';
@@ -10,7 +10,6 @@ import { GetNormalizedConnectorRectRequest } from '../../get-normalized-connecto
  * Returns a connector + its normalized rounded rect.
  */
 @Injectable()
-@FExecutionRegister(GetConnectorRectReferenceRequest)
 export class GetConnectorRectReference implements IExecution<
   GetConnectorRectReferenceRequest,
   IConnectorRectRef
@@ -25,8 +24,6 @@ export class GetConnectorRectReference implements IExecution<
   }
 
   private _getRect(x: FConnectorBase): IRoundedRect {
-    return this._mediator.execute<IRoundedRect>(
-      new GetNormalizedConnectorRectRequest(x.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedConnectorRectRequest(x.hostElement));
   }
 }

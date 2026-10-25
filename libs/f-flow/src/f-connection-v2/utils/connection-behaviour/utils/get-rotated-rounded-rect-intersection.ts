@@ -1,4 +1,4 @@
-import { GetIntersections, IPoint, IRoundedRect, RoundedRect } from '@foblex/2d';
+import { GetIntersections, IPoint, IRoundedRect, RoundedRect } from '../../../../_libs/f-2d';
 import { IConnectionEndpointRotationContext } from '../models';
 
 export function getRotatedRoundedRectIntersection(

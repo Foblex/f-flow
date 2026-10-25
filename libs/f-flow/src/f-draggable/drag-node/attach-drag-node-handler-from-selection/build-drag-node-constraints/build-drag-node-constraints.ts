@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
+import { IMinMaxPoint, IPoint, IRect, PointExtensions } from '../../../../_libs/f-2d';
 import { BuildDragNodeConstraintsRequest } from './build-drag-node-constraints-request';
 import { infinityMinMax } from '../../../../utils';
 import { FNodeBase } from '../../../../f-node';
@@ -12,10 +12,10 @@ import {
 import { IDragNodeDeltaConstraints, IDragNodeSoftConstraint } from '../../drag-node-constraint';
 
 @Injectable()
-@FExecutionRegister(BuildDragNodeConstraintsRequest)
-export class BuildDragNodeConstraints
-  implements IExecution<BuildDragNodeConstraintsRequest, IDragNodeDeltaConstraints>
-{
+export class BuildDragNodeConstraints implements IExecution<
+  BuildDragNodeConstraintsRequest,
+  IDragNodeDeltaConstraints
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ nodeOrGroup }: BuildDragNodeConstraintsRequest): IDragNodeDeltaConstraints {
@@ -26,13 +26,11 @@ export class BuildDragNodeConstraints
   }
 
   private _readCurrentRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _readParentsChain(nodeOrGroup: FNodeBase): FNodeBase[] {
-    return this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(nodeOrGroup)) ?? [];
+    return this._mediator.execute(new GetParentNodesRequest(nodeOrGroup)) ?? [];
   }
 
   private _buildConstraints(parents: FNodeBase[], childRect: IRect): IDragNodeDeltaConstraints {
@@ -61,9 +59,7 @@ export class BuildDragNodeConstraints
     parent: FNodeBase,
     childrenPaddings: [number, number, number, number],
   ): ReadNodeBoundsWithPaddingsResponse {
-    return this._mediator.execute<ReadNodeBoundsWithPaddingsResponse>(
-      new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings),
-    );
+    return this._mediator.execute(new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings));
   }
 
   private _calculateDifference(parentRect: IRect, currentRect: IRect): IMinMaxPoint {

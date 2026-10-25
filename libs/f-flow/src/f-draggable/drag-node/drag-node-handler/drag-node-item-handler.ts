@@ -1,6 +1,6 @@
-import { IPoint, IRect, IRoundedRect, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, IRoundedRect, PointExtensions, RectExtensions } from '../../../_libs/f-2d';
 import { Injector } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { DragHandlerBase } from '../../infrastructure';
 import {
   DragNodeDeltaConstraints,
@@ -14,7 +14,6 @@ import {
   F_CSS_CLASS,
   GetConnectorRectReferenceRequest,
   GetNormalizedElementRectRequest,
-  IConnectorRectRef,
 } from '../../../domain';
 import { FConnectorBase } from '../../../f-connectors';
 import { IParentConnectionHandlers } from './i-soft-parent-connection-handlers';
@@ -212,9 +211,7 @@ export class DragNodeItemHandler extends DragHandlerBase<unknown> {
       return cached;
     }
 
-    const rect = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    ).rect;
+    const rect = this._mediator.execute(new GetConnectorRectReferenceRequest(connector)).rect;
     cache.set(cacheKey, rect);
 
     return rect;

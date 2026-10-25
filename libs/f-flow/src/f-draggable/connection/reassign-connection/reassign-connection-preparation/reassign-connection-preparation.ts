@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { ReassignConnectionPreparationRequest } from './reassign-connection-preparation-request';
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '../../../../_libs/f-2d';
 import { FComponentsStore } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { isValidEventTrigger, UpdateItemAndChildrenLayersRequest } from '../../../../domain';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   isDragHandleEnd,
   isPointerInsideStartOrEndDragHandles,
@@ -16,7 +16,6 @@ import { DragHandlerInjector } from '../../../infrastructure';
 import { ReassignConnectionHandler } from '../reassign-connection-handler';
 
 @Injectable()
-@FExecutionRegister(ReassignConnectionPreparationRequest)
 export class ReassignConnectionPreparation implements IExecution<
   ReassignConnectionPreparationRequest,
   void
@@ -92,7 +91,7 @@ export class ReassignConnectionPreparation implements IExecution<
   }
 
   private _bringToFront(connection: FConnectionBase): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new UpdateItemAndChildrenLayersRequest(
         connection,
         this._canvas.fConnectionsContainer().nativeElement,

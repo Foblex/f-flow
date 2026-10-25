@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PointExtensions, SizeExtensions } from '@foblex/2d';
+import { PointExtensions, SizeExtensions } from '@foblex/flow';
 import * as dagre from 'dagre';
 import { graphlib } from 'dagre';
 import {

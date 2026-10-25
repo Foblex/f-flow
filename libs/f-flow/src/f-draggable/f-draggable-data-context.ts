@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IPoint, Point } from '@foblex/2d';
+import { IPoint, Point } from '../_libs/f-2d';
 import { DragHandlerBase, IPointerEvent } from './infrastructure';
 import { ISelectable } from '../mixins';
 

@@ -1,5 +1,5 @@
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, IHandler } from '@foblex/mediator';
+import { IPoint, ITransformModel, Point } from '../../../../../_libs/f-2d';
+import { IHandler } from '../../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionCreateDragHandlerRequest } from './create-connection-create-drag-handler-request';
 import { FComponentsStore } from '../../../../../f-storage';
@@ -8,7 +8,6 @@ import { DragHandlerInjector } from '../../../../infrastructure';
 import { CreateConnectionHandler } from '../../create-connection-handler';
 
 @Injectable()
-@FExecutionRegister(CreateConnectionCreateDragHandlerRequest)
 export class CreateConnectionCreateDragHandler implements IHandler<
   CreateConnectionCreateDragHandlerRequest,
   void

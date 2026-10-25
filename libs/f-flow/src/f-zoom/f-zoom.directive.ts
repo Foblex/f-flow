@@ -13,7 +13,7 @@ import {
   untracked,
 } from '@angular/core';
 import { F_ZOOM, FZoomBase } from './f-zoom-base';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import {
   defaultEventTrigger,
   FEventTrigger,
@@ -23,7 +23,7 @@ import {
   SetZoomRequest,
 } from '../domain';
 import { FCanvasBase } from '../f-canvas';
-import { IPoint, IRect, PointExtensions, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, PointExtensions, RectExtensions } from '../_libs/f-2d';
 import { isNode } from '../f-node';
 import { EFZoomDirection } from './e-f-zoom-direction';
 import { EventExtensions } from '../f-draggable/infrastructure';

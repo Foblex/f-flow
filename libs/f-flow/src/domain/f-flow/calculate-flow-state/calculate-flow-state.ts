@@ -1,10 +1,10 @@
 import { CalculateFlowStateRequest } from './calculate-flow-state-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IFFlowState } from './i-f-flow-state';
 import { FComponentsStore } from '../../../f-storage';
 import { FGroupDirective, FNodeDirective } from '../../../f-node';
-import { IPoint, ITransformModel, PointExtensions } from '@foblex/2d';
+import { IPoint, ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { CalculateNodesStateRequest } from './calculate-nodes-state';
 import { CalculateConnectionsStateRequest } from './calculate-connections-state';
 import { FCanvasBase } from '../../../f-canvas';
@@ -13,7 +13,6 @@ import { FCanvasBase } from '../../../f-canvas';
  * Execution that retrieves the current state of the Flow, including its position, scale, nodes, groups, and connections.
  */
 @Injectable()
-@FExecutionRegister(CalculateFlowStateRequest)
 export class CalculateFlowState implements IExecution<CalculateFlowStateRequest, IFFlowState> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);

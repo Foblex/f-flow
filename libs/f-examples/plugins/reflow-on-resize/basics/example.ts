@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { FCanvasComponent, FFlowModule, provideFFlow, withReflowOnResize } from '@foblex/flow';
+import {
+  FCanvasComponent,
+  FFlowModule,
+  provideFFlow,
+  withReflowOnResize,
+  withInitialView,
+} from '@foblex/flow';
 
 @Component({
   selector: 'reflow-basics',
@@ -8,7 +14,7 @@ import { FCanvasComponent, FFlowModule, provideFFlow, withReflowOnResize } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule],
-  providers: [provideFFlow(withReflowOnResize())],
+  providers: [provideFFlow(withInitialView(), withReflowOnResize())],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -16,7 +22,7 @@ export class Example {
   protected readonly expanded = signal(false);
 
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(true);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   protected toggleNode(): void {

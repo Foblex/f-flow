@@ -265,7 +265,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Click to Connect',
     group: 'Connections - Editing',
     date: new Date('2026-07-04 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Diagram Example – Click-to-Connect Connections with Foblex Flow',
       description:
@@ -526,6 +525,23 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     },
   },
   {
+    slug: 'initial-view',
+    text: 'Initial View',
+    group: 'Viewport',
+    badge: { text: 'New', type: 'success' },
+    date: new Date('2026-10-24 00:00:00'),
+    seo: {
+      title: 'Initial View',
+      description:
+        'Show the flow already fitted or centered on first paint — no jump from the default viewport. Enable with the fInitialView input or the withInitialView() feature.',
+      image: './previews/examples/initial-view.light.png',
+      imageDark: './previews/examples/initial-view.dark.png',
+      imageWidth: 821,
+      imageHeight: 600,
+      imageType: 'image/png',
+    },
+  },
+  {
     slug: 'background',
     text: 'Background',
     group: 'Viewport',
@@ -546,7 +562,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Auto Pan',
     group: 'Viewport',
     date: new Date('2026-03-26 13:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Auto Pan',
       description:
@@ -563,7 +578,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Canvas Layer Ordering',
     group: 'Viewport',
     date: new Date('2026-04-26 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Canvas Layer Ordering — Stack Groups, Connections, and Nodes in Any Order',
       description:
@@ -662,7 +676,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Accessibility',
     group: 'Editor Helpers',
     date: new Date('2026-07-04 18:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Diagram Example – Accessible Flow Editor with Foblex Flow',
       description:
@@ -674,24 +687,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
       imageType: 'image/png',
     },
   },
-  {
-    slug: 'help-in-positioning',
-    text: 'Help in Positioning (Legacy)',
-    group: 'Editor Helpers',
-    date: new Date('2025-02-09 12:37:27'),
-    badge: { text: 'Deprecated', type: 'danger' },
-    seo: {
-      title: 'Angular Diagram Example – Legacy Node Alignment Helpers (Deprecated)',
-      description:
-        'Legacy node alignment helper example kept for reference. For new projects, use Magnetic Lines and Magnetic Rects instead.',
-      image: './previews/examples/help-in-positioning.light.png',
-      imageDark: './previews/examples/help-in-positioning.dark.png',
-      imageWidth: 821,
-      imageHeight: 600,
-      imageType: 'image/png',
-    },
-  },
-
   // -------- Layout Engines --------
   {
     slug: 'dagre-layout',
@@ -849,7 +844,6 @@ export const EXAMPLES_PAGES: IPageDefinition[] = [
     text: 'Control Schemes',
     group: 'Events',
     date: new Date('2026-07-03 12:00:00'),
-    badge: { text: 'New', type: 'success' },
     seo: {
       title: 'Angular Diagram Example – Switchable Control Schemes with Foblex Flow',
       description:
@@ -1163,10 +1157,6 @@ export const EXAMPLES_COMPONENTS = [
   ),
   defineLazyComponent('auto-pan', () => import('@foblex/examples/extensions/auto-pan/example')),
   defineLazyComponent(
-    'help-in-positioning',
-    () => import('@foblex/examples/extensions/help-in-positioning/example'),
-  ),
-  defineLazyComponent(
     'magnetic-lines',
     () => import('@foblex/examples/extensions/magnetic-lines/example'),
   ),
@@ -1175,6 +1165,10 @@ export const EXAMPLES_COMPONENTS = [
     () => import('@foblex/examples/extensions/magnetic-rects/example'),
   ),
   defineLazyComponent('zoom', () => import('@foblex/examples/extensions/zoom/example')),
+  defineLazyComponent(
+    'initial-view',
+    () => import('@foblex/examples/extensions/initial-view/example'),
+  ),
   defineLazyComponent(
     'minimap-example',
     () => import('@foblex/examples/extensions/minimap-example/example'),

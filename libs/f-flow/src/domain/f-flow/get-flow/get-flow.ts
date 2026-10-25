@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { GetFlowRequest } from './get-flow-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FFlowBase } from '../../../f-flow';
@@ -8,7 +8,6 @@ import { FFlowBase } from '../../../f-flow';
  * Execution that retrieves the current Flow from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(GetFlowRequest)
 export class GetFlow implements IExecution<GetFlowRequest, FFlowBase> {
   private readonly _store = inject(FComponentsStore);
 

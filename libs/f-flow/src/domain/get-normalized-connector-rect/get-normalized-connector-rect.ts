@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedConnectorRectRequest } from './get-normalized-connector-rect-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
 import {
   IPoint,
@@ -11,9 +11,9 @@ import {
   RectExtensions,
   RoundedRect,
   SizeExtensions,
-} from '@foblex/2d';
+} from '../../_libs/f-2d';
 import { GetCachedFCacheRectRequest, UpdateFCacheRectByElementRequest } from '../../f-cache';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../_libs/f-platform';
 import { calculatePointerInFlow } from '../../utils';
 
 /**
@@ -22,7 +22,6 @@ import { calculatePointerInFlow } from '../../utils';
  * adjusting for the canvas transformation and element offsets.
  */
 @Injectable()
-@FExecutionRegister(GetNormalizedConnectorRectRequest)
 export class GetNormalizedConnectorRect implements IExecution<
   GetNormalizedConnectorRectRequest,
   IRoundedRect
@@ -36,6 +35,7 @@ export class GetNormalizedConnectorRect implements IExecution<
   }
 
   public handle({ element, cache }: GetNormalizedConnectorRectRequest): IRoundedRect {
+    // deliberate narrowing: connector entries in the cache hold rounded rects
     const cachedRect = this._mediator.execute<IRoundedRect | undefined>(
       new GetCachedFCacheRectRequest(element),
     );

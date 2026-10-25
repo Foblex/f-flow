@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { PinchToZoomFinalizeRequest } from './pinch-to-zoom-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { PinchToZoomHandler } from '../handler';
 
 @Injectable()
-@FExecutionRegister(PinchToZoomFinalizeRequest)
 export class PinchToZoomFinalize implements IExecution<PinchToZoomFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
 

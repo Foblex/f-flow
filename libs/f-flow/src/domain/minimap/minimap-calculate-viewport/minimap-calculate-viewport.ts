@@ -1,14 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapCalculateViewportRequest } from './minimap-calculate-viewport-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { adjustRectToMinSize, IRect, ISize, RectExtensions, SizeExtensions } from '@foblex/2d';
+import { IExecution } from '../../../_libs/f-mediator';
+import {
+  adjustRectToMinSize,
+  IRect,
+  ISize,
+  RectExtensions,
+  SizeExtensions,
+} from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 import { FFlowBase } from '../../../f-flow';
 import { IMinimapViewport } from './i-minimap-viewport';
 import { MinimapNodeRects } from '../minimap-node-rects';
 
 @Injectable()
-@FExecutionRegister(MinimapCalculateViewportRequest)
 export class MinimapCalculateViewport implements IExecution<
   MinimapCalculateViewportRequest,
   IMinimapViewport

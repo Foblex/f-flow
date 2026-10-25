@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { ResizeNodeFinalizeRequest } from './resize-node-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isResizeNodeHandler } from '../is-resize-node-handler';
 
 @Injectable()
-@FExecutionRegister(ResizeNodeFinalizeRequest)
 export class ResizeNodeFinalize implements IExecution<ResizeNodeFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
 

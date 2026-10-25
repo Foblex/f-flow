@@ -4,7 +4,7 @@ import {
   IFConnectionBuilderResponse,
 } from '../../models';
 import { buildConnectionAnchors } from '../utils';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 const EPS = 0.0002;
 

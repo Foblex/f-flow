@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../_libs/f-2d';
 import { FDragStartedEvent } from '../f-drag-started-event';
 import { IDragSessionContext, IDragSessionFeature } from './i-drag-session-feature';
 import { IPointerEvent } from './pointer-events';

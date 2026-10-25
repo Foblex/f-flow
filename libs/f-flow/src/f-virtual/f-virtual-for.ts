@@ -10,6 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FComponentsStore } from '../f-storage';
+import { BrowserService } from '../_libs/f-platform';
 
 interface FVirtualContext<T> {
   $implicit: T;
@@ -27,6 +28,7 @@ export class FVirtualFor<T> implements OnChanges, OnDestroy {
   private readonly _tpl = inject<TemplateRef<FVirtualContext<T>>>(TemplateRef);
   private readonly _zone = inject(NgZone);
   private readonly _componentsStore = inject(FComponentsStore, { optional: true });
+  private readonly _browser = inject(BrowserService);
 
   private _rafId: number | null = null;
   private _isProgressiveRenderActive = false;
@@ -53,6 +55,16 @@ export class FVirtualFor<T> implements OnChanges, OnDestroy {
   }
 
   private _renderProgressively(): void {
+    // the server has no requestAnimationFrame — and SSR wants the full HTML in one
+    // pass anyway, so render everything synchronously and skip the frame pump
+    if (!this._browser.isBrowser()) {
+      for (let i = 0; i < this.fVirtualForOf.length; i++) {
+        this._insertView(i);
+      }
+
+      return;
+    }
+
     // Frame budget pump, "measure once, predict chunk" style.
     //
     // Each frame we first run a small calibration batch to learn how long a

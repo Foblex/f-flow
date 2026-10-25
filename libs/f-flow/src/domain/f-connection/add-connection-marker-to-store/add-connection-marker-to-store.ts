@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { AddConnectionMarkerToStoreRequest } from './add-connection-marker-to-store-request';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -7,7 +7,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that adds a connection marker to the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(AddConnectionMarkerToStoreRequest)
 export class AddConnectionMarkerToStore implements IExecution<
   AddConnectionMarkerToStoreRequest,
   void

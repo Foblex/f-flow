@@ -1,6 +1,5 @@
-import { IRect } from '@foblex/2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 import {
@@ -9,14 +8,10 @@ import {
 } from './resolve-connection-endpoint-rotation-context-request';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectionEndpointRotationContextRequest)
-export class ResolveConnectionEndpointRotationContext
-  implements
-    IExecution<
-      ResolveConnectionEndpointRotationContextRequest,
-      TResolveConnectionEndpointRotationContextResponse
-    >
-{
+export class ResolveConnectionEndpointRotationContext implements IExecution<
+  ResolveConnectionEndpointRotationContextRequest,
+  TResolveConnectionEndpointRotationContextResponse
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
@@ -32,9 +27,7 @@ export class ResolveConnectionEndpointRotationContext
       return undefined;
     }
 
-    const nodeRect = this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(node.hostElement),
-    );
+    const nodeRect = this._mediator.execute(new GetNormalizedElementRectRequest(node.hostElement));
 
     return {
       rotationDeg: node._rotate,

@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState } from '../../models';
 import { DisposeConnectionWorkerRequest } from './dispose-connection-worker-request';
 
 @Injectable()
-@FExecutionRegister(DisposeConnectionWorkerRequest)
 export class DisposeConnectionWorker implements IExecution<DisposeConnectionWorkerRequest, void> {
   private readonly _state = inject(ConnectionWorkerState);
 

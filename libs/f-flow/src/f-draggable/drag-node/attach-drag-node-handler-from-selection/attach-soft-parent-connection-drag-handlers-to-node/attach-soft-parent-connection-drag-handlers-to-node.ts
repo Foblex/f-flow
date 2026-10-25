@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachSoftParentConnectionDragHandlersToNodeRequest } from './attach-soft-parent-connection-drag-handlers-to-node-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import { FNodeBase } from '../../../../f-node';
 import { FConnectionBase } from '../../../../f-connection-v2';
@@ -18,12 +18,11 @@ import {
   requireSourceConnector,
   requireTargetConnector,
 } from '../../../../f-connectors';
-import { IRoundedRect } from '@foblex/2d';
-import { GetConnectorRectReferenceRequest, IConnectorRectRef } from '../../../../domain';
+import { IRoundedRect } from '../../../../_libs/f-2d';
+import { GetConnectorRectReferenceRequest } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(AttachSoftParentConnectionDragHandlersToNodeRequest)
 export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
   AttachSoftParentConnectionDragHandlersToNodeRequest,
   void
@@ -134,9 +133,7 @@ export class AttachSoftParentConnectionDragHandlersToNode implements IExecution<
       return cached;
     }
 
-    const rect = this._mediator.execute<IConnectorRectRef>(
-      new GetConnectorRectReferenceRequest(connector),
-    ).rect;
+    const rect = this._mediator.execute(new GetConnectorRectReferenceRequest(connector)).rect;
     cache.set(cacheKey, rect);
 
     return rect;

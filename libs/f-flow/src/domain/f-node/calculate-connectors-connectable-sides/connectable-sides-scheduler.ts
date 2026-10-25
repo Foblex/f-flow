@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import type { FNodeBase } from '../../../f-node/f-node-base';
 import { FComponentsStore } from '../../../f-storage/f-components-store';
 import { CalculateConnectorsConnectableSidesRequest } from './calculate-connectors-connectable-sides-request';
@@ -36,7 +36,7 @@ export class ConnectableSidesScheduler {
     for (const node of this._pending) {
       // A node destroyed while queued must not be recalculated.
       if (this._store.nodes.get(node.fId()) === node) {
-        this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(node));
+        this._mediator.execute(new CalculateConnectorsConnectableSidesRequest(node));
       }
     }
     this._pending.clear();

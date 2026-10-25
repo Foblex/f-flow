@@ -1,4 +1,4 @@
-import { IRect } from '@foblex/2d';
+import { IRect } from '../../../../_libs/f-2d';
 import { Injectable } from '@angular/core';
 import { EFReflowCollision, EFReflowDeltaSource, EFReflowMode, EFReflowScope } from '../enums';
 import {

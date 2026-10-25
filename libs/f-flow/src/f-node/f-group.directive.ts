@@ -11,7 +11,7 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IRect, ISize, PointExtensions } from '../_libs/f-2d';
 import { F_NODE, FNodeBase } from './f-node-base';
 import { NotifyTransformChangedRequest } from '../f-storage';
 import { IHasHostElement } from '../i-has-host-element';
@@ -21,7 +21,7 @@ import {
   RemoveNodeFromStoreRequest,
   ConnectableSidesScheduler,
 } from '../domain';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 
 let uniqueId = 0;
 
@@ -108,7 +108,7 @@ export class FGroupDirective
   public ngOnInit(): void {
     super.redraw();
 
-    this._mediator.execute<void>(new AddNodeToStoreRequest(this));
+    this._mediator.execute(new AddNodeToStoreRequest(this));
   }
 
   protected override setStyle(styleName: string, value: string) {
@@ -141,9 +141,7 @@ export class FGroupDirective
   }
 
   private _listenStateSizeChanges(): void {
-    this._mediator.execute<void>(
-      new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef),
-    );
+    this._mediator.execute(new UpdateNodeWhenStateOrSizeChangedRequest(this, this._destroyRef));
   }
 
   public override refresh(): void {
@@ -151,6 +149,6 @@ export class FGroupDirective
   }
 
   public ngOnDestroy(): void {
-    this._mediator.execute<void>(new RemoveNodeFromStoreRequest(this));
+    this._mediator.execute(new RemoveNodeFromStoreRequest(this));
   }
 }

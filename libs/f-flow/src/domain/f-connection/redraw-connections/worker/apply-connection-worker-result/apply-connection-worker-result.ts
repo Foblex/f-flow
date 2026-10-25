@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { ILine } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { ILine } from '../../../../../_libs/f-2d';
 import { EFConnectableSide } from '../../../../../f-connection-v2';
 import { RenderConnectionFromGeometryRequest } from '../../main-thread/render-connection-from-geometry';
 import { RenderConnectionWithLineRequest } from '../../main-thread/render-connection-with-line';
@@ -8,10 +8,10 @@ import { IConnectionWorkerBatchItem, IConnectionWorkerResultItem } from '../../m
 import { ApplyConnectionWorkerResultRequest } from './apply-connection-worker-result-request';
 
 @Injectable()
-@FExecutionRegister(ApplyConnectionWorkerResultRequest)
-export class ApplyConnectionWorkerResult
-  implements IExecution<ApplyConnectionWorkerResultRequest, void>
-{
+export class ApplyConnectionWorkerResult implements IExecution<
+  ApplyConnectionWorkerResultRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({ batchItem, result }: ApplyConnectionWorkerResultRequest): void {
@@ -30,7 +30,7 @@ export class ApplyConnectionWorkerResult
         result.sourceSide as EFConnectableSide,
         result.targetSide as EFConnectableSide,
       );
-      this._mediator.execute<void>(
+      this._mediator.execute(
         new RenderConnectionWithLineRequest(
           batchItem.connection,
           batchItem.geometry.source,
@@ -44,7 +44,7 @@ export class ApplyConnectionWorkerResult
   }
 
   private _fallbackToMainThread(batchItem: IConnectionWorkerBatchItem): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new RenderConnectionFromGeometryRequest(batchItem.connection, batchItem.geometry),
     );
   }

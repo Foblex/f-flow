@@ -1,4 +1,9 @@
-<f-flow fDraggable (fFullRendered)="loaded()" (fConnectionWaypointsChanged)="changed($event)">
+<f-flow
+  fInitialView
+  fDraggable
+  (fFullRendered)="loaded()"
+  (fConnectionWaypointsChanged)="changed($event)"
+>
   <f-canvas>
     <f-connection
       [fReassignDisabled]="true"

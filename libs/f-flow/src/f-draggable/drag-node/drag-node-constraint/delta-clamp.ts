@@ -1,4 +1,4 @@
-import { IMinMaxPoint, IPoint } from '@foblex/2d';
+import { IMinMaxPoint, IPoint } from '../../../_libs/f-2d';
 
 export interface IConstraintEdges {
   left: boolean;

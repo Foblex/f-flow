@@ -13,8 +13,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { EmitConnectionsChangesRequest } from '../../f-storage';
-import { castToEnum } from '@foblex/utils';
-import { FMediator } from '@foblex/mediator';
+import { castToEnum } from '../../_libs/f-utils';
+import { FMediator } from '../../_libs/f-mediator';
 import {
   AddConnectionForCreateToStoreRequest,
   RemoveConnectionForCreateFromStoreRequest,

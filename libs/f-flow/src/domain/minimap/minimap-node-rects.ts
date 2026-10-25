@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, RectExtensions } from '../../_libs/f-2d';
 import { FComponentsStore } from '../../f-storage';
 import { FNodeBase } from '../../f-node';
 

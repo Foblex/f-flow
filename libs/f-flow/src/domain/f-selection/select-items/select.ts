@@ -1,6 +1,6 @@
 import { SelectRequest } from './select-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 
@@ -8,7 +8,6 @@ import { FDraggableDataContext } from '../../../f-draggable';
  * Execution that handles the selection of nodes and connections in the FFlow.
  */
 @Injectable()
-@FExecutionRegister(SelectRequest)
 export class Select implements IExecution<SelectRequest, void> {
   private readonly _dragContext = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);

@@ -7,7 +7,7 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import { IPoint, PointExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions } from '../../../../_libs/f-2d';
 
 export const F_CONNECTION_WAYPOINTS = new InjectionToken<FConnectionWaypointsBase>(
   'F_CONNECTION_WAYPOINTS',

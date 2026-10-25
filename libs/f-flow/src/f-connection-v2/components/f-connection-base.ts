@@ -9,7 +9,7 @@ import {
   Signal,
   viewChild,
 } from '@angular/core';
-import { ILine, IPoint, LineExtensions, PointExtensions } from '@foblex/2d';
+import { ILine, IPoint, LineExtensions, PointExtensions } from '../../_libs/f-2d';
 import {
   ICanChangeVisibility,
   ISelectable,

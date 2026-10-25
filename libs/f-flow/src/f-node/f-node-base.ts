@@ -10,12 +10,12 @@ import {
   Signal,
   untracked,
 } from '@angular/core';
-import { IPoint, IRect, ISize, PointExtensions } from '@foblex/2d';
+import { IPoint, IRect, ISize, PointExtensions } from '../_libs/f-2d';
 import { FConnectorBase } from '../f-connectors';
 import { IHasHostElement } from '../i-has-host-element';
 import { ISelectable, mixinChangeSelection } from '../mixins';
 import { FChannel } from '../reactivity';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../_libs/f-platform';
 
 export const F_NODE = new InjectionToken<FNodeBase>('F_NODE');
 

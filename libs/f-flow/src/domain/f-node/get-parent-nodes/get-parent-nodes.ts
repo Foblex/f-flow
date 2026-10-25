@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GetParentNodesRequest } from './get-parent-nodes-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 import { FComponentsStore } from '../../../f-storage';
 
@@ -8,7 +8,6 @@ import { FComponentsStore } from '../../../f-storage';
  * Execution that retrieves all parent nodes of a given node from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(GetParentNodesRequest)
 export class GetParentNodes implements IExecution<GetParentNodesRequest, FNodeBase[]> {
   private readonly _store = inject(FComponentsStore);
 

@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../../_libs/f-2d';
 import { FConnectionBase } from '../../../../../f-connection-v2';
 import {
   IConnectionRedrawSession,
@@ -7,6 +7,9 @@ import {
 } from '../../models';
 
 export class RunConnectionRedrawSliceRequest {
+  /** Erased marker: the execution's return type, inferred by FMediator.execute. */
+  declare readonly __response: void;
+
   static readonly fToken = Symbol('RunConnectionRedrawSliceRequest');
 
   constructor(

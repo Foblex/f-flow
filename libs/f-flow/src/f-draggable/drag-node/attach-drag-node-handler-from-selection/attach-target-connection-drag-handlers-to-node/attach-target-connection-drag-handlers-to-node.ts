@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachTargetConnectionDragHandlersToNodeRequest } from './attach-target-connection-drag-handlers-to-node-request';
 import { FComponentsStore } from '../../../../f-storage';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { FNodeBase } from '../../../../f-node';
 import { getAllTargetConnectors } from '../../../../f-connectors';
 import {
@@ -13,7 +13,6 @@ import { FConnectionBase } from '../../../../f-connection-v2';
 import { DragHandlerInjector } from '../../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(AttachTargetConnectionDragHandlersToNodeRequest)
 export class AttachTargetConnectionDragHandlersToNode implements IExecution<
   AttachTargetConnectionDragHandlersToNodeRequest,
   void

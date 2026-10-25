@@ -1,4 +1,9 @@
-<f-flow fDraggable (fLoaded)="loaded()" (fReassignConnection)="reassignConnection($event)">
+<f-flow
+  fInitialView
+  fDraggable
+  (fLoaded)="loaded()"
+  (fReassignConnection)="reassignConnection($event)"
+>
   <f-canvas>
     @for (connection of connections(); track connection.id) {
     <f-connection

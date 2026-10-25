@@ -35,7 +35,7 @@ nx g @foblex/flow:add
 ```
 
 ```bash [manual]
-npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow
 ```
 
 ```bash [update]

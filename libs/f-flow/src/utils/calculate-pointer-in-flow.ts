@@ -1,4 +1,4 @@
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
+import { IPoint, ITransformModel, Point } from '../_libs/f-2d';
 
 export function calculatePointerInFlow(
   position: IPoint,

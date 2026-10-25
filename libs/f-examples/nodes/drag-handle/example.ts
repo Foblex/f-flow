@@ -18,7 +18,7 @@ export class Example {
    * Resets the canvas scale and centers the view without animation.
    */
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(true);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 
   /**

@@ -1,14 +1,14 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { MagneticLinesPreparationRequest } from './magnetic-lines-preparation-request';
-import { IRect, ISize } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IRect, ISize } from '../../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   DragNodeHandler,
   DragNodeItemHandler,
   MagneticLineRenderer,
   MagneticLinesHandler,
 } from '../../index';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FNodeBase } from '../../../../f-node';
@@ -16,7 +16,6 @@ import { GetNormalizedElementRectRequest } from '../../../../domain';
 import { FMagneticLinesBase } from '../../../../plugins/snapping/f-magnetic-lines';
 
 @Injectable()
-@FExecutionRegister(MagneticLinesPreparationRequest)
 export class MagneticLinesPreparation implements IExecution<MagneticLinesPreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -66,7 +65,7 @@ export class MagneticLinesPreparation implements IExecution<MagneticLinesPrepara
     const notDragged = this._store.nodes.getAll().filter((x) => !dragged.has(x));
 
     return notDragged.map((x) =>
-      this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+      this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement)),
     );
   }
 }

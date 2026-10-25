@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { CalculateResizeLimitsRequest } from './calculate-resize-limits-request';
-import { IRect, SizeExtensions } from '@foblex/2d';
+import { IRect, SizeExtensions } from '../../../_libs/f-2d';
 import { IResizeConstraint, IResizeLimit, IResizeLimits } from '../constraint';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { CalculateDirectChildrenUnionRectRequest } from '../calculate-direct-children-union-rect';
 import { FNodeBase } from '../../../f-node';
 import { GetNodePaddingRequest, GetParentNodesRequest } from '../../../domain';
@@ -12,7 +12,6 @@ import {
 } from '../../drag-node';
 
 @Injectable()
-@FExecutionRegister(CalculateResizeLimitsRequest)
 export class CalculateResizeLimits implements IExecution<
   CalculateResizeLimitsRequest,
   IResizeConstraint
@@ -35,22 +34,20 @@ export class CalculateResizeLimits implements IExecution<
     nodeOrGroup: FNodeBase,
     rect: IRect,
   ): [number, number, number, number] {
-    return this._mediator.execute<[number, number, number, number]>(
-      new GetNodePaddingRequest(nodeOrGroup, rect),
-    );
+    return this._mediator.execute(new GetNodePaddingRequest(nodeOrGroup, rect));
   }
 
   private _getNormalizedChildrenBounds(
     nodeOrGroup: FNodeBase,
     paddings: [number, number, number, number],
   ): IRect | null {
-    return this._mediator.execute<IRect | null>(
+    return this._mediator.execute(
       new CalculateDirectChildrenUnionRectRequest(nodeOrGroup, paddings),
     );
   }
 
   private _getParentsChain(nodeOrGroup: FNodeBase): FNodeBase[] {
-    return this._mediator.execute<FNodeBase[]>(new GetParentNodesRequest(nodeOrGroup)) ?? [];
+    return this._mediator.execute(new GetParentNodesRequest(nodeOrGroup)) ?? [];
   }
 
   private _buildSoftHardLimits(parents: FNodeBase[]): IResizeLimits {
@@ -81,9 +78,7 @@ export class CalculateResizeLimits implements IExecution<
     parent: FNodeBase,
     childrenPaddings: [number, number, number, number],
   ): ReadNodeBoundsWithPaddingsResponse {
-    return this._mediator.execute<ReadNodeBoundsWithPaddingsResponse>(
-      new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings),
-    );
+    return this._mediator.execute(new ReadNodeBoundsWithPaddingsRequest(parent, childrenPaddings));
   }
 
   private _isAutoExpand(nodeOrGroup: FNodeBase): boolean {

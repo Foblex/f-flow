@@ -17,6 +17,7 @@ import {
   FReflowController,
   provideFFlow,
   withReflowOnResize,
+  withInitialView,
 } from '@foblex/flow';
 import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 
@@ -27,7 +28,9 @@ import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule, FToolbarComponent, FSelectComponent],
-  providers: [provideFFlow(withReflowOnResize({ collision: EFReflowCollision.STOP }))],
+  providers: [
+    provideFFlow(withInitialView(), withReflowOnResize({ collision: EFReflowCollision.STOP })),
+  ],
 })
 export class Example implements OnInit {
   private readonly _canvas = viewChild.required(FCanvasComponent);
@@ -55,6 +58,6 @@ export class Example implements OnInit {
   }
 
   protected loaded(): void {
-    this._canvas()?.resetScaleAndCenter(true);
+    this._canvas()?.resetScaleAndCenter(false);
   }
 }

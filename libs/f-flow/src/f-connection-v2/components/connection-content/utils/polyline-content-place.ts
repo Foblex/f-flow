@@ -1,5 +1,5 @@
 import { IPolylineContent } from './i-polyline-content';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../_libs/f-2d';
 import { PolylineSampler } from './polyline-sampler';
 import { PolylineContentAlign } from './polyline-content-align';
 

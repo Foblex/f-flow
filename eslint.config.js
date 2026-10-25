@@ -26,6 +26,13 @@ module.exports = tseslint.config(
       '@typescript-eslint/naming-convention': [
         'error',
         {
+          // the erased `__response` phantom on mediator request classes (see
+          // _libs/f-mediator/f-response-of.ts) is a deliberate double-underscore marker
+          'selector': ['classProperty', 'typeProperty'],
+          'filter': { 'regex': '^__response$', 'match': true },
+          'format': null,
+        },
+        {
           'selector': 'memberLike',
           'format': ['camelCase'],
           'leadingUnderscore': 'allow',

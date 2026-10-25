@@ -45,12 +45,12 @@ For Nx workspaces:
 nx g @foblex/flow-elk-layout:add
 ```
 
-`ng add` checks `@foblex/flow` and the required Foblex companion packages, adds only the missing ones, and wires the default Flow theme into application styles when it is missing.
+`ng add` checks `@foblex/flow`, adds it when missing, and wires the default Flow theme into application styles when it is missing.
 
 If you prefer manual installation:
 
 ```bash
-npm install @foblex/flow @foblex/flow-elk-layout @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow @foblex/flow-elk-layout
 ```
 
 You do not need to install the underlying `elkjs` package separately because the adapter ships it as a runtime dependency.

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
+import { IPoint, Point, PointExtensions } from '../../../_libs/f-2d';
 import { RunAutoPanFrameRequest } from './run-auto-pan-frame-request';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
@@ -14,7 +14,6 @@ import { StopAutoPanRequest } from '../stop-auto-pan';
 import { ScheduleAutoPanFrameRequest } from '../schedule-auto-pan-frame';
 
 @Injectable()
-@FExecutionRegister(RunAutoPanFrameRequest)
 export class RunAutoPanFrame implements IExecution<RunAutoPanFrameRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -23,21 +22,21 @@ export class RunAutoPanFrame implements IExecution<RunAutoPanFrameRequest, void>
   public handle(_request: RunAutoPanFrameRequest): void {
     const mode = this._getAutoPanMode();
     if (!this._canAutoPan(mode)) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
 
     const delta = this._getAutoPanDelta();
     if (!delta.x && !delta.y) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
 
     this._applyCanvasDelta(delta, mode);
     this._replayLastPointerMove();
-    this._mediator.execute<void>(new ScheduleAutoPanFrameRequest());
+    this._mediator.execute(new ScheduleAutoPanFrameRequest());
   }
 
   private _applyCanvasDelta(delta: IPoint, mode: TAutoPanMode): void {

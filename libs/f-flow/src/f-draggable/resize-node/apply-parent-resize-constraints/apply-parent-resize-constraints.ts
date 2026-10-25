@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApplyParentResizeConstraintsRequest } from './apply-parent-resize-constraints-request';
-import { IRect } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IRect } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { IResizeLimit, IResizeLimits, IResizeOverflow } from '../constraint';
 import { SetFCacheNodeRectRequest } from '../../../f-cache';
 
@@ -13,7 +13,6 @@ import { SetFCacheNodeRectRequest } from '../../../f-cache';
  * - HARD (child): the child rect is clamped to stay within the hard.innerRect.
  */
 @Injectable()
-@FExecutionRegister(ApplyParentResizeConstraintsRequest)
 export class ApplyParentResizeConstraints implements IExecution<
   ApplyParentResizeConstraintsRequest,
   void

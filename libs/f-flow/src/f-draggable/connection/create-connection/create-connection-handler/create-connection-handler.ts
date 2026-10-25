@@ -1,4 +1,4 @@
-import { IPoint, RectExtensions, RoundedRect } from '@foblex/2d';
+import { IPoint, RectExtensions, RoundedRect } from '../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { FSourceConnectorBase } from '../../../../f-connectors';
 import { DragHandlerBase, FDragHandlerResult } from '../../../infrastructure';

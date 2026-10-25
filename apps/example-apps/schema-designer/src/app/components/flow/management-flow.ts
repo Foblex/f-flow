@@ -13,7 +13,7 @@ import {
   FZoomDirective,
 } from '@foblex/flow';
 import { IPoint, PointExtensions } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '@foblex/flow';
 import { ERelationType, ITable } from '../../domain';
 import { FlowController, IContextMenuTarget } from '../../controllers/flow-controller';
 import { EditorStore } from '../../store';

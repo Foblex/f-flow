@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { CalculateConnectorsConnectableSidesRequest } from './calculate-connectors-connectable-sides-request';
 import { FConnectorBase } from '../../../f-connectors';
 import { CalculateConnectableSideByConnectedPositionsRequest } from './calculate-connectable-side-by-connected-positions';
@@ -11,10 +11,10 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  * Execution that calculates connectable sides for all connectors of a node.
  */
 @Injectable()
-@FExecutionRegister(CalculateConnectorsConnectableSidesRequest)
-export class CalculateConnectorsConnectableSides
-  implements IExecution<CalculateConnectorsConnectableSidesRequest, void>
-{
+export class CalculateConnectorsConnectableSides implements IExecution<
+  CalculateConnectorsConnectableSidesRequest,
+  void
+> {
   private readonly _mediator = inject(FMediator);
 
   /**
@@ -60,7 +60,7 @@ export class CalculateConnectorsConnectableSides
     const mode = connector.userFConnectableSide;
 
     if (mode === EFConnectableSide.AUTO) {
-      return this._mediator.execute<EFConnectableSide>(
+      return this._mediator.execute(
         new CalculateConnectableSideByInternalPositionRequest(connector),
       );
     }

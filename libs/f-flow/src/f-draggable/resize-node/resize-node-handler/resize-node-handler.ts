@@ -1,7 +1,7 @@
-import { IPoint, IRect, IRoundedRect, RectExtensions } from '@foblex/2d';
+import { IPoint, IRect, IRoundedRect, RectExtensions } from '../../../_libs/f-2d';
 import { DragHandlerBase } from '../../infrastructure';
 import { EFResizeHandleType, FNodeBase } from '../../../f-node';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../../../_libs/f-mediator';
 import { CalculateResizeLimitsRequest } from '../calculate-resize-limits';
 import { ApplyChildResizeConstraintsRequest } from '../apply-child-resize-constraints';
 import { CalculateChangedRectFromDifferenceRequest } from '../calculate-changed-rect-from-difference';
@@ -76,6 +76,12 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
     const rect = this._lastRect ?? this._fallbackRectFromModel();
     this._nodeOrGroup.sizeChange.emit(rect);
 
+    // same contract as the drag handler: pointermove wrote `_position` directly for
+    // speed, so the model has to catch up here — a top/left-handle resize shifts the
+    // position, and a permanent model/_position mismatch makes the reflow orchestrator
+    // treat the node as mid-flight and silently skip it forever
+    this._nodeOrGroup.position.set(this._nodeOrGroup._position);
+
     this._reflowOrchestrator.handleResize(this._nodeOrGroup, this._baselineRect);
 
     requestAnimationFrame(() => this._nodeOrGroup.refresh());
@@ -86,13 +92,13 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   // --------------------------
 
   private _readBaselineRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._nodeOrGroup.hostElement),
     );
   }
 
   private _buildConstraints(baselineRect: IRect): IResizeConstraint {
-    return this._mediator.execute<IResizeConstraint>(
+    return this._mediator.execute(
       new CalculateResizeLimitsRequest(this._nodeOrGroup, baselineRect),
     );
   }
@@ -102,7 +108,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
   // --------------------------
 
   private _calcNextRect(delta: IPoint): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new CalculateChangedRectFromDifferenceRequest(
         this._baselineRect,
         delta,
@@ -164,7 +170,7 @@ export class ResizeNodeHandler extends DragHandlerBase<FResizeNodeStartEventData
       return cached;
     }
 
-    const rect = this._mediator.execute<IRoundedRect>(
+    const rect = this._mediator.execute(
       new GetNormalizedConnectorRectRequest(connector.hostElement, false),
     );
     cache.set(cacheKey, rect);

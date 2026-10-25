@@ -1,5 +1,5 @@
-import { RectExtensions, RoundedRect } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { RectExtensions, RoundedRect } from '../../../_libs/f-2d';
+import { BrowserService } from '../../../_libs/f-platform';
 import {
   CalculateClosestConnector,
   canvasFactory,
@@ -67,7 +67,7 @@ describe('FindConnectableConnectorUsingPriorityAndPosition', () => {
     const top = connectorRef('top', 154, 94);
     const left = connectorRef('left', 94, 134);
 
-    const result = mediator.execute<FConnectorBase | undefined>(
+    const result = mediator.execute(
       new FindConnectableConnectorUsingPriorityAndPositionRequest({ x: 100, y: 140 }, [top, left]),
     );
 
@@ -96,7 +96,7 @@ describe('FindConnectableConnectorUsingPriorityAndPosition', () => {
       rect: RoundedRect.fromRect(RectExtensions.initialize(100, 140, 0, 0)),
     };
 
-    const result = mediator.execute<FConnectorBase | undefined>(
+    const result = mediator.execute(
       new FindConnectableConnectorUsingPriorityAndPositionRequest({ x: 103, y: 142 }, [top, left]),
     );
 
@@ -106,7 +106,7 @@ describe('FindConnectableConnectorUsingPriorityAndPosition', () => {
   it('returns undefined when the pointer is outside every connector and node', () => {
     const top = connectorRef('top', 154, 94);
 
-    const result = mediator.execute<FConnectorBase | undefined>(
+    const result = mediator.execute(
       new FindConnectableConnectorUsingPriorityAndPositionRequest({ x: 380, y: 20 }, [top]),
     );
 

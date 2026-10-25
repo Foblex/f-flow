@@ -1,4 +1,4 @@
-import { IPoint, IRect } from '@foblex/2d';
+import { IPoint, IRect } from '../../../_libs/f-2d';
 
 /**
  * A single node/group position change as computed by the planner.

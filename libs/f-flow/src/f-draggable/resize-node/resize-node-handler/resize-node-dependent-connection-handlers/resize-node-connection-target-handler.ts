@@ -1,4 +1,4 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../../_libs/f-2d';
 import { Injectable } from '@angular/core';
 import { ResizeNodeConnectionHandlerBase } from './resize-node-connection-handler-base';
 

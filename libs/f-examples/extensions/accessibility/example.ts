@@ -7,6 +7,7 @@ import {
   FMoveNodesEvent,
   provideFFlow,
   withA11y,
+  withInitialView,
 } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { generateGuid } from '@foblex/utils';
@@ -30,7 +31,7 @@ interface IConnection {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule],
-  providers: [provideFFlow(withA11y({ moveStep: 20 }))],
+  providers: [provideFFlow(withInitialView(), withA11y({ moveStep: 20 }))],
 })
 export class Example {
   private readonly _canvas = viewChild.required(FCanvasComponent);

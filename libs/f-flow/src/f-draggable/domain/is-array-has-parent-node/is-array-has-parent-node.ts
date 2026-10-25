@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IsArrayHasParentNodeRequest } from './is-array-has-parent-node-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 
 @Injectable()
-@FExecutionRegister(IsArrayHasParentNodeRequest)
 export class IsArrayHasParentNode implements IExecution<IsArrayHasParentNodeRequest, boolean> {
   public handle(request: IsArrayHasParentNodeRequest): boolean {
     return this._isParentNodeInArray(

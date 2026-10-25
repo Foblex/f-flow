@@ -11,7 +11,7 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FMinimapFlowDirective } from './f-minimap-flow.directive';
 import { FMinimapCanvasDirective } from './f-minimap-canvas.directive';
 import { FMinimapViewDirective } from './f-minimap-view.directive';
@@ -22,8 +22,8 @@ import {
   RegisterPluginInstanceRequest,
   RemovePluginInstanceRequest,
 } from '../f-storage';
-import { debounceAnimationFrame, FChannelHub, notifyOnStart } from '../reactivity';
-import { BrowserService } from '@foblex/platform';
+import { debounceAnimationFrame, notifyOnStart } from '../reactivity';
+import { BrowserService } from '../_libs/f-platform';
 import { F_MINIMAP_BASE, FMinimapBase } from './f-minimap-base';
 
 @Component({
@@ -71,12 +71,18 @@ export class FMinimapComponent extends FMinimapBase implements AfterViewInit, On
   }
 
   public ngAfterViewInit(): void {
+    // guard BEFORE subscribing: the notifyOnStart() + debounceAnimationFrame() pipe
+    // schedules a bare requestAnimationFrame from a microtask, which does not exist
+    // on the server — the isBrowser check inside _redraw() is downstream of it
+    if (!this._browser.isBrowser()) {
+      return;
+    }
     this._listenTransformChanges();
   }
 
   private _listenTransformChanges(): void {
     this._mediator
-      .execute<FChannelHub>(new ListenTransformChangesRequest())
+      .execute(new ListenTransformChangesRequest())
       .pipe(notifyOnStart(), debounceAnimationFrame())
       .listen(this._destroyRef, () => {
         this._redraw();

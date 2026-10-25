@@ -1,4 +1,4 @@
-import { IMinMaxPoint, IRect, ISize } from '@foblex/2d';
+import { IMinMaxPoint, IRect, ISize } from '../../../_libs/f-2d';
 import { FNodeBase } from '../../../f-node';
 
 export interface IDragNodeSoftConstraint {

@@ -1,20 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { CalculateNodesStateRequest } from './calculate-nodes-state-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { IFFlowStateNode } from '../i-f-flow-state-node';
 import { FComponentsStore } from '../../../../f-storage';
 import { IFFlowStateConnector } from '../i-f-flow-state-connector';
 import { GetNormalizedElementRectRequest } from '../../../get-normalized-element-rect';
-import { IRect } from '@foblex/2d';
 
 /**
  * Execution that retrieves the state of Flow nodes, including their position, size, inputs, outputs, and selection status.
  */
 @Injectable()
-@FExecutionRegister(CalculateNodesStateRequest)
-export class CalculateNodesState
-  implements IExecution<CalculateNodesStateRequest, IFFlowStateNode[]>
-{
+export class CalculateNodesState implements IExecution<
+  CalculateNodesStateRequest,
+  IFFlowStateNode[]
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
@@ -24,7 +23,7 @@ export class CalculateNodesState
       .filter((x) => x instanceof component)
       .map((x) => {
         const measuredRect = measuredSize
-          ? this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement))
+          ? this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement))
           : null;
 
         return {

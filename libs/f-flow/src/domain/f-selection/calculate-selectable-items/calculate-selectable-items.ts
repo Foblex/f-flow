@@ -1,9 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { IRect } from '@foblex/2d';
 import { ICanBeSelectedElementAndRect } from './i-can-be-selected-element-and-rect';
-import { CalculateSelectableItemsRequest } from './calculate-selectable-items-request';
 import { FNodeBase } from '../../../f-node';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
@@ -14,7 +12,6 @@ import { FConnectionBase } from '../../../f-connection-v2';
  * It filters out elements that are already selected in the FDraggableDataContext.
  */
 @Injectable()
-@FExecutionRegister(CalculateSelectableItemsRequest)
 export class CalculateSelectableItems implements IExecution<void, ICanBeSelectedElementAndRect[]> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -44,7 +41,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+          fRect: this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement)),
         };
       });
   }
@@ -59,9 +56,7 @@ export class CalculateSelectableItems implements IExecution<void, ICanBeSelected
       .map((x) => {
         return {
           element: x,
-          fRect: this._mediator.execute<IRect>(
-            new GetNormalizedElementRectRequest(x.boundingElement),
-          ),
+          fRect: this._mediator.execute(new GetNormalizedElementRectRequest(x.boundingElement)),
         };
       });
   }

@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { IPoint, IRect } from '@foblex/2d';
-import { generateGuid } from '@foblex/utils';
+import { IPoint, IRect } from '../../_libs/f-2d';
+import { generateGuid } from '../../_libs/f-utils';
 import type {
   FCreateConnectionEvent,
   FCreateNodeEvent,

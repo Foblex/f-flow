@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { RemoveConnectorFromStoreRequest } from './remove-connector-from-store-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FConnectorBase } from '../../../f-connectors';
@@ -9,7 +9,6 @@ import { UnregisterFCacheConnectorRequest } from '../../../f-cache';
  * Execution that removes an inputConnector from the FComponentsStore.
  */
 @Injectable()
-@FExecutionRegister(RemoveConnectorFromStoreRequest)
 export class RemoveConnectorFromStore implements IExecution<RemoveConnectorFromStoreRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);

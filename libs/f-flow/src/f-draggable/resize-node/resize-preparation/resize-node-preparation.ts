@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ResizeNodePreparationRequest } from './resize-node-preparation-request';
-import { ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { ITransformModel, Point } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isValidEventTrigger, SelectAndUpdateNodeLayerRequest } from '../../../domain';
@@ -10,12 +10,11 @@ import { ResizeNodeHandler } from '../resize-node-handler';
 import {
   getDataAttrValueFromClosestElementWithClass,
   isClosestElementHasClass,
-} from '@foblex/utils';
+} from '../../../_libs/f-utils';
 import { DragHandlerInjector } from '../../infrastructure';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node';
 
 @Injectable()
-@FExecutionRegister(ResizeNodePreparationRequest)
 export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -54,7 +53,7 @@ export class ResizeNodePreparation implements IExecution<ResizeNodePreparationRe
 
     const handler = this._dragInjector.createInstance(ResizeNodeHandler);
     handler.initialize(nodeOrGroup, this._readResizeHandleType(event.targetElement));
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new AttachResizeConnectionDragHandlersToNodeRequest(handler, nodeOrGroup),
     );
 

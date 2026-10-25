@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragCanvasPreparationRequest } from './drag-canvas-preparation-request';
-import { Point } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { Point } from '../../../_libs/f-2d';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore, INSTANCES } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DragCanvasHandler } from '../drag-canvas-handler';
@@ -11,7 +11,6 @@ import { DragHandlerInjector } from '../../infrastructure';
 import { IPointerEvent } from '../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(DragCanvasPreparationRequest)
 export class DragCanvasPreparation implements IExecution<DragCanvasPreparationRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _dragContext = inject(FDraggableDataContext);

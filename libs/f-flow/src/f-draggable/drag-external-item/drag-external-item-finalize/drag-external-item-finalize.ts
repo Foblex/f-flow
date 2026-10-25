@@ -1,7 +1,7 @@
 import { EventEmitter, inject, Injectable } from '@angular/core';
 import { DragExternalItemFinalizeRequest } from './drag-external-item-finalize-request';
-import { IPoint, IRect } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IPoint, IRect } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FCreateNodeEvent } from '../f-create-node-event';
 import { FDragHandlerResult } from '../../infrastructure';
 import { FComponentsStore } from '../../../f-storage';
@@ -9,13 +9,12 @@ import { DragExternalItemHandler } from '../drag-external-item-handler';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isDragExternalItemHandler } from '../is-drag-external-item-handler';
 import { DropToGroupHandler } from '../../drop-to-group';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { IDragExternalItemDragResult } from '../i-drag-external-item-drag-result';
 import { getDeepElementsFromPoint } from '../../../utils/get-deep-elements-from-point';
 
 @Injectable()
-@FExecutionRegister(DragExternalItemFinalizeRequest)
 export class DragExternalItemFinalize implements IExecution<DragExternalItemFinalizeRequest, void> {
   private readonly _result: FDragHandlerResult<IDragExternalItemDragResult> =
     inject(FDragHandlerResult);
@@ -96,7 +95,7 @@ export class DragExternalItemFinalize implements IExecution<DragExternalItemFina
   }
 
   private _getPreviewRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._result.getData().preview),
     );
   }

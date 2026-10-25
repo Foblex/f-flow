@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { MinimapCalculateViewRectRequest } from './minimap-calculate-view-rect-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { IRect, RectExtensions } from '@foblex/2d';
+import { IExecution } from '../../../_libs/f-mediator';
+import { IRect, RectExtensions } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
-@FExecutionRegister(MinimapCalculateViewRectRequest)
 export class MinimapCalculateViewRect implements IExecution<
   MinimapCalculateViewRectRequest,
   IRect

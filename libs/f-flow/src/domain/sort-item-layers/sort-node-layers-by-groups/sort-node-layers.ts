@@ -1,10 +1,10 @@
 import { SortNodeLayersRequest } from './sort-node-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../../get-deep-children-nodes-and-groups';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../_libs/f-platform';
 import { FCanvasBase } from '../../../f-canvas';
 
 /**
@@ -13,7 +13,6 @@ import { FCanvasBase } from '../../../f-canvas';
  * and moves them to maintain the correct hierarchy.
  */
 @Injectable()
-@FExecutionRegister(SortNodeLayersRequest)
 export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
@@ -41,6 +40,23 @@ export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
     });
   }
 
+  // each move appends the group's children to the container tail; when they already sit
+  // there in that exact order the append is a pure no-op that still resets CSS
+  // transitions and forces layout, so the steady state (every pass after the first one)
+  // must skip the DOM entirely
+  private _isAlreadyContainerTail(elements: HTMLElement[]): boolean {
+    let cursor: Element | null = this._nodesContainer.lastElementChild;
+
+    for (let i = elements.length - 1; i >= 0; i--) {
+      if (cursor !== elements[i]) {
+        return false;
+      }
+      cursor = cursor.previousElementSibling;
+    }
+
+    return true;
+  }
+
   private _getGroups(): FNodeBase[] {
     return this._store.nodes.getAll().filter((x) => this._groupsContainer.contains(x.hostElement));
   }
@@ -55,12 +71,16 @@ export class SortNodeLayers implements IExecution<SortNodeLayersRequest, void> {
 
   private _getChildrenNodes(fId: string): HTMLElement[] {
     return this._mediator
-      .execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .execute(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .filter((x) => this._nodesContainer.contains(x.hostElement))
       .map((x) => x.hostElement);
   }
 
   private _moveChildrenNodes(sortedChildrenGroups: HTMLElement[]): void {
+    if (!sortedChildrenGroups.length || this._isAlreadyContainerTail(sortedChildrenGroups)) {
+      return;
+    }
+
     const fragment = this._browser.document.createDocumentFragment();
     sortedChildrenGroups.forEach((childGroup: HTMLElement) => {
       fragment.appendChild(childGroup);

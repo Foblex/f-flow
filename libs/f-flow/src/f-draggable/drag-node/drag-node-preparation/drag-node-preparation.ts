@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragNodePreparationRequest } from './drag-node-preparation-request';
-import { Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { Point } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { findNodeOrGroupContaining, FNodeBase } from '../../../f-node';
@@ -11,14 +11,13 @@ import {
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
-import { isClosestElementHasClass } from '@foblex/utils';
+import { isClosestElementHasClass } from '../../../_libs/f-utils';
 import { DragNodeHandler } from '../drag-node-handler';
 import { IPointerEvent } from '../../infrastructure';
 import { MagneticLinesPreparationRequest } from '../magnetic-lines';
 import { MagneticRectsPreparationRequest } from '../magnetic-rects';
 
 @Injectable()
-@FExecutionRegister(DragNodePreparationRequest)
 export class DragNodePreparation implements IExecution<DragNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -39,8 +38,8 @@ export class DragNodePreparation implements IExecution<DragNodePreparationReques
     // Store pointer-down context for other handlers
     this._dragSession.draggableItems = [this._buildDragNodeHandler(node)];
 
-    this._mediator.execute<void>(new MagneticLinesPreparationRequest());
-    this._mediator.execute<void>(new MagneticRectsPreparationRequest());
+    this._mediator.execute(new MagneticLinesPreparationRequest());
+    this._mediator.execute(new MagneticRectsPreparationRequest());
   }
 
   private _canStartDrag(event: IPointerEvent, trigger: FEventTrigger): boolean {

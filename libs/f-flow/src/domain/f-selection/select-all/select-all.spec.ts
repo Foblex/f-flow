@@ -35,7 +35,7 @@ describe('SelectAll', () => {
       selectableFactory().id('selected-2').selected(true).onUnmarkAsSelected(secondUnmark).build(),
     ];
 
-    mediator.execute<void>(new SelectAllRequest());
+    mediator.execute(new SelectAllRequest());
 
     expect(firstUnmark).toHaveBeenCalledTimes(1);
     expect(secondUnmark).toHaveBeenCalledTimes(1);
@@ -54,7 +54,7 @@ describe('SelectAll', () => {
     registryAdd(componentsStore.connections, connection);
     draggableDataContext.selectedItems = [];
 
-    mediator.execute<void>(new SelectAllRequest());
+    mediator.execute(new SelectAllRequest());
 
     expect(markNode).toHaveBeenCalledTimes(1);
     expect(markConnection).toHaveBeenCalledTimes(1);
@@ -65,7 +65,7 @@ describe('SelectAll', () => {
   it('should handle empty nodes and connections arrays', () => {
     draggableDataContext.selectedItems = [];
 
-    mediator.execute<void>(new SelectAllRequest());
+    mediator.execute(new SelectAllRequest());
 
     expect(draggableDataContext.selectedItems.length).toBe(0);
     expect(draggableDataContext.isSelectedChanged).toBe(true);

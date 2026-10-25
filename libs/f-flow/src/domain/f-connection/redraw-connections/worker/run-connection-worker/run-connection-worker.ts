@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { ConnectionWorkerState, IConnectionWorkerResultItem } from '../../models';
 import { EnsureConnectionWorkerRequest } from '../ensure-connection-worker';
 import { IsConnectionWorkerEnabledRequest } from '../is-connection-worker-enabled';
 import { RunConnectionWorkerRequest } from './run-connection-worker-request';
 
 @Injectable()
-@FExecutionRegister(RunConnectionWorkerRequest)
-export class RunConnectionWorker
-  implements IExecution<RunConnectionWorkerRequest, Promise<IConnectionWorkerResultItem[]>>
-{
+export class RunConnectionWorker implements IExecution<
+  RunConnectionWorkerRequest,
+  Promise<IConnectionWorkerResultItem[]>
+> {
   private readonly _state = inject(ConnectionWorkerState);
   private readonly _mediator = inject(FMediator);
 
@@ -18,13 +18,13 @@ export class RunConnectionWorker
       return Promise.resolve([]);
     }
 
-    if (!this._mediator.execute<boolean>(new IsConnectionWorkerEnabledRequest())) {
+    if (!this._mediator.execute(new IsConnectionWorkerEnabledRequest())) {
       return Promise.reject(new Error('Connection worker is disabled.'));
     }
 
     this._interruptPendingRequests();
 
-    const worker = this._mediator.execute<Worker | null>(new EnsureConnectionWorkerRequest());
+    const worker = this._mediator.execute(new EnsureConnectionWorkerRequest());
     if (!worker) {
       return Promise.reject(new Error('Unable to initialize connection worker.'));
     }

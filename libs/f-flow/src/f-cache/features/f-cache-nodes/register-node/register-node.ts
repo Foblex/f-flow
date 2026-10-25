@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { RegisterFCacheNodeRequest } from './register-node-request';
 import { FCache, FCacheNode } from '../../../model';
 import { F_CACHE_OPTIONS } from '../../../config';
 
 @Injectable()
-@FExecutionRegister(RegisterFCacheNodeRequest)
 export class RegisterFCacheNode implements IExecution<RegisterFCacheNodeRequest, void> {
   private readonly _store = inject(FCache);
   private readonly _options = inject(F_CACHE_OPTIONS);

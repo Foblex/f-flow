@@ -1,6 +1,6 @@
 import { effect, inject, Injectable, Injector } from '@angular/core';
-import { BrowserService } from '@foblex/platform';
-import { IPoint, PointExtensions } from '@foblex/2d';
+import { BrowserService } from '../../_libs/f-platform';
+import { IPoint, PointExtensions } from '../../_libs/f-2d';
 import { FComponentsStore } from '../../f-storage';
 import { FCanvasChangeEvent } from '../../f-canvas';
 import {

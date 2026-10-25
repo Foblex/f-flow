@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { InputCanvasPositionRequest } from './input-canvas-position-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
-import { IPoint, ITransformModel, PointExtensions } from '@foblex/2d';
+import { IExecution } from '../../../_libs/f-mediator';
+import { IPoint, ITransformModel, PointExtensions } from '../../../_libs/f-2d';
 import { FComponentsStore } from '../../../f-storage';
 
 /**
  * It updates the canvas position and redraws the canvas when the user set a new position using the input.
  */
 @Injectable()
-@FExecutionRegister(InputCanvasPositionRequest)
 export class InputCanvasPosition implements IExecution<InputCanvasPositionRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

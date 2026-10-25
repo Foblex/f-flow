@@ -7,25 +7,38 @@ import { CalculateSourceConnectorsToConnect } from './calculate-source-connector
 import { FindConnectableConnectorUsingPriorityAndPosition } from './find-connectable-connector-using-priority-and-position';
 import { AddConnectorToStore } from './add-connector-to-store';
 import { RemoveConnectorFromStore } from './remove-connector-from-store';
+import { fExecution } from '../../_libs/f-mediator';
+import { CalculateClosestConnectorRequest } from './calculate-closest-connector/calculate-closest-connector-request';
+import { CalculateSourceConnectorsToConnectRequest } from './calculate-source-connectors-to-connect/calculate-source-connectors-to-connect-request';
+import { CalculateTargetConnectorsToConnectRequest } from './calculate-target-connectors-to-connect/calculate-target-connectors-to-connect-request';
+import { FindConnectableConnectorUsingPriorityAndPositionRequest } from './find-connectable-connector-using-priority-and-position/find-connectable-connector-using-priority-and-position-request';
+import { GetConnectorRectReferenceRequest } from './get-connector-rect-reference/get-connector-rect-reference-request';
+import { MarkConnectableConnectorsRequest } from './mark-connectable-connectors/mark-connectable-connectors-request';
+import { RemoveConnectorFromStoreRequest } from './remove-connector-from-store/remove-connector-from-store-request';
+import { UnmarkConnectableConnectorsRequest } from './unmark-connectable-connectors/unmark-connectable-connectors-request';
+import { AddConnectorToStoreRequest } from './add-connector-to-store/add-connector-to-store-request';
 /*
  * This file exports all the connector-related executions that can be used in the FFlow domain.
  */
 export const F_CONNECTORS_FEATURES = [
-  AddConnectorToStore,
+  fExecution(AddConnectorToStoreRequest, AddConnectorToStore),
 
-  RemoveConnectorFromStore,
+  fExecution(RemoveConnectorFromStoreRequest, RemoveConnectorFromStore),
 
-  CalculateClosestConnector,
+  fExecution(CalculateClosestConnectorRequest, CalculateClosestConnector),
 
-  FindConnectableConnectorUsingPriorityAndPosition,
+  fExecution(
+    FindConnectableConnectorUsingPriorityAndPositionRequest,
+    FindConnectableConnectorUsingPriorityAndPosition,
+  ),
 
-  CalculateSourceConnectorsToConnect,
+  fExecution(CalculateSourceConnectorsToConnectRequest, CalculateSourceConnectorsToConnect),
 
-  CalculateTargetConnectorsToConnect,
+  fExecution(CalculateTargetConnectorsToConnectRequest, CalculateTargetConnectorsToConnect),
 
-  GetConnectorRectReference,
+  fExecution(GetConnectorRectReferenceRequest, GetConnectorRectReference),
 
-  MarkConnectableConnectors,
+  fExecution(MarkConnectableConnectorsRequest, MarkConnectableConnectors),
 
-  UnmarkConnectableConnectors,
+  fExecution(UnmarkConnectableConnectorsRequest, UnmarkConnectableConnectors),
 ];

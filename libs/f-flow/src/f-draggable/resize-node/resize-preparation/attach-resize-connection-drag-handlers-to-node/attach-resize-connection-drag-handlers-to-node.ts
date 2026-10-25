@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AttachResizeConnectionDragHandlersToNodeRequest } from './attach-resize-connection-drag-handlers-to-node-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../../f-storage';
 import {
   getAllSourceConnectors,
@@ -16,15 +16,13 @@ import {
   ResizeNodeConnectionSourceHandler,
   ResizeNodeConnectionTargetHandler,
 } from '../../resize-node-handler';
-import { IRect } from '@foblex/2d';
 import { GetNormalizedElementRectRequest } from '../../../../domain';
 import { DragHandlerInjector } from '../../../infrastructure';
 import { CalculateResizeLimitsRequest } from '../../calculate-resize-limits';
 import { IResizeNodeConnectionHandlers } from '../../resize-node-handler';
-import { IResizeConstraint, IResizeLimit } from '../../constraint';
+import { IResizeLimit } from '../../constraint';
 
 @Injectable()
-@FExecutionRegister(AttachResizeConnectionDragHandlersToNodeRequest)
 export class AttachResizeConnectionDragHandlersToNode implements IExecution<
   AttachResizeConnectionDragHandlersToNodeRequest,
   void
@@ -63,10 +61,10 @@ export class AttachResizeConnectionDragHandlersToNode implements IExecution<
   }
 
   private _readSoftParents(nodeOrGroup: FNodeBase): FNodeBase[] {
-    const baselineRect = this._mediator.execute<IRect>(
+    const baselineRect = this._mediator.execute(
       new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
     );
-    const constraints = this._mediator.execute<IResizeConstraint>(
+    const constraints = this._mediator.execute(
       new CalculateResizeLimitsRequest(nodeOrGroup, baselineRect),
     );
 

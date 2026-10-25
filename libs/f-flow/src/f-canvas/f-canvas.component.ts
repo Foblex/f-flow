@@ -17,9 +17,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { F_CANVAS, FCanvasBase } from './models';
-import { IPoint, PointExtensions, TransformModelExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions, TransformModelExtensions } from '../_libs/f-2d';
 import { FCanvasChangeEvent } from './models';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { EFCanvasLayer } from './enums';
 import { resolveLayerOrder } from './layers';
 import { F_CANVAS_CONFIG } from './utils';
@@ -42,7 +42,6 @@ import {
   WaitForConnectionsRenderedRequest,
 } from '../domain';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../f-storage';
-import { FFlowBase } from '../f-flow';
 import { F_DEFAULT_LAYER_ORDER } from './constants';
 
 /**
@@ -127,7 +126,7 @@ export class FCanvasComponent extends FCanvasBase implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._flowId = this._mediator.execute<FFlowBase>(new GetFlowRequest()).fId();
+    this._flowId = this._mediator.execute(new GetFlowRequest()).fId();
     this._mediator.execute(new AddCanvasToStoreRequest(this));
     this._positionChange();
     this._scaleChange();

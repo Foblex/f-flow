@@ -1,6 +1,6 @@
 import { CalculateSourceConnectorsToConnectRequest } from './calculate-source-connectors-to-connect-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import {
   FConnectorBase,
   FSourceConnectorBase,
@@ -9,7 +9,7 @@ import {
 import { FComponentsStore } from '../../../f-storage';
 import { IConnectorRectRef } from '../i-connector-rect-ref';
 import { GetConnectorRectReferenceRequest } from '../get-connector-rect-reference';
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 import { CalculateConnectableSideByConnectedPositionsRequest, isCalculateMode } from '../../f-node';
 import { EFConnectableSide } from '../../../f-connection-v2';
 
@@ -18,7 +18,6 @@ import { EFConnectableSide } from '../../../f-connection-v2';
  * along with their rect references.
  */
 @Injectable()
-@FExecutionRegister(CalculateSourceConnectorsToConnectRequest)
 export class CalculateSourceConnectorsToConnect implements IExecution<
   CalculateSourceConnectorsToConnectRequest,
   IConnectorRectRef[]
@@ -38,9 +37,7 @@ export class CalculateSourceConnectorsToConnect implements IExecution<
 
     const refs: IConnectorRectRef[] = [];
     for (const connector of sources) {
-      refs.push(
-        this._mediator.execute<IConnectorRectRef>(new GetConnectorRectReferenceRequest(connector)),
-      );
+      refs.push(this._mediator.execute(new GetConnectorRectReferenceRequest(connector)));
     }
 
     this._scheduleApplyCalculatedSides(refs, pointer);

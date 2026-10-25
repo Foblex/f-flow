@@ -41,7 +41,6 @@ export function validateRepository(root) {
 export function collectReleaseIssues({ root, flow, dagre, elk, callCenter, marketing }) {
   const issues = [];
   const releaseVersion = flow.version;
-  const expectedFlowPeer = `^${releaseVersion.split('.')[0]}.0.0`;
 
   for (const [name, manifest] of [
     ['package.json', root],
@@ -53,14 +52,27 @@ export function collectReleaseIssues({ root, flow, dagre, elk, callCenter, marke
     }
   }
 
+  // the layout packages import flow's public API, so their peer floor must stay inside
+  // the released major and must not point past the version being released — but it is
+  // allowed to be higher than ^major.0.0 when the import surface appeared mid-major
+  // (e.g. the vendored geometry exports exist only since 19.4.0)
   for (const [name, manifest] of [
     ['libs/f-layout/dagre/package.json', dagre],
     ['libs/f-layout/elk/package.json', elk],
   ]) {
     const actualPeer = manifest.peerDependencies?.['@foblex/flow'];
-    if (actualPeer !== expectedFlowPeer) {
+    const match = /^\^(\d+)\.(\d+)\.(\d+)$/.exec(actualPeer ?? '');
+    const [relMajor, relMinor, relPatch] = releaseVersion.split('.').map(Number);
+    if (!match) {
+      issues.push(`${name}: expected a caret @foblex/flow peer, found ${actualPeer ?? 'missing'}`);
+      continue;
+    }
+    const [peerMajor, peerMinor, peerPatch] = match.slice(1).map(Number);
+    const floorBeyondRelease =
+      peerMinor > relMinor || (peerMinor === relMinor && peerPatch > relPatch);
+    if (peerMajor !== relMajor || floorBeyondRelease) {
       issues.push(
-        `${name}: expected @foblex/flow peer ${expectedFlowPeer}, found ${actualPeer ?? 'missing'}`,
+        `${name}: @foblex/flow peer ${actualPeer} must stay within ^${relMajor} and not exceed ${releaseVersion}`,
       );
     }
   }

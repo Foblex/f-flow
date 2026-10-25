@@ -1,11 +1,10 @@
-import { RectExtensions, RoundedRect } from '@foblex/2d';
+import { RectExtensions, RoundedRect } from '../../../_libs/f-2d';
 import {
   CalculateClosestConnector,
   CalculateClosestConnectorRequest,
   connectorFactory,
   configureDiTest,
   createMediatorHarness,
-  IClosestConnectorRef,
   MediatorHarness,
 } from '@foblex/flow';
 
@@ -24,7 +23,7 @@ describe('CalculateClosestConnector', () => {
   });
 
   it('should return the only element if its distance is less than snapThreshold', () => {
-    const result = mediator.execute<IClosestConnectorRef>(
+    const result = mediator.execute(
       new CalculateClosestConnectorRequest({ x: 10, y: 10 }, [
         {
           connector: connectorFactory().id('input1').build(),
@@ -42,7 +41,7 @@ describe('CalculateClosestConnector', () => {
   });
 
   it('should return 10 if the only element is exactly at snapThreshold distance', () => {
-    const result = mediator.execute<IClosestConnectorRef>(
+    const result = mediator.execute(
       new CalculateClosestConnectorRequest({ x: 0, y: 0 }, [
         {
           connector: connectorFactory().id('input1').build(),

@@ -1,4 +1,4 @@
-import { IPoint, Point, PointExtensions } from '@foblex/2d';
+import { IPoint, Point, PointExtensions } from '../../_libs/f-2d';
 
 export type TAutoPanMode = 'rebase' | 'direct';
 

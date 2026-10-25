@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { ListenConnectionsChangesRequest } from './listen-connections-changes-request';
 import { FComponentsStore } from '../../../f-storage';
 import { debounceTime, FChannelHub, notifyOnStart } from '../../../reactivity';
 
 @Injectable()
-@FExecutionRegister(ListenConnectionsChangesRequest)
 export class ListenConnectionsChanges implements IExecution<
   ListenConnectionsChangesRequest,
   FChannelHub

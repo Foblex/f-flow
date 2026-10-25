@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../_libs/f-2d';
 import { IFLayoutNode } from './i-f-layout-node';
 import { IFLayoutNodePosition } from './i-f-layout-node-position';
 

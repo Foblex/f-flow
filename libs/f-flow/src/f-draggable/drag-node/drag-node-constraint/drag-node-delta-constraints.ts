@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../_libs/f-2d';
 import { GridSnapper } from './grid-snapper';
 import { DeltaClamp, IDeltaClampResult } from './delta-clamp';
 import { Injector } from '@angular/core';

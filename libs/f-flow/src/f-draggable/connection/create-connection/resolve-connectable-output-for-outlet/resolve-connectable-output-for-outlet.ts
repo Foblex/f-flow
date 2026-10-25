@@ -1,13 +1,11 @@
-import { IHandler } from '@foblex/mediator';
+import { IHandler } from '../../../../_libs/f-mediator';
 import { inject, Injectable } from '@angular/core';
 import { FComponentsStore } from '../../../../f-storage';
 import { FConnectorBase, getAllSourceConnectors } from '../../../../f-connectors';
 import { FNodeBase } from '../../../../f-node';
 import { ResolveConnectableOutputForOutletRequest } from './resolve-connectable-output-for-outlet-request';
-import { FExecutionRegister } from '@foblex/mediator';
 
 @Injectable()
-@FExecutionRegister(ResolveConnectableOutputForOutletRequest)
 export class ResolveConnectableOutputForOutlet implements IHandler<
   ResolveConnectableOutputForOutletRequest,
   FConnectorBase | undefined

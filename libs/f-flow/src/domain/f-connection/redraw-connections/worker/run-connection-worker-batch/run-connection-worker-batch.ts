@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
 import { IConnectionWorkerResultItem } from '../../models';
 import { RunConnectionWorkerRequest } from '../run-connection-worker';
 import { RunConnectionWorkerBatchRequest } from './run-connection-worker-batch-request';
 
 @Injectable()
-@FExecutionRegister(RunConnectionWorkerBatchRequest)
-export class RunConnectionWorkerBatch
-  implements IExecution<RunConnectionWorkerBatchRequest, Promise<IConnectionWorkerResultItem[]>>
-{
+export class RunConnectionWorkerBatch implements IExecution<
+  RunConnectionWorkerBatchRequest,
+  Promise<IConnectionWorkerResultItem[]>
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({
@@ -18,8 +18,6 @@ export class RunConnectionWorkerBatch
       return Promise.resolve([]);
     }
 
-    return this._mediator.execute<Promise<IConnectionWorkerResultItem[]>>(
-      new RunConnectionWorkerRequest(batch.payload),
-    );
+    return this._mediator.execute(new RunConnectionWorkerRequest(batch.payload));
   }
 }

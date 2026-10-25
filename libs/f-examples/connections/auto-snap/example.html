@@ -1,4 +1,4 @@
-<f-flow fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
+<f-flow fInitialView fDraggable (fLoaded)="onLoaded()" (fCreateConnection)="addConnection($event)">
   <f-canvas fZoom>
     <f-connection-for-create fType="segment"></f-connection-for-create>
     <f-snap-connection [fSnapThreshold]="50" fType="segment"></f-snap-connection>

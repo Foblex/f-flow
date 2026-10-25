@@ -20,6 +20,7 @@ import {
   IFControlScheme,
   provideFFlow,
   withControlScheme,
+  withInitialView,
 } from '@foblex/flow';
 import { FSelectComponent, FToolbarComponent } from '@foblex/m-render';
 
@@ -32,7 +33,7 @@ type SchemeKey = 'default' | 'scroll-pan' | 'drag-select';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [FFlowModule, FToolbarComponent, FSelectComponent],
-  providers: [provideFFlow(withControlScheme(F_DEFAULT_CONTROL_SCHEME))],
+  providers: [provideFFlow(withInitialView(), withControlScheme(F_DEFAULT_CONTROL_SCHEME))],
 })
 export class Example implements OnInit {
   private readonly _canvas = viewChild.required(FCanvasComponent);

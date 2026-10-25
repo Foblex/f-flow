@@ -7,7 +7,7 @@ import {
   OnInit,
   input,
 } from '@angular/core';
-import { FMediator } from '@foblex/mediator';
+import { FMediator } from '../_libs/f-mediator';
 import { FAutoPanBase } from './f-auto-pan-base';
 import {
   INSTANCES,

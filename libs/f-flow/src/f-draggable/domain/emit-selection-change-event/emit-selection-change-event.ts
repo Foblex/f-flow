@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { EmitSelectionChangeEventRequest } from './emit-selection-change-event-request';
 import { FComponentsStore, NotifyTransformChangedRequest } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
@@ -11,7 +11,6 @@ import { FSelectionChangeEvent } from '../../f-selection-change-event';
  * It retrieves the current selection and emits it through the FSelectionChangeEvent.
  */
 @Injectable()
-@FExecutionRegister(EmitSelectionChangeEventRequest)
 export class EmitSelectionChangeEvent implements IExecution<EmitSelectionChangeEventRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -24,11 +23,11 @@ export class EmitSelectionChangeEvent implements IExecution<EmitSelectionChangeE
 
     this._emitSelectionChange(this._getSelection());
     this._dragSession.isSelectedChanged = false;
-    this._mediator.execute<void>(new NotifyTransformChangedRequest());
+    this._mediator.execute(new NotifyTransformChangedRequest());
   }
 
   private _getSelection(): ICurrentSelection {
-    return this._mediator.execute<ICurrentSelection>(new GetCurrentSelectionRequest());
+    return this._mediator.execute(new GetCurrentSelectionRequest());
   }
 
   private _emitSelectionChange(selection: ICurrentSelection): void {

@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { DragConnectionWaypointFinalizeRequest } from './drag-connection-waypoint-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../../_libs/f-mediator';
 import { DragConnectionWaypointHandler } from '../drag-connection-waypoint-handler';
 import { FDraggableDataContext } from '../../../../f-draggable';
 
 @Injectable()
-@FExecutionRegister(DragConnectionWaypointFinalizeRequest)
-export class DragConnectionWaypointFinalize
-  implements IExecution<DragConnectionWaypointFinalizeRequest, void>
-{
+export class DragConnectionWaypointFinalize implements IExecution<
+  DragConnectionWaypointFinalizeRequest,
+  void
+> {
   private readonly _dragContext = inject(FDraggableDataContext);
 
   private get _fDragHandler(): DragConnectionWaypointHandler {

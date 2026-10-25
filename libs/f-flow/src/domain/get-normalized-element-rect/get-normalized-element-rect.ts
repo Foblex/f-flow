@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GetNormalizedElementRectRequest } from './get-normalized-element-rect-request';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
 import {
   IPoint,
@@ -10,7 +10,7 @@ import {
   RectExtensions,
   RoundedRect,
   SizeExtensions,
-} from '@foblex/2d';
+} from '../../_libs/f-2d';
 import { GetCachedFCacheRectRequest, UpdateFCacheRectByElementRequest } from '../../f-cache';
 import { calculatePointerInFlow } from '../../utils';
 
@@ -20,7 +20,6 @@ import { calculatePointerInFlow } from '../../utils';
  * adjusting for the canvas transformation and element offsets.
  */
 @Injectable()
-@FExecutionRegister(GetNormalizedElementRectRequest)
 export class GetNormalizedElementRect implements IExecution<
   GetNormalizedElementRectRequest,
   IRect
@@ -33,9 +32,7 @@ export class GetNormalizedElementRect implements IExecution<
   }
 
   public handle({ element }: GetNormalizedElementRectRequest): IRect {
-    const cachedRect = this._mediator.execute<IRect | undefined>(
-      new GetCachedFCacheRectRequest(element),
-    );
+    const cachedRect = this._mediator.execute(new GetCachedFCacheRectRequest(element));
     if (cachedRect) {
       return cachedRect;
     }

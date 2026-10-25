@@ -1,6 +1,6 @@
 import { SortItemLayersRequest } from './sort-item-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { SortNodeLayersRequest } from './sort-node-layers-by-groups';
 import { SortItemsByParentRequest } from './sort-items-by-parent';
 import { FComponentsStore } from '../../f-storage';
@@ -14,7 +14,6 @@ import { FCanvasBase } from '../../f-canvas';
  * then sorts the node layers, and finally sorts items by their parent nodes in the nodes container.
  */
 @Injectable()
-@FExecutionRegister(SortItemLayersRequest)
 export class SortItemLayers implements IExecution<SortItemLayersRequest, void> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);

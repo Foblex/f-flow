@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DragConnectionWaypointPreparationRequest } from './drag-connection-waypoint-preparation-request';
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IPoint, ITransformModel, Point } from '../../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { DragConnectionWaypointHandler } from '../drag-connection-waypoint-handler';
 import { FComponentsStore } from '../../../../f-storage';
 import { DragHandlerInjector, FDraggableDataContext } from '../../../../f-draggable';
@@ -11,7 +11,6 @@ import { calculatePointerInFlow } from '../../../../utils';
 import { FConnectionBase, pickWaypoint } from '../../../../f-connection-v2';
 
 @Injectable()
-@FExecutionRegister(DragConnectionWaypointPreparationRequest)
 export class DragConnectionWaypointPreparation implements IExecution<
   DragConnectionWaypointPreparationRequest,
   void
@@ -74,7 +73,7 @@ export class DragConnectionWaypointPreparation implements IExecution<
   }
 
   private _updateConnectionLayer(connection: FConnectionBase): void {
-    this._mediator.execute<void>(
+    this._mediator.execute(
       new UpdateItemAndChildrenLayersRequest(
         connection,
         this._canvas.fConnectionsContainer().nativeElement,

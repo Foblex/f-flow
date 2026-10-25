@@ -146,6 +146,24 @@ Fix: fold the offset into `fNodePosition` itself and remove the extra CSS positi
 
 The threshold (in on-screen pixels) is configurable via `provideFFlow({ diagnostics: { maxNodePositionDrift: 5 } })`; set `0` to switch the check off. Default: `2`.
 
+## FF1012
+
+**Warning: node is wrapped by another element, layer raising skipped.**
+
+An `[fNode]` / `[fGroup]` is not a direct child of a canvas layer container — usually the directive sits **inside a component's template**, so the component's host element wraps the node. The canvas positions, drags, and layer-sorts the container's direct children, so the wrapped item cannot be raised above its siblings; the raise is skipped (in earlier versions this threw `Unknown container` mid-gesture).
+
+Fix: place the directive on your component's host element in the canvas template, not inside the component's own template:
+
+```html
+<f-canvas>
+  @for (node of nodes; track node.id) {
+    <app-node fNode [fNodeId]="node.id" [fNodePosition]="node.position" [data]="node" />
+  }
+</f-canvas>
+```
+
+Your component keeps its whole template — connectors, content, styling. This is also how the production examples do it (see the schema designer).
+
 ## Verifying a flow programmatically
 
 To verify a flow programmatically (useful in tests and for AI agents):

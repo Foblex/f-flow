@@ -1,4 +1,4 @@
-import { ILine, IPoint, IRect } from '@foblex/2d';
+import { ILine, IPoint, IRect } from '../../../../_libs/f-2d';
 import { ICalculateBehaviorRequest } from '../models';
 import { EFConnectableSide } from '../../../enums';
 

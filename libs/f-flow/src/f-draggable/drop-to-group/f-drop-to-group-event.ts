@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../_libs/f-2d';
 
 export class FDropToGroupEvent {
   /** Preferred name: Group (target) id */

@@ -24,7 +24,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. The c
 ## 2. Project facts
 
 - **Package**: `@foblex/flow` on npm — https://www.npmjs.com/package/@foblex/flow
-- **Current version**: v19.3.0 (October 2026)
+- **Current version**: v19.4.0 (October 2026)
 - **Current download data**: https://www.npmjs.com/package/@foblex/flow
 - **GitHub**: https://github.com/Foblex/f-flow
 - **License**: MIT
@@ -38,7 +38,7 @@ It is distributed as the npm package `@foblex/flow` under the MIT license. The c
 - Both modes render state through normal Angular templates.
 - Connections are connector-to-connector (`fSourceId` → `fTargetId` referencing `fConnectorId`), not generic node-to-node edges.
 - Do NOT assume React Flow style APIs such as [nodes], [edges], setNodes(), addEdge().
-- Diagnostics use stable FFxxxx codes (see https://flow.foblex.com/docs/errors). Dev-mode warnings cover unresolved connection ids (FF1001), zero-height hosts (FF1002), and FF1004–FF1011; they are stripped from production builds. A connector outside a node throws FF1003 in every build.
+- Diagnostics use stable FFxxxx codes (see https://flow.foblex.com/docs/errors). Dev-mode warnings cover unresolved connection ids (FF1001), zero-height hosts (FF1002), and FF1004–FF1012; they are stripped from production builds. A connector outside a node throws FF1003 in every build.
 - Nested control flow needs ngProjectAs: nodes/groups/connections inside nested @if/@for blocks (or a wrapper element) are NOT projected into <f-canvas> — they render detached and invisible with no error (dev mode warns FF1004). Wrap the block with <ng-container ngProjectAs="[fNodes]"> (groups: "[fGroups]", connections: "[fConnections]"). A single top-level @for/@if directly inside <f-canvas> is fine.
 
 ## 4. Installation
@@ -56,7 +56,7 @@ nx g @foblex/flow:add
 Manual installation:
 
 ```bash
-npm install @foblex/flow @foblex/platform@^1.0.4 @foblex/mediator@^1.1.3 @foblex/2d@^1.2.2 @foblex/utils@^1.1.1
+npm install @foblex/flow
 ```
 
 Include the default theme in angular.json:
@@ -73,13 +73,11 @@ Include the default theme in angular.json:
 ```json
 {
   "@angular/common": ">=17.3.0",
-  "@angular/core": ">=17.3.0",
-  "@foblex/platform": "^1.0.4",
-  "@foblex/mediator": "^1.1.3",
-  "@foblex/2d": "^1.2.2",
-  "@foblex/utils": "^1.1.1"
+  "@angular/core": ">=17.3.0"
 }
 ```
+
+The former runtime dependencies (`@foblex/2d`, `@foblex/utils`, `@foblex/platform`, `@foblex/mediator`) are bundled with the library since `19.4.0`; the geometry types (`IPoint`, `IRect`, `ISize`, ...) are imported from `@foblex/flow` directly. `ng update @foblex/flow` rewrites application imports of those packages and removes the obsolete dependencies.
 
 ### Module Import
 
@@ -204,6 +202,7 @@ Selector: `f-flow`
 |-------|------|---------|-------------|
 | fFlowId | InputSignal\<string\> | f-flow-{id} | Unique flow identifier |
 | fCache | InputSignal\<boolean\> | false | Enable the optional geometry cache; measure before enabling |
+| fInitialView | InputSignal\<boolean \| undefined\> | undefined | Render invisibly and reveal only after the first full render and the viewport work queued by `(fFullRendered)` — first visible frame is already fitted/centered. When bound, overrides `withInitialView()` in both directions |
 
 #### Outputs
 
@@ -221,7 +220,7 @@ Selector: `f-flow`
 | reset | reset(): void | Resets internal state; re-emits on next render |
 | getNodesBoundingBox | getNodesBoundingBox(): IRect \| null | Returns bounding box of all nodes/groups |
 | getSelection | getSelection(): ICurrentSelection | Returns selected node/group/connection ids |
-| getPositionInFlow | getPositionInFlow(position: IPoint): IRect | Converts viewport point to flow coordinates |
+| getPositionInFlow | getPositionInFlow(position: IPoint): IPoint | Converts viewport point to flow coordinates |
 | getState | getState(options?: IFFlowStateOptions): IFFlowState | Exports full flow state; `{ measuredSize: true }` includes measured node sizes |
 | selectAll | selectAll(): void | Selects all items |
 | select | select(nodesAndGroups: string[], connections: string[], isSelectedChanged?: boolean): void | Selects specific items |
@@ -1342,6 +1341,24 @@ Progressive rendering for large diagrams. Renders nodes in chunks using a frame-
   </f-canvas>
 </f-flow>
 ```
+
+### Initial View (withInitialView / fInitialView)
+
+Shows the flow already fitted or centered on first paint — no jump from the default viewport. The flow renders invisibly (layout and measurements still happen); the `(fFullRendered)` handler sets the viewport up with `animated: false`; the library reveals the flow only after the transform has been applied.
+
+```html
+<f-flow fInitialView (fFullRendered)="loaded()">
+  <f-canvas> ... </f-canvas>
+</f-flow>
+```
+
+```typescript
+protected loaded(): void {
+  this._canvas()?.fitToScreen(PointExtensions.initialize(100, 100), false);
+}
+```
+
+Provider alternative: `providers: [provideFFlow(withInitialView())]`. A bound `fInitialView` input overrides the provider feature in both directions. Without a handler the flow is revealed right after the first full render. Progressively rendered graphs stay invisible until the full render completes.
 
 ### Caching (fCache)
 

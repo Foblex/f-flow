@@ -1,14 +1,14 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { MagneticRectsPreparationRequest } from './magnetic-rects-preparation-request';
-import { IRect } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IRect } from '../../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import {
   DragNodeHandler,
   DragNodeItemHandler,
   MagneticRectsHandler,
   MagneticRectsRenderer,
 } from '../../index';
-import { BrowserService } from '@foblex/platform';
+import { BrowserService } from '../../../../_libs/f-platform';
 import { FComponentsStore, INSTANCES } from '../../../../f-storage';
 import { FDraggableDataContext } from '../../../f-draggable-data-context';
 import { FNodeBase } from '../../../../f-node';
@@ -16,7 +16,6 @@ import { GetNormalizedElementRectRequest } from '../../../../domain';
 import { FMagneticRectsBase } from '../../../../plugins/snapping/f-magnetic-rects';
 
 @Injectable()
-@FExecutionRegister(MagneticRectsPreparationRequest)
 export class MagneticRectsPreparation implements IExecution<MagneticRectsPreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -64,7 +63,7 @@ export class MagneticRectsPreparation implements IExecution<MagneticRectsPrepara
     const notDragged = this._store.nodes.getAll().filter((x) => !dragged.has(x));
 
     return notDragged.map((x) =>
-      this._mediator.execute<IRect>(new GetNormalizedElementRectRequest(x.hostElement)),
+      this._mediator.execute(new GetNormalizedElementRectRequest(x.hostElement)),
     );
   }
 }

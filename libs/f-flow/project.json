@@ -39,7 +39,7 @@
       "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/dist/f-flow"],
       "options": {
-        "command": "tsc -p libs/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"libs/f-flow/schematics/*/schema.json\" \"libs/f-flow/schematics/*/files/**\" \"libs/f-flow/schematics/collection.json\" dist/f-flow"
+        "command": "tsc -p libs/f-flow/tsconfig.schematics.json && copyfiles -u 2 \"libs/f-flow/schematics/*/schema.json\" \"libs/f-flow/schematics/*/files/**\" \"libs/f-flow/schematics/collection.json\" \"libs/f-flow/schematics/migrations.json\" dist/f-flow"
       }
     },
     "publish": {

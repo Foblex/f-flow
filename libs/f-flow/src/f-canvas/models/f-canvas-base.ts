@@ -1,4 +1,4 @@
-import { PointExtensions, TransformModelExtensions, IPoint } from '@foblex/2d';
+import { PointExtensions, TransformModelExtensions, IPoint } from '../../_libs/f-2d';
 import {
   DestroyRef,
   Directive,

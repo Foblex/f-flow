@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FitToChildNodesAndGroupsRequest } from './fit-to-child-nodes-and-groups-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeBase } from '../../../f-node';
-import { IRect, RectExtensions } from '@foblex/2d';
+import { IRect, RectExtensions } from '../../../_libs/f-2d';
 import { GetNormalizedElementRectRequest } from '../../get-normalized-element-rect';
 import { GetNodePaddingRequest } from '../get-node-padding';
 
 @Injectable()
-@FExecutionRegister(FitToChildNodesAndGroupsRequest)
 export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGroupsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -59,7 +58,7 @@ export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGr
       return;
     }
 
-    this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(parentNode));
+    this._mediator.execute(new FitToChildNodesAndGroupsRequest(parentNode));
   }
 
   private _calculateDirectChildren(nodeOrGroup: FNodeBase): FNodeBase[] {
@@ -74,15 +73,11 @@ export class FitToChildNodesAndGroups implements IExecution<FitToChildNodesAndGr
   }
 
   private _boundingRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _paddings(nodeOrGroup: FNodeBase, rect: IRect): [number, number, number, number] {
-    return this._mediator.execute<[number, number, number, number]>(
-      new GetNodePaddingRequest(nodeOrGroup, rect),
-    );
+    return this._mediator.execute(new GetNodePaddingRequest(nodeOrGroup, rect));
   }
 
   private _calculateChildrenBounding(

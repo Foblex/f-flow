@@ -1,16 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { CalculateDirectChildrenUnionRectRequest } from './calculate-direct-children-union-rect-request';
-import { IRect, RectExtensions } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IRect, RectExtensions } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
 import { GetNormalizedElementRectRequest } from '../../../domain';
 import { FComponentsStore } from '../../../f-storage';
 
 @Injectable()
-@FExecutionRegister(CalculateDirectChildrenUnionRectRequest)
-export class CalculateDirectChildrenUnionRect
-  implements IExecution<CalculateDirectChildrenUnionRectRequest, IRect | null>
-{
+export class CalculateDirectChildrenUnionRect implements IExecution<
+  CalculateDirectChildrenUnionRectRequest,
+  IRect | null
+> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
 
@@ -31,9 +31,7 @@ export class CalculateDirectChildrenUnionRect
   }
 
   private _normalizeRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _concatRectWithParentPadding(

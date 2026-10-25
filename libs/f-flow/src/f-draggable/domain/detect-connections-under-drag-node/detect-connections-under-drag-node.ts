@@ -1,6 +1,6 @@
-import { GetIntersections, IRoundedRect } from '@foblex/2d';
+import { GetIntersections, IRoundedRect } from '../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { DetectConnectionsUnderDragNodeRequest } from './detect-connections-under-drag-node-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FNodeConnectionsIntersectionEvent } from '../../index';
@@ -10,7 +10,6 @@ import { GetNormalizedConnectorRectRequest } from '../../../domain';
 import { FConnectionBase } from '../../../f-connection-v2';
 
 @Injectable()
-@FExecutionRegister(DetectConnectionsUnderDragNodeRequest)
 export class DetectConnectionsUnderDragNode implements IExecution<
   DetectConnectionsUnderDragNodeRequest,
   void
@@ -86,7 +85,7 @@ export class DetectConnectionsUnderDragNode implements IExecution<
   }
 
   private _collectConnectionsUnderNode(node: FNodeBase): FConnectionBase[] {
-    const nodeRect = this._mediator.execute<IRoundedRect>(
+    const nodeRect = this._mediator.execute(
       new GetNormalizedConnectorRectRequest(node.hostElement, false),
     );
 

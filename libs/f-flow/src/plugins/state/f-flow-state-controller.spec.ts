@@ -25,7 +25,7 @@ import {
   FReassignConnectionEvent,
   FSelectionChangeEvent,
 } from '../../f-draggable';
-import { RectExtensions } from '@foblex/2d';
+import { RectExtensions } from '../../_libs/f-2d';
 import { FFlowState } from './f-flow-state';
 import { FFlowStateController } from './f-flow-state-controller';
 import { F_FLOW_STATE_CONFIG, IFFlowStateConfig, mergeFlowStateConfig } from './i-f-flow-state';

@@ -1,4 +1,4 @@
-<f-flow fDraggable (fLoaded)="onLoaded()">
+<f-flow fInitialView fDraggable (fLoaded)="onLoaded()">
   <f-line-alignment [fAlignThreshold]="40"></f-line-alignment>
   <f-canvas>
     <f-connection fOutputId="output1" fInputId="input1" fBehavior="floating"></f-connection>
@@ -6,7 +6,7 @@
       <div fNodeOutput fOutputId="output1" class="right"></div>
       I'm a node
     </div>
-    <div fNode [fNodePosition]="{ x: 200, y: 100 }"  fDragHandle>
+    <div fNode [fNodePosition]="{ x: 200, y: 100 }" fDragHandle>
       <div fNodeInput fInputId="input1" class="left"></div>
       I'm a node
     </div>

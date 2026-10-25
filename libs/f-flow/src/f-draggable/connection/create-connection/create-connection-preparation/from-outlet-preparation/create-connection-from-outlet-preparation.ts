@@ -1,5 +1,5 @@
-import { FExecutionRegister, FMediator, IHandler } from '@foblex/mediator';
-import { IPoint } from '@foblex/2d';
+import { FMediator, IHandler } from '../../../../../_libs/f-mediator';
+import { IPoint } from '../../../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { CreateConnectionFromOutletPreparationRequest } from './create-connection-from-outlet-preparation-request';
 import { FComponentsStore } from '../../../../../f-storage';
@@ -14,7 +14,6 @@ import { CreateConnectionCreateDragHandlerRequest } from '../create-drag-handler
 import { FNodeBase } from '../../../../../f-node';
 
 @Injectable()
-@FExecutionRegister(CreateConnectionFromOutletPreparationRequest)
 export class CreateConnectionFromOutletPreparation implements IHandler<
   CreateConnectionFromOutletPreparationRequest,
   void

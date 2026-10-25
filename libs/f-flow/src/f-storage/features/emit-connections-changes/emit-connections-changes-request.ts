@@ -1,4 +1,7 @@
 export class EmitConnectionsChangesRequest {
+  /** Erased marker: the execution's return type, inferred by FMediator.execute. */
+  declare readonly __response: void;
+
   static readonly fToken = Symbol('EmitConnectionsChangesRequest');
   /**
    * When set, only connections touching this node need a redraw; omitted

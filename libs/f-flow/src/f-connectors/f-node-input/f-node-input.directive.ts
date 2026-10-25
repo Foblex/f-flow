@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { F_NODE_INPUT, FNodeInputBase } from './f-node-input-base';
 import { injectConnectorNode } from '../inject-connector-node';
-import { castToEnum } from '@foblex/utils';
-import { FMediator } from '@foblex/mediator';
+import { castToEnum } from '../../_libs/f-utils';
+import { FMediator } from '../../_libs/f-mediator';
 import {
   AddConnectorToStoreRequest,
   F_CSS_CLASS,

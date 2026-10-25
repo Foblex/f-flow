@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { RotateNodePreparationRequest } from './rotate-node-preparation-request';
-import { IPoint, ITransformModel, Point } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IPoint, ITransformModel, Point } from '../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { FComponentsStore } from '../../../f-storage';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import {
   CalculateInputConnectionsRequest,
   CalculateOutputConnectionsRequest,
   GetConnectorRectReferenceRequest,
-  IConnectorRectRef,
   isValidEventTrigger,
   SelectAndUpdateNodeLayerRequest,
 } from '../../../domain';
@@ -21,7 +20,6 @@ import {
   DragNodeConnectionSourceHandler,
   DragNodeConnectionTargetHandler,
 } from '../../drag-node';
-import { FConnectionBase } from '../../../f-connection-v2';
 
 type TRotateConnectionHandler = {
   connection: DragNodeConnectionHandlerBase;
@@ -29,7 +27,6 @@ type TRotateConnectionHandler = {
 };
 
 @Injectable()
-@FExecutionRegister(RotateNodePreparationRequest)
 export class RotateNodePreparation implements IExecution<RotateNodePreparationRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -89,38 +86,30 @@ export class RotateNodePreparation implements IExecution<RotateNodePreparationRe
   }
 
   private _buildInputConnectionHandlers(nodeOrGroup: FNodeBase): TRotateConnectionHandler[] {
-    return this._mediator
-      .execute<FConnectionBase[]>(new CalculateInputConnectionsRequest(nodeOrGroup))
-      .map((x) => {
-        const connector = requireTargetConnector(this._store, x.targetId());
-        const connectorRef = this._mediator.execute<IConnectorRectRef>(
-          new GetConnectorRectReferenceRequest(connector),
-        );
-        const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
-        handler.initialize(x);
+    return this._mediator.execute(new CalculateInputConnectionsRequest(nodeOrGroup)).map((x) => {
+      const connector = requireTargetConnector(this._store, x.targetId());
+      const connectorRef = this._mediator.execute(new GetConnectorRectReferenceRequest(connector));
+      const handler = this._dragInjector.get(DragNodeConnectionTargetHandler);
+      handler.initialize(x);
 
-        return {
-          connection: handler,
-          connector: connectorRef.rect.gravityCenter,
-        };
-      });
+      return {
+        connection: handler,
+        connector: connectorRef.rect.gravityCenter,
+      };
+    });
   }
 
   private _buildOutputConnectionHandlers(nodeOrGroup: FNodeBase): TRotateConnectionHandler[] {
-    return this._mediator
-      .execute<FConnectionBase[]>(new CalculateOutputConnectionsRequest(nodeOrGroup))
-      .map((x) => {
-        const connector = requireSourceConnector(this._store, x.sourceId());
-        const connectorRef = this._mediator.execute<IConnectorRectRef>(
-          new GetConnectorRectReferenceRequest(connector),
-        );
-        const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
-        handler.initialize(x);
+    return this._mediator.execute(new CalculateOutputConnectionsRequest(nodeOrGroup)).map((x) => {
+      const connector = requireSourceConnector(this._store, x.sourceId());
+      const connectorRef = this._mediator.execute(new GetConnectorRectReferenceRequest(connector));
+      const handler = this._dragInjector.get(DragNodeConnectionSourceHandler);
+      handler.initialize(x);
 
-        return {
-          connection: handler,
-          connector: connectorRef.rect.gravityCenter,
-        };
-      });
+      return {
+        connection: handler,
+        connector: connectorRef.rect.gravityCenter,
+      };
+    });
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CalculateChangedRectFromDifferenceRequest } from './calculate-changed-rect-from-difference-request';
-import { IPoint, IRect, ISize, RectExtensions } from '@foblex/2d';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IPoint, IRect, ISize, RectExtensions } from '../../../_libs/f-2d';
+import { IExecution } from '../../../_libs/f-mediator';
 import { RESIZE_DIRECTIONS } from '../constraint';
 
 @Injectable()
-@FExecutionRegister(CalculateChangedRectFromDifferenceRequest)
 export class CalculateChangedRectFromDifference implements IExecution<
   CalculateChangedRectFromDifferenceRequest,
   IRect

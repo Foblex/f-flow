@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { DropToGroupFinalizeRequest } from './drop-to-group-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { DropToGroupHandler } from '../drop-to-group-handler';
 import { FComponentsStore } from '../../../f-storage';
@@ -9,7 +9,6 @@ import { FDropToGroupEvent } from '../f-drop-to-group-event';
 import { IPointerEvent } from '../../infrastructure';
 
 @Injectable()
-@FExecutionRegister(DropToGroupFinalizeRequest)
 export class DropToGroupFinalize implements IExecution<DropToGroupFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
   private readonly _store = inject(FComponentsStore);

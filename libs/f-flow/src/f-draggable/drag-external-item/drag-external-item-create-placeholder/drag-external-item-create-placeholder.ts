@@ -1,11 +1,10 @@
 import { DragExternalItemCreatePlaceholderRequest } from './drag-external-item-create-placeholder-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { EmbeddedViewRef, inject, Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
-import { deepCloneNode, getOrCreateRootNodeForViewRef } from '@foblex/utils';
-import { BrowserService } from '@foblex/platform';
+import { deepCloneNode, getOrCreateRootNodeForViewRef } from '../../../_libs/f-utils';
+import { BrowserService } from '../../../_libs/f-platform';
 
 @Injectable()
-@FExecutionRegister(DragExternalItemCreatePlaceholderRequest)
 export class DragExternalItemCreatePlaceholder implements IExecution<
   DragExternalItemCreatePlaceholderRequest,
   HTMLElement | SVGElement

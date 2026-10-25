@@ -1,5 +1,5 @@
 import { ElementRef, inject, InjectionToken } from '@angular/core';
-import { IPoint, PointExtensions } from '@foblex/2d';
+import { IPoint, PointExtensions } from '../../../../_libs/f-2d';
 
 export const F_CONNECTION_DRAG_HANDLE_END = new InjectionToken<FConnectionDragHandleBase>(
   'F_CONNECTION_DRAG_HANDLE_END',

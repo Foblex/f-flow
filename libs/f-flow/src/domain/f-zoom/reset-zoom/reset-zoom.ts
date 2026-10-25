@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { ResetZoomRequest } from './reset-zoom-request';
 import { FComponentsStore } from '../../../f-storage';
 import { FCanvasBase } from '../../../f-canvas';
@@ -8,7 +8,6 @@ import { FCanvasBase } from '../../../f-canvas';
  * Execution that resets the zoom level of the FCanvas.
  */
 @Injectable()
-@FExecutionRegister(ResetZoomRequest)
 export class ResetZoom implements IExecution<ResetZoomRequest, void> {
   private readonly _store = inject(FComponentsStore);
 

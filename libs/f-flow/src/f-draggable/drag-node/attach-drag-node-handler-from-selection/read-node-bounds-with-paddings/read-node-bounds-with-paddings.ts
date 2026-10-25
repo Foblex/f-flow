@@ -1,16 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { ReadNodeBoundsWithPaddingsRequest } from './read-node-bounds-with-paddings-request';
-import { IRect, RectExtensions } from '@foblex/2d';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { IRect, RectExtensions } from '../../../../_libs/f-2d';
+import { FMediator, IExecution } from '../../../../_libs/f-mediator';
 import { FNodeBase } from '../../../../f-node';
 import { GetNodePaddingRequest, GetNormalizedElementRectRequest } from '../../../../domain';
 import { ReadNodeBoundsWithPaddingsResponse } from './read-node-bounds-with-paddings-response';
 
 @Injectable()
-@FExecutionRegister(ReadNodeBoundsWithPaddingsRequest)
-export class ReadNodeBoundsWithPaddings
-  implements IExecution<ReadNodeBoundsWithPaddingsRequest, ReadNodeBoundsWithPaddingsResponse>
-{
+export class ReadNodeBoundsWithPaddings implements IExecution<
+  ReadNodeBoundsWithPaddingsRequest,
+  ReadNodeBoundsWithPaddingsResponse
+> {
   private readonly _mediator = inject(FMediator);
 
   public handle({
@@ -38,14 +38,10 @@ export class ReadNodeBoundsWithPaddings
   }
 
   private _readBoundingRect(nodeOrGroup: FNodeBase): IRect {
-    return this._mediator.execute<IRect>(
-      new GetNormalizedElementRectRequest(nodeOrGroup.hostElement),
-    );
+    return this._mediator.execute(new GetNormalizedElementRectRequest(nodeOrGroup.hostElement));
   }
 
   private _readOwnPaddings(nodeOrGroup: FNodeBase, rect: IRect): [number, number, number, number] {
-    return this._mediator.execute<[number, number, number, number]>(
-      new GetNodePaddingRequest(nodeOrGroup, rect),
-    );
+    return this._mediator.execute(new GetNodePaddingRequest(nodeOrGroup, rect));
   }
 }

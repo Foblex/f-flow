@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { RotateNodeFinalizeRequest } from './rotate-node-finalize-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { isRotateNodeHandler } from '../is-rotate-node-handler';
 
 @Injectable()
-@FExecutionRegister(RotateNodeFinalizeRequest)
 export class RotateNodeFinalize implements IExecution<RotateNodeFinalizeRequest, void> {
   private readonly _dragSession = inject(FDraggableDataContext);
 

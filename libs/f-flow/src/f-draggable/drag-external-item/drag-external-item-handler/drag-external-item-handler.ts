@@ -1,6 +1,13 @@
-import { IPoint, IRect, ITransformModel, Point, PointExtensions, RectExtensions } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
-import { FMediator } from '@foblex/mediator';
+import {
+  IPoint,
+  IRect,
+  ITransformModel,
+  Point,
+  PointExtensions,
+  RectExtensions,
+} from '../../../_libs/f-2d';
+import { BrowserService } from '../../../_libs/f-platform';
+import { FMediator } from '../../../_libs/f-mediator';
 import { Injector } from '@angular/core';
 import { DragHandlerBase, FDragHandlerResult } from '../../infrastructure';
 import { FDragExternalItemStartEventData } from '../f-drag-external-item-start-event-data';
@@ -79,7 +86,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _getStartRect(): IRect {
-    return this._mediator.execute<IRect>(
+    return this._mediator.execute(
       new GetNormalizedElementRectRequest(this._externalItem.hostElement),
     );
   }
@@ -126,9 +133,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _createPreview(): HTMLElement | SVGElement {
-    const el = this._mediator.execute<HTMLElement>(
-      new DragExternalItemCreatePreviewRequest(this._externalItem),
-    );
+    const el = this._mediator.execute(new DragExternalItemCreatePreviewRequest(this._externalItem));
 
     if (this._externalItem.previewMatchSize()) {
       this._matchSize(el as HTMLElement, this._pointerDownRect);
@@ -140,9 +145,7 @@ export class DragExternalItemHandler extends DragHandlerBase<unknown> {
   }
 
   private _createPlaceholder(): HTMLElement | SVGElement {
-    return this._mediator.execute<HTMLElement>(
-      new DragExternalItemCreatePlaceholderRequest(this._externalItem),
-    );
+    return this._mediator.execute(new DragExternalItemCreatePlaceholderRequest(this._externalItem));
   }
 
   private _placePreviewIntoOverlay(): void {

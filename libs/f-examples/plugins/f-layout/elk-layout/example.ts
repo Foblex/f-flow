@@ -149,6 +149,6 @@ export class Example implements OnInit {
   }
 
   private _fitToScreen(): void {
-    this._canvas()?.fitToScreen(PointExtensions.initialize(150, 150), true);
+    this._canvas()?.fitToScreen(PointExtensions.initialize(150, 150), false);
   }
 }

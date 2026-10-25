@@ -1,8 +1,8 @@
-import { IRoundedRect } from '@foblex/2d';
+import { IRoundedRect } from '../../../_libs/f-2d';
 import { inject, Injectable } from '@angular/core';
 import { RedrawConnectionsRequest } from './redraw-connections-request';
 import { FComponentsStore } from '../../../f-storage';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { CreateConnectionMarkersRequest } from '../create-connection-markers';
 import { CompleteConnectionRedrawRequest } from './pipeline/complete-connection-redraw';
 import { RunConnectionRedrawSliceRequest } from './pipeline/run-connection-redraw-slice';
@@ -19,7 +19,6 @@ import { findSourceConnector, findTargetConnector } from '../../../f-connectors'
  * and sets up connections based on the stored outputs and inputs.
  */
 @Injectable()
-@FExecutionRegister(RedrawConnectionsRequest)
 export class RedrawConnections implements IExecution<RedrawConnectionsRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -27,9 +26,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
 
   public handle(_: RedrawConnectionsRequest): void {
     const scope = this._resolveScope();
-    const session = this._mediator.execute<IConnectionRedrawSession>(
-      new StartConnectionRedrawRequest(scope === null),
-    );
+    const session = this._mediator.execute(new StartConnectionRedrawRequest(scope === null));
 
     this._createMarkersForCreate();
 
@@ -40,7 +37,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     const connectorRectCache = new Map<string, IRoundedRect>();
 
     if (!connections.length) {
-      this._mediator.execute<void>(new CompleteConnectionRedrawRequest(session));
+      this._mediator.execute(new CompleteConnectionRedrawRequest(session));
 
       return;
     }
@@ -132,19 +129,19 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
   private _createMarkersForCreate(): void {
     const instance = this._store.connections.getForCreate();
     if (instance) {
-      this._mediator.execute<boolean>(new CreateConnectionMarkersRequest(instance));
+      this._mediator.execute(new CreateConnectionMarkersRequest(instance));
     }
   }
 
   private _createMarkersForSnap(): void {
     const instance = this._store.connections.getForSnap();
     if (instance) {
-      this._mediator.execute<boolean>(new CreateConnectionMarkersRequest(instance));
+      this._mediator.execute(new CreateConnectionMarkersRequest(instance));
     }
   }
 
   private _shouldUseConnectionWorker(connectionLength: number) {
-    return this._mediator.execute<boolean>(new ShouldUseConnectionWorkerRequest(connectionLength));
+    return this._mediator.execute(new ShouldUseConnectionWorkerRequest(connectionLength));
   }
 
   private _redrawUsingWorker(
@@ -152,9 +149,7 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     cache: Map<string, IRoundedRect>,
     session: IConnectionRedrawSession,
   ): void {
-    this._mediator.execute<void>(
-      new StartConnectionWorkerRedrawRequest(connections, cache, session),
-    );
+    this._mediator.execute(new StartConnectionWorkerRedrawRequest(connections, cache, session));
   }
 
   private _redrawWithoutWorker(
@@ -162,8 +157,6 @@ export class RedrawConnections implements IExecution<RedrawConnectionsRequest, v
     cache: Map<string, IRoundedRect>,
     session: IConnectionRedrawSession,
   ): void {
-    this._mediator.execute<void>(
-      new RunConnectionRedrawSliceRequest(connections, cache, 0, session),
-    );
+    this._mediator.execute(new RunConnectionRedrawSliceRequest(connections, cache, 0, session));
   }
 }

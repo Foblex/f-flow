@@ -1,21 +1,21 @@
 import { UpdateItemAndChildrenLayersRequest } from './update-item-and-children-layers-request';
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../_libs/f-mediator';
 import { FComponentsStore } from '../../f-storage';
-import { FNodeBase } from '../../f-node';
 import { GetDeepChildrenNodesAndGroupsRequest } from '../get-deep-children-nodes-and-groups';
 import { MoveFrontElementsBeforeTargetElementRequest } from './move-front-elements-before-target-element';
 import { FCanvasBase } from '../../f-canvas';
+import { fWarnOnce } from '../f-diagnostics';
 
 /**
  * Execution that updates the layers of an item and its children in the FCanvas.
  * It handles different item containers (groups, nodes, connections) and updates their layers accordingly.
  */
 @Injectable()
-@FExecutionRegister(UpdateItemAndChildrenLayersRequest)
-export class UpdateItemAndChildrenLayers
-  implements IExecution<UpdateItemAndChildrenLayersRequest, void>
-{
+export class UpdateItemAndChildrenLayers implements IExecution<
+  UpdateItemAndChildrenLayersRequest,
+  void
+> {
   private readonly _store = inject(FComponentsStore);
   private readonly _mediator = inject(FMediator);
 
@@ -47,7 +47,15 @@ export class UpdateItemAndChildrenLayers
         this._handleConnection(request);
         break;
       default:
-        throw new Error('Unknown container');
+        // FF1012 — the item's parent is not one of the canvas layer containers: the
+        // fNode/fGroup sits inside a wrapper component's template, so layer sorting
+        // cannot reorder it (the canvas only reorders a container's direct children).
+        // Skip the raise instead of breaking the gesture with a throw (issue #337).
+        fWarnOnce(
+          'FF1012',
+          request.item.fId(),
+          `"${request.item.fId()}" is not a direct child of a canvas layer container — it is wrapped by <${request.itemContainer?.tagName?.toLowerCase() ?? 'unknown'}>. The canvas positions, drags, and layer-sorts the container's direct children, so place the fNode/fGroup directive on your component's host element in the canvas template instead of inside the component's own template. Layer raising is skipped for this item.`,
+        );
     }
   }
 
@@ -130,7 +138,7 @@ export class UpdateItemAndChildrenLayers
 
   private _getChildrenNodesAndGroups(fId: string): HTMLElement[] {
     return this._mediator
-      .execute<FNodeBase[]>(new GetDeepChildrenNodesAndGroupsRequest(fId))
+      .execute(new GetDeepChildrenNodesAndGroupsRequest(fId))
       .map((x) => x.hostElement);
   }
 }

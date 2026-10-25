@@ -1,4 +1,4 @@
-import { IPoint } from '@foblex/2d';
+import { IPoint } from '../../../../../_libs/f-2d';
 
 /**
  * Control point for a cubic segment end that lies on an intermediate waypoint.

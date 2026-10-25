@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { IPoint, PointExtensions } from '@foblex/2d';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
+import { IPoint, PointExtensions } from '../../../_libs/f-2d';
 import { ScheduleAutoPanFrameRequest } from './schedule-auto-pan-frame-request';
 import { StopAutoPanRequest } from '../stop-auto-pan';
 import { RunAutoPanFrameRequest } from '../run-auto-pan-frame';
@@ -9,7 +9,6 @@ import { FDraggableDataContext } from '../../f-draggable-data-context';
 import { calculateAutoPanDelta, resolveAutoPanMode } from '../auto-pan.utils';
 
 @Injectable()
-@FExecutionRegister(ScheduleAutoPanFrameRequest)
 export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _store = inject(FComponentsStore);
@@ -17,7 +16,7 @@ export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequ
 
   public handle(_request: ScheduleAutoPanFrameRequest): void {
     if (!this._canAutoPan() || !this._hasAutoPanDelta()) {
-      this._mediator.execute<void>(new StopAutoPanRequest());
+      this._mediator.execute(new StopAutoPanRequest());
 
       return;
     }
@@ -28,7 +27,7 @@ export class ScheduleAutoPanFrame implements IExecution<ScheduleAutoPanFrameRequ
 
     this._dragContext.autoPanFrameId = requestAnimationFrame(() => {
       this._dragContext.autoPanFrameId = null;
-      this._mediator.execute<void>(new RunAutoPanFrameRequest());
+      this._mediator.execute(new RunAutoPanFrameRequest());
     });
   }
 

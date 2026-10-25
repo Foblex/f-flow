@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
-import { BrowserService } from '@foblex/platform';
+import { FMediator, IExecution } from '../../../../../_libs/f-mediator';
+import { BrowserService } from '../../../../../_libs/f-platform';
 import { CompleteConnectionRedrawRequest } from '../complete-connection-redraw';
 import { IsConnectionRedrawCurrentRequest } from '../is-connection-redraw-current';
 import { RenderConnectionRequest } from '../../main-thread/render-connection';
@@ -12,7 +12,6 @@ const CONNECTIONS_PER_SLICE_LIMIT = 500;
 const SLICE_BUDGET_MS = 6;
 
 @Injectable()
-@FExecutionRegister(RunConnectionRedrawSliceRequest)
 export class RunConnectionRedrawSlice implements IExecution<RunConnectionRedrawSliceRequest, void> {
   private readonly _mediator = inject(FMediator);
   private readonly _browser = inject(BrowserService);
@@ -41,14 +40,14 @@ export class RunConnectionRedrawSlice implements IExecution<RunConnectionRedrawS
       const connection = connections[endIndex];
 
       if (batchItems) {
-        this._mediator.execute<void>(
+        this._mediator.execute(
           new ApplyConnectionWorkerResultRequest(
             batchItems[endIndex] ?? null,
             workerResults?.[endIndex],
           ),
         );
       } else {
-        this._mediator.execute<void>(new RenderConnectionRequest(connection, cache));
+        this._mediator.execute(new RenderConnectionRequest(connection, cache));
       }
 
       endIndex++;
@@ -60,13 +59,13 @@ export class RunConnectionRedrawSlice implements IExecution<RunConnectionRedrawS
     }
 
     if (endIndex >= connections.length) {
-      this._mediator.execute<void>(new CompleteConnectionRedrawRequest(session));
+      this._mediator.execute(new CompleteConnectionRedrawRequest(session));
 
       return;
     }
 
     this._requestAnimationFrame(() =>
-      this._mediator.execute<void>(
+      this._mediator.execute(
         new RunConnectionRedrawSliceRequest(
           connections,
           cache,
@@ -80,7 +79,7 @@ export class RunConnectionRedrawSlice implements IExecution<RunConnectionRedrawS
   }
 
   private _isCurrent(session: IConnectionRedrawSession): boolean {
-    return this._mediator.execute<boolean>(new IsConnectionRedrawCurrentRequest(session));
+    return this._mediator.execute(new IsConnectionRedrawCurrentRequest(session));
   }
 
   private _requestAnimationFrame(callback: () => void): void {

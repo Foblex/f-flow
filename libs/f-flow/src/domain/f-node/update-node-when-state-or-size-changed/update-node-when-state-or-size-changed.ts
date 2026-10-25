@@ -1,5 +1,5 @@
 import { afterNextRender, inject, Injectable, Injector } from '@angular/core';
-import { FExecutionRegister, FMediator, IExecution } from '@foblex/mediator';
+import { FMediator, IExecution } from '../../../_libs/f-mediator';
 import { UpdateNodeWhenStateOrSizeChangedRequest } from './update-node-when-state-or-size-changed-request';
 import { EmitConnectionsChangesRequest } from '../../../f-storage';
 import { FChannelHub, FResizeChannel } from '../../../reactivity';
@@ -19,7 +19,6 @@ import { FReflowOrchestrator } from '../../../plugins/layout/f-reflow-on-resize'
  * feature is not active.
  */
 @Injectable()
-@FExecutionRegister(UpdateNodeWhenStateOrSizeChangedRequest)
 export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
   UpdateNodeWhenStateOrSizeChangedRequest,
   void
@@ -41,13 +40,13 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
       .listen(destroyRef, () => {
         // Scoped: a single node's resize/state change only needs its own
         // connections redrawn, not a whole-graph pass.
-        this._mediator.execute<void>(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
+        this._mediator.execute(new EmitConnectionsChangesRequest(nodeOrGroup.fId()));
         if (!this._isDragging()) {
           this._mediator.execute(
             new InvalidateFCacheNodeRequest(nodeOrGroup.fId(), 'UpdateNodeWhenStateOrSizeChanged'),
           );
 
-          this._mediator.execute<void>(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
+          this._mediator.execute(new CalculateConnectorsConnectableSidesRequest(nodeOrGroup));
 
           // Auto-fit must read FRESH child parentage. On a state-driven change
           // (e.g. undo re-parenting a child out), the fit would otherwise run
@@ -58,11 +57,11 @@ export class UpdateNodeWhenStateOrSizeChanged implements IExecution<
           // the settled parentage. Content/plain resizes keep today's sync path.
           if (nodeOrGroup.fAutoSizeToFitChildren()) {
             afterNextRender(
-              () => this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup)),
+              () => this._mediator.execute(new FitToChildNodesAndGroupsRequest(nodeOrGroup)),
               { injector: this._injector },
             );
           } else {
-            this._mediator.execute<void>(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
+            this._mediator.execute(new FitToChildNodesAndGroupsRequest(nodeOrGroup));
           }
 
           this._reflowOrchestrator.handleResize(nodeOrGroup);

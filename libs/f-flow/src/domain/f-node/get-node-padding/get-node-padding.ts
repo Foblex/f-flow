@@ -1,16 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { GetNodePaddingRequest } from './get-node-padding-request';
-import { FExecutionRegister, IExecution } from '@foblex/mediator';
+import { IExecution } from '../../../_libs/f-mediator';
 import { FNodeBase } from '../../../f-node';
-import { IRect } from '@foblex/2d';
-import { BrowserService } from '@foblex/platform';
+import { IRect } from '../../../_libs/f-2d';
+import { BrowserService } from '../../../_libs/f-platform';
 
 /**
  * Execution that retrieves the padding data of a Node.
  * If the Node does not include padding, it returns [0, 0, 0, 0].
  */
 @Injectable()
-@FExecutionRegister(GetNodePaddingRequest)
 export class GetNodePadding implements IExecution<
   GetNodePaddingRequest,
   [number, number, number, number]

@@ -1,4 +1,4 @@
-import { Point, PointExtensions } from '@foblex/2d';
+import { Point, PointExtensions } from '../../../_libs/f-2d';
 import {
   canvasFactory,
   configureDiTest,

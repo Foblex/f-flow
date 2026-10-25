@@ -1,7 +1,7 @@
 import { inject, Injectable, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { FMediator } from '@foblex/mediator';
-import { IPoint, ITransformModel, Point, PointExtensions } from '@foblex/2d';
+import { FMediator } from '../../../_libs/f-mediator';
+import { IPoint, ITransformModel, Point, PointExtensions } from '../../../_libs/f-2d';
 import { isValidEventTrigger } from '../../../domain';
 import { IFConnectionFlow } from './i-f-connection-flow';
 import { FComponentsStore } from '../../../f-storage';

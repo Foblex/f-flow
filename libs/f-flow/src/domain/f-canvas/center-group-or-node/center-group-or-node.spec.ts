@@ -1,5 +1,5 @@
-import { PointExtensions } from '@foblex/2d';
-import { FMediator } from '@foblex/mediator';
+import { PointExtensions } from '../../../_libs/f-2d';
+import { FMediator } from '../../../_libs/f-mediator';
 import {
   canvasFactory,
   CenterGroupOrNode,
