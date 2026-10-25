@@ -71,6 +71,12 @@ export class FMinimapComponent extends FMinimapBase implements AfterViewInit, On
   }
 
   public ngAfterViewInit(): void {
+    // guard BEFORE subscribing: the notifyOnStart() + debounceAnimationFrame() pipe
+    // schedules a bare requestAnimationFrame from a microtask, which does not exist
+    // on the server — the isBrowser check inside _redraw() is downstream of it
+    if (!this._browser.isBrowser()) {
+      return;
+    }
     this._listenTransformChanges();
   }
 

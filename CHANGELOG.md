@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
+- **minimap:** `<f-minimap>` no longer crashes SSR/prerender — the transform-changes subscription (whose pipe schedules `requestAnimationFrame` from a microtask) is now guarded for the browser before subscribing, instead of relying on the guard inside `_redraw()` that sat downstream of the throwing call ([#341](https://github.com/Foblex/f-flow/issues/341)).
 - **virtualization:** `*fVirtualFor` no longer crashes SSR/prerender — on the server it renders all views synchronously instead of starting the `requestAnimationFrame` frame pump, which does not exist in Node ([#340](https://github.com/Foblex/f-flow/issues/340)).
 - **external items:** destroyed `[fExternalItem]` directives are removed from `FExternalItemService` instead of being re-registered, so routed pages with palettes no longer leak their views and DOM through the root-provided service ([#335](https://github.com/Foblex/f-flow/issues/335)). Thanks @arunraja92.
 - **diagnostics:** a node wrapped by its component's host element no longer breaks the drag gesture with an `Unknown container` throw — layer raising is skipped with a one-shot dev-mode warning `FF1012` that explains the supported pattern ([#337](https://github.com/Foblex/f-flow/issues/337)). Thanks @i3ene.
