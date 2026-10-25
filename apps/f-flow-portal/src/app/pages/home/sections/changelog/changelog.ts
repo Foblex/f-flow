@@ -16,6 +16,13 @@ interface IChangelogItem {
  */
 const CHANGELOG: IChangelogItem[] = [
   {
+    version: 'v19.4.0',
+    date: 'October 2026',
+    description:
+      'Zero runtime dependencies besides Angular, the Initial View feature for a jump-free first frame, load events that fire when the render settles, a reflow-on-resize fix, and SSR hardening.',
+    href: 'https://flow.foblex.com/blog/foblex-flow-v19-4-0-zero-dependencies-initial-view-and-faster-load-events',
+  },
+  {
     version: 'v19.3.0',
     date: 'September 2026',
     description:
@@ -28,13 +35,6 @@ const CHANGELOG: IChangelogItem[] = [
     description:
       'Managed Flow State with batched undo and redo, faster rendering for large flows, and interaction support inside Angular Elements and open Shadow DOM.',
     href: 'https://flow.foblex.com/blog/foblex-flow-v19-1-0-managed-state-faster-large-flows-and-shadow-dom-support',
-  },
-  {
-    version: 'v19.0.0',
-    date: 'July 2026',
-    description:
-      'Control schemes, click-to-connect, keyboard accessibility, a unified connector model, and an AI-ready integration toolchain.',
-    href: 'https://flow.foblex.com/blog/foblex-flow-v19-0-0-control-schemes-click-to-connect-keyboard-accessibility-and-a-unified-connector-model',
   },
 ];
 
