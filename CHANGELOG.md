@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Fixes
 
+- **virtualization:** `*fVirtualFor` no longer crashes SSR/prerender — on the server it renders all views synchronously instead of starting the `requestAnimationFrame` frame pump, which does not exist in Node ([#340](https://github.com/Foblex/f-flow/issues/340)).
 - **external items:** destroyed `[fExternalItem]` directives are removed from `FExternalItemService` instead of being re-registered, so routed pages with palettes no longer leak their views and DOM through the root-provided service ([#335](https://github.com/Foblex/f-flow/issues/335)). Thanks @arunraja92.
 - **diagnostics:** a node wrapped by its component's host element no longer breaks the drag gesture with an `Unknown container` throw — layer raising is skipped with a one-shot dev-mode warning `FF1012` that explains the supported pattern ([#337](https://github.com/Foblex/f-flow/issues/337)). Thanks @i3ene.
 - **external items:** the drag preview stays under the pointer on a scrolled page — its transform is written in viewport coordinates now that the preview is `position: fixed`, so the scroll offset is no longer applied twice, and the dropped node (`FCreateNodeEvent.externalItemRect`) lands where the preview was released ([#339](https://github.com/Foblex/f-flow/pull/339)). Thanks @itaishopen-unyx.
